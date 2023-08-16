@@ -15,6 +15,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(NetworkToNetworkInterconnectId))
+            {
+                writer.WritePropertyName("networkToNetworkInterconnectId"u8);
+                writer.WriteStringValue(NetworkToNetworkInterconnectId);
+            }
             writer.WritePropertyName("peeringOption"u8);
             writer.WriteStringValue(PeeringOption.ToString());
             if (Optional.IsDefined(OptionBProperties))
@@ -36,25 +41,29 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<EnabledDisabledState> administrativeState = default;
-            Optional<string> networkToNetworkInterconnectId = default;
+            Optional<ResourceIdentifier> networkToNetworkInterconnectId = default;
+            Optional<NetworkFabricAdministrativeState> administrativeState = default;
             PeeringOption peeringOption = default;
-            Optional<NetworkFabricOptionBProperties> optionBProperties = default;
-            Optional<NetworkFabricOptionAProperties> optionAProperties = default;
+            Optional<OptionBProperties> optionBProperties = default;
+            Optional<VpnConfigurationOptionAProperties> optionAProperties = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("networkToNetworkInterconnectId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkToNetworkInterconnectId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("administrativeState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    administrativeState = new EnabledDisabledState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("networkToNetworkInterconnectId"u8))
-                {
-                    networkToNetworkInterconnectId = property.Value.GetString();
+                    administrativeState = new NetworkFabricAdministrativeState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("peeringOption"u8))
@@ -68,7 +77,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    optionBProperties = NetworkFabricOptionBProperties.DeserializeNetworkFabricOptionBProperties(property.Value);
+                    optionBProperties = OptionBProperties.DeserializeOptionBProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("optionAProperties"u8))
@@ -77,11 +86,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    optionAProperties = NetworkFabricOptionAProperties.DeserializeNetworkFabricOptionAProperties(property.Value);
+                    optionAProperties = VpnConfigurationOptionAProperties.DeserializeVpnConfigurationOptionAProperties(property.Value);
                     continue;
                 }
             }
-            return new VpnConfigurationProperties(Optional.ToNullable(administrativeState), networkToNetworkInterconnectId.Value, peeringOption, optionBProperties.Value, optionAProperties.Value);
+            return new VpnConfigurationProperties(networkToNetworkInterconnectId.Value, Optional.ToNullable(administrativeState), peeringOption, optionBProperties.Value, optionAProperties.Value);
         }
     }
 }

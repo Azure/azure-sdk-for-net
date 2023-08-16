@@ -5,7 +5,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
@@ -62,7 +61,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Creates the configured <see cref="StorageResource"/> instance using the given <see cref="AzureSasCredential"/>.
         /// </summary>
         /// <returns></returns>
-        public async Task<StorageResource> MakeResourceAsync(AzureSasCredential credential, CancellationToken cancellationToken = default)
+        public async Task<StorageResource> CreateResourceAsync(AzureSasCredential credential, CancellationToken cancellationToken = default)
         {
             return ResourceType switch
             {
@@ -86,7 +85,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Creates the configured <see cref="StorageResource"/> instance using the given <see cref="TokenCredential"/>.
         /// </summary>
         /// <returns></returns>
-        public async Task<StorageResource> MakeResourceAsync(TokenCredential credential, CancellationToken cancellationToken = default)
+        public async Task<StorageResource> CreateResourceAsync(TokenCredential credential, CancellationToken cancellationToken = default)
         {
             return ResourceType switch
             {
@@ -110,7 +109,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Creates the configured <see cref="StorageResource"/> instance using no credential.
         /// </summary>
         /// <returns></returns>
-        public async Task<StorageResource> MakeResourceAsync(CancellationToken cancellationToken = default)
+        public async Task<StorageResource> CreateResourceAsync(CancellationToken cancellationToken = default)
         {
             return ResourceType switch
             {

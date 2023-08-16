@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -237,7 +238,7 @@ namespace Azure.Messaging.ServiceBus
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope(
                 DiagnosticProperty.CreateRuleActivityName,
-                DiagnosticScope.ActivityKind.Client);
+                ActivityKind.Client);
             scope.Start();
 
             try
@@ -304,7 +305,7 @@ namespace Azure.Messaging.ServiceBus
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope(
                 DiagnosticProperty.DeleteRuleActivityName,
-                DiagnosticScope.ActivityKind.Client);
+                ActivityKind.Client);
             scope.Start();
 
             try
@@ -341,7 +342,7 @@ namespace Azure.Messaging.ServiceBus
                 List<RuleProperties> ruleProperties;
                 using (DiagnosticScope scope = _clientDiagnostics.CreateScope(
                     DiagnosticProperty.GetRulesActivityName,
-                    DiagnosticScope.ActivityKind.Client))
+                    ActivityKind.Client))
                 {
                     scope.Start();
                     try

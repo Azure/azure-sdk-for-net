@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-05-01-preview";
+            _apiVersion = apiVersion ?? "2023-07-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l2NetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l2NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<L2NetworkData>> GetAsync(string subscriptionId, string resourceGroupName, string l2NetworkName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkCloudL2NetworkData>> GetAsync(string subscriptionId, string resourceGroupName, string l2NetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -216,13 +216,13 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                     {
-                        L2NetworkData value = default;
+                        NetworkCloudL2NetworkData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = L2NetworkData.DeserializeL2NetworkData(document.RootElement);
+                        value = NetworkCloudL2NetworkData.DeserializeNetworkCloudL2NetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((L2NetworkData)null, message.Response);
+                    return Response.FromValue((NetworkCloudL2NetworkData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l2NetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l2NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<L2NetworkData> Get(string subscriptionId, string resourceGroupName, string l2NetworkName, CancellationToken cancellationToken = default)
+        public Response<NetworkCloudL2NetworkData> Get(string subscriptionId, string resourceGroupName, string l2NetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -247,19 +247,19 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                     {
-                        L2NetworkData value = default;
+                        NetworkCloudL2NetworkData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = L2NetworkData.DeserializeL2NetworkData(document.RootElement);
+                        value = NetworkCloudL2NetworkData.DeserializeNetworkCloudL2NetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((L2NetworkData)null, message.Response);
+                    return Response.FromValue((NetworkCloudL2NetworkData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string l2NetworkName, L2NetworkData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string l2NetworkName, NetworkCloudL2NetworkData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l2NetworkName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l2NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string l2NetworkName, L2NetworkData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string l2NetworkName, NetworkCloudL2NetworkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l2NetworkName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l2NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string l2NetworkName, L2NetworkData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string l2NetworkName, NetworkCloudL2NetworkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string l2NetworkName, L2NetworkPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string l2NetworkName, NetworkCloudL2NetworkPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l2NetworkName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l2NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<L2NetworkData>> UpdateAsync(string subscriptionId, string resourceGroupName, string l2NetworkName, L2NetworkPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkCloudL2NetworkData>> UpdateAsync(string subscriptionId, string resourceGroupName, string l2NetworkName, NetworkCloudL2NetworkPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -454,9 +454,9 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                     {
-                        L2NetworkData value = default;
+                        NetworkCloudL2NetworkData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = L2NetworkData.DeserializeL2NetworkData(document.RootElement);
+                        value = NetworkCloudL2NetworkData.DeserializeNetworkCloudL2NetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l2NetworkName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l2NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<L2NetworkData> Update(string subscriptionId, string resourceGroupName, string l2NetworkName, L2NetworkPatch patch, CancellationToken cancellationToken = default)
+        public Response<NetworkCloudL2NetworkData> Update(string subscriptionId, string resourceGroupName, string l2NetworkName, NetworkCloudL2NetworkPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -485,9 +485,9 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                     {
-                        L2NetworkData value = default;
+                        NetworkCloudL2NetworkData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = L2NetworkData.DeserializeL2NetworkData(document.RootElement);
+                        value = NetworkCloudL2NetworkData.DeserializeNetworkCloudL2NetworkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

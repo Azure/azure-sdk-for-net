@@ -94,7 +94,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 kind = "System",
             };
 
-            Response response = client.CreateOrUpdate(RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdate(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -120,7 +120,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 kind = "System",
             };
 
-            Response response = client.CreateOrUpdate(RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdate(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -141,7 +141,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 kind = "System",
             };
 
-            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -167,7 +167,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 kind = "System",
             };
 
-            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());

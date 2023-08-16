@@ -2932,9 +2932,66 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             superTypes = new[] {
                 "<String>"
             },
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -2962,6 +3019,42 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                     isLegacyAttribute = true,
                     relationshipTypeName = "<relationshipTypeName>",
                     cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
                     defaultValue = "<defaultValue>",
                     description = "<description>",
                     includeInNotification = true,
@@ -2980,6 +3073,35 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -3007,6 +3129,35 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -3041,9 +3192,66 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             },
             relationshipCategory = "ASSOCIATION",
             relationshipLabel = "<relationshipLabel>",
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -3060,9 +3268,66 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     },
                 structDefs = new[] {
         new {
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -3079,9 +3344,66 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     },
                 termTemplateDefs = new[] {
         new {
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -3549,9 +3871,66 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             superTypes = new[] {
                 "<String>"
             },
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -3579,6 +3958,42 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                     isLegacyAttribute = true,
                     relationshipTypeName = "<relationshipTypeName>",
                     cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
                     defaultValue = "<defaultValue>",
                     description = "<description>",
                     includeInNotification = true,
@@ -3597,6 +4012,35 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -3624,6 +4068,35 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -3658,9 +4131,66 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             },
             relationshipCategory = "ASSOCIATION",
             relationshipLabel = "<relationshipLabel>",
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -3677,9 +4207,66 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     },
                 structDefs = new[] {
         new {
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -3696,9 +4283,66 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     },
                 termTemplateDefs = new[] {
         new {
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -4166,9 +4810,66 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             superTypes = new[] {
                 "<String>"
             },
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -4196,6 +4897,42 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                     isLegacyAttribute = true,
                     relationshipTypeName = "<relationshipTypeName>",
                     cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
                     defaultValue = "<defaultValue>",
                     description = "<description>",
                     includeInNotification = true,
@@ -4214,6 +4951,35 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -4241,6 +5007,35 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -4275,9 +5070,66 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             },
             relationshipCategory = "ASSOCIATION",
             relationshipLabel = "<relationshipLabel>",
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -4294,9 +5146,66 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     },
                 structDefs = new[] {
         new {
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -4313,9 +5222,66 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     },
                 termTemplateDefs = new[] {
         new {
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -4783,9 +5749,66 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             superTypes = new[] {
                 "<String>"
             },
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -4813,6 +5836,42 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                     isLegacyAttribute = true,
                     relationshipTypeName = "<relationshipTypeName>",
                     cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
                     defaultValue = "<defaultValue>",
                     description = "<description>",
                     includeInNotification = true,
@@ -4831,6 +5890,35 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -4858,6 +5946,35 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -4892,9 +6009,66 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             },
             relationshipCategory = "ASSOCIATION",
             relationshipLabel = "<relationshipLabel>",
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -4911,9 +6085,66 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     },
                 structDefs = new[] {
         new {
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -4930,9 +6161,66 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     },
                 termTemplateDefs = new[] {
         new {
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -5398,9 +6686,66 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             superTypes = new[] {
                 "<String>"
             },
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -5428,6 +6773,42 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                     isLegacyAttribute = true,
                     relationshipTypeName = "<relationshipTypeName>",
                     cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
                     defaultValue = "<defaultValue>",
                     description = "<description>",
                     includeInNotification = true,
@@ -5446,6 +6827,35 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -5473,6 +6883,35 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -5507,9 +6946,66 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             },
             relationshipCategory = "ASSOCIATION",
             relationshipLabel = "<relationshipLabel>",
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -5526,9 +7022,66 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     },
                 structDefs = new[] {
         new {
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -5545,9 +7098,66 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     },
                 termTemplateDefs = new[] {
         new {
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -5679,9 +7289,66 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             superTypes = new[] {
                 "<String>"
             },
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -5709,6 +7376,42 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                     isLegacyAttribute = true,
                     relationshipTypeName = "<relationshipTypeName>",
                     cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
                     defaultValue = "<defaultValue>",
                     description = "<description>",
                     includeInNotification = true,
@@ -5727,6 +7430,35 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -5754,6 +7486,35 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -5788,9 +7549,66 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             },
             relationshipCategory = "ASSOCIATION",
             relationshipLabel = "<relationshipLabel>",
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -5807,9 +7625,66 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     },
                 structDefs = new[] {
         new {
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",
@@ -5826,9 +7701,66 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     },
                 termTemplateDefs = new[] {
         new {
+            attributeDefs = new[] {
+                new {
+                    isLegacyAttribute = true,
+                    relationshipTypeName = "<relationshipTypeName>",
+                    cardinality = "SINGLE",
+                    constraints = new[] {
+                        new {
+                            @params = new {
+                                key = new {},
+                            },
+                            type = "<type>",
+                        }
+                    },
+                    defaultValue = "<defaultValue>",
+                    description = "<description>",
+                    includeInNotification = true,
+                    isIndexable = true,
+                    isOptional = true,
+                    isUnique = true,
+                    name = "<name>",
+                    options = new {
+                        key = "<String>",
+                    },
+                    typeName = "<typeName>",
+                    valuesMaxCount = 1234,
+                    valuesMinCount = 1234,
+                }
+            },
             category = "PRIMITIVE",
             createTime = 123.45f,
             createdBy = "<createdBy>",
+            dateFormatter = new {
+                availableLocales = new[] {
+                    "<String>"
+                },
+                calendar = 123.45f,
+                lenient = true,
+                numberFormat = new {
+                    availableLocales = new[] {
+                        "<String>"
+                    },
+                    currency = "<currency>",
+                    groupingUsed = true,
+                    maximumFractionDigits = 1234,
+                    maximumIntegerDigits = 1234,
+                    minimumFractionDigits = 1234,
+                    minimumIntegerDigits = 1234,
+                    parseIntegerOnly = true,
+                    roundingMode = "UP",
+                },
+                timeZone = new {
+                    dstSavings = 1234,
+                    id = "<id>",
+                    availableIds = new[] {
+                        "<String>"
+                    },
+                    displayName = "<displayName>",
+                    rawOffset = 1234,
+                },
+            },
             description = "<description>",
             guid = "<guid>",
             name = "<name>",

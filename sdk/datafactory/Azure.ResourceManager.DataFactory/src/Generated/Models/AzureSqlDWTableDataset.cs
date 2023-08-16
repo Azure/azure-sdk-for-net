@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Azure SQL Data Warehouse dataset. </summary>
-    public partial class AzureSqlDWTableDataset : DataFactoryDatasetDefinition
+    public partial class AzureSqlDWTableDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of AzureSqlDWTableDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

@@ -13,6 +13,7 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+deserialize-null-collection-as-null-value: true
 
 no-property-type-replacement: RegenerateKeyContent
 

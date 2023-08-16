@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.14 (Unreleased)
+## 1.0.0-beta.15 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,30 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.14 (2023-08-09)
+
+### Breaking Changes
+
+* Location ip on server spans will now be set using `client.address` tag key on
+  activity instead of `http.client_ip`.
+  ([#37707](https://github.com/Azure/azure-sdk-for-net/pull/37707))
+* Removing `ServiceVersion.V2020_09_15_Preview`. This is no longer in use and
+  the exporter has already defaulted to the latest `ServiceVersion.v2_1`.
+  ([#37996](https://github.com/Azure/azure-sdk-for-net/pull/37996))
+* Remove Nullable Annotations from the Exporter's public API.
+  ([#37996](https://github.com/Azure/azure-sdk-for-net/pull/37996))
+
+### Bugs Fixed
+
+* Fixed an issue causing no telemetry if SDK Version string exceeds max length.
+  ([#37807](https://github.com/Azure/azure-sdk-for-net/pull/37807))
+
+### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#37837](https://github.com/Azure/azure-sdk-for-net/pull/37837))
+  - OpenTelemetry 1.5.1
 
 ## 1.0.0-beta.13 (2023-07-13)
 
@@ -159,7 +183,7 @@
   - Users may disable by setting `AzureMonitorExporterOptions.DisableOfflineStorage` ([#28446](https://github.com/Azure/azure-sdk-for-net/pull/28446))
 * Added support for exception telemetry from ILogger ([#26670](https://github.com/Azure/azure-sdk-for-net/pull/26670))
 * Support for exporting Activity exception event ([#29676](https://github.com/Azure/azure-sdk-for-net/pull/29676))
-* Added support for sampling using [Application Insights based sampler](https://github.com/open-telemetry/opentelemetry-dotnet-contrib/tree/main/src/OpenTelemetry.Extensions.AzureMonitor) ([#31118](https://github.com/Azure/azure-sdk-for-net/pull/31118))
+* Added support for sampling using [Application Insights based sampler](https://www.nuget.org/packages/OpenTelemetry.Extensions.AzureMonitor/) ([#31118](https://github.com/Azure/azure-sdk-for-net/pull/31118))
 
 ### Breaking Changes
 

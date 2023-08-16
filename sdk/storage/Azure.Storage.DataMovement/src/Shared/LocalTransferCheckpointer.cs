@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Storage.DataMovement.Models.JobPlan;
+using Azure.Storage.DataMovement.JobPlan;
 
 namespace Azure.Storage.DataMovement
 {
@@ -302,7 +302,7 @@ namespace Azure.Storage.DataMovement
         /// <inheritdoc/>
         public override async Task SetJobTransferStatusAsync(
             string transferId,
-            StorageTransferStatus status,
+            DataTransferStatus status,
             CancellationToken cancellationToken = default)
         {
             long length = DataMovementConstants.PlanFile.OneByte;
@@ -345,7 +345,7 @@ namespace Azure.Storage.DataMovement
         public override async Task SetJobPartTransferStatusAsync(
             string transferId,
             int partNumber,
-            StorageTransferStatus status,
+            DataTransferStatus status,
             CancellationToken cancellationToken = default)
         {
             long length = DataMovementConstants.PlanFile.OneByte;

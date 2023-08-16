@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics.Tracing;
 using System.Runtime.CompilerServices;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
+using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 {
@@ -67,7 +68,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void FailedToTransmit(string exceptionMessage) => WriteEvent(7, exceptionMessage);
 
         [NonEvent]
-        public void TransmissionFailed(int statusCode, TelemetryItemOrigin origin, bool willRetry, ConnectionVars connectionVars, string? requestEndpoint, Response? response)
+        public void TransmissionFailed(int statusCode, TelemetryItemOrigin origin, bool isAadEnabled, bool willRetry, ConnectionVars connectionVars, string? requestEndpoint, Response? response)
         {
             if (IsEnabled(EventLevel.Verbose))
             {
@@ -80,6 +81,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
                         errorMessage: "N/A",
                         action: willRetry ? "Telemetry is stored offline for retry" : "Telemetry is dropped",
                         origin: origin.ToString(),
+                        isAadEnabled: isAadEnabled,
                         instrumentationKey: connectionVars.InstrumentationKey,
                         configuredEndpoint: connectionVars.IngestionEndpoint,
                         actualEndpoint: requestEndpoint);
@@ -93,6 +95,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
                             errorMessage: error ?? "N/A",
                             action: willRetry ? "Telemetry is stored offline for retry" : "Telemetry is dropped",
                             origin: origin.ToString(),
+                            isAadEnabled: isAadEnabled,
                             instrumentationKey: connectionVars.InstrumentationKey,
                             configuredEndpoint: connectionVars.IngestionEndpoint,
                             actualEndpoint: requestEndpoint);
@@ -106,15 +109,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
                     errorMessage: "(To get exact error change LogLevel to Verbose)",
                     action: willRetry ? "Telemetry is stored offline for retry" : "Telemetry is dropped",
                     origin: origin.ToString(),
+                    isAadEnabled: isAadEnabled,
                     instrumentationKey: connectionVars.InstrumentationKey,
                     configuredEndpoint: connectionVars.IngestionEndpoint,
                     actualEndpoint: requestEndpoint);
             }
         }
 
-        [Event(8, Message = "Transmission failed. StatusCode: {0}. Error from Ingestion: {1}. Action: {2}. Origin: {3}. Instrumentation Key: {4}. Configured Endpoint: {5}. Actual Endpoint: {6}", Level = EventLevel.Critical)]
-        public void TransmissionFailed(int statusCode, string errorMessage, string action, string origin, string instrumentationKey, string configuredEndpoint, string? actualEndpoint)
-            => WriteEvent(8, statusCode, errorMessage, action, origin, instrumentationKey, configuredEndpoint, actualEndpoint);
+        [Event(8, Message = "Transmission failed. StatusCode: {0}. Error from Ingestion: {1}. Action: {2}. Origin: {3}. AAD Enabled: {4}. Instrumentation Key: {5}. Configured Endpoint: {6}. Actual Endpoint: {7}", Level = EventLevel.Critical)]
+        public void TransmissionFailed(int statusCode, string errorMessage, string action, string origin, bool isAadEnabled, string instrumentationKey, string configuredEndpoint, string? actualEndpoint)
+            => WriteEvent(8, statusCode, errorMessage, action, origin, isAadEnabled, instrumentationKey, configuredEndpoint, actualEndpoint);
 
         [Event(9, Message = "{0} has been disposed.", Level = EventLevel.Informational)]
         public void DisposedObject(string name) => WriteEvent(9, name);
@@ -264,19 +268,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void SdkVersionCreateFailed(string exceptionMessage) => WriteEvent(24, exceptionMessage);
 
         [NonEvent]
-        public void FailedToTransmitFromStorage(string instrumentationKey, Exception ex)
+        public void FailedToTransmitFromStorage(bool isAadEnabled, string instrumentationKey, Exception ex)
         {
             if (IsEnabled(EventLevel.Error))
             {
-                FailedToTransmitFromStorage(instrumentationKey, ex.FlattenException().ToInvariantString());
+                FailedToTransmitFromStorage(isAadEnabled, instrumentationKey, ex.FlattenException().ToInvariantString());
             }
         }
 
-        [Event(25, Message = "Failed to transmit from storage due to an exception. Instrumentation Key: {0}. {1}", Level = EventLevel.Error)]
-        public void FailedToTransmitFromStorage(string instrumentationKey, string exceptionMessage) => WriteEvent(25, instrumentationKey, exceptionMessage);
+        [Event(25, Message = "Failed to transmit from storage due to an exception. AAD Enabled: {0}. Instrumentation Key: {1}. {2}", Level = EventLevel.Error)]
+        public void FailedToTransmitFromStorage(bool isAadEnabled, string instrumentationKey, string exceptionMessage) => WriteEvent(25, isAadEnabled, instrumentationKey, exceptionMessage);
 
-        [Event(26, Message = "Successfully transmitted a blob from storage. Instrumentation Key: {0}", Level = EventLevel.Verbose)]
-        public void TransmitFromStorageSuccess(string instrumentationKey) => WriteEvent(26, instrumentationKey);
+        [Event(26, Message = "Successfully transmitted a blob from storage. AAD Enabled: {0}. Instrumentation Key: {1}", Level = EventLevel.Verbose)]
+        public void TransmitFromStorageSuccess(bool isAadEnabled, string instrumentationKey) => WriteEvent(26, isAadEnabled, instrumentationKey);
 
         [Event(27, Message = "HttpPipelineBuilder is built with AAD Credentials. TokenCredential: {0} Scope: {1}", Level = EventLevel.Informational)]
         public void SetAADCredentialsToPipeline(string credentialTypeName, string scope) => WriteEvent(27, credentialTypeName, scope);
@@ -312,28 +316,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void ErrorInitializingStatsbeat(string instrumentationKey, string configuredEndpoint, string exceptionMessage) => WriteEvent(31, instrumentationKey, configuredEndpoint, exceptionMessage);
 
         [NonEvent]
-        public void TransmissionSuccess(TelemetryItemOrigin origin, string instrumentationKey)
+        public void TransmissionSuccess(TelemetryItemOrigin origin, bool isAadEnabled, string instrumentationKey)
         {
             if (IsEnabled(EventLevel.Verbose))
             {
-                TransmissionSuccess(origin.ToString(), instrumentationKey);
+                TransmissionSuccess(origin.ToString(), isAadEnabled, instrumentationKey);
             }
         }
 
-        [Event(32, Message = "Successfully transmitted a batch of telemetry Items. Origin: {0}. Instrumentation Key: {1}", Level = EventLevel.Verbose)]
-        public void TransmissionSuccess(string origin, string instrumentationKey) => WriteEvent(32, origin, instrumentationKey);
+        [Event(32, Message = "Successfully transmitted a batch of telemetry Items. Origin: {0}. AAD: {1}. Instrumentation Key: {2}", Level = EventLevel.Verbose)]
+        public void TransmissionSuccess(string origin, bool isAadEnabled, string instrumentationKey) => WriteEvent(32, origin, isAadEnabled, instrumentationKey);
 
         [NonEvent]
-        public void TransmitterFailed(TelemetryItemOrigin origin, string instrumentationKey, Exception ex)
+        public void TransmitterFailed(TelemetryItemOrigin origin, bool isAadEnabled, string instrumentationKey, Exception ex)
         {
             if (IsEnabled(EventLevel.Error))
             {
-                TransmitterFailed(origin.ToString(), instrumentationKey, ex.FlattenException().ToInvariantString());
+                TransmitterFailed(origin.ToString(), isAadEnabled, instrumentationKey, ex.FlattenException().ToInvariantString());
             }
         }
 
-        [Event(33, Message = "Transmitter failed due to an exception. Origin: {0}. Instrumentation Key: {1}. {2}", Level = EventLevel.Error)]
-        public void TransmitterFailed(string origin, string instrumentationKey, string exceptionMessage) => WriteEvent(33, origin, instrumentationKey, exceptionMessage);
+        [Event(33, Message = "Transmitter failed due to an exception. Origin: {0}. AAD: {1}. Instrumentation Key: {2}. {3}", Level = EventLevel.Error)]
+        public void TransmitterFailed(string origin, bool isAadEnabled, string instrumentationKey, string exceptionMessage) => WriteEvent(33, origin, isAadEnabled, instrumentationKey, exceptionMessage);
 
         [Event(34, Message = "Exporter encountered a transmission failure and will wait {0} milliseconds before transmitting again.", Level = EventLevel.Warning)]
         public void BackoffEnabled(double milliseconds) => WriteEvent(34, milliseconds);
@@ -349,5 +353,35 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(35, Message = "Failed to deserialize response from ingestion due to an exception. Not user actionable. {0}", Level = EventLevel.Warning)]
         public void FailedToDeserializeIngestionResponse(string exceptionMessage) => WriteEvent(35, exceptionMessage);
+
+        [Event(36, Message = "Version string exceeds expected length. This is only for internal telemetry and can safely be ignored. Type Name: {0}. Version: {1}", Level = EventLevel.Verbose)]
+        public void VersionStringUnexpectedLength(string typeName, string value) => WriteEvent(36, typeName, value);
+
+        [Event(37, Message = "Failed to delete telemetry from storage. This may result in duplicate telemetry if the file is processed again. Not user actionable.", Level = EventLevel.Warning)]
+        public void DeletedFailed() => WriteEvent(37);
+
+        [NonEvent]
+        public void PartialContentResponseInvalid(int totalTelemetryItems, TelemetryErrorDetails error)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                PartialContentResponseInvalid(totalTelemetryItems, error.Index?.ToString() ?? "N/A", error.StatusCode?.ToString() ?? "N/A", error.Message);
+            }
+        }
+
+        [Event(38, Message = "Received a partial success from ingestion that does not match telemetry that was sent. Total telemetry items sent: {0}. Error Index: {1}. Error StatusCode: {2}. Error Message: {3}", Level = EventLevel.Warning)]
+        public void PartialContentResponseInvalid(int totalTelemetryItems, string errorIndex, string errorStatusCode, string errorMessage) => WriteEvent(38, totalTelemetryItems, errorIndex, errorStatusCode, errorMessage);
+
+        [NonEvent]
+        public void PartialContentResponseUnhandled(TelemetryErrorDetails error)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                PartialContentResponseUnhandled(error.StatusCode?.ToString() ?? "N/A", error.Message);
+            }
+        }
+
+        [Event(39, Message = "Received a partial success from ingestion. This status code is not handled and telemetry will be lost. Error StatusCode: {0}. Error Message: {1}", Level = EventLevel.Warning)]
+        public void PartialContentResponseUnhandled(string errorStatusCode, string errorMessage) => WriteEvent(39, errorStatusCode, errorMessage);
     }
 }

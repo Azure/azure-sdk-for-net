@@ -1,12 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.DataMovement.Models;
-using Azure.Storage.DataMovement.Models.JobPlan;
+using Azure.Storage.DataMovement.JobPlan;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
@@ -23,7 +21,6 @@ namespace Azure.Storage.DataMovement.Blobs
                 copyId: blobProperties.CopyId,
                 copyProgress: blobProperties.CopyProgress,
                 copySource: blobProperties.CopySource,
-                copyStatus: blobProperties.CopyStatus.ToCopyStatus(),
                 contentLength: blobProperties.ContentLength,
                 contentType: blobProperties.ContentType,
                 eTag: blobProperties.ETag,
@@ -36,8 +33,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 versionId: blobProperties.VersionId,
                 isLatestVersion: blobProperties.IsLatestVersion,
                 expiresOn: blobProperties.ExpiresOn,
-                lastAccessed: blobProperties.LastAccessed,
-                resourceType: blobProperties.BlobType.ToStorageResourceType());
+                lastAccessed: blobProperties.LastAccessed);
         }
 
         internal static StorageResourceProperties ToStorageResourceProperties(this BlobDownloadDetails blobProperties)
@@ -51,7 +47,6 @@ namespace Azure.Storage.DataMovement.Blobs
                 copyId: blobProperties.CopyId,
                 copyProgress: blobProperties.CopyProgress,
                 copySource: blobProperties.CopySource,
-                copyStatus: blobProperties.CopyStatus.ToCopyStatus(),
                 contentLength: blobProperties.ContentLength,
                 contentType: blobProperties.ContentType,
                 eTag: blobProperties.ETag,
@@ -64,56 +59,17 @@ namespace Azure.Storage.DataMovement.Blobs
                 versionId: blobProperties.VersionId,
                 isLatestVersion: default,
                 expiresOn: default,
-                lastAccessed: blobProperties.LastAccessed,
-                resourceType: blobProperties.BlobType.ToStorageResourceType());
+                lastAccessed: blobProperties.LastAccessed);
         }
 
-        internal static ReadStreamStorageResourceResult ToReadStreamStorageResourceInfo(this BlobDownloadStreamingResult result)
+        internal static StorageResourceReadStreamResult ToReadStreamStorageResourceInfo(this BlobDownloadStreamingResult result)
         {
-            return new ReadStreamStorageResourceResult(
+            return new StorageResourceReadStreamResult(
                 content: result.Content,
                 contentRange: result.Details.ContentRange,
                 acceptRanges: result.Details.AcceptRanges,
                 rangeContentHash: result.Details.BlobContentHash,
                 properties: result.Details.ToStorageResourceProperties());
-        }
-
-        private static ServiceCopyStatus? ToCopyStatus(this CopyStatus copyStatus)
-        {
-            if (CopyStatus.Pending == copyStatus)
-            {
-                return ServiceCopyStatus.Pending;
-            }
-            else if (CopyStatus.Success == copyStatus)
-            {
-                return ServiceCopyStatus.Success;
-            }
-            else if (CopyStatus.Aborted == copyStatus)
-            {
-                return ServiceCopyStatus.Aborted;
-            }
-            else if (CopyStatus.Failed == copyStatus)
-            {
-                return ServiceCopyStatus.Failed;
-            }
-            return default;
-        }
-
-        private static StorageResourceType ToStorageResourceType(this BlobType blobType)
-        {
-            if (BlobType.Block == blobType)
-            {
-                return StorageResourceType.BlockBlob;
-            }
-            else if (BlobType.Page == blobType)
-            {
-                return StorageResourceType.PageBlob;
-            }
-            else if (BlobType.Append == blobType)
-            {
-                return StorageResourceType.AppendBlob;
-            }
-            return default;
         }
 
         /// <summary>
@@ -175,7 +131,7 @@ namespace Azure.Storage.DataMovement.Blobs
         internal static AppendBlobStorageResourceOptions ToAppendBlobStorageResourceOptions(
             this BlobStorageResourceContainerOptions options)
         {
-            return new AppendBlobStorageResourceOptions(options?.ResourceOptions);
+            return new AppendBlobStorageResourceOptions(options?.BlobOptions);
         }
 
         internal static BlobDownloadOptions ToBlobDownloadOptions(
@@ -255,7 +211,7 @@ namespace Azure.Storage.DataMovement.Blobs
         internal static BlockBlobStorageResourceOptions ToBlockBlobStorageResourceOptions(
             this BlobStorageResourceContainerOptions options)
         {
-            return new BlockBlobStorageResourceOptions(options?.ResourceOptions);
+            return new BlockBlobStorageResourceOptions(options?.BlobOptions);
         }
 
         internal static BlobDownloadOptions ToBlobDownloadOptions(
@@ -378,7 +334,7 @@ namespace Azure.Storage.DataMovement.Blobs
         internal static PageBlobStorageResourceOptions ToPageBlobStorageResourceOptions(
             this BlobStorageResourceContainerOptions options)
         {
-            return new PageBlobStorageResourceOptions(options?.ResourceOptions);
+            return new PageBlobStorageResourceOptions(options?.BlobOptions);
         }
 
         internal static BlobDownloadOptions ToBlobDownloadOptions(
@@ -550,8 +506,8 @@ namespace Azure.Storage.DataMovement.Blobs
                 cancellationToken).ConfigureAwait(false);
             BlobStorageResourceContainerOptions options = new()
             {
-                DirectoryPrefix = directoryPrefix,
-                ResourceOptions = baseOptions,
+                BlobDirectoryPrefix = directoryPrefix,
+                BlobOptions = baseOptions,
             };
 
             return options;

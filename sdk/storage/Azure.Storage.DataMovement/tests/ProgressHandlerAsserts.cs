@@ -11,7 +11,7 @@ namespace Azure.Storage.DataMovement.Tests
     internal static class ProgressHandlerAsserts
     {
         public static void AssertFileProgress(
-            IEnumerable<StorageTransferProgress> updates,
+            IEnumerable<DataTransferProgress> updates,
             long fileCount,
             long skippedCount = 0,
             long failedCount = 0,
@@ -32,23 +32,23 @@ namespace Azure.Storage.DataMovement.Tests
                     continue;
                 }
 
-                IEnumerable<StorageTransferProgress> before = updates.Take(index);
+                IEnumerable<DataTransferProgress> before = updates.Take(index);
                 AssertProgressUpdates(before, fileCount);
 
-                StorageTransferProgress lastBeforePause = before.Last();
+                DataTransferProgress lastBeforePause = before.Last();
                 completed += lastBeforePause.CompletedCount;
                 skipped += lastBeforePause.SkippedCount;
                 failed += lastBeforePause.FailedCount;
             }
 
             // Grab the final set of updates (all the updates if there were no pauses)
-            IEnumerable<StorageTransferProgress> finalUpdates =
+            IEnumerable<DataTransferProgress> finalUpdates =
                 pauseIndexes.Length > 0 ? updates.Skip(pauseIndexes.Last()) : updates;
 
             AssertProgressUpdates(finalUpdates, fileCount);
 
             // Check final update for goal state
-            StorageTransferProgress final = finalUpdates.Last();
+            DataTransferProgress final = finalUpdates.Last();
             completed += final.CompletedCount;
             skipped += final.SkippedCount;
             failed += final.FailedCount;
@@ -61,7 +61,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         public static void AssertBytesTransferred(
-            IEnumerable<StorageTransferProgress> updates,
+            IEnumerable<DataTransferProgress> updates,
             long[] expectedUpdates)
         {
             IEnumerable<long?> bytesUpdates = updates.Select(x => x.BytesTransferred);
@@ -77,12 +77,12 @@ namespace Azure.Storage.DataMovement.Tests
             CollectionAssert.AreEqual(expectedUpdates, actualUpdates);
         }
 
-        private static void AssertProgressUpdates(IEnumerable<StorageTransferProgress> updates, long fileCount)
+        private static void AssertProgressUpdates(IEnumerable<DataTransferProgress> updates, long fileCount)
         {
             long completed = 0;
             long skipped = 0;
             long failed = 0;
-            foreach (StorageTransferProgress update in updates)
+            foreach (DataTransferProgress update in updates)
             {
                 // Queued/InProgress should never be below zero or above total
                 Assert.GreaterOrEqual(update.QueuedCount, 0);

@@ -37,7 +37,12 @@ namespace Azure.Identity
         /// the <see cref="DiagnosticsOptions.IsLoggingContentEnabled"/> property must be set to <c>true</c>.
         /// Setting this property to `true` equates to passing 'true' for the enablePiiLogging parameter to the 'WithLogging' method on the MSAL client builder.
         /// </summary>
-        public bool IsSupportLoggingEnabled { get; set; }
+        public bool IsUnsafeSupportLoggingEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether this credential is part of a chained credential.
+        /// </summary>
+        internal bool IsChainedCredential { get; set; }
 
         internal virtual T Clone<T>()
             where T : TokenCredentialOptions, new()
@@ -47,7 +52,7 @@ namespace Azure.Identity
             // copy TokenCredentialOptions Properties
             clone.AuthorityHost = AuthorityHost;
 
-            clone.IsSupportLoggingEnabled = IsSupportLoggingEnabled;
+            clone.IsUnsafeSupportLoggingEnabled = IsUnsafeSupportLoggingEnabled;
 
             // copy TokenCredentialDiagnosticsOptions specific options
             clone.Diagnostics.IsAccountIdentifierLoggingEnabled = Diagnostics.IsAccountIdentifierLoggingEnabled;

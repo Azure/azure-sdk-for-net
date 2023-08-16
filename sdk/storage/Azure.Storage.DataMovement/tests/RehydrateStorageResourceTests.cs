@@ -5,15 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.DataMovement.Models;
-using Azure.Storage.DataMovement.Models.JobPlan;
+using Azure.Storage.DataMovement.JobPlan;
+using Azure.Storage.Tests;
 using Moq;
 using NUnit.Framework;
+using static Azure.Storage.DataMovement.Tests.TransferUtility;
 
 namespace Azure.Storage.DataMovement.Tests
 {
-    public class RehydrateStorageResourceTests : DataMovementTestBase
+    public class RehydrateStorageResourceTests
     {
         public enum RehydrateApi
         {
@@ -25,17 +27,21 @@ namespace Azure.Storage.DataMovement.Tests
             /// <summary>
             /// Instance of the provider the user is given to invoke rehydration on.
             /// </summary>
-            ProviderInstance,
+            ProviderInstanceOLD,
 
             /// <summary>
             /// The public, package-wide static API for rehydrating.
             /// </summary>
-            PublicStaticApi
+            PublicStaticApiOLD,
+
+            /// <summary>
+            /// New provider system for creating resources.
+            /// </summary>
+            Provider
         }
         public static IEnumerable<RehydrateApi> GetRehydrateApis() => Enum.GetValues(typeof(RehydrateApi)).Cast<RehydrateApi>();
 
-        public RehydrateStorageResourceTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public RehydrateStorageResourceTests()
         { }
 
         private enum StorageResourceType
@@ -65,11 +71,11 @@ namespace Azure.Storage.DataMovement.Tests
         {
             var mock = new Mock<DataTransferProperties>(MockBehavior.Strict);
             mock.Setup(p => p.TransferId).Returns(transferId);
-            mock.Setup(p => p.Checkpointer).Returns(new TransferCheckpointerOptions(checkpointerPath));
+            mock.Setup(p => p.Checkpointer).Returns(new TransferCheckpointStoreOptions(checkpointerPath));
             mock.Setup(p => p.SourcePath).Returns(sourcePath);
             mock.Setup(p => p.DestinationPath).Returns(destinationPath);
-            mock.Setup(p => p.SourceScheme).Returns(sourceResourceId);
-            mock.Setup(p => p.DestinationScheme).Returns(destinationResourceId);
+            mock.Setup(p => p.SourceTypeId).Returns(sourceResourceId);
+            mock.Setup(p => p.DestinationTypeId).Returns(destinationResourceId);
             mock.Setup(p => p.IsContainer).Returns(isContainer);
             return mock;
         }
@@ -122,7 +128,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             for (int currentPart = 0; currentPart < partCount; currentPart++)
             {
-                JobPartPlanHeader header = CreateDefaultJobPartHeader(
+                JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: currentPart,
                     sourcePath: sourcePaths[currentPart],
@@ -154,7 +160,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 return null;
             }
-            return getSource ? sourceProvider.MakeResource() : destinationProvider.MakeResource();
+            return getSource ? sourceProvider.CreateResource() : destinationProvider.CreateResource();
         }
 
         [Test]
@@ -165,9 +171,10 @@ namespace Azure.Storage.DataMovement.Tests
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            Random random = new();
             string transferId = GetNewTransferId();
-            string sourcePath = GetNewString(20);
-            string destinationPath = GetNewString(15);
+            string sourcePath = random.NextString(20);
+            string destinationPath = random.NextString(15);
             string originalPath = isSource ? sourcePath : destinationPath;
 
             StorageResourceType sourceType = !isSource ? StorageResourceType.BlockBlob : StorageResourceType.Local;
@@ -190,17 +197,21 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationType,
                 new List<string>() { destinationPath } );
 
-            LocalFileStorageResource storageResource = api switch
+            StorageResource storageResource = api switch
             {
                 RehydrateApi.ResourceStaticApi => LocalFileStorageResource.RehydrateResource(transferProperties, isSource),
-                RehydrateApi.ProviderInstance => (LocalFileStorageResource)new LocalStorageResourceProvider(
-                    transferProperties, isSource, isFolder: false).MakeResource(),
-                RehydrateApi.PublicStaticApi => (LocalFileStorageResource)LocalStorageResourcesInlineTryGet(
+                RehydrateApi.ProviderInstanceOLD => new LocalStorageResourceProvider(
+                    transferProperties, isSource, isFolder: false).CreateResource(),
+                RehydrateApi.PublicStaticApiOLD => LocalStorageResourcesInlineTryGet(
                     transferProperties, isSource),
+                RehydrateApi.Provider => isSource
+                    ? await new LocalFilesStorageResourceProvider().FromSourceAsync(transferProperties, CancellationToken.None)
+                    : await new LocalFilesStorageResourceProvider().FromDestinationAsync(transferProperties, CancellationToken.None),
                 _ => throw new ArgumentException("Unrecognized test parameter"),
             };
 
             Assert.AreEqual(originalPath, storageResource.Path);
+            Assert.IsInstanceOf(typeof(LocalFileStorageResource), storageResource);
         }
 
         [Test]
@@ -211,15 +222,16 @@ namespace Azure.Storage.DataMovement.Tests
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            Random random = new();
             string transferId = GetNewTransferId();
-            string sourceParentPath = GetNewString(20);
+            string sourceParentPath = random.NextString(20);
             List<string> sourcePaths = new List<string>();
-            string destinationParentPath = GetNewString(15);
+            string destinationParentPath = random.NextString(15);
             List<string> destinationPaths = new List<string>();
             int jobPartCount = 10;
             for (int i = 0; i< jobPartCount; i++)
             {
-                string childPath = GetNewString(5);
+                string childPath = random.NextString(5);
                 sourcePaths.Add(Path.Combine(sourceParentPath, childPath));
                 destinationPaths.Add(Path.Combine(destinationParentPath, childPath));
             }
@@ -246,17 +258,21 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationPaths,
                 jobPartCount);
 
-            LocalDirectoryStorageResourceContainer storageResource = api switch
+            StorageResource storageResource = api switch
             {
                 RehydrateApi.ResourceStaticApi => LocalDirectoryStorageResourceContainer.RehydrateResource(transferProperties, isSource),
-                RehydrateApi.ProviderInstance => (LocalDirectoryStorageResourceContainer)new LocalStorageResourceProvider(
-                    transferProperties, isSource, isFolder: true).MakeResource(),
-                RehydrateApi.PublicStaticApi => (LocalDirectoryStorageResourceContainer)LocalStorageResourcesInlineTryGet(
+                RehydrateApi.ProviderInstanceOLD => new LocalStorageResourceProvider(
+                    transferProperties, isSource, isFolder: true).CreateResource(),
+                RehydrateApi.PublicStaticApiOLD => LocalStorageResourcesInlineTryGet(
                     transferProperties, isSource),
+                RehydrateApi.Provider => isSource
+                    ? await new LocalFilesStorageResourceProvider().FromSourceAsync(transferProperties, CancellationToken.None)
+                    : await new LocalFilesStorageResourceProvider().FromDestinationAsync(transferProperties, CancellationToken.None),
                 _ => throw new ArgumentException("Unrecognized test parameter"),
             };
 
             Assert.AreEqual(originalPath, storageResource.Path);
+            Assert.IsInstanceOf(typeof(LocalDirectoryStorageResourceContainer), storageResource);
         }
     }
 }

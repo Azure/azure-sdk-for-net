@@ -1351,6 +1351,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
                 activeLearningSuggestions = new[] {
                     new {
                         clusterHead = "<clusterHead>",
+                        suggestedQuestions = new[] {
+                            new {
+                                question = "<question>",
+                                userSuggestedCount = 1234,
+                                autoSuggestedCount = 1234,
+                            }
+                        },
                     }
                 },
             }
@@ -1466,6 +1473,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring.Samples
                 activeLearningSuggestions = new[] {
                     new {
                         clusterHead = "<clusterHead>",
+                        suggestedQuestions = new[] {
+                            new {
+                                question = "<question>",
+                                userSuggestedCount = 1234,
+                                autoSuggestedCount = 1234,
+                            }
+                        },
                     }
                 },
             }

@@ -49,354 +49,354 @@ namespace Azure.ResourceManager.NetworkCloud
                 return new SubscriptionResourceExtensionClient(client, scope);
             });
         }
-        #region BareMetalMachineResource
+        #region NetworkCloudBareMetalMachineResource
         /// <summary>
-        /// Gets an object representing a <see cref="BareMetalMachineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BareMetalMachineResource.CreateResourceIdentifier" /> to create a <see cref="BareMetalMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudBareMetalMachineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudBareMetalMachineResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudBareMetalMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BareMetalMachineResource" /> object. </returns>
-        public static BareMetalMachineResource GetBareMetalMachineResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkCloudBareMetalMachineResource" /> object. </returns>
+        public static NetworkCloudBareMetalMachineResource GetNetworkCloudBareMetalMachineResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BareMetalMachineResource.ValidateResourceId(id);
-                return new BareMetalMachineResource(client, id);
+                NetworkCloudBareMetalMachineResource.ValidateResourceId(id);
+                return new NetworkCloudBareMetalMachineResource(client, id);
             }
             );
         }
         #endregion
 
-        #region CloudServicesNetworkResource
+        #region NetworkCloudCloudServicesNetworkResource
         /// <summary>
-        /// Gets an object representing a <see cref="CloudServicesNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CloudServicesNetworkResource.CreateResourceIdentifier" /> to create a <see cref="CloudServicesNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudCloudServicesNetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudCloudServicesNetworkResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudCloudServicesNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CloudServicesNetworkResource" /> object. </returns>
-        public static CloudServicesNetworkResource GetCloudServicesNetworkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkCloudCloudServicesNetworkResource" /> object. </returns>
+        public static NetworkCloudCloudServicesNetworkResource GetNetworkCloudCloudServicesNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                CloudServicesNetworkResource.ValidateResourceId(id);
-                return new CloudServicesNetworkResource(client, id);
+                NetworkCloudCloudServicesNetworkResource.ValidateResourceId(id);
+                return new NetworkCloudCloudServicesNetworkResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ClusterManagerResource
+        #region NetworkCloudClusterManagerResource
         /// <summary>
-        /// Gets an object representing a <see cref="ClusterManagerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ClusterManagerResource.CreateResourceIdentifier" /> to create a <see cref="ClusterManagerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudClusterManagerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudClusterManagerResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudClusterManagerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ClusterManagerResource" /> object. </returns>
-        public static ClusterManagerResource GetClusterManagerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkCloudClusterManagerResource" /> object. </returns>
+        public static NetworkCloudClusterManagerResource GetNetworkCloudClusterManagerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ClusterManagerResource.ValidateResourceId(id);
-                return new ClusterManagerResource(client, id);
+                NetworkCloudClusterManagerResource.ValidateResourceId(id);
+                return new NetworkCloudClusterManagerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ClusterResource
+        #region NetworkCloudClusterResource
         /// <summary>
-        /// Gets an object representing a <see cref="ClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ClusterResource.CreateResourceIdentifier" /> to create a <see cref="ClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudClusterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudClusterResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ClusterResource" /> object. </returns>
-        public static ClusterResource GetClusterResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkCloudClusterResource" /> object. </returns>
+        public static NetworkCloudClusterResource GetNetworkCloudClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ClusterResource.ValidateResourceId(id);
-                return new ClusterResource(client, id);
+                NetworkCloudClusterResource.ValidateResourceId(id);
+                return new NetworkCloudClusterResource(client, id);
             }
             );
         }
         #endregion
 
-        #region KubernetesClusterResource
+        #region NetworkCloudKubernetesClusterResource
         /// <summary>
-        /// Gets an object representing a <see cref="KubernetesClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KubernetesClusterResource.CreateResourceIdentifier" /> to create a <see cref="KubernetesClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudKubernetesClusterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudKubernetesClusterResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudKubernetesClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KubernetesClusterResource" /> object. </returns>
-        public static KubernetesClusterResource GetKubernetesClusterResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkCloudKubernetesClusterResource" /> object. </returns>
+        public static NetworkCloudKubernetesClusterResource GetNetworkCloudKubernetesClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                KubernetesClusterResource.ValidateResourceId(id);
-                return new KubernetesClusterResource(client, id);
+                NetworkCloudKubernetesClusterResource.ValidateResourceId(id);
+                return new NetworkCloudKubernetesClusterResource(client, id);
             }
             );
         }
         #endregion
 
-        #region L2NetworkResource
+        #region NetworkCloudL2NetworkResource
         /// <summary>
-        /// Gets an object representing a <see cref="L2NetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="L2NetworkResource.CreateResourceIdentifier" /> to create a <see cref="L2NetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudL2NetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudL2NetworkResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudL2NetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="L2NetworkResource" /> object. </returns>
-        public static L2NetworkResource GetL2NetworkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkCloudL2NetworkResource" /> object. </returns>
+        public static NetworkCloudL2NetworkResource GetNetworkCloudL2NetworkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                L2NetworkResource.ValidateResourceId(id);
-                return new L2NetworkResource(client, id);
+                NetworkCloudL2NetworkResource.ValidateResourceId(id);
+                return new NetworkCloudL2NetworkResource(client, id);
             }
             );
         }
         #endregion
 
-        #region L3NetworkResource
+        #region NetworkCloudL3NetworkResource
         /// <summary>
-        /// Gets an object representing a <see cref="L3NetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="L3NetworkResource.CreateResourceIdentifier" /> to create a <see cref="L3NetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudL3NetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudL3NetworkResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudL3NetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="L3NetworkResource" /> object. </returns>
-        public static L3NetworkResource GetL3NetworkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkCloudL3NetworkResource" /> object. </returns>
+        public static NetworkCloudL3NetworkResource GetNetworkCloudL3NetworkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                L3NetworkResource.ValidateResourceId(id);
-                return new L3NetworkResource(client, id);
+                NetworkCloudL3NetworkResource.ValidateResourceId(id);
+                return new NetworkCloudL3NetworkResource(client, id);
             }
             );
         }
         #endregion
 
-        #region RackSkuResource
+        #region NetworkCloudRackSkuResource
         /// <summary>
-        /// Gets an object representing a <see cref="RackSkuResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RackSkuResource.CreateResourceIdentifier" /> to create a <see cref="RackSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudRackSkuResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudRackSkuResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudRackSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RackSkuResource" /> object. </returns>
-        public static RackSkuResource GetRackSkuResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkCloudRackSkuResource" /> object. </returns>
+        public static NetworkCloudRackSkuResource GetNetworkCloudRackSkuResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RackSkuResource.ValidateResourceId(id);
-                return new RackSkuResource(client, id);
+                NetworkCloudRackSkuResource.ValidateResourceId(id);
+                return new NetworkCloudRackSkuResource(client, id);
             }
             );
         }
         #endregion
 
-        #region RackResource
+        #region NetworkCloudRackResource
         /// <summary>
-        /// Gets an object representing a <see cref="RackResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RackResource.CreateResourceIdentifier" /> to create a <see cref="RackResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudRackResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudRackResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudRackResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RackResource" /> object. </returns>
-        public static RackResource GetRackResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkCloudRackResource" /> object. </returns>
+        public static NetworkCloudRackResource GetNetworkCloudRackResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RackResource.ValidateResourceId(id);
-                return new RackResource(client, id);
+                NetworkCloudRackResource.ValidateResourceId(id);
+                return new NetworkCloudRackResource(client, id);
             }
             );
         }
         #endregion
 
-        #region StorageApplianceResource
+        #region NetworkCloudStorageApplianceResource
         /// <summary>
-        /// Gets an object representing a <see cref="StorageApplianceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageApplianceResource.CreateResourceIdentifier" /> to create a <see cref="StorageApplianceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudStorageApplianceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudStorageApplianceResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudStorageApplianceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageApplianceResource" /> object. </returns>
-        public static StorageApplianceResource GetStorageApplianceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkCloudStorageApplianceResource" /> object. </returns>
+        public static NetworkCloudStorageApplianceResource GetNetworkCloudStorageApplianceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                StorageApplianceResource.ValidateResourceId(id);
-                return new StorageApplianceResource(client, id);
+                NetworkCloudStorageApplianceResource.ValidateResourceId(id);
+                return new NetworkCloudStorageApplianceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region TrunkedNetworkResource
+        #region NetworkCloudTrunkedNetworkResource
         /// <summary>
-        /// Gets an object representing a <see cref="TrunkedNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TrunkedNetworkResource.CreateResourceIdentifier" /> to create a <see cref="TrunkedNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudTrunkedNetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudTrunkedNetworkResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudTrunkedNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TrunkedNetworkResource" /> object. </returns>
-        public static TrunkedNetworkResource GetTrunkedNetworkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkCloudTrunkedNetworkResource" /> object. </returns>
+        public static NetworkCloudTrunkedNetworkResource GetNetworkCloudTrunkedNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                TrunkedNetworkResource.ValidateResourceId(id);
-                return new TrunkedNetworkResource(client, id);
+                NetworkCloudTrunkedNetworkResource.ValidateResourceId(id);
+                return new NetworkCloudTrunkedNetworkResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VirtualMachineResource
+        #region NetworkCloudVirtualMachineResource
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualMachineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudVirtualMachineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudVirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudVirtualMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachineResource" /> object. </returns>
-        public static VirtualMachineResource GetVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkCloudVirtualMachineResource" /> object. </returns>
+        public static NetworkCloudVirtualMachineResource GetNetworkCloudVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VirtualMachineResource.ValidateResourceId(id);
-                return new VirtualMachineResource(client, id);
+                NetworkCloudVirtualMachineResource.ValidateResourceId(id);
+                return new NetworkCloudVirtualMachineResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VolumeResource
+        #region NetworkCloudVolumeResource
         /// <summary>
-        /// Gets an object representing a <see cref="VolumeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VolumeResource.CreateResourceIdentifier" /> to create a <see cref="VolumeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudVolumeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudVolumeResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudVolumeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VolumeResource" /> object. </returns>
-        public static VolumeResource GetVolumeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkCloudVolumeResource" /> object. </returns>
+        public static NetworkCloudVolumeResource GetNetworkCloudVolumeResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                VolumeResource.ValidateResourceId(id);
-                return new VolumeResource(client, id);
+                NetworkCloudVolumeResource.ValidateResourceId(id);
+                return new NetworkCloudVolumeResource(client, id);
             }
             );
         }
         #endregion
 
-        #region BareMetalMachineKeySetResource
+        #region NetworkCloudBareMetalMachineKeySetResource
         /// <summary>
-        /// Gets an object representing a <see cref="BareMetalMachineKeySetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BareMetalMachineKeySetResource.CreateResourceIdentifier" /> to create a <see cref="BareMetalMachineKeySetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudBareMetalMachineKeySetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudBareMetalMachineKeySetResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudBareMetalMachineKeySetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BareMetalMachineKeySetResource" /> object. </returns>
-        public static BareMetalMachineKeySetResource GetBareMetalMachineKeySetResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkCloudBareMetalMachineKeySetResource" /> object. </returns>
+        public static NetworkCloudBareMetalMachineKeySetResource GetNetworkCloudBareMetalMachineKeySetResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BareMetalMachineKeySetResource.ValidateResourceId(id);
-                return new BareMetalMachineKeySetResource(client, id);
+                NetworkCloudBareMetalMachineKeySetResource.ValidateResourceId(id);
+                return new NetworkCloudBareMetalMachineKeySetResource(client, id);
             }
             );
         }
         #endregion
 
-        #region BmcKeySetResource
+        #region NetworkCloudBmcKeySetResource
         /// <summary>
-        /// Gets an object representing a <see cref="BmcKeySetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BmcKeySetResource.CreateResourceIdentifier" /> to create a <see cref="BmcKeySetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudBmcKeySetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudBmcKeySetResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudBmcKeySetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BmcKeySetResource" /> object. </returns>
-        public static BmcKeySetResource GetBmcKeySetResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkCloudBmcKeySetResource" /> object. </returns>
+        public static NetworkCloudBmcKeySetResource GetNetworkCloudBmcKeySetResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                BmcKeySetResource.ValidateResourceId(id);
-                return new BmcKeySetResource(client, id);
+                NetworkCloudBmcKeySetResource.ValidateResourceId(id);
+                return new NetworkCloudBmcKeySetResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ClusterMetricsConfigurationResource
+        #region NetworkCloudClusterMetricsConfigurationResource
         /// <summary>
-        /// Gets an object representing a <see cref="ClusterMetricsConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ClusterMetricsConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="ClusterMetricsConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudClusterMetricsConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudClusterMetricsConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudClusterMetricsConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ClusterMetricsConfigurationResource" /> object. </returns>
-        public static ClusterMetricsConfigurationResource GetClusterMetricsConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkCloudClusterMetricsConfigurationResource" /> object. </returns>
+        public static NetworkCloudClusterMetricsConfigurationResource GetNetworkCloudClusterMetricsConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ClusterMetricsConfigurationResource.ValidateResourceId(id);
-                return new ClusterMetricsConfigurationResource(client, id);
+                NetworkCloudClusterMetricsConfigurationResource.ValidateResourceId(id);
+                return new NetworkCloudClusterMetricsConfigurationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region AgentPoolResource
+        #region NetworkCloudAgentPoolResource
         /// <summary>
-        /// Gets an object representing an <see cref="AgentPoolResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AgentPoolResource.CreateResourceIdentifier" /> to create an <see cref="AgentPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudAgentPoolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudAgentPoolResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudAgentPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AgentPoolResource" /> object. </returns>
-        public static AgentPoolResource GetAgentPoolResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkCloudAgentPoolResource" /> object. </returns>
+        public static NetworkCloudAgentPoolResource GetNetworkCloudAgentPoolResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AgentPoolResource.ValidateResourceId(id);
-                return new AgentPoolResource(client, id);
+                NetworkCloudAgentPoolResource.ValidateResourceId(id);
+                return new NetworkCloudAgentPoolResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ConsoleResource
+        #region NetworkCloudVirtualMachineConsoleResource
         /// <summary>
-        /// Gets an object representing a <see cref="ConsoleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConsoleResource.CreateResourceIdentifier" /> to create a <see cref="ConsoleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudVirtualMachineConsoleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudVirtualMachineConsoleResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudVirtualMachineConsoleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConsoleResource" /> object. </returns>
-        public static ConsoleResource GetConsoleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkCloudVirtualMachineConsoleResource" /> object. </returns>
+        public static NetworkCloudVirtualMachineConsoleResource GetNetworkCloudVirtualMachineConsoleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ConsoleResource.ValidateResourceId(id);
-                return new ConsoleResource(client, id);
+                NetworkCloudVirtualMachineConsoleResource.ValidateResourceId(id);
+                return new NetworkCloudVirtualMachineConsoleResource(client, id);
             }
             );
         }
         #endregion
 
-        /// <summary> Gets a collection of BareMetalMachineResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of NetworkCloudBareMetalMachineResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of BareMetalMachineResources and their operations over a BareMetalMachineResource. </returns>
-        public static BareMetalMachineCollection GetBareMetalMachines(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of NetworkCloudBareMetalMachineResources and their operations over a NetworkCloudBareMetalMachineResource. </returns>
+        public static NetworkCloudBareMetalMachineCollection GetNetworkCloudBareMetalMachines(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetBareMetalMachines();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudBareMetalMachines();
         }
 
         /// <summary>
@@ -418,9 +418,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<BareMetalMachineResource>> GetBareMetalMachineAsync(this ResourceGroupResource resourceGroupResource, string bareMetalMachineName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkCloudBareMetalMachineResource>> GetNetworkCloudBareMetalMachineAsync(this ResourceGroupResource resourceGroupResource, string bareMetalMachineName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetBareMetalMachines().GetAsync(bareMetalMachineName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetNetworkCloudBareMetalMachines().GetAsync(bareMetalMachineName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -442,17 +442,17 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<BareMetalMachineResource> GetBareMetalMachine(this ResourceGroupResource resourceGroupResource, string bareMetalMachineName, CancellationToken cancellationToken = default)
+        public static Response<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachine(this ResourceGroupResource resourceGroupResource, string bareMetalMachineName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetBareMetalMachines().Get(bareMetalMachineName, cancellationToken);
+            return resourceGroupResource.GetNetworkCloudBareMetalMachines().Get(bareMetalMachineName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CloudServicesNetworkResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of NetworkCloudCloudServicesNetworkResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of CloudServicesNetworkResources and their operations over a CloudServicesNetworkResource. </returns>
-        public static CloudServicesNetworkCollection GetCloudServicesNetworks(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of NetworkCloudCloudServicesNetworkResources and their operations over a NetworkCloudCloudServicesNetworkResource. </returns>
+        public static NetworkCloudCloudServicesNetworkCollection GetNetworkCloudCloudServicesNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCloudServicesNetworks();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudCloudServicesNetworks();
         }
 
         /// <summary>
@@ -474,9 +474,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="cloudServicesNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServicesNetworkName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<CloudServicesNetworkResource>> GetCloudServicesNetworkAsync(this ResourceGroupResource resourceGroupResource, string cloudServicesNetworkName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkCloudCloudServicesNetworkResource>> GetNetworkCloudCloudServicesNetworkAsync(this ResourceGroupResource resourceGroupResource, string cloudServicesNetworkName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetCloudServicesNetworks().GetAsync(cloudServicesNetworkName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetNetworkCloudCloudServicesNetworks().GetAsync(cloudServicesNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -498,17 +498,17 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="cloudServicesNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServicesNetworkName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<CloudServicesNetworkResource> GetCloudServicesNetwork(this ResourceGroupResource resourceGroupResource, string cloudServicesNetworkName, CancellationToken cancellationToken = default)
+        public static Response<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetwork(this ResourceGroupResource resourceGroupResource, string cloudServicesNetworkName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetCloudServicesNetworks().Get(cloudServicesNetworkName, cancellationToken);
+            return resourceGroupResource.GetNetworkCloudCloudServicesNetworks().Get(cloudServicesNetworkName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ClusterManagerResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of NetworkCloudClusterManagerResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ClusterManagerResources and their operations over a ClusterManagerResource. </returns>
-        public static ClusterManagerCollection GetClusterManagers(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of NetworkCloudClusterManagerResources and their operations over a NetworkCloudClusterManagerResource. </returns>
+        public static NetworkCloudClusterManagerCollection GetNetworkCloudClusterManagers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetClusterManagers();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudClusterManagers();
         }
 
         /// <summary>
@@ -530,9 +530,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="clusterManagerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ClusterManagerResource>> GetClusterManagerAsync(this ResourceGroupResource resourceGroupResource, string clusterManagerName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkCloudClusterManagerResource>> GetNetworkCloudClusterManagerAsync(this ResourceGroupResource resourceGroupResource, string clusterManagerName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetClusterManagers().GetAsync(clusterManagerName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetNetworkCloudClusterManagers().GetAsync(clusterManagerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -554,17 +554,17 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="clusterManagerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterManagerName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ClusterManagerResource> GetClusterManager(this ResourceGroupResource resourceGroupResource, string clusterManagerName, CancellationToken cancellationToken = default)
+        public static Response<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManager(this ResourceGroupResource resourceGroupResource, string clusterManagerName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetClusterManagers().Get(clusterManagerName, cancellationToken);
+            return resourceGroupResource.GetNetworkCloudClusterManagers().Get(clusterManagerName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ClusterResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of NetworkCloudClusterResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ClusterResources and their operations over a ClusterResource. </returns>
-        public static ClusterCollection GetClusters(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of NetworkCloudClusterResources and their operations over a NetworkCloudClusterResource. </returns>
+        public static NetworkCloudClusterCollection GetNetworkCloudClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetClusters();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudClusters();
         }
 
         /// <summary>
@@ -586,9 +586,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ClusterResource>> GetClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkCloudClusterResource>> GetNetworkCloudClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetNetworkCloudClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -610,17 +610,17 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ClusterResource> GetCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        public static Response<NetworkCloudClusterResource> GetNetworkCloudCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetClusters().Get(clusterName, cancellationToken);
+            return resourceGroupResource.GetNetworkCloudClusters().Get(clusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of KubernetesClusterResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of NetworkCloudKubernetesClusterResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of KubernetesClusterResources and their operations over a KubernetesClusterResource. </returns>
-        public static KubernetesClusterCollection GetKubernetesClusters(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of NetworkCloudKubernetesClusterResources and their operations over a NetworkCloudKubernetesClusterResource. </returns>
+        public static NetworkCloudKubernetesClusterCollection GetNetworkCloudKubernetesClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetKubernetesClusters();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudKubernetesClusters();
         }
 
         /// <summary>
@@ -642,9 +642,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="kubernetesClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesClusterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<KubernetesClusterResource>> GetKubernetesClusterAsync(this ResourceGroupResource resourceGroupResource, string kubernetesClusterName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkCloudKubernetesClusterResource>> GetNetworkCloudKubernetesClusterAsync(this ResourceGroupResource resourceGroupResource, string kubernetesClusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetKubernetesClusters().GetAsync(kubernetesClusterName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetNetworkCloudKubernetesClusters().GetAsync(kubernetesClusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -666,17 +666,17 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="kubernetesClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesClusterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<KubernetesClusterResource> GetKubernetesCluster(this ResourceGroupResource resourceGroupResource, string kubernetesClusterName, CancellationToken cancellationToken = default)
+        public static Response<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesCluster(this ResourceGroupResource resourceGroupResource, string kubernetesClusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetKubernetesClusters().Get(kubernetesClusterName, cancellationToken);
+            return resourceGroupResource.GetNetworkCloudKubernetesClusters().Get(kubernetesClusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of L2NetworkResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of NetworkCloudL2NetworkResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of L2NetworkResources and their operations over a L2NetworkResource. </returns>
-        public static L2NetworkCollection GetL2Networks(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of NetworkCloudL2NetworkResources and their operations over a NetworkCloudL2NetworkResource. </returns>
+        public static NetworkCloudL2NetworkCollection GetNetworkCloudL2Networks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetL2Networks();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudL2Networks();
         }
 
         /// <summary>
@@ -698,9 +698,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="l2NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l2NetworkName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<L2NetworkResource>> GetL2NetworkAsync(this ResourceGroupResource resourceGroupResource, string l2NetworkName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkCloudL2NetworkResource>> GetNetworkCloudL2NetworkAsync(this ResourceGroupResource resourceGroupResource, string l2NetworkName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetL2Networks().GetAsync(l2NetworkName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetNetworkCloudL2Networks().GetAsync(l2NetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -722,17 +722,17 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="l2NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l2NetworkName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<L2NetworkResource> GetL2Network(this ResourceGroupResource resourceGroupResource, string l2NetworkName, CancellationToken cancellationToken = default)
+        public static Response<NetworkCloudL2NetworkResource> GetNetworkCloudL2Network(this ResourceGroupResource resourceGroupResource, string l2NetworkName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetL2Networks().Get(l2NetworkName, cancellationToken);
+            return resourceGroupResource.GetNetworkCloudL2Networks().Get(l2NetworkName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of L3NetworkResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of NetworkCloudL3NetworkResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of L3NetworkResources and their operations over a L3NetworkResource. </returns>
-        public static L3NetworkCollection GetL3Networks(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of NetworkCloudL3NetworkResources and their operations over a NetworkCloudL3NetworkResource. </returns>
+        public static NetworkCloudL3NetworkCollection GetNetworkCloudL3Networks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetL3Networks();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudL3Networks();
         }
 
         /// <summary>
@@ -754,9 +754,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="l3NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l3NetworkName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<L3NetworkResource>> GetL3NetworkAsync(this ResourceGroupResource resourceGroupResource, string l3NetworkName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkCloudL3NetworkResource>> GetNetworkCloudL3NetworkAsync(this ResourceGroupResource resourceGroupResource, string l3NetworkName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetL3Networks().GetAsync(l3NetworkName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetNetworkCloudL3Networks().GetAsync(l3NetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -778,17 +778,17 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="l3NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l3NetworkName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<L3NetworkResource> GetL3Network(this ResourceGroupResource resourceGroupResource, string l3NetworkName, CancellationToken cancellationToken = default)
+        public static Response<NetworkCloudL3NetworkResource> GetNetworkCloudL3Network(this ResourceGroupResource resourceGroupResource, string l3NetworkName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetL3Networks().Get(l3NetworkName, cancellationToken);
+            return resourceGroupResource.GetNetworkCloudL3Networks().Get(l3NetworkName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RackResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of NetworkCloudRackResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of RackResources and their operations over a RackResource. </returns>
-        public static RackCollection GetRacks(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of NetworkCloudRackResources and their operations over a NetworkCloudRackResource. </returns>
+        public static NetworkCloudRackCollection GetNetworkCloudRacks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRacks();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudRacks();
         }
 
         /// <summary>
@@ -810,9 +810,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="rackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="rackName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<RackResource>> GetRackAsync(this ResourceGroupResource resourceGroupResource, string rackName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkCloudRackResource>> GetNetworkCloudRackAsync(this ResourceGroupResource resourceGroupResource, string rackName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetRacks().GetAsync(rackName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetNetworkCloudRacks().GetAsync(rackName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -834,17 +834,17 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="rackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="rackName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<RackResource> GetRack(this ResourceGroupResource resourceGroupResource, string rackName, CancellationToken cancellationToken = default)
+        public static Response<NetworkCloudRackResource> GetNetworkCloudRack(this ResourceGroupResource resourceGroupResource, string rackName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetRacks().Get(rackName, cancellationToken);
+            return resourceGroupResource.GetNetworkCloudRacks().Get(rackName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of StorageApplianceResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of NetworkCloudStorageApplianceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of StorageApplianceResources and their operations over a StorageApplianceResource. </returns>
-        public static StorageApplianceCollection GetStorageAppliances(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of NetworkCloudStorageApplianceResources and their operations over a NetworkCloudStorageApplianceResource. </returns>
+        public static NetworkCloudStorageApplianceCollection GetNetworkCloudStorageAppliances(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetStorageAppliances();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudStorageAppliances();
         }
 
         /// <summary>
@@ -866,9 +866,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="storageApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageApplianceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<StorageApplianceResource>> GetStorageApplianceAsync(this ResourceGroupResource resourceGroupResource, string storageApplianceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkCloudStorageApplianceResource>> GetNetworkCloudStorageApplianceAsync(this ResourceGroupResource resourceGroupResource, string storageApplianceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetStorageAppliances().GetAsync(storageApplianceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetNetworkCloudStorageAppliances().GetAsync(storageApplianceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -890,17 +890,17 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="storageApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageApplianceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<StorageApplianceResource> GetStorageAppliance(this ResourceGroupResource resourceGroupResource, string storageApplianceName, CancellationToken cancellationToken = default)
+        public static Response<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliance(this ResourceGroupResource resourceGroupResource, string storageApplianceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetStorageAppliances().Get(storageApplianceName, cancellationToken);
+            return resourceGroupResource.GetNetworkCloudStorageAppliances().Get(storageApplianceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of TrunkedNetworkResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of NetworkCloudTrunkedNetworkResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of TrunkedNetworkResources and their operations over a TrunkedNetworkResource. </returns>
-        public static TrunkedNetworkCollection GetTrunkedNetworks(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of NetworkCloudTrunkedNetworkResources and their operations over a NetworkCloudTrunkedNetworkResource. </returns>
+        public static NetworkCloudTrunkedNetworkCollection GetNetworkCloudTrunkedNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetTrunkedNetworks();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudTrunkedNetworks();
         }
 
         /// <summary>
@@ -922,9 +922,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="trunkedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="trunkedNetworkName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<TrunkedNetworkResource>> GetTrunkedNetworkAsync(this ResourceGroupResource resourceGroupResource, string trunkedNetworkName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkCloudTrunkedNetworkResource>> GetNetworkCloudTrunkedNetworkAsync(this ResourceGroupResource resourceGroupResource, string trunkedNetworkName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetTrunkedNetworks().GetAsync(trunkedNetworkName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetNetworkCloudTrunkedNetworks().GetAsync(trunkedNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -946,17 +946,17 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="trunkedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="trunkedNetworkName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<TrunkedNetworkResource> GetTrunkedNetwork(this ResourceGroupResource resourceGroupResource, string trunkedNetworkName, CancellationToken cancellationToken = default)
+        public static Response<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetwork(this ResourceGroupResource resourceGroupResource, string trunkedNetworkName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetTrunkedNetworks().Get(trunkedNetworkName, cancellationToken);
+            return resourceGroupResource.GetNetworkCloudTrunkedNetworks().Get(trunkedNetworkName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualMachineResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of NetworkCloudVirtualMachineResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of VirtualMachineResources and their operations over a VirtualMachineResource. </returns>
-        public static VirtualMachineCollection GetVirtualMachines(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of NetworkCloudVirtualMachineResources and their operations over a NetworkCloudVirtualMachineResource. </returns>
+        public static NetworkCloudVirtualMachineCollection GetNetworkCloudVirtualMachines(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVirtualMachines();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudVirtualMachines();
         }
 
         /// <summary>
@@ -978,9 +978,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<VirtualMachineResource>> GetVirtualMachineAsync(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkCloudVirtualMachineResource>> GetNetworkCloudVirtualMachineAsync(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetVirtualMachines().GetAsync(virtualMachineName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetNetworkCloudVirtualMachines().GetAsync(virtualMachineName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1002,17 +1002,17 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<VirtualMachineResource> GetVirtualMachine(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
+        public static Response<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachine(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetVirtualMachines().Get(virtualMachineName, cancellationToken);
+            return resourceGroupResource.GetNetworkCloudVirtualMachines().Get(virtualMachineName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VolumeResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of NetworkCloudVolumeResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of VolumeResources and their operations over a VolumeResource. </returns>
-        public static VolumeCollection GetVolumes(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of NetworkCloudVolumeResources and their operations over a NetworkCloudVolumeResource. </returns>
+        public static NetworkCloudVolumeCollection GetNetworkCloudVolumes(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVolumes();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudVolumes();
         }
 
         /// <summary>
@@ -1034,9 +1034,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<VolumeResource>> GetVolumeAsync(this ResourceGroupResource resourceGroupResource, string volumeName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkCloudVolumeResource>> GetNetworkCloudVolumeAsync(this ResourceGroupResource resourceGroupResource, string volumeName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetVolumes().GetAsync(volumeName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetNetworkCloudVolumes().GetAsync(volumeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1058,41 +1058,17 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<VolumeResource> GetVolume(this ResourceGroupResource resourceGroupResource, string volumeName, CancellationToken cancellationToken = default)
+        public static Response<NetworkCloudVolumeResource> GetNetworkCloudVolume(this ResourceGroupResource resourceGroupResource, string volumeName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetVolumes().Get(volumeName, cancellationToken);
+            return resourceGroupResource.GetNetworkCloudVolumes().Get(volumeName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RackSkuResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of NetworkCloudRackSkuResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of RackSkuResources and their operations over a RackSkuResource. </returns>
-        public static RackSkuCollection GetRackSkus(this SubscriptionResource subscriptionResource)
+        /// <returns> An object representing collection of NetworkCloudRackSkuResources and their operations over a NetworkCloudRackSkuResource. </returns>
+        public static NetworkCloudRackSkuCollection GetNetworkCloudRackSkus(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRackSkus();
-        }
-
-        /// <summary>
-        /// Get the properties of the provided rack SKU.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/rackSkus/{rackSkuName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RackSkus_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="rackSkuName"> The name of the rack SKU. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="rackSkuName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="rackSkuName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<RackSkuResource>> GetRackSkuAsync(this SubscriptionResource subscriptionResource, string rackSkuName, CancellationToken cancellationToken = default)
-        {
-            return await subscriptionResource.GetRackSkus().GetAsync(rackSkuName, cancellationToken).ConfigureAwait(false);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudRackSkus();
         }
 
         /// <summary>
@@ -1114,9 +1090,33 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="rackSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="rackSkuName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<RackSkuResource> GetRackSku(this SubscriptionResource subscriptionResource, string rackSkuName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkCloudRackSkuResource>> GetNetworkCloudRackSkuAsync(this SubscriptionResource subscriptionResource, string rackSkuName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetRackSkus().Get(rackSkuName, cancellationToken);
+            return await subscriptionResource.GetNetworkCloudRackSkus().GetAsync(rackSkuName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the properties of the provided rack SKU.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/rackSkus/{rackSkuName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RackSkus_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="rackSkuName"> The name of the rack SKU. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="rackSkuName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="rackSkuName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<NetworkCloudRackSkuResource> GetNetworkCloudRackSku(this SubscriptionResource subscriptionResource, string rackSkuName, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetNetworkCloudRackSkus().Get(rackSkuName, cancellationToken);
         }
 
         /// <summary>
@@ -1134,10 +1134,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BareMetalMachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BareMetalMachineResource> GetBareMetalMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkCloudBareMetalMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBareMetalMachinesAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudBareMetalMachinesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1155,10 +1155,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BareMetalMachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BareMetalMachineResource> GetBareMetalMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudBareMetalMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBareMetalMachines(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudBareMetalMachines(cancellationToken);
         }
 
         /// <summary>
@@ -1176,10 +1176,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CloudServicesNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CloudServicesNetworkResource> GetCloudServicesNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkCloudCloudServicesNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCloudServicesNetworksAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudCloudServicesNetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1197,10 +1197,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CloudServicesNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CloudServicesNetworkResource> GetCloudServicesNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudCloudServicesNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCloudServicesNetworks(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudCloudServicesNetworks(cancellationToken);
         }
 
         /// <summary>
@@ -1218,10 +1218,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ClusterManagerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ClusterManagerResource> GetClusterManagersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkCloudClusterManagerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetClusterManagersAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudClusterManagersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1239,10 +1239,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterManagerResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ClusterManagerResource> GetClusterManagers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudClusterManagerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetClusterManagers(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudClusterManagers(cancellationToken);
         }
 
         /// <summary>
@@ -1260,10 +1260,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ClusterResource> GetClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkCloudClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkCloudClusterResource> GetNetworkCloudClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetClustersAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1281,10 +1281,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ClusterResource> GetClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkCloudClusterResource> GetNetworkCloudClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetClusters(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudClusters(cancellationToken);
         }
 
         /// <summary>
@@ -1302,10 +1302,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KubernetesClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<KubernetesClusterResource> GetKubernetesClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkCloudKubernetesClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetKubernetesClustersAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudKubernetesClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1323,10 +1323,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KubernetesClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<KubernetesClusterResource> GetKubernetesClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudKubernetesClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetKubernetesClusters(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudKubernetesClusters(cancellationToken);
         }
 
         /// <summary>
@@ -1344,10 +1344,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="L2NetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<L2NetworkResource> GetL2NetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkCloudL2NetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkCloudL2NetworkResource> GetNetworkCloudL2NetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetL2NetworksAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudL2NetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1365,10 +1365,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="L2NetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<L2NetworkResource> GetL2Networks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudL2NetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkCloudL2NetworkResource> GetNetworkCloudL2Networks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetL2Networks(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudL2Networks(cancellationToken);
         }
 
         /// <summary>
@@ -1386,10 +1386,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="L3NetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<L3NetworkResource> GetL3NetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkCloudL3NetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkCloudL3NetworkResource> GetNetworkCloudL3NetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetL3NetworksAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudL3NetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1407,10 +1407,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="L3NetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<L3NetworkResource> GetL3Networks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudL3NetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkCloudL3NetworkResource> GetNetworkCloudL3Networks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetL3Networks(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudL3Networks(cancellationToken);
         }
 
         /// <summary>
@@ -1428,10 +1428,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RackResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<RackResource> GetRacksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkCloudRackResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkCloudRackResource> GetNetworkCloudRacksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRacksAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudRacksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1449,10 +1449,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RackResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<RackResource> GetRacks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudRackResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkCloudRackResource> GetNetworkCloudRacks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRacks(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudRacks(cancellationToken);
         }
 
         /// <summary>
@@ -1470,10 +1470,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageApplianceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<StorageApplianceResource> GetStorageAppliancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkCloudStorageApplianceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageAppliancesAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudStorageAppliancesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1491,10 +1491,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageApplianceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<StorageApplianceResource> GetStorageAppliances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudStorageApplianceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageAppliances(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudStorageAppliances(cancellationToken);
         }
 
         /// <summary>
@@ -1512,10 +1512,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TrunkedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<TrunkedNetworkResource> GetTrunkedNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkCloudTrunkedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTrunkedNetworksAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudTrunkedNetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1533,10 +1533,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TrunkedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<TrunkedNetworkResource> GetTrunkedNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudTrunkedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTrunkedNetworks(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudTrunkedNetworks(cancellationToken);
         }
 
         /// <summary>
@@ -1554,10 +1554,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineResource> GetVirtualMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkCloudVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualMachinesAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudVirtualMachinesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1575,10 +1575,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineResource> GetVirtualMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualMachines(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudVirtualMachines(cancellationToken);
         }
 
         /// <summary>
@@ -1596,10 +1596,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VolumeResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VolumeResource> GetVolumesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkCloudVolumeResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkCloudVolumeResource> GetNetworkCloudVolumesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVolumesAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudVolumesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1617,10 +1617,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VolumeResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VolumeResource> GetVolumes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudVolumeResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkCloudVolumeResource> GetNetworkCloudVolumes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVolumes(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudVolumes(cancellationToken);
         }
     }
 }

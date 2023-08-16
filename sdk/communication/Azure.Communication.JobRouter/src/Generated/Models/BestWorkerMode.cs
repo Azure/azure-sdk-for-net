@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Communication.JobRouter.Models;
+
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Jobs are distributed to the worker with the strongest abilities available. </summary>

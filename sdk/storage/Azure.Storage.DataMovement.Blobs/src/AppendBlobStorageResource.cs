@@ -8,24 +8,24 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.DataMovement.Models;
+using Azure.Storage.DataMovement;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
     /// The AppendBlobStorageResource class.
     /// </summary>
-    public class AppendBlobStorageResource : StorageResourceSingle
+    public class AppendBlobStorageResource : StorageResourceItem
     {
         internal AppendBlobClient BlobClient { get; set; }
         internal AppendBlobStorageResourceOptions _options;
-        private long? _length;
-        private ETag? _etagDownloadLock = default;
+        internal long? _length;
+        internal ETag? _etagDownloadLock = default;
 
         /// <summary>
         /// The identifier for the type of storage resource.
         /// </summary>
-        public override string ResourceId => "AppendBlob";
+        protected override string ResourceId => "AppendBlob";
 
         /// <summary>
         /// Gets the URL of the storage resource.
@@ -40,24 +40,24 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Defines whether the storage resource type can produce a web URL.
         /// </summary>
-        public override bool CanProduceUri => true;
+        protected override bool CanProduceUri => true;
 
         /// <summary>
         /// Defines the recommended Transfer Type for the storage resource.
         /// </summary>
-        public override TransferType TransferType => TransferType.Sequential;
+        protected override DataTransferOrder TransferType => DataTransferOrder.Sequential;
 
         /// <summary>
         /// Defines the maximum chunk size for the storage resource.
         /// </summary>
-        public override long MaxChunkSize => Constants.Blob.Append.MaxAppendBlockBytes;
+        protected override long MaxChunkSize => Constants.Blob.Append.MaxAppendBlockBytes;
 
         /// <summary>
         /// Length of the storage resource. This information is obtained during a GetStorageResources API call.
         ///
         /// Will return default if the length was not set by a GetStorageResources API call.
         /// </summary>
-        public override long? Length => _length;
+        protected override long? Length => _length;
 
         /// <summary>
         /// The constructor for a new instance of the <see cref="AppendBlobStorageResource"/>
@@ -103,8 +103,8 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
-        /// <returns>The <see cref="ReadStreamStorageResourceResult"/> resulting from the upload operation.</returns>
-        public override async Task<ReadStreamStorageResourceResult> ReadStreamAsync(
+        /// <returns>The <see cref="StorageResourceReadStreamResult"/> resulting from the upload operation.</returns>
+        protected override async Task<StorageResourceReadStreamResult> ReadStreamAsync(
             long position = 0,
             long? length = default,
             CancellationToken cancellationToken = default)
@@ -118,32 +118,35 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Consumes the readable stream to upload.
         /// </summary>
-        /// <param name="position">The offset at which which the stream will be copied to. Default value is 0.</param>
-        /// <param name="overwrite">
-        /// If set to true, will overwrite the blob if it currently exists.
+        /// <param name="stream">
+        /// The stream containing the data to be consumed and uploaded.
         /// </param>
         /// <param name="streamLength">
         /// The length of the content stream.
         /// </param>
-        /// <param name="completeLength">
-        /// The expected complete length of the blob.
+        /// <param name="overwrite">
+        /// If set to true, will overwrite the blob if it currently exists.
         /// </param>
-        /// <param name="stream">The stream containing the data to be consumed and uploaded.</param>
-        /// <param name="options">Options for the storage resource. See <see cref="StorageResourceWriteToOffsetOptions"/>.</param>
+        /// <param name="completeLength">
+        /// The expected complete length of the resource item.
+        /// </param>
+        /// <param name="options">
+        /// Options for the storage resource. See <see cref="StorageResourceWriteToOffsetOptions"/>.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        public override async Task WriteFromStreamAsync(
+        protected override async Task CopyFromStreamAsync(
             Stream stream,
             long streamLength,
             bool overwrite,
-            long position = 0,
-            long completeLength = 0,
+            long completeLength,
             StorageResourceWriteToOffsetOptions options = default,
             CancellationToken cancellationToken = default)
         {
+            long position = options?.Position != default ? options.Position.Value : 0;
             if (position == 0)
             {
                 await BlobClient.CreateAsync(
@@ -162,7 +165,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Uploads/copy the blob from a URL.
         /// </summary>
-        /// <param name="sourceResource">An instance of <see cref="StorageResourceSingle"/>
+        /// <param name="sourceResource">An instance of <see cref="StorageResourceItem"/>
         /// that contains the data to be uploaded.</param>
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if it currently exists.
@@ -176,8 +179,8 @@ namespace Azure.Storage.DataMovement.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        public override async Task CopyFromUriAsync(
-            StorageResourceSingle sourceResource,
+        protected override async Task CopyFromUriAsync(
+            StorageResourceItem sourceResource,
             bool overwrite,
             long completeLength,
             StorageResourceCopyFromUriOptions options = default,
@@ -203,7 +206,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Uploads/copy the blob from a URL. Supports ranged operations.
         /// </summary>
-        /// <param name="sourceResource">An instance of <see cref="StorageResourceSingle"/>
+        /// <param name="sourceResource">An instance of <see cref="StorageResourceItem"/>
         /// that contains the data to be uploaded.</param>
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if it already exists.
@@ -218,11 +221,11 @@ namespace Azure.Storage.DataMovement.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        public override async Task CopyBlockFromUriAsync(
-            StorageResourceSingle sourceResource,
+        protected override async Task CopyBlockFromUriAsync(
+            StorageResourceItem sourceResource,
             HttpRange range,
             bool overwrite,
-            long completeLength = 0,
+            long completeLength,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
@@ -247,7 +250,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// See <see cref="StorageResourceProperties"/>.
         /// </summary>
         /// <returns>Returns the properties of the Append Blob Storage Resource. See <see cref="StorageResourceProperties"/>.</returns>
-        public override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        protected override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             Response<BlobProperties> response = await BlobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
             GrabEtag(response.GetRawResponse());
@@ -265,7 +268,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Gets the HTTP Authorization header for the storage resource if available. If not available
         /// will return default.
         /// </returns>
-        public override async Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
+        protected override async Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
         {
             return await BlobBaseClientInternals.GetCopyAuthorizationTokenAsync(BlobClient, cancellationToken).ConfigureAwait(false);
         }
@@ -273,7 +276,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Commits the block list given.
         /// </summary>
-        public override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
+        protected override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
         {
             // no-op for now
             return Task.CompletedTask;
@@ -290,7 +293,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// If the storage resource exists and is deleted, true will be returned.
         /// Otherwise if the storage resource does not exist, false will be returned.
         /// </returns>
-        public override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
+        protected override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
         {
             return await BlobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }

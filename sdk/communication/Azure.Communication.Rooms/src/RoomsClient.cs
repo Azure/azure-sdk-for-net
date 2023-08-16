@@ -119,10 +119,8 @@ namespace Azure.Communication.Rooms
             scope.Start();
             try
             {
-                Guid repeatabilityRequestId = Guid.NewGuid();
-                DateTimeOffset repeatabilityFirstSent = DateTimeOffset.UtcNow;
                 var participantDictionary = ConvertRoomParticipantsToDictionaryForAddOrUpdate(participants);
-                return await RoomsServiceClient.CreateAsync(repeatabilityRequestId, repeatabilityFirstSent, validFrom, validUntil, participantDictionary, cancellationToken).ConfigureAwait(false);
+                return await RoomsServiceClient.CreateAsync(validFrom, validUntil, participantDictionary, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -144,10 +142,8 @@ namespace Azure.Communication.Rooms
             scope.Start();
             try
             {
-                Guid repeatabilityRequestId = Guid.NewGuid();
-                DateTimeOffset repeatabilityFirstSent = DateTimeOffset.UtcNow;
                 var participantDictionary = ConvertRoomParticipantsToDictionaryForAddOrUpdate(participants);
-                return RoomsServiceClient.Create(repeatabilityRequestId, repeatabilityFirstSent, validFrom, validUntil, participantDictionary, cancellationToken);
+                return RoomsServiceClient.Create(validFrom, validUntil, participantDictionary, cancellationToken);
             }
             catch (Exception ex)
             {

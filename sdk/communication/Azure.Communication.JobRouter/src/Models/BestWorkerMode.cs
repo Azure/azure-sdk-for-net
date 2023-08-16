@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Communication.JobRouter.Models;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter

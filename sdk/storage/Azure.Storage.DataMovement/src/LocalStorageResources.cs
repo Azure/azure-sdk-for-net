@@ -3,7 +3,6 @@
 
 using System;
 using Azure.Core;
-using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
@@ -55,7 +54,7 @@ namespace Azure.Storage.DataMovement
             Argument.AssertNotNull(info, nameof(info));
 
             const string expected = "LocalFile";
-            return (info.SourceScheme == expected, info.DestinationScheme == expected);
+            return (info.SourceTypeId == expected, info.DestinationTypeId == expected);
         }
     }
 }

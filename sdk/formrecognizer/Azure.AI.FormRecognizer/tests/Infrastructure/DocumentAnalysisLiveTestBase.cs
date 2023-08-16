@@ -12,7 +12,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 {
     [ClientTestFixture(
         DocumentAnalysisClientOptions.ServiceVersion.V2022_08_31,
-        DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)]
+        DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)]
     public class DocumentAnalysisLiveTestBase : RecordedTestBase<DocumentAnalysisTestEnvironment>
     {
         /// <summary>
@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             ServiceVersionString = _serviceVersion switch
             {
                 DocumentAnalysisClientOptions.ServiceVersion.V2022_08_31 => "2022-08-31",
-                DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview => "2023-02-28-preview",
+                DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31 => "2023-07-31",
                 _ => null
             };
 
@@ -127,8 +127,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 ContainerType.Singleforms => TestEnvironment.BlobContainerSasUrl,
                 ContainerType.MultipageFiles => TestEnvironment.MultipageBlobContainerSasUrl,
                 ContainerType.SelectionMarks => TestEnvironment.SelectionMarkBlobContainerSasUrl,
-                ContainerType.TableVariableRows => TestEnvironment.TableDynamicRowsContainerSasUrl,
-                ContainerType.TableFixedRows => TestEnvironment.TableFixedRowsContainerSasUrl,
                 _ => TestEnvironment.BlobContainerSasUrl,
             };
             var trainingFilesUri = new Uri(trainingFiles);
@@ -147,11 +145,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var client = CreateDocumentModelAdministrationClient();
             var trainingFilesUri = new Uri(TestEnvironment.ClassifierTrainingSasUrl);
-            var sourceA = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-A/train" };
-            var sourceB = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-B/train" };
-            var sourceC = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-C/train" };
-            var sourceD = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-D/train" };
-            var sourceE = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-E/train" };
+            var sourceA = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-A/train" };
+            var sourceB = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-B/train" };
+            var sourceC = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-C/train" };
+            var sourceD = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-D/train" };
+            var sourceE = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-E/train" };
 
             var documentTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
             {
@@ -169,9 +167,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             Singleforms,
             MultipageFiles,
-            SelectionMarks,
-            TableVariableRows,
-            TableFixedRows
+            SelectionMarks
         }
     }
 }

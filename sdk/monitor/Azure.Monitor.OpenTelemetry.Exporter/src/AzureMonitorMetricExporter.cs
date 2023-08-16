@@ -11,7 +11,7 @@ using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    internal class AzureMonitorMetricExporter : BaseExporter<Metric>
+    internal sealed class AzureMonitorMetricExporter : BaseExporter<Metric>
     {
         private readonly ITransmitter _transmitter;
         private readonly string _instrumentationKey;

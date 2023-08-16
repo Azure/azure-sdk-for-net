@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of L2NetworkAttachmentConfiguration. </summary>
         /// <param name="networkId"> The resource ID of the network that is being configured for attachment. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkId"/> is null. </exception>
-        public L2NetworkAttachmentConfiguration(string networkId)
+        public L2NetworkAttachmentConfiguration(ResourceIdentifier networkId)
         {
             Argument.AssertNotNull(networkId, nameof(networkId));
 
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of L2NetworkAttachmentConfiguration. </summary>
         /// <param name="networkId"> The resource ID of the network that is being configured for attachment. </param>
         /// <param name="pluginType"> The indicator of how this network will be utilized by the Kubernetes cluster. </param>
-        internal L2NetworkAttachmentConfiguration(string networkId, KubernetesPluginType? pluginType)
+        internal L2NetworkAttachmentConfiguration(ResourceIdentifier networkId, KubernetesPluginType? pluginType)
         {
             NetworkId = networkId;
             PluginType = pluginType;
         }
 
         /// <summary> The resource ID of the network that is being configured for attachment. </summary>
-        public string NetworkId { get; set; }
+        public ResourceIdentifier NetworkId { get; set; }
         /// <summary> The indicator of how this network will be utilized by the Kubernetes cluster. </summary>
         public KubernetesPluginType? PluginType { get; set; }
     }

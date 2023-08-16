@@ -1,16 +1,20 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.5 (Unreleased)
 
 ### Features Added
-
-- Added support for MSA passthrough. Note this is only available for legacy 1st party applications.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.4 (2023-07-17)
+
+### Features Added
+
+- Added support for MSA passthrough. Note this is only available for legacy 1st party applications.
 
 ## 1.0.0-beta.3 (2022-08-09)
 

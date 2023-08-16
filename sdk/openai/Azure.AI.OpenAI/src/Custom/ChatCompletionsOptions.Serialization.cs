@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -25,6 +26,38 @@ namespace Azure.AI.OpenAI
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(Functions) && Functions.Count > 0)
+            {
+                writer.WritePropertyName("functions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Functions)
+                {
+                    if (item.IsPredefined)
+                    {
+                        throw new ArgumentException(
+                            @"Predefined function definitions such as 'auto' and 'none' cannot be provided as
+                            custom functions. These should only be used to constrain the FunctionCall option.");
+                    }
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(FunctionCall))
+            {
+                writer.WritePropertyName("function_call");
+
+                if (FunctionCall.IsPredefined)
+                {
+                    writer.WriteStringValue(FunctionCall.Name);
+                }
+                else
+                {
+                    writer.WriteStartObject();
+                    writer.WritePropertyName("name");
+                    writer.WriteStringValue(FunctionCall.Name);
+                    writer.WriteEndObject();
+                }
+            }
             if (Optional.IsDefined(MaxTokens))
             {
                 if (MaxTokens != null)

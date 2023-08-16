@@ -45,7 +45,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var registerWorker = await client.CreateWorkerAsync(
                 new CreateWorkerOptions(workerId: workerId1, totalCapacity: 1)
                 {
-                    QueueIds = { [queueResponse.Value.Id] = new RouterQueueAssignment() },
+                    QueueAssignments = { [queueResponse.Value.Id] = new RouterQueueAssignment() },
                     ChannelConfigurations = { [channelResponse] = new ChannelConfiguration(1) },
                     AvailableForOffers = true,
                 });

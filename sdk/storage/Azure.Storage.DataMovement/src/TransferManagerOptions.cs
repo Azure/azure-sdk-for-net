@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
@@ -21,9 +20,9 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Optional. Sets the way errors during a transfer will be handled.
-        /// Default is <see cref="ErrorHandlingBehavior.StopOnAllFailures"/>.
+        /// Default is <see cref="DataTransferErrorMode.StopOnAnyFailure"/>.
         /// </summary>
-        public ErrorHandlingBehavior ErrorHandling { get; set; }
+        public DataTransferErrorMode ErrorHandling { get; set; }
 
         /// <summary>
         /// The maximum number of workers that may be used in a parallel transfer.
@@ -34,7 +33,7 @@ namespace Azure.Storage.DataMovement
         /// Optional. Defines the options for creating a checkpointer which is used for saving
         /// transfer state so transfers can be resumed.
         /// </summary>
-        public TransferCheckpointerOptions CheckpointerOptions { get; set; }
+        public TransferCheckpointStoreOptions CheckpointerOptions { get; set; }
 
         internal TransferManagerClientOptions ClientOptions { get; } = new();
 

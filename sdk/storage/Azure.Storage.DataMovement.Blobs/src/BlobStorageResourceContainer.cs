@@ -10,7 +10,6 @@ using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
@@ -19,11 +18,11 @@ namespace Azure.Storage.DataMovement.Blobs
     /// </summary>
     public class BlobStorageResourceContainer : StorageResourceContainer
     {
-        private BlobContainerClient _blobContainerClient;
-        private string _directoryPrefix;
+        internal BlobContainerClient BlobContainerClient { get; }
+        internal string DirectoryPrefix { get; }
         private BlobStorageResourceContainerOptions _options;
 
-        private bool IsDirectory => _directoryPrefix != null;
+        private bool IsDirectory => DirectoryPrefix != null;
 
         /// <summary>
         /// The constructor to create an instance of the BlobStorageResourceContainer.
@@ -35,28 +34,28 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="options">Options for the storage resource. See <see cref="BlobStorageResourceContainerOptions"/>.</param>
         public BlobStorageResourceContainer(BlobContainerClient blobContainerClient, BlobStorageResourceContainerOptions options = default)
         {
-            _blobContainerClient = blobContainerClient;
+            BlobContainerClient = blobContainerClient;
             _options = options;
-            _directoryPrefix = _options?.DirectoryPrefix;
+            DirectoryPrefix = _options?.BlobDirectoryPrefix;
 
-            Uri = _directoryPrefix != null
-                ? new BlobUriBuilder(_blobContainerClient.Uri)
+            Uri = DirectoryPrefix != null
+                ? new BlobUriBuilder(BlobContainerClient.Uri)
                 {
-                    BlobName = _directoryPrefix,
+                    BlobName = DirectoryPrefix,
                 }.ToUri()
-                : _blobContainerClient.Uri;
+                : BlobContainerClient.Uri;
         }
 
         /// <summary>
         /// Defines whether the storage resource type can produce a web URL.
         /// </summary>
-        public override bool CanProduceUri => true;
+        protected override bool CanProduceUri => true;
 
         /// <summary>
         /// Gets the path of the storage resource.
         /// Return empty string since we are using the root of the container.
         /// </summary>
-        public override string Path => _directoryPrefix ?? string.Empty;
+        public override string Path => DirectoryPrefix ?? string.Empty;
 
         /// <summary>
         /// Gets the URL of the storage resource.
@@ -67,7 +66,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Retrieves a single blob resource based on this respective resource.
         /// </summary>
         /// <param name="path">The path to the storage resource, relative to the directory prefix if any.</param>
-        public override StorageResourceSingle GetChildStorageResource(string path)
+        protected override StorageResourceItem GetStorageResourceReference(string path)
             => GetBlobAsStorageResource(ApplyOptionalPrefix(path), type: _options?.BlobType ?? BlobType.Block);
 
         /// <summary>
@@ -78,10 +77,10 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="type">The type of <see cref="BlobType"/> that the storage resource is.</param>
         /// <param name="etagLock">Etag for the resource to lock on.</param>
         /// <returns>
-        /// <see cref="StorageResourceSingle"/> which represents the child blob client of
+        /// <see cref="StorageResourceItem"/> which represents the child blob client of
         /// this respective blob virtual directory resource.
         /// </returns>
-        private StorageResourceSingle GetBlobAsStorageResource(
+        private StorageResourceItem GetBlobAsStorageResource(
             string blobName,
             long? length = default,
             BlobType type = BlobType.Block,
@@ -90,7 +89,7 @@ namespace Azure.Storage.DataMovement.Blobs
             // Recreate the blobName using the existing parent directory path
             if (type == BlobType.Append)
             {
-                AppendBlobClient client = _blobContainerClient.GetAppendBlobClient(blobName);
+                AppendBlobClient client = BlobContainerClient.GetAppendBlobClient(blobName);
                 return new AppendBlobStorageResource(
                     client,
                     length,
@@ -99,7 +98,7 @@ namespace Azure.Storage.DataMovement.Blobs
             }
             else if (type == BlobType.Page)
             {
-                PageBlobClient client = _blobContainerClient.GetPageBlobClient(blobName);
+                PageBlobClient client = BlobContainerClient.GetPageBlobClient(blobName);
                 return new PageBlobStorageResource(
                     client,
                     length,
@@ -108,7 +107,7 @@ namespace Azure.Storage.DataMovement.Blobs
             }
             else // (type == BlobType.Block)
             {
-                BlockBlobClient client = _blobContainerClient.GetBlockBlobClient(blobName);
+                BlockBlobClient client = BlobContainerClient.GetBlockBlobClient(blobName);
                 return new BlockBlobStorageResource(
                     client,
                     length,
@@ -123,11 +122,11 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Because blobs is a flat namespace, virtual directories will not be returned.
         /// </summary>
         /// <returns>List of the child resources in the storage container.</returns>
-        public override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
+        protected override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            AsyncPageable<BlobItem> pages = _blobContainerClient.GetBlobsAsync(
-                prefix: _directoryPrefix,
+            AsyncPageable<BlobItem> pages = BlobContainerClient.GetBlobsAsync(
+                prefix: DirectoryPrefix,
                 cancellationToken: cancellationToken);
             await foreach (BlobItem blobItem in pages.ConfigureAwait(false))
             {
@@ -321,7 +320,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
         private string ApplyOptionalPrefix(string path)
             => IsDirectory
-                ? string.Join("/", _directoryPrefix, path)
+                ? string.Join("/", DirectoryPrefix, path)
                 : path;
     }
 }
