@@ -3,7 +3,6 @@
 
 using System;
 using System.Text.Json;
-using System.Xml.Linq;
 
 namespace Azure.Core.Json
 {
@@ -34,6 +33,7 @@ namespace Azure.Core.Json
 
         public readonly JsonValueKind ValueKind => Value switch
         {
+            null => JsonValueKind.Null,
             bool b => b ? JsonValueKind.True : JsonValueKind.False,
             string => JsonValueKind.String,
             DateTime => JsonValueKind.String,
@@ -50,16 +50,15 @@ namespace Azure.Core.Json
             float => JsonValueKind.Number,
             double => JsonValueKind.Number,
             decimal => JsonValueKind.Number,
-            null => JsonValueKind.Null,
             JsonElement e => e.ValueKind,
-            _ => throw new InvalidCastException() // TODO: fix exception
+            _ => throw new InvalidOperationException($"Unrecognized change type '{Value.GetType()}'.")
         };
 
         internal readonly void EnsureString()
         {
             if (ValueKind != JsonValueKind.String)
             {
-                throw new InvalidOperationException($"Expected an 'Array' type but was '{ValueKind}'.");
+                throw new InvalidOperationException($"Expected a 'String' kind but was '{ValueKind}'.");
             }
         }
 
@@ -67,7 +66,7 @@ namespace Azure.Core.Json
         {
             if (ValueKind != JsonValueKind.Number)
             {
-                throw new InvalidOperationException($"Expected an 'Array' type but was '{ValueKind}'.");
+                throw new InvalidOperationException($"Expected a 'Number' kind but was '{ValueKind}'.");
             }
         }
 
@@ -75,7 +74,7 @@ namespace Azure.Core.Json
         {
             if (ValueKind != JsonValueKind.Array)
             {
-                throw new InvalidOperationException($"Expected an 'Array' type but was '{ValueKind}'.");
+                throw new InvalidOperationException($"Expected an 'Array' kind but was '{ValueKind}'.");
             }
         }
 
@@ -88,7 +87,7 @@ namespace Azure.Core.Json
                 return e.GetArrayLength();
             }
 
-            throw new InvalidOperationException($"Expected an 'Array' type but was '{ValueKind}'.");
+            throw new InvalidOperationException($"Expected an 'Array' kind but was '{ValueKind}'.");
         }
 
         internal bool IsDescendant(string path)

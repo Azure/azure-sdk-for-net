@@ -205,16 +205,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        try
-                        {
-                            value = (double)change.Value;
-                            return true;
-                        }
-                        catch (InvalidCastException)
-                        {
-                            // TODO
-                            throw new InvalidOperationException("Changed element is not a double");
-                        }
+                        value = checked((double)change.Value);
+                        return true;
                 }
             }
 
@@ -269,16 +261,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        try
-                        {
-                            value = (int)change.Value;
-                            return true;
-                        }
-                        catch (InvalidCastException)
-                        {
-                            // TODO
-                            throw new InvalidOperationException("Changed element is not an int");
-                        }
+                        value = checked((int)change.Value);
+                        return true;
                 }
             }
 
@@ -328,16 +312,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        try
-                        {
-                            value = (long)change.Value;
-                            return true;
-                        }
-                        catch (InvalidCastException)
-                        {
-                            // TODO
-                            throw new InvalidOperationException("Changed element is not a long");
-                        }
+                        value = checked((long)change.Value);
+                        return true;
                 }
             }
 
@@ -387,16 +363,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        try
-                        {
-                            value = (float)change.Value;
-                            return true;
-                        }
-                        catch (InvalidCastException)
-                        {
-                            // TODO
-                            throw new InvalidOperationException("Changed element is not a float");
-                        }
+                        value = checked((float)change.Value);
+                        return true;
                 }
             }
 
@@ -487,16 +455,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        try
-                        {
-                            value = (byte)change.Value;
-                            return true;
-                        }
-                        catch (InvalidCastException)
-                        {
-                            // TODO
-                            throw new InvalidOperationException("Changed element is not a byte");
-                        }
+                        value = checked((byte)change.Value);
+                        return true;
                 }
             }
 
@@ -536,8 +496,7 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        // TODO
-                        throw new InvalidOperationException("Changed element is not a DateTime");
+                        throw new InvalidOperationException($"Element {change.Value} cannot be converted to DateTime.");
                 }
             }
 
@@ -577,8 +536,7 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        // TODO
-                        throw new InvalidOperationException("Changed element is not a DateTime");
+                        throw new InvalidOperationException($"Element {change.Value} cannot be converted to DateTimeOffset.");
                 }
             }
 
@@ -614,16 +572,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        try
-                        {
-                            value = (decimal)change.Value;
-                            return true;
-                        }
-                        catch (InvalidCastException)
-                        {
-                            // TODO
-                            throw new InvalidOperationException("Changed element is not a decimal");
-                        }
+                        value = checked((decimal)change.Value);
+                        return true;
                 }
             }
 
@@ -662,8 +612,7 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        // TODO
-                        throw new InvalidOperationException("Changed element is not a Guid.");
+                        throw new InvalidOperationException($"Element {change.Value} cannot be converted to Guid.");
                 }
             }
 
@@ -699,16 +648,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        try
-                        {
-                            value = (short)change.Value;
-                            return true;
-                        }
-                        catch (InvalidCastException)
-                        {
-                            // TODO
-                            throw new InvalidOperationException("Changed element is not a short");
-                        }
+                        value = checked((short)change.Value);
+                        return true;
                 }
             }
 
@@ -744,16 +685,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        try
-                        {
-                            value = (sbyte)change.Value;
-                            return true;
-                        }
-                        catch (InvalidCastException)
-                        {
-                            // TODO
-                            throw new InvalidOperationException("Changed element is not an sbyte");
-                        }
+                        value = checked((sbyte)change.Value);
+                        return true;
                 }
             }
 
@@ -789,16 +722,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        try
-                        {
-                            value = (ushort)change.Value;
-                            return true;
-                        }
-                        catch (InvalidCastException)
-                        {
-                            // TODO
-                            throw new InvalidOperationException("Changed element is not a ushort.");
-                        }
+                        value = checked((ushort)change.Value);
+                        return true;
                 }
             }
 
@@ -834,16 +759,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        try
-                        {
-                            value = (uint)change.Value;
-                            return true;
-                        }
-                        catch (InvalidCastException)
-                        {
-                            // TODO
-                            throw new InvalidOperationException("Changed element is not a unint");
-                        }
+                        value = checked((uint)change.Value);
+                        return true;
                 }
             }
 
@@ -879,16 +796,8 @@ namespace Azure.Core.Json
                         value = default;
                         return false;
                     default:
-                        try
-                        {
-                            value = (ulong)change.Value;
-                            return true;
-                        }
-                        catch (InvalidCastException)
-                        {
-                            // TODO
-                            throw new InvalidOperationException("Changed element is not a ulong");
-                        }
+                        value = checked((ulong)change.Value);
+                        return true;
                 }
             }
 
