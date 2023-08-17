@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.1-Preview (2023-08-17)
+## 1.0.1 (2023-08-17)
 
 ### Other Changes
 - Improve memory management for attachment handling
