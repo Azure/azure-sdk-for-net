@@ -31,7 +31,7 @@ namespace Azure.Core.Tests.PatchModels
 
                 if (property.NameEquals("updatedOn"))
                 {
-                    updatedOn = property.Value.GetDateTimeOffset();
+                    updatedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
@@ -93,9 +93,8 @@ namespace Azure.Core.Tests.PatchModels
                 throw new InvalidOperationException("'updatedOn' was not initialized during Deserialization.");
             }
 
-            // TODO: write a DateTimeOffset correctly.
             writer.WritePropertyName("updatedOn");
-            writer.WriteStringValue(UpdatedOn.Value);
+            writer.WriteStringValue(UpdatedOn.Value!, "O");
 
             writer.WriteEndObject();
         }
@@ -118,9 +117,8 @@ namespace Azure.Core.Tests.PatchModels
 
             if (_updatedOnPatchFlag)
             {
-                // TODO: write a DateTimeOffset correctly.
                 writer.WritePropertyName("updatedOn");
-                writer.WriteStringValue(UpdatedOn.Value);
+                writer.WriteStringValue(UpdatedOn.Value!, "O");
             }
 
             writer.WriteEndObject();
