@@ -398,6 +398,8 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
+                change.EnsureString();
+
                 switch (change.Value)
                 {
                     case string s:
