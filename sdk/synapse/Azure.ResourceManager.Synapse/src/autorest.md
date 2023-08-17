@@ -13,6 +13,9 @@ namespace: Azure.ResourceManager.Synapse
 tag: package-composite-v2
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 use-core-datafactory-replacements: false
 modelerfour:
