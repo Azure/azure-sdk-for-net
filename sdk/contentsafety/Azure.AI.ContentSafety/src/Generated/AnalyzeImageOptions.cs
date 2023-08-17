@@ -17,7 +17,7 @@ namespace Azure.AI.ContentSafety
         /// <summary> Initializes a new instance of AnalyzeImageOptions. </summary>
         /// <param name="image"> The image needs to be analyzed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="image"/> is null. </exception>
-        public AnalyzeImageOptions(ImageData image)
+        public AnalyzeImageOptions(ContentSafetyImageData image)
         {
             Argument.AssertNotNull(image, nameof(image));
 
@@ -28,14 +28,14 @@ namespace Azure.AI.ContentSafety
         /// <summary> Initializes a new instance of AnalyzeImageOptions. </summary>
         /// <param name="image"> The image needs to be analyzed. </param>
         /// <param name="categories"> The categories will be analyzed. If not assigned, a default set of the categories' analysis results will be returned. </param>
-        internal AnalyzeImageOptions(ImageData image, IList<ImageCategory> categories)
+        internal AnalyzeImageOptions(ContentSafetyImageData image, IList<ImageCategory> categories)
         {
             Image = image;
             Categories = categories;
         }
 
         /// <summary> The image needs to be analyzed. </summary>
-        public ImageData Image { get; }
+        public ContentSafetyImageData Image { get; }
         /// <summary> The categories will be analyzed. If not assigned, a default set of the categories' analysis results will be returned. </summary>
         public IList<ImageCategory> Categories { get; }
     }
