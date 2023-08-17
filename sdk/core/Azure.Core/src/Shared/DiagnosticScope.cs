@@ -24,7 +24,7 @@ namespace Azure.Core.Pipeline
         private readonly ActivityAdapter? _activityAdapter;
         private readonly bool _suppressNestedClientActivities;
 
-#if !NET5_0
+#if NET6_0_OR_GREATER
         [RequiresUnreferencedCode("The diagnosticSourceArgs are used in a call to DiagnosticSource.Write, all necessary properties need to be preserved on the type being passed in using DynamicDependency attributes.")]
 #endif
 #if NETCOREAPP2_1
@@ -139,9 +139,9 @@ namespace Azure.Core.Pipeline
         /// Marks the scope as failed.
         /// </summary>
         /// <param name="exception">The exception to associate with the failed scope.</param>
-#if !NET5_0
-        [DynamicDependency(nameof(Exception.Message), typeof(Exception))]
-        [DynamicDependency(nameof(Exception.StackTrace), typeof(Exception))]
+#if NET6_0_OR_GREATER
+        //[DynamicDependency(nameof(Exception.Message), typeof(Exception))]
+        //[DynamicDependency(nameof(Exception.StackTrace), typeof(Exception))]
         [RequiresUnreferencedCode("The exception is used in a call to DiagnosticSource.Write, all necessary properties need to be preserved on the exception type being passed in using DynamicDependency attributes.")]
 #endif
         public void Failed(Exception? exception = default)
@@ -343,8 +343,8 @@ namespace Azure.Core.Pipeline
             }
 
 #if !NET5_0
-            [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(Activity))]
-            [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(DiagnosticActivity))]
+            //[DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(Activity))]
+            //[DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(DiagnosticActivity))]
 #endif
             public Activity? Start()
             {
@@ -449,7 +449,7 @@ namespace Azure.Core.Pipeline
                 return _currentActivity;
             }
 
-#if !NET5_0 && !NET462
+#if NET6_0_OR_GREATER
             [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The values being passed into Write have the commonly used properties being preserved with DynamicDependency on the ActivityAdapter.Start() method.")]
 #endif
             private void WriteStartEvent()
@@ -507,7 +507,7 @@ namespace Azure.Core.Pipeline
                 _currentActivity?.SetStartTime(startTime);
             }
 
-#if !NET5_0
+#if NET6_0_OR_GREATER
             [RequiresUnreferencedCode("The exception is used in a call to DiagnosticSource.Write, all necessary properties need to be preserved on the exception type being passed in using DynamicDependency attributes.")]
 #endif
             public void MarkFailed(Exception? exception)
@@ -538,7 +538,7 @@ namespace Azure.Core.Pipeline
                 _tracestate = tracestate;
             }
 
-#if !NET5_0
+#if NET6_0_OR_GREATER
             [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "The class constructor is marked with RequiresUnreferencedCode.")]
 #endif
             public void Dispose()
