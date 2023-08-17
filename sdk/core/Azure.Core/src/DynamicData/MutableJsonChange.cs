@@ -3,6 +3,7 @@
 
 using System;
 using System.Text.Json;
+using System.Xml.Linq;
 
 namespace Azure.Core.Json
 {
@@ -54,18 +55,31 @@ namespace Azure.Core.Json
             _ => throw new InvalidCastException() // TODO: fix exception
         };
 
-        private void EnsureArray()
+        internal readonly void EnsureString()
         {
-            if (Value is JsonElement e && e.ValueKind == JsonValueKind.Array)
+            if (ValueKind != JsonValueKind.String)
             {
-                return;
+                throw new InvalidOperationException($"Expected an 'Array' type but was '{ValueKind}'.");
             }
-
-            // TODO: improve exception
-            throw new InvalidOperationException($"Expected an 'Array' type for item.");
         }
 
-        internal int GetArrayLength()
+        internal readonly void EnsureNumber()
+        {
+            if (ValueKind != JsonValueKind.Number)
+            {
+                throw new InvalidOperationException($"Expected an 'Array' type but was '{ValueKind}'.");
+            }
+        }
+
+        internal readonly void EnsureArray()
+        {
+            if (ValueKind != JsonValueKind.Array)
+            {
+                throw new InvalidOperationException($"Expected an 'Array' type but was '{ValueKind}'.");
+            }
+        }
+
+        internal readonly int GetArrayLength()
         {
             EnsureArray();
 
@@ -74,8 +88,7 @@ namespace Azure.Core.Json
                 return e.GetArrayLength();
             }
 
-            //TODO
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"Expected an 'Array' type but was '{ValueKind}'.");
         }
 
         internal bool IsDescendant(string path)

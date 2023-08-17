@@ -192,11 +192,7 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                if (change.ValueKind != JsonValueKind.Number)
-                {
-                    // TODO
-                    throw new InvalidOperationException();
-                }
+                change.EnsureNumber();
 
                 switch (change.Value)
                 {
@@ -260,11 +256,7 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                if (change.ValueKind != JsonValueKind.Number)
-                {
-                    // TODO
-                    throw new InvalidOperationException();
-                }
+                change.EnsureNumber();
 
                 switch (change.Value)
                 {
@@ -323,11 +315,7 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                if (change.ValueKind != JsonValueKind.Number)
-                {
-                    // TODO
-                    throw new InvalidOperationException();
-                }
+                change.EnsureNumber();
 
                 switch (change.Value)
                 {
@@ -386,11 +374,7 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                if (change.ValueKind != JsonValueKind.Number)
-                {
-                    // TODO
-                    throw new InvalidOperationException();
-                }
+                change.EnsureNumber();
 
                 switch (change.Value)
                 {
@@ -490,11 +474,7 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                if (change.ValueKind != JsonValueKind.Number)
-                {
-                    // TODO
-                    throw new InvalidOperationException();
-                }
+                change.EnsureNumber();
 
                 switch (change.Value)
                 {
@@ -539,11 +519,7 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                if (change.ValueKind != JsonValueKind.String)
-                {
-                    // TODO
-                    throw new InvalidOperationException();
-                }
+                change.EnsureString();
 
                 switch (change.Value)
                 {
@@ -584,11 +560,7 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                if (change.ValueKind != JsonValueKind.String)
-                {
-                    // TODO
-                    throw new InvalidOperationException();
-                }
+                change.EnsureString();
 
                 switch (change.Value)
                 {
@@ -629,11 +601,7 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                if (change.ValueKind != JsonValueKind.Number)
-                {
-                    // TODO
-                    throw new InvalidOperationException();
-                }
+                change.EnsureNumber();
 
                 switch (change.Value)
                 {
@@ -678,11 +646,7 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                if (change.ValueKind != JsonValueKind.String)
-                {
-                    // TODO
-                    throw new InvalidOperationException();
-                }
+                change.EnsureString();
 
                 switch (change.Value)
                 {
@@ -722,11 +686,7 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                if (change.ValueKind != JsonValueKind.Number)
-                {
-                    // TODO
-                    throw new InvalidOperationException();
-                }
+                change.EnsureNumber();
 
                 switch (change.Value)
                 {
@@ -771,11 +731,7 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                if (change.ValueKind != JsonValueKind.Number)
-                {
-                    // TODO
-                    throw new InvalidOperationException();
-                }
+                change.EnsureNumber();
 
                 switch (change.Value)
                 {
@@ -820,11 +776,7 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                if (change.ValueKind != JsonValueKind.Number)
-                {
-                    // TODO
-                    throw new InvalidOperationException();
-                }
+                change.EnsureNumber();
 
                 switch (change.Value)
                 {
@@ -869,11 +821,7 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                if (change.ValueKind != JsonValueKind.Number)
-                {
-                    // TODO
-                    throw new InvalidOperationException();
-                }
+                change.EnsureNumber();
 
                 switch (change.Value)
                 {
@@ -918,11 +866,7 @@ namespace Azure.Core.Json
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                if (change.ValueKind != JsonValueKind.Number)
-                {
-                    // TODO
-                    throw new InvalidOperationException();
-                }
+                change.EnsureNumber();
 
                 switch (change.Value)
                 {
@@ -964,7 +908,7 @@ namespace Azure.Core.Json
         /// <summary>
         /// Gets an enumerator to enumerate the values in the JSON array represented by this MutableJsonElement.
         /// </summary>
-        internal ArrayEnumerator EnumerateArray()
+        public ArrayEnumerator EnumerateArray()
         {
             EnsureValid();
 
@@ -976,7 +920,7 @@ namespace Azure.Core.Json
         /// <summary>
         /// Gets an enumerator to enumerate the properties in the JSON object represented by this JsonElement.
         /// </summary>
-        internal ObjectEnumerator EnumerateObject()
+        public ObjectEnumerator EnumerateObject()
         {
             EnsureValid();
 
