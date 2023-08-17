@@ -9,18 +9,11 @@ namespace Azure.Core.Tests.PatchModels
 {
     public partial class SimplePatchModel : IModelJsonSerializable<SimplePatchModel>, IUtf8JsonSerializable
     {
-        SimplePatchModel IModelJsonSerializable<SimplePatchModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
-        {
-            PatchModelHelper.ValidateFormat(this, options.Format);
-
-            return Deserialize(ref reader, options);
-        }
-
         private static SimplePatchModel Deserialize(JsonElement element)
         {
-            Optional<string> name = default;
-            Optional<int> count = default;
-            Optional<DateTimeOffset> updatedOn = default;
+            string name = default;
+            int count = default;
+            DateTimeOffset updatedOn = default;
 
             foreach (JsonProperty property in element.EnumerateObject())
             {
@@ -44,6 +37,13 @@ namespace Azure.Core.Tests.PatchModels
             }
 
             return new SimplePatchModel(name, count, updatedOn);
+        }
+
+        SimplePatchModel IModelJsonSerializable<SimplePatchModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            PatchModelHelper.ValidateFormat(this, options.Format);
+
+            return Deserialize(ref reader, options);
         }
 
         private static SimplePatchModel Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)

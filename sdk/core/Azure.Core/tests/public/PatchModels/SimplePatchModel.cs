@@ -21,7 +21,7 @@ namespace Azure.Core.Tests.PatchModels
         /// Serialization constructor.
         /// </summary>
         /// <param name="element"></param>
-        internal SimplePatchModel(string name, int? count, DateTimeOffset? updatedOn)
+        internal SimplePatchModel(string name, int count, DateTimeOffset updatedOn)
         {
             _name = name;
             _count = count;
