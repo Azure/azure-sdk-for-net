@@ -351,7 +351,7 @@ namespace Azure.Core.Tests
 
             MutableJsonDocumentTests.ValidateWriteTo(expected, mdoc);
 
-            JsonElement element = DynamicData.SerializeToJsonElement(new int[] { 1, 2, 3 });
+            JsonElement element = MutableJsonElement.SerializeToJsonElement(new int[] { 1, 2, 3 });
             mdoc.RootElement.SetProperty("Baz", element);
 
             expected = """
@@ -409,7 +409,7 @@ namespace Azure.Core.Tests
                 """;
 
             MutableJsonDocumentTests.ValidateWriteTo(expected, mdoc);
-            JsonElement element = DynamicData.SerializeToJsonElement(new
+            JsonElement element = MutableJsonElement.SerializeToJsonElement(new
             {
                 Foo = new
                 {
@@ -464,7 +464,7 @@ namespace Azure.Core.Tests
 
             MutableJsonDocumentTests.ValidateWriteTo(expected, mdoc);
 
-            JsonElement element = DynamicData.SerializeToJsonElement(new int[] { 0, 1, 2, 3 });
+            JsonElement element = MutableJsonElement.SerializeToJsonElement(new int[] { 0, 1, 2, 3 });
             mdoc.RootElement.GetProperty("Bar").Set(element);
             mdoc.RootElement.GetProperty("Bar").GetIndexElement(3).Set(4);
 
@@ -549,7 +549,7 @@ namespace Azure.Core.Tests
             // Mutate a value
             string name = mdoc.RootElement.EnumerateObject().First().Name;
             MutableJsonElement value = mdoc.RootElement.EnumerateObject().First().Value;
-            JsonElement element = DynamicData.SerializeToJsonElement(value);
+            JsonElement element = MutableJsonElement.SerializeToJsonElement(value);
             mdoc.RootElement.GetProperty(name).Set(element);
 
             // Validate after changes.
@@ -880,7 +880,7 @@ namespace Azure.Core.Tests
 
             mdoc.RootElement.GetProperty("a").GetProperty("aa").Set(3);
             mdoc.RootElement.GetProperty("b").GetProperty("ba").Set("3");
-            JsonElement element = DynamicData.SerializeToJsonElement(new { ba = "3", bb = "4" });
+            JsonElement element = MutableJsonElement.SerializeToJsonElement(new { ba = "3", bb = "4" });
             mdoc.RootElement.GetProperty("b").Set(element);
             mdoc.RootElement.GetProperty("a").GetProperty("ab").Set(4);
             mdoc.RootElement.GetProperty("b").GetProperty("ba").Set("5");
@@ -1040,7 +1040,7 @@ namespace Azure.Core.Tests
             using MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
             mdoc.RootElement.GetProperty("a").GetProperty("aa").GetIndexElement(0).Set(2);
             mdoc.RootElement.GetProperty("b").GetProperty("bb").GetProperty("bbb").GetIndexElement(1).Set(true);
-            JsonElement element = DynamicData.SerializeToJsonElement(new { cd = "cd" });
+            JsonElement element = MutableJsonElement.SerializeToJsonElement(new { cd = "cd" });
             mdoc.RootElement.GetProperty("c").GetIndexElement(1).Set(element);
 
             ValidatePatch("""
@@ -1083,7 +1083,7 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("a").GetProperty("aa").GetIndexElement(0).Set(2);
             mdoc.RootElement.GetProperty("b").GetProperty("bb").GetProperty("bbb").GetIndexElement(1).Set(true);
             mdoc.RootElement.GetProperty("a").GetProperty("aa").GetIndexElement(0).Set(3);
-            JsonElement element = DynamicData.SerializeToJsonElement(new { cd = "cd" });
+            JsonElement element = MutableJsonElement.SerializeToJsonElement(new { cd = "cd" });
             mdoc.RootElement.GetProperty("c").GetIndexElement(1).Set(element);
             mdoc.RootElement.GetProperty("a").GetProperty("aa").GetIndexElement(1).Set(4);
 
@@ -1126,9 +1126,9 @@ namespace Azure.Core.Tests
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
             mdoc.RootElement.GetProperty("a").GetProperty("aa").GetIndexElement(0).Set(2);
             mdoc.RootElement.GetProperty("b").GetProperty("bb").GetProperty("bbb").GetIndexElement(1).Set(true);
-            JsonElement element = DynamicData.SerializeToJsonElement(new int[] { 2, 3 });
+            JsonElement element = MutableJsonElement.SerializeToJsonElement(new int[] { 2, 3 });
             mdoc.RootElement.GetProperty("a").GetProperty("aa").Set(element);
-            element = DynamicData.SerializeToJsonElement(new { cd = "cd" });
+            element = MutableJsonElement.SerializeToJsonElement(new { cd = "cd" });
             mdoc.RootElement.GetProperty("c").GetIndexElement(1).Set(element);
             mdoc.RootElement.GetProperty("a").GetProperty("aa").GetIndexElement(1).Set(4);
 
@@ -1164,7 +1164,7 @@ namespace Azure.Core.Tests
                 }
                 """;
             using MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
-            JsonElement element = DynamicData.SerializeToJsonElement(new { aa = 3, ab = 4 });
+            JsonElement element = MutableJsonElement.SerializeToJsonElement(new { aa = 3, ab = 4 });
             mdoc.RootElement.GetProperty("a").Set(element);
 
             ValidatePatch("""
@@ -1193,7 +1193,7 @@ namespace Azure.Core.Tests
                 }
                 """;
             using MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
-            JsonElement element = DynamicData.SerializeToJsonElement(new { ac = 3 });
+            JsonElement element = MutableJsonElement.SerializeToJsonElement(new { ac = 3 });
             mdoc.RootElement.GetProperty("a").Set(element);
 
             ValidatePatch("""
@@ -1278,7 +1278,7 @@ namespace Azure.Core.Tests
                 """;
             using MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            JsonElement element = DynamicData.SerializeToJsonElement(new { ca = true, cb = false });
+            JsonElement element = MutableJsonElement.SerializeToJsonElement(new { ca = true, cb = false });
             mdoc.RootElement.SetProperty("c", element);
 
             ValidatePatch("""
@@ -1498,7 +1498,7 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("title").Set("Hello!");
             mdoc.RootElement.SetProperty("phoneNumber", "+01-123-456-7890");
             mdoc.RootElement.GetProperty("author").RemoveProperty("familyName");
-            JsonElement element = DynamicData.SerializeToJsonElement(new string[] { "example" });
+            JsonElement element = MutableJsonElement.SerializeToJsonElement(new string[] { "example" });
             mdoc.RootElement.SetProperty("tags", element);
 
             ValidatePatch("""

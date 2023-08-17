@@ -9,7 +9,6 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 namespace Azure.Core.Json
 {
     /// <summary>
@@ -118,7 +117,7 @@ namespace Azure.Core.Json
                         return false;
                     }
 
-                    value = new MutableJsonElement(_root, MutableJsonChange.ConvertToJsonElement(change, _root.SerializerOptions), GetString(path, 0, pathLength), change.Index);
+                    value = new MutableJsonElement(_root, SerializeToJsonElement(change.Value, _root.SerializerOptions), GetString(path, 0, pathLength), change.Index);
                     return true;
                 }
 
@@ -173,7 +172,7 @@ namespace Azure.Core.Json
             string path = MutableJsonDocument.ChangeTracker.PushIndex(_path, index);
             if (Changes.TryGetChange(path, _highWaterMark, out MutableJsonChange change))
             {
-                return new MutableJsonElement(_root, MutableJsonChange.ConvertToJsonElement(change, _root.SerializerOptions), path, change.Index);
+                return new MutableJsonElement(_root, SerializeToJsonElement(change.Value, _root.SerializerOptions), path, change.Index);
             }
 
             return new MutableJsonElement(_root, _element[index], path, _highWaterMark);
@@ -553,7 +552,7 @@ namespace Azure.Core.Json
                         return true;
                     case DateTimeOffset:
                     case string:
-                        MutableJsonChange.ConvertToJsonElement(change, _root.SerializerOptions).TryGetDateTime(out value);
+                        SerializeToJsonElement(change.Value, _root.SerializerOptions).TryGetDateTime(out value);
                         return true;
                     case JsonElement element:
                         return element.TryGetDateTime(out value);
@@ -598,7 +597,7 @@ namespace Azure.Core.Json
                         return true;
                     case DateTime:
                     case string:
-                        MutableJsonChange.ConvertToJsonElement(change, _root.SerializerOptions).TryGetDateTimeOffset(out value);
+                        SerializeToJsonElement(change.Value, _root.SerializerOptions).TryGetDateTimeOffset(out value);
                         return true;
                     case JsonElement element:
                         return element.TryGetDateTimeOffset(out value);
@@ -691,7 +690,7 @@ namespace Azure.Core.Json
                         value = g;
                         return true;
                     case string:
-                        MutableJsonChange.ConvertToJsonElement(change, _root.SerializerOptions).TryGetGuid(out value);
+                        SerializeToJsonElement(change.Value, _root.SerializerOptions).TryGetGuid(out value);
                         return true;
                     case JsonElement element:
                         return element.TryGetGuid(out value);
@@ -1449,13 +1448,30 @@ namespace Azure.Core.Json
             return _element.ToString() ?? "null";
         }
 
+        internal static JsonElement SerializeToJsonElement(object? value, JsonSerializerOptions? options = default)
+        {
+            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(value, options);
+
+            // Most JsonDocument.Parse calls return a that is backed by one or more ArrayPool
+            // arrays.  Those arrays are not returned until the instance is disposed.
+            // This is a workaround that allows us to dispose the JsonDocument so that we
+            // don't leak ArrayPool arrays.
+#if NET6_0_OR_GREATER
+            Utf8JsonReader reader = new(bytes);
+            return JsonElement.ParseValue(ref reader);
+#else
+            using JsonDocument doc = JsonDocument.Parse(bytes);
+            return doc.RootElement.Clone();
+#endif
+        }
+
         internal JsonElement GetJsonElement()
         {
             EnsureValid();
 
             if (Changes.TryGetChange(_path, _highWaterMark, out MutableJsonChange change))
             {
-                return MutableJsonChange.ConvertToJsonElement(change, _root.SerializerOptions);
+                return SerializeToJsonElement(change.Value, _root.SerializerOptions);
             }
 
             // Account for changes to descendants of this element as well
@@ -1536,5 +1552,4 @@ namespace Azure.Core.Json
             }
         }
     }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

@@ -342,7 +342,7 @@ namespace Azure.Core.Tests
 
             using MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-            JsonElement element = DynamicData.SerializeToJsonElement(new { B = 5.5 });
+            JsonElement element = MutableJsonElement.SerializeToJsonElement(new { B = 5.5 });
             mdoc.RootElement.GetProperty("Baz").Set(element);
 
             // Assert:
@@ -586,7 +586,7 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual("hi", mdoc.RootElement.GetProperty("Foo").GetString());
 
-            JsonElement element = DynamicData.SerializeToJsonElement(new
+            JsonElement element = MutableJsonElement.SerializeToJsonElement(new
             {
                 Bar = 6
             });
@@ -613,7 +613,7 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual("hi", mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetString());
 
-            JsonElement element = DynamicData.SerializeToJsonElement(new int[] { 1, 2, 3 });
+            JsonElement element = MutableJsonElement.SerializeToJsonElement(new int[] { 1, 2, 3 });
             mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").Set(element);
 
             Assert.AreEqual(1, mdoc.RootElement.GetIndexElement(0).GetProperty("Foo").GetIndexElement(0).GetInt32());
