@@ -32,7 +32,7 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("data"u8))
                 {
-                    data = property.Value.();
+                    DeserializeDataProperty(property, ref data);
                     continue;
                 }
             }
