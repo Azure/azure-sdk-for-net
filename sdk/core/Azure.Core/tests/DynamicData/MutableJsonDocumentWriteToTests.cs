@@ -660,7 +660,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanWriteDateTimeOffset()
         {
-            DateTimeOffset dateTime = DateTimeOffset.Now;
+            DateTimeOffset dateTime = DateTimeOffset.Parse("2023-08-17T10:36:42.5482841+07:00");
             string dateTimeString = MutableJsonElementTests.FormatDateTimeOffset(dateTime);
             string json = $"{{\"foo\" : \"{dateTimeString}\"}}";
 
@@ -671,14 +671,14 @@ namespace Azure.Core.Tests
             MutableJsonDocumentTests.ValidateWriteTo(json, mdoc);
 
             // Get from assigned existing value
-            DateTimeOffset fooValue = DateTimeOffset.Now.AddDays(1);
+            DateTimeOffset fooValue = dateTime.AddDays(1);
             string fooString = MutableJsonElementTests.FormatDateTimeOffset(fooValue);
             mdoc.RootElement.GetProperty("foo").Set(fooValue);
             Assert.AreEqual(fooString, mdoc.RootElement.GetProperty("foo").ToString());
             MutableJsonDocumentTests.ValidateWriteTo($"{{\"foo\" : \"{fooString}\"}}", mdoc);
 
             // Get from added value
-            DateTimeOffset barValue = DateTimeOffset.Now.AddDays(2);
+            DateTimeOffset barValue = dateTime.AddDays(2);
             string barString = MutableJsonElementTests.FormatDateTimeOffset(barValue);
             mdoc.RootElement.SetProperty("bar", barValue);
             Assert.AreEqual(barString, mdoc.RootElement.GetProperty("bar").ToString());

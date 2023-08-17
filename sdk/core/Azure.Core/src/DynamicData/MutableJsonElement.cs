@@ -1307,10 +1307,10 @@ namespace Azure.Core.Json
         {
             byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(value, options);
 
-            // Most JsonDocument.Parse calls return a that is backed by one or more ArrayPool
-            // arrays.  Those arrays are not returned until the instance is disposed.
-            // This is a workaround that allows us to dispose the JsonDocument so that we
-            // don't leak ArrayPool arrays.
+            // Most JsonDocument.Parse calls return an array that is backed by one or more
+            // ArrayPool arrays.  Those arrays are not returned until the instance is disposed.
+            // This workaround allows us to dispose the JsonDocument so that we don't leak
+            // ArrayPool arrays.
 #if NET6_0_OR_GREATER
             Utf8JsonReader reader = new(bytes);
             return JsonElement.ParseValue(ref reader);
