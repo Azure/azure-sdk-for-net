@@ -19,6 +19,8 @@ namespace Azure.Core.Json
         private readonly ReadOnlyMemory<byte> _original;
         private readonly JsonDocument _originalDocument;
 
+        private static JsonSerializerOptions DefaultSerializerOptions = new JsonSerializerOptions();
+
         private readonly JsonSerializerOptions _serializerOptions;
         internal JsonSerializerOptions SerializerOptions { get => _serializerOptions; }
 
@@ -203,7 +205,7 @@ namespace Azure.Core.Json
         {
             _originalDocument = document;
             _original = utf8Json;
-            _serializerOptions = serializerOptions ?? new JsonSerializerOptions();
+            _serializerOptions = serializerOptions ?? DefaultSerializerOptions;
         }
 
         private class MutableJsonDocumentConverter : JsonConverter<MutableJsonDocument>
