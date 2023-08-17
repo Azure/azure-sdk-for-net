@@ -49,7 +49,11 @@ namespace Azure.Core.Tests.PatchModels
         /// </summary>
         public ChildPatchModel Child
         {
-            get => _child;
+            get
+            {
+                _child ??= new ChildPatchModel();
+                return _child;
+            }
             set
             {
                 _child = value;

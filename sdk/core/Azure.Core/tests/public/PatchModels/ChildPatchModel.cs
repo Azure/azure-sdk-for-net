@@ -10,6 +10,8 @@ namespace Azure.Core.Tests.PatchModels
     {
         internal bool HasChanges => _aPatchFlag || _bPatchFlag;
 
+        internal ChildPatchModel() { }
+
         /// <summary> Serialization constructor. </summary>
         internal ChildPatchModel(string a, string b)
         {

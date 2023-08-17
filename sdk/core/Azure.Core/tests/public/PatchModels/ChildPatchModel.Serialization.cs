@@ -63,19 +63,22 @@ namespace Azure.Core.Tests.PatchModels
             writer.WriteStartObject();
 
             // It's required for GET, so assume we have it
-            if (A == null)
-            {
-                throw new InvalidOperationException("'a' was not initialized during Deserialization.");
-            }
+            //if (A == null)
+            //{
+            //    throw new InvalidOperationException("'a' was not initialized during Deserialization.");
+            //}
 
             writer.WritePropertyName("a");
             writer.WriteStringValue(A);
 
             // It's required for GET, so assume we have it
-            if (B == null)
-            {
-                throw new InvalidOperationException("'b' was not initialized during Deserialization.");
-            }
+            // TODO: note actually, it could have been set to null for the patch.
+            // It's ok, we just write it out no matter what, and don't throw.
+            // TODO: Update this in other models.
+            //if (B == null)
+            //{
+            //    throw new InvalidOperationException("'b' was not initialized during Deserialization.");
+            //}
 
             writer.WritePropertyName("b");
             writer.WriteStringValue(B);

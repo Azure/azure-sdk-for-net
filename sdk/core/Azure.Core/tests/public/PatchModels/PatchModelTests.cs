@@ -39,7 +39,7 @@ namespace Azure.Core.Tests.Public
             SimplePatchModel model = new();
             model.UpdatedOn = updateTime;
 
-            ValidatePatch($"{{\"updatedOn\":\"{updateTime:O}\"}}", model);
+            ValidatePatch($"{{\"updatedOn\":\"{updateTime.UtcDateTime:O}\"}}", model);
         }
 
         [Test]
@@ -60,7 +60,7 @@ namespace Azure.Core.Tests.Public
             model.Name = "xyz";
             model.Count = 2;
 
-            ValidatePatch("""{"count":2, "name":"xyz"}""", model);
+            ValidatePatch("""{"name":"xyz", "count":2}""", model);
         }
         #endregion
 
@@ -112,17 +112,17 @@ namespace Azure.Core.Tests.Public
             model.Child.B = "b1";
             model.Child.A = "a1";
 
-            ValidatePatch("""{"child": {"a": "a1", "b": "b1"}, "id": "id1"}""", model);
+            ValidatePatch("""{"id": "id1", "child": {"a": "a1", "b": "b1"}}""", model);
 
             model.Child.A = "a2";
             model.Id = "id2";
 
-            ValidatePatch("""{"child": {"a": "a2", "b": "b1"}, "id": "id2"}""", model);
+            ValidatePatch("""{"id": "id2", "child": {"a": "a2", "b": "b1"}}""", model);
 
             model.Child.A = null;
             model.Child.B = null;
 
-            ValidatePatch("""{"child": {"a": null, "b": null}, "id": "id2"}""", model);
+            ValidatePatch("""{"id": "id2", "child": {"a": null, "b": null}}""", model);
         }
 
         [Test]
@@ -145,7 +145,9 @@ namespace Azure.Core.Tests.Public
             Assert.AreEqual("bb", model.Child.B);
 
             ValidateSerialize("""{"id": "123", "child": {"a": "aa", "b": "bb"}}""", model);
-            ValidatePatch(string.Empty, model);
+
+            // TODO: "{}" or "" ?  Either is doable.
+            ValidatePatch("{}", model);
 
             model.Child.A = "a2";
             model.Child.B = null;
