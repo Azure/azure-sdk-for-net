@@ -2,39 +2,23 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Buffers;
 using System.Text.Json;
 
 namespace Azure.Core.Json
 {
     internal struct MutableJsonChange
     {
-        private JsonElement? _serializedValue;
-        private readonly JsonSerializerOptions _serializerOptions;
-
         public MutableJsonChange(string path,
             int index,
             object? value,
-            JsonSerializerOptions options,
             MutableJsonChangeKind changeKind,
             string? addedPropertyName)
         {
             Path = path;
             Index = index;
             Value = value;
-            _serializerOptions = options;
             ChangeKind = changeKind;
             AddedPropertyName = addedPropertyName;
-
-            if (value is JsonElement element)
-            {
-                _serializedValue = element;
-            }
-
-            if (value is JsonDocument doc)
-            {
-                _serializedValue = doc.RootElement;
-            }
         }
 
         public string Path { get; }
@@ -47,18 +31,68 @@ namespace Azure.Core.Json
 
         public MutableJsonChangeKind ChangeKind { get; }
 
-        public JsonValueKind ValueKind => GetSerializedValue().ValueKind;
-
-        internal JsonElement GetSerializedValue()
+        public readonly JsonValueKind ValueKind => Value switch
         {
-            if (_serializedValue != null)
+            bool b => b ? JsonValueKind.True : JsonValueKind.False,
+            string => JsonValueKind.String,
+            DateTime => JsonValueKind.String,
+            DateTimeOffset => JsonValueKind.String,
+            Guid => JsonValueKind.String,
+            byte => JsonValueKind.Number,
+            sbyte => JsonValueKind.Number,
+            short => JsonValueKind.Number,
+            ushort => JsonValueKind.Number,
+            int => JsonValueKind.Number,
+            uint => JsonValueKind.Number,
+            long => JsonValueKind.Number,
+            ulong => JsonValueKind.Number,
+            float => JsonValueKind.Number,
+            double => JsonValueKind.Number,
+            decimal => JsonValueKind.Number,
+            null => JsonValueKind.Null,
+            JsonElement e => e.ValueKind,
+            _ => throw new InvalidCastException() // TODO: fix exception
+        };
+
+        private void EnsureArray()
+        {
+            if (Value is JsonElement e && e.ValueKind == JsonValueKind.Array)
             {
-                return _serializedValue.Value;
+                return;
             }
 
-            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(Value, _serializerOptions);
-            _serializedValue = JsonDocument.Parse(bytes).RootElement;
-            return _serializedValue.Value;
+            // TODO: improve exception
+            throw new InvalidOperationException($"Expected an 'Array' type for item.");
+        }
+
+        internal int GetArrayLength()
+        {
+            EnsureArray();
+
+            if (Value is JsonElement e)
+            {
+                return e.GetArrayLength();
+            }
+
+            //TODO
+            throw new InvalidOperationException();
+        }
+
+        internal static JsonElement ConvertToJsonElement(MutableJsonChange change, JsonSerializerOptions options)
+        {
+            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(change.Value, options);
+
+            // Most JsonDocument.Parse calls return a that is backed by one or more ArrayPool
+            // arrays.  Those arrays are not returned until the instance is disposed.
+            // This is a workaround that allows us to dispose the JsonDocument so that we
+            // don't leak ArrayPool arrays.
+#if NET6_0_OR_GREATER
+            Utf8JsonReader reader = new(bytes);
+            return JsonElement.ParseValue(ref reader);
+#else
+            using JsonDocument doc = JsonDocument.Parse(bytes);
+            return doc.RootElement.Clone();
+#endif
         }
 
         internal bool IsDescendant(string path)
@@ -110,7 +144,12 @@ namespace Azure.Core.Json
 
         internal string AsString()
         {
-            return GetSerializedValue().ToString() ?? "null";
+            if (Value is null)
+            {
+                return "null";
+            }
+
+            return Value.ToString()!;
         }
 
         public override string ToString()

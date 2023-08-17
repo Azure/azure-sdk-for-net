@@ -100,7 +100,7 @@ namespace Azure.Core.Json
 
                 int index = _changes.Count;
 
-                _changes.Add(new MutableJsonChange(path, index, value, _options, changeKind, addedPropertyName));
+                _changes.Add(new MutableJsonChange(path, index, value, changeKind, addedPropertyName));
 
                 return index;
             }

@@ -69,7 +69,7 @@ namespace Azure.Core.Tests
         #region Helpers
         private MutableJsonChange CreateChange(string name)
         {
-            return new MutableJsonChange(name, -1, null, null, MutableJsonChangeKind.PropertyUpdate, null);
+            return new MutableJsonChange(name, -1, null, MutableJsonChangeKind.PropertyUpdate, null);
         }
         #endregion
     }
