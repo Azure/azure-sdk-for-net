@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.Json;
 
 namespace Azure.Core.Tests.PatchModels
 {
@@ -11,73 +10,67 @@ namespace Azure.Core.Tests.PatchModels
     /// </summary>
     public partial class SimplePatchModel
     {
-#pragma warning disable AZC0020 // Avoid using banned types in libraries
-        private readonly MutableJsonElement _element;
-
         /// <summary>
         /// Public constructor.
         /// </summary>
         public SimplePatchModel()
         {
-            _element = MutableJsonDocument.Parse(MutableJsonDocument.EmptyJson).RootElement;
         }
 
         /// <summary>
         /// Serialization constructor.
         /// </summary>
         /// <param name="element"></param>
-        internal SimplePatchModel(MutableJsonElement element)
+        internal SimplePatchModel(string name, int? count, DateTimeOffset? updatedOn)
         {
-            _element = element;
+            _name = name;
+            _count = count;
+            _updatedOn = updatedOn;
         }
 
         /// <summary>
         /// Optional string property corresponding to JSON """{"name": "abc"}""".
         /// </summary>
+        private string _name;
+        private bool _namePatchFlag;
         public string Name
         {
-            get
+            get => _name;
+            set
             {
-                if (_element.TryGetProperty("name", out MutableJsonElement value))
-                {
-                    return value.GetString();
-                }
-                return null;
+                _name = value;
+                _namePatchFlag = true;
             }
-            set => _element.SetProperty("name", value);
         }
 
         /// <summary>
         /// Optional int property corresponding to JSON """{"count": 1}""".
         /// </summary>
+        private int? _count;
+        private bool _countPatchFlag;
         public int? Count
         {
-            get
+            get => _count;
+            set
             {
-                if (_element.TryGetProperty("count", out MutableJsonElement value))
-                {
-                    return value.GetInt32();
-                }
-                return null;
+                _count = value;
+                _countPatchFlag = true;
             }
-            set => _element.SetProperty("count", value);
         }
 
         /// <summary>
         /// Optional DateTimeOffset property corresponding to JSON """{"updatedOn": "2020-06-25T17:44:37.6830000Z"}""".
         /// </summary>
+        private DateTimeOffset? _updatedOn;
+        private bool _updatedOnPatchFlag;
         public DateTimeOffset? UpdatedOn
         {
-            get
+            get => _updatedOn;
+            set
             {
-                if (_element.TryGetProperty("updatedOn", out MutableJsonElement value))
-                {
-                    return value.GetDateTimeOffset();
-                }
-                return null;
+                _updatedOn = value;
+                _updatedOnPatchFlag = true;
             }
-            set => _element.SetProperty("updatedOn", value);
         }
-#pragma warning restore AZC0020 // Avoid using banned types in libraries
     }
 }

@@ -3,7 +3,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core.Json;
 using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.PatchModels
@@ -17,10 +16,40 @@ namespace Azure.Core.Tests.PatchModels
             return Deserialize(ref reader, options);
         }
 
+        private static SimplePatchModel Deserialize(JsonElement element)
+        {
+            Optional<string> name = default;
+            Optional<int> count = default;
+            Optional<DateTimeOffset> updatedOn = default;
+
+            foreach (JsonProperty property in element.EnumerateObject())
+            {
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+
+                if (property.NameEquals("count"))
+                {
+                    count = property.Value.GetInt32();
+                    continue;
+                }
+
+                if (property.NameEquals("updatedOn"))
+                {
+                    updatedOn = property.Value.GetDateTimeOffset();
+                    continue;
+                }
+            }
+
+            return new SimplePatchModel(name, count, updatedOn);
+        }
+
         private static SimplePatchModel Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            MutableJsonDocument mdoc = MutableJsonDocument.Parse(ref reader);
-            return new SimplePatchModel(mdoc.RootElement);
+            JsonElement element = JsonDocument.ParseValue(ref reader).RootElement;
+            return Deserialize(element);
         }
 
         SimplePatchModel IModelSerializable<SimplePatchModel>.Deserialize(BinaryData data, ModelSerializerOptions options)
@@ -32,8 +61,69 @@ namespace Azure.Core.Tests.PatchModels
 
         private static SimplePatchModel Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            MutableJsonDocument mdoc = MutableJsonDocument.Parse(data);
-            return new SimplePatchModel(mdoc.RootElement);
+            JsonElement element = JsonDocument.Parse(data).RootElement;
+            return Deserialize(element);
+        }
+
+        private void SerializeFull(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+
+            // It's required for GET, so assume we have it
+            if (Name == null)
+            {
+                throw new InvalidOperationException("'name' was not initialized during Deserialization.");
+            }
+
+            writer.WritePropertyName("name");
+            writer.WriteStringValue(Name);
+
+            // It's required for GET, so assume we have it
+            if (Count == null)
+            {
+                throw new InvalidOperationException("'count' was not initialized during Deserialization.");
+            }
+
+            writer.WritePropertyName("count");
+            writer.WriteNumberValue(Count.Value);
+
+            // It's required for GET, so assume we have it
+            if (UpdatedOn == null)
+            {
+                throw new InvalidOperationException("'updatedOn' was not initialized during Deserialization.");
+            }
+
+            // TODO: write a DateTimeOffset correctly.
+            writer.WritePropertyName("updatedOn");
+            writer.WriteStringValue(UpdatedOn.Value);
+
+            writer.WriteEndObject();
+        }
+
+        private void SerializePatch(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+
+            if (_namePatchFlag)
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
+            }
+
+            if (_countPatchFlag)
+            {
+                writer.WritePropertyName("count");
+                writer.WriteNumberValue(Count.Value);
+            }
+
+            if (_updatedOnPatchFlag)
+            {
+                // TODO: write a DateTimeOffset correctly.
+                writer.WritePropertyName("updatedOn");
+                writer.WriteStringValue(UpdatedOn.Value);
+            }
+
+            writer.WriteEndObject();
         }
 
         void IModelJsonSerializable<SimplePatchModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
@@ -44,10 +134,10 @@ namespace Azure.Core.Tests.PatchModels
             {
                 case "J":
                 case "W":
-                    _element.WriteTo(writer, "J");
+                    SerializeFull(writer);
                     break;
                 case "P":
-                    _element.WriteTo(writer, "P");
+                    SerializePatch(writer);
                     break;
                 default:
                     // Exception was thrown by ValidateFormat.
