@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace Azure.ResourceManager.TestFramework
 {
-    public partial class InherentCheckTests
+    public partial class InheritanceCheckTests
     {
         private string[] ExceptionList { get; set; }
 
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.TestFramework
         private const string TestAssemblySuffix = ".Tests";
 
         [Test]
-        public void InherentCheck()
+        public void ValidateInheritanceForResourceAndCollectionSuffix()
         {
             var testAssembly = Assembly.GetExecutingAssembly();
             var assemblyName = testAssembly.GetName().Name;
