@@ -18,9 +18,9 @@ public-clients: false
 head-as-boolean: false
 resource-model-requires-type: false
 
-csharpgen:
-  attach: true
-#mgmt-debug: 
+# csharpgen:
+#   attach: true
+#mgmt-debug:
 #  show-serialized-names: true
 
 rename-mapping:
@@ -524,33 +524,5 @@ directive:
       for (var path in $)
       {
           delete $[path];
-      }
-  - from: vmssPublicIpAddress.json
-    where: $.paths
-    transform: >
-      for (var path in $)
-      {
-          delete $[path];
-      }
-  - from: vmssNetworkInterface.json
-    where: $.paths
-    transform: >
-      for (var path in $)
-      {
-          delete $[path];
-      }
-  - from: vmssNetworkInterface.json
-    where: $.definitions
-    transform: >
-      for (var def in $)
-      {
-          delete $[def];
-      }
-  - from: vmssNetworkInterface.json
-    where: $.parameters
-    transform: >
-      for (var param in $)
-      {
-          delete $[param];
       }
 ```
