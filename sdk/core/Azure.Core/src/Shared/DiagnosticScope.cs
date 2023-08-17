@@ -507,7 +507,7 @@ namespace Azure.Core.Pipeline
                 _currentActivity?.SetStartTime(startTime);
             }
 
-#if !NET5_0 && !NET462
+#if !NET5_0
             [RequiresUnreferencedCode("The exception is used in a call to DiagnosticSource.Write, all necessary properties need to be preserved on the exception type being passed in using DynamicDependency attributes.")]
 #endif
             public void MarkFailed(Exception? exception)
