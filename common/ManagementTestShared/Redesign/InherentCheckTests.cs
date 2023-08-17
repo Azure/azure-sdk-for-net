@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace Azure.ResourceManager.TestFramework
 {
-    public sealed class InherentCheckTests
+    public partial class InherentCheckTests
     {
         private string[] ExceptionList { get; set; }
 
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.TestFramework
 
             foreach (var type in sdkAssembly.GetTypes())
             {
-                if (type.IsClass && !exceptionList.Contains(type.Name))
+                if (type.IsClass && type.IsPublic && !exceptionList.Contains(type.Name))
                 {
                     if (type.Name.EndsWith("Resource")
                         && !type.Name.Equals("ArmResource")
