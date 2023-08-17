@@ -1306,7 +1306,11 @@ namespace Azure.Core.Json
         internal static JsonElement SerializeToJsonElement(object? value, JsonSerializerOptions? options = default)
         {
             byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(value, options);
+            return ParseFromBytes(bytes);
+        }
 
+        private static JsonElement ParseFromBytes(byte[] bytes)
+        {
             // Most JsonDocument.Parse calls return an array that is backed by one or more
             // ArrayPool arrays.  Those arrays are not returned until the instance is disposed.
             // This workaround allows us to dispose the JsonDocument so that we don't leak
@@ -1332,8 +1336,7 @@ namespace Azure.Core.Json
             // Account for changes to descendants of this element as well
             if (Changes.DescendantChanged(_path, _highWaterMark))
             {
-                JsonDocument document = JsonDocument.Parse(GetRawBytes());
-                return document.RootElement;
+                return ParseFromBytes(GetRawBytes());
             }
 
             return _element;

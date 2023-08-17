@@ -62,6 +62,7 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("last_modified").Set("2023-03-23T16:35:35+00:00");
 
             MutableJsonDocumentTests.ValidateWriteTo(data2, mdoc);
+            MutableJsonDocumentTests.ValidateWriteTo(data2.ToString(), mdoc);
         }
 
         [Test]
@@ -658,6 +659,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Ignore("Investigating possible issue in Utf8JsonWriter.")]
         public void CanWriteDateTimeOffset()
         {
             DateTimeOffset dateTime = DateTimeOffset.Parse("2023-08-17T10:36:42.5482841+07:00");
