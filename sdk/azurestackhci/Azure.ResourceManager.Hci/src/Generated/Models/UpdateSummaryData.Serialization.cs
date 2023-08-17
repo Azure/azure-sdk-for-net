@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("oemFamily"u8);
                 writer.WriteStringValue(OemFamily);
             }
+            if (Optional.IsDefined(CurrentOemVersion))
+            {
+                writer.WritePropertyName("currentOemVersion"u8);
+                writer.WriteStringValue(CurrentOemVersion);
+            }
             if (Optional.IsDefined(HardwareModel))
             {
                 writer.WritePropertyName("hardwareModel"u8);
@@ -103,6 +108,7 @@ namespace Azure.ResourceManager.Hci
             Optional<SystemData> systemData = default;
             Optional<HciProvisioningState> provisioningState = default;
             Optional<string> oemFamily = default;
+            Optional<string> currentOemVersion = default;
             Optional<string> hardwareModel = default;
             Optional<IList<HciPackageVersionInfo>> packageVersions = default;
             Optional<string> currentVersion = default;
@@ -168,6 +174,11 @@ namespace Azure.ResourceManager.Hci
                         if (property0.NameEquals("oemFamily"u8))
                         {
                             oemFamily = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("currentOemVersion"u8))
+                        {
+                            currentOemVersion = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("hardwareModel"u8))
@@ -257,7 +268,7 @@ namespace Azure.ResourceManager.Hci
                     continue;
                 }
             }
-            return new UpdateSummaryData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), oemFamily.Value, hardwareModel.Value, Optional.ToList(packageVersions), currentVersion.Value, Optional.ToNullable(lastUpdated), Optional.ToNullable(lastChecked), Optional.ToNullable(healthState), Optional.ToList(healthCheckResult), Optional.ToNullable(healthCheckDate), Optional.ToNullable(state));
+            return new UpdateSummaryData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), oemFamily.Value, currentOemVersion.Value, hardwareModel.Value, Optional.ToList(packageVersions), currentVersion.Value, Optional.ToNullable(lastUpdated), Optional.ToNullable(lastChecked), Optional.ToNullable(healthState), Optional.ToList(healthCheckResult), Optional.ToNullable(healthCheckDate), Optional.ToNullable(state));
         }
     }
 }

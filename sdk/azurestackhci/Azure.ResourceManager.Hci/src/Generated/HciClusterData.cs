@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Hci
         /// <param name="location"> The location. </param>
         public HciClusterData(AzureLocation location) : base(location)
         {
-            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
         /// <summary> Initializes a new instance of HciClusterData. </summary>
@@ -33,6 +32,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="identity"> Identity of Cluster resource. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="status"> Status of the cluster agent. </param>
         /// <param name="cloudId"> Unique, immutable resource id. </param>
@@ -51,12 +51,9 @@ namespace Azure.ResourceManager.Hci
         /// <param name="lastBillingTimestamp"> Most recent billing meter timestamp. </param>
         /// <param name="serviceEndpoint"> Region specific DataPath Endpoint of the cluster. </param>
         /// <param name="resourceProviderObjectId"> Object id of RP Service Principal. </param>
-        /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="typeIdentityType"> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </param>
-        /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
-        internal HciClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HciProvisioningState? provisioningState, HciClusterStatus? status, Guid? cloudId, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, SoftwareAssuranceProperties softwareAssuranceProperties, HciClusterDesiredProperties desiredProperties, HciClusterReportedProperties reportedProperties, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint, string resourceProviderObjectId, Guid? principalId, Guid? tenantId, HciManagedServiceIdentityType? typeIdentityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities) : base(id, name, resourceType, systemData, tags, location)
+        internal HciClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, HciProvisioningState? provisioningState, HciClusterStatus? status, Guid? cloudId, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, SoftwareAssuranceProperties softwareAssuranceProperties, HciClusterDesiredProperties desiredProperties, HciClusterReportedProperties reportedProperties, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint, string resourceProviderObjectId) : base(id, name, resourceType, systemData, tags, location)
         {
+            Identity = identity;
             ProvisioningState = provisioningState;
             Status = status;
             CloudId = cloudId;
@@ -75,12 +72,10 @@ namespace Azure.ResourceManager.Hci
             LastBillingTimestamp = lastBillingTimestamp;
             ServiceEndpoint = serviceEndpoint;
             ResourceProviderObjectId = resourceProviderObjectId;
-            PrincipalId = principalId;
-            TenantId = tenantId;
-            TypeIdentityType = typeIdentityType;
-            UserAssignedIdentities = userAssignedIdentities;
         }
 
+        /// <summary> Identity of Cluster resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Provisioning state. </summary>
         public HciProvisioningState? ProvisioningState { get; }
         /// <summary> Status of the cluster agent. </summary>
@@ -117,13 +112,5 @@ namespace Azure.ResourceManager.Hci
         public string ServiceEndpoint { get; }
         /// <summary> Object id of RP Service Principal. </summary>
         public string ResourceProviderObjectId { get; }
-        /// <summary> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </summary>
-        public Guid? PrincipalId { get; }
-        /// <summary> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </summary>
-        public Guid? TenantId { get; }
-        /// <summary> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </summary>
-        public HciManagedServiceIdentityType? TypeIdentityType { get; set; }
-        /// <summary> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </summary>
-        public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
     }
 }

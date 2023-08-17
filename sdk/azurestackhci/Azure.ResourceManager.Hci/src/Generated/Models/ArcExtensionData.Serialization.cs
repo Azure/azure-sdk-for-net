@@ -89,6 +89,7 @@ namespace Azure.ResourceManager.Hci
             Optional<HciProvisioningState> provisioningState = default;
             Optional<ArcExtensionAggregateState> aggregateState = default;
             Optional<IReadOnlyList<PerNodeExtensionState>> perNodeExtensionDetails = default;
+            Optional<ExtensionManagedBy> managedBy = default;
             Optional<string> forceUpdateTag = default;
             Optional<string> publisher = default;
             Optional<string> type0 = default;
@@ -164,6 +165,15 @@ namespace Azure.ResourceManager.Hci
                             perNodeExtensionDetails = array;
                             continue;
                         }
+                        if (property0.NameEquals("managedBy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            managedBy = new ExtensionManagedBy(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("extensionParameters"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -236,7 +246,7 @@ namespace Azure.ResourceManager.Hci
                     continue;
                 }
             }
-            return new ArcExtensionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(aggregateState), Optional.ToList(perNodeExtensionDetails), forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, Optional.ToNullable(enableAutomaticUpgrade));
+            return new ArcExtensionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(aggregateState), Optional.ToList(perNodeExtensionDetails), Optional.ToNullable(managedBy), forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, Optional.ToNullable(enableAutomaticUpgrade));
         }
     }
 }

@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                JsonSerializer.Serialize(writer, Identity);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(CloudManagementEndpoint))
@@ -47,25 +52,6 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("desiredProperties"u8);
                 writer.WriteObjectValue(DesiredProperties);
-            }
-            writer.WriteEndObject();
-            writer.WritePropertyName("identity"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ManagedServiceIdentityType))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ManagedServiceIdentityType.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(UserAssignedIdentities))
-            {
-                writer.WritePropertyName("userAssignedIdentities"u8);
-                writer.WriteStartObject();
-                foreach (var item in UserAssignedIdentities)
-                {
-                    writer.WritePropertyName(item.Key);
-                    JsonSerializer.Serialize(writer, item.Value);
-                }
-                writer.WriteEndObject();
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

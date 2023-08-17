@@ -106,6 +106,63 @@ namespace Azure.ResourceManager.Hci
         }
         #endregion
 
+        #region HciGalleryImageResource
+        /// <summary>
+        /// Gets an object representing a <see cref="HciGalleryImageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciGalleryImageResource.CreateResourceIdentifier" /> to create a <see cref="HciGalleryImageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HciGalleryImageResource" /> object. </returns>
+        public static HciGalleryImageResource GetHciGalleryImageResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                HciGalleryImageResource.ValidateResourceId(id);
+                return new HciGalleryImageResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region HciMarketplaceGalleryImageResource
+        /// <summary>
+        /// Gets an object representing a <see cref="HciMarketplaceGalleryImageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciMarketplaceGalleryImageResource.CreateResourceIdentifier" /> to create a <see cref="HciMarketplaceGalleryImageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HciMarketplaceGalleryImageResource" /> object. </returns>
+        public static HciMarketplaceGalleryImageResource GetHciMarketplaceGalleryImageResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                HciMarketplaceGalleryImageResource.ValidateResourceId(id);
+                return new HciMarketplaceGalleryImageResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region HciNetworkInterfaceResource
+        /// <summary>
+        /// Gets an object representing a <see cref="HciNetworkInterfaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciNetworkInterfaceResource.CreateResourceIdentifier" /> to create a <see cref="HciNetworkInterfaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HciNetworkInterfaceResource" /> object. </returns>
+        public static HciNetworkInterfaceResource GetHciNetworkInterfaceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                HciNetworkInterfaceResource.ValidateResourceId(id);
+                return new HciNetworkInterfaceResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region OfferResource
         /// <summary>
         /// Gets an object representing an <see cref="OfferResource" /> along with the instance operations that can be performed on it but with no data.
@@ -158,6 +215,25 @@ namespace Azure.ResourceManager.Hci
             {
                 HciSkuResource.ValidateResourceId(id);
                 return new HciSkuResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region HciStorageContainerResource
+        /// <summary>
+        /// Gets an object representing a <see cref="HciStorageContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciStorageContainerResource.CreateResourceIdentifier" /> to create a <see cref="HciStorageContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HciStorageContainerResource" /> object. </returns>
+        public static HciStorageContainerResource GetHciStorageContainerResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                HciStorageContainerResource.ValidateResourceId(id);
+                return new HciStorageContainerResource(client, id);
             }
             );
         }
@@ -220,6 +296,120 @@ namespace Azure.ResourceManager.Hci
         }
         #endregion
 
+        #region HciVirtualHardDiskResource
+        /// <summary>
+        /// Gets an object representing a <see cref="HciVirtualHardDiskResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciVirtualHardDiskResource.CreateResourceIdentifier" /> to create a <see cref="HciVirtualHardDiskResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HciVirtualHardDiskResource" /> object. </returns>
+        public static HciVirtualHardDiskResource GetHciVirtualHardDiskResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                HciVirtualHardDiskResource.ValidateResourceId(id);
+                return new HciVirtualHardDiskResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region HciVirtualMachineResource
+        /// <summary>
+        /// Gets an object representing a <see cref="HciVirtualMachineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciVirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="HciVirtualMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HciVirtualMachineResource" /> object. </returns>
+        public static HciVirtualMachineResource GetHciVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                HciVirtualMachineResource.ValidateResourceId(id);
+                return new HciVirtualMachineResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region HciHybridIdentityMetadataResource
+        /// <summary>
+        /// Gets an object representing a <see cref="HciHybridIdentityMetadataResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciHybridIdentityMetadataResource.CreateResourceIdentifier" /> to create a <see cref="HciHybridIdentityMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HciHybridIdentityMetadataResource" /> object. </returns>
+        public static HciHybridIdentityMetadataResource GetHciHybridIdentityMetadataResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                HciHybridIdentityMetadataResource.ValidateResourceId(id);
+                return new HciHybridIdentityMetadataResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region HciMachineExtensionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="HciMachineExtensionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciMachineExtensionResource.CreateResourceIdentifier" /> to create a <see cref="HciMachineExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HciMachineExtensionResource" /> object. </returns>
+        public static HciMachineExtensionResource GetHciMachineExtensionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                HciMachineExtensionResource.ValidateResourceId(id);
+                return new HciMachineExtensionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region HciGuestAgentResource
+        /// <summary>
+        /// Gets an object representing a <see cref="HciGuestAgentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciGuestAgentResource.CreateResourceIdentifier" /> to create a <see cref="HciGuestAgentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HciGuestAgentResource" /> object. </returns>
+        public static HciGuestAgentResource GetHciGuestAgentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                HciGuestAgentResource.ValidateResourceId(id);
+                return new HciGuestAgentResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region HciVirtualNetworkResource
+        /// <summary>
+        /// Gets an object representing a <see cref="HciVirtualNetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciVirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="HciVirtualNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HciVirtualNetworkResource" /> object. </returns>
+        public static HciVirtualNetworkResource GetHciVirtualNetworkResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                HciVirtualNetworkResource.ValidateResourceId(id);
+                return new HciVirtualNetworkResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         /// <summary> Gets a collection of HciClusterResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of HciClusterResources and their operations over a HciClusterResource. </returns>
@@ -276,6 +466,396 @@ namespace Azure.ResourceManager.Hci
             return resourceGroupResource.GetHciClusters().Get(clusterName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of HciGalleryImageResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of HciGalleryImageResources and their operations over a HciGalleryImageResource. </returns>
+        public static HciGalleryImageCollection GetHciGalleryImages(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHciGalleryImages();
+        }
+
+        /// <summary>
+        /// Gets a gallery image
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/galleryImages/{galleryImageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GalleryImages_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="galleryImageName"> Name of the gallery image. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<HciGalleryImageResource>> GetHciGalleryImageAsync(this ResourceGroupResource resourceGroupResource, string galleryImageName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetHciGalleryImages().GetAsync(galleryImageName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a gallery image
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/galleryImages/{galleryImageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GalleryImages_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="galleryImageName"> Name of the gallery image. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<HciGalleryImageResource> GetHciGalleryImage(this ResourceGroupResource resourceGroupResource, string galleryImageName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetHciGalleryImages().Get(galleryImageName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of HciMarketplaceGalleryImageResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of HciMarketplaceGalleryImageResources and their operations over a HciMarketplaceGalleryImageResource. </returns>
+        public static HciMarketplaceGalleryImageCollection GetHciMarketplaceGalleryImages(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHciMarketplaceGalleryImages();
+        }
+
+        /// <summary>
+        /// Gets a marketplace gallery image
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/marketplaceGalleryImages/{marketplaceGalleryImageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceGalleryImages_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="marketplaceGalleryImageName"> Name of the marketplace gallery image. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="marketplaceGalleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="marketplaceGalleryImageName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<HciMarketplaceGalleryImageResource>> GetHciMarketplaceGalleryImageAsync(this ResourceGroupResource resourceGroupResource, string marketplaceGalleryImageName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetHciMarketplaceGalleryImages().GetAsync(marketplaceGalleryImageName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a marketplace gallery image
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/marketplaceGalleryImages/{marketplaceGalleryImageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceGalleryImages_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="marketplaceGalleryImageName"> Name of the marketplace gallery image. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="marketplaceGalleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="marketplaceGalleryImageName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<HciMarketplaceGalleryImageResource> GetHciMarketplaceGalleryImage(this ResourceGroupResource resourceGroupResource, string marketplaceGalleryImageName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetHciMarketplaceGalleryImages().Get(marketplaceGalleryImageName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of HciNetworkInterfaceResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of HciNetworkInterfaceResources and their operations over a HciNetworkInterfaceResource. </returns>
+        public static HciNetworkInterfaceCollection GetHciNetworkInterfaces(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHciNetworkInterfaces();
+        }
+
+        /// <summary>
+        /// Gets a network interface
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkInterfaces/{networkInterfaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkInterfaces_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="networkInterfaceName"> Name of the network interface. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<HciNetworkInterfaceResource>> GetHciNetworkInterfaceAsync(this ResourceGroupResource resourceGroupResource, string networkInterfaceName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetHciNetworkInterfaces().GetAsync(networkInterfaceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a network interface
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkInterfaces/{networkInterfaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkInterfaces_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="networkInterfaceName"> Name of the network interface. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<HciNetworkInterfaceResource> GetHciNetworkInterface(this ResourceGroupResource resourceGroupResource, string networkInterfaceName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetHciNetworkInterfaces().Get(networkInterfaceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of HciStorageContainerResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of HciStorageContainerResources and their operations over a HciStorageContainerResource. </returns>
+        public static HciStorageContainerCollection GetHciStorageContainers(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHciStorageContainers();
+        }
+
+        /// <summary>
+        /// Gets a storage container
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/storageContainers/{storageContainerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageContainers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="storageContainerName"> Name of the storage container. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<HciStorageContainerResource>> GetHciStorageContainerAsync(this ResourceGroupResource resourceGroupResource, string storageContainerName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetHciStorageContainers().GetAsync(storageContainerName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a storage container
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/storageContainers/{storageContainerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageContainers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="storageContainerName"> Name of the storage container. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<HciStorageContainerResource> GetHciStorageContainer(this ResourceGroupResource resourceGroupResource, string storageContainerName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetHciStorageContainers().Get(storageContainerName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of HciVirtualHardDiskResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of HciVirtualHardDiskResources and their operations over a HciVirtualHardDiskResource. </returns>
+        public static HciVirtualHardDiskCollection GetHciVirtualHardDisks(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHciVirtualHardDisks();
+        }
+
+        /// <summary>
+        /// Gets a virtual hard disk
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualHardDisks/{virtualHardDiskName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualHardDisks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="virtualHardDiskName"> Name of the virtual hard disk. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualHardDiskName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<HciVirtualHardDiskResource>> GetHciVirtualHardDiskAsync(this ResourceGroupResource resourceGroupResource, string virtualHardDiskName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetHciVirtualHardDisks().GetAsync(virtualHardDiskName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a virtual hard disk
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualHardDisks/{virtualHardDiskName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualHardDisks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="virtualHardDiskName"> Name of the virtual hard disk. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualHardDiskName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualHardDiskName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<HciVirtualHardDiskResource> GetHciVirtualHardDisk(this ResourceGroupResource resourceGroupResource, string virtualHardDiskName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetHciVirtualHardDisks().Get(virtualHardDiskName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of HciVirtualMachineResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of HciVirtualMachineResources and their operations over a HciVirtualMachineResource. </returns>
+        public static HciVirtualMachineCollection GetHciVirtualMachines(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHciVirtualMachines();
+        }
+
+        /// <summary>
+        /// Gets a virtual machine
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualMachines/{virtualMachineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachines_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="virtualMachineName"> Name of the virtual machine. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<HciVirtualMachineResource>> GetHciVirtualMachineAsync(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetHciVirtualMachines().GetAsync(virtualMachineName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a virtual machine
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualMachines/{virtualMachineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachines_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="virtualMachineName"> Name of the virtual machine. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<HciVirtualMachineResource> GetHciVirtualMachine(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetHciVirtualMachines().Get(virtualMachineName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of HciVirtualNetworkResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of HciVirtualNetworkResources and their operations over a HciVirtualNetworkResource. </returns>
+        public static HciVirtualNetworkCollection GetHciVirtualNetworks(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHciVirtualNetworks();
+        }
+
+        /// <summary>
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualNetworks/{virtualNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="virtualNetworkName"> Name of the virtual network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<HciVirtualNetworkResource>> GetHciVirtualNetworkAsync(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetHciVirtualNetworks().GetAsync(virtualNetworkName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/virtualNetworks/{virtualNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworks_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="virtualNetworkName"> Name of the virtual network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<HciVirtualNetworkResource> GetHciVirtualNetwork(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetHciVirtualNetworks().Get(virtualNetworkName, cancellationToken);
+        }
+
         /// <summary>
         /// List all HCI clusters in a subscription.
         /// <list type="bullet">
@@ -316,6 +896,300 @@ namespace Azure.ResourceManager.Hci
         public static Pageable<HciClusterResource> GetHciClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHciClusters(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the gallery images in the specified subscription. Use the nextLink property in the response to get the next page of gallery images.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/galleryImages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GalleryImages_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="HciGalleryImageResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HciGalleryImageResource> GetHciGalleryImagesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHciGalleryImagesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the gallery images in the specified subscription. Use the nextLink property in the response to get the next page of gallery images.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/galleryImages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GalleryImages_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HciGalleryImageResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HciGalleryImageResource> GetHciGalleryImages(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHciGalleryImages(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the marketplace gallery images in the specified subscription. Use the nextLink property in the response to get the next page of marketplace gallery images.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/marketplaceGalleryImages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceGalleryImages_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="HciMarketplaceGalleryImageResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HciMarketplaceGalleryImageResource> GetHciMarketplaceGalleryImagesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHciMarketplaceGalleryImagesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the marketplace gallery images in the specified subscription. Use the nextLink property in the response to get the next page of marketplace gallery images.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/marketplaceGalleryImages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceGalleryImages_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HciMarketplaceGalleryImageResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HciMarketplaceGalleryImageResource> GetHciMarketplaceGalleryImages(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHciMarketplaceGalleryImages(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the network interfaces in the specified subscription. Use the nextLink property in the response to get the next page of network interfaces.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/networkInterfaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkInterfaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="HciNetworkInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HciNetworkInterfaceResource> GetHciNetworkInterfacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHciNetworkInterfacesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the network interfaces in the specified subscription. Use the nextLink property in the response to get the next page of network interfaces.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/networkInterfaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkInterfaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HciNetworkInterfaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HciNetworkInterfaceResource> GetHciNetworkInterfaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHciNetworkInterfaces(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the storage containers in the specified subscription. Use the nextLink property in the response to get the next page of storage containers.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/storageContainers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageContainers_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="HciStorageContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HciStorageContainerResource> GetHciStorageContainersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHciStorageContainersAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the storage containers in the specified subscription. Use the nextLink property in the response to get the next page of storage containers.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/storageContainers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageContainers_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HciStorageContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HciStorageContainerResource> GetHciStorageContainers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHciStorageContainers(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the virtual hard disks in the specified subscription. Use the nextLink property in the response to get the next page of virtual hard disks.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/virtualHardDisks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualHardDisks_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="HciVirtualHardDiskResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HciVirtualHardDiskResource> GetHciVirtualHardDisksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHciVirtualHardDisksAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the virtual hard disks in the specified subscription. Use the nextLink property in the response to get the next page of virtual hard disks.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/virtualHardDisks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualHardDisks_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HciVirtualHardDiskResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HciVirtualHardDiskResource> GetHciVirtualHardDisks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHciVirtualHardDisks(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to get the next page of virtual machines.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/virtualMachines</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachines_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="HciVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HciVirtualMachineResource> GetHciVirtualMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHciVirtualMachinesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to get the next page of virtual machines.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/virtualMachines</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachines_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HciVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HciVirtualMachineResource> GetHciVirtualMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHciVirtualMachines(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the virtual networks in the specified subscription. Use the nextLink property in the response to get the next page of virtual networks.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/virtualNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworks_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="HciVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HciVirtualNetworkResource> GetHciVirtualNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHciVirtualNetworksAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all of the virtual networks in the specified subscription. Use the nextLink property in the response to get the next page of virtual networks.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureStackHCI/virtualNetworks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworks_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HciVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HciVirtualNetworkResource> GetHciVirtualNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHciVirtualNetworks(cancellationToken);
         }
     }
 }

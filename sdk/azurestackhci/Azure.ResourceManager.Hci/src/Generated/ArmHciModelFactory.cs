@@ -8,9 +8,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Hci;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -31,12 +33,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="aggregateState"> Aggregate state of Arc agent across the nodes in this HCI cluster. </param>
         /// <param name="perNodeDetails"> State of Arc agent in each of the nodes. </param>
         /// <param name="connectivityProperties"> contains connectivity related configuration for ARC resources. </param>
+        /// <param name="defaultExtensions"> Consent time for each of the default extensions category. </param>
         /// <returns> A new <see cref="Hci.ArcSettingData"/> instance for mocking. </returns>
-        public static ArcSettingData ArcSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HciProvisioningState? provisioningState = null, string arcInstanceResourceGroup = null, Guid? arcApplicationClientId = null, Guid? arcApplicationTenantId = null, Guid? arcServicePrincipalObjectId = null, Guid? arcApplicationObjectId = null, ArcSettingAggregateState? aggregateState = null, IEnumerable<PerNodeArcState> perNodeDetails = null, BinaryData connectivityProperties = null)
+        public static ArcSettingData ArcSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HciProvisioningState? provisioningState = null, string arcInstanceResourceGroup = null, Guid? arcApplicationClientId = null, Guid? arcApplicationTenantId = null, Guid? arcServicePrincipalObjectId = null, Guid? arcApplicationObjectId = null, ArcSettingAggregateState? aggregateState = null, IEnumerable<PerNodeArcState> perNodeDetails = null, BinaryData connectivityProperties = null, IEnumerable<DefaultExtensionDetails> defaultExtensions = null)
         {
             perNodeDetails ??= new List<PerNodeArcState>();
+            defaultExtensions ??= new List<DefaultExtensionDetails>();
 
-            return new ArcSettingData(id, name, resourceType, systemData, provisioningState, arcInstanceResourceGroup, arcApplicationClientId, arcApplicationTenantId, arcServicePrincipalObjectId, arcApplicationObjectId, aggregateState, perNodeDetails?.ToList(), connectivityProperties);
+            return new ArcSettingData(id, name, resourceType, systemData, provisioningState, arcInstanceResourceGroup, arcApplicationClientId, arcApplicationTenantId, arcServicePrincipalObjectId, arcApplicationObjectId, aggregateState, perNodeDetails?.ToList(), connectivityProperties, defaultExtensions?.ToList());
         }
 
         /// <summary> Initializes a new instance of PerNodeArcState. </summary>
@@ -47,6 +51,15 @@ namespace Azure.ResourceManager.Hci.Models
         public static PerNodeArcState PerNodeArcState(string name = null, string arcInstance = null, NodeArcState? state = null)
         {
             return new PerNodeArcState(name, arcInstance, state);
+        }
+
+        /// <summary> Initializes a new instance of DefaultExtensionDetails. </summary>
+        /// <param name="category"> Default extension category. </param>
+        /// <param name="consentOn"> Consent time for extension category. </param>
+        /// <returns> A new <see cref="Models.DefaultExtensionDetails"/> instance for mocking. </returns>
+        public static DefaultExtensionDetails DefaultExtensionDetails(string category = null, DateTimeOffset? consentOn = null)
+        {
+            return new DefaultExtensionDetails(category, consentOn);
         }
 
         /// <summary> Initializes a new instance of ArcPasswordCredential. </summary>
@@ -78,6 +91,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="identity"> Identity of Cluster resource. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="status"> Status of the cluster agent. </param>
         /// <param name="cloudId"> Unique, immutable resource id. </param>
@@ -96,17 +110,12 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="lastBillingTimestamp"> Most recent billing meter timestamp. </param>
         /// <param name="serviceEndpoint"> Region specific DataPath Endpoint of the cluster. </param>
         /// <param name="resourceProviderObjectId"> Object id of RP Service Principal. </param>
-        /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="typeIdentityType"> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </param>
-        /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
         /// <returns> A new <see cref="Hci.HciClusterData"/> instance for mocking. </returns>
-        public static HciClusterData HciClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HciProvisioningState? provisioningState = null, HciClusterStatus? status = null, Guid? cloudId = null, string cloudManagementEndpoint = null, Guid? aadClientId = null, Guid? aadTenantId = null, Guid? aadApplicationObjectId = null, Guid? aadServicePrincipalObjectId = null, SoftwareAssuranceProperties softwareAssuranceProperties = null, HciClusterDesiredProperties desiredProperties = null, HciClusterReportedProperties reportedProperties = null, float? trialDaysRemaining = null, string billingModel = null, DateTimeOffset? registrationTimestamp = null, DateTimeOffset? lastSyncTimestamp = null, DateTimeOffset? lastBillingTimestamp = null, string serviceEndpoint = null, string resourceProviderObjectId = null, Guid? principalId = null, Guid? tenantId = null, HciManagedServiceIdentityType? typeIdentityType = null, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = null)
+        public static HciClusterData HciClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, HciProvisioningState? provisioningState = null, HciClusterStatus? status = null, Guid? cloudId = null, string cloudManagementEndpoint = null, Guid? aadClientId = null, Guid? aadTenantId = null, Guid? aadApplicationObjectId = null, Guid? aadServicePrincipalObjectId = null, SoftwareAssuranceProperties softwareAssuranceProperties = null, HciClusterDesiredProperties desiredProperties = null, HciClusterReportedProperties reportedProperties = null, float? trialDaysRemaining = null, string billingModel = null, DateTimeOffset? registrationTimestamp = null, DateTimeOffset? lastSyncTimestamp = null, DateTimeOffset? lastBillingTimestamp = null, string serviceEndpoint = null, string resourceProviderObjectId = null)
         {
             tags ??= new Dictionary<string, string>();
-            userAssignedIdentities ??= new Dictionary<string, UserAssignedIdentity>();
 
-            return new HciClusterData(id, name, resourceType, systemData, tags, location, provisioningState, status, cloudId, cloudManagementEndpoint, aadClientId, aadTenantId, aadApplicationObjectId, aadServicePrincipalObjectId, softwareAssuranceProperties, desiredProperties, reportedProperties, trialDaysRemaining, billingModel, registrationTimestamp, lastSyncTimestamp, lastBillingTimestamp, serviceEndpoint, resourceProviderObjectId, principalId, tenantId, typeIdentityType, userAssignedIdentities);
+            return new HciClusterData(id, name, resourceType, systemData, tags, location, identity, provisioningState, status, cloudId, cloudManagementEndpoint, aadClientId, aadTenantId, aadApplicationObjectId, aadServicePrincipalObjectId, softwareAssuranceProperties, desiredProperties, reportedProperties, trialDaysRemaining, billingModel, registrationTimestamp, lastSyncTimestamp, lastBillingTimestamp, serviceEndpoint, resourceProviderObjectId);
         }
 
         /// <summary> Initializes a new instance of SoftwareAssuranceProperties. </summary>
@@ -151,11 +160,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="serialNumber"> Immutable id of the cluster node. </param>
         /// <param name="coreCount"> Number of physical cores on the cluster node. </param>
         /// <param name="memoryInGiB"> Total available memory on the cluster node (in GiB). </param>
-        /// <param name="lastLicensingTimestamp"> Most recent licensing timestamp. </param>
         /// <returns> A new <see cref="Models.HciClusterNode"/> instance for mocking. </returns>
-        public static HciClusterNode HciClusterNode(string name = null, float? id = null, WindowsServerSubscription? windowsServerSubscription = null, ClusterNodeType? nodeType = null, string ehcResourceId = null, string manufacturer = null, string model = null, string osName = null, string osVersion = null, string osDisplayVersion = null, string serialNumber = null, float? coreCount = null, float? memoryInGiB = null, DateTimeOffset? lastLicensingTimestamp = null)
+        public static HciClusterNode HciClusterNode(string name = null, float? id = null, WindowsServerSubscription? windowsServerSubscription = null, ClusterNodeType? nodeType = null, string ehcResourceId = null, string manufacturer = null, string model = null, string osName = null, string osVersion = null, string osDisplayVersion = null, string serialNumber = null, float? coreCount = null, float? memoryInGiB = null)
         {
-            return new HciClusterNode(name, id, windowsServerSubscription, nodeType, ehcResourceId, manufacturer, model, osName, osVersion, osDisplayVersion, serialNumber, coreCount, memoryInGiB, lastLicensingTimestamp);
+            return new HciClusterNode(name, id, windowsServerSubscription, nodeType, ehcResourceId, manufacturer, model, osName, osVersion, osDisplayVersion, serialNumber, coreCount, memoryInGiB);
         }
 
         /// <summary> Initializes a new instance of HciClusterIdentityResult. </summary>
@@ -177,6 +185,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="provisioningState"> Provisioning state of the Extension proxy resource. </param>
         /// <param name="aggregateState"> Aggregate state of Arc Extensions across the nodes in this HCI cluster. </param>
         /// <param name="perNodeExtensionDetails"> State of Arc Extension in each of the nodes. </param>
+        /// <param name="managedBy"> Indicates if the extension is managed by azure or the user. </param>
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="arcExtensionType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
@@ -186,11 +195,11 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="protectedSettings"> Protected settings (may contain secrets). </param>
         /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </param>
         /// <returns> A new <see cref="Hci.ArcExtensionData"/> instance for mocking. </returns>
-        public static ArcExtensionData ArcExtensionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HciProvisioningState? provisioningState = null, ArcExtensionAggregateState? aggregateState = null, IEnumerable<PerNodeExtensionState> perNodeExtensionDetails = null, string forceUpdateTag = null, string publisher = null, string arcExtensionType = null, string typeHandlerVersion = null, bool? shouldAutoUpgradeMinorVersion = null, BinaryData settings = null, BinaryData protectedSettings = null, bool? enableAutomaticUpgrade = null)
+        public static ArcExtensionData ArcExtensionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HciProvisioningState? provisioningState = null, ArcExtensionAggregateState? aggregateState = null, IEnumerable<PerNodeExtensionState> perNodeExtensionDetails = null, ExtensionManagedBy? managedBy = null, string forceUpdateTag = null, string publisher = null, string arcExtensionType = null, string typeHandlerVersion = null, bool? shouldAutoUpgradeMinorVersion = null, BinaryData settings = null, BinaryData protectedSettings = null, bool? enableAutomaticUpgrade = null)
         {
             perNodeExtensionDetails ??= new List<PerNodeExtensionState>();
 
-            return new ArcExtensionData(id, name, resourceType, systemData, provisioningState, aggregateState, perNodeExtensionDetails?.ToList(), forceUpdateTag, publisher, arcExtensionType, typeHandlerVersion, shouldAutoUpgradeMinorVersion, settings, protectedSettings, enableAutomaticUpgrade);
+            return new ArcExtensionData(id, name, resourceType, systemData, provisioningState, aggregateState, perNodeExtensionDetails?.ToList(), managedBy, forceUpdateTag, publisher, arcExtensionType, typeHandlerVersion, shouldAutoUpgradeMinorVersion, settings, protectedSettings, enableAutomaticUpgrade);
         }
 
         /// <summary> Initializes a new instance of PerNodeExtensionState. </summary>
@@ -226,6 +235,139 @@ namespace Azure.ResourceManager.Hci.Models
         public static ExtensionInstanceViewStatus ExtensionInstanceViewStatus(string code = null, HciStatusLevelType? level = null, string displayStatus = null, string message = null, DateTimeOffset? time = null)
         {
             return new ExtensionInstanceViewStatus(code, level, displayStatus, message, time);
+        }
+
+        /// <summary> Initializes a new instance of HciGalleryImageData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
+        /// <param name="containerName"> Container Name for storage container. </param>
+        /// <param name="imagePath"> location of the image the gallery image should be created from. </param>
+        /// <param name="osType"> Operating system type that the gallery image uses [Windows, Linux]. </param>
+        /// <param name="cloudInitDataSource"> Datasource for the gallery image when provisioning with cloud-init [NoCloud, Azure]. </param>
+        /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine [V1, V2]. </param>
+        /// <param name="identifier"> This is the gallery image definition identifier. </param>
+        /// <param name="version"> Specifies information about the gallery image version that you want to create or update. </param>
+        /// <param name="provisioningState"> Provisioning state of the gallery image. </param>
+        /// <param name="status"> The observed state of gallery images. </param>
+        /// <returns> A new <see cref="Hci.HciGalleryImageData"/> instance for mocking. </returns>
+        public static HciGalleryImageData HciGalleryImageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HciExtendedLocation extendedLocation = null, string containerName = null, string imagePath = null, OperatingSystemType? osType = null, CloudInitDataSource? cloudInitDataSource = null, HciHyperVGeneration? hyperVGeneration = null, HciGalleryImageIdentifier identifier = null, HciGalleryImageVersion version = null, HciGenericProvisioningState? provisioningState = null, HciGalleryImageStatus status = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new HciGalleryImageData(id, name, resourceType, systemData, tags, location, extendedLocation, containerName, imagePath, osType, cloudInitDataSource, hyperVGeneration, identifier, version, provisioningState, status);
+        }
+
+        /// <summary> Initializes a new instance of HciGalleryImageStatus. </summary>
+        /// <param name="errorCode"> GalleryImage provisioning error code. </param>
+        /// <param name="errorMessage"> Descriptive error message. </param>
+        /// <param name="provisioningStatus"></param>
+        /// <param name="downloadSizeInMB"> The download status of the gallery image. </param>
+        /// <param name="progressPercentage"> The progress of the operation in percentage. </param>
+        /// <returns> A new <see cref="Models.HciGalleryImageStatus"/> instance for mocking. </returns>
+        public static HciGalleryImageStatus HciGalleryImageStatus(string errorCode = null, string errorMessage = null, HciGalleryImageProvisioningStatus provisioningStatus = null, long? downloadSizeInMB = null, long? progressPercentage = null)
+        {
+            return new HciGalleryImageStatus(errorCode, errorMessage, provisioningStatus, downloadSizeInMB != null ? new GalleryImageStatusDownloadStatus(downloadSizeInMB) : null, progressPercentage);
+        }
+
+        /// <summary> Initializes a new instance of HciGalleryImageProvisioningStatus. </summary>
+        /// <param name="operationId"> The ID of the operation performed on the gallery image. </param>
+        /// <param name="status"> The status of the operation performed on the gallery image [Succeeded, Failed, InProgress]. </param>
+        /// <returns> A new <see cref="Models.HciGalleryImageProvisioningStatus"/> instance for mocking. </returns>
+        public static HciGalleryImageProvisioningStatus HciGalleryImageProvisioningStatus(string operationId = null, HciClusterStatus? status = null)
+        {
+            return new HciGalleryImageProvisioningStatus(operationId, status);
+        }
+
+        /// <summary> Initializes a new instance of HciMarketplaceGalleryImageData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
+        /// <param name="containerName"> Container Name for storage container. </param>
+        /// <param name="osType"> Operating system type that the gallery image uses [Windows, Linux]. </param>
+        /// <param name="cloudInitDataSource"> Datasource for the gallery image when provisioning with cloud-init [NoCloud, Azure]. </param>
+        /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine [V1, V2]. </param>
+        /// <param name="identifier"> This is the gallery image definition identifier. </param>
+        /// <param name="version"> Specifies information about the gallery image version that you want to create or update. </param>
+        /// <param name="provisioningState"> Provisioning state of the marketplace gallery image. </param>
+        /// <param name="status"> The observed state of marketplace gallery images. </param>
+        /// <returns> A new <see cref="Hci.HciMarketplaceGalleryImageData"/> instance for mocking. </returns>
+        public static HciMarketplaceGalleryImageData HciMarketplaceGalleryImageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HciExtendedLocation extendedLocation = null, string containerName = null, OperatingSystemType? osType = null, CloudInitDataSource? cloudInitDataSource = null, HciHyperVGeneration? hyperVGeneration = null, HciGalleryImageIdentifier identifier = null, HciGalleryImageVersion version = null, HciGenericProvisioningState? provisioningState = null, HciMarketplaceGalleryImageStatus status = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new HciMarketplaceGalleryImageData(id, name, resourceType, systemData, tags, location, extendedLocation, containerName, osType, cloudInitDataSource, hyperVGeneration, identifier, version, provisioningState, status);
+        }
+
+        /// <summary> Initializes a new instance of HciMarketplaceGalleryImageStatus. </summary>
+        /// <param name="errorCode"> MarketplaceGalleryImage provisioning error code. </param>
+        /// <param name="errorMessage"> Descriptive error message. </param>
+        /// <param name="provisioningStatus"></param>
+        /// <param name="downloadSizeInMB"> The download status of the gallery image. </param>
+        /// <param name="progressPercentage"> The progress of the operation in percentage. </param>
+        /// <returns> A new <see cref="Models.HciMarketplaceGalleryImageStatus"/> instance for mocking. </returns>
+        public static HciMarketplaceGalleryImageStatus HciMarketplaceGalleryImageStatus(string errorCode = null, string errorMessage = null, HciMarketplaceGalleryImageProvisioningStatus provisioningStatus = null, long? downloadSizeInMB = null, long? progressPercentage = null)
+        {
+            return new HciMarketplaceGalleryImageStatus(errorCode, errorMessage, provisioningStatus, downloadSizeInMB != null ? new MarketplaceGalleryImageStatusDownloadStatus(downloadSizeInMB) : null, progressPercentage);
+        }
+
+        /// <summary> Initializes a new instance of HciMarketplaceGalleryImageProvisioningStatus. </summary>
+        /// <param name="operationId"> The ID of the operation performed on the gallery image. </param>
+        /// <param name="status"> The status of the operation performed on the gallery image [Succeeded, Failed, InProgress]. </param>
+        /// <returns> A new <see cref="Models.HciMarketplaceGalleryImageProvisioningStatus"/> instance for mocking. </returns>
+        public static HciMarketplaceGalleryImageProvisioningStatus HciMarketplaceGalleryImageProvisioningStatus(string operationId = null, HciClusterStatus? status = null)
+        {
+            return new HciMarketplaceGalleryImageProvisioningStatus(operationId, status);
+        }
+
+        /// <summary> Initializes a new instance of HciNetworkInterfaceData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
+        /// <param name="ipConfigurations"> IPConfigurations - A list of IPConfigurations of the network interface. </param>
+        /// <param name="macAddress"> MacAddress - The MAC address of the network interface. </param>
+        /// <param name="dnsServers"> DNS Settings for the interface. </param>
+        /// <param name="provisioningState"> Provisioning state of the network interface. </param>
+        /// <param name="status"> The observed state of network interfaces. </param>
+        /// <returns> A new <see cref="Hci.HciNetworkInterfaceData"/> instance for mocking. </returns>
+        public static HciNetworkInterfaceData HciNetworkInterfaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HciExtendedLocation extendedLocation = null, IEnumerable<HciIPConfiguration> ipConfigurations = null, string macAddress = null, IEnumerable<string> dnsServers = null, HciGenericProvisioningState? provisioningState = null, HciNetworkInterfaceStatus status = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            ipConfigurations ??= new List<HciIPConfiguration>();
+            dnsServers ??= new List<string>();
+
+            return new HciNetworkInterfaceData(id, name, resourceType, systemData, tags, location, extendedLocation, ipConfigurations?.ToList(), macAddress, dnsServers != null ? new InterfaceDnsSettings(dnsServers?.ToList()) : null, provisioningState, status);
+        }
+
+        /// <summary> Initializes a new instance of HciNetworkInterfaceStatus. </summary>
+        /// <param name="errorCode"> NetworkInterface provisioning error code. </param>
+        /// <param name="errorMessage"> Descriptive error message. </param>
+        /// <param name="provisioningStatus"></param>
+        /// <returns> A new <see cref="Models.HciNetworkInterfaceStatus"/> instance for mocking. </returns>
+        public static HciNetworkInterfaceStatus HciNetworkInterfaceStatus(string errorCode = null, string errorMessage = null, HciNetworkInterfaceProvisioningStatus provisioningStatus = null)
+        {
+            return new HciNetworkInterfaceStatus(errorCode, errorMessage, provisioningStatus);
+        }
+
+        /// <summary> Initializes a new instance of HciNetworkInterfaceProvisioningStatus. </summary>
+        /// <param name="operationId"> The ID of the operation performed on the network interface. </param>
+        /// <param name="status"> The status of the operation performed on the network interface [Succeeded, Failed, InProgress]. </param>
+        /// <returns> A new <see cref="Models.HciNetworkInterfaceProvisioningStatus"/> instance for mocking. </returns>
+        public static HciNetworkInterfaceProvisioningStatus HciNetworkInterfaceProvisioningStatus(string operationId = null, HciClusterStatus? status = null)
+        {
+            return new HciNetworkInterfaceProvisioningStatus(operationId, status);
         }
 
         /// <summary> Initializes a new instance of OfferData. </summary>
@@ -277,6 +419,46 @@ namespace Azure.ResourceManager.Hci.Models
             return new HciSkuData(id, name, resourceType, systemData, provisioningState, publisherId, offerId, content, contentVersion, skuMappings?.ToList());
         }
 
+        /// <summary> Initializes a new instance of HciStorageContainerData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
+        /// <param name="path"> Path of the storage container on the disk. </param>
+        /// <param name="provisioningState"> Provisioning state of the storage container. </param>
+        /// <param name="status"> The observed state of storage containers. </param>
+        /// <returns> A new <see cref="Hci.HciStorageContainerData"/> instance for mocking. </returns>
+        public static HciStorageContainerData HciStorageContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HciExtendedLocation extendedLocation = null, string path = null, HciGenericProvisioningState? provisioningState = null, HciStorageContainerStatus status = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new HciStorageContainerData(id, name, resourceType, systemData, tags, location, extendedLocation, path, provisioningState, status);
+        }
+
+        /// <summary> Initializes a new instance of HciStorageContainerStatus. </summary>
+        /// <param name="errorCode"> StorageContainer provisioning error code. </param>
+        /// <param name="errorMessage"> Descriptive error message. </param>
+        /// <param name="availableSizeMB"> Amount of space available on the disk in MB. </param>
+        /// <param name="containerSizeMB"> Total size of the disk in MB. </param>
+        /// <param name="provisioningStatus"></param>
+        /// <returns> A new <see cref="Models.HciStorageContainerStatus"/> instance for mocking. </returns>
+        public static HciStorageContainerStatus HciStorageContainerStatus(string errorCode = null, string errorMessage = null, long? availableSizeMB = null, long? containerSizeMB = null, HciStorageContainerProvisioningStatus provisioningStatus = null)
+        {
+            return new HciStorageContainerStatus(errorCode, errorMessage, availableSizeMB, containerSizeMB, provisioningStatus);
+        }
+
+        /// <summary> Initializes a new instance of HciStorageContainerProvisioningStatus. </summary>
+        /// <param name="operationId"> The ID of the operation performed on the storage container. </param>
+        /// <param name="status"> The status of the operation performed on the storage container [Succeeded, Failed, InProgress]. </param>
+        /// <returns> A new <see cref="Models.HciStorageContainerProvisioningStatus"/> instance for mocking. </returns>
+        public static HciStorageContainerProvisioningStatus HciStorageContainerProvisioningStatus(string operationId = null, HciClusterStatus? status = null)
+        {
+            return new HciStorageContainerProvisioningStatus(operationId, status);
+        }
+
         /// <summary> Initializes a new instance of UpdateRunData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -295,13 +477,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="startTimeUtc"> When the step started, or empty if it has not started executing. </param>
         /// <param name="endTimeUtc"> When the step reached a terminal state. </param>
         /// <param name="lastUpdatedTimeUtc"> Completion time of this step or the last completed sub-step. </param>
+        /// <param name="expectedExecutionTime"> Expected execution time of a given step. This is optionally authored in the update action plan and can be empty. </param>
         /// <param name="steps"> Recursive model for child steps of this step. </param>
         /// <returns> A new <see cref="Hci.UpdateRunData"/> instance for mocking. </returns>
-        public static UpdateRunData UpdateRunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, HciProvisioningState? provisioningState = null, DateTimeOffset? timeStarted = null, DateTimeOffset? lastUpdatedOn = null, string duration = null, UpdateRunPropertiesState? state = null, string namePropertiesProgressName = null, string description = null, string errorMessage = null, string status = null, DateTimeOffset? startTimeUtc = null, DateTimeOffset? endTimeUtc = null, DateTimeOffset? lastUpdatedTimeUtc = null, IEnumerable<HciUpdateStep> steps = null)
+        public static UpdateRunData UpdateRunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, HciProvisioningState? provisioningState = null, DateTimeOffset? timeStarted = null, DateTimeOffset? lastUpdatedOn = null, string duration = null, UpdateRunPropertiesState? state = null, string namePropertiesProgressName = null, string description = null, string errorMessage = null, string status = null, DateTimeOffset? startTimeUtc = null, DateTimeOffset? endTimeUtc = null, DateTimeOffset? lastUpdatedTimeUtc = null, string expectedExecutionTime = null, IEnumerable<HciUpdateStep> steps = null)
         {
             steps ??= new List<HciUpdateStep>();
 
-            return new UpdateRunData(id, name, resourceType, systemData, location, provisioningState, timeStarted, lastUpdatedOn, duration, state, namePropertiesProgressName, description, errorMessage, status, startTimeUtc, endTimeUtc, lastUpdatedTimeUtc, steps?.ToList());
+            return new UpdateRunData(id, name, resourceType, systemData, location, provisioningState, timeStarted, lastUpdatedOn, duration, state, namePropertiesProgressName, description, errorMessage, status, startTimeUtc, endTimeUtc, lastUpdatedTimeUtc, expectedExecutionTime, steps?.ToList());
         }
 
         /// <summary> Initializes a new instance of UpdateSummaryData. </summary>
@@ -312,6 +495,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> Provisioning state of the UpdateSummaries proxy resource. </param>
         /// <param name="oemFamily"> OEM family name. </param>
+        /// <param name="currentOemVersion"> Current OEM Version. </param>
         /// <param name="hardwareModel"> Name of the hardware model. </param>
         /// <param name="packageVersions"> Current version of each updatable component. </param>
         /// <param name="currentVersion"> Current Solution Bundle version of the stamp. </param>
@@ -322,12 +506,12 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="healthCheckOn"> Last time the package-specific checks were run. </param>
         /// <param name="state"> Overall update state of the stamp. </param>
         /// <returns> A new <see cref="Hci.UpdateSummaryData"/> instance for mocking. </returns>
-        public static UpdateSummaryData UpdateSummaryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, HciProvisioningState? provisioningState = null, string oemFamily = null, string hardwareModel = null, IEnumerable<HciPackageVersionInfo> packageVersions = null, string currentVersion = null, DateTimeOffset? lastUpdated = null, DateTimeOffset? lastChecked = null, HciHealthState? healthState = null, IEnumerable<HciPrecheckResult> healthCheckResult = null, DateTimeOffset? healthCheckOn = null, UpdateSummariesPropertiesState? state = null)
+        public static UpdateSummaryData UpdateSummaryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, HciProvisioningState? provisioningState = null, string oemFamily = null, string currentOemVersion = null, string hardwareModel = null, IEnumerable<HciPackageVersionInfo> packageVersions = null, string currentVersion = null, DateTimeOffset? lastUpdated = null, DateTimeOffset? lastChecked = null, HciHealthState? healthState = null, IEnumerable<HciPrecheckResult> healthCheckResult = null, DateTimeOffset? healthCheckOn = null, UpdateSummariesPropertiesState? state = null)
         {
             packageVersions ??= new List<HciPackageVersionInfo>();
             healthCheckResult ??= new List<HciPrecheckResult>();
 
-            return new UpdateSummaryData(id, name, resourceType, systemData, location, provisioningState, oemFamily, hardwareModel, packageVersions?.ToList(), currentVersion, lastUpdated, lastChecked, healthState, healthCheckResult?.ToList(), healthCheckOn, state);
+            return new UpdateSummaryData(id, name, resourceType, systemData, location, provisioningState, oemFamily, currentOemVersion, hardwareModel, packageVersions?.ToList(), currentVersion, lastUpdated, lastChecked, healthState, healthCheckResult?.ToList(), healthCheckOn, state);
         }
 
         /// <summary> Initializes a new instance of UpdateData. </summary>
@@ -365,6 +549,242 @@ namespace Azure.ResourceManager.Hci.Models
             healthCheckResult ??= new List<HciPrecheckResult>();
 
             return new UpdateData(id, name, resourceType, systemData, location, provisioningState, installedOn, description, state, prerequisites?.ToList(), componentVersions?.ToList(), rebootRequired, healthState, healthCheckResult?.ToList(), healthCheckOn, packagePath, packageSizeInMb, displayName, version, publisher, releaseLink, availabilityType, packageType, additionalProperties, progressPercentage, notifyMessage);
+        }
+
+        /// <summary> Initializes a new instance of HciVirtualHardDiskData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
+        /// <param name="blockSizeBytes"></param>
+        /// <param name="diskSizeGB"> Size of the disk in GB. </param>
+        /// <param name="dynamic"> Boolean for enabling dynamic sizing on the virtual hard disk. </param>
+        /// <param name="logicalSectorBytes"></param>
+        /// <param name="physicalSectorBytes"></param>
+        /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine [V1, V2]. </param>
+        /// <param name="diskFileFormat"> The format of the actual VHD file [vhd, vhdx]. </param>
+        /// <param name="provisioningState"> Provisioning state of the virtual hard disk. </param>
+        /// <param name="containerId"> Storage ContainerID of the storage container to be used for VHD. </param>
+        /// <param name="status"> The observed state of virtual hard disks. </param>
+        /// <returns> A new <see cref="Hci.HciVirtualHardDiskData"/> instance for mocking. </returns>
+        public static HciVirtualHardDiskData HciVirtualHardDiskData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HciExtendedLocation extendedLocation = null, int? blockSizeBytes = null, long? diskSizeGB = null, bool? @dynamic = null, int? logicalSectorBytes = null, int? physicalSectorBytes = null, HciHyperVGeneration? hyperVGeneration = null, HciDiskFileFormat? diskFileFormat = null, HciGenericProvisioningState? provisioningState = null, string containerId = null, HciVirtualHardDiskStatus status = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new HciVirtualHardDiskData(id, name, resourceType, systemData, tags, location, extendedLocation, blockSizeBytes, diskSizeGB, @dynamic, logicalSectorBytes, physicalSectorBytes, hyperVGeneration, diskFileFormat, provisioningState, containerId, status);
+        }
+
+        /// <summary> Initializes a new instance of HciVirtualHardDiskStatus. </summary>
+        /// <param name="errorCode"> VirtualHardDisk provisioning error code. </param>
+        /// <param name="errorMessage"> Descriptive error message. </param>
+        /// <param name="provisioningStatus"></param>
+        /// <returns> A new <see cref="Models.HciVirtualHardDiskStatus"/> instance for mocking. </returns>
+        public static HciVirtualHardDiskStatus HciVirtualHardDiskStatus(string errorCode = null, string errorMessage = null, HciVirtualHardDiskProvisioningStatus provisioningStatus = null)
+        {
+            return new HciVirtualHardDiskStatus(errorCode, errorMessage, provisioningStatus);
+        }
+
+        /// <summary> Initializes a new instance of HciVirtualHardDiskProvisioningStatus. </summary>
+        /// <param name="operationId"> The ID of the operation performed on the virtual hard disk. </param>
+        /// <param name="status"> The status of the operation performed on the virtual hard disk [Succeeded, Failed, InProgress]. </param>
+        /// <returns> A new <see cref="Models.HciVirtualHardDiskProvisioningStatus"/> instance for mocking. </returns>
+        public static HciVirtualHardDiskProvisioningStatus HciVirtualHardDiskProvisioningStatus(string operationId = null, HciClusterStatus? status = null)
+        {
+            return new HciVirtualHardDiskProvisioningStatus(operationId, status);
+        }
+
+        /// <summary> Initializes a new instance of HciVirtualMachineData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
+        /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned. </param>
+        /// <param name="hardwareProfile"> HardwareProfile - Specifies the hardware settings for the virtual machine. </param>
+        /// <param name="networkInterfaces"> NetworkProfile - describes the network configuration the virtual machine. </param>
+        /// <param name="osProfile"> OsProfile - describes the configuration of the operating system and sets login data. </param>
+        /// <param name="securityProfile"> SecurityProfile - Specifies the security settings for the virtual machine. </param>
+        /// <param name="storageProfile"> StorageProfile - contains information about the disks and storage information for the virtual machine. </param>
+        /// <param name="provisioningState"> Provisioning state of the virtual machine. </param>
+        /// <param name="status"> The observed state of virtual machines. </param>
+        /// <param name="guestAgentProfile"> Guest agent status properties. </param>
+        /// <param name="vmId"> Unique identifier for the vm resource. </param>
+        /// <returns> A new <see cref="Hci.HciVirtualMachineData"/> instance for mocking. </returns>
+        public static HciVirtualMachineData HciVirtualMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HciExtendedLocation extendedLocation = null, ManagedServiceIdentity identity = null, HciHardwareProfile hardwareProfile = null, IEnumerable<WritableSubResource> networkInterfaces = null, HciOSProfile osProfile = null, HciSecurityProfile securityProfile = null, HciStorageProfile storageProfile = null, HciGenericProvisioningState? provisioningState = null, HciVirtualMachineStatus status = null, HciGuestAgentProfile guestAgentProfile = null, string vmId = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            networkInterfaces ??= new List<WritableSubResource>();
+
+            return new HciVirtualMachineData(id, name, resourceType, systemData, tags, location, extendedLocation, identity, hardwareProfile, networkInterfaces != null ? new VirtualMachinePropertiesNetworkProfile(networkInterfaces?.ToList()) : null, osProfile, securityProfile, storageProfile, provisioningState, status, guestAgentProfile, vmId);
+        }
+
+        /// <summary> Initializes a new instance of HciVirtualMachineStatus. </summary>
+        /// <param name="errorCode"> VirtualMachine provisioning error code. </param>
+        /// <param name="errorMessage"> Descriptive error message. </param>
+        /// <param name="powerState"> The power state of the virtual machine. </param>
+        /// <param name="provisioningStatus"></param>
+        /// <returns> A new <see cref="Models.HciVirtualMachineStatus"/> instance for mocking. </returns>
+        public static HciVirtualMachineStatus HciVirtualMachineStatus(string errorCode = null, string errorMessage = null, HciPowerState? powerState = null, HciVirtualMachineProvisioningStatus provisioningStatus = null)
+        {
+            return new HciVirtualMachineStatus(errorCode, errorMessage, powerState, provisioningStatus);
+        }
+
+        /// <summary> Initializes a new instance of HciVirtualMachineProvisioningStatus. </summary>
+        /// <param name="operationId"> The ID of the operation performed on the virtual machine. </param>
+        /// <param name="status"> The status of the operation performed on the virtual machine [Succeeded, Failed, InProgress]. </param>
+        /// <returns> A new <see cref="Models.HciVirtualMachineProvisioningStatus"/> instance for mocking. </returns>
+        public static HciVirtualMachineProvisioningStatus HciVirtualMachineProvisioningStatus(string operationId = null, HciClusterStatus? status = null)
+        {
+            return new HciVirtualMachineProvisioningStatus(operationId, status);
+        }
+
+        /// <summary> Initializes a new instance of HciGuestAgentProfile. </summary>
+        /// <param name="vmUuid"> Specifies the VM's unique SMBIOS ID. </param>
+        /// <param name="status"> The status of the hybrid machine agent. </param>
+        /// <param name="lastStatusChange"> The time of the last status change. </param>
+        /// <param name="agentVersion"> The hybrid machine agent full version. </param>
+        /// <param name="errorDetails"> Details about the error state. </param>
+        /// <returns> A new <see cref="Models.HciGuestAgentProfile"/> instance for mocking. </returns>
+        public static HciGuestAgentProfile HciGuestAgentProfile(string vmUuid = null, HciAgentStatusType? status = null, DateTimeOffset? lastStatusChange = null, string agentVersion = null, IEnumerable<ResponseError> errorDetails = null)
+        {
+            errorDetails ??= new List<ResponseError>();
+
+            return new HciGuestAgentProfile(vmUuid, status, lastStatusChange, agentVersion, errorDetails?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of HciHybridIdentityMetadataData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="resourceUid"> The unique identifier for the resource. </param>
+        /// <param name="publicKey"> The Public Key. </param>
+        /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <returns> A new <see cref="Hci.HciHybridIdentityMetadataData"/> instance for mocking. </returns>
+        public static HciHybridIdentityMetadataData HciHybridIdentityMetadataData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string resourceUid = null, string publicKey = null, ManagedServiceIdentity identity = null, string provisioningState = null)
+        {
+            return new HciHybridIdentityMetadataData(id, name, resourceType, systemData, resourceUid, publicKey, identity, provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of HciMachineExtensionData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
+        /// <param name="publisher"> The name of the extension handler publisher. </param>
+        /// <param name="typePropertiesType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
+        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
+        /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
+        /// <param name="settings"> Json formatted public settings for the extension. </param>
+        /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="instanceView"> The machine extension instance view. </param>
+        /// <returns> A new <see cref="Hci.HciMachineExtensionData"/> instance for mocking. </returns>
+        public static HciMachineExtensionData HciMachineExtensionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string forceUpdateTag = null, string publisher = null, string typePropertiesType = null, string typeHandlerVersion = null, bool? autoUpgradeMinorVersion = null, BinaryData settings = null, BinaryData protectedSettings = null, string provisioningState = null, HciMachineExtensionInstanceView instanceView = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new HciMachineExtensionData(id, name, resourceType, systemData, tags, location, forceUpdateTag, publisher, typePropertiesType, typeHandlerVersion, autoUpgradeMinorVersion, settings, protectedSettings, provisioningState, instanceView);
+        }
+
+        /// <summary> Initializes a new instance of HciMachineExtensionInstanceView. </summary>
+        /// <param name="name"> The machine extension name. </param>
+        /// <param name="machineExtensionInstanceViewType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
+        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
+        /// <param name="status"> Instance view status. </param>
+        /// <returns> A new <see cref="Models.HciMachineExtensionInstanceView"/> instance for mocking. </returns>
+        public static HciMachineExtensionInstanceView HciMachineExtensionInstanceView(string name = null, string machineExtensionInstanceViewType = null, string typeHandlerVersion = null, HciInstanceViewStatus status = null)
+        {
+            return new HciMachineExtensionInstanceView(name, machineExtensionInstanceViewType, typeHandlerVersion, status);
+        }
+
+        /// <summary> Initializes a new instance of HciInstanceViewStatus. </summary>
+        /// <param name="code"> The status code. </param>
+        /// <param name="level"> The level code. </param>
+        /// <param name="displayStatus"> The short localizable label for the status. </param>
+        /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
+        /// <param name="time"> The time of the status. </param>
+        /// <returns> A new <see cref="Models.HciInstanceViewStatus"/> instance for mocking. </returns>
+        public static HciInstanceViewStatus HciInstanceViewStatus(string code = null, HciStatusLevelType? level = null, string displayStatus = null, string message = null, DateTimeOffset? time = null)
+        {
+            return new HciInstanceViewStatus(code, level, displayStatus, message, time);
+        }
+
+        /// <summary> Initializes a new instance of HciGuestAgentData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="credentials"> Username / Password Credentials to provision guest agent. </param>
+        /// <param name="httpsProxy"> HTTP Proxy configuration for the VM. </param>
+        /// <param name="provisioningAction"> The guest agent provisioning action. </param>
+        /// <param name="status"> The guest agent status. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <returns> A new <see cref="Hci.HciGuestAgentData"/> instance for mocking. </returns>
+        public static HciGuestAgentData HciGuestAgentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HciGuestCredential credentials = null, string httpsProxy = null, HciAgentProvisioningAction? provisioningAction = null, string status = null, string provisioningState = null)
+        {
+            return new HciGuestAgentData(id, name, resourceType, systemData, credentials, httpsProxy != null ? new HttpProxyConfiguration(httpsProxy) : null, provisioningAction, status, provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of HciVirtualNetworkData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
+        /// <param name="dhcpOptionsDnsServers"> DhcpOptions contains an array of DNS servers available to VMs deployed in the virtual network. Standard DHCP option for a subnet overrides VNET DHCP options. </param>
+        /// <param name="networkType"> Type of the network. </param>
+        /// <param name="subnets"> Subnet - list of subnets under the virtual network. </param>
+        /// <param name="provisioningState"> Provisioning state of the virtual network. </param>
+        /// <param name="vmSwitchName"> name of the network switch to be used for VMs. </param>
+        /// <param name="status"> The observed state of virtual networks. </param>
+        /// <returns> A new <see cref="Hci.HciVirtualNetworkData"/> instance for mocking. </returns>
+        public static HciVirtualNetworkData HciVirtualNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HciExtendedLocation extendedLocation = null, IEnumerable<string> dhcpOptionsDnsServers = null, HciNetworkType? networkType = null, IEnumerable<HciSubnet> subnets = null, HciGenericProvisioningState? provisioningState = null, string vmSwitchName = null, HciVirtualNetworkStatus status = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            dhcpOptionsDnsServers ??= new List<string>();
+            subnets ??= new List<HciSubnet>();
+
+            return new HciVirtualNetworkData(id, name, resourceType, systemData, tags, location, extendedLocation, dhcpOptionsDnsServers != null ? new VirtualNetworkPropertiesDhcpOptions(dhcpOptionsDnsServers?.ToList()) : null, networkType, subnets?.ToList(), provisioningState, vmSwitchName, status);
+        }
+
+        /// <summary> Initializes a new instance of HciIPPoolInfo. </summary>
+        /// <param name="used"> no. of ip addresses allocated from the ip pool. </param>
+        /// <param name="available"> no. of ip addresses available in the ip pool. </param>
+        /// <returns> A new <see cref="Models.HciIPPoolInfo"/> instance for mocking. </returns>
+        public static HciIPPoolInfo HciIPPoolInfo(string used = null, string available = null)
+        {
+            return new HciIPPoolInfo(used, available);
+        }
+
+        /// <summary> Initializes a new instance of HciVirtualNetworkStatus. </summary>
+        /// <param name="errorCode"> VirtualNetwork provisioning error code. </param>
+        /// <param name="errorMessage"> Descriptive error message. </param>
+        /// <param name="provisioningStatus"></param>
+        /// <returns> A new <see cref="Models.HciVirtualNetworkStatus"/> instance for mocking. </returns>
+        public static HciVirtualNetworkStatus HciVirtualNetworkStatus(string errorCode = null, string errorMessage = null, HciVirtualNetworkProvisioningStatus provisioningStatus = null)
+        {
+            return new HciVirtualNetworkStatus(errorCode, errorMessage, provisioningStatus);
+        }
+
+        /// <summary> Initializes a new instance of HciVirtualNetworkProvisioningStatus. </summary>
+        /// <param name="operationId"> The ID of the operation performed on the virtual network. </param>
+        /// <param name="status"> The status of the operation performed on the virtual network [Succeeded, Failed, InProgress]. </param>
+        /// <returns> A new <see cref="Models.HciVirtualNetworkProvisioningStatus"/> instance for mocking. </returns>
+        public static HciVirtualNetworkProvisioningStatus HciVirtualNetworkProvisioningStatus(string operationId = null, HciClusterStatus? status = null)
+        {
+            return new HciVirtualNetworkProvisioningStatus(operationId, status);
         }
     }
 }

@@ -83,6 +83,11 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(LastUpdatedTimeUtc.Value, "O");
             }
+            if (Optional.IsDefined(ExpectedExecutionTime))
+            {
+                writer.WritePropertyName("expectedExecutionTime"u8);
+                writer.WriteStringValue(ExpectedExecutionTime);
+            }
             if (Optional.IsCollectionDefined(Steps))
             {
                 writer.WritePropertyName("steps"u8);
@@ -121,6 +126,7 @@ namespace Azure.ResourceManager.Hci
             Optional<DateTimeOffset> startTimeUtc = default;
             Optional<DateTimeOffset> endTimeUtc = default;
             Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
+            Optional<string> expectedExecutionTime = default;
             Optional<IList<HciUpdateStep>> steps = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -263,6 +269,11 @@ namespace Azure.ResourceManager.Hci
                                     lastUpdatedTimeUtc = property1.Value.GetDateTimeOffset("O");
                                     continue;
                                 }
+                                if (property1.NameEquals("expectedExecutionTime"u8))
+                                {
+                                    expectedExecutionTime = property1.Value.GetString();
+                                    continue;
+                                }
                                 if (property1.NameEquals("steps"u8))
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
@@ -284,7 +295,7 @@ namespace Azure.ResourceManager.Hci
                     continue;
                 }
             }
-            return new UpdateRunData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), Optional.ToNullable(timeStarted), Optional.ToNullable(lastUpdatedTime), duration.Value, Optional.ToNullable(state), name0.Value, description.Value, errorMessage.Value, status.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), Optional.ToList(steps));
+            return new UpdateRunData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), Optional.ToNullable(timeStarted), Optional.ToNullable(lastUpdatedTime), duration.Value, Optional.ToNullable(state), name0.Value, description.Value, errorMessage.Value, status.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), expectedExecutionTime.Value, Optional.ToList(steps));
         }
     }
 }

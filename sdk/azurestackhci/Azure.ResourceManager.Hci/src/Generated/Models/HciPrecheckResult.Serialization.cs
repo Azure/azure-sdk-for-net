@@ -26,6 +26,15 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("tags"u8);
                 writer.WriteObjectValue(Tags);
             }
+            if (Optional.IsDefined(HealthCheckTags))
+            {
+                writer.WritePropertyName("healthCheckTags"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(HealthCheckTags);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(HealthCheckTags.ToString()).RootElement);
+#endif
+            }
             if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
@@ -61,6 +70,11 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("targetResourceName"u8);
                 writer.WriteStringValue(TargetResourceName);
             }
+            if (Optional.IsDefined(TargetResourceType))
+            {
+                writer.WritePropertyName("targetResourceType"u8);
+                writer.WriteStringValue(TargetResourceType);
+            }
             if (Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
@@ -87,6 +101,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             Optional<string> name = default;
             Optional<HciPrecheckResultTags> tags = default;
+            Optional<BinaryData> healthCheckTags = default;
             Optional<string> title = default;
             Optional<HciClusterStatus> status = default;
             Optional<UpdateSeverity> severity = default;
@@ -94,6 +109,7 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<string> remediation = default;
             Optional<string> targetResourceId = default;
             Optional<string> targetResourceName = default;
+            Optional<string> targetResourceType = default;
             Optional<DateTimeOffset> timestamp = default;
             Optional<string> additionalData = default;
             Optional<string> healthCheckSource = default;
@@ -111,6 +127,15 @@ namespace Azure.ResourceManager.Hci.Models
                         continue;
                     }
                     tags = HciPrecheckResultTags.DeserializeHciPrecheckResultTags(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("healthCheckTags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    healthCheckTags = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("title"u8))
@@ -156,6 +181,11 @@ namespace Azure.ResourceManager.Hci.Models
                     targetResourceName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("targetResourceType"u8))
+                {
+                    targetResourceType = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -176,7 +206,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new HciPrecheckResult(name.Value, tags.Value, title.Value, Optional.ToNullable(status), Optional.ToNullable(severity), description.Value, remediation.Value, targetResourceId.Value, targetResourceName.Value, Optional.ToNullable(timestamp), additionalData.Value, healthCheckSource.Value);
+            return new HciPrecheckResult(name.Value, tags.Value, healthCheckTags.Value, title.Value, Optional.ToNullable(status), Optional.ToNullable(severity), description.Value, remediation.Value, targetResourceId.Value, targetResourceName.Value, targetResourceType.Value, Optional.ToNullable(timestamp), additionalData.Value, healthCheckSource.Value);
         }
     }
 }

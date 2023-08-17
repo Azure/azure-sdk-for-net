@@ -78,6 +78,7 @@ namespace Azure.ResourceManager.Hci
             Optional<ArcSettingAggregateState> aggregateState = default;
             Optional<IReadOnlyList<PerNodeArcState>> perNodeDetails = default;
             Optional<BinaryData> connectivityProperties = default;
+            Optional<IReadOnlyList<DefaultExtensionDetails>> defaultExtensions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -195,11 +196,25 @@ namespace Azure.ResourceManager.Hci
                             connectivityProperties = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("defaultExtensions"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<DefaultExtensionDetails> array = new List<DefaultExtensionDetails>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(DefaultExtensionDetails.DeserializeDefaultExtensionDetails(item));
+                            }
+                            defaultExtensions = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ArcSettingData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), arcInstanceResourceGroup.Value, Optional.ToNullable(arcApplicationClientId), Optional.ToNullable(arcApplicationTenantId), Optional.ToNullable(arcServicePrincipalObjectId), Optional.ToNullable(arcApplicationObjectId), Optional.ToNullable(aggregateState), Optional.ToList(perNodeDetails), connectivityProperties.Value);
+            return new ArcSettingData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), arcInstanceResourceGroup.Value, Optional.ToNullable(arcApplicationClientId), Optional.ToNullable(arcApplicationTenantId), Optional.ToNullable(arcServicePrincipalObjectId), Optional.ToNullable(arcApplicationObjectId), Optional.ToNullable(aggregateState), Optional.ToList(perNodeDetails), connectivityProperties.Value, Optional.ToList(defaultExtensions));
         }
     }
 }

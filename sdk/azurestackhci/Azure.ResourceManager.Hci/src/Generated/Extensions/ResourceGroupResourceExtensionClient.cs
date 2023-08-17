@@ -37,5 +37,54 @@ namespace Azure.ResourceManager.Hci
         {
             return GetCachedClient(Client => new HciClusterCollection(Client, Id));
         }
+
+        /// <summary> Gets a collection of HciGalleryImageResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of HciGalleryImageResources and their operations over a HciGalleryImageResource. </returns>
+        public virtual HciGalleryImageCollection GetHciGalleryImages()
+        {
+            return GetCachedClient(Client => new HciGalleryImageCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of HciMarketplaceGalleryImageResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of HciMarketplaceGalleryImageResources and their operations over a HciMarketplaceGalleryImageResource. </returns>
+        public virtual HciMarketplaceGalleryImageCollection GetHciMarketplaceGalleryImages()
+        {
+            return GetCachedClient(Client => new HciMarketplaceGalleryImageCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of HciNetworkInterfaceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of HciNetworkInterfaceResources and their operations over a HciNetworkInterfaceResource. </returns>
+        public virtual HciNetworkInterfaceCollection GetHciNetworkInterfaces()
+        {
+            return GetCachedClient(Client => new HciNetworkInterfaceCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of HciStorageContainerResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of HciStorageContainerResources and their operations over a HciStorageContainerResource. </returns>
+        public virtual HciStorageContainerCollection GetHciStorageContainers()
+        {
+            return GetCachedClient(Client => new HciStorageContainerCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of HciVirtualHardDiskResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of HciVirtualHardDiskResources and their operations over a HciVirtualHardDiskResource. </returns>
+        public virtual HciVirtualHardDiskCollection GetHciVirtualHardDisks()
+        {
+            return GetCachedClient(Client => new HciVirtualHardDiskCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of HciVirtualMachineResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of HciVirtualMachineResources and their operations over a HciVirtualMachineResource. </returns>
+        public virtual HciVirtualMachineCollection GetHciVirtualMachines()
+        {
+            return GetCachedClient(Client => new HciVirtualMachineCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of HciVirtualNetworkResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of HciVirtualNetworkResources and their operations over a HciVirtualNetworkResource. </returns>
+        public virtual HciVirtualNetworkCollection GetHciVirtualNetworks()
+        {
+            return GetCachedClient(Client => new HciVirtualNetworkCollection(Client, Id));
+        }
     }
 }

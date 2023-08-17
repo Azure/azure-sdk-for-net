@@ -13,6 +13,7 @@ using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Hci;
 using Azure.ResourceManager.Hci.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Hci.Samples
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Hci.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetHciClusters_ListClustersInAGivenSubscription()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/examples/ListClustersBySubscription.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2022-12-15-preview/examples/ListClustersBySubscription.json
             // this example is just showing the usage of "Clusters_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetCluster()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/examples/GetCluster.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2022-12-15-preview/examples/GetCluster.json
             // this example is just showing the usage of "Clusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.Hci.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateCluster()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/examples/UpdateCluster.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2022-12-15-preview/examples/UpdateCluster.json
             // this example is just showing the usage of "Clusters_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -111,13 +112,13 @@ namespace Azure.ResourceManager.Hci.Samples
 ["tag1"] = "value1",
 ["tag2"] = "value2",
 },
+                Identity = new ManagedServiceIdentity("SystemAssigned"),
                 CloudManagementEndpoint = "https://98294836-31be-4668-aeae-698667faf99b.waconazure.com",
                 DesiredProperties = new HciClusterDesiredProperties()
                 {
                     WindowsServerSubscription = WindowsServerSubscription.Enabled,
                     DiagnosticLevel = HciClusterDiagnosticLevel.Basic,
                 },
-                ManagedServiceIdentityType = HciManagedServiceIdentityType.SystemAssigned,
             };
             HciClusterResource result = await hciCluster.UpdateAsync(patch);
 
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.Hci.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteCluster()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/examples/DeleteCluster.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2022-12-15-preview/examples/DeleteCluster.json
             // this example is just showing the usage of "Clusters_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.Hci.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task UploadCertificate_UploadCertificate()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/examples/UploadCertificate.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2022-12-15-preview/examples/UploadCertificate.json
             // this example is just showing the usage of "Clusters_UploadCertificate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -194,7 +195,7 @@ namespace Azure.ResourceManager.Hci.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateIdentity_CreateClusterIdentity()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/examples/CreateClusterIdentity.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2022-12-15-preview/examples/CreateClusterIdentity.json
             // this example is just showing the usage of "Clusters_CreateIdentity" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -222,7 +223,7 @@ namespace Azure.ResourceManager.Hci.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ExtendSoftwareAssuranceBenefit_CreateClusterIdentity()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/examples/ExtendSoftwareAssuranceBenefit.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2022-12-15-preview/examples/ExtendSoftwareAssuranceBenefit.json
             // this example is just showing the usage of "Clusters_ExtendSoftwareAssuranceBenefit" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -258,7 +259,7 @@ namespace Azure.ResourceManager.Hci.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetOffers_ListOfferResourcesByHCICluster()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/examples/ListOffersByCluster.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2022-12-15-preview/examples/ListOffersByCluster.json
             // this example is just showing the usage of "Offers_ListByCluster" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
