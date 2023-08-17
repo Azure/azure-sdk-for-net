@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using Azure.Core.Json;
-using Azure.Core.Serialization;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -580,28 +579,30 @@ namespace Azure.Core.Tests
             Assert.AreEqual($"{44}", mdoc.RootElement.GetProperty("bar").ToString());
         }
 
-        //[TestCaseSource(nameof(NumberValues))]
-        //public void CanWriteNumber<T>(string serializedX, T x, T y, T z)
-        //{
-        //    string json = $"{{\"foo\" : {serializedX}}}";
+        [TestCaseSource(nameof(NumberValues))]
+        public void CanWriteNumber<T>(string serializedX, T x, T y, T z,
+            Action<MutableJsonDocument, string, T> set,
+            Func<MutableJsonDocument, string, T, MutableJsonElement> setProperty)
+        {
+            string json = $"{{\"foo\" : {serializedX}}}";
 
-        //    // Get from parsed JSON
-        //    using MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            // Get from parsed JSON
+            using MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
-        //    // Get from parsed JSON
-        //    Assert.AreEqual($"{x}", mdoc.RootElement.GetProperty("foo").ToString());
-        //    MutableJsonDocumentTests.ValidateWriteTo(json, mdoc);
+            // Get from parsed JSON
+            Assert.AreEqual($"{x}", mdoc.RootElement.GetProperty("foo").ToString());
+            MutableJsonDocumentTests.ValidateWriteTo(json, mdoc);
 
-        //    // Get from assigned existing value
-        //    mdoc.RootElement.GetProperty("foo").Set(y);
-        //    Assert.AreEqual($"{y}", mdoc.RootElement.GetProperty("foo").ToString());
-        //    MutableJsonDocumentTests.ValidateWriteTo($"{{\"foo\" : {y}}}", mdoc);
+            // Get from assigned existing value
+            set(mdoc, "foo", y);
+            Assert.AreEqual($"{y}", mdoc.RootElement.GetProperty("foo").ToString());
+            MutableJsonDocumentTests.ValidateWriteTo($"{{\"foo\" : {y}}}", mdoc);
 
-        //    // Get from added value
-        //    mdoc.RootElement.SetProperty("bar", z);
-        //    Assert.AreEqual($"{z}", mdoc.RootElement.GetProperty("bar").ToString());
-        //    MutableJsonDocumentTests.ValidateWriteTo($"{{\"foo\":{y},\"bar\":{z}}}", mdoc);
-        //}
+            // Get from added value
+            setProperty(mdoc, "bar", z);
+            Assert.AreEqual($"{z}", mdoc.RootElement.GetProperty("bar").ToString());
+            MutableJsonDocumentTests.ValidateWriteTo($"{{\"foo\":{y},\"bar\":{z}}}", mdoc);
+        }
 
         [Test]
         public void CanWriteGuid()
@@ -1679,19 +1680,41 @@ namespace Azure.Core.Tests
         {
             // Valid ranges:
             // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/integral-numeric-types
-            yield return new object[] { "42", (byte)42, (byte)43, (byte)44 };
-            yield return new object[] { "42", (sbyte)42, (sbyte)43, (sbyte)44 };
-            yield return new object[] { "42", (short)42, (short)43, (short)44 };
-            yield return new object[] { "42", (ushort)42, (ushort)43, (ushort)44 };
-            yield return new object[] { "42", 42, 43, 44 };
-            yield return new object[] { "42", 42u, 43u, 44u };
-            yield return new object[] { "42", 42L, 43L, 44L };
-            yield return new object[] { "42", 42ul, 43ul, 44ul };
+            yield return new object[] { "42", (byte)42, (byte)43, (byte)44,
+                (MutableJsonDocument mdoc, string name, byte value) => mdoc.RootElement.GetProperty(name).Set(value),
+                (MutableJsonDocument mdoc, string name, byte value) => mdoc.RootElement.SetProperty(name, value) };
+            yield return new object[] { "42", (sbyte)42, (sbyte)43, (sbyte)44,
+                (MutableJsonDocument mdoc, string name, sbyte value) => mdoc.RootElement.GetProperty(name).Set(value),
+                (MutableJsonDocument mdoc, string name, sbyte value) => mdoc.RootElement.SetProperty(name, value) };
+            yield return new object[] {"42", (short)42, (short)43, (short)44,
+                (MutableJsonDocument mdoc, string name, short value) => mdoc.RootElement.GetProperty(name).Set(value),
+                (MutableJsonDocument mdoc, string name, short value) => mdoc.RootElement.SetProperty(name, value) };
+            yield return new object[] {"42", (ushort)42, (ushort)43, (ushort)44,
+                (MutableJsonDocument mdoc, string name, ushort value) => mdoc.RootElement.GetProperty(name).Set(value),
+                (MutableJsonDocument mdoc, string name, ushort value) => mdoc.RootElement.SetProperty(name, value) };
+            yield return new object[] { "42", 42, 43, 44,
+                (MutableJsonDocument mdoc, string name, int value) => mdoc.RootElement.GetProperty(name).Set(value),
+                (MutableJsonDocument mdoc, string name, int value) => mdoc.RootElement.SetProperty(name, value) };
+            yield return new object[] { "42", 42u, 43u, 44u,
+                (MutableJsonDocument mdoc, string name, uint value) => mdoc.RootElement.GetProperty(name).Set(value),
+                (MutableJsonDocument mdoc, string name, uint value) => mdoc.RootElement.SetProperty(name, value) };
+            yield return new object[] { "42", 42L, 43L, 44L,
+                (MutableJsonDocument mdoc, string name, long value) => mdoc.RootElement.GetProperty(name).Set(value),
+                (MutableJsonDocument mdoc, string name, long value) => mdoc.RootElement.SetProperty(name, value) };
+            yield return new object[] { "42", 42ul, 43ul, 44ul,
+                (MutableJsonDocument mdoc, string name, ulong value) => mdoc.RootElement.GetProperty(name).Set(value),
+                (MutableJsonDocument mdoc, string name, ulong value) => mdoc.RootElement.SetProperty(name, value) };
 #if NETCOREAPP
-            yield return new object[] { "42.1", 42.1f, 43.1f, 44.1f };
-            yield return new object[] { "42.1", 42.1d, 43.1d, 44.1d };
+            yield return new object[] { "42.1", 42.1f, 43.1f, 44.1f,
+                (MutableJsonDocument mdoc, string name, float value) => mdoc.RootElement.GetProperty(name).Set(value),
+                (MutableJsonDocument mdoc, string name, float value) => mdoc.RootElement.SetProperty(name, value) };
+            yield return new object[] { "42.1", 42.1d, 43.1d, 44.1d,
+                (MutableJsonDocument mdoc, string name, double value) => mdoc.RootElement.GetProperty(name).Set(value),
+                (MutableJsonDocument mdoc, string name, double value) => mdoc.RootElement.SetProperty(name, value) };
 #endif
-            yield return new object[] { "42.1", 42.1m, 43.1m, 44.1m };
+            yield return new object[] { "42.1", 42.1m, 43.1m, 44.1m,
+                (MutableJsonDocument mdoc, string name, decimal value) => mdoc.RootElement.GetProperty(name).Set(value),
+                (MutableJsonDocument mdoc, string name, decimal value) => mdoc.RootElement.SetProperty(name, value) };
         }
         #endregion
     }
