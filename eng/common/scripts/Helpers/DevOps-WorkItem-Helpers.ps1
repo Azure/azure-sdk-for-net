@@ -180,6 +180,52 @@ function FindParentWorkItem($serviceName, $packageDisplayName, $outputCommand = 
   return $null
 }
 
+$releasePlanWorkItems = @{}
+function FindReleasePlanWorkItem($serviceName, $packageDisplayName, $outputCommand = $false)
+{
+  $key = BuildHashKey $serviceName $packageDisplayName
+  if ($key -and $releasePlanWorkItems.ContainsKey($key)) {
+    return $releasePlanWorkItems[$key]
+  }
+
+  if ($serviceName) {
+    $condition = "[ServiceName] = '${serviceName}'"
+    if ($packageDisplayName) {
+      $condition += " AND [PackageDisplayName] = '${packageDisplayName}'"
+    }
+    else {
+      $condition += " AND [PackageDisplayName] = ''"
+    }
+  }
+  else {
+    $condition = "[ServiceName] <> ''"
+  }
+  $condition += " AND [System.State] <> 'Finished'"  
+  $query = "SELECT [ID], [ServiceName], [PackageDisplayName], [Parent] FROM WorkItems WHERE [Work Item Type] = 'Release Plan' AND ${condition}"
+
+  $fields = @("System.Id", "Custom.ServiceName", "Custom.PackageDisplayName", "System.Parent")
+
+  $workItems = Invoke-Query $fields $query $outputCommand
+
+  foreach ($wi in $workItems)
+  {
+    $localKey = BuildHashKey $wi.fields["Custom.ServiceName"] $wi.fields["Custom.PackageDisplayName"]
+    if (!$localKey) { continue }
+    if ($releasePlanWorkItems.ContainsKey($localKey) -and $releasePlanWorkItems[$localKey].id -ne $wi.id) {
+      Write-Warning "Already found parent [$($releasePlanWorkItems[$localKey].id)] with key [$localKey], using that one instead of [$($wi.id)]."
+    }
+    else {
+      Write-Verbose "[$($wi.id)]$localKey - Cached"
+      $releasePlanWorkItems[$localKey] = $wi
+    }
+  }
+
+  if ($key -and $releasePlanWorkItems.ContainsKey($key)) {
+    return $releasePlanWorkItems[$key]
+  }
+  return $null
+}
+
 $packageWorkItems = @{}
 $packageWorkItemWithoutKeyFields = @{}
 
@@ -490,14 +536,37 @@ function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingIte
       }
     }
 
-    $newparentItem = FindOrCreatePackageGroupParent $serviceName $pkgDisplayName -outputCommand $false
+    $newparentItem = FindOrCreateReleasePlanParent $serviceName $pkgDisplayName -outputCommand $false
     UpdateWorkItemParent $existingItem $newParentItem -outputCommand $outputCommand
     return $existingItem
   }
 
-  $parentItem = FindOrCreatePackageGroupParent $serviceName $pkgDisplayName -outputCommand $false
+  $parentItem = FindOrCreateReleasePlanParent $serviceName $pkgDisplayName -outputCommand $false
   $workItem = CreateWorkItem $title "Package" "Release" "Release" $fields $assignedTo $parentItem.id -outputCommand $outputCommand
   Write-Host "[$($workItem.id)]$lang - $pkgName($verMajorMinor) - Created"
+  return $workItem
+}
+
+function FindOrCreateReleasePlanParent($serviceName, $packageDisplayName, $outputCommand = $true)
+{
+  $existingItem = FindReleasePlanWorkItem $serviceName $packageDisplayName -outputCommand $outputCommand
+  if ($existingItem) {
+    Write-Host "Found existing release plan work item [$($existingItem.id)]"
+    $newparentItem = FindOrCreatePackageGroupParent $serviceName $packageDisplayName -outputCommand $outputCommand
+    UpdateWorkItemParent $existingItem $newParentItem
+    return $existingItem
+  }
+
+  $fields = @()
+  $fields += "`"PackageDisplayName=${packageDisplayName}`""
+  $fields += "`"ServiceName=${serviceName}`""
+  $productParentItem = FindOrCreatePackageGroupParent $serviceName $packageDisplayName -outputCommand $outputCommand
+  $title = "Release Plan - $($packageDisplayName)"
+  $workItem = CreateWorkItem $title "Release Plan" "Release" "Release" $fields $null $productParentItem.id
+
+  $localKey = BuildHashKey $serviceName $packageDisplayName
+  Write-Host "[$($workItem.id)]$localKey - Created release plan work item"
+  $releasePlanWorkItems[$localKey] = $workItem
   return $workItem
 }
 
@@ -505,6 +574,7 @@ function FindOrCreatePackageGroupParent($serviceName, $packageDisplayName, $outp
 {
   $existingItem = FindParentWorkItem $serviceName $packageDisplayName -outputCommand $outputCommand
   if ($existingItem) {
+    Write-Host "Found existing product work item [$($existingItem.id)]"
     $newparentItem = FindOrCreateServiceParent $serviceName -outputCommand $outputCommand
     UpdateWorkItemParent $existingItem $newParentItem
     return $existingItem
@@ -525,8 +595,9 @@ function FindOrCreatePackageGroupParent($serviceName, $packageDisplayName, $outp
 
 function FindOrCreateServiceParent($serviceName, $outputCommand = $true)
 {
-  $serviceParent = FindParentWorkItem $serviceName -outputCommand $outputCommand
+  $serviceParent = FindParentWorkItem $serviceName -packageDisplayName $null -outputCommand $outputCommand
   if ($serviceParent) {
+    Write-Host "Found existing service work item [$($serviceParent.id)]"
     return $serviceParent
   }
 
@@ -538,7 +609,7 @@ function FindOrCreateServiceParent($serviceName, $outputCommand = $true)
   $workItem = CreateWorkItem $serviceName "Epic" "Release" "Release" $fields $null $parentId -outputCommand $outputCommand
 
   $localKey = BuildHashKey $serviceName
-  Write-Host "[$($workItem.id)]$localKey - Created"
+  Write-Host "[$($workItem.id)]$localKey - Created service work item"
   $parentWorkItems[$localKey] = $workItem
   return $workItem
 }
