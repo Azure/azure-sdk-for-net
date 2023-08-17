@@ -1,5 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.RecoveryServicesBackup.csproj" />
+    <PackageReference Include="Azure.ResourceManager.RecoveryServices" />
+    <PackageReference Include="Azure.ResourceManager.Storage" />
+    <PackageReference Include="Azure.ResourceManager.ManagedServiceIdentities" />
+    <PackageReference Include="Azure.ResourceManager.KeyVault" />
+    <PackageReference Include="Azure.Security.KeyVault.Keys" />
   </ItemGroup>
 </Project>
