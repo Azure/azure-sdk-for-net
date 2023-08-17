@@ -631,6 +631,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [Ignore("Investigating possible issue in Utf8JsonWriter.")]
         public void CanWriteDateTime()
         {
             DateTime dateTime = DateTime.Parse("2023-05-07T21:04:45.1657010-07:00");
