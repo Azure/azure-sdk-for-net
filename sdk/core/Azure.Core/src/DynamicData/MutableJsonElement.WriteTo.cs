@@ -120,9 +120,6 @@ namespace Azure.Core.Json
                 case bool b:
                     writer.WriteBooleanValue(b);
                     return;
-                case string s:
-                    writer.WriteStringValue(s);
-                    return;
                 case byte b:
                     writer.WriteNumberValue(b);
                     return;
@@ -156,25 +153,23 @@ namespace Azure.Core.Json
                 case decimal d:
                     writer.WriteNumberValue(d);
                     return;
+                case string s:
+                    writer.WriteStringValue(s);
+                    return;
                 case DateTime d:
-                    // TODO - test
                     writer.WriteStringValue(d);
                     return;
                 case DateTimeOffset d:
-                    // TODO - test
                     writer.WriteStringValue(d);
                     return;
                 case Guid g:
-                    // TODO - test
                     writer.WriteStringValue(g);
                     return;
                 case null:
                     writer.WriteNullValue();
                     return;
                 default:
-                    // Change can't have the type it has
-                    // TODO
-                    throw new InvalidOperationException();
+                    throw new InvalidOperationException($"Unrecognized change type '{change.Value.GetType()}'.");
             }
         }
     }
