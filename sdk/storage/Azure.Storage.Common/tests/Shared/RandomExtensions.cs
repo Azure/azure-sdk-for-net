@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text;
 
 namespace Azure.Storage.Tests
 {
@@ -17,6 +18,20 @@ namespace Azure.Storage.Tests
                 buffer[i] = _alphanumeric[random.Next(_alphanumeric.Length)];
             }
             return new string(buffer);
+        }
+
+        public static Span<byte> NextBytesInline(this Random random, int length)
+        {
+            var buffer = new byte[length];
+            random.NextBytes(buffer);
+            return new Span<byte>(buffer);
+        }
+
+        public static string NextBase64(this Random random, int length)
+        {
+            var buffer = new byte[length];
+            random.NextBytes(buffer);
+            return Convert.ToBase64String(buffer);
         }
     }
 }
