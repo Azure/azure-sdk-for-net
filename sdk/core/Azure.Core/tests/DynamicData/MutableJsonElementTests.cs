@@ -559,14 +559,12 @@ namespace Azure.Core.Tests
 
         internal static string FormatDateTime(DateTime d)
         {
-            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(d);
-            return JsonDocument.Parse(bytes).RootElement.GetString();
+            return MutableJsonElement.SerializeToJsonElement(d).GetString();
         }
 
         internal static string FormatDateTimeOffset(DateTimeOffset d)
         {
-            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(d);
-            return JsonDocument.Parse(bytes).RootElement.GetString();
+            return MutableJsonElement.SerializeToJsonElement(d).GetString();
         }
 
         public static IEnumerable<object[]> NumberValues()

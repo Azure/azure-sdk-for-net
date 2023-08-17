@@ -37,7 +37,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanGetSortedChanges()
         {
-            MutableJsonDocument.ChangeTracker changeTracker = new(null);
+            MutableJsonDocument.ChangeTracker changeTracker = new();
             char delimiter = MutableJsonDocument.ChangeTracker.Delimiter;
 
             changeTracker.AddChange("a", 1);
