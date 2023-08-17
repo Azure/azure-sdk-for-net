@@ -9,7 +9,8 @@
 ### Bugs Fixed
 
 ### Other Changes
-
+- Improve memory management for attachment handling
+ 
 ## 1.0.0 (2023-03-31)
 
 ### Breaking Changes
