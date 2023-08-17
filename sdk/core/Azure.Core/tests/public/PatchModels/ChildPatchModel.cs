@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Json;
-
 namespace Azure.Core.Tests.PatchModels
 {
     /// <summary>
@@ -10,55 +8,43 @@ namespace Azure.Core.Tests.PatchModels
     /// </summary>
     public partial class ChildPatchModel
     {
-#pragma warning disable AZC0020 // Avoid using banned types in libraries
-        private readonly MutableJsonElement _element;
-
-        // Note: A child patch model doesn't have a public constructor.
-        //
-        // When a nested model is also an input to a service method, it will
-        // need to have a public constructor.  When this happens, the parent
-        // model it is also part of will not allow it to be set, to ensure the
-        // MutableJsonElements point to the same root MutableJsonDocument when
-        // they are part of the same input, so the Patch JSON will be correct.
+        internal bool HasChanges => _aPatchFlag || _bPatchFlag;
 
         /// <summary> Serialization constructor. </summary>
-        /// <param name="element"></param>
-        internal ChildPatchModel(MutableJsonElement element)
+        internal ChildPatchModel(string a, string b)
         {
-            _element = element;
+            _a = a;
+            _b = b;
         }
 
+        private string _a;
+        private bool _aPatchFlag;
         /// <summary>
         /// Optional string property corresponding to JSON """{"a": "aaa"}""".
         /// </summary>
         public string A
         {
-            get
+            get => _a;
+            set
             {
-                if (_element.TryGetProperty("a", out MutableJsonElement value))
-                {
-                    return value.GetString();
-                }
-                return null;
+                _a = value;
+                _aPatchFlag = true;
             }
-            set => _element.SetProperty("a", value);
         }
 
+        private string _b;
+        private bool _bPatchFlag;
         /// <summary>
         /// Optional string property corresponding to JSON """{"b": "bbb"}""".
         /// </summary>
         public string B
         {
-            get
+            get => _b;
+            set
             {
-                if (_element.TryGetProperty("b", out MutableJsonElement value))
-                {
-                    return value.GetString();
-                }
-                return null;
+                _b = value;
+                _bPatchFlag = true;
             }
-            set => _element.SetProperty("b", value);
         }
-#pragma warning restore AZC0020 // Avoid using banned types in libraries
     }
 }

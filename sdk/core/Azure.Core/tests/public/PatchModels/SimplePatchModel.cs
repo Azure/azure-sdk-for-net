@@ -28,11 +28,11 @@ namespace Azure.Core.Tests.PatchModels
             _updatedOn = updatedOn;
         }
 
+        private string _name;
+        private bool _namePatchFlag;
         /// <summary>
         /// Optional string property corresponding to JSON """{"name": "abc"}""".
         /// </summary>
-        private string _name;
-        private bool _namePatchFlag;
         public string Name
         {
             get => _name;
@@ -43,11 +43,11 @@ namespace Azure.Core.Tests.PatchModels
             }
         }
 
+        private int? _count;
+        private bool _countPatchFlag;
         /// <summary>
         /// Optional int property corresponding to JSON """{"count": 1}""".
         /// </summary>
-        private int? _count;
-        private bool _countPatchFlag;
         public int? Count
         {
             get => _count;
@@ -58,11 +58,11 @@ namespace Azure.Core.Tests.PatchModels
             }
         }
 
+        private DateTimeOffset? _updatedOn;
+        private bool _updatedOnPatchFlag;
         /// <summary>
         /// Optional DateTimeOffset property corresponding to JSON """{"updatedOn": "2020-06-25T17:44:37.6830000Z"}""".
         /// </summary>
-        private DateTimeOffset? _updatedOn;
-        private bool _updatedOnPatchFlag;
         public DateTimeOffset? UpdatedOn
         {
             get => _updatedOn;

@@ -7,103 +7,102 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.PatchModels
 {
-    public partial class ParentPatchModel : IModelJsonSerializable<ParentPatchModel>, IUtf8JsonSerializable
+    public partial class ChildPatchModel : IModelJsonSerializable<ChildPatchModel>, IUtf8JsonSerializable
     {
-        internal static ParentPatchModel Deserialize(JsonElement element)
+        internal static ChildPatchModel Deserialize(JsonElement element)
         {
-            string id = default;
-            ChildPatchModel child = default;
+            string a = default;
+            string b = default;
 
             foreach (JsonProperty property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("a"))
                 {
-                    id = property.Value.GetString();
+                    a = property.Value.GetString();
                     continue;
                 }
 
-                if (property.NameEquals("child"))
+                if (property.NameEquals("b"))
                 {
-                    child = ChildPatchModel.Deserialize(property.Value);
+                    b = property.Value.GetString();
                     continue;
                 }
             }
 
-            return new ParentPatchModel(id, child);
+            return new ChildPatchModel(a, b);
         }
 
-        ParentPatchModel IModelJsonSerializable<ParentPatchModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        ChildPatchModel IModelJsonSerializable<ChildPatchModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             PatchModelHelper.ValidateFormat(this, options.Format);
 
             return Deserialize(ref reader, options);
         }
 
-        private static ParentPatchModel Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        private static ChildPatchModel Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             JsonElement element = JsonDocument.ParseValue(ref reader).RootElement;
             return Deserialize(element);
         }
 
-        ParentPatchModel IModelSerializable<ParentPatchModel>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        ChildPatchModel IModelSerializable<ChildPatchModel>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
             PatchModelHelper.ValidateFormat(this, options.Format);
 
             return Deserialize(data, options);
         }
 
-        private static ParentPatchModel Deserialize(BinaryData data, ModelSerializerOptions options)
+        private static ChildPatchModel Deserialize(BinaryData data, ModelSerializerOptions options)
         {
             JsonElement element = JsonDocument.Parse(data).RootElement;
             return Deserialize(element);
         }
 
-        private void SerializeFull(Utf8JsonWriter writer)
+        internal void SerializeFull(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
 
             // It's required for GET, so assume we have it
-            if (Id == null)
+            if (A == null)
             {
-                throw new InvalidOperationException("'id' was not initialized during Deserialization.");
+                throw new InvalidOperationException("'a' was not initialized during Deserialization.");
             }
 
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            writer.WritePropertyName("a");
+            writer.WriteStringValue(A);
 
             // It's required for GET, so assume we have it
-            if (Child == null)
+            if (B == null)
             {
-                throw new InvalidOperationException("'child' was not initialized during Deserialization.");
+                throw new InvalidOperationException("'b' was not initialized during Deserialization.");
             }
 
-            writer.WritePropertyName("child");
-            Child.SerializeFull(writer);
+            writer.WritePropertyName("b");
+            writer.WriteStringValue(B);
 
             writer.WriteEndObject();
         }
 
-        private void SerializePatch(Utf8JsonWriter writer)
+        internal void SerializePatch(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
 
-            if (_idPatchFlag)
+            if (_aPatchFlag)
             {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
+                writer.WritePropertyName("a");
+                writer.WriteStringValue(A);
             }
 
-            if (_childPatchFlag ||
-                (Child != null && Child.HasChanges))
+            if (_bPatchFlag)
             {
-                writer.WritePropertyName("child");
-                Child.SerializePatch(writer);
+                writer.WritePropertyName("b");
+                writer.WriteStringValue(B);
             }
 
             writer.WriteEndObject();
         }
 
-        void IModelJsonSerializable<ParentPatchModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IModelJsonSerializable<ChildPatchModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             PatchModelHelper.ValidateFormat(this, options.Format);
 
@@ -122,17 +121,17 @@ namespace Azure.Core.Tests.PatchModels
             }
         }
 
-        BinaryData IModelSerializable<ParentPatchModel>.Serialize(ModelSerializerOptions options)
+        BinaryData IModelSerializable<ChildPatchModel>.Serialize(ModelSerializerOptions options)
         {
             PatchModelHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
 
-        public static implicit operator RequestContent(ParentPatchModel model)
+        public static implicit operator RequestContent(ChildPatchModel model)
             => RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
 
-        public static explicit operator ParentPatchModel(Response response)
+        public static explicit operator ChildPatchModel(Response response)
         {
             Argument.AssertNotNull(response, nameof(response));
 
