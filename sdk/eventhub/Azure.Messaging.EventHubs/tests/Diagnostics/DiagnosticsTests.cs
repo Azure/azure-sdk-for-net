@@ -195,6 +195,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventHubBufferedProducerAppliesDiagnosticIdToEventsOnEnqueue()
         {
+            using var testListener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
             Activity activity = new Activity("SomeActivity").Start();
 
             var eventHubName = "SomeName";
@@ -244,7 +245,8 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (EventData eventData in writtenEventsData)
             {
                 Assert.That(eventData.Properties.TryGetValue(MessagingClientDiagnostics.DiagnosticIdAttribute, out object value), Is.True, "The events should have a diagnostic identifier property.");
-                Assert.That(value, Is.EqualTo(activity.Id), "The diagnostics identifier should match the activity in the active scope.");
+                ActivityContext.TryParse((string)value, null, out var context);
+                Assert.That(context.TraceId, Is.EqualTo(activity.TraceId), "The trace identifier should match the activity in the active scope when the events were enqueued.");
             }
         }
 
@@ -256,6 +258,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventHubBufferedProducerAppliesDiagnosticIdToSingleEventOnEnqueue()
         {
+            using var testListener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
             Activity activity = new Activity("SomeActivity").Start();
 
             var eventHubName = "SomeName";
@@ -301,7 +304,8 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (EventData eventData in writtenEventsData)
             {
                 Assert.That(eventData.Properties.TryGetValue(MessagingClientDiagnostics.DiagnosticIdAttribute, out object value), Is.True, "The events should have a diagnostic identifier property.");
-                Assert.That(value, Is.EqualTo(activity.Id), "The diagnostics identifier should match the activity in the active scope.");
+                ActivityContext.TryParse((string)value, null, out var context);
+                Assert.That(context.TraceId, Is.EqualTo(activity.TraceId), "The trace identifier should match the activity in the active scope when the events were enqueued.");
             }
         }
 
