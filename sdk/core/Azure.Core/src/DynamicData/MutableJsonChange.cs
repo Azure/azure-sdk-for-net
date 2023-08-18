@@ -51,7 +51,6 @@ namespace Azure.Core.Json
 
         public JsonValueKind ValueKind => GetSerializedValue().ValueKind;
 
-        [RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
         internal JsonElement GetSerializedValue()
         {
             if (_serializedValue != null)
