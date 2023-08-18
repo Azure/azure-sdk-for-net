@@ -39,6 +39,17 @@ namespace Azure.Core.Tests.PatchModels
             _changes = changes.GetElement(path);
 
             // TODO: add freezing mechanism to make sure this isn't called multiple times?
+
+            // TODO:
+            // Note: we could simplify this a lot if we just pass around the root changelist
+            // and tell a nested model what its parent path prefix is.
+            // The parent doesn't need to maintain a registration.
+            // It does have the implication that a model can only be rooted with one
+            // change list at a time, not shared between instances.
+            // Although, honestly, if something is set, it doesn't need to track
+            // its changes anymore, because the entire thing will be written out when
+            // any changes happen to it, since it is a wholesale replacement.
+            // Set of an "object" is a fairly atomic thing.
         }
 
         private string _a;
