@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of RemotePrivateEndpointConnectionARMResourceData. </summary>
         public RemotePrivateEndpointConnectionARMResourceData()
         {
-            IPAddresses = new ChangeTrackingList<IPAddress>();
+            IPAddresses = new Core.ChangeTrackingList<IPAddress>();
         }
 
         /// <summary> Initializes a new instance of RemotePrivateEndpointConnectionARMResourceData. </summary>

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceAadLoginFlow : IUtf8JsonSerializable
+    public partial class AppServiceAadLoginFlow : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(LoginParameters))
+            if (Core.Optional.IsCollectionDefined(LoginParameters))
             {
                 writer.WritePropertyName("loginParameters"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsWwwAuthenticateDisabled))
+            if (Core.Optional.IsDefined(IsWwwAuthenticateDisabled))
             {
                 writer.WritePropertyName("disableWWWAuthenticate"u8);
                 writer.WriteBooleanValue(IsWwwAuthenticateDisabled.Value);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IList<string>> loginParameters = default;
-            Optional<bool> disableWWWAuthenticate = default;
+            Core.Optional<IList<string>> loginParameters = default;
+            Core.Optional<bool> disableWWWAuthenticate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("loginParameters"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceAadLoginFlow(Optional.ToList(loginParameters), Optional.ToNullable(disableWWWAuthenticate));
+            return new AppServiceAadLoginFlow(Core.Optional.ToList(loginParameters), Core.Optional.ToNullable(disableWWWAuthenticate));
         }
     }
 }

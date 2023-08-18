@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<bool> nameAvailable = default;
-            Optional<string> reason = default;
-            Optional<string> message = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceType> type = default;
+            Core.Optional<bool> nameAvailable = default;
+            Core.Optional<string> reason = default;
+            Core.Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     continue;
                 }
             }
-            return new TrafficManagerNameAvailabilityResult(name.Value, Optional.ToNullable(type), Optional.ToNullable(nameAvailable), reason.Value, message.Value);
+            return new TrafficManagerNameAvailabilityResult(name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(nameAvailable), reason.Value, message.Value);
         }
     }
 }

@@ -14,12 +14,12 @@ using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
 {
-    public partial class SapApplicationServerInstanceData : IUtf8JsonSerializable
+    public partial class SapApplicationServerInstanceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,27 +44,27 @@ namespace Azure.ResourceManager.Workloads
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> instanceNo = default;
-            Optional<ResourceIdentifier> subnet = default;
-            Optional<string> hostname = default;
-            Optional<string> kernelVersion = default;
-            Optional<string> kernelPatch = default;
-            Optional<string> ipAddress = default;
-            Optional<long?> gatewayPort = default;
-            Optional<long?> icmHttpPort = default;
-            Optional<long?> icmHttpsPort = default;
-            Optional<SubResource> loadBalancerDetails = default;
-            Optional<IReadOnlyList<ApplicationServerVmDetails>> vmDetails = default;
-            Optional<SapVirtualInstanceStatus> status = default;
-            Optional<SapHealthState> health = default;
-            Optional<SapVirtualInstanceProvisioningState> provisioningState = default;
-            Optional<SapVirtualInstanceError> errors = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> instanceNo = default;
+            Core.Optional<ResourceIdentifier> subnet = default;
+            Core.Optional<string> hostname = default;
+            Core.Optional<string> kernelVersion = default;
+            Core.Optional<string> kernelPatch = default;
+            Core.Optional<string> ipAddress = default;
+            Core.Optional<long?> gatewayPort = default;
+            Core.Optional<long?> icmHttpPort = default;
+            Core.Optional<long?> icmHttpsPort = default;
+            Core.Optional<SubResource> loadBalancerDetails = default;
+            Core.Optional<IReadOnlyList<ApplicationServerVmDetails>> vmDetails = default;
+            Core.Optional<SapVirtualInstanceStatus> status = default;
+            Core.Optional<SapHealthState> health = default;
+            Core.Optional<SapVirtualInstanceProvisioningState> provisioningState = default;
+            Core.Optional<SapVirtualInstanceError> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Workloads
                     continue;
                 }
             }
-            return new SapApplicationServerInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, instanceNo.Value, subnet.Value, hostname.Value, kernelVersion.Value, kernelPatch.Value, ipAddress.Value, Optional.ToNullable(gatewayPort), Optional.ToNullable(icmHttpPort), Optional.ToNullable(icmHttpsPort), loadBalancerDetails, Optional.ToList(vmDetails), Optional.ToNullable(status), Optional.ToNullable(health), Optional.ToNullable(provisioningState), errors.Value);
+            return new SapApplicationServerInstanceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, instanceNo.Value, subnet.Value, hostname.Value, kernelVersion.Value, kernelPatch.Value, ipAddress.Value, Core.Optional.ToNullable(gatewayPort), Core.Optional.ToNullable(icmHttpPort), Core.Optional.ToNullable(icmHttpsPort), loadBalancerDetails, Core.Optional.ToList(vmDetails), Core.Optional.ToNullable(status), Core.Optional.ToNullable(health), Core.Optional.ToNullable(provisioningState), errors.Value);
         }
     }
 }

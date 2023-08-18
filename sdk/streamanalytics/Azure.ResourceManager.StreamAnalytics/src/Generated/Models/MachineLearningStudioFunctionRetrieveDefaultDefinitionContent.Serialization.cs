@@ -10,21 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class MachineLearningStudioFunctionRetrieveDefaultDefinitionContent : IUtf8JsonSerializable
+    public partial class MachineLearningStudioFunctionRetrieveDefaultDefinitionContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("bindingType"u8);
             writer.WriteStringValue(BindingType);
             writer.WritePropertyName("bindingRetrievalProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExecuteEndpoint))
+            if (Core.Optional.IsDefined(ExecuteEndpoint))
             {
                 writer.WritePropertyName("executeEndpoint"u8);
                 writer.WriteStringValue(ExecuteEndpoint);
             }
-            if (Optional.IsDefined(UdfType))
+            if (Core.Optional.IsDefined(UdfType))
             {
                 writer.WritePropertyName("udfType"u8);
                 writer.WriteStringValue(UdfType.Value.ToString());

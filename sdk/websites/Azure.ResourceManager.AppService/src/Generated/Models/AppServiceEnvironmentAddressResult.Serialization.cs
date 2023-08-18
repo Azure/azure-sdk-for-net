@@ -13,29 +13,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceEnvironmentAddressResult : IUtf8JsonSerializable
+    public partial class AppServiceEnvironmentAddressResult : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceIPAddress))
+            if (Core.Optional.IsDefined(ServiceIPAddress))
             {
                 writer.WritePropertyName("serviceIpAddress"u8);
                 writer.WriteStringValue(ServiceIPAddress.ToString());
             }
-            if (Optional.IsDefined(InternalIPAddress))
+            if (Core.Optional.IsDefined(InternalIPAddress))
             {
                 writer.WritePropertyName("internalIpAddress"u8);
                 writer.WriteStringValue(InternalIPAddress.ToString());
             }
-            if (Optional.IsCollectionDefined(OutboundIPAddresses))
+            if (Core.Optional.IsCollectionDefined(OutboundIPAddresses))
             {
                 writer.WritePropertyName("outboundIpAddresses"u8);
                 writer.WriteStartArray();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VirtualIPMappings))
+            if (Core.Optional.IsCollectionDefined(VirtualIPMappings))
             {
                 writer.WritePropertyName("vipMappings"u8);
                 writer.WriteStartArray();
@@ -70,15 +70,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IPAddress> serviceIPAddress = default;
-            Optional<IPAddress> internalIPAddress = default;
-            Optional<IList<IPAddress>> outboundIPAddresses = default;
-            Optional<IList<VirtualIPMapping>> vipMappings = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IPAddress> serviceIPAddress = default;
+            Core.Optional<IPAddress> internalIPAddress = default;
+            Core.Optional<IList<IPAddress>> outboundIPAddresses = default;
+            Core.Optional<IList<VirtualIPMapping>> vipMappings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceEnvironmentAddressResult(id, name, type, systemData.Value, serviceIPAddress.Value, internalIPAddress.Value, Optional.ToList(outboundIPAddresses), Optional.ToList(vipMappings), kind.Value);
+            return new AppServiceEnvironmentAddressResult(id, name, type, systemData.Value, serviceIPAddress.Value, internalIPAddress.Value, Core.Optional.ToList(outboundIPAddresses), Core.Optional.ToList(vipMappings), kind.Value);
         }
     }
 }

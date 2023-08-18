@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.StorageSync
             try
             {
                 var response = await _storageSyncServiceRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, storageSyncServiceName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageSyncArmOperation<StorageSyncServiceResource>(new StorageSyncServiceOperationSource(Client), _storageSyncServiceClientDiagnostics, Pipeline, _storageSyncServiceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, storageSyncServiceName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageSyncArmOperation<StorageSyncServiceResource>(new StorageSyncServiceOperationSource(Client), _storageSyncServiceClientDiagnostics, Pipeline, _storageSyncServiceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, storageSyncServiceName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.StorageSync
             try
             {
                 var response = _storageSyncServiceRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, storageSyncServiceName, content, cancellationToken);
-                var operation = new StorageSyncArmOperation<StorageSyncServiceResource>(new StorageSyncServiceOperationSource(Client), _storageSyncServiceClientDiagnostics, Pipeline, _storageSyncServiceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, storageSyncServiceName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageSyncArmOperation<StorageSyncServiceResource>(new StorageSyncServiceOperationSource(Client), _storageSyncServiceClientDiagnostics, Pipeline, _storageSyncServiceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, storageSyncServiceName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.StorageSync
         public virtual AsyncPageable<StorageSyncServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageSyncServiceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StorageSyncServiceResource(Client, StorageSyncServiceData.DeserializeStorageSyncServiceData(e)), _storageSyncServiceClientDiagnostics, Pipeline, "StorageSyncServiceCollection.GetAll", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StorageSyncServiceResource(Client, StorageSyncServiceData.DeserializeStorageSyncServiceData(e)), _storageSyncServiceClientDiagnostics, Pipeline, "StorageSyncServiceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.StorageSync
         public virtual Pageable<StorageSyncServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageSyncServiceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new StorageSyncServiceResource(Client, StorageSyncServiceData.DeserializeStorageSyncServiceData(e)), _storageSyncServiceClientDiagnostics, Pipeline, "StorageSyncServiceCollection.GetAll", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, e => new StorageSyncServiceResource(Client, StorageSyncServiceData.DeserializeStorageSyncServiceData(e)), _storageSyncServiceClientDiagnostics, Pipeline, "StorageSyncServiceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

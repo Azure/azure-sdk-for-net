@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.VoiceServices
             try
             {
                 var response = await _voiceServicesTestLineTestLinesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new VoiceServicesArmOperation(_voiceServicesTestLineTestLinesClientDiagnostics, Pipeline, _voiceServicesTestLineTestLinesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new VoiceServicesArmOperation(_voiceServicesTestLineTestLinesClientDiagnostics, Pipeline, _voiceServicesTestLineTestLinesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.VoiceServices
             try
             {
                 var response = _voiceServicesTestLineTestLinesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new VoiceServicesArmOperation(_voiceServicesTestLineTestLinesClientDiagnostics, Pipeline, _voiceServicesTestLineTestLinesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new VoiceServicesArmOperation(_voiceServicesTestLineTestLinesClientDiagnostics, Pipeline, _voiceServicesTestLineTestLinesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

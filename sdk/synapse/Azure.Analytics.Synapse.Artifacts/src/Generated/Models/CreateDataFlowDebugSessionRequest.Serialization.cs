@@ -13,27 +13,27 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(CreateDataFlowDebugSessionRequestConverter))]
-    public partial class CreateDataFlowDebugSessionRequest : IUtf8JsonSerializable
+    public partial class CreateDataFlowDebugSessionRequest : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComputeType))
+            if (Core.Optional.IsDefined(ComputeType))
             {
                 writer.WritePropertyName("computeType"u8);
                 writer.WriteStringValue(ComputeType);
             }
-            if (Optional.IsDefined(CoreCount))
+            if (Core.Optional.IsDefined(CoreCount))
             {
                 writer.WritePropertyName("coreCount"u8);
                 writer.WriteNumberValue(CoreCount.Value);
             }
-            if (Optional.IsDefined(TimeToLive))
+            if (Core.Optional.IsDefined(TimeToLive))
             {
                 writer.WritePropertyName("timeToLive"u8);
                 writer.WriteNumberValue(TimeToLive.Value);
             }
-            if (Optional.IsDefined(IntegrationRuntime))
+            if (Core.Optional.IsDefined(IntegrationRuntime))
             {
                 writer.WritePropertyName("integrationRuntime"u8);
                 writer.WriteObjectValue(IntegrationRuntime);
@@ -47,10 +47,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> computeType = default;
-            Optional<int> coreCount = default;
-            Optional<int> timeToLive = default;
-            Optional<IntegrationRuntimeDebugResource> integrationRuntime = default;
+            Core.Optional<string> computeType = default;
+            Core.Optional<int> coreCount = default;
+            Core.Optional<int> timeToLive = default;
+            Core.Optional<IntegrationRuntimeDebugResource> integrationRuntime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeType"u8))
@@ -86,7 +86,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new CreateDataFlowDebugSessionRequest(computeType.Value, Optional.ToNullable(coreCount), Optional.ToNullable(timeToLive), integrationRuntime.Value);
+            return new CreateDataFlowDebugSessionRequest(computeType.Value, Core.Optional.ToNullable(coreCount), Core.Optional.ToNullable(timeToLive), integrationRuntime.Value);
         }
 
         internal partial class CreateDataFlowDebugSessionRequestConverter : JsonConverter<CreateDataFlowDebugSessionRequest>

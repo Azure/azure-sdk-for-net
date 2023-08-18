@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ContainerThrottlingInfo : IUtf8JsonSerializable
+    public partial class ContainerThrottlingInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Periods))
+            if (Core.Optional.IsDefined(Periods))
             {
                 writer.WritePropertyName("periods"u8);
                 writer.WriteNumberValue(Periods.Value);
             }
-            if (Optional.IsDefined(ThrottledPeriods))
+            if (Core.Optional.IsDefined(ThrottledPeriods))
             {
                 writer.WritePropertyName("throttledPeriods"u8);
                 writer.WriteNumberValue(ThrottledPeriods.Value);
             }
-            if (Optional.IsDefined(ThrottledTime))
+            if (Core.Optional.IsDefined(ThrottledTime))
             {
                 writer.WritePropertyName("throttledTime"u8);
                 writer.WriteNumberValue(ThrottledTime.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<int> periods = default;
-            Optional<int> throttledPeriods = default;
-            Optional<int> throttledTime = default;
+            Core.Optional<int> periods = default;
+            Core.Optional<int> throttledPeriods = default;
+            Core.Optional<int> throttledTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("periods"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new ContainerThrottlingInfo(Optional.ToNullable(periods), Optional.ToNullable(throttledPeriods), Optional.ToNullable(throttledTime));
+            return new ContainerThrottlingInfo(Core.Optional.ToNullable(periods), Core.Optional.ToNullable(throttledPeriods), Core.Optional.ToNullable(throttledTime));
         }
     }
 }

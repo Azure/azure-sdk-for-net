@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class OnvifDns : IUtf8JsonSerializable
+    public partial class OnvifDns : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FromDhcp))
+            if (Core.Optional.IsDefined(FromDhcp))
             {
                 writer.WritePropertyName("fromDhcp"u8);
                 writer.WriteBooleanValue(FromDhcp.Value);
             }
-            if (Optional.IsCollectionDefined(Ipv4Address))
+            if (Core.Optional.IsCollectionDefined(Ipv4Address))
             {
                 writer.WritePropertyName("ipv4Address"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Ipv6Address))
+            if (Core.Optional.IsCollectionDefined(Ipv6Address))
             {
                 writer.WritePropertyName("ipv6Address"u8);
                 writer.WriteStartArray();
@@ -50,9 +50,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<bool> fromDhcp = default;
-            Optional<IList<string>> ipv4Address = default;
-            Optional<IList<string>> ipv6Address = default;
+            Core.Optional<bool> fromDhcp = default;
+            Core.Optional<IList<string>> ipv4Address = default;
+            Core.Optional<IList<string>> ipv6Address = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fromDhcp"u8))
@@ -93,7 +93,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new OnvifDns(Optional.ToNullable(fromDhcp), Optional.ToList(ipv4Address), Optional.ToList(ipv6Address));
+            return new OnvifDns(Core.Optional.ToNullable(fromDhcp), Core.Optional.ToList(ipv4Address), Core.Optional.ToList(ipv6Address));
         }
     }
 }

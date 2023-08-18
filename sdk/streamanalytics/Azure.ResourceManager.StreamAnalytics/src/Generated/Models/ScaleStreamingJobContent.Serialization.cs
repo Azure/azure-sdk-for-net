@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class ScaleStreamingJobContent : IUtf8JsonSerializable
+    public partial class ScaleStreamingJobContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StreamingUnits))
+            if (Core.Optional.IsDefined(StreamingUnits))
             {
                 writer.WritePropertyName("streamingUnits"u8);
                 writer.WriteNumberValue(StreamingUnits.Value);

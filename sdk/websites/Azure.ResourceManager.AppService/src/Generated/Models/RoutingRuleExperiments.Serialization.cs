@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    internal partial class RoutingRuleExperiments : IUtf8JsonSerializable
+    internal partial class RoutingRuleExperiments : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(RampUpRules))
+            if (Core.Optional.IsCollectionDefined(RampUpRules))
             {
                 writer.WritePropertyName("rampUpRules"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IList<RampUpRule>> rampUpRules = default;
+            Core.Optional<IList<RampUpRule>> rampUpRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rampUpRules"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new RoutingRuleExperiments(Optional.ToList(rampUpRules));
+            return new RoutingRuleExperiments(Core.Optional.ToList(rampUpRules));
         }
     }
 }

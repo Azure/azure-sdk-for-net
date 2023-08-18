@@ -11,24 +11,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class MigrateMySqlContent : IUtf8JsonSerializable
+    public partial class MigrateMySqlContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectionString))
+            if (Core.Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
-            if (Optional.IsDefined(MigrationType))
+            if (Core.Optional.IsDefined(MigrationType))
             {
                 writer.WritePropertyName("migrationType"u8);
                 writer.WriteStringValue(MigrationType.Value.ToSerialString());
@@ -43,13 +43,13 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> connectionString = default;
-            Optional<MySqlMigrationType> migrationType = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> connectionString = default;
+            Core.Optional<MySqlMigrationType> migrationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new MigrateMySqlContent(id, name, type, systemData.Value, connectionString.Value, Optional.ToNullable(migrationType), kind.Value);
+            return new MigrateMySqlContent(id, name, type, systemData.Value, connectionString.Value, Core.Optional.ToNullable(migrationType), kind.Value);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of WebAppStack. </summary>
         public WebAppStack()
         {
-            MajorVersions = new ChangeTrackingList<WebAppMajorVersion>();
+            MajorVersions = new Core.ChangeTrackingList<WebAppMajorVersion>();
         }
 
         /// <summary> Initializes a new instance of WebAppStack. </summary>

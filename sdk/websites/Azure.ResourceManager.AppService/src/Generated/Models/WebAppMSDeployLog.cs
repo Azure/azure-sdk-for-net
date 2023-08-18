@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of WebAppMSDeployLog. </summary>
         public WebAppMSDeployLog()
         {
-            Entries = new ChangeTrackingList<WebAppMSDeployLogEntry>();
+            Entries = new Core.ChangeTrackingList<WebAppMSDeployLogEntry>();
         }
 
         /// <summary> Initializes a new instance of WebAppMSDeployLog. </summary>

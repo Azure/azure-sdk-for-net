@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of WebAppMajorVersion. </summary>
         internal WebAppMajorVersion()
         {
-            MinorVersions = new ChangeTrackingList<WebAppMinorVersion>();
+            MinorVersions = new Core.ChangeTrackingList<WebAppMinorVersion>();
         }
 
         /// <summary> Initializes a new instance of WebAppMajorVersion. </summary>

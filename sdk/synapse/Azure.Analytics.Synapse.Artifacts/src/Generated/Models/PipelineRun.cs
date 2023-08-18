@@ -17,8 +17,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of PipelineRun. </summary>
         internal PipelineRun()
         {
-            Parameters = new ChangeTrackingDictionary<string, string>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            Parameters = new Core.ChangeTrackingDictionary<string, string>();
+            AdditionalProperties = new Core.ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of PipelineRun. </summary>

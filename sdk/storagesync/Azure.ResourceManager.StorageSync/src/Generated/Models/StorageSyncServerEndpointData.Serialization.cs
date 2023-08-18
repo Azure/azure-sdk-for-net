@@ -13,64 +13,64 @@ using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
 {
-    public partial class StorageSyncServerEndpointData : IUtf8JsonSerializable
+    public partial class StorageSyncServerEndpointData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServerLocalPath))
+            if (Core.Optional.IsDefined(ServerLocalPath))
             {
                 writer.WritePropertyName("serverLocalPath"u8);
                 writer.WriteStringValue(ServerLocalPath);
             }
-            if (Optional.IsDefined(CloudTiering))
+            if (Core.Optional.IsDefined(CloudTiering))
             {
                 writer.WritePropertyName("cloudTiering"u8);
                 writer.WriteStringValue(CloudTiering.Value.ToString());
             }
-            if (Optional.IsDefined(VolumeFreeSpacePercent))
+            if (Core.Optional.IsDefined(VolumeFreeSpacePercent))
             {
                 writer.WritePropertyName("volumeFreeSpacePercent"u8);
                 writer.WriteNumberValue(VolumeFreeSpacePercent.Value);
             }
-            if (Optional.IsDefined(TierFilesOlderThanDays))
+            if (Core.Optional.IsDefined(TierFilesOlderThanDays))
             {
                 writer.WritePropertyName("tierFilesOlderThanDays"u8);
                 writer.WriteNumberValue(TierFilesOlderThanDays.Value);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (Core.Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(ServerResourceId))
+            if (Core.Optional.IsDefined(ServerResourceId))
             {
                 writer.WritePropertyName("serverResourceId"u8);
                 writer.WriteStringValue(ServerResourceId);
             }
-            if (Optional.IsDefined(OfflineDataTransfer))
+            if (Core.Optional.IsDefined(OfflineDataTransfer))
             {
                 writer.WritePropertyName("offlineDataTransfer"u8);
                 writer.WriteStringValue(OfflineDataTransfer.Value.ToString());
             }
-            if (Optional.IsDefined(OfflineDataTransferShareName))
+            if (Core.Optional.IsDefined(OfflineDataTransferShareName))
             {
                 writer.WritePropertyName("offlineDataTransferShareName"u8);
                 writer.WriteStringValue(OfflineDataTransferShareName);
             }
-            if (Optional.IsDefined(InitialDownloadPolicy))
+            if (Core.Optional.IsDefined(InitialDownloadPolicy))
             {
                 writer.WritePropertyName("initialDownloadPolicy"u8);
                 writer.WriteStringValue(InitialDownloadPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(LocalCacheMode))
+            if (Core.Optional.IsDefined(LocalCacheMode))
             {
                 writer.WritePropertyName("localCacheMode"u8);
                 writer.WriteStringValue(LocalCacheMode.Value.ToString());
             }
-            if (Optional.IsDefined(InitialUploadPolicy))
+            if (Core.Optional.IsDefined(InitialUploadPolicy))
             {
                 writer.WritePropertyName("initialUploadPolicy"u8);
                 writer.WriteStringValue(InitialUploadPolicy.Value.ToString());
@@ -88,27 +88,27 @@ namespace Azure.ResourceManager.StorageSync
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> serverLocalPath = default;
-            Optional<StorageSyncFeatureStatus> cloudTiering = default;
-            Optional<int> volumeFreeSpacePercent = default;
-            Optional<int> tierFilesOlderThanDays = default;
-            Optional<string> friendlyName = default;
-            Optional<ResourceIdentifier> serverResourceId = default;
-            Optional<string> provisioningState = default;
-            Optional<string> lastWorkflowId = default;
-            Optional<string> lastOperationName = default;
-            Optional<ServerEndpointSyncStatus> syncStatus = default;
-            Optional<StorageSyncFeatureStatus> offlineDataTransfer = default;
-            Optional<ResourceIdentifier> offlineDataTransferStorageAccountResourceId = default;
-            Optional<Guid> offlineDataTransferStorageAccountTenantId = default;
-            Optional<string> offlineDataTransferShareName = default;
-            Optional<ServerEndpointCloudTieringStatus> cloudTieringStatus = default;
-            Optional<ServerEndpointRecallStatus> recallStatus = default;
-            Optional<InitialDownloadPolicy> initialDownloadPolicy = default;
-            Optional<LocalCacheMode> localCacheMode = default;
-            Optional<InitialUploadPolicy> initialUploadPolicy = default;
-            Optional<string> serverName = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> serverLocalPath = default;
+            Core.Optional<StorageSyncFeatureStatus> cloudTiering = default;
+            Core.Optional<int> volumeFreeSpacePercent = default;
+            Core.Optional<int> tierFilesOlderThanDays = default;
+            Core.Optional<string> friendlyName = default;
+            Core.Optional<ResourceIdentifier> serverResourceId = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<string> lastWorkflowId = default;
+            Core.Optional<string> lastOperationName = default;
+            Core.Optional<ServerEndpointSyncStatus> syncStatus = default;
+            Core.Optional<StorageSyncFeatureStatus> offlineDataTransfer = default;
+            Core.Optional<ResourceIdentifier> offlineDataTransferStorageAccountResourceId = default;
+            Core.Optional<Guid> offlineDataTransferStorageAccountTenantId = default;
+            Core.Optional<string> offlineDataTransferShareName = default;
+            Core.Optional<ServerEndpointCloudTieringStatus> cloudTieringStatus = default;
+            Core.Optional<ServerEndpointRecallStatus> recallStatus = default;
+            Core.Optional<InitialDownloadPolicy> initialDownloadPolicy = default;
+            Core.Optional<LocalCacheMode> localCacheMode = default;
+            Core.Optional<InitialUploadPolicy> initialUploadPolicy = default;
+            Core.Optional<string> serverName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.StorageSync
                     continue;
                 }
             }
-            return new StorageSyncServerEndpointData(id, name, type, systemData.Value, serverLocalPath.Value, Optional.ToNullable(cloudTiering), Optional.ToNullable(volumeFreeSpacePercent), Optional.ToNullable(tierFilesOlderThanDays), friendlyName.Value, serverResourceId.Value, provisioningState.Value, lastWorkflowId.Value, lastOperationName.Value, syncStatus.Value, Optional.ToNullable(offlineDataTransfer), offlineDataTransferStorageAccountResourceId.Value, Optional.ToNullable(offlineDataTransferStorageAccountTenantId), offlineDataTransferShareName.Value, cloudTieringStatus.Value, recallStatus.Value, Optional.ToNullable(initialDownloadPolicy), Optional.ToNullable(localCacheMode), Optional.ToNullable(initialUploadPolicy), serverName.Value);
+            return new StorageSyncServerEndpointData(id, name, type, systemData.Value, serverLocalPath.Value, Core.Optional.ToNullable(cloudTiering), Core.Optional.ToNullable(volumeFreeSpacePercent), Core.Optional.ToNullable(tierFilesOlderThanDays), friendlyName.Value, serverResourceId.Value, provisioningState.Value, lastWorkflowId.Value, lastOperationName.Value, syncStatus.Value, Core.Optional.ToNullable(offlineDataTransfer), offlineDataTransferStorageAccountResourceId.Value, Core.Optional.ToNullable(offlineDataTransferStorageAccountTenantId), offlineDataTransferShareName.Value, cloudTieringStatus.Value, recallStatus.Value, Core.Optional.ToNullable(initialDownloadPolicy), Core.Optional.ToNullable(localCacheMode), Core.Optional.ToNullable(initialUploadPolicy), serverName.Value);
         }
     }
 }

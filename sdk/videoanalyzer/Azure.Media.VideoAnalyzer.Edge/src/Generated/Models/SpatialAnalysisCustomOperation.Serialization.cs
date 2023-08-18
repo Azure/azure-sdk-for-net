@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class SpatialAnalysisCustomOperation : IUtf8JsonSerializable
+    public partial class SpatialAnalysisCustomOperation : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("extensionConfiguration"u8);

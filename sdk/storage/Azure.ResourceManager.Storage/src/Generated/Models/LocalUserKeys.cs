@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of LocalUserKeys. </summary>
         internal LocalUserKeys()
         {
-            SshAuthorizedKeys = new ChangeTrackingList<StorageSshPublicKey>();
+            SshAuthorizedKeys = new Core.ChangeTrackingList<StorageSshPublicKey>();
         }
 
         /// <summary> Initializes a new instance of LocalUserKeys. </summary>

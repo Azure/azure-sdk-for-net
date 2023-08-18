@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary> Initializes a new instance of WebPubSubHubProperties. </summary>
         public WebPubSubHubProperties()
         {
-            EventHandlers = new ChangeTrackingList<WebPubSubEventHandler>();
+            EventHandlers = new Core.ChangeTrackingList<WebPubSubEventHandler>();
         }
 
         /// <summary> Initializes a new instance of WebPubSubHubProperties. </summary>

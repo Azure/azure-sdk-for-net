@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Argument.AssertNotNull(pipeline, nameof(pipeline));
 
             Pipeline = pipeline;
-            Parameters = new ChangeTrackingDictionary<string, object>();
+            Parameters = new Core.ChangeTrackingDictionary<string, object>();
             Type = "ExecutePipeline";
         }
 

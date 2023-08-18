@@ -14,64 +14,64 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SqlDWSinkConverter))]
-    public partial class SqlDWSink : IUtf8JsonSerializable
+    public partial class SqlDWSink : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PreCopyScript))
+            if (Core.Optional.IsDefined(PreCopyScript))
             {
                 writer.WritePropertyName("preCopyScript"u8);
                 writer.WriteObjectValue(PreCopyScript);
             }
-            if (Optional.IsDefined(AllowPolyBase))
+            if (Core.Optional.IsDefined(AllowPolyBase))
             {
                 writer.WritePropertyName("allowPolyBase"u8);
                 writer.WriteObjectValue(AllowPolyBase);
             }
-            if (Optional.IsDefined(PolyBaseSettings))
+            if (Core.Optional.IsDefined(PolyBaseSettings))
             {
                 writer.WritePropertyName("polyBaseSettings"u8);
                 writer.WriteObjectValue(PolyBaseSettings);
             }
-            if (Optional.IsDefined(AllowCopyCommand))
+            if (Core.Optional.IsDefined(AllowCopyCommand))
             {
                 writer.WritePropertyName("allowCopyCommand"u8);
                 writer.WriteObjectValue(AllowCopyCommand);
             }
-            if (Optional.IsDefined(CopyCommandSettings))
+            if (Core.Optional.IsDefined(CopyCommandSettings))
             {
                 writer.WritePropertyName("copyCommandSettings"u8);
                 writer.WriteObjectValue(CopyCommandSettings);
             }
-            if (Optional.IsDefined(TableOption))
+            if (Core.Optional.IsDefined(TableOption))
             {
                 writer.WritePropertyName("tableOption"u8);
                 writer.WriteObjectValue(TableOption);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(WriteBatchSize))
+            if (Core.Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize"u8);
                 writer.WriteObjectValue(WriteBatchSize);
             }
-            if (Optional.IsDefined(WriteBatchTimeout))
+            if (Core.Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
                 writer.WriteObjectValue(WriteBatchTimeout);
             }
-            if (Optional.IsDefined(SinkRetryCount))
+            if (Core.Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
                 writer.WriteObjectValue(SinkRetryCount);
             }
-            if (Optional.IsDefined(SinkRetryWait))
+            if (Core.Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
                 writer.WriteObjectValue(SinkRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (Core.Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
@@ -90,18 +90,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> preCopyScript = default;
-            Optional<object> allowPolyBase = default;
-            Optional<PolybaseSettings> polyBaseSettings = default;
-            Optional<object> allowCopyCommand = default;
-            Optional<DWCopyCommandSettings> copyCommandSettings = default;
-            Optional<object> tableOption = default;
+            Core.Optional<object> preCopyScript = default;
+            Core.Optional<object> allowPolyBase = default;
+            Core.Optional<PolybaseSettings> polyBaseSettings = default;
+            Core.Optional<object> allowCopyCommand = default;
+            Core.Optional<DWCopyCommandSettings> copyCommandSettings = default;
+            Core.Optional<object> tableOption = default;
             string type = default;
-            Optional<object> writeBatchSize = default;
-            Optional<object> writeBatchTimeout = default;
-            Optional<object> sinkRetryCount = default;
-            Optional<object> sinkRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            Core.Optional<object> writeBatchSize = default;
+            Core.Optional<object> writeBatchTimeout = default;
+            Core.Optional<object> sinkRetryCount = default;
+            Core.Optional<object> sinkRetryWait = default;
+            Core.Optional<object> maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())

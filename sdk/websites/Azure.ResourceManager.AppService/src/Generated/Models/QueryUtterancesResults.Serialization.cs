@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class QueryUtterancesResults : IUtf8JsonSerializable
+    public partial class QueryUtterancesResults : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Query))
+            if (Core.Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
-            if (Optional.IsCollectionDefined(Results))
+            if (Core.Optional.IsCollectionDefined(Results))
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> query = default;
-            Optional<IList<QueryUtterancesResult>> results = default;
+            Core.Optional<string> query = default;
+            Core.Optional<IList<QueryUtterancesResult>> results = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("query"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new QueryUtterancesResults(query.Value, Optional.ToList(results));
+            return new QueryUtterancesResults(query.Value, Core.Optional.ToList(results));
         }
     }
 }

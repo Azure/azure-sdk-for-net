@@ -10,21 +10,21 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class ParameterDeclaration : IUtf8JsonSerializable
+    public partial class ParameterDeclaration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Default))
+            if (Core.Optional.IsDefined(Default))
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteStringValue(Default);
@@ -40,8 +40,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             string name = default;
             ParameterType type = default;
-            Optional<string> description = default;
-            Optional<string> @default = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> @default = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

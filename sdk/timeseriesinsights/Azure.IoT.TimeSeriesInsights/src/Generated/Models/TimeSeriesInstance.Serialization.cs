@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class TimeSeriesInstance : IUtf8JsonSerializable
+    public partial class TimeSeriesInstance : Core.IUtf8JsonSerializable
     {
     }
 }

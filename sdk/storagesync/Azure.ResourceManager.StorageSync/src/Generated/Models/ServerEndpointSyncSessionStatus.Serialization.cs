@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<int> lastSyncResult = default;
-            Optional<DateTimeOffset> lastSyncTimestamp = default;
-            Optional<DateTimeOffset> lastSyncSuccessTimestamp = default;
-            Optional<long> lastSyncPerItemErrorCount = default;
-            Optional<long> persistentFilesNotSyncingCount = default;
-            Optional<long> transientFilesNotSyncingCount = default;
-            Optional<IReadOnlyList<ServerEndpointFilesNotSyncingError>> filesNotSyncingErrors = default;
-            Optional<ServerEndpointSyncMode> lastSyncMode = default;
+            Core.Optional<int> lastSyncResult = default;
+            Core.Optional<DateTimeOffset> lastSyncTimestamp = default;
+            Core.Optional<DateTimeOffset> lastSyncSuccessTimestamp = default;
+            Core.Optional<long> lastSyncPerItemErrorCount = default;
+            Core.Optional<long> persistentFilesNotSyncingCount = default;
+            Core.Optional<long> transientFilesNotSyncingCount = default;
+            Core.Optional<IReadOnlyList<ServerEndpointFilesNotSyncingError>> filesNotSyncingErrors = default;
+            Core.Optional<ServerEndpointSyncMode> lastSyncMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastSyncResult"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     continue;
                 }
             }
-            return new ServerEndpointSyncSessionStatus(Optional.ToNullable(lastSyncResult), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastSyncSuccessTimestamp), Optional.ToNullable(lastSyncPerItemErrorCount), Optional.ToNullable(persistentFilesNotSyncingCount), Optional.ToNullable(transientFilesNotSyncingCount), Optional.ToList(filesNotSyncingErrors), Optional.ToNullable(lastSyncMode));
+            return new ServerEndpointSyncSessionStatus(Core.Optional.ToNullable(lastSyncResult), Core.Optional.ToNullable(lastSyncTimestamp), Core.Optional.ToNullable(lastSyncSuccessTimestamp), Core.Optional.ToNullable(lastSyncPerItemErrorCount), Core.Optional.ToNullable(persistentFilesNotSyncingCount), Core.Optional.ToNullable(transientFilesNotSyncingCount), Core.Optional.ToList(filesNotSyncingErrors), Core.Optional.ToNullable(lastSyncMode));
         }
     }
 }

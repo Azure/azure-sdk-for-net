@@ -14,37 +14,37 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(IntegrationRuntimeComputePropertiesConverter))]
-    public partial class IntegrationRuntimeComputeProperties : IUtf8JsonSerializable
+    public partial class IntegrationRuntimeComputeProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location);
             }
-            if (Optional.IsDefined(NodeSize))
+            if (Core.Optional.IsDefined(NodeSize))
             {
                 writer.WritePropertyName("nodeSize"u8);
                 writer.WriteStringValue(NodeSize);
             }
-            if (Optional.IsDefined(NumberOfNodes))
+            if (Core.Optional.IsDefined(NumberOfNodes))
             {
                 writer.WritePropertyName("numberOfNodes"u8);
                 writer.WriteNumberValue(NumberOfNodes.Value);
             }
-            if (Optional.IsDefined(MaxParallelExecutionsPerNode))
+            if (Core.Optional.IsDefined(MaxParallelExecutionsPerNode))
             {
                 writer.WritePropertyName("maxParallelExecutionsPerNode"u8);
                 writer.WriteNumberValue(MaxParallelExecutionsPerNode.Value);
             }
-            if (Optional.IsDefined(DataFlowProperties))
+            if (Core.Optional.IsDefined(DataFlowProperties))
             {
                 writer.WritePropertyName("dataFlowProperties"u8);
                 writer.WriteObjectValue(DataFlowProperties);
             }
-            if (Optional.IsDefined(VNetProperties))
+            if (Core.Optional.IsDefined(VNetProperties))
             {
                 writer.WritePropertyName("vNetProperties"u8);
                 writer.WriteObjectValue(VNetProperties);
@@ -63,12 +63,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> location = default;
-            Optional<string> nodeSize = default;
-            Optional<int> numberOfNodes = default;
-            Optional<int> maxParallelExecutionsPerNode = default;
-            Optional<IntegrationRuntimeDataFlowProperties> dataFlowProperties = default;
-            Optional<IntegrationRuntimeVNetProperties> vNetProperties = default;
+            Core.Optional<string> location = default;
+            Core.Optional<string> nodeSize = default;
+            Core.Optional<int> numberOfNodes = default;
+            Core.Optional<int> maxParallelExecutionsPerNode = default;
+            Core.Optional<IntegrationRuntimeDataFlowProperties> dataFlowProperties = default;
+            Core.Optional<IntegrationRuntimeVNetProperties> vNetProperties = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeComputeProperties(location.Value, nodeSize.Value, Optional.ToNullable(numberOfNodes), Optional.ToNullable(maxParallelExecutionsPerNode), dataFlowProperties.Value, vNetProperties.Value, additionalProperties);
+            return new IntegrationRuntimeComputeProperties(location.Value, nodeSize.Value, Core.Optional.ToNullable(numberOfNodes), Core.Optional.ToNullable(maxParallelExecutionsPerNode), dataFlowProperties.Value, vNetProperties.Value, additionalProperties);
         }
 
         internal partial class IntegrationRuntimeComputePropertiesConverter : JsonConverter<IntegrationRuntimeComputeProperties>

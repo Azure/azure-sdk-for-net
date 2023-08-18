@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <summary> Initializes a new instance of StorageCacheNetworkSettings. </summary>
         public StorageCacheNetworkSettings()
         {
-            UtilityAddresses = new ChangeTrackingList<IPAddress>();
-            DnsServers = new ChangeTrackingList<IPAddress>();
+            UtilityAddresses = new Core.ChangeTrackingList<IPAddress>();
+            DnsServers = new Core.ChangeTrackingList<IPAddress>();
         }
 
         /// <summary> Initializes a new instance of StorageCacheNetworkSettings. </summary>

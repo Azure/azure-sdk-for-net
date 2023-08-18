@@ -49,7 +49,7 @@ namespace Azure.AI.Translation.Document
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -70,7 +70,7 @@ namespace Azure.AI.Translation.Document
         /// If the glossary is invalid or unreachable during translation, an error is indicated in the document status.
         /// If a file with the same name already exists at the destination, it will be overwritten. The targetUrl for each target language must be unique.
         /// </remarks>
-        public async Task<ResponseWithHeaders<DocumentTranslationStartTranslationHeaders>> StartTranslationAsync(StartTranslationDetails body, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<DocumentTranslationStartTranslationHeaders>> StartTranslationAsync(StartTranslationDetails body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -83,7 +83,7 @@ namespace Azure.AI.Translation.Document
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -104,7 +104,7 @@ namespace Azure.AI.Translation.Document
         /// If the glossary is invalid or unreachable during translation, an error is indicated in the document status.
         /// If a file with the same name already exists at the destination, it will be overwritten. The targetUrl for each target language must be unique.
         /// </remarks>
-        public ResponseWithHeaders<DocumentTranslationStartTranslationHeaders> StartTranslation(StartTranslationDetails body, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<DocumentTranslationStartTranslationHeaders> StartTranslation(StartTranslationDetails body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -117,7 +117,7 @@ namespace Azure.AI.Translation.Document
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -144,11 +144,11 @@ namespace Azure.AI.Translation.Document
             {
                 uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
             }
-            if (ids != null && Optional.IsCollectionDefined(ids))
+            if (ids != null && Core.Optional.IsCollectionDefined(ids))
             {
                 uri.AppendQueryDelimited("ids", ids, ",", true);
             }
-            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            if (statuses != null && Core.Optional.IsCollectionDefined(statuses))
             {
                 uri.AppendQueryDelimited("statuses", statuses, ",", true);
             }
@@ -160,7 +160,7 @@ namespace Azure.AI.Translation.Document
             {
                 uri.AppendQuery("createdDateTimeUtcEnd", createdDateTimeUtcEnd.Value, "O", true);
             }
-            if (orderBy != null && Optional.IsCollectionDefined(orderBy))
+            if (orderBy != null && Core.Optional.IsCollectionDefined(orderBy))
             {
                 uri.AppendQueryDelimited("$orderBy", orderBy, ",", true);
             }
@@ -222,7 +222,7 @@ namespace Azure.AI.Translation.Document
         /// Note: If the server can't honor $top and/or $skip, the server must return an error to the client informing about it instead of just ignoring the query options.
         /// This reduces the risk of the client making assumptions about the data returned.
         /// </remarks>
-        public async Task<ResponseWithHeaders<TranslationsStatus, DocumentTranslationGetTranslationsStatusHeaders>> GetTranslationsStatusAsync(int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<TranslationsStatus, DocumentTranslationGetTranslationsStatusHeaders>> GetTranslationsStatusAsync(int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetTranslationsStatusRequest(top, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -234,7 +234,7 @@ namespace Azure.AI.Translation.Document
                         TranslationsStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = TranslationsStatus.DeserializeTranslationsStatus(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -294,7 +294,7 @@ namespace Azure.AI.Translation.Document
         /// Note: If the server can't honor $top and/or $skip, the server must return an error to the client informing about it instead of just ignoring the query options.
         /// This reduces the risk of the client making assumptions about the data returned.
         /// </remarks>
-        public ResponseWithHeaders<TranslationsStatus, DocumentTranslationGetTranslationsStatusHeaders> GetTranslationsStatus(int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<TranslationsStatus, DocumentTranslationGetTranslationsStatusHeaders> GetTranslationsStatus(int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetTranslationsStatusRequest(top, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy);
             _pipeline.Send(message, cancellationToken);
@@ -306,7 +306,7 @@ namespace Azure.AI.Translation.Document
                         TranslationsStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = TranslationsStatus.DeserializeTranslationsStatus(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -335,7 +335,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="documentId"> Format - uuid.  The document id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Returns the translation status for a specific document based on the request Id and document Id. </remarks>
-        public async Task<ResponseWithHeaders<DocumentStatusResult, DocumentTranslationGetDocumentStatusHeaders>> GetDocumentStatusAsync(Guid id, Guid documentId, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<DocumentStatusResult, DocumentTranslationGetDocumentStatusHeaders>> GetDocumentStatusAsync(Guid id, Guid documentId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDocumentStatusRequest(id, documentId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -347,7 +347,7 @@ namespace Azure.AI.Translation.Document
                         DocumentStatusResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = DocumentStatusResult.DeserializeDocumentStatusResult(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -359,7 +359,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="documentId"> Format - uuid.  The document id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Returns the translation status for a specific document based on the request Id and document Id. </remarks>
-        public ResponseWithHeaders<DocumentStatusResult, DocumentTranslationGetDocumentStatusHeaders> GetDocumentStatus(Guid id, Guid documentId, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<DocumentStatusResult, DocumentTranslationGetDocumentStatusHeaders> GetDocumentStatus(Guid id, Guid documentId, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDocumentStatusRequest(id, documentId);
             _pipeline.Send(message, cancellationToken);
@@ -371,7 +371,7 @@ namespace Azure.AI.Translation.Document
                         DocumentStatusResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = DocumentStatusResult.DeserializeDocumentStatusResult(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -400,7 +400,7 @@ namespace Azure.AI.Translation.Document
         /// Returns the status for a document translation request.
         /// The status includes the overall request status, as well as the status for documents that are being translated as part of that request.
         /// </remarks>
-        public async Task<ResponseWithHeaders<TranslationStatusResult, DocumentTranslationGetTranslationStatusHeaders>> GetTranslationStatusAsync(Guid id, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<TranslationStatusResult, DocumentTranslationGetTranslationStatusHeaders>> GetTranslationStatusAsync(Guid id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetTranslationStatusRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -412,7 +412,7 @@ namespace Azure.AI.Translation.Document
                         TranslationStatusResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = TranslationStatusResult.DeserializeTranslationStatusResult(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -426,7 +426,7 @@ namespace Azure.AI.Translation.Document
         /// Returns the status for a document translation request.
         /// The status includes the overall request status, as well as the status for documents that are being translated as part of that request.
         /// </remarks>
-        public ResponseWithHeaders<TranslationStatusResult, DocumentTranslationGetTranslationStatusHeaders> GetTranslationStatus(Guid id, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<TranslationStatusResult, DocumentTranslationGetTranslationStatusHeaders> GetTranslationStatus(Guid id, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetTranslationStatusRequest(id);
             _pipeline.Send(message, cancellationToken);
@@ -438,7 +438,7 @@ namespace Azure.AI.Translation.Document
                         TranslationStatusResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = TranslationStatusResult.DeserializeTranslationStatusResult(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -539,11 +539,11 @@ namespace Azure.AI.Translation.Document
             {
                 uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
             }
-            if (ids != null && Optional.IsCollectionDefined(ids))
+            if (ids != null && Core.Optional.IsCollectionDefined(ids))
             {
                 uri.AppendQueryDelimited("ids", ids, ",", true);
             }
-            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            if (statuses != null && Core.Optional.IsCollectionDefined(statuses))
             {
                 uri.AppendQueryDelimited("statuses", statuses, ",", true);
             }
@@ -555,7 +555,7 @@ namespace Azure.AI.Translation.Document
             {
                 uri.AppendQuery("createdDateTimeUtcEnd", createdDateTimeUtcEnd.Value, "O", true);
             }
-            if (orderBy != null && Optional.IsCollectionDefined(orderBy))
+            if (orderBy != null && Core.Optional.IsCollectionDefined(orderBy))
             {
                 uri.AppendQueryDelimited("$orderBy", orderBy, ",", true);
             }
@@ -615,7 +615,7 @@ namespace Azure.AI.Translation.Document
         /// Note: If the server can't honor $top and/or $skip, the server must return an error to the client informing about it instead of just ignoring the query options.
         /// This reduces the risk of the client making assumptions about the data returned.
         /// </remarks>
-        public async Task<ResponseWithHeaders<DocumentsStatus, DocumentTranslationGetDocumentsStatusHeaders>> GetDocumentsStatusAsync(Guid id, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<DocumentsStatus, DocumentTranslationGetDocumentsStatusHeaders>> GetDocumentsStatusAsync(Guid id, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDocumentsStatusRequest(id, top, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -627,7 +627,7 @@ namespace Azure.AI.Translation.Document
                         DocumentsStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = DocumentsStatus.DeserializeDocumentsStatus(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -685,7 +685,7 @@ namespace Azure.AI.Translation.Document
         /// Note: If the server can't honor $top and/or $skip, the server must return an error to the client informing about it instead of just ignoring the query options.
         /// This reduces the risk of the client making assumptions about the data returned.
         /// </remarks>
-        public ResponseWithHeaders<DocumentsStatus, DocumentTranslationGetDocumentsStatusHeaders> GetDocumentsStatus(Guid id, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<DocumentsStatus, DocumentTranslationGetDocumentsStatusHeaders> GetDocumentsStatus(Guid id, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDocumentsStatusRequest(id, top, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy);
             _pipeline.Send(message, cancellationToken);
@@ -697,7 +697,7 @@ namespace Azure.AI.Translation.Document
                         DocumentsStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = DocumentsStatus.DeserializeDocumentsStatus(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -724,7 +724,7 @@ namespace Azure.AI.Translation.Document
         /// The list of supported document formats supported by the Document Translation service.
         /// The list includes the common file extension, as well as the content-type if using the upload API.
         /// </remarks>
-        public async Task<ResponseWithHeaders<SupportedFileFormats, DocumentTranslationGetSupportedDocumentFormatsHeaders>> GetSupportedDocumentFormatsAsync(CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<SupportedFileFormats, DocumentTranslationGetSupportedDocumentFormatsHeaders>> GetSupportedDocumentFormatsAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetSupportedDocumentFormatsRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -736,7 +736,7 @@ namespace Azure.AI.Translation.Document
                         SupportedFileFormats value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = SupportedFileFormats.DeserializeSupportedFileFormats(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -749,7 +749,7 @@ namespace Azure.AI.Translation.Document
         /// The list of supported document formats supported by the Document Translation service.
         /// The list includes the common file extension, as well as the content-type if using the upload API.
         /// </remarks>
-        public ResponseWithHeaders<SupportedFileFormats, DocumentTranslationGetSupportedDocumentFormatsHeaders> GetSupportedDocumentFormats(CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<SupportedFileFormats, DocumentTranslationGetSupportedDocumentFormatsHeaders> GetSupportedDocumentFormats(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetSupportedDocumentFormatsRequest();
             _pipeline.Send(message, cancellationToken);
@@ -761,7 +761,7 @@ namespace Azure.AI.Translation.Document
                         SupportedFileFormats value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = SupportedFileFormats.DeserializeSupportedFileFormats(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -788,7 +788,7 @@ namespace Azure.AI.Translation.Document
         /// The list of supported glossary formats supported by the Document Translation service.
         /// The list includes the common file extension used.
         /// </remarks>
-        public async Task<ResponseWithHeaders<SupportedFileFormats, DocumentTranslationGetSupportedGlossaryFormatsHeaders>> GetSupportedGlossaryFormatsAsync(CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<SupportedFileFormats, DocumentTranslationGetSupportedGlossaryFormatsHeaders>> GetSupportedGlossaryFormatsAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetSupportedGlossaryFormatsRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -800,7 +800,7 @@ namespace Azure.AI.Translation.Document
                         SupportedFileFormats value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = SupportedFileFormats.DeserializeSupportedFileFormats(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -813,7 +813,7 @@ namespace Azure.AI.Translation.Document
         /// The list of supported glossary formats supported by the Document Translation service.
         /// The list includes the common file extension used.
         /// </remarks>
-        public ResponseWithHeaders<SupportedFileFormats, DocumentTranslationGetSupportedGlossaryFormatsHeaders> GetSupportedGlossaryFormats(CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<SupportedFileFormats, DocumentTranslationGetSupportedGlossaryFormatsHeaders> GetSupportedGlossaryFormats(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetSupportedGlossaryFormatsRequest();
             _pipeline.Send(message, cancellationToken);
@@ -825,7 +825,7 @@ namespace Azure.AI.Translation.Document
                         SupportedFileFormats value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = SupportedFileFormats.DeserializeSupportedFileFormats(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -849,7 +849,7 @@ namespace Azure.AI.Translation.Document
         /// <summary> Returns a list of supported storage sources. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Returns a list of storage sources/options supported by the Document Translation service. </remarks>
-        public async Task<ResponseWithHeaders<SupportedStorageSources, DocumentTranslationGetSupportedStorageSourcesHeaders>> GetSupportedStorageSourcesAsync(CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<SupportedStorageSources, DocumentTranslationGetSupportedStorageSourcesHeaders>> GetSupportedStorageSourcesAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetSupportedStorageSourcesRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -861,7 +861,7 @@ namespace Azure.AI.Translation.Document
                         SupportedStorageSources value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = SupportedStorageSources.DeserializeSupportedStorageSources(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -871,7 +871,7 @@ namespace Azure.AI.Translation.Document
         /// <summary> Returns a list of supported storage sources. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Returns a list of storage sources/options supported by the Document Translation service. </remarks>
-        public ResponseWithHeaders<SupportedStorageSources, DocumentTranslationGetSupportedStorageSourcesHeaders> GetSupportedStorageSources(CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<SupportedStorageSources, DocumentTranslationGetSupportedStorageSourcesHeaders> GetSupportedStorageSources(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetSupportedStorageSourcesRequest();
             _pipeline.Send(message, cancellationToken);
@@ -883,7 +883,7 @@ namespace Azure.AI.Translation.Document
                         SupportedStorageSources value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = SupportedStorageSources.DeserializeSupportedStorageSources(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -959,7 +959,7 @@ namespace Azure.AI.Translation.Document
         /// Note: If the server can't honor $top and/or $skip, the server must return an error to the client informing about it instead of just ignoring the query options.
         /// This reduces the risk of the client making assumptions about the data returned.
         /// </remarks>
-        public async Task<ResponseWithHeaders<TranslationsStatus, DocumentTranslationGetTranslationsStatusHeaders>> GetTranslationsStatusNextPageAsync(string nextLink, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<TranslationsStatus, DocumentTranslationGetTranslationsStatusHeaders>> GetTranslationsStatusNextPageAsync(string nextLink, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -976,7 +976,7 @@ namespace Azure.AI.Translation.Document
                         TranslationsStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = TranslationsStatus.DeserializeTranslationsStatus(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1038,7 +1038,7 @@ namespace Azure.AI.Translation.Document
         /// Note: If the server can't honor $top and/or $skip, the server must return an error to the client informing about it instead of just ignoring the query options.
         /// This reduces the risk of the client making assumptions about the data returned.
         /// </remarks>
-        public ResponseWithHeaders<TranslationsStatus, DocumentTranslationGetTranslationsStatusHeaders> GetTranslationsStatusNextPage(string nextLink, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<TranslationsStatus, DocumentTranslationGetTranslationsStatusHeaders> GetTranslationsStatusNextPage(string nextLink, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1055,7 +1055,7 @@ namespace Azure.AI.Translation.Document
                         TranslationsStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = TranslationsStatus.DeserializeTranslationsStatus(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1129,7 +1129,7 @@ namespace Azure.AI.Translation.Document
         /// Note: If the server can't honor $top and/or $skip, the server must return an error to the client informing about it instead of just ignoring the query options.
         /// This reduces the risk of the client making assumptions about the data returned.
         /// </remarks>
-        public async Task<ResponseWithHeaders<DocumentsStatus, DocumentTranslationGetDocumentsStatusHeaders>> GetDocumentsStatusNextPageAsync(string nextLink, Guid id, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<DocumentsStatus, DocumentTranslationGetDocumentsStatusHeaders>> GetDocumentsStatusNextPageAsync(string nextLink, Guid id, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1146,7 +1146,7 @@ namespace Azure.AI.Translation.Document
                         DocumentsStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = DocumentsStatus.DeserializeDocumentsStatus(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1206,7 +1206,7 @@ namespace Azure.AI.Translation.Document
         /// Note: If the server can't honor $top and/or $skip, the server must return an error to the client informing about it instead of just ignoring the query options.
         /// This reduces the risk of the client making assumptions about the data returned.
         /// </remarks>
-        public ResponseWithHeaders<DocumentsStatus, DocumentTranslationGetDocumentsStatusHeaders> GetDocumentsStatusNextPage(string nextLink, Guid id, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<DocumentsStatus, DocumentTranslationGetDocumentsStatusHeaders> GetDocumentsStatusNextPage(string nextLink, Guid id, int? top = null, int? skip = null, int? maxpagesize = null, IEnumerable<Guid> ids = null, IEnumerable<string> statuses = null, DateTimeOffset? createdDateTimeUtcStart = null, DateTimeOffset? createdDateTimeUtcEnd = null, IEnumerable<string> orderBy = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1223,7 +1223,7 @@ namespace Azure.AI.Translation.Document
                         DocumentsStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = DocumentsStatus.DeserializeDocumentsStatus(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);

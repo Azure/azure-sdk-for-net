@@ -16,7 +16,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary> Initializes a new instance of PathList. </summary>
         internal PathList()
         {
-            Paths = new ChangeTrackingList<Path>();
+            Paths = new Core.ChangeTrackingList<Path>();
         }
 
         /// <summary> Initializes a new instance of PathList. </summary>

@@ -24,7 +24,7 @@ namespace Azure.IoT.TimeSeriesInsights
             Argument.AssertNotNull(defaultCategory, nameof(defaultCategory));
 
             Value = value;
-            Categories = new ChangeTrackingList<TimeSeriesAggregateCategory>();
+            Categories = new Core.ChangeTrackingList<TimeSeriesAggregateCategory>();
             DefaultCategory = defaultCategory;
             Kind = "categorical";
         }

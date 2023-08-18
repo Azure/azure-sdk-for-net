@@ -14,24 +14,24 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SqlScriptConverter))]
-    public partial class SqlScript : IUtf8JsonSerializable
+    public partial class SqlScript : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Type))
+            if (Core.Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
             }
             writer.WritePropertyName("content"u8);
             writer.WriteObjectValue(Content);
-            if (Optional.IsDefined(Folder))
+            if (Core.Optional.IsDefined(Folder))
             {
                 if (Folder != null)
                 {
@@ -57,10 +57,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<SqlScriptType> type = default;
+            Core.Optional<string> description = default;
+            Core.Optional<SqlScriptType> type = default;
             SqlScriptContent content = default;
-            Optional<SqlScriptFolder> folder = default;
+            Core.Optional<SqlScriptFolder> folder = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlScript(description.Value, Optional.ToNullable(type), content, folder.Value, additionalProperties);
+            return new SqlScript(description.Value, Core.Optional.ToNullable(type), content, folder.Value, additionalProperties);
         }
 
         internal partial class SqlScriptConverter : JsonConverter<SqlScript>

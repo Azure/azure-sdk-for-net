@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, SapDiskConfiguration>> volumeConfigurations = default;
+            Core.Optional<IReadOnlyDictionary<string, SapDiskConfiguration>> volumeConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("volumeConfigurations"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new SapDiskConfigurationsResult(Optional.ToDictionary(volumeConfigurations));
+            return new SapDiskConfigurationsResult(Core.Optional.ToDictionary(volumeConfigurations));
         }
     }
 }

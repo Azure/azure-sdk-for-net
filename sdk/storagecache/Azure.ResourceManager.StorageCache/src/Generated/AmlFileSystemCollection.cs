@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = await _amlFileSystemamlFilesystemsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, amlFileSystemName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageCacheArmOperation<AmlFileSystemResource>(new AmlFileSystemOperationSource(Client), _amlFileSystemamlFilesystemsClientDiagnostics, Pipeline, _amlFileSystemamlFilesystemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, amlFileSystemName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StorageCacheArmOperation<AmlFileSystemResource>(new AmlFileSystemOperationSource(Client), _amlFileSystemamlFilesystemsClientDiagnostics, Pipeline, _amlFileSystemamlFilesystemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, amlFileSystemName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = _amlFileSystemamlFilesystemsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, amlFileSystemName, data, cancellationToken);
-                var operation = new StorageCacheArmOperation<AmlFileSystemResource>(new AmlFileSystemOperationSource(Client), _amlFileSystemamlFilesystemsClientDiagnostics, Pipeline, _amlFileSystemamlFilesystemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, amlFileSystemName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StorageCacheArmOperation<AmlFileSystemResource>(new AmlFileSystemOperationSource(Client), _amlFileSystemamlFilesystemsClientDiagnostics, Pipeline, _amlFileSystemamlFilesystemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, amlFileSystemName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _amlFileSystemamlFilesystemsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _amlFileSystemamlFilesystemsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AmlFileSystemResource(Client, AmlFileSystemData.DeserializeAmlFileSystemData(e)), _amlFileSystemamlFilesystemsClientDiagnostics, Pipeline, "AmlFileSystemCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AmlFileSystemResource(Client, AmlFileSystemData.DeserializeAmlFileSystemData(e)), _amlFileSystemamlFilesystemsClientDiagnostics, Pipeline, "AmlFileSystemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _amlFileSystemamlFilesystemsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _amlFileSystemamlFilesystemsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AmlFileSystemResource(Client, AmlFileSystemData.DeserializeAmlFileSystemData(e)), _amlFileSystemamlFilesystemsClientDiagnostics, Pipeline, "AmlFileSystemCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AmlFileSystemResource(Client, AmlFileSystemData.DeserializeAmlFileSystemData(e)), _amlFileSystemamlFilesystemsClientDiagnostics, Pipeline, "AmlFileSystemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> timeGrain = default;
-            Optional<IReadOnlyList<PerfMonSample>> values = default;
+            Core.Optional<string> name = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<string> timeGrain = default;
+            Core.Optional<IReadOnlyList<PerfMonSample>> values = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new PerfMonSet(name.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeGrain.Value, Optional.ToList(values));
+            return new PerfMonSet(name.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), timeGrain.Value, Core.Optional.ToList(values));
         }
     }
 }

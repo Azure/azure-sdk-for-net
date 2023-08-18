@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseSelfHostedIntegrationRuntimeStatus. </summary>
         internal SynapseSelfHostedIntegrationRuntimeStatus()
         {
-            Nodes = new ChangeTrackingList<SynapseSelfHostedIntegrationRuntimeNode>();
-            Capabilities = new ChangeTrackingDictionary<string, string>();
-            ServiceUrls = new ChangeTrackingList<string>();
-            Links = new ChangeTrackingList<SynapseLinkedIntegrationRuntime>();
-            NewerVersions = new ChangeTrackingList<string>();
+            Nodes = new Core.ChangeTrackingList<SynapseSelfHostedIntegrationRuntimeNode>();
+            Capabilities = new Core.ChangeTrackingDictionary<string, string>();
+            ServiceUrls = new Core.ChangeTrackingList<string>();
+            Links = new Core.ChangeTrackingList<SynapseLinkedIntegrationRuntime>();
+            NewerVersions = new Core.ChangeTrackingList<string>();
             RuntimeType = IntegrationRuntimeType.SelfHosted;
         }
 

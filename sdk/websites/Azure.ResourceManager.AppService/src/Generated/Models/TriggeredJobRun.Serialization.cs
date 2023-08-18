@@ -11,62 +11,62 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class TriggeredJobRun : IUtf8JsonSerializable
+    public partial class TriggeredJobRun : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(WebJobId))
+            if (Core.Optional.IsDefined(WebJobId))
             {
                 writer.WritePropertyName("web_job_id"u8);
                 writer.WriteStringValue(WebJobId);
             }
-            if (Optional.IsDefined(WebJobName))
+            if (Core.Optional.IsDefined(WebJobName))
             {
                 writer.WritePropertyName("web_job_name"u8);
                 writer.WriteStringValue(WebJobName);
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(StartOn))
+            if (Core.Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("start_time"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Core.Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("end_time"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(Duration))
+            if (Core.Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "c");
             }
-            if (Optional.IsDefined(OutputUri))
+            if (Core.Optional.IsDefined(OutputUri))
             {
                 writer.WritePropertyName("output_url"u8);
                 writer.WriteStringValue(OutputUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ErrorUri))
+            if (Core.Optional.IsDefined(ErrorUri))
             {
                 writer.WritePropertyName("error_url"u8);
                 writer.WriteStringValue(ErrorUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Uri))
+            if (Core.Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(JobName))
+            if (Core.Optional.IsDefined(JobName))
             {
                 writer.WritePropertyName("job_name"u8);
                 writer.WriteStringValue(JobName);
             }
-            if (Optional.IsDefined(Trigger))
+            if (Core.Optional.IsDefined(Trigger))
             {
                 writer.WritePropertyName("trigger"u8);
                 writer.WriteStringValue(Trigger);
@@ -80,17 +80,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> webJobId = default;
-            Optional<string> webJobName = default;
-            Optional<TriggeredWebJobStatus> status = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<TimeSpan> duration = default;
-            Optional<Uri> outputUrl = default;
-            Optional<Uri> errorUrl = default;
-            Optional<Uri> url = default;
-            Optional<string> jobName = default;
-            Optional<string> trigger = default;
+            Core.Optional<string> webJobId = default;
+            Core.Optional<string> webJobName = default;
+            Core.Optional<TriggeredWebJobStatus> status = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<TimeSpan> duration = default;
+            Core.Optional<Uri> outputUrl = default;
+            Core.Optional<Uri> errorUrl = default;
+            Core.Optional<Uri> url = default;
+            Core.Optional<string> jobName = default;
+            Core.Optional<string> trigger = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("web_job_id"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new TriggeredJobRun(webJobId.Value, webJobName.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(duration), outputUrl.Value, errorUrl.Value, url.Value, jobName.Value, trigger.Value);
+            return new TriggeredJobRun(webJobId.Value, webJobName.Value, Core.Optional.ToNullable(status), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToNullable(duration), outputUrl.Value, errorUrl.Value, url.Value, jobName.Value, trigger.Value);
         }
     }
 }

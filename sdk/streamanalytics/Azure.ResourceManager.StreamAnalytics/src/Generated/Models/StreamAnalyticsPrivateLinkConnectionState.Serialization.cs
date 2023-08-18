@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamAnalyticsPrivateLinkConnectionState : IUtf8JsonSerializable
+    public partial class StreamAnalyticsPrivateLinkConnectionState : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<string> description = default;
-            Optional<string> actionsRequired = default;
+            Core.Optional<string> status = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))

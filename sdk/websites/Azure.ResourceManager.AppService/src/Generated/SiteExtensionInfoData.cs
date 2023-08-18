@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of SiteExtensionInfoData. </summary>
         public SiteExtensionInfoData()
         {
-            Authors = new ChangeTrackingList<string>();
+            Authors = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SiteExtensionInfoData. </summary>

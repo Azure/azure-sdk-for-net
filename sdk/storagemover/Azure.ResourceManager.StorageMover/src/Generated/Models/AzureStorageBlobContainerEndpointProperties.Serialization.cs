@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    public partial class AzureStorageBlobContainerEndpointProperties : IUtf8JsonSerializable
+    public partial class AzureStorageBlobContainerEndpointProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("storageAccountResourceId"u8);
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             writer.WriteStringValue(BlobContainerName);
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.StorageMover.Models
             string storageAccountResourceId = default;
             string blobContainerName = default;
             EndpointType endpointType = default;
-            Optional<string> description = default;
-            Optional<StorageMoverProvisioningState> provisioningState = default;
+            Core.Optional<string> description = default;
+            Core.Optional<StorageMoverProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountResourceId"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     continue;
                 }
             }
-            return new AzureStorageBlobContainerEndpointProperties(endpointType, description.Value, Optional.ToNullable(provisioningState), storageAccountResourceId, blobContainerName);
+            return new AzureStorageBlobContainerEndpointProperties(endpointType, description.Value, Core.Optional.ToNullable(provisioningState), storageAccountResourceId, blobContainerName);
         }
     }
 }

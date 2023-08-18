@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class RemoteDeviceAdapterCollection : IUtf8JsonSerializable
+    public partial class RemoteDeviceAdapterCollection : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (Core.Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ContinuationToken))
+            if (Core.Optional.IsDefined(ContinuationToken))
             {
                 writer.WritePropertyName("@continuationToken"u8);
                 writer.WriteStringValue(ContinuationToken);
@@ -40,8 +40,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<IList<RemoteDeviceAdapter>> value = default;
-            Optional<string> continuationToken = default;
+            Core.Optional<IList<RemoteDeviceAdapter>> value = default;
+            Core.Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -64,7 +64,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new RemoteDeviceAdapterCollection(Optional.ToList(value), continuationToken.Value);
+            return new RemoteDeviceAdapterCollection(Core.Optional.ToList(value), continuationToken.Value);
         }
     }
 }

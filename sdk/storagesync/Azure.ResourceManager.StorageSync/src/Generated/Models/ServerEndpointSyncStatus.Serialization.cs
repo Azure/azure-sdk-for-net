@@ -19,18 +19,18 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<ServerEndpointHealthState> downloadHealth = default;
-            Optional<ServerEndpointHealthState> uploadHealth = default;
-            Optional<ServerEndpointHealthState> combinedHealth = default;
-            Optional<ServerEndpointSyncActivityState> syncActivity = default;
-            Optional<long> totalPersistentFilesNotSyncingCount = default;
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Optional<ServerEndpointSyncSessionStatus> uploadStatus = default;
-            Optional<ServerEndpointSyncSessionStatus> downloadStatus = default;
-            Optional<ServerEndpointSyncActivityStatus> uploadActivity = default;
-            Optional<ServerEndpointSyncActivityStatus> downloadActivity = default;
-            Optional<ServerEndpointOfflineDataTransferState> offlineDataTransferStatus = default;
-            Optional<ServerEndpointBackgroundDataDownloadActivity> backgroundDataDownloadActivity = default;
+            Core.Optional<ServerEndpointHealthState> downloadHealth = default;
+            Core.Optional<ServerEndpointHealthState> uploadHealth = default;
+            Core.Optional<ServerEndpointHealthState> combinedHealth = default;
+            Core.Optional<ServerEndpointSyncActivityState> syncActivity = default;
+            Core.Optional<long> totalPersistentFilesNotSyncingCount = default;
+            Core.Optional<DateTimeOffset> lastUpdatedTimestamp = default;
+            Core.Optional<ServerEndpointSyncSessionStatus> uploadStatus = default;
+            Core.Optional<ServerEndpointSyncSessionStatus> downloadStatus = default;
+            Core.Optional<ServerEndpointSyncActivityStatus> uploadActivity = default;
+            Core.Optional<ServerEndpointSyncActivityStatus> downloadActivity = default;
+            Core.Optional<ServerEndpointOfflineDataTransferState> offlineDataTransferStatus = default;
+            Core.Optional<ServerEndpointBackgroundDataDownloadActivity> backgroundDataDownloadActivity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("downloadHealth"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     continue;
                 }
             }
-            return new ServerEndpointSyncStatus(Optional.ToNullable(downloadHealth), Optional.ToNullable(uploadHealth), Optional.ToNullable(combinedHealth), Optional.ToNullable(syncActivity), Optional.ToNullable(totalPersistentFilesNotSyncingCount), Optional.ToNullable(lastUpdatedTimestamp), uploadStatus.Value, downloadStatus.Value, uploadActivity.Value, downloadActivity.Value, Optional.ToNullable(offlineDataTransferStatus), backgroundDataDownloadActivity.Value);
+            return new ServerEndpointSyncStatus(Core.Optional.ToNullable(downloadHealth), Core.Optional.ToNullable(uploadHealth), Core.Optional.ToNullable(combinedHealth), Core.Optional.ToNullable(syncActivity), Core.Optional.ToNullable(totalPersistentFilesNotSyncingCount), Core.Optional.ToNullable(lastUpdatedTimestamp), uploadStatus.Value, downloadStatus.Value, uploadActivity.Value, downloadActivity.Value, Core.Optional.ToNullable(offlineDataTransferStatus), backgroundDataDownloadActivity.Value);
         }
     }
 }

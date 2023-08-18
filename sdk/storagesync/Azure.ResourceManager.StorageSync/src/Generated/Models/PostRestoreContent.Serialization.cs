@@ -10,47 +10,47 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class PostRestoreContent : IUtf8JsonSerializable
+    public partial class PostRestoreContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Partition))
+            if (Core.Optional.IsDefined(Partition))
             {
                 writer.WritePropertyName("partition"u8);
                 writer.WriteStringValue(Partition);
             }
-            if (Optional.IsDefined(ReplicaGroup))
+            if (Core.Optional.IsDefined(ReplicaGroup))
             {
                 writer.WritePropertyName("replicaGroup"u8);
                 writer.WriteStringValue(ReplicaGroup);
             }
-            if (Optional.IsDefined(RequestId))
+            if (Core.Optional.IsDefined(RequestId))
             {
                 writer.WritePropertyName("requestId"u8);
                 writer.WriteStringValue(RequestId);
             }
-            if (Optional.IsDefined(AzureFileShareUri))
+            if (Core.Optional.IsDefined(AzureFileShareUri))
             {
                 writer.WritePropertyName("azureFileShareUri"u8);
                 writer.WriteStringValue(AzureFileShareUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(SourceAzureFileShareUri))
+            if (Core.Optional.IsDefined(SourceAzureFileShareUri))
             {
                 writer.WritePropertyName("sourceAzureFileShareUri"u8);
                 writer.WriteStringValue(SourceAzureFileShareUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(FailedFileList))
+            if (Core.Optional.IsDefined(FailedFileList))
             {
                 writer.WritePropertyName("failedFileList"u8);
                 writer.WriteStringValue(FailedFileList);
             }
-            if (Optional.IsCollectionDefined(RestoreFileSpec))
+            if (Core.Optional.IsCollectionDefined(RestoreFileSpec))
             {
                 writer.WritePropertyName("restoreFileSpec"u8);
                 writer.WriteStartArray();

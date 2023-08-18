@@ -20,18 +20,18 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 return null;
             }
-            Optional<string> subscriptionId = default;
-            Optional<string> displayName = default;
-            Optional<SubscriptionProvisioningState> provisioningState = default;
-            Optional<Uri> acceptOwnershipUrl = default;
-            Optional<AcceptOwnershipState> acceptOwnershipState = default;
-            Optional<string> billingScope = default;
-            Optional<SubscriptionWorkload> workload = default;
-            Optional<string> resellerId = default;
-            Optional<string> subscriptionOwnerId = default;
-            Optional<string> managementGroupId = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Core.Optional<string> subscriptionId = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<SubscriptionProvisioningState> provisioningState = default;
+            Core.Optional<Uri> acceptOwnershipUrl = default;
+            Core.Optional<AcceptOwnershipState> acceptOwnershipState = default;
+            Core.Optional<string> billingScope = default;
+            Core.Optional<SubscriptionWorkload> workload = default;
+            Core.Optional<string> resellerId = default;
+            Core.Optional<string> subscriptionOwnerId = default;
+            Core.Optional<string> managementGroupId = default;
+            Core.Optional<DateTimeOffset> createdTime = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subscriptionId"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Subscription.Models
                     continue;
                 }
             }
-            return new SubscriptionAliasProperties(subscriptionId.Value, displayName.Value, Optional.ToNullable(provisioningState), acceptOwnershipUrl.Value, Optional.ToNullable(acceptOwnershipState), billingScope.Value, Optional.ToNullable(workload), resellerId.Value, subscriptionOwnerId.Value, managementGroupId.Value, Optional.ToNullable(createdTime), Optional.ToDictionary(tags));
+            return new SubscriptionAliasProperties(subscriptionId.Value, displayName.Value, Core.Optional.ToNullable(provisioningState), acceptOwnershipUrl.Value, Core.Optional.ToNullable(acceptOwnershipState), billingScope.Value, Core.Optional.ToNullable(workload), resellerId.Value, subscriptionOwnerId.Value, managementGroupId.Value, Core.Optional.ToNullable(createdTime), Core.Optional.ToDictionary(tags));
         }
     }
 }

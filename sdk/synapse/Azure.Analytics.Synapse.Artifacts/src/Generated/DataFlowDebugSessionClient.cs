@@ -139,7 +139,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateQueryDataFlowDebugSessionsByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateQueryDataFlowDebugSessionsByWorkspaceNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataFlowDebugSessionInfo.DeserializeDataFlowDebugSessionInfo, _clientDiagnostics, _pipeline, "DataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataFlowDebugSessionInfo.DeserializeDataFlowDebugSessionInfo, _clientDiagnostics, _pipeline, "DataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Query all active data flow debug sessions. </summary>
@@ -148,7 +148,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateQueryDataFlowDebugSessionsByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateQueryDataFlowDebugSessionsByWorkspaceNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataFlowDebugSessionInfo.DeserializeDataFlowDebugSessionInfo, _clientDiagnostics, _pipeline, "DataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataFlowDebugSessionInfo.DeserializeDataFlowDebugSessionInfo, _clientDiagnostics, _pipeline, "DataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Creates a data flow debug session. </summary>

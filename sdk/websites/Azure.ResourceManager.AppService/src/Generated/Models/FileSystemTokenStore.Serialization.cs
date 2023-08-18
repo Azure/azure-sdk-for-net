@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    internal partial class FileSystemTokenStore : IUtf8JsonSerializable
+    internal partial class FileSystemTokenStore : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Directory))
+            if (Core.Optional.IsDefined(Directory))
             {
                 writer.WritePropertyName("directory"u8);
                 writer.WriteStringValue(Directory);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> directory = default;
+            Core.Optional<string> directory = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("directory"u8))

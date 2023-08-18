@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of WebAppMSDeploy. </summary>
         public WebAppMSDeploy()
         {
-            SetParameters = new ChangeTrackingDictionary<string, string>();
+            SetParameters = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of WebAppMSDeploy. </summary>

@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startedTimestamp = default;
-            Optional<DateTimeOffset> completedTimestamp = default;
-            Optional<long> namespaceFilesCount = default;
-            Optional<long> namespaceDirectoriesCount = default;
-            Optional<long> namespaceSizeBytes = default;
-            Optional<DateTimeOffset> nextRunTimestamp = default;
+            Core.Optional<DateTimeOffset> startedTimestamp = default;
+            Core.Optional<DateTimeOffset> completedTimestamp = default;
+            Core.Optional<long> namespaceFilesCount = default;
+            Core.Optional<long> namespaceDirectoriesCount = default;
+            Core.Optional<long> namespaceSizeBytes = default;
+            Core.Optional<DateTimeOffset> nextRunTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startedTimestamp"u8))
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     continue;
                 }
             }
-            return new CloudEndpointLastChangeEnumerationStatus(Optional.ToNullable(startedTimestamp), Optional.ToNullable(completedTimestamp), Optional.ToNullable(namespaceFilesCount), Optional.ToNullable(namespaceDirectoriesCount), Optional.ToNullable(namespaceSizeBytes), Optional.ToNullable(nextRunTimestamp));
+            return new CloudEndpointLastChangeEnumerationStatus(Core.Optional.ToNullable(startedTimestamp), Core.Optional.ToNullable(completedTimestamp), Core.Optional.ToNullable(namespaceFilesCount), Core.Optional.ToNullable(namespaceDirectoriesCount), Core.Optional.ToNullable(namespaceSizeBytes), Core.Optional.ToNullable(nextRunTimestamp));
         }
     }
 }

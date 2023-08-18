@@ -17,8 +17,8 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
         /// <summary> Initializes a new instance of SparkJob. </summary>
         internal SparkJob()
         {
-            Timing = new ChangeTrackingList<string>();
-            Pipeline = new ChangeTrackingList<SparkJob>();
+            Timing = new Core.ChangeTrackingList<string>();
+            Pipeline = new Core.ChangeTrackingList<SparkJob>();
         }
 
         /// <summary> Initializes a new instance of SparkJob. </summary>

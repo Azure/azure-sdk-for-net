@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Subscription
             try
             {
                 var response = await SubscriptionRestClient.AcceptOwnershipAsync(subscriptionId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new SubscriptionArmOperation(SubscriptionClientDiagnostics, Pipeline, SubscriptionRestClient.CreateAcceptOwnershipRequest(subscriptionId, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new SubscriptionArmOperation(SubscriptionClientDiagnostics, Pipeline, SubscriptionRestClient.CreateAcceptOwnershipRequest(subscriptionId, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Subscription
             try
             {
                 var response = SubscriptionRestClient.AcceptOwnership(subscriptionId, content, cancellationToken);
-                var operation = new SubscriptionArmOperation(SubscriptionClientDiagnostics, Pipeline, SubscriptionRestClient.CreateAcceptOwnershipRequest(subscriptionId, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new SubscriptionArmOperation(SubscriptionClientDiagnostics, Pipeline, SubscriptionRestClient.CreateAcceptOwnershipRequest(subscriptionId, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

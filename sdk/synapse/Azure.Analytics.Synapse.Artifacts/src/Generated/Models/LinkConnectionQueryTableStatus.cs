@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of LinkConnectionQueryTableStatus. </summary>
         internal LinkConnectionQueryTableStatus()
         {
-            Value = new ChangeTrackingList<LinkTableStatus>();
+            Value = new Core.ChangeTrackingList<LinkTableStatus>();
         }
 
         /// <summary> Initializes a new instance of LinkConnectionQueryTableStatus. </summary>

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary> Initializes a new instance of WebPubSubPrivateLink. </summary>
         public WebPubSubPrivateLink()
         {
-            RequiredMembers = new ChangeTrackingList<string>();
-            RequiredZoneNames = new ChangeTrackingList<string>();
-            ShareablePrivateLinkTypes = new ChangeTrackingList<ShareablePrivateLinkType>();
+            RequiredMembers = new Core.ChangeTrackingList<string>();
+            RequiredZoneNames = new Core.ChangeTrackingList<string>();
+            ShareablePrivateLinkTypes = new Core.ChangeTrackingList<ShareablePrivateLinkType>();
         }
 
         /// <summary> Initializes a new instance of WebPubSubPrivateLink. </summary>

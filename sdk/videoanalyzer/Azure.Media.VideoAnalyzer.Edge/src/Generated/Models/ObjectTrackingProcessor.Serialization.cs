@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class ObjectTrackingProcessor : IUtf8JsonSerializable
+    public partial class ObjectTrackingProcessor : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Accuracy))
+            if (Core.Optional.IsDefined(Accuracy))
             {
                 writer.WritePropertyName("accuracy"u8);
                 writer.WriteStringValue(Accuracy.Value.ToString());
@@ -41,7 +41,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<ObjectTrackingAccuracy> accuracy = default;
+            Core.Optional<ObjectTrackingAccuracy> accuracy = default;
             string type = default;
             string name = default;
             IList<NodeInput> inputs = default;
@@ -77,7 +77,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new ObjectTrackingProcessor(type, name, inputs, Optional.ToNullable(accuracy));
+            return new ObjectTrackingProcessor(type, name, inputs, Core.Optional.ToNullable(accuracy));
         }
     }
 }

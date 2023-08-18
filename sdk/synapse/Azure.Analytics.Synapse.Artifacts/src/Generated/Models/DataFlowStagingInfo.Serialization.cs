@@ -13,17 +13,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DataFlowStagingInfoConverter))]
-    public partial class DataFlowStagingInfo : IUtf8JsonSerializable
+    public partial class DataFlowStagingInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedService))
+            if (Core.Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
                 writer.WriteObjectValue(LinkedService);
             }
-            if (Optional.IsDefined(FolderPath))
+            if (Core.Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteObjectValue(FolderPath);
@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> linkedService = default;
-            Optional<object> folderPath = default;
+            Core.Optional<LinkedServiceReference> linkedService = default;
+            Core.Optional<object> folderPath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedService"u8))

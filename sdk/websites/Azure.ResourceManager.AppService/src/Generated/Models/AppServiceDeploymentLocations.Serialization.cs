@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AppServiceGeoRegion>> locations = default;
-            Optional<IReadOnlyList<AppServiceEnvironmentProperties>> hostingEnvironments = default;
-            Optional<IReadOnlyList<HostingEnvironmentDeploymentInfo>> hostingEnvironmentDeploymentInfos = default;
+            Core.Optional<IReadOnlyList<AppServiceGeoRegion>> locations = default;
+            Core.Optional<IReadOnlyList<AppServiceEnvironmentProperties>> hostingEnvironments = default;
+            Core.Optional<IReadOnlyList<HostingEnvironmentDeploymentInfo>> hostingEnvironmentDeploymentInfos = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("locations"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceDeploymentLocations(Optional.ToList(locations), Optional.ToList(hostingEnvironments), Optional.ToList(hostingEnvironmentDeploymentInfos));
+            return new AppServiceDeploymentLocations(Core.Optional.ToList(locations), Core.Optional.ToList(hostingEnvironments), Core.Optional.ToList(hostingEnvironmentDeploymentInfos));
         }
     }
 }

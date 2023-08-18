@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseDataSourceSku : IUtf8JsonSerializable
+    public partial class SynapseDataSourceSku : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
-            if (Optional.IsDefined(Capacity))
+            if (Core.Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 return null;
             }
             SynapseSkuName name = default;
-            Optional<int> capacity = default;
+            Core.Optional<int> capacity = default;
             KustoPoolSkuSize size = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SynapseDataSourceSku(name, Optional.ToNullable(capacity), size);
+            return new SynapseDataSourceSku(name, Core.Optional.ToNullable(capacity), size);
         }
     }
 }

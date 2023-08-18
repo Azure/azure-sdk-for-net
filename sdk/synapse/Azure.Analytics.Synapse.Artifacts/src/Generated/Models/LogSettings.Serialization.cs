@@ -13,17 +13,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LogSettingsConverter))]
-    public partial class LogSettings : IUtf8JsonSerializable
+    public partial class LogSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableCopyActivityLog))
+            if (Core.Optional.IsDefined(EnableCopyActivityLog))
             {
                 writer.WritePropertyName("enableCopyActivityLog"u8);
                 writer.WriteObjectValue(EnableCopyActivityLog);
             }
-            if (Optional.IsDefined(CopyActivityLogSettings))
+            if (Core.Optional.IsDefined(CopyActivityLogSettings))
             {
                 writer.WritePropertyName("copyActivityLogSettings"u8);
                 writer.WriteObjectValue(CopyActivityLogSettings);
@@ -39,8 +39,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> enableCopyActivityLog = default;
-            Optional<CopyActivityLogSettings> copyActivityLogSettings = default;
+            Core.Optional<object> enableCopyActivityLog = default;
+            Core.Optional<CopyActivityLogSettings> copyActivityLogSettings = default;
             LogLocationSettings logLocationSettings = default;
             foreach (var property in element.EnumerateObject())
             {

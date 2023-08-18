@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<IPAddress> ipAddress = default;
-            Optional<int> port = default;
-            Optional<double> latency = default;
-            Optional<bool> isAccessible = default;
+            Core.Optional<IPAddress> ipAddress = default;
+            Core.Optional<int> port = default;
+            Core.Optional<double> latency = default;
+            Core.Optional<bool> isAccessible = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipAddress"u8))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     continue;
                 }
             }
-            return new OutboundEndpointDetail(ipAddress.Value, Optional.ToNullable(port), Optional.ToNullable(latency), Optional.ToNullable(isAccessible));
+            return new OutboundEndpointDetail(ipAddress.Value, Core.Optional.ToNullable(port), Core.Optional.ToNullable(latency), Core.Optional.ToNullable(isAccessible));
         }
     }
 }

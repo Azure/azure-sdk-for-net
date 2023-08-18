@@ -12,24 +12,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceCertificateEmail : IUtf8JsonSerializable
+    public partial class AppServiceCertificateEmail : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(EmailId))
+            if (Core.Optional.IsDefined(EmailId))
             {
                 writer.WritePropertyName("emailId"u8);
                 writer.WriteStringValue(EmailId);
             }
-            if (Optional.IsDefined(TimeStamp))
+            if (Core.Optional.IsDefined(TimeStamp))
             {
                 writer.WritePropertyName("timeStamp"u8);
                 writer.WriteStringValue(TimeStamp.Value, "O");
@@ -44,13 +44,13 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> emailId = default;
-            Optional<DateTimeOffset> timeStamp = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> emailId = default;
+            Core.Optional<DateTimeOffset> timeStamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceCertificateEmail(id, name, type, systemData.Value, emailId.Value, Optional.ToNullable(timeStamp), kind.Value);
+            return new AppServiceCertificateEmail(id, name, type, systemData.Value, emailId.Value, Core.Optional.ToNullable(timeStamp), kind.Value);
         }
     }
 }

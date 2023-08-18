@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class TimeSeriesExpression : IUtf8JsonSerializable
+    public partial class TimeSeriesExpression : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("tsx"u8);

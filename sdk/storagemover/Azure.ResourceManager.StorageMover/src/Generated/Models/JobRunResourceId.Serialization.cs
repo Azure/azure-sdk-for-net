@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> jobRunResourceId = default;
+            Core.Optional<ResourceIdentifier> jobRunResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobRunResourceId"u8))

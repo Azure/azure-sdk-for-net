@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceRecommendation. </summary>
         public AppServiceRecommendation()
         {
-            CategoryTags = new ChangeTrackingList<string>();
-            States = new ChangeTrackingList<string>();
+            CategoryTags = new Core.ChangeTrackingList<string>();
+            States = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AppServiceRecommendation. </summary>

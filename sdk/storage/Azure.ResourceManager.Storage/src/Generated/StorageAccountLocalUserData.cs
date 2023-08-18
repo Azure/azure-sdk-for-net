@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Initializes a new instance of StorageAccountLocalUserData. </summary>
         public StorageAccountLocalUserData()
         {
-            PermissionScopes = new ChangeTrackingList<StoragePermissionScope>();
-            SshAuthorizedKeys = new ChangeTrackingList<StorageSshPublicKey>();
+            PermissionScopes = new Core.ChangeTrackingList<StoragePermissionScope>();
+            SshAuthorizedKeys = new Core.ChangeTrackingList<StorageSshPublicKey>();
         }
 
         /// <summary> Initializes a new instance of StorageAccountLocalUserData. </summary>

@@ -12,22 +12,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseIntegrationRuntimeVnetProperties : IUtf8JsonSerializable
+    public partial class SynapseIntegrationRuntimeVnetProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(VnetId))
+            if (Core.Optional.IsDefined(VnetId))
             {
                 writer.WritePropertyName("vNetId"u8);
                 writer.WriteStringValue(VnetId.Value);
             }
-            if (Optional.IsDefined(Subnet))
+            if (Core.Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteStringValue(Subnet);
             }
-            if (Optional.IsCollectionDefined(PublicIPs))
+            if (Core.Optional.IsCollectionDefined(PublicIPs))
             {
                 writer.WritePropertyName("publicIPs"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SubnetId))
+            if (Core.Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<Guid> vNetId = default;
-            Optional<string> subnet = default;
-            Optional<IList<string>> publicIPs = default;
-            Optional<ResourceIdentifier> subnetId = default;
+            Core.Optional<Guid> vNetId = default;
+            Core.Optional<string> subnet = default;
+            Core.Optional<IList<string>> publicIPs = default;
+            Core.Optional<ResourceIdentifier> subnetId = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseIntegrationRuntimeVnetProperties(Optional.ToNullable(vNetId), subnet.Value, Optional.ToList(publicIPs), subnetId.Value, additionalProperties);
+            return new SynapseIntegrationRuntimeVnetProperties(Core.Optional.ToNullable(vNetId), subnet.Value, Core.Optional.ToList(publicIPs), subnetId.Value, additionalProperties);
         }
     }
 }

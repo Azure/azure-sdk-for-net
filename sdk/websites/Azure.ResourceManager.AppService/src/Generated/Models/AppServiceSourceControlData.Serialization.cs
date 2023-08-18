@@ -12,34 +12,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class AppServiceSourceControlData : IUtf8JsonSerializable
+    public partial class AppServiceSourceControlData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Token))
+            if (Core.Optional.IsDefined(Token))
             {
                 writer.WritePropertyName("token"u8);
                 writer.WriteStringValue(Token);
             }
-            if (Optional.IsDefined(TokenSecret))
+            if (Core.Optional.IsDefined(TokenSecret))
             {
                 writer.WritePropertyName("tokenSecret"u8);
                 writer.WriteStringValue(TokenSecret);
             }
-            if (Optional.IsDefined(RefreshToken))
+            if (Core.Optional.IsDefined(RefreshToken))
             {
                 writer.WritePropertyName("refreshToken"u8);
                 writer.WriteStringValue(RefreshToken);
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (Core.Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
@@ -54,15 +54,15 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> token = default;
-            Optional<string> tokenSecret = default;
-            Optional<string> refreshToken = default;
-            Optional<DateTimeOffset> expirationTime = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> token = default;
+            Core.Optional<string> tokenSecret = default;
+            Core.Optional<string> refreshToken = default;
+            Core.Optional<DateTimeOffset> expirationTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new AppServiceSourceControlData(id, name, type, systemData.Value, token.Value, tokenSecret.Value, refreshToken.Value, Optional.ToNullable(expirationTime), kind.Value);
+            return new AppServiceSourceControlData(id, name, type, systemData.Value, token.Value, tokenSecret.Value, refreshToken.Value, Core.Optional.ToNullable(expirationTime), kind.Value);
         }
     }
 }

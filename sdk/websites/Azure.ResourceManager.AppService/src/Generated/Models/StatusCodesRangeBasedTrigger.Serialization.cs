@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StatusCodesRangeBasedTrigger : IUtf8JsonSerializable
+    public partial class StatusCodesRangeBasedTrigger : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StatusCodes))
+            if (Core.Optional.IsDefined(StatusCodes))
             {
                 writer.WritePropertyName("statusCodes"u8);
                 writer.WriteStringValue(StatusCodes);
             }
-            if (Optional.IsDefined(Path))
+            if (Core.Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsDefined(Count))
+            if (Core.Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(TimeInterval))
+            if (Core.Optional.IsDefined(TimeInterval))
             {
                 writer.WritePropertyName("timeInterval"u8);
                 writer.WriteStringValue(TimeInterval);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> statusCodes = default;
-            Optional<string> path = default;
-            Optional<int> count = default;
-            Optional<string> timeInterval = default;
+            Core.Optional<string> statusCodes = default;
+            Core.Optional<string> path = default;
+            Core.Optional<int> count = default;
+            Core.Optional<string> timeInterval = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("statusCodes"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StatusCodesRangeBasedTrigger(statusCodes.Value, path.Value, Optional.ToNullable(count), timeInterval.Value);
+            return new StatusCodesRangeBasedTrigger(statusCodes.Value, path.Value, Core.Optional.ToNullable(count), timeInterval.Value);
         }
     }
 }

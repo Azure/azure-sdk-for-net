@@ -16,9 +16,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of StartDataFlowDebugSessionRequest. </summary>
         public StartDataFlowDebugSessionRequest()
         {
-            DataFlows = new ChangeTrackingList<DataFlowResource>();
-            Datasets = new ChangeTrackingList<DatasetResource>();
-            LinkedServices = new ChangeTrackingList<LinkedServiceResource>();
+            DataFlows = new Core.ChangeTrackingList<DataFlowResource>();
+            Datasets = new Core.ChangeTrackingList<DatasetResource>();
+            LinkedServices = new Core.ChangeTrackingList<LinkedServiceResource>();
         }
 
         /// <summary> Initializes a new instance of StartDataFlowDebugSessionRequest. </summary>

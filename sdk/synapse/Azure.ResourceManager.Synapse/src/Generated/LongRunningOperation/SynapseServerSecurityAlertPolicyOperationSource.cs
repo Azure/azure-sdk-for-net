@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
-    internal class SynapseServerSecurityAlertPolicyOperationSource : IOperationSource<SynapseServerSecurityAlertPolicyResource>
+    internal class SynapseServerSecurityAlertPolicyOperationSource : Core.IOperationSource<SynapseServerSecurityAlertPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Synapse
             _client = client;
         }
 
-        SynapseServerSecurityAlertPolicyResource IOperationSource<SynapseServerSecurityAlertPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SynapseServerSecurityAlertPolicyResource Core.IOperationSource<SynapseServerSecurityAlertPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SynapseServerSecurityAlertPolicyData.DeserializeSynapseServerSecurityAlertPolicyData(document.RootElement);
             return new SynapseServerSecurityAlertPolicyResource(_client, data);
         }
 
-        async ValueTask<SynapseServerSecurityAlertPolicyResource> IOperationSource<SynapseServerSecurityAlertPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SynapseServerSecurityAlertPolicyResource> Core.IOperationSource<SynapseServerSecurityAlertPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SynapseServerSecurityAlertPolicyData.DeserializeSynapseServerSecurityAlertPolicyData(document.RootElement);

@@ -27,7 +27,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             Argument.AssertNotNull(tasks, nameof(tasks));
 
             Tasks = tasks;
-            Errors = new ChangeTrackingList<TextAnalyticsError>();
+            Errors = new Core.ChangeTrackingList<TextAnalyticsError>();
         }
 
         /// <summary> Initializes a new instance of AnalyzeJobState. </summary>

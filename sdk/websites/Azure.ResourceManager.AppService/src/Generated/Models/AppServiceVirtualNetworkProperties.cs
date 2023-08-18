@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceVirtualNetworkProperties. </summary>
         internal AppServiceVirtualNetworkProperties()
         {
-            Routes = new ChangeTrackingList<AppServiceVirtualNetworkRoute>();
+            Routes = new Core.ChangeTrackingList<AppServiceVirtualNetworkRoute>();
         }
 
         /// <summary> Initializes a new instance of AppServiceVirtualNetworkProperties. </summary>

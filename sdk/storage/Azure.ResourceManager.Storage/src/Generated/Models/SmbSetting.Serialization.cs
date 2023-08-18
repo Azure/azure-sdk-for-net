@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class SmbSetting : IUtf8JsonSerializable
+    public partial class SmbSetting : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Multichannel))
+            if (Core.Optional.IsDefined(Multichannel))
             {
                 writer.WritePropertyName("multichannel"u8);
                 writer.WriteObjectValue(Multichannel);
             }
-            if (Optional.IsDefined(Versions))
+            if (Core.Optional.IsDefined(Versions))
             {
                 writer.WritePropertyName("versions"u8);
                 writer.WriteStringValue(Versions);
             }
-            if (Optional.IsDefined(AuthenticationMethods))
+            if (Core.Optional.IsDefined(AuthenticationMethods))
             {
                 writer.WritePropertyName("authenticationMethods"u8);
                 writer.WriteStringValue(AuthenticationMethods);
             }
-            if (Optional.IsDefined(KerberosTicketEncryption))
+            if (Core.Optional.IsDefined(KerberosTicketEncryption))
             {
                 writer.WritePropertyName("kerberosTicketEncryption"u8);
                 writer.WriteStringValue(KerberosTicketEncryption);
             }
-            if (Optional.IsDefined(ChannelEncryption))
+            if (Core.Optional.IsDefined(ChannelEncryption))
             {
                 writer.WritePropertyName("channelEncryption"u8);
                 writer.WriteStringValue(ChannelEncryption);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<Multichannel> multichannel = default;
-            Optional<string> versions = default;
-            Optional<string> authenticationMethods = default;
-            Optional<string> kerberosTicketEncryption = default;
-            Optional<string> channelEncryption = default;
+            Core.Optional<Multichannel> multichannel = default;
+            Core.Optional<string> versions = default;
+            Core.Optional<string> authenticationMethods = default;
+            Core.Optional<string> kerberosTicketEncryption = default;
+            Core.Optional<string> channelEncryption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("multichannel"u8))

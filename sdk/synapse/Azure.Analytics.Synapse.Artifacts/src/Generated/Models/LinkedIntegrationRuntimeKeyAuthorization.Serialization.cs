@@ -13,9 +13,9 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LinkedIntegrationRuntimeKeyAuthorizationConverter))]
-    public partial class LinkedIntegrationRuntimeKeyAuthorization : IUtf8JsonSerializable
+    public partial class LinkedIntegrationRuntimeKeyAuthorization : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("key"u8);

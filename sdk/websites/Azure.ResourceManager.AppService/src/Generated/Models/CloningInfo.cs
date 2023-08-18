@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             Argument.AssertNotNull(sourceWebAppId, nameof(sourceWebAppId));
 
             SourceWebAppId = sourceWebAppId;
-            AppSettingsOverrides = new ChangeTrackingDictionary<string, string>();
+            AppSettingsOverrides = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of CloningInfo. </summary>

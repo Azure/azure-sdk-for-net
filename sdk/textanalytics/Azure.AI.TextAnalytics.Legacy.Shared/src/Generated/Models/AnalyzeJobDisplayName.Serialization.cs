@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             {
                 return null;
             }
-            Optional<string> displayName = default;
+            Core.Optional<string> displayName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<TenantPolicyData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<TenantPolicyData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Subscription.Models
                     continue;
                 }
             }
-            return new TenantPoliciesResult(Optional.ToList(value), nextLink.Value);
+            return new TenantPoliciesResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -14,17 +14,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SynapseNotebookActivityConverter))]
-    public partial class SynapseNotebookActivity : IUtf8JsonSerializable
+    public partial class SynapseNotebookActivity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedServiceName))
+            if (Core.Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 writer.WriteObjectValue(LinkedServiceName);
             }
-            if (Optional.IsDefined(Policy))
+            if (Core.Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -33,22 +33,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(OnInactiveMarkAs))
+            if (Core.Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (Core.Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserProperties))
+            if (Core.Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -72,12 +72,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("notebook"u8);
             writer.WriteObjectValue(Notebook);
-            if (Optional.IsDefined(SparkPool))
+            if (Core.Optional.IsDefined(SparkPool))
             {
                 writer.WritePropertyName("sparkPool"u8);
                 writer.WriteObjectValue(SparkPool);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (Core.Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -88,37 +88,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ExecutorSize))
+            if (Core.Optional.IsDefined(ExecutorSize))
             {
                 writer.WritePropertyName("executorSize"u8);
                 writer.WriteObjectValue(ExecutorSize);
             }
-            if (Optional.IsDefined(Conf))
+            if (Core.Optional.IsDefined(Conf))
             {
                 writer.WritePropertyName("conf"u8);
                 writer.WriteObjectValue(Conf);
             }
-            if (Optional.IsDefined(DriverSize))
+            if (Core.Optional.IsDefined(DriverSize))
             {
                 writer.WritePropertyName("driverSize"u8);
                 writer.WriteObjectValue(DriverSize);
             }
-            if (Optional.IsDefined(NumExecutors))
+            if (Core.Optional.IsDefined(NumExecutors))
             {
                 writer.WritePropertyName("numExecutors"u8);
                 writer.WriteObjectValue(NumExecutors);
             }
-            if (Optional.IsDefined(ConfigurationType))
+            if (Core.Optional.IsDefined(ConfigurationType))
             {
                 writer.WritePropertyName("configurationType"u8);
                 writer.WriteStringValue(ConfigurationType.Value.ToString());
             }
-            if (Optional.IsDefined(TargetSparkConfiguration))
+            if (Core.Optional.IsDefined(TargetSparkConfiguration))
             {
                 writer.WritePropertyName("targetSparkConfiguration"u8);
                 writer.WriteObjectValue(TargetSparkConfiguration);
             }
-            if (Optional.IsCollectionDefined(SparkConfig))
+            if (Core.Optional.IsCollectionDefined(SparkConfig))
             {
                 writer.WritePropertyName("sparkConfig"u8);
                 writer.WriteStartObject();
@@ -149,25 +149,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> linkedServiceName = default;
-            Optional<ActivityPolicy> policy = default;
+            Core.Optional<LinkedServiceReference> linkedServiceName = default;
+            Core.Optional<ActivityPolicy> policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
+            Core.Optional<string> description = default;
+            Core.Optional<ActivityState> state = default;
+            Core.Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            Core.Optional<IList<ActivityDependency>> dependsOn = default;
+            Core.Optional<IList<UserProperty>> userProperties = default;
             SynapseNotebookReference notebook = default;
-            Optional<BigDataPoolParametrizationReference> sparkPool = default;
-            Optional<IDictionary<string, NotebookParameter>> parameters = default;
-            Optional<object> executorSize = default;
-            Optional<object> conf = default;
-            Optional<object> driverSize = default;
-            Optional<object> numExecutors = default;
-            Optional<ConfigurationType> configurationType = default;
-            Optional<SparkConfigurationParametrizationReference> targetSparkConfiguration = default;
-            Optional<IDictionary<string, object>> sparkConfig = default;
+            Core.Optional<BigDataPoolParametrizationReference> sparkPool = default;
+            Core.Optional<IDictionary<string, NotebookParameter>> parameters = default;
+            Core.Optional<object> executorSize = default;
+            Core.Optional<object> conf = default;
+            Core.Optional<object> driverSize = default;
+            Core.Optional<object> numExecutors = default;
+            Core.Optional<ConfigurationType> configurationType = default;
+            Core.Optional<SparkConfigurationParametrizationReference> targetSparkConfiguration = default;
+            Core.Optional<IDictionary<string, object>> sparkConfig = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -369,7 +369,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseNotebookActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, notebook, sparkPool.Value, Optional.ToDictionary(parameters), executorSize.Value, conf.Value, driverSize.Value, numExecutors.Value, Optional.ToNullable(configurationType), targetSparkConfiguration.Value, Optional.ToDictionary(sparkConfig));
+            return new SynapseNotebookActivity(name, type, description.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(onInactiveMarkAs), Core.Optional.ToList(dependsOn), Core.Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, notebook, sparkPool.Value, Core.Optional.ToDictionary(parameters), executorSize.Value, conf.Value, driverSize.Value, numExecutors.Value, Core.Optional.ToNullable(configurationType), targetSparkConfiguration.Value, Core.Optional.ToDictionary(sparkConfig));
         }
 
         internal partial class SynapseNotebookActivityConverter : JsonConverter<SynapseNotebookActivity>

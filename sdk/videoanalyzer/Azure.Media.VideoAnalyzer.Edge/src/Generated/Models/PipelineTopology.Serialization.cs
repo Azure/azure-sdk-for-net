@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class PipelineTopology : IUtf8JsonSerializable
+    public partial class PipelineTopology : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(SystemData))
+            if (Core.Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 writer.WriteObjectValue(SystemData);
             }
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -37,8 +37,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             string name = default;
-            Optional<SystemData> systemData = default;
-            Optional<PipelineTopologyProperties> properties = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<PipelineTopologyProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

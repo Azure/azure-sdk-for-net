@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlobStaticWebsite : IXmlSerializable
+    public partial class BlobStaticWebsite : Core.IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "StaticWebsite");
             writer.WriteStartElement("Enabled");
             writer.WriteValue(Enabled);
             writer.WriteEndElement();
-            if (Optional.IsDefined(IndexDocument))
+            if (Core.Optional.IsDefined(IndexDocument))
             {
                 writer.WriteStartElement("IndexDocument");
                 writer.WriteValue(IndexDocument);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(ErrorDocument404Path))
+            if (Core.Optional.IsDefined(ErrorDocument404Path))
             {
                 writer.WriteStartElement("ErrorDocument404Path");
                 writer.WriteValue(ErrorDocument404Path);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(DefaultIndexDocumentPath))
+            if (Core.Optional.IsDefined(DefaultIndexDocumentPath))
             {
                 writer.WriteStartElement("DefaultIndexDocumentPath");
                 writer.WriteValue(DefaultIndexDocumentPath);

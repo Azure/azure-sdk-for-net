@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<string> name = default;
-            Optional<string> size = default;
-            Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Optional<IReadOnlyList<KustoPoolSkuLocationInfoItem>> locationInfo = default;
-            Optional<IReadOnlyList<BinaryData>> restrictions = default;
+            Core.Optional<string> resourceType = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> size = default;
+            Core.Optional<IReadOnlyList<AzureLocation>> locations = default;
+            Core.Optional<IReadOnlyList<KustoPoolSkuLocationInfoItem>> locationInfo = default;
+            Core.Optional<IReadOnlyList<BinaryData>> restrictions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new KustoPoolSkuDescription(resourceType.Value, name.Value, size.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(restrictions));
+            return new KustoPoolSkuDescription(resourceType.Value, name.Value, size.Value, Core.Optional.ToList(locations), Core.Optional.ToList(locationInfo), Core.Optional.ToList(restrictions));
         }
     }
 }

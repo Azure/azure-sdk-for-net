@@ -13,22 +13,22 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LinkConnectionComputeConverter))]
-    public partial class LinkConnectionCompute : IUtf8JsonSerializable
+    public partial class LinkConnectionCompute : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CoreCount))
+            if (Core.Optional.IsDefined(CoreCount))
             {
                 writer.WritePropertyName("coreCount"u8);
                 writer.WriteNumberValue(CoreCount.Value);
             }
-            if (Optional.IsDefined(ComputeType))
+            if (Core.Optional.IsDefined(ComputeType))
             {
                 writer.WritePropertyName("computeType"u8);
                 writer.WriteStringValue(ComputeType);
             }
-            if (Optional.IsDefined(DataProcessIntervalMinutes))
+            if (Core.Optional.IsDefined(DataProcessIntervalMinutes))
             {
                 writer.WritePropertyName("dataProcessIntervalMinutes"u8);
                 writer.WriteNumberValue(DataProcessIntervalMinutes.Value);
@@ -42,9 +42,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<int> coreCount = default;
-            Optional<string> computeType = default;
-            Optional<int> dataProcessIntervalMinutes = default;
+            Core.Optional<int> coreCount = default;
+            Core.Optional<string> computeType = default;
+            Core.Optional<int> dataProcessIntervalMinutes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("coreCount"u8))
@@ -71,7 +71,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkConnectionCompute(Optional.ToNullable(coreCount), computeType.Value, Optional.ToNullable(dataProcessIntervalMinutes));
+            return new LinkConnectionCompute(Core.Optional.ToNullable(coreCount), computeType.Value, Core.Optional.ToNullable(dataProcessIntervalMinutes));
         }
 
         internal partial class LinkConnectionComputeConverter : JsonConverter<LinkConnectionCompute>

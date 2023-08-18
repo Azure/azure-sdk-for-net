@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseSqlPoolSecurityAlertPolicyListResult. </summary>
         internal SynapseSqlPoolSecurityAlertPolicyListResult()
         {
-            Value = new ChangeTrackingList<SynapseSqlPoolSecurityAlertPolicyData>();
+            Value = new Core.ChangeTrackingList<SynapseSqlPoolSecurityAlertPolicyData>();
         }
 
         /// <summary> Initializes a new instance of SynapseSqlPoolSecurityAlertPolicyListResult. </summary>

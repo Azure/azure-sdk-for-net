@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<int> filesystemSubnetSize = default;
+            Core.Optional<int> filesystemSubnetSize = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filesystemSubnetSize"u8))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new RequiredAmlFileSystemSubnetsSize(Optional.ToNullable(filesystemSubnetSize));
+            return new RequiredAmlFileSystemSubnetsSize(Core.Optional.ToNullable(filesystemSubnetSize));
         }
     }
 }

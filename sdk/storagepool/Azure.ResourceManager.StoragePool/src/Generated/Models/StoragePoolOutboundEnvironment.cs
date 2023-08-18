@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <summary> Initializes a new instance of StoragePoolOutboundEnvironment. </summary>
         internal StoragePoolOutboundEnvironment()
         {
-            Endpoints = new ChangeTrackingList<OutboundEndpointDependency>();
+            Endpoints = new Core.ChangeTrackingList<OutboundEndpointDependency>();
         }
 
         /// <summary> Initializes a new instance of StoragePoolOutboundEnvironment. </summary>

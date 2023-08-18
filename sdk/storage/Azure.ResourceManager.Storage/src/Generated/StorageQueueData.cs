@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Initializes a new instance of StorageQueueData. </summary>
         public StorageQueueData()
         {
-            Metadata = new ChangeTrackingDictionary<string, string>();
+            Metadata = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of StorageQueueData. </summary>

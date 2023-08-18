@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of WebAppBackupData. </summary>
         public WebAppBackupData()
         {
-            Databases = new ChangeTrackingList<AppServiceDatabaseBackupSetting>();
+            Databases = new Core.ChangeTrackingList<AppServiceDatabaseBackupSetting>();
         }
 
         /// <summary> Initializes a new instance of WebAppBackupData. </summary>

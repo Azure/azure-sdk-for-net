@@ -22,7 +22,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             string id = default;
             DetectedLanguage detectedLanguage = default;
             IReadOnlyList<TextAnalyticsWarning> warnings = default;
-            Optional<DocumentStatistics> statistics = default;
+            Core.Optional<DocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

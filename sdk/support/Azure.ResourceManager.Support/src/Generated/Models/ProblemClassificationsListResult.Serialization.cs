@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProblemClassificationData>> value = default;
+            Core.Optional<IReadOnlyList<ProblemClassificationData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Support.Models
                     continue;
                 }
             }
-            return new ProblemClassificationsListResult(Optional.ToList(value));
+            return new ProblemClassificationsListResult(Core.Optional.ToList(value));
         }
     }
 }

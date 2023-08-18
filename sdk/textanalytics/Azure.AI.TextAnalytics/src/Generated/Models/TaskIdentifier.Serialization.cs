@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class TaskIdentifier : IUtf8JsonSerializable
+    internal partial class TaskIdentifier : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TaskName))
+            if (Core.Optional.IsDefined(TaskName))
             {
                 writer.WritePropertyName("taskName"u8);
                 writer.WriteStringValue(TaskName);
@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            Optional<string> taskName = default;
+            Core.Optional<string> taskName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("taskName"u8))

@@ -21,7 +21,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             WarningCodeValue code = default;
             string message = default;
-            Optional<string> targetRef = default;
+            Core.Optional<string> targetRef = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))

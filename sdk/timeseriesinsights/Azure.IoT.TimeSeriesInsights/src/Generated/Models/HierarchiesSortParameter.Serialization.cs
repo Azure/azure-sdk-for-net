@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class HierarchiesSortParameter : IUtf8JsonSerializable
+    internal partial class HierarchiesSortParameter : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(By))
+            if (Core.Optional.IsDefined(By))
             {
                 writer.WritePropertyName("by"u8);
                 writer.WriteStringValue(By.Value.ToString());

@@ -11,12 +11,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class DeletedSiteData : IUtf8JsonSerializable
+    public partial class DeletedSiteData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -33,19 +33,19 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> deletedSiteId = default;
-            Optional<string> deletedTimestamp = default;
-            Optional<string> subscription = default;
-            Optional<string> resourceGroup = default;
-            Optional<string> deletedSiteName = default;
-            Optional<string> slot = default;
-            Optional<string> kind0 = default;
-            Optional<string> geoRegionName = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<int> deletedSiteId = default;
+            Core.Optional<string> deletedTimestamp = default;
+            Core.Optional<string> subscription = default;
+            Core.Optional<string> resourceGroup = default;
+            Core.Optional<string> deletedSiteName = default;
+            Core.Optional<string> slot = default;
+            Core.Optional<string> kind0 = default;
+            Core.Optional<string> geoRegionName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new DeletedSiteData(id, name, type, systemData.Value, Optional.ToNullable(deletedSiteId), deletedTimestamp.Value, subscription.Value, resourceGroup.Value, deletedSiteName.Value, slot.Value, kind0.Value, geoRegionName.Value, kind.Value);
+            return new DeletedSiteData(id, name, type, systemData.Value, Core.Optional.ToNullable(deletedSiteId), deletedTimestamp.Value, subscription.Value, resourceGroup.Value, deletedSiteName.Value, slot.Value, kind0.Value, geoRegionName.Value, kind.Value);
         }
     }
 }

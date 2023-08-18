@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<SynapseKeyData>> value = default;
+            Core.Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<SynapseKeyData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new KeyInfoListResult(nextLink.Value, Optional.ToList(value));
+            return new KeyInfoListResult(nextLink.Value, Core.Optional.ToList(value));
         }
     }
 }

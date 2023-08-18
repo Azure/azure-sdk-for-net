@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> runtimeVersion = default;
-            Optional<bool> remoteDebuggingSupported = default;
-            Optional<AppInsightsWebAppStackSettings> appInsightsSettings = default;
-            Optional<GitHubActionWebAppStackSettings> gitHubActionSettings = default;
-            Optional<bool> isPreview = default;
-            Optional<bool> isDeprecated = default;
-            Optional<bool> isHidden = default;
-            Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<bool> isAutoUpdate = default;
-            Optional<bool> isEarlyAccess = default;
+            Core.Optional<string> runtimeVersion = default;
+            Core.Optional<bool> remoteDebuggingSupported = default;
+            Core.Optional<AppInsightsWebAppStackSettings> appInsightsSettings = default;
+            Core.Optional<GitHubActionWebAppStackSettings> gitHubActionSettings = default;
+            Core.Optional<bool> isPreview = default;
+            Core.Optional<bool> isDeprecated = default;
+            Core.Optional<bool> isHidden = default;
+            Core.Optional<DateTimeOffset> endOfLifeDate = default;
+            Core.Optional<bool> isAutoUpdate = default;
+            Core.Optional<bool> isEarlyAccess = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("runtimeVersion"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new WebAppRuntimeSettings(runtimeVersion.Value, Optional.ToNullable(remoteDebuggingSupported), appInsightsSettings.Value, gitHubActionSettings.Value, Optional.ToNullable(isPreview), Optional.ToNullable(isDeprecated), Optional.ToNullable(isHidden), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(isAutoUpdate), Optional.ToNullable(isEarlyAccess));
+            return new WebAppRuntimeSettings(runtimeVersion.Value, Core.Optional.ToNullable(remoteDebuggingSupported), appInsightsSettings.Value, gitHubActionSettings.Value, Core.Optional.ToNullable(isPreview), Core.Optional.ToNullable(isDeprecated), Core.Optional.ToNullable(isHidden), Core.Optional.ToNullable(endOfLifeDate), Core.Optional.ToNullable(isAutoUpdate), Core.Optional.ToNullable(isEarlyAccess));
         }
     }
 }

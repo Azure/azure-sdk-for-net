@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SynapseDataMaskingRuleData>> value = default;
+            Core.Optional<IReadOnlyList<SynapseDataMaskingRuleData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SynapseDataMaskingRuleListResult(Optional.ToList(value));
+            return new SynapseDataMaskingRuleListResult(Core.Optional.ToList(value));
         }
     }
 }

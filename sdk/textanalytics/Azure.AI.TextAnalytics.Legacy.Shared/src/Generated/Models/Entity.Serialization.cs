@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             string text = default;
             string category = default;
-            Optional<string> subcategory = default;
+            Core.Optional<string> subcategory = default;
             int offset = default;
             int length = default;
             double confidenceScore = default;

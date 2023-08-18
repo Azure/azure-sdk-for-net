@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    public partial class KqlScriptContent : IUtf8JsonSerializable
+    public partial class KqlScriptContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Query))
+            if (Core.Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
-            if (Optional.IsDefined(Metadata))
+            if (Core.Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
-            if (Optional.IsDefined(CurrentConnection))
+            if (Core.Optional.IsDefined(CurrentConnection))
             {
                 writer.WritePropertyName("currentConnection"u8);
                 writer.WriteObjectValue(CurrentConnection);
@@ -39,9 +39,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> query = default;
-            Optional<KqlScriptContentMetadata> metadata = default;
-            Optional<KqlScriptContentCurrentConnection> currentConnection = default;
+            Core.Optional<string> query = default;
+            Core.Optional<KqlScriptContentMetadata> metadata = default;
+            Core.Optional<KqlScriptContentCurrentConnection> currentConnection = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("query"u8))

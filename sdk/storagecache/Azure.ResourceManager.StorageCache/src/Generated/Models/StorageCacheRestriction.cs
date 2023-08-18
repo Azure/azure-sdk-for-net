@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <summary> Initializes a new instance of StorageCacheRestriction. </summary>
         internal StorageCacheRestriction()
         {
-            Values = new ChangeTrackingList<string>();
+            Values = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of StorageCacheRestriction. </summary>

@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class NumericVariable : IUtf8JsonSerializable
+    public partial class NumericVariable : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteObjectValue(Value);
-            if (Optional.IsDefined(Interpolation))
+            if (Core.Optional.IsDefined(Interpolation))
             {
                 writer.WritePropertyName("interpolation"u8);
                 writer.WriteObjectValue(Interpolation);
@@ -26,7 +26,7 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteObjectValue(Aggregation);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (Optional.IsDefined(Filter))
+            if (Core.Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
@@ -41,10 +41,10 @@ namespace Azure.IoT.TimeSeriesInsights
                 return null;
             }
             TimeSeriesExpression value = default;
-            Optional<TimeSeriesInterpolation> interpolation = default;
+            Core.Optional<TimeSeriesInterpolation> interpolation = default;
             TimeSeriesExpression aggregation = default;
             string kind = default;
-            Optional<TimeSeriesExpression> filter = default;
+            Core.Optional<TimeSeriesExpression> filter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))

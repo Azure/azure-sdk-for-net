@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class QueueRetentionPolicy : IXmlSerializable
+    public partial class QueueRetentionPolicy : Core.IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "RetentionPolicy");
             writer.WriteStartElement("Enabled");
             writer.WriteValue(Enabled);
             writer.WriteEndElement();
-            if (Optional.IsDefined(Days))
+            if (Core.Optional.IsDefined(Days))
             {
                 writer.WriteStartElement("Days");
                 writer.WriteValue(Days.Value);

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class BlobTag : IXmlSerializable
+    internal partial class BlobTag : Core.IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "Tag");
             writer.WriteStartElement("Key");

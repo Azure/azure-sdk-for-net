@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DomainRecommendationSearchContent : IUtf8JsonSerializable
+    public partial class DomainRecommendationSearchContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Keywords))
+            if (Core.Optional.IsDefined(Keywords))
             {
                 writer.WritePropertyName("keywords"u8);
                 writer.WriteStringValue(Keywords);
             }
-            if (Optional.IsDefined(MaxDomainRecommendations))
+            if (Core.Optional.IsDefined(MaxDomainRecommendations))
             {
                 writer.WritePropertyName("maxDomainRecommendations"u8);
                 writer.WriteNumberValue(MaxDomainRecommendations.Value);

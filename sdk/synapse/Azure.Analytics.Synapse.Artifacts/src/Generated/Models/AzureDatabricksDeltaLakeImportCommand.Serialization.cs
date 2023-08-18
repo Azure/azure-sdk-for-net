@@ -14,17 +14,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureDatabricksDeltaLakeImportCommandConverter))]
-    public partial class AzureDatabricksDeltaLakeImportCommand : IUtf8JsonSerializable
+    public partial class AzureDatabricksDeltaLakeImportCommand : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DateFormat))
+            if (Core.Optional.IsDefined(DateFormat))
             {
                 writer.WritePropertyName("dateFormat"u8);
                 writer.WriteObjectValue(DateFormat);
             }
-            if (Optional.IsDefined(TimestampFormat))
+            if (Core.Optional.IsDefined(TimestampFormat))
             {
                 writer.WritePropertyName("timestampFormat"u8);
                 writer.WriteObjectValue(TimestampFormat);
@@ -45,8 +45,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> dateFormat = default;
-            Optional<object> timestampFormat = default;
+            Core.Optional<object> dateFormat = default;
+            Core.Optional<object> timestampFormat = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();

@@ -14,19 +14,19 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(PipelineResourceConverter))]
-    public partial class PipelineResource : IUtf8JsonSerializable
+    public partial class PipelineResource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Activities))
+            if (Core.Optional.IsCollectionDefined(Activities))
             {
                 writer.WritePropertyName("activities"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (Core.Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Variables))
+            if (Core.Optional.IsCollectionDefined(Variables))
             {
                 writer.WritePropertyName("variables"u8);
                 writer.WriteStartObject();
@@ -58,12 +58,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Concurrency))
+            if (Core.Optional.IsDefined(Concurrency))
             {
                 writer.WritePropertyName("concurrency"u8);
                 writer.WriteNumberValue(Concurrency.Value);
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (Core.Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RunDimensions))
+            if (Core.Optional.IsCollectionDefined(RunDimensions))
             {
                 writer.WritePropertyName("runDimensions"u8);
                 writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Folder))
+            if (Core.Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
@@ -114,18 +114,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> etag = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> description = default;
-            Optional<IList<Activity>> activities = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IDictionary<string, VariableSpecification>> variables = default;
-            Optional<int> concurrency = default;
-            Optional<IList<object>> annotations = default;
-            Optional<IDictionary<string, object>> runDimensions = default;
-            Optional<PipelineFolder> folder = default;
+            Core.Optional<string> etag = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> type = default;
+            Core.Optional<string> description = default;
+            Core.Optional<IList<Activity>> activities = default;
+            Core.Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            Core.Optional<IDictionary<string, VariableSpecification>> variables = default;
+            Core.Optional<int> concurrency = default;
+            Core.Optional<IList<object>> annotations = default;
+            Core.Optional<IDictionary<string, object>> runDimensions = default;
+            Core.Optional<PipelineFolder> folder = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -272,7 +272,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PipelineResource(id.Value, name.Value, type.Value, etag.Value, description.Value, Optional.ToList(activities), Optional.ToDictionary(parameters), Optional.ToDictionary(variables), Optional.ToNullable(concurrency), Optional.ToList(annotations), Optional.ToDictionary(runDimensions), folder.Value, additionalProperties);
+            return new PipelineResource(id.Value, name.Value, type.Value, etag.Value, description.Value, Core.Optional.ToList(activities), Core.Optional.ToDictionary(parameters), Core.Optional.ToDictionary(variables), Core.Optional.ToNullable(concurrency), Core.Optional.ToList(annotations), Core.Optional.ToDictionary(runDimensions), folder.Value, additionalProperties);
         }
 
         internal partial class PipelineResourceConverter : JsonConverter<PipelineResource>

@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Argument.AssertNotNull(content, nameof(content));
 
             Content = content;
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new Core.ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of SqlScript. </summary>

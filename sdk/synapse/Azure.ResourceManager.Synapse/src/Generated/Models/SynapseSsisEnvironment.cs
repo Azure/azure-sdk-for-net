@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseSsisEnvironment. </summary>
         internal SynapseSsisEnvironment()
         {
-            Variables = new ChangeTrackingList<SynapseSsisVariable>();
+            Variables = new Core.ChangeTrackingList<SynapseSsisVariable>();
             MetadataType = SynapseSsisObjectMetadataType.Environment;
         }
 

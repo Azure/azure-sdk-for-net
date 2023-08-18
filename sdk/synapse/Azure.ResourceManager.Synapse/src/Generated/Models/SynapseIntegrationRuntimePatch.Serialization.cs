@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseIntegrationRuntimePatch : IUtf8JsonSerializable
+    public partial class SynapseIntegrationRuntimePatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AutoUpdate))
+            if (Core.Optional.IsDefined(AutoUpdate))
             {
                 writer.WritePropertyName("autoUpdate"u8);
                 writer.WriteStringValue(AutoUpdate.Value.ToString());
             }
-            if (Optional.IsDefined(UpdateDelayOffset))
+            if (Core.Optional.IsDefined(UpdateDelayOffset))
             {
                 writer.WritePropertyName("updateDelayOffset"u8);
                 writer.WriteStringValue(UpdateDelayOffset);

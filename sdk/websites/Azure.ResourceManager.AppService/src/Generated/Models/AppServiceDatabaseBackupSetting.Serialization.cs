@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceDatabaseBackupSetting : IUtf8JsonSerializable
+    public partial class AppServiceDatabaseBackupSetting : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("databaseType"u8);
             writer.WriteStringValue(DatabaseType.ToString());
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ConnectionStringName))
+            if (Core.Optional.IsDefined(ConnectionStringName))
             {
                 writer.WritePropertyName("connectionStringName"u8);
                 writer.WriteStringValue(ConnectionStringName);
             }
-            if (Optional.IsDefined(ConnectionString))
+            if (Core.Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             AppServiceDatabaseType databaseType = default;
-            Optional<string> name = default;
-            Optional<string> connectionStringName = default;
-            Optional<string> connectionString = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> connectionStringName = default;
+            Core.Optional<string> connectionString = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseType"u8))

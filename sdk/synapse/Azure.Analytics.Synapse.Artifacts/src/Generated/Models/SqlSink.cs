@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SqlSink. </summary>
         public SqlSink()
         {
-            StoredProcedureParameters = new ChangeTrackingDictionary<string, StoredProcedureParameter>();
+            StoredProcedureParameters = new Core.ChangeTrackingDictionary<string, StoredProcedureParameter>();
             Type = "SqlSink";
         }
 

@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamingJobExternal : IUtf8JsonSerializable
+    public partial class StreamingJobExternal : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageAccount))
+            if (Core.Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteObjectValue(StorageAccount);
             }
-            if (Optional.IsDefined(Container))
+            if (Core.Optional.IsDefined(Container))
             {
                 writer.WritePropertyName("container"u8);
                 writer.WriteStringValue(Container);
             }
-            if (Optional.IsDefined(Path))
+            if (Core.Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsDefined(RefreshConfiguration))
+            if (Core.Optional.IsDefined(RefreshConfiguration))
             {
                 writer.WritePropertyName("refreshConfiguration"u8);
                 writer.WriteObjectValue(RefreshConfiguration);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<StreamAnalyticsStorageAccount> storageAccount = default;
-            Optional<string> container = default;
-            Optional<string> path = default;
-            Optional<StreamingJobRefreshConfiguration> refreshConfiguration = default;
+            Core.Optional<StreamAnalyticsStorageAccount> storageAccount = default;
+            Core.Optional<string> container = default;
+            Core.Optional<string> path = default;
+            Core.Optional<StreamingJobRefreshConfiguration> refreshConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccount"u8))

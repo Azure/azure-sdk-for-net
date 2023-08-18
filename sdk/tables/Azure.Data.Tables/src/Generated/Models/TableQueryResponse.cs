@@ -16,7 +16,7 @@ namespace Azure.Data.Tables.Models
         /// <summary> Initializes a new instance of TableQueryResponse. </summary>
         internal TableQueryResponse()
         {
-            Value = new ChangeTrackingList<TableItem>();
+            Value = new Core.ChangeTrackingList<TableItem>();
         }
 
         /// <summary> Initializes a new instance of TableQueryResponse. </summary>

@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ManagementPolicySnapShot : IUtf8JsonSerializable
+    public partial class ManagementPolicySnapShot : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TierToCool))
+            if (Core.Optional.IsDefined(TierToCool))
             {
                 writer.WritePropertyName("tierToCool"u8);
                 writer.WriteObjectValue(TierToCool);
             }
-            if (Optional.IsDefined(TierToArchive))
+            if (Core.Optional.IsDefined(TierToArchive))
             {
                 writer.WritePropertyName("tierToArchive"u8);
                 writer.WriteObjectValue(TierToArchive);
             }
-            if (Optional.IsDefined(TierToCold))
+            if (Core.Optional.IsDefined(TierToCold))
             {
                 writer.WritePropertyName("tierToCold"u8);
                 writer.WriteObjectValue(TierToCold);
             }
-            if (Optional.IsDefined(TierToHot))
+            if (Core.Optional.IsDefined(TierToHot))
             {
                 writer.WritePropertyName("tierToHot"u8);
                 writer.WriteObjectValue(TierToHot);
             }
-            if (Optional.IsDefined(Delete))
+            if (Core.Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
                 writer.WriteObjectValue(Delete);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<DateAfterCreation> tierToCool = default;
-            Optional<DateAfterCreation> tierToArchive = default;
-            Optional<DateAfterCreation> tierToCold = default;
-            Optional<DateAfterCreation> tierToHot = default;
-            Optional<DateAfterCreation> delete = default;
+            Core.Optional<DateAfterCreation> tierToCool = default;
+            Core.Optional<DateAfterCreation> tierToArchive = default;
+            Core.Optional<DateAfterCreation> tierToCold = default;
+            Core.Optional<DateAfterCreation> tierToHot = default;
+            Core.Optional<DateAfterCreation> delete = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tierToCool"u8))

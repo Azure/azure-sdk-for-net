@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class VirtualDirectory : IUtf8JsonSerializable
+    public partial class VirtualDirectory : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualPath))
+            if (Core.Optional.IsDefined(VirtualPath))
             {
                 writer.WritePropertyName("virtualPath"u8);
                 writer.WriteStringValue(VirtualPath);
             }
-            if (Optional.IsDefined(PhysicalPath))
+            if (Core.Optional.IsDefined(PhysicalPath))
             {
                 writer.WritePropertyName("physicalPath"u8);
                 writer.WriteStringValue(PhysicalPath);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> virtualPath = default;
-            Optional<string> physicalPath = default;
+            Core.Optional<string> virtualPath = default;
+            Core.Optional<string> physicalPath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualPath"u8))

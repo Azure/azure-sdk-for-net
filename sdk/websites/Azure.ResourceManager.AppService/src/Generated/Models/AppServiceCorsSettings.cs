@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceCorsSettings. </summary>
         public AppServiceCorsSettings()
         {
-            AllowedOrigins = new ChangeTrackingList<string>();
+            AllowedOrigins = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AppServiceCorsSettings. </summary>

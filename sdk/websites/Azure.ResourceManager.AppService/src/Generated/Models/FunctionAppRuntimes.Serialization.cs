@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<FunctionAppRuntimeSettings> linuxRuntimeSettings = default;
-            Optional<FunctionAppRuntimeSettings> windowsRuntimeSettings = default;
+            Core.Optional<FunctionAppRuntimeSettings> linuxRuntimeSettings = default;
+            Core.Optional<FunctionAppRuntimeSettings> windowsRuntimeSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linuxRuntimeSettings"u8))

@@ -14,27 +14,27 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(MongoDbCursorMethodsPropertiesConverter))]
-    public partial class MongoDbCursorMethodsProperties : IUtf8JsonSerializable
+    public partial class MongoDbCursorMethodsProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Project))
+            if (Core.Optional.IsDefined(Project))
             {
                 writer.WritePropertyName("project"u8);
                 writer.WriteObjectValue(Project);
             }
-            if (Optional.IsDefined(Sort))
+            if (Core.Optional.IsDefined(Sort))
             {
                 writer.WritePropertyName("sort"u8);
                 writer.WriteObjectValue(Sort);
             }
-            if (Optional.IsDefined(Skip))
+            if (Core.Optional.IsDefined(Skip))
             {
                 writer.WritePropertyName("skip"u8);
                 writer.WriteObjectValue(Skip);
             }
-            if (Optional.IsDefined(Limit))
+            if (Core.Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteObjectValue(Limit);
@@ -53,10 +53,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> project = default;
-            Optional<object> sort = default;
-            Optional<object> skip = default;
-            Optional<object> limit = default;
+            Core.Optional<object> project = default;
+            Core.Optional<object> sort = default;
+            Core.Optional<object> skip = default;
+            Core.Optional<object> limit = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())

@@ -20,8 +20,8 @@ namespace Azure.AI.Translation.Document.Models
             }
             string code = default;
             string message = default;
-            Optional<string> target = default;
-            Optional<InnerTranslationError> innerError = default;
+            Core.Optional<string> target = default;
+            Core.Optional<InnerTranslationError> innerError = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))

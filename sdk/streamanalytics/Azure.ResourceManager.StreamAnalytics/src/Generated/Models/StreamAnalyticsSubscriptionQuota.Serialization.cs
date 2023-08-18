@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamAnalyticsSubscriptionQuota : IUtf8JsonSerializable
+    public partial class StreamAnalyticsSubscriptionQuota : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<int> maxCount = default;
-            Optional<int> currentCount = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceType> type = default;
+            Core.Optional<int> maxCount = default;
+            Core.Optional<int> currentCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new StreamAnalyticsSubscriptionQuota(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(maxCount), Optional.ToNullable(currentCount));
+            return new StreamAnalyticsSubscriptionQuota(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(maxCount), Core.Optional.ToNullable(currentCount));
         }
     }
 }

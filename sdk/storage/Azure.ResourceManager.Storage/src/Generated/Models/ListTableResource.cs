@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of ListTableResource. </summary>
         internal ListTableResource()
         {
-            Value = new ChangeTrackingList<TableData>();
+            Value = new Core.ChangeTrackingList<TableData>();
         }
 
         /// <summary> Initializes a new instance of ListTableResource. </summary>

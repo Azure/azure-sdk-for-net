@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    public partial class QuotaTicketDetails : IUtf8JsonSerializable
+    public partial class QuotaTicketDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(QuotaChangeRequestSubType))
+            if (Core.Optional.IsDefined(QuotaChangeRequestSubType))
             {
                 writer.WritePropertyName("quotaChangeRequestSubType"u8);
                 writer.WriteStringValue(QuotaChangeRequestSubType);
             }
-            if (Optional.IsDefined(QuotaChangeRequestVersion))
+            if (Core.Optional.IsDefined(QuotaChangeRequestVersion))
             {
                 writer.WritePropertyName("quotaChangeRequestVersion"u8);
                 writer.WriteStringValue(QuotaChangeRequestVersion);
             }
-            if (Optional.IsCollectionDefined(QuotaChangeRequests))
+            if (Core.Optional.IsCollectionDefined(QuotaChangeRequests))
             {
                 writer.WritePropertyName("quotaChangeRequests"u8);
                 writer.WriteStartArray();
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<string> quotaChangeRequestSubType = default;
-            Optional<string> quotaChangeRequestVersion = default;
-            Optional<IList<SupportQuotaChangeContent>> quotaChangeRequests = default;
+            Core.Optional<string> quotaChangeRequestSubType = default;
+            Core.Optional<string> quotaChangeRequestVersion = default;
+            Core.Optional<IList<SupportQuotaChangeContent>> quotaChangeRequests = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("quotaChangeRequestSubType"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Support.Models
                     continue;
                 }
             }
-            return new QuotaTicketDetails(quotaChangeRequestSubType.Value, quotaChangeRequestVersion.Value, Optional.ToList(quotaChangeRequests));
+            return new QuotaTicketDetails(quotaChangeRequestSubType.Value, quotaChangeRequestVersion.Value, Core.Optional.ToList(quotaChangeRequests));
         }
     }
 }

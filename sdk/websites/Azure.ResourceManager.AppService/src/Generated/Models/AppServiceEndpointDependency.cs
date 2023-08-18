@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceEndpointDependency. </summary>
         internal AppServiceEndpointDependency()
         {
-            EndpointDetails = new ChangeTrackingList<AppServiceEndpointDetail>();
+            EndpointDetails = new Core.ChangeTrackingList<AppServiceEndpointDetail>();
         }
 
         /// <summary> Initializes a new instance of AppServiceEndpointDependency. </summary>

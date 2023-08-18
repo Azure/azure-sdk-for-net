@@ -14,21 +14,21 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(TumblingWindowTriggerConverter))]
-    public partial class TumblingWindowTrigger : IUtf8JsonSerializable
+    public partial class TumblingWindowTrigger : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("pipeline"u8);
             writer.WriteObjectValue(Pipeline);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (Core.Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -51,24 +51,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteNumberValue(Interval);
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime, "O");
-            if (Optional.IsDefined(EndTime))
+            if (Core.Optional.IsDefined(EndTime))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndTime.Value, "O");
             }
-            if (Optional.IsDefined(Delay))
+            if (Core.Optional.IsDefined(Delay))
             {
                 writer.WritePropertyName("delay"u8);
                 writer.WriteObjectValue(Delay);
             }
             writer.WritePropertyName("maxConcurrency"u8);
             writer.WriteNumberValue(MaxConcurrency);
-            if (Optional.IsDefined(RetryPolicy))
+            if (Core.Optional.IsDefined(RetryPolicy))
             {
                 writer.WritePropertyName("retryPolicy"u8);
                 writer.WriteObjectValue(RetryPolicy);
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (Core.Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -95,17 +95,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             TriggerPipelineReference pipeline = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<TriggerRuntimeState> runtimeState = default;
-            Optional<IList<object>> annotations = default;
+            Core.Optional<string> description = default;
+            Core.Optional<TriggerRuntimeState> runtimeState = default;
+            Core.Optional<IList<object>> annotations = default;
             TumblingWindowFrequency frequency = default;
             int interval = default;
             DateTimeOffset startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<object> delay = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<object> delay = default;
             int maxConcurrency = default;
-            Optional<RetryPolicy> retryPolicy = default;
-            Optional<IList<DependencyReference>> dependsOn = default;
+            Core.Optional<RetryPolicy> retryPolicy = default;
+            Core.Optional<IList<DependencyReference>> dependsOn = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -231,7 +231,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TumblingWindowTrigger(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties, pipeline, frequency, interval, startTime, Optional.ToNullable(endTime), delay.Value, maxConcurrency, retryPolicy.Value, Optional.ToList(dependsOn));
+            return new TumblingWindowTrigger(type, description.Value, Core.Optional.ToNullable(runtimeState), Core.Optional.ToList(annotations), additionalProperties, pipeline, frequency, interval, startTime, Core.Optional.ToNullable(endTime), delay.Value, maxConcurrency, retryPolicy.Value, Core.Optional.ToList(dependsOn));
         }
 
         internal partial class TumblingWindowTriggerConverter : JsonConverter<TumblingWindowTrigger>

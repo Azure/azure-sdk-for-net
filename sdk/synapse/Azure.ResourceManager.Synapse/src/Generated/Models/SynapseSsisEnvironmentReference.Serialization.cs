@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<long> id = default;
-            Optional<string> environmentFolderName = default;
-            Optional<string> environmentName = default;
-            Optional<string> referenceType = default;
+            Core.Optional<long> id = default;
+            Core.Optional<string> environmentFolderName = default;
+            Core.Optional<string> environmentName = default;
+            Core.Optional<string> referenceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SynapseSsisEnvironmentReference(Optional.ToNullable(id), environmentFolderName.Value, environmentName.Value, referenceType.Value);
+            return new SynapseSsisEnvironmentReference(Core.Optional.ToNullable(id), environmentFolderName.Value, environmentName.Value, referenceType.Value);
         }
     }
 }

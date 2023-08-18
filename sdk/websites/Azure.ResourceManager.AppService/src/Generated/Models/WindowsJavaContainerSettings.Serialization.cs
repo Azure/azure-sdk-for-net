@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> javaContainer = default;
-            Optional<string> javaContainerVersion = default;
-            Optional<bool> isPreview = default;
-            Optional<bool> isDeprecated = default;
-            Optional<bool> isHidden = default;
-            Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<bool> isAutoUpdate = default;
-            Optional<bool> isEarlyAccess = default;
+            Core.Optional<string> javaContainer = default;
+            Core.Optional<string> javaContainerVersion = default;
+            Core.Optional<bool> isPreview = default;
+            Core.Optional<bool> isDeprecated = default;
+            Core.Optional<bool> isHidden = default;
+            Core.Optional<DateTimeOffset> endOfLifeDate = default;
+            Core.Optional<bool> isAutoUpdate = default;
+            Core.Optional<bool> isEarlyAccess = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("javaContainer"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new WindowsJavaContainerSettings(javaContainer.Value, javaContainerVersion.Value, Optional.ToNullable(isPreview), Optional.ToNullable(isDeprecated), Optional.ToNullable(isHidden), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(isAutoUpdate), Optional.ToNullable(isEarlyAccess));
+            return new WindowsJavaContainerSettings(javaContainer.Value, javaContainerVersion.Value, Core.Optional.ToNullable(isPreview), Core.Optional.ToNullable(isDeprecated), Core.Optional.ToNullable(isHidden), Core.Optional.ToNullable(endOfLifeDate), Core.Optional.ToNullable(isAutoUpdate), Core.Optional.ToNullable(isEarlyAccess));
         }
     }
 }

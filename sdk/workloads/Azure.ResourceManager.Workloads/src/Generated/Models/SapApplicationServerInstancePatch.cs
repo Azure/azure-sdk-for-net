@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of SapApplicationServerInstancePatch. </summary>
         public SapApplicationServerInstancePatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Gets or sets the Resource tags. </summary>

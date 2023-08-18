@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Text = text;
             Type = type;
-            Parameters = new ChangeTrackingList<ScriptActivityParameter>();
+            Parameters = new Core.ChangeTrackingList<ScriptActivityParameter>();
         }
 
         /// <summary> Initializes a new instance of ScriptActivityScriptBlock. </summary>

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class Mpeg4Configuration : IUtf8JsonSerializable
+    public partial class Mpeg4Configuration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(GovLength))
+            if (Core.Optional.IsDefined(GovLength))
             {
                 writer.WritePropertyName("govLength"u8);
                 writer.WriteNumberValue(GovLength.Value);
             }
-            if (Optional.IsDefined(Profile))
+            if (Core.Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
                 writer.WriteStringValue(Profile.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<float> govLength = default;
-            Optional<Mpeg4Profile> profile = default;
+            Core.Optional<float> govLength = default;
+            Core.Optional<Mpeg4Profile> profile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("govLength"u8))
@@ -57,7 +57,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new Mpeg4Configuration(Optional.ToNullable(govLength), Optional.ToNullable(profile));
+            return new Mpeg4Configuration(Core.Optional.ToNullable(govLength), Core.Optional.ToNullable(profile));
         }
     }
 }

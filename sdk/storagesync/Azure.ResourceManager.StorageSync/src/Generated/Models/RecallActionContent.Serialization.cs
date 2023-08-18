@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class RecallActionContent : IUtf8JsonSerializable
+    public partial class RecallActionContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Pattern))
+            if (Core.Optional.IsDefined(Pattern))
             {
                 writer.WritePropertyName("pattern"u8);
                 writer.WriteStringValue(Pattern);
             }
-            if (Optional.IsDefined(RecallPath))
+            if (Core.Optional.IsDefined(RecallPath))
             {
                 writer.WritePropertyName("recallPath"u8);
                 writer.WriteStringValue(RecallPath);

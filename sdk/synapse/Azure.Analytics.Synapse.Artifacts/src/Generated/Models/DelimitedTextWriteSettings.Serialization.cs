@@ -14,24 +14,24 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DelimitedTextWriteSettingsConverter))]
-    public partial class DelimitedTextWriteSettings : IUtf8JsonSerializable
+    public partial class DelimitedTextWriteSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(QuoteAllText))
+            if (Core.Optional.IsDefined(QuoteAllText))
             {
                 writer.WritePropertyName("quoteAllText"u8);
                 writer.WriteObjectValue(QuoteAllText);
             }
             writer.WritePropertyName("fileExtension"u8);
             writer.WriteObjectValue(FileExtension);
-            if (Optional.IsDefined(MaxRowsPerFile))
+            if (Core.Optional.IsDefined(MaxRowsPerFile))
             {
                 writer.WritePropertyName("maxRowsPerFile"u8);
                 writer.WriteObjectValue(MaxRowsPerFile);
             }
-            if (Optional.IsDefined(FileNamePrefix))
+            if (Core.Optional.IsDefined(FileNamePrefix))
             {
                 writer.WritePropertyName("fileNamePrefix"u8);
                 writer.WriteObjectValue(FileNamePrefix);
@@ -52,10 +52,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> quoteAllText = default;
+            Core.Optional<object> quoteAllText = default;
             object fileExtension = default;
-            Optional<object> maxRowsPerFile = default;
-            Optional<object> fileNamePrefix = default;
+            Core.Optional<object> maxRowsPerFile = default;
+            Core.Optional<object> fileNamePrefix = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();

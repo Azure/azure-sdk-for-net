@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Models
 {
-    internal partial class DocumentFilter : IUtf8JsonSerializable
+    internal partial class DocumentFilter : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Prefix))
+            if (Core.Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
-            if (Optional.IsDefined(Suffix))
+            if (Core.Optional.IsDefined(Suffix))
             {
                 writer.WritePropertyName("suffix"u8);
                 writer.WriteStringValue(Suffix);

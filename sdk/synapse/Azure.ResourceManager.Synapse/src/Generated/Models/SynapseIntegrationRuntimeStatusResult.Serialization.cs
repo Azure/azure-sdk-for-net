@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            Core.Optional<string> name = default;
             SynapseIntegrationRuntimeStatus properties = default;
             foreach (var property in element.EnumerateObject())
             {

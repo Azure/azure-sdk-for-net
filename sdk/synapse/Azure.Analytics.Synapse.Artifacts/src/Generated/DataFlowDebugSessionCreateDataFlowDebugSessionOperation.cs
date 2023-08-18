@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Synapse.Artifacts
 {
     /// <summary> Creates a data flow debug session. </summary>
-    public partial class DataFlowDebugSessionCreateDataFlowDebugSessionOperation : Operation<CreateDataFlowDebugSessionResponse>, IOperationSource<CreateDataFlowDebugSessionResponse>
+    public partial class DataFlowDebugSessionCreateDataFlowDebugSessionOperation : Operation<CreateDataFlowDebugSessionResponse>, Core.IOperationSource<CreateDataFlowDebugSessionResponse>
     {
         private readonly OperationInternal<CreateDataFlowDebugSessionResponse> _operation;
 
@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal DataFlowDebugSessionCreateDataFlowDebugSessionOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            IOperation<CreateDataFlowDebugSessionResponse> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
+            IOperation<CreateDataFlowDebugSessionResponse> nextLinkOperation = Core.NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, Core.OperationFinalStateVia.Location);
             _operation = new OperationInternal<CreateDataFlowDebugSessionResponse>(nextLinkOperation, clientDiagnostics, response, "DataFlowDebugSessionCreateDataFlowDebugSessionOperation");
         }
 
@@ -67,13 +67,13 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <inheritdoc />
         public override ValueTask<Response<CreateDataFlowDebugSessionResponse>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        CreateDataFlowDebugSessionResponse IOperationSource<CreateDataFlowDebugSessionResponse>.CreateResult(Response response, CancellationToken cancellationToken)
+        CreateDataFlowDebugSessionResponse Core.IOperationSource<CreateDataFlowDebugSessionResponse>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return CreateDataFlowDebugSessionResponse.DeserializeCreateDataFlowDebugSessionResponse(document.RootElement);
         }
 
-        async ValueTask<CreateDataFlowDebugSessionResponse> IOperationSource<CreateDataFlowDebugSessionResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CreateDataFlowDebugSessionResponse> Core.IOperationSource<CreateDataFlowDebugSessionResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return CreateDataFlowDebugSessionResponse.DeserializeCreateDataFlowDebugSessionResponse(document.RootElement);

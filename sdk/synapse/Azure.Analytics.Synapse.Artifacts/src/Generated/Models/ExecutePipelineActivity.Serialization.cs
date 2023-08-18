@@ -14,31 +14,31 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(ExecutePipelineActivityConverter))]
-    public partial class ExecutePipelineActivity : IUtf8JsonSerializable
+    public partial class ExecutePipelineActivity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(OnInactiveMarkAs))
+            if (Core.Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (Core.Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserProperties))
+            if (Core.Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -62,7 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("pipeline"u8);
             writer.WriteObjectValue(Pipeline);
-            if (Optional.IsCollectionDefined(Parameters))
+            if (Core.Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -78,7 +78,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(WaitOnCompletion))
+            if (Core.Optional.IsDefined(WaitOnCompletion))
             {
                 writer.WritePropertyName("waitOnCompletion"u8);
                 writer.WriteBooleanValue(WaitOnCompletion.Value);
@@ -100,14 +100,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
+            Core.Optional<string> description = default;
+            Core.Optional<ActivityState> state = default;
+            Core.Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            Core.Optional<IList<ActivityDependency>> dependsOn = default;
+            Core.Optional<IList<UserProperty>> userProperties = default;
             PipelineReference pipeline = default;
-            Optional<IDictionary<string, object>> parameters = default;
-            Optional<bool> waitOnCompletion = default;
+            Core.Optional<IDictionary<string, object>> parameters = default;
+            Core.Optional<bool> waitOnCompletion = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -223,7 +223,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ExecutePipelineActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, pipeline, Optional.ToDictionary(parameters), Optional.ToNullable(waitOnCompletion));
+            return new ExecutePipelineActivity(name, type, description.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(onInactiveMarkAs), Core.Optional.ToList(dependsOn), Core.Optional.ToList(userProperties), additionalProperties, pipeline, Core.Optional.ToDictionary(parameters), Core.Optional.ToNullable(waitOnCompletion));
         }
 
         internal partial class ExecutePipelineActivityConverter : JsonConverter<ExecutePipelineActivity>

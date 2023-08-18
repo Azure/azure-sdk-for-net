@@ -14,31 +14,31 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(MongoDbCollectionDatasetConverter))]
-    public partial class MongoDbCollectionDataset : IUtf8JsonSerializable
+    public partial class MongoDbCollectionDataset : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Structure))
+            if (Core.Optional.IsDefined(Structure))
             {
                 writer.WritePropertyName("structure"u8);
                 writer.WriteObjectValue(Structure);
             }
-            if (Optional.IsDefined(Schema))
+            if (Core.Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 writer.WriteObjectValue(Schema);
             }
             writer.WritePropertyName("linkedServiceName"u8);
             writer.WriteObjectValue(LinkedServiceName);
-            if (Optional.IsCollectionDefined(Parameters))
+            if (Core.Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (Core.Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Folder))
+            if (Core.Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
@@ -89,13 +89,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
-            Optional<object> structure = default;
-            Optional<object> schema = default;
+            Core.Optional<string> description = default;
+            Core.Optional<object> structure = default;
+            Core.Optional<object> schema = default;
             LinkedServiceReference linkedServiceName = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
-            Optional<DatasetFolder> folder = default;
+            Core.Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            Core.Optional<IList<object>> annotations = default;
+            Core.Optional<DatasetFolder> folder = default;
             object collectionName = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -198,7 +198,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MongoDbCollectionDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, collectionName);
+            return new MongoDbCollectionDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Core.Optional.ToDictionary(parameters), Core.Optional.ToList(annotations), folder.Value, additionalProperties, collectionName);
         }
 
         internal partial class MongoDbCollectionDatasetConverter : JsonConverter<MongoDbCollectionDataset>

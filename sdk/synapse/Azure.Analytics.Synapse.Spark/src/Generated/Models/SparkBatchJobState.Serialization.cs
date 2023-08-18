@@ -19,15 +19,15 @@ namespace Azure.Analytics.Synapse.Spark.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset?> notStartedAt = default;
-            Optional<DateTimeOffset?> startingAt = default;
-            Optional<DateTimeOffset?> runningAt = default;
-            Optional<DateTimeOffset?> deadAt = default;
-            Optional<DateTimeOffset?> successAt = default;
-            Optional<DateTimeOffset?> killedAt = default;
-            Optional<DateTimeOffset?> recoveringAt = default;
-            Optional<string> currentState = default;
-            Optional<SparkRequest> jobCreationRequest = default;
+            Core.Optional<DateTimeOffset?> notStartedAt = default;
+            Core.Optional<DateTimeOffset?> startingAt = default;
+            Core.Optional<DateTimeOffset?> runningAt = default;
+            Core.Optional<DateTimeOffset?> deadAt = default;
+            Core.Optional<DateTimeOffset?> successAt = default;
+            Core.Optional<DateTimeOffset?> killedAt = default;
+            Core.Optional<DateTimeOffset?> recoveringAt = default;
+            Core.Optional<string> currentState = default;
+            Core.Optional<SparkRequest> jobCreationRequest = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("notStartedAt"u8))
@@ -115,7 +115,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     continue;
                 }
             }
-            return new SparkBatchJobState(Optional.ToNullable(notStartedAt), Optional.ToNullable(startingAt), Optional.ToNullable(runningAt), Optional.ToNullable(deadAt), Optional.ToNullable(successAt), Optional.ToNullable(killedAt), Optional.ToNullable(recoveringAt), currentState.Value, jobCreationRequest.Value);
+            return new SparkBatchJobState(Core.Optional.ToNullable(notStartedAt), Core.Optional.ToNullable(startingAt), Core.Optional.ToNullable(runningAt), Core.Optional.ToNullable(deadAt), Core.Optional.ToNullable(successAt), Core.Optional.ToNullable(killedAt), Core.Optional.ToNullable(recoveringAt), currentState.Value, jobCreationRequest.Value);
         }
     }
 }

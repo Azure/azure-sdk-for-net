@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class BlobInventoryPolicySchema : IUtf8JsonSerializable
+    public partial class BlobInventoryPolicySchema : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             bool enabled = default;
-            Optional<string> destination = default;
+            Core.Optional<string> destination = default;
             BlobInventoryRuleType type = default;
             IList<BlobInventoryPolicyRule> rules = default;
             foreach (var property in element.EnumerateObject())

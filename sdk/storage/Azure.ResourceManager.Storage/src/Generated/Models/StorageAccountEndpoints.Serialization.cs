@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<Uri> blob = default;
-            Optional<Uri> queue = default;
-            Optional<Uri> table = default;
-            Optional<Uri> file = default;
-            Optional<Uri> web = default;
-            Optional<Uri> dfs = default;
-            Optional<StorageAccountMicrosoftEndpoints> microsoftEndpoints = default;
-            Optional<StorageAccountInternetEndpoints> internetEndpoints = default;
+            Core.Optional<Uri> blob = default;
+            Core.Optional<Uri> queue = default;
+            Core.Optional<Uri> table = default;
+            Core.Optional<Uri> file = default;
+            Core.Optional<Uri> web = default;
+            Core.Optional<Uri> dfs = default;
+            Core.Optional<StorageAccountMicrosoftEndpoints> microsoftEndpoints = default;
+            Core.Optional<StorageAccountInternetEndpoints> internetEndpoints = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blob"u8))

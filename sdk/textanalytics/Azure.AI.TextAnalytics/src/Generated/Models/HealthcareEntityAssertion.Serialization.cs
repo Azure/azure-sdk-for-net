@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    public partial class HealthcareEntityAssertion : IUtf8JsonSerializable
+    public partial class HealthcareEntityAssertion : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Conditionality))
+            if (Core.Optional.IsDefined(Conditionality))
             {
                 writer.WritePropertyName("conditionality"u8);
                 writer.WriteStringValue(Conditionality.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Certainty))
+            if (Core.Optional.IsDefined(Certainty))
             {
                 writer.WritePropertyName("certainty"u8);
                 writer.WriteStringValue(Certainty.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Association))
+            if (Core.Optional.IsDefined(Association))
             {
                 writer.WritePropertyName("association"u8);
                 writer.WriteStringValue(Association.Value.ToSerialString());
@@ -39,9 +39,9 @@ namespace Azure.AI.TextAnalytics
             {
                 return null;
             }
-            Optional<EntityConditionality> conditionality = default;
-            Optional<EntityCertainty> certainty = default;
-            Optional<EntityAssociation> association = default;
+            Core.Optional<EntityConditionality> conditionality = default;
+            Core.Optional<EntityCertainty> certainty = default;
+            Core.Optional<EntityAssociation> association = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("conditionality"u8))
@@ -72,7 +72,7 @@ namespace Azure.AI.TextAnalytics
                     continue;
                 }
             }
-            return new HealthcareEntityAssertion(Optional.ToNullable(conditionality), Optional.ToNullable(certainty), Optional.ToNullable(association));
+            return new HealthcareEntityAssertion(Core.Optional.ToNullable(conditionality), Core.Optional.ToNullable(certainty), Core.Optional.ToNullable(association));
         }
     }
 }

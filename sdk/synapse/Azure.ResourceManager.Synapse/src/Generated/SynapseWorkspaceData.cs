@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="location"> The location. </param>
         public SynapseWorkspaceData(AzureLocation location) : base(location)
         {
-            ConnectivityEndpoints = new ChangeTrackingDictionary<string, string>();
-            PrivateEndpointConnections = new ChangeTrackingList<SynapsePrivateEndpointConnectionData>();
-            ExtraProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            Settings = new ChangeTrackingDictionary<string, BinaryData>();
+            ConnectivityEndpoints = new Core.ChangeTrackingDictionary<string, string>();
+            PrivateEndpointConnections = new Core.ChangeTrackingList<SynapsePrivateEndpointConnectionData>();
+            ExtraProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            Settings = new Core.ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of SynapseWorkspaceData. </summary>

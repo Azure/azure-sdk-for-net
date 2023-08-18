@@ -14,39 +14,39 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureSearchIndexSinkConverter))]
-    public partial class AzureSearchIndexSink : IUtf8JsonSerializable
+    public partial class AzureSearchIndexSink : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(WriteBehavior))
+            if (Core.Optional.IsDefined(WriteBehavior))
             {
                 writer.WritePropertyName("writeBehavior"u8);
                 writer.WriteStringValue(WriteBehavior.Value.ToString());
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(WriteBatchSize))
+            if (Core.Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize"u8);
                 writer.WriteObjectValue(WriteBatchSize);
             }
-            if (Optional.IsDefined(WriteBatchTimeout))
+            if (Core.Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
                 writer.WriteObjectValue(WriteBatchTimeout);
             }
-            if (Optional.IsDefined(SinkRetryCount))
+            if (Core.Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
                 writer.WriteObjectValue(SinkRetryCount);
             }
-            if (Optional.IsDefined(SinkRetryWait))
+            if (Core.Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
                 writer.WriteObjectValue(SinkRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (Core.Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
@@ -65,13 +65,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<AzureSearchIndexWriteBehaviorType> writeBehavior = default;
+            Core.Optional<AzureSearchIndexWriteBehaviorType> writeBehavior = default;
             string type = default;
-            Optional<object> writeBatchSize = default;
-            Optional<object> writeBatchTimeout = default;
-            Optional<object> sinkRetryCount = default;
-            Optional<object> sinkRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            Core.Optional<object> writeBatchSize = default;
+            Core.Optional<object> writeBatchTimeout = default;
+            Core.Optional<object> sinkRetryCount = default;
+            Core.Optional<object> sinkRetryWait = default;
+            Core.Optional<object> maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureSearchIndexSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, Optional.ToNullable(writeBehavior));
+            return new AzureSearchIndexSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, Core.Optional.ToNullable(writeBehavior));
         }
 
         internal partial class AzureSearchIndexSinkConverter : JsonConverter<AzureSearchIndexSink>

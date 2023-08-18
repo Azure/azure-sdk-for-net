@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <summary> Initializes a new instance of StorageCacheSecuritySettings. </summary>
         public StorageCacheSecuritySettings()
         {
-            AccessPolicies = new ChangeTrackingList<NfsAccessPolicy>();
+            AccessPolicies = new Core.ChangeTrackingList<NfsAccessPolicy>();
         }
 
         /// <summary> Initializes a new instance of StorageCacheSecuritySettings. </summary>

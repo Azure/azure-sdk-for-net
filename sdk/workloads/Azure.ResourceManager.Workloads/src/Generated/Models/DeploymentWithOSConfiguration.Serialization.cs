@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class DeploymentWithOSConfiguration : IUtf8JsonSerializable
+    public partial class DeploymentWithOSConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AppLocation))
+            if (Core.Optional.IsDefined(AppLocation))
             {
                 writer.WritePropertyName("appLocation"u8);
                 writer.WriteStringValue(AppLocation.Value);
             }
-            if (Optional.IsDefined(InfrastructureConfiguration))
+            if (Core.Optional.IsDefined(InfrastructureConfiguration))
             {
                 writer.WritePropertyName("infrastructureConfiguration"u8);
                 writer.WriteObjectValue(InfrastructureConfiguration);
             }
-            if (Optional.IsDefined(SoftwareConfiguration))
+            if (Core.Optional.IsDefined(SoftwareConfiguration))
             {
                 writer.WritePropertyName("softwareConfiguration"u8);
                 writer.WriteObjectValue(SoftwareConfiguration);
             }
-            if (Optional.IsDefined(OSSapConfiguration))
+            if (Core.Optional.IsDefined(OSSapConfiguration))
             {
                 writer.WritePropertyName("osSapConfiguration"u8);
                 writer.WriteObjectValue(OSSapConfiguration);
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<AzureLocation> appLocation = default;
-            Optional<InfrastructureConfiguration> infrastructureConfiguration = default;
-            Optional<SapSoftwareConfiguration> softwareConfiguration = default;
-            Optional<OSSapConfiguration> osSapConfiguration = default;
+            Core.Optional<AzureLocation> appLocation = default;
+            Core.Optional<InfrastructureConfiguration> infrastructureConfiguration = default;
+            Core.Optional<SapSoftwareConfiguration> softwareConfiguration = default;
+            Core.Optional<OSSapConfiguration> osSapConfiguration = default;
             SapConfigurationType configurationType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new DeploymentWithOSConfiguration(configurationType, Optional.ToNullable(appLocation), infrastructureConfiguration.Value, softwareConfiguration.Value, osSapConfiguration.Value);
+            return new DeploymentWithOSConfiguration(configurationType, Core.Optional.ToNullable(appLocation), infrastructureConfiguration.Value, softwareConfiguration.Value, osSapConfiguration.Value);
         }
     }
 }

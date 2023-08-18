@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
-    internal class SynapseAttachedDatabaseConfigurationOperationSource : IOperationSource<SynapseAttachedDatabaseConfigurationResource>
+    internal class SynapseAttachedDatabaseConfigurationOperationSource : Core.IOperationSource<SynapseAttachedDatabaseConfigurationResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Synapse
             _client = client;
         }
 
-        SynapseAttachedDatabaseConfigurationResource IOperationSource<SynapseAttachedDatabaseConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SynapseAttachedDatabaseConfigurationResource Core.IOperationSource<SynapseAttachedDatabaseConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SynapseAttachedDatabaseConfigurationData.DeserializeSynapseAttachedDatabaseConfigurationData(document.RootElement);
             return new SynapseAttachedDatabaseConfigurationResource(_client, data);
         }
 
-        async ValueTask<SynapseAttachedDatabaseConfigurationResource> IOperationSource<SynapseAttachedDatabaseConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SynapseAttachedDatabaseConfigurationResource> Core.IOperationSource<SynapseAttachedDatabaseConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SynapseAttachedDatabaseConfigurationData.DeserializeSynapseAttachedDatabaseConfigurationData(document.RootElement);

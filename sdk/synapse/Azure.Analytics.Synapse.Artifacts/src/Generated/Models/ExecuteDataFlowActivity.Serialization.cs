@@ -14,17 +14,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(ExecuteDataFlowActivityConverter))]
-    public partial class ExecuteDataFlowActivity : IUtf8JsonSerializable
+    public partial class ExecuteDataFlowActivity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedServiceName))
+            if (Core.Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 writer.WriteObjectValue(LinkedServiceName);
             }
-            if (Optional.IsDefined(Policy))
+            if (Core.Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -33,22 +33,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(OnInactiveMarkAs))
+            if (Core.Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (Core.Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserProperties))
+            if (Core.Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -72,37 +72,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("dataflow"u8);
             writer.WriteObjectValue(Dataflow);
-            if (Optional.IsDefined(Staging))
+            if (Core.Optional.IsDefined(Staging))
             {
                 writer.WritePropertyName("staging"u8);
                 writer.WriteObjectValue(Staging);
             }
-            if (Optional.IsDefined(IntegrationRuntime))
+            if (Core.Optional.IsDefined(IntegrationRuntime))
             {
                 writer.WritePropertyName("integrationRuntime"u8);
                 writer.WriteObjectValue(IntegrationRuntime);
             }
-            if (Optional.IsDefined(Compute))
+            if (Core.Optional.IsDefined(Compute))
             {
                 writer.WritePropertyName("compute"u8);
                 writer.WriteObjectValue(Compute);
             }
-            if (Optional.IsDefined(TraceLevel))
+            if (Core.Optional.IsDefined(TraceLevel))
             {
                 writer.WritePropertyName("traceLevel"u8);
                 writer.WriteObjectValue(TraceLevel);
             }
-            if (Optional.IsDefined(ContinueOnError))
+            if (Core.Optional.IsDefined(ContinueOnError))
             {
                 writer.WritePropertyName("continueOnError"u8);
                 writer.WriteObjectValue(ContinueOnError);
             }
-            if (Optional.IsDefined(RunConcurrently))
+            if (Core.Optional.IsDefined(RunConcurrently))
             {
                 writer.WritePropertyName("runConcurrently"u8);
                 writer.WriteObjectValue(RunConcurrently);
             }
-            if (Optional.IsDefined(SourceStagingConcurrency))
+            if (Core.Optional.IsDefined(SourceStagingConcurrency))
             {
                 writer.WritePropertyName("sourceStagingConcurrency"u8);
                 writer.WriteObjectValue(SourceStagingConcurrency);
@@ -122,23 +122,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> linkedServiceName = default;
-            Optional<ActivityPolicy> policy = default;
+            Core.Optional<LinkedServiceReference> linkedServiceName = default;
+            Core.Optional<ActivityPolicy> policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
+            Core.Optional<string> description = default;
+            Core.Optional<ActivityState> state = default;
+            Core.Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            Core.Optional<IList<ActivityDependency>> dependsOn = default;
+            Core.Optional<IList<UserProperty>> userProperties = default;
             DataFlowReference dataflow = default;
-            Optional<DataFlowStagingInfo> staging = default;
-            Optional<IntegrationRuntimeReference> integrationRuntime = default;
-            Optional<ExecuteDataFlowActivityTypePropertiesCompute> compute = default;
-            Optional<object> traceLevel = default;
-            Optional<object> continueOnError = default;
-            Optional<object> runConcurrently = default;
-            Optional<object> sourceStagingConcurrency = default;
+            Core.Optional<DataFlowStagingInfo> staging = default;
+            Core.Optional<IntegrationRuntimeReference> integrationRuntime = default;
+            Core.Optional<ExecuteDataFlowActivityTypePropertiesCompute> compute = default;
+            Core.Optional<object> traceLevel = default;
+            Core.Optional<object> continueOnError = default;
+            Core.Optional<object> runConcurrently = default;
+            Core.Optional<object> sourceStagingConcurrency = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -305,7 +305,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ExecuteDataFlowActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, dataflow, staging.Value, integrationRuntime.Value, compute.Value, traceLevel.Value, continueOnError.Value, runConcurrently.Value, sourceStagingConcurrency.Value);
+            return new ExecuteDataFlowActivity(name, type, description.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(onInactiveMarkAs), Core.Optional.ToList(dependsOn), Core.Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, dataflow, staging.Value, integrationRuntime.Value, compute.Value, traceLevel.Value, continueOnError.Value, runConcurrently.Value, sourceStagingConcurrency.Value);
         }
 
         internal partial class ExecuteDataFlowActivityConverter : JsonConverter<ExecuteDataFlowActivity>

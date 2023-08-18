@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<BlobRestoreProgressStatus> status = default;
-            Optional<string> failureReason = default;
-            Optional<string> restoreId = default;
-            Optional<BlobRestoreContent> parameters = default;
+            Core.Optional<BlobRestoreProgressStatus> status = default;
+            Core.Optional<string> failureReason = default;
+            Core.Optional<string> restoreId = default;
+            Core.Optional<BlobRestoreContent> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new BlobRestoreStatus(Optional.ToNullable(status), failureReason.Value, restoreId.Value, parameters.Value);
+            return new BlobRestoreStatus(Core.Optional.ToNullable(status), failureReason.Value, restoreId.Value, parameters.Value);
         }
     }
 }

@@ -14,74 +14,74 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class SiteExtensionInfoData : IUtf8JsonSerializable
+    public partial class SiteExtensionInfoData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtensionId))
+            if (Core.Optional.IsDefined(ExtensionId))
             {
                 writer.WritePropertyName("extension_id"u8);
                 writer.WriteStringValue(ExtensionId);
             }
-            if (Optional.IsDefined(Title))
+            if (Core.Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(ExtensionType))
+            if (Core.Optional.IsDefined(ExtensionType))
             {
                 writer.WritePropertyName("extension_type"u8);
                 writer.WriteStringValue(ExtensionType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Summary))
+            if (Core.Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Version))
+            if (Core.Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(ExtensionUri))
+            if (Core.Optional.IsDefined(ExtensionUri))
             {
                 writer.WritePropertyName("extension_url"u8);
                 writer.WriteStringValue(ExtensionUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ProjectUri))
+            if (Core.Optional.IsDefined(ProjectUri))
             {
                 writer.WritePropertyName("project_url"u8);
                 writer.WriteStringValue(ProjectUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(IconUri))
+            if (Core.Optional.IsDefined(IconUri))
             {
                 writer.WritePropertyName("icon_url"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(LicenseUri))
+            if (Core.Optional.IsDefined(LicenseUri))
             {
                 writer.WritePropertyName("license_url"u8);
                 writer.WriteStringValue(LicenseUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(FeedUri))
+            if (Core.Optional.IsDefined(FeedUri))
             {
                 writer.WritePropertyName("feed_url"u8);
                 writer.WriteStringValue(FeedUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(Authors))
+            if (Core.Optional.IsCollectionDefined(Authors))
             {
                 writer.WritePropertyName("authors"u8);
                 writer.WriteStartArray();
@@ -91,42 +91,42 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(InstallerCommandLineParams))
+            if (Core.Optional.IsDefined(InstallerCommandLineParams))
             {
                 writer.WritePropertyName("installer_command_line_params"u8);
                 writer.WriteStringValue(InstallerCommandLineParams);
             }
-            if (Optional.IsDefined(PublishedOn))
+            if (Core.Optional.IsDefined(PublishedOn))
             {
                 writer.WritePropertyName("published_date_time"u8);
                 writer.WriteStringValue(PublishedOn.Value, "O");
             }
-            if (Optional.IsDefined(DownloadCount))
+            if (Core.Optional.IsDefined(DownloadCount))
             {
                 writer.WritePropertyName("download_count"u8);
                 writer.WriteNumberValue(DownloadCount.Value);
             }
-            if (Optional.IsDefined(LocalIsLatestVersion))
+            if (Core.Optional.IsDefined(LocalIsLatestVersion))
             {
                 writer.WritePropertyName("local_is_latest_version"u8);
                 writer.WriteBooleanValue(LocalIsLatestVersion.Value);
             }
-            if (Optional.IsDefined(LocalPath))
+            if (Core.Optional.IsDefined(LocalPath))
             {
                 writer.WritePropertyName("local_path"u8);
                 writer.WriteStringValue(LocalPath);
             }
-            if (Optional.IsDefined(InstalledOn))
+            if (Core.Optional.IsDefined(InstalledOn))
             {
                 writer.WritePropertyName("installed_date_time"u8);
                 writer.WriteStringValue(InstalledOn.Value, "O");
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (Core.Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(Comment))
+            if (Core.Optional.IsDefined(Comment))
             {
                 writer.WritePropertyName("comment"u8);
                 writer.WriteStringValue(Comment);
@@ -141,31 +141,31 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> extensionId = default;
-            Optional<string> title = default;
-            Optional<SiteExtensionType> extensionType = default;
-            Optional<string> summary = default;
-            Optional<string> description = default;
-            Optional<string> version = default;
-            Optional<Uri> extensionUrl = default;
-            Optional<Uri> projectUrl = default;
-            Optional<Uri> iconUrl = default;
-            Optional<Uri> licenseUrl = default;
-            Optional<Uri> feedUrl = default;
-            Optional<IList<string>> authors = default;
-            Optional<string> installerCommandLineParams = default;
-            Optional<DateTimeOffset> publishedDateTime = default;
-            Optional<int> downloadCount = default;
-            Optional<bool> localIsLatestVersion = default;
-            Optional<string> localPath = default;
-            Optional<DateTimeOffset> installedDateTime = default;
-            Optional<string> provisioningState = default;
-            Optional<string> comment = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> extensionId = default;
+            Core.Optional<string> title = default;
+            Core.Optional<SiteExtensionType> extensionType = default;
+            Core.Optional<string> summary = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> version = default;
+            Core.Optional<Uri> extensionUrl = default;
+            Core.Optional<Uri> projectUrl = default;
+            Core.Optional<Uri> iconUrl = default;
+            Core.Optional<Uri> licenseUrl = default;
+            Core.Optional<Uri> feedUrl = default;
+            Core.Optional<IList<string>> authors = default;
+            Core.Optional<string> installerCommandLineParams = default;
+            Core.Optional<DateTimeOffset> publishedDateTime = default;
+            Core.Optional<int> downloadCount = default;
+            Core.Optional<bool> localIsLatestVersion = default;
+            Core.Optional<string> localPath = default;
+            Core.Optional<DateTimeOffset> installedDateTime = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<string> comment = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new SiteExtensionInfoData(id, name, type, systemData.Value, extensionId.Value, title.Value, Optional.ToNullable(extensionType), summary.Value, description.Value, version.Value, extensionUrl.Value, projectUrl.Value, iconUrl.Value, licenseUrl.Value, feedUrl.Value, Optional.ToList(authors), installerCommandLineParams.Value, Optional.ToNullable(publishedDateTime), Optional.ToNullable(downloadCount), Optional.ToNullable(localIsLatestVersion), localPath.Value, Optional.ToNullable(installedDateTime), provisioningState.Value, comment.Value, kind.Value);
+            return new SiteExtensionInfoData(id, name, type, systemData.Value, extensionId.Value, title.Value, Core.Optional.ToNullable(extensionType), summary.Value, description.Value, version.Value, extensionUrl.Value, projectUrl.Value, iconUrl.Value, licenseUrl.Value, feedUrl.Value, Core.Optional.ToList(authors), installerCommandLineParams.Value, Core.Optional.ToNullable(publishedDateTime), Core.Optional.ToNullable(downloadCount), Core.Optional.ToNullable(localIsLatestVersion), localPath.Value, Core.Optional.ToNullable(installedDateTime), provisioningState.Value, comment.Value, kind.Value);
         }
     }
 }

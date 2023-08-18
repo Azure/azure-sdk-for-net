@@ -21,8 +21,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> refreshStatus = default;
-            Optional<string> errorMessage = default;
+            Core.Optional<string> refreshStatus = default;
+            Core.Optional<string> errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("refreshStatus"u8))

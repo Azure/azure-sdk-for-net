@@ -14,12 +14,12 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(CustomActivityReferenceObjectConverter))]
-    public partial class CustomActivityReferenceObject : IUtf8JsonSerializable
+    public partial class CustomActivityReferenceObject : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(LinkedServices))
+            if (Core.Optional.IsCollectionDefined(LinkedServices))
             {
                 writer.WritePropertyName("linkedServices"u8);
                 writer.WriteStartArray();
@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Datasets))
+            if (Core.Optional.IsCollectionDefined(Datasets))
             {
                 writer.WritePropertyName("datasets"u8);
                 writer.WriteStartArray();
@@ -48,8 +48,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IList<LinkedServiceReference>> linkedServices = default;
-            Optional<IList<DatasetReference>> datasets = default;
+            Core.Optional<IList<LinkedServiceReference>> linkedServices = default;
+            Core.Optional<IList<DatasetReference>> datasets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServices"u8))
@@ -81,7 +81,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new CustomActivityReferenceObject(Optional.ToList(linkedServices), Optional.ToList(datasets));
+            return new CustomActivityReferenceObject(Core.Optional.ToList(linkedServices), Core.Optional.ToList(datasets));
         }
 
         internal partial class CustomActivityReferenceObjectConverter : JsonConverter<CustomActivityReferenceObject>

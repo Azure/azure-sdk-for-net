@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class OnvifHostName : IUtf8JsonSerializable
+    public partial class OnvifHostName : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FromDhcp))
+            if (Core.Optional.IsDefined(FromDhcp))
             {
                 writer.WritePropertyName("fromDhcp"u8);
                 writer.WriteBooleanValue(FromDhcp.Value);
             }
-            if (Optional.IsDefined(Hostname))
+            if (Core.Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
@@ -34,8 +34,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<bool> fromDhcp = default;
-            Optional<string> hostname = default;
+            Core.Optional<bool> fromDhcp = default;
+            Core.Optional<string> hostname = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fromDhcp"u8))
@@ -53,7 +53,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new OnvifHostName(Optional.ToNullable(fromDhcp), hostname.Value);
+            return new OnvifHostName(Core.Optional.ToNullable(fromDhcp), hostname.Value);
         }
     }
 }

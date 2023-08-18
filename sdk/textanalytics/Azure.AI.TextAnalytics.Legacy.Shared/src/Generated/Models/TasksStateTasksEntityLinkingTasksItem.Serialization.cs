@@ -20,9 +20,9 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
             {
                 return null;
             }
-            Optional<EntityLinkingResult> results = default;
+            Core.Optional<EntityLinkingResult> results = default;
             DateTimeOffset lastUpdateDateTime = default;
-            Optional<string> taskName = default;
+            Core.Optional<string> taskName = default;
             State status = default;
             foreach (var property in element.EnumerateObject())
             {

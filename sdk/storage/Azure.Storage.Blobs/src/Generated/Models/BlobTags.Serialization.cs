@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class BlobTags : IXmlSerializable
+    internal partial class BlobTags : Core.IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "Tags");
             writer.WriteStartElement("TagSet");

@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<long> availableCapacity = default;
-            Optional<long> totalCapacity = default;
-            Optional<string> unit = default;
-            Optional<ComputeModeOption> computeMode = default;
-            Optional<WorkerSizeOption> workerSize = default;
-            Optional<int> workerSizeId = default;
-            Optional<bool> excludeFromCapacityAllocation = default;
-            Optional<bool> isApplicableForAllComputeModes = default;
-            Optional<string> siteMode = default;
-            Optional<bool> isLinux = default;
+            Core.Optional<string> name = default;
+            Core.Optional<long> availableCapacity = default;
+            Core.Optional<long> totalCapacity = default;
+            Core.Optional<string> unit = default;
+            Core.Optional<ComputeModeOption> computeMode = default;
+            Core.Optional<WorkerSizeOption> workerSize = default;
+            Core.Optional<int> workerSizeId = default;
+            Core.Optional<bool> excludeFromCapacityAllocation = default;
+            Core.Optional<bool> isApplicableForAllComputeModes = default;
+            Core.Optional<string> siteMode = default;
+            Core.Optional<bool> isLinux = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StampCapacity(name.Value, Optional.ToNullable(availableCapacity), Optional.ToNullable(totalCapacity), unit.Value, Optional.ToNullable(computeMode), Optional.ToNullable(workerSize), Optional.ToNullable(workerSizeId), Optional.ToNullable(excludeFromCapacityAllocation), Optional.ToNullable(isApplicableForAllComputeModes), siteMode.Value, Optional.ToNullable(isLinux));
+            return new StampCapacity(name.Value, Core.Optional.ToNullable(availableCapacity), Core.Optional.ToNullable(totalCapacity), unit.Value, Core.Optional.ToNullable(computeMode), Core.Optional.ToNullable(workerSize), Core.Optional.ToNullable(workerSizeId), Core.Optional.ToNullable(excludeFromCapacityAllocation), Core.Optional.ToNullable(isApplicableForAllComputeModes), siteMode.Value, Core.Optional.ToNullable(isLinux));
         }
     }
 }

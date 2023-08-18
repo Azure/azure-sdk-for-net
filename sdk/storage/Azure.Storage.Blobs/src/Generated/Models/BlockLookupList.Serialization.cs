@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class BlockLookupList : IXmlSerializable
+    internal partial class BlockLookupList : Core.IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "BlockList");
-            if (Optional.IsCollectionDefined(Committed))
+            if (Core.Optional.IsCollectionDefined(Committed))
             {
                 foreach (var item in Committed)
                 {
@@ -24,7 +24,7 @@ namespace Azure.Storage.Blobs.Models
                     writer.WriteEndElement();
                 }
             }
-            if (Optional.IsCollectionDefined(Uncommitted))
+            if (Core.Optional.IsCollectionDefined(Uncommitted))
             {
                 foreach (var item in Uncommitted)
                 {
@@ -33,7 +33,7 @@ namespace Azure.Storage.Blobs.Models
                     writer.WriteEndElement();
                 }
             }
-            if (Optional.IsCollectionDefined(Latest))
+            if (Core.Optional.IsCollectionDefined(Latest))
             {
                 foreach (var item in Latest)
                 {

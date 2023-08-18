@@ -14,39 +14,39 @@ using Azure.ResourceManager.StreamAnalytics.Models;
 
 namespace Azure.ResourceManager.StreamAnalytics
 {
-    public partial class StreamingJobOutputData : IUtf8JsonSerializable
+    public partial class StreamingJobOutputData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Datasource))
+            if (Core.Optional.IsDefined(Datasource))
             {
                 writer.WritePropertyName("datasource"u8);
                 writer.WriteObjectValue(Datasource);
             }
-            if (Optional.IsDefined(TimeFrame))
+            if (Core.Optional.IsDefined(TimeFrame))
             {
                 writer.WritePropertyName("timeWindow"u8);
                 writer.WriteStringValue(TimeFrame.Value, "T");
             }
-            if (Optional.IsDefined(SizeWindow))
+            if (Core.Optional.IsDefined(SizeWindow))
             {
                 writer.WritePropertyName("sizeWindow"u8);
                 writer.WriteNumberValue(SizeWindow.Value);
             }
-            if (Optional.IsDefined(Serialization))
+            if (Core.Optional.IsDefined(Serialization))
             {
                 writer.WritePropertyName("serialization"u8);
                 writer.WriteObjectValue(Serialization);
             }
-            if (Optional.IsDefined(WatermarkSettings))
+            if (Core.Optional.IsDefined(WatermarkSettings))
             {
                 writer.WritePropertyName("watermarkSettings"u8);
                 writer.WriteObjectValue(WatermarkSettings);
@@ -61,17 +61,17 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<StreamingJobOutputDataSource> datasource = default;
-            Optional<TimeSpan> timeWindow = default;
-            Optional<float> sizeWindow = default;
-            Optional<StreamAnalyticsDataSerialization> serialization = default;
-            Optional<StreamingJobDiagnostics> diagnostics = default;
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyList<LastOutputEventTimestamp>> lastOutputEventTimestamps = default;
-            Optional<StreamingJobOutputWatermarkProperties> watermarkSettings = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceType> type = default;
+            Core.Optional<StreamingJobOutputDataSource> datasource = default;
+            Core.Optional<TimeSpan> timeWindow = default;
+            Core.Optional<float> sizeWindow = default;
+            Core.Optional<StreamAnalyticsDataSerialization> serialization = default;
+            Core.Optional<StreamingJobDiagnostics> diagnostics = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<IReadOnlyList<LastOutputEventTimestamp>> lastOutputEventTimestamps = default;
+            Core.Optional<StreamingJobOutputWatermarkProperties> watermarkSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     continue;
                 }
             }
-            return new StreamingJobOutputData(id.Value, name.Value, Optional.ToNullable(type), datasource.Value, Optional.ToNullable(timeWindow), Optional.ToNullable(sizeWindow), serialization.Value, diagnostics.Value, Optional.ToNullable(etag), Optional.ToList(lastOutputEventTimestamps), watermarkSettings.Value);
+            return new StreamingJobOutputData(id.Value, name.Value, Core.Optional.ToNullable(type), datasource.Value, Core.Optional.ToNullable(timeWindow), Core.Optional.ToNullable(sizeWindow), serialization.Value, diagnostics.Value, Core.Optional.ToNullable(etag), Core.Optional.ToList(lastOutputEventTimestamps), watermarkSettings.Value);
         }
     }
 }

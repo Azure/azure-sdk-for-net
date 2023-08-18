@@ -14,27 +14,27 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(IntegrationRuntimeSsisCatalogInfoConverter))]
-    public partial class IntegrationRuntimeSsisCatalogInfo : IUtf8JsonSerializable
+    public partial class IntegrationRuntimeSsisCatalogInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CatalogServerEndpoint))
+            if (Core.Optional.IsDefined(CatalogServerEndpoint))
             {
                 writer.WritePropertyName("catalogServerEndpoint"u8);
                 writer.WriteStringValue(CatalogServerEndpoint);
             }
-            if (Optional.IsDefined(CatalogAdminUserName))
+            if (Core.Optional.IsDefined(CatalogAdminUserName))
             {
                 writer.WritePropertyName("catalogAdminUserName"u8);
                 writer.WriteStringValue(CatalogAdminUserName);
             }
-            if (Optional.IsDefined(CatalogAdminPassword))
+            if (Core.Optional.IsDefined(CatalogAdminPassword))
             {
                 writer.WritePropertyName("catalogAdminPassword"u8);
                 writer.WriteObjectValue(CatalogAdminPassword);
             }
-            if (Optional.IsDefined(CatalogPricingTier))
+            if (Core.Optional.IsDefined(CatalogPricingTier))
             {
                 writer.WritePropertyName("catalogPricingTier"u8);
                 writer.WriteStringValue(CatalogPricingTier.Value.ToString());
@@ -53,10 +53,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> catalogServerEndpoint = default;
-            Optional<string> catalogAdminUserName = default;
-            Optional<SecureString> catalogAdminPassword = default;
-            Optional<IntegrationRuntimeSsisCatalogPricingTier> catalogPricingTier = default;
+            Core.Optional<string> catalogServerEndpoint = default;
+            Core.Optional<string> catalogAdminUserName = default;
+            Core.Optional<SecureString> catalogAdminPassword = default;
+            Core.Optional<IntegrationRuntimeSsisCatalogPricingTier> catalogPricingTier = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeSsisCatalogInfo(catalogServerEndpoint.Value, catalogAdminUserName.Value, catalogAdminPassword.Value, Optional.ToNullable(catalogPricingTier), additionalProperties);
+            return new IntegrationRuntimeSsisCatalogInfo(catalogServerEndpoint.Value, catalogAdminUserName.Value, catalogAdminPassword.Value, Core.Optional.ToNullable(catalogPricingTier), additionalProperties);
         }
 
         internal partial class IntegrationRuntimeSsisCatalogInfoConverter : JsonConverter<IntegrationRuntimeSsisCatalogInfo>

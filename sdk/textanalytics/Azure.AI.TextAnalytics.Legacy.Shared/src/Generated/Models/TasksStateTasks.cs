@@ -24,11 +24,11 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
             Failed = failed;
             InProgress = inProgress;
             Total = total;
-            EntityRecognitionTasks = new ChangeTrackingList<TasksStateTasksEntityRecognitionTasksItem>();
-            EntityRecognitionPiiTasks = new ChangeTrackingList<TasksStateTasksEntityRecognitionPiiTasksItem>();
-            KeyPhraseExtractionTasks = new ChangeTrackingList<TasksStateTasksKeyPhraseExtractionTasksItem>();
-            EntityLinkingTasks = new ChangeTrackingList<TasksStateTasksEntityLinkingTasksItem>();
-            SentimentAnalysisTasks = new ChangeTrackingList<TasksStateTasksSentimentAnalysisTasksItem>();
+            EntityRecognitionTasks = new Core.ChangeTrackingList<TasksStateTasksEntityRecognitionTasksItem>();
+            EntityRecognitionPiiTasks = new Core.ChangeTrackingList<TasksStateTasksEntityRecognitionPiiTasksItem>();
+            KeyPhraseExtractionTasks = new Core.ChangeTrackingList<TasksStateTasksKeyPhraseExtractionTasksItem>();
+            EntityLinkingTasks = new Core.ChangeTrackingList<TasksStateTasksEntityLinkingTasksItem>();
+            SentimentAnalysisTasks = new Core.ChangeTrackingList<TasksStateTasksSentimentAnalysisTasksItem>();
         }
 
         /// <summary> Initializes a new instance of TasksStateTasks. </summary>

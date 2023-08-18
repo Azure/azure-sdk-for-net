@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
-    public partial class ManagedDiskIscsiLun : IUtf8JsonSerializable
+    public partial class ManagedDiskIscsiLun : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             }
             string name = default;
             ResourceIdentifier managedDiskAzureResourceId = default;
-            Optional<int> lun = default;
+            Core.Optional<int> lun = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     continue;
                 }
             }
-            return new ManagedDiskIscsiLun(name, managedDiskAzureResourceId, Optional.ToNullable(lun));
+            return new ManagedDiskIscsiLun(name, managedDiskAzureResourceId, Core.Optional.ToNullable(lun));
         }
     }
 }

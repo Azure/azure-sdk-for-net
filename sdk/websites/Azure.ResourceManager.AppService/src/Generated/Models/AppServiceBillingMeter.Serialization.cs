@@ -12,44 +12,44 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceBillingMeter : IUtf8JsonSerializable
+    public partial class AppServiceBillingMeter : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(MeterId))
+            if (Core.Optional.IsDefined(MeterId))
             {
                 writer.WritePropertyName("meterId"u8);
                 writer.WriteStringValue(MeterId.Value);
             }
-            if (Optional.IsDefined(BillingLocation))
+            if (Core.Optional.IsDefined(BillingLocation))
             {
                 writer.WritePropertyName("billingLocation"u8);
                 writer.WriteStringValue(BillingLocation.Value);
             }
-            if (Optional.IsDefined(ShortName))
+            if (Core.Optional.IsDefined(ShortName))
             {
                 writer.WritePropertyName("shortName"u8);
                 writer.WriteStringValue(ShortName);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (Core.Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(OSType))
+            if (Core.Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (Optional.IsDefined(Multiplier))
+            if (Core.Optional.IsDefined(Multiplier))
             {
                 writer.WritePropertyName("multiplier"u8);
                 writer.WriteNumberValue(Multiplier.Value);
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> meterId = default;
-            Optional<AzureLocation> billingLocation = default;
-            Optional<string> shortName = default;
-            Optional<string> friendlyName = default;
-            Optional<string> osType = default;
-            Optional<double> multiplier = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<Guid> meterId = default;
+            Core.Optional<AzureLocation> billingLocation = default;
+            Core.Optional<string> shortName = default;
+            Core.Optional<string> friendlyName = default;
+            Core.Optional<string> osType = default;
+            Core.Optional<double> multiplier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceBillingMeter(id, name, type, systemData.Value, Optional.ToNullable(meterId), Optional.ToNullable(billingLocation), shortName.Value, friendlyName.Value, osType.Value, Optional.ToNullable(multiplier), kind.Value);
+            return new AppServiceBillingMeter(id, name, type, systemData.Value, Core.Optional.ToNullable(meterId), Core.Optional.ToNullable(billingLocation), shortName.Value, friendlyName.Value, osType.Value, Core.Optional.ToNullable(multiplier), kind.Value);
         }
     }
 }

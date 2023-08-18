@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="defaultAction"> Specifies the default action of allow or deny when no other rules match. </param>
         public StorageAccountNetworkRuleSet(StorageNetworkDefaultAction defaultAction)
         {
-            ResourceAccessRules = new ChangeTrackingList<StorageAccountResourceAccessRule>();
-            VirtualNetworkRules = new ChangeTrackingList<StorageAccountVirtualNetworkRule>();
-            IPRules = new ChangeTrackingList<StorageAccountIPRule>();
+            ResourceAccessRules = new Core.ChangeTrackingList<StorageAccountResourceAccessRule>();
+            VirtualNetworkRules = new Core.ChangeTrackingList<StorageAccountVirtualNetworkRule>();
+            IPRules = new Core.ChangeTrackingList<StorageAccountIPRule>();
             DefaultAction = defaultAction;
         }
 

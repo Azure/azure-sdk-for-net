@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ManagementPolicyDefinition : IUtf8JsonSerializable
+    public partial class ManagementPolicyDefinition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("actions"u8);
             writer.WriteObjectValue(Actions);
-            if (Optional.IsDefined(Filters))
+            if (Core.Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteObjectValue(Filters);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             ManagementPolicyAction actions = default;
-            Optional<ManagementPolicyFilter> filters = default;
+            Core.Optional<ManagementPolicyFilter> filters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actions"u8))

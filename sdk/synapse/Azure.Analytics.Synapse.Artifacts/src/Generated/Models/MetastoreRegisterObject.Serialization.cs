@@ -13,9 +13,9 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(MetastoreRegisterObjectConverter))]
-    public partial class MetastoreRegisterObject : IUtf8JsonSerializable
+    public partial class MetastoreRegisterObject : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("inputFolder"u8);

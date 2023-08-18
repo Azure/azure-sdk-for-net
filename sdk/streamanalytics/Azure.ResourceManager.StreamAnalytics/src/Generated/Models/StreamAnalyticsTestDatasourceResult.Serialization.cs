@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<StreamAnalyticsTestDatasourceResultStatus> status = default;
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<string> target = default;
-            Optional<IReadOnlyList<StreamAnalyticsErrorDetails>> details = default;
+            Core.Optional<StreamAnalyticsTestDatasourceResultStatus> status = default;
+            Core.Optional<string> code = default;
+            Core.Optional<string> message = default;
+            Core.Optional<string> target = default;
+            Core.Optional<IReadOnlyList<StreamAnalyticsErrorDetails>> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new StreamAnalyticsTestDatasourceResult(code.Value, message.Value, target.Value, Optional.ToList(details), Optional.ToNullable(status));
+            return new StreamAnalyticsTestDatasourceResult(code.Value, message.Value, target.Value, Core.Optional.ToList(details), Core.Optional.ToNullable(status));
         }
     }
 }

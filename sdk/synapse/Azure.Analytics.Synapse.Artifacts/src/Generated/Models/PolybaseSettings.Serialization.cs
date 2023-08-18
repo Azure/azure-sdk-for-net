@@ -14,27 +14,27 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(PolybaseSettingsConverter))]
-    public partial class PolybaseSettings : IUtf8JsonSerializable
+    public partial class PolybaseSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RejectType))
+            if (Core.Optional.IsDefined(RejectType))
             {
                 writer.WritePropertyName("rejectType"u8);
                 writer.WriteStringValue(RejectType.Value.ToString());
             }
-            if (Optional.IsDefined(RejectValue))
+            if (Core.Optional.IsDefined(RejectValue))
             {
                 writer.WritePropertyName("rejectValue"u8);
                 writer.WriteObjectValue(RejectValue);
             }
-            if (Optional.IsDefined(RejectSampleValue))
+            if (Core.Optional.IsDefined(RejectSampleValue))
             {
                 writer.WritePropertyName("rejectSampleValue"u8);
                 writer.WriteObjectValue(RejectSampleValue);
             }
-            if (Optional.IsDefined(UseTypeDefault))
+            if (Core.Optional.IsDefined(UseTypeDefault))
             {
                 writer.WritePropertyName("useTypeDefault"u8);
                 writer.WriteObjectValue(UseTypeDefault);
@@ -53,10 +53,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<PolybaseSettingsRejectType> rejectType = default;
-            Optional<object> rejectValue = default;
-            Optional<object> rejectSampleValue = default;
-            Optional<object> useTypeDefault = default;
+            Core.Optional<PolybaseSettingsRejectType> rejectType = default;
+            Core.Optional<object> rejectValue = default;
+            Core.Optional<object> rejectSampleValue = default;
+            Core.Optional<object> useTypeDefault = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PolybaseSettings(Optional.ToNullable(rejectType), rejectValue.Value, rejectSampleValue.Value, useTypeDefault.Value, additionalProperties);
+            return new PolybaseSettings(Core.Optional.ToNullable(rejectType), rejectValue.Value, rejectSampleValue.Value, useTypeDefault.Value, additionalProperties);
         }
 
         internal partial class PolybaseSettingsConverter : JsonConverter<PolybaseSettings>

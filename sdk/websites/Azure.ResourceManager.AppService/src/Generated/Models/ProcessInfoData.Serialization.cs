@@ -14,54 +14,54 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class ProcessInfoData : IUtf8JsonSerializable
+    public partial class ProcessInfoData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DeploymentName))
+            if (Core.Optional.IsDefined(DeploymentName))
             {
                 writer.WritePropertyName("deployment_name"u8);
                 writer.WriteStringValue(DeploymentName);
             }
-            if (Optional.IsDefined(Href))
+            if (Core.Optional.IsDefined(Href))
             {
                 writer.WritePropertyName("href"u8);
                 writer.WriteStringValue(Href);
             }
-            if (Optional.IsDefined(Minidump))
+            if (Core.Optional.IsDefined(Minidump))
             {
                 writer.WritePropertyName("minidump"u8);
                 writer.WriteStringValue(Minidump);
             }
-            if (Optional.IsDefined(IsProfileRunning))
+            if (Core.Optional.IsDefined(IsProfileRunning))
             {
                 writer.WritePropertyName("is_profile_running"u8);
                 writer.WriteBooleanValue(IsProfileRunning.Value);
             }
-            if (Optional.IsDefined(IsIisProfileRunning))
+            if (Core.Optional.IsDefined(IsIisProfileRunning))
             {
                 writer.WritePropertyName("is_iis_profile_running"u8);
                 writer.WriteBooleanValue(IsIisProfileRunning.Value);
             }
-            if (Optional.IsDefined(IisProfileTimeoutInSeconds))
+            if (Core.Optional.IsDefined(IisProfileTimeoutInSeconds))
             {
                 writer.WritePropertyName("iis_profile_timeout_in_seconds"u8);
                 writer.WriteNumberValue(IisProfileTimeoutInSeconds.Value);
             }
-            if (Optional.IsDefined(Parent))
+            if (Core.Optional.IsDefined(Parent))
             {
                 writer.WritePropertyName("parent"u8);
                 writer.WriteStringValue(Parent);
             }
-            if (Optional.IsCollectionDefined(Children))
+            if (Core.Optional.IsCollectionDefined(Children))
             {
                 writer.WritePropertyName("children"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Threads))
+            if (Core.Optional.IsCollectionDefined(Threads))
             {
                 writer.WritePropertyName("threads"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(OpenFileHandles))
+            if (Core.Optional.IsCollectionDefined(OpenFileHandles))
             {
                 writer.WritePropertyName("open_file_handles"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Modules))
+            if (Core.Optional.IsCollectionDefined(Modules))
             {
                 writer.WritePropertyName("modules"u8);
                 writer.WriteStartArray();
@@ -101,107 +101,107 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FileName))
+            if (Core.Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("file_name"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Optional.IsDefined(CommandLine))
+            if (Core.Optional.IsDefined(CommandLine))
             {
                 writer.WritePropertyName("command_line"u8);
                 writer.WriteStringValue(CommandLine);
             }
-            if (Optional.IsDefined(UserName))
+            if (Core.Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("user_name"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Optional.IsDefined(HandleCount))
+            if (Core.Optional.IsDefined(HandleCount))
             {
                 writer.WritePropertyName("handle_count"u8);
                 writer.WriteNumberValue(HandleCount.Value);
             }
-            if (Optional.IsDefined(ModuleCount))
+            if (Core.Optional.IsDefined(ModuleCount))
             {
                 writer.WritePropertyName("module_count"u8);
                 writer.WriteNumberValue(ModuleCount.Value);
             }
-            if (Optional.IsDefined(ThreadCount))
+            if (Core.Optional.IsDefined(ThreadCount))
             {
                 writer.WritePropertyName("thread_count"u8);
                 writer.WriteNumberValue(ThreadCount.Value);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Core.Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("start_time"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(TotalCpuTime))
+            if (Core.Optional.IsDefined(TotalCpuTime))
             {
                 writer.WritePropertyName("total_cpu_time"u8);
                 writer.WriteStringValue(TotalCpuTime);
             }
-            if (Optional.IsDefined(UserCpuTime))
+            if (Core.Optional.IsDefined(UserCpuTime))
             {
                 writer.WritePropertyName("user_cpu_time"u8);
                 writer.WriteStringValue(UserCpuTime);
             }
-            if (Optional.IsDefined(PrivilegedCpuTime))
+            if (Core.Optional.IsDefined(PrivilegedCpuTime))
             {
                 writer.WritePropertyName("privileged_cpu_time"u8);
                 writer.WriteStringValue(PrivilegedCpuTime);
             }
-            if (Optional.IsDefined(WorkingSet))
+            if (Core.Optional.IsDefined(WorkingSet))
             {
                 writer.WritePropertyName("working_set"u8);
                 writer.WriteNumberValue(WorkingSet.Value);
             }
-            if (Optional.IsDefined(PeakWorkingSet))
+            if (Core.Optional.IsDefined(PeakWorkingSet))
             {
                 writer.WritePropertyName("peak_working_set"u8);
                 writer.WriteNumberValue(PeakWorkingSet.Value);
             }
-            if (Optional.IsDefined(PrivateMemory))
+            if (Core.Optional.IsDefined(PrivateMemory))
             {
                 writer.WritePropertyName("private_memory"u8);
                 writer.WriteNumberValue(PrivateMemory.Value);
             }
-            if (Optional.IsDefined(VirtualMemory))
+            if (Core.Optional.IsDefined(VirtualMemory))
             {
                 writer.WritePropertyName("virtual_memory"u8);
                 writer.WriteNumberValue(VirtualMemory.Value);
             }
-            if (Optional.IsDefined(PeakVirtualMemory))
+            if (Core.Optional.IsDefined(PeakVirtualMemory))
             {
                 writer.WritePropertyName("peak_virtual_memory"u8);
                 writer.WriteNumberValue(PeakVirtualMemory.Value);
             }
-            if (Optional.IsDefined(PagedSystemMemory))
+            if (Core.Optional.IsDefined(PagedSystemMemory))
             {
                 writer.WritePropertyName("paged_system_memory"u8);
                 writer.WriteNumberValue(PagedSystemMemory.Value);
             }
-            if (Optional.IsDefined(NonPagedSystemMemory))
+            if (Core.Optional.IsDefined(NonPagedSystemMemory))
             {
                 writer.WritePropertyName("non_paged_system_memory"u8);
                 writer.WriteNumberValue(NonPagedSystemMemory.Value);
             }
-            if (Optional.IsDefined(PagedMemory))
+            if (Core.Optional.IsDefined(PagedMemory))
             {
                 writer.WritePropertyName("paged_memory"u8);
                 writer.WriteNumberValue(PagedMemory.Value);
             }
-            if (Optional.IsDefined(PeakPagedMemory))
+            if (Core.Optional.IsDefined(PeakPagedMemory))
             {
                 writer.WritePropertyName("peak_paged_memory"u8);
                 writer.WriteNumberValue(PeakPagedMemory.Value);
             }
-            if (Optional.IsDefined(TimeStamp))
+            if (Core.Optional.IsDefined(TimeStamp))
             {
                 writer.WritePropertyName("time_stamp"u8);
                 writer.WriteStringValue(TimeStamp.Value, "O");
             }
-            if (Optional.IsCollectionDefined(EnvironmentVariables))
+            if (Core.Optional.IsCollectionDefined(EnvironmentVariables))
             {
                 writer.WritePropertyName("environment_variables"u8);
                 writer.WriteStartObject();
@@ -212,17 +212,17 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(IsScmSite))
+            if (Core.Optional.IsDefined(IsScmSite))
             {
                 writer.WritePropertyName("is_scm_site"u8);
                 writer.WriteBooleanValue(IsScmSite.Value);
             }
-            if (Optional.IsDefined(IsWebjob))
+            if (Core.Optional.IsDefined(IsWebjob))
             {
                 writer.WritePropertyName("is_webjob"u8);
                 writer.WriteBooleanValue(IsWebjob.Value);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -237,47 +237,47 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> identifier = default;
-            Optional<string> deploymentName = default;
-            Optional<string> href = default;
-            Optional<string> minidump = default;
-            Optional<bool> isProfileRunning = default;
-            Optional<bool> isIisProfileRunning = default;
-            Optional<double> iisProfileTimeoutInSeconds = default;
-            Optional<string> parent = default;
-            Optional<IList<string>> children = default;
-            Optional<IList<ProcessThreadInfo>> threads = default;
-            Optional<IList<string>> openFileHandles = default;
-            Optional<IList<ProcessModuleInfoData>> modules = default;
-            Optional<string> fileName = default;
-            Optional<string> commandLine = default;
-            Optional<string> userName = default;
-            Optional<int> handleCount = default;
-            Optional<int> moduleCount = default;
-            Optional<int> threadCount = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> totalCpuTime = default;
-            Optional<string> userCpuTime = default;
-            Optional<string> privilegedCpuTime = default;
-            Optional<long> workingSet = default;
-            Optional<long> peakWorkingSet = default;
-            Optional<long> privateMemory = default;
-            Optional<long> virtualMemory = default;
-            Optional<long> peakVirtualMemory = default;
-            Optional<long> pagedSystemMemory = default;
-            Optional<long> nonPagedSystemMemory = default;
-            Optional<long> pagedMemory = default;
-            Optional<long> peakPagedMemory = default;
-            Optional<DateTimeOffset> timeStamp = default;
-            Optional<IDictionary<string, string>> environmentVariables = default;
-            Optional<bool> isScmSite = default;
-            Optional<bool> isWebjob = default;
-            Optional<string> description = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<int> identifier = default;
+            Core.Optional<string> deploymentName = default;
+            Core.Optional<string> href = default;
+            Core.Optional<string> minidump = default;
+            Core.Optional<bool> isProfileRunning = default;
+            Core.Optional<bool> isIisProfileRunning = default;
+            Core.Optional<double> iisProfileTimeoutInSeconds = default;
+            Core.Optional<string> parent = default;
+            Core.Optional<IList<string>> children = default;
+            Core.Optional<IList<ProcessThreadInfo>> threads = default;
+            Core.Optional<IList<string>> openFileHandles = default;
+            Core.Optional<IList<ProcessModuleInfoData>> modules = default;
+            Core.Optional<string> fileName = default;
+            Core.Optional<string> commandLine = default;
+            Core.Optional<string> userName = default;
+            Core.Optional<int> handleCount = default;
+            Core.Optional<int> moduleCount = default;
+            Core.Optional<int> threadCount = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<string> totalCpuTime = default;
+            Core.Optional<string> userCpuTime = default;
+            Core.Optional<string> privilegedCpuTime = default;
+            Core.Optional<long> workingSet = default;
+            Core.Optional<long> peakWorkingSet = default;
+            Core.Optional<long> privateMemory = default;
+            Core.Optional<long> virtualMemory = default;
+            Core.Optional<long> peakVirtualMemory = default;
+            Core.Optional<long> pagedSystemMemory = default;
+            Core.Optional<long> nonPagedSystemMemory = default;
+            Core.Optional<long> pagedMemory = default;
+            Core.Optional<long> peakPagedMemory = default;
+            Core.Optional<DateTimeOffset> timeStamp = default;
+            Core.Optional<IDictionary<string, string>> environmentVariables = default;
+            Core.Optional<bool> isScmSite = default;
+            Core.Optional<bool> isWebjob = default;
+            Core.Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new ProcessInfoData(id, name, type, systemData.Value, Optional.ToNullable(identifier), deploymentName.Value, href.Value, minidump.Value, Optional.ToNullable(isProfileRunning), Optional.ToNullable(isIisProfileRunning), Optional.ToNullable(iisProfileTimeoutInSeconds), parent.Value, Optional.ToList(children), Optional.ToList(threads), Optional.ToList(openFileHandles), Optional.ToList(modules), fileName.Value, commandLine.Value, userName.Value, Optional.ToNullable(handleCount), Optional.ToNullable(moduleCount), Optional.ToNullable(threadCount), Optional.ToNullable(startTime), totalCpuTime.Value, userCpuTime.Value, privilegedCpuTime.Value, Optional.ToNullable(workingSet), Optional.ToNullable(peakWorkingSet), Optional.ToNullable(privateMemory), Optional.ToNullable(virtualMemory), Optional.ToNullable(peakVirtualMemory), Optional.ToNullable(pagedSystemMemory), Optional.ToNullable(nonPagedSystemMemory), Optional.ToNullable(pagedMemory), Optional.ToNullable(peakPagedMemory), Optional.ToNullable(timeStamp), Optional.ToDictionary(environmentVariables), Optional.ToNullable(isScmSite), Optional.ToNullable(isWebjob), description.Value, kind.Value);
+            return new ProcessInfoData(id, name, type, systemData.Value, Core.Optional.ToNullable(identifier), deploymentName.Value, href.Value, minidump.Value, Core.Optional.ToNullable(isProfileRunning), Core.Optional.ToNullable(isIisProfileRunning), Core.Optional.ToNullable(iisProfileTimeoutInSeconds), parent.Value, Core.Optional.ToList(children), Core.Optional.ToList(threads), Core.Optional.ToList(openFileHandles), Core.Optional.ToList(modules), fileName.Value, commandLine.Value, userName.Value, Core.Optional.ToNullable(handleCount), Core.Optional.ToNullable(moduleCount), Core.Optional.ToNullable(threadCount), Core.Optional.ToNullable(startTime), totalCpuTime.Value, userCpuTime.Value, privilegedCpuTime.Value, Core.Optional.ToNullable(workingSet), Core.Optional.ToNullable(peakWorkingSet), Core.Optional.ToNullable(privateMemory), Core.Optional.ToNullable(virtualMemory), Core.Optional.ToNullable(peakVirtualMemory), Core.Optional.ToNullable(pagedSystemMemory), Core.Optional.ToNullable(nonPagedSystemMemory), Core.Optional.ToNullable(pagedMemory), Core.Optional.ToNullable(peakPagedMemory), Core.Optional.ToNullable(timeStamp), Core.Optional.ToDictionary(environmentVariables), Core.Optional.ToNullable(isScmSite), Core.Optional.ToNullable(isWebjob), description.Value, kind.Value);
         }
     }
 }

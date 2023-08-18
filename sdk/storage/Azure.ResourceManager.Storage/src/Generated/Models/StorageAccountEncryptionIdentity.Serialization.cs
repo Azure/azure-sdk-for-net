@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageAccountEncryptionIdentity : IUtf8JsonSerializable
+    public partial class StorageAccountEncryptionIdentity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EncryptionUserAssignedIdentity))
+            if (Core.Optional.IsDefined(EncryptionUserAssignedIdentity))
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(EncryptionUserAssignedIdentity);
             }
-            if (Optional.IsDefined(EncryptionFederatedIdentityClientId))
+            if (Core.Optional.IsDefined(EncryptionFederatedIdentityClientId))
             {
                 writer.WritePropertyName("federatedIdentityClientId"u8);
                 writer.WriteStringValue(EncryptionFederatedIdentityClientId);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<string> userAssignedIdentity = default;
-            Optional<string> federatedIdentityClientId = default;
+            Core.Optional<string> userAssignedIdentity = default;
+            Core.Optional<string> federatedIdentityClientId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userAssignedIdentity"u8))

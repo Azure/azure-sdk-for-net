@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<long> currentValue = default;
-            Optional<long> limit = default;
-            Optional<SignalRServiceUsageName> name = default;
-            Optional<string> unit = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<long> currentValue = default;
+            Core.Optional<long> limit = default;
+            Core.Optional<SignalRServiceUsageName> name = default;
+            Core.Optional<string> unit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     continue;
                 }
             }
-            return new SignalRServiceUsage(id.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value, unit.Value);
+            return new SignalRServiceUsage(id.Value, Core.Optional.ToNullable(currentValue), Core.Optional.ToNullable(limit), name.Value, unit.Value);
         }
     }
 }

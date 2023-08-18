@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of MultiplePipelineTrigger. </summary>
         public MultiplePipelineTrigger()
         {
-            Pipelines = new ChangeTrackingList<TriggerPipelineReference>();
+            Pipelines = new Core.ChangeTrackingList<TriggerPipelineReference>();
             Type = "MultiplePipelineTrigger";
         }
 

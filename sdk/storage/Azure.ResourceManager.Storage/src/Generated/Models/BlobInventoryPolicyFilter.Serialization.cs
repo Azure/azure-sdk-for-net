@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class BlobInventoryPolicyFilter : IUtf8JsonSerializable
+    public partial class BlobInventoryPolicyFilter : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IncludePrefix))
+            if (Core.Optional.IsCollectionDefined(IncludePrefix))
             {
                 writer.WritePropertyName("prefixMatch"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExcludePrefix))
+            if (Core.Optional.IsCollectionDefined(ExcludePrefix))
             {
                 writer.WritePropertyName("excludePrefix"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(BlobTypes))
+            if (Core.Optional.IsCollectionDefined(BlobTypes))
             {
                 writer.WritePropertyName("blobTypes"u8);
                 writer.WriteStartArray();
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IncludeBlobVersions))
+            if (Core.Optional.IsDefined(IncludeBlobVersions))
             {
                 writer.WritePropertyName("includeBlobVersions"u8);
                 writer.WriteBooleanValue(IncludeBlobVersions.Value);
             }
-            if (Optional.IsDefined(IncludeSnapshots))
+            if (Core.Optional.IsDefined(IncludeSnapshots))
             {
                 writer.WritePropertyName("includeSnapshots"u8);
                 writer.WriteBooleanValue(IncludeSnapshots.Value);
             }
-            if (Optional.IsDefined(IncludeDeleted))
+            if (Core.Optional.IsDefined(IncludeDeleted))
             {
                 writer.WritePropertyName("includeDeleted"u8);
                 writer.WriteBooleanValue(IncludeDeleted.Value);
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<IList<string>> prefixMatch = default;
-            Optional<IList<string>> excludePrefix = default;
-            Optional<IList<string>> blobTypes = default;
-            Optional<bool> includeBlobVersions = default;
-            Optional<bool> includeSnapshots = default;
-            Optional<bool> includeDeleted = default;
+            Core.Optional<IList<string>> prefixMatch = default;
+            Core.Optional<IList<string>> excludePrefix = default;
+            Core.Optional<IList<string>> blobTypes = default;
+            Core.Optional<bool> includeBlobVersions = default;
+            Core.Optional<bool> includeSnapshots = default;
+            Core.Optional<bool> includeDeleted = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("prefixMatch"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new BlobInventoryPolicyFilter(Optional.ToList(prefixMatch), Optional.ToList(excludePrefix), Optional.ToList(blobTypes), Optional.ToNullable(includeBlobVersions), Optional.ToNullable(includeSnapshots), Optional.ToNullable(includeDeleted));
+            return new BlobInventoryPolicyFilter(Core.Optional.ToList(prefixMatch), Core.Optional.ToList(excludePrefix), Core.Optional.ToList(blobTypes), Core.Optional.ToNullable(includeBlobVersions), Core.Optional.ToNullable(includeSnapshots), Core.Optional.ToNullable(includeDeleted));
         }
     }
 }

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> displayText = default;
-            Optional<string> value = default;
-            Optional<FunctionAppRuntimes> stackSettings = default;
+            Core.Optional<string> displayText = default;
+            Core.Optional<string> value = default;
+            Core.Optional<FunctionAppRuntimes> stackSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayText"u8))

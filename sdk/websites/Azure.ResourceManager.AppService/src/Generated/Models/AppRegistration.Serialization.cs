@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppRegistration : IUtf8JsonSerializable
+    public partial class AppRegistration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AppId))
+            if (Core.Optional.IsDefined(AppId))
             {
                 writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
-            if (Optional.IsDefined(AppSecretSettingName))
+            if (Core.Optional.IsDefined(AppSecretSettingName))
             {
                 writer.WritePropertyName("appSecretSettingName"u8);
                 writer.WriteStringValue(AppSecretSettingName);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> appId = default;
-            Optional<string> appSecretSettingName = default;
+            Core.Optional<string> appId = default;
+            Core.Optional<string> appSecretSettingName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appId"u8))

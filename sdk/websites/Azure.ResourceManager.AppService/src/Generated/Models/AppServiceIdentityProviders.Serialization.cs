@@ -11,52 +11,52 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceIdentityProviders : IUtf8JsonSerializable
+    public partial class AppServiceIdentityProviders : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureActiveDirectory))
+            if (Core.Optional.IsDefined(AzureActiveDirectory))
             {
                 writer.WritePropertyName("azureActiveDirectory"u8);
                 writer.WriteObjectValue(AzureActiveDirectory);
             }
-            if (Optional.IsDefined(Facebook))
+            if (Core.Optional.IsDefined(Facebook))
             {
                 writer.WritePropertyName("facebook"u8);
                 writer.WriteObjectValue(Facebook);
             }
-            if (Optional.IsDefined(GitHub))
+            if (Core.Optional.IsDefined(GitHub))
             {
                 writer.WritePropertyName("gitHub"u8);
                 writer.WriteObjectValue(GitHub);
             }
-            if (Optional.IsDefined(Google))
+            if (Core.Optional.IsDefined(Google))
             {
                 writer.WritePropertyName("google"u8);
                 writer.WriteObjectValue(Google);
             }
-            if (Optional.IsDefined(LegacyMicrosoftAccount))
+            if (Core.Optional.IsDefined(LegacyMicrosoftAccount))
             {
                 writer.WritePropertyName("legacyMicrosoftAccount"u8);
                 writer.WriteObjectValue(LegacyMicrosoftAccount);
             }
-            if (Optional.IsDefined(Twitter))
+            if (Core.Optional.IsDefined(Twitter))
             {
                 writer.WritePropertyName("twitter"u8);
                 writer.WriteObjectValue(Twitter);
             }
-            if (Optional.IsDefined(Apple))
+            if (Core.Optional.IsDefined(Apple))
             {
                 writer.WritePropertyName("apple"u8);
                 writer.WriteObjectValue(Apple);
             }
-            if (Optional.IsDefined(AzureStaticWebApps))
+            if (Core.Optional.IsDefined(AzureStaticWebApps))
             {
                 writer.WritePropertyName("azureStaticWebApps"u8);
                 writer.WriteObjectValue(AzureStaticWebApps);
             }
-            if (Optional.IsCollectionDefined(CustomOpenIdConnectProviders))
+            if (Core.Optional.IsCollectionDefined(CustomOpenIdConnectProviders))
             {
                 writer.WritePropertyName("customOpenIdConnectProviders"u8);
                 writer.WriteStartObject();
@@ -76,15 +76,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<AppServiceAadProvider> azureActiveDirectory = default;
-            Optional<AppServiceFacebookProvider> facebook = default;
-            Optional<AppServiceGitHubProvider> gitHub = default;
-            Optional<AppServiceGoogleProvider> google = default;
-            Optional<LegacyMicrosoftAccount> legacyMicrosoftAccount = default;
-            Optional<AppServiceTwitterProvider> twitter = default;
-            Optional<AppServiceAppleProvider> apple = default;
-            Optional<AppServiceStaticWebAppsProvider> azureStaticWebApps = default;
-            Optional<IDictionary<string, CustomOpenIdConnectProvider>> customOpenIdConnectProviders = default;
+            Core.Optional<AppServiceAadProvider> azureActiveDirectory = default;
+            Core.Optional<AppServiceFacebookProvider> facebook = default;
+            Core.Optional<AppServiceGitHubProvider> gitHub = default;
+            Core.Optional<AppServiceGoogleProvider> google = default;
+            Core.Optional<LegacyMicrosoftAccount> legacyMicrosoftAccount = default;
+            Core.Optional<AppServiceTwitterProvider> twitter = default;
+            Core.Optional<AppServiceAppleProvider> apple = default;
+            Core.Optional<AppServiceStaticWebAppsProvider> azureStaticWebApps = default;
+            Core.Optional<IDictionary<string, CustomOpenIdConnectProvider>> customOpenIdConnectProviders = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureActiveDirectory"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceIdentityProviders(azureActiveDirectory.Value, facebook.Value, gitHub.Value, google.Value, legacyMicrosoftAccount.Value, twitter.Value, apple.Value, azureStaticWebApps.Value, Optional.ToDictionary(customOpenIdConnectProviders));
+            return new AppServiceIdentityProviders(azureActiveDirectory.Value, facebook.Value, gitHub.Value, google.Value, legacyMicrosoftAccount.Value, twitter.Value, apple.Value, azureStaticWebApps.Value, Core.Optional.ToDictionary(customOpenIdConnectProviders));
         }
     }
 }

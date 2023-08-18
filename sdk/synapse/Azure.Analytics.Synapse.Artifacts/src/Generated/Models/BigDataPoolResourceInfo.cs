@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Argument.AssertNotNull(location, nameof(location));
 
-            CustomLibraries = new ChangeTrackingList<LibraryInfo>();
+            CustomLibraries = new Core.ChangeTrackingList<LibraryInfo>();
         }
 
         /// <summary> Initializes a new instance of BigDataPoolResourceInfo. </summary>

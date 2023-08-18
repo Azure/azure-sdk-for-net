@@ -19,9 +19,9 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 return null;
             }
             int id = default;
-            Optional<string> code = default;
-            Optional<LivyStatementStates> state = default;
-            Optional<SparkStatementOutput> output = default;
+            Core.Optional<string> code = default;
+            Core.Optional<LivyStatementStates> state = default;
+            Core.Optional<SparkStatementOutput> output = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     continue;
                 }
             }
-            return new SparkStatement(id, code.Value, Optional.ToNullable(state), output.Value);
+            return new SparkStatement(id, code.Value, Core.Optional.ToNullable(state), output.Value);
         }
     }
 }

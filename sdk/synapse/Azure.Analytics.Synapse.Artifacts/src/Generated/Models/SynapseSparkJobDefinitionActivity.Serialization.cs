@@ -14,17 +14,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SynapseSparkJobDefinitionActivityConverter))]
-    public partial class SynapseSparkJobDefinitionActivity : IUtf8JsonSerializable
+    public partial class SynapseSparkJobDefinitionActivity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedServiceName))
+            if (Core.Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 writer.WriteObjectValue(LinkedServiceName);
             }
-            if (Optional.IsDefined(Policy))
+            if (Core.Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -33,22 +33,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(OnInactiveMarkAs))
+            if (Core.Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (Core.Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserProperties))
+            if (Core.Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("sparkJob"u8);
             writer.WriteObjectValue(SparkJob);
-            if (Optional.IsCollectionDefined(Arguments))
+            if (Core.Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("args"u8);
                 writer.WriteStartArray();
@@ -87,22 +87,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(File))
+            if (Core.Optional.IsDefined(File))
             {
                 writer.WritePropertyName("file"u8);
                 writer.WriteObjectValue(File);
             }
-            if (Optional.IsDefined(ScanFolder))
+            if (Core.Optional.IsDefined(ScanFolder))
             {
                 writer.WritePropertyName("scanFolder"u8);
                 writer.WriteObjectValue(ScanFolder);
             }
-            if (Optional.IsDefined(ClassName))
+            if (Core.Optional.IsDefined(ClassName))
             {
                 writer.WritePropertyName("className"u8);
                 writer.WriteObjectValue(ClassName);
             }
-            if (Optional.IsCollectionDefined(Files))
+            if (Core.Optional.IsCollectionDefined(Files))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
@@ -117,7 +117,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PythonCodeReference))
+            if (Core.Optional.IsCollectionDefined(PythonCodeReference))
             {
                 writer.WritePropertyName("pythonCodeReference"u8);
                 writer.WriteStartArray();
@@ -132,7 +132,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FilesV2))
+            if (Core.Optional.IsCollectionDefined(FilesV2))
             {
                 writer.WritePropertyName("filesV2"u8);
                 writer.WriteStartArray();
@@ -147,42 +147,42 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TargetBigDataPool))
+            if (Core.Optional.IsDefined(TargetBigDataPool))
             {
                 writer.WritePropertyName("targetBigDataPool"u8);
                 writer.WriteObjectValue(TargetBigDataPool);
             }
-            if (Optional.IsDefined(ExecutorSize))
+            if (Core.Optional.IsDefined(ExecutorSize))
             {
                 writer.WritePropertyName("executorSize"u8);
                 writer.WriteObjectValue(ExecutorSize);
             }
-            if (Optional.IsDefined(Conf))
+            if (Core.Optional.IsDefined(Conf))
             {
                 writer.WritePropertyName("conf"u8);
                 writer.WriteObjectValue(Conf);
             }
-            if (Optional.IsDefined(DriverSize))
+            if (Core.Optional.IsDefined(DriverSize))
             {
                 writer.WritePropertyName("driverSize"u8);
                 writer.WriteObjectValue(DriverSize);
             }
-            if (Optional.IsDefined(NumExecutors))
+            if (Core.Optional.IsDefined(NumExecutors))
             {
                 writer.WritePropertyName("numExecutors"u8);
                 writer.WriteObjectValue(NumExecutors);
             }
-            if (Optional.IsDefined(ConfigurationType))
+            if (Core.Optional.IsDefined(ConfigurationType))
             {
                 writer.WritePropertyName("configurationType"u8);
                 writer.WriteStringValue(ConfigurationType.Value.ToString());
             }
-            if (Optional.IsDefined(TargetSparkConfiguration))
+            if (Core.Optional.IsDefined(TargetSparkConfiguration))
             {
                 writer.WritePropertyName("targetSparkConfiguration"u8);
                 writer.WriteObjectValue(TargetSparkConfiguration);
             }
-            if (Optional.IsCollectionDefined(SparkConfig))
+            if (Core.Optional.IsCollectionDefined(SparkConfig))
             {
                 writer.WritePropertyName("sparkConfig"u8);
                 writer.WriteStartObject();
@@ -213,31 +213,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> linkedServiceName = default;
-            Optional<ActivityPolicy> policy = default;
+            Core.Optional<LinkedServiceReference> linkedServiceName = default;
+            Core.Optional<ActivityPolicy> policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
+            Core.Optional<string> description = default;
+            Core.Optional<ActivityState> state = default;
+            Core.Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            Core.Optional<IList<ActivityDependency>> dependsOn = default;
+            Core.Optional<IList<UserProperty>> userProperties = default;
             SynapseSparkJobReference sparkJob = default;
-            Optional<IList<object>> args = default;
-            Optional<object> file = default;
-            Optional<object> scanFolder = default;
-            Optional<object> className = default;
-            Optional<IList<object>> files = default;
-            Optional<IList<object>> pythonCodeReference = default;
-            Optional<IList<object>> filesV2 = default;
-            Optional<BigDataPoolParametrizationReference> targetBigDataPool = default;
-            Optional<object> executorSize = default;
-            Optional<object> conf = default;
-            Optional<object> driverSize = default;
-            Optional<object> numExecutors = default;
-            Optional<ConfigurationType> configurationType = default;
-            Optional<SparkConfigurationParametrizationReference> targetSparkConfiguration = default;
-            Optional<IDictionary<string, object>> sparkConfig = default;
+            Core.Optional<IList<object>> args = default;
+            Core.Optional<object> file = default;
+            Core.Optional<object> scanFolder = default;
+            Core.Optional<object> className = default;
+            Core.Optional<IList<object>> files = default;
+            Core.Optional<IList<object>> pythonCodeReference = default;
+            Core.Optional<IList<object>> filesV2 = default;
+            Core.Optional<BigDataPoolParametrizationReference> targetBigDataPool = default;
+            Core.Optional<object> executorSize = default;
+            Core.Optional<object> conf = default;
+            Core.Optional<object> driverSize = default;
+            Core.Optional<object> numExecutors = default;
+            Core.Optional<ConfigurationType> configurationType = default;
+            Core.Optional<SparkConfigurationParametrizationReference> targetSparkConfiguration = default;
+            Core.Optional<IDictionary<string, object>> sparkConfig = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -536,7 +536,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseSparkJobDefinitionActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, sparkJob, Optional.ToList(args), file.Value, scanFolder.Value, className.Value, Optional.ToList(files), Optional.ToList(pythonCodeReference), Optional.ToList(filesV2), targetBigDataPool.Value, executorSize.Value, conf.Value, driverSize.Value, numExecutors.Value, Optional.ToNullable(configurationType), targetSparkConfiguration.Value, Optional.ToDictionary(sparkConfig));
+            return new SynapseSparkJobDefinitionActivity(name, type, description.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(onInactiveMarkAs), Core.Optional.ToList(dependsOn), Core.Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, sparkJob, Core.Optional.ToList(args), file.Value, scanFolder.Value, className.Value, Core.Optional.ToList(files), Core.Optional.ToList(pythonCodeReference), Core.Optional.ToList(filesV2), targetBigDataPool.Value, executorSize.Value, conf.Value, driverSize.Value, numExecutors.Value, Core.Optional.ToNullable(configurationType), targetSparkConfiguration.Value, Core.Optional.ToDictionary(sparkConfig));
         }
 
         internal partial class SynapseSparkJobDefinitionActivityConverter : JsonConverter<SynapseSparkJobDefinitionActivity>

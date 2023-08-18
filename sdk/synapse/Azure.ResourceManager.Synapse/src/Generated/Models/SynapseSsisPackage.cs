@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseSsisPackage. </summary>
         internal SynapseSsisPackage()
         {
-            Parameters = new ChangeTrackingList<SynapseSsisParameter>();
+            Parameters = new Core.ChangeTrackingList<SynapseSsisParameter>();
             MetadataType = SynapseSsisObjectMetadataType.Package;
         }
 

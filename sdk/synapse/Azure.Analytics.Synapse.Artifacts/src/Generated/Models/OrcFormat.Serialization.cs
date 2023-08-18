@@ -14,19 +14,19 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(OrcFormatConverter))]
-    public partial class OrcFormat : IUtf8JsonSerializable
+    public partial class OrcFormat : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Serializer))
+            if (Core.Optional.IsDefined(Serializer))
             {
                 writer.WritePropertyName("serializer"u8);
                 writer.WriteObjectValue(Serializer);
             }
-            if (Optional.IsDefined(Deserializer))
+            if (Core.Optional.IsDefined(Deserializer))
             {
                 writer.WritePropertyName("deserializer"u8);
                 writer.WriteObjectValue(Deserializer);
@@ -46,8 +46,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<object> serializer = default;
-            Optional<object> deserializer = default;
+            Core.Optional<object> serializer = default;
+            Core.Optional<object> deserializer = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())

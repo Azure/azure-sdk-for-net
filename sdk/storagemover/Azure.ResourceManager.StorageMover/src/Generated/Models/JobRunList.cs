@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <summary> Initializes a new instance of JobRunList. </summary>
         internal JobRunList()
         {
-            Value = new ChangeTrackingList<JobRunData>();
+            Value = new Core.ChangeTrackingList<JobRunData>();
         }
 
         /// <summary> Initializes a new instance of JobRunList. </summary>

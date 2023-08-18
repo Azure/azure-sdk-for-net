@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseEntityReference : IUtf8JsonSerializable
+    public partial class SynapseEntityReference : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IntegrationRuntimeEntityReferenceType))
+            if (Core.Optional.IsDefined(IntegrationRuntimeEntityReferenceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IntegrationRuntimeEntityReferenceType.Value.ToString());
             }
-            if (Optional.IsDefined(ReferenceName))
+            if (Core.Optional.IsDefined(ReferenceName))
             {
                 writer.WritePropertyName("referenceName"u8);
                 writer.WriteStringValue(ReferenceName);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<SynapseIntegrationRuntimeEntityReferenceType> type = default;
-            Optional<string> referenceName = default;
+            Core.Optional<SynapseIntegrationRuntimeEntityReferenceType> type = default;
+            Core.Optional<string> referenceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SynapseEntityReference(Optional.ToNullable(type), referenceName.Value);
+            return new SynapseEntityReference(Core.Optional.ToNullable(type), referenceName.Value);
         }
     }
 }

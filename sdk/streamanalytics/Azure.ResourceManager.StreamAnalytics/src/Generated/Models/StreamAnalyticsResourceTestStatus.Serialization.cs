@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<string> code = default;
-            Optional<string> message = default;
+            Core.Optional<string> status = default;
+            Core.Optional<string> code = default;
+            Core.Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))

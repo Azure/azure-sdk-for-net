@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class OSSapConfiguration : IUtf8JsonSerializable
+    public partial class OSSapConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DeployerVmPackages))
+            if (Core.Optional.IsDefined(DeployerVmPackages))
             {
                 writer.WritePropertyName("deployerVmPackages"u8);
                 writer.WriteObjectValue(DeployerVmPackages);
             }
-            if (Optional.IsDefined(SapFqdn))
+            if (Core.Optional.IsDefined(SapFqdn))
             {
                 writer.WritePropertyName("sapFqdn"u8);
                 writer.WriteStringValue(SapFqdn);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<DeployerVmPackages> deployerVmPackages = default;
-            Optional<string> sapFqdn = default;
+            Core.Optional<DeployerVmPackages> deployerVmPackages = default;
+            Core.Optional<string> sapFqdn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deployerVmPackages"u8))

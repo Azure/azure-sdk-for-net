@@ -36,7 +36,7 @@ namespace Azure.Storage.Files.Shares.Models
             SessionId = sessionId;
             ClientIp = clientIp;
             OpenTime = openTime;
-            AccessRightList = new ChangeTrackingList<AccessRight>();
+            AccessRightList = new Core.ChangeTrackingList<AccessRight>();
         }
 
         /// <summary> Initializes a new instance of HandleItem. </summary>

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    public partial struct LinkedEntityMatch : IUtf8JsonSerializable
+    public partial struct LinkedEntityMatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("confidenceScore"u8);

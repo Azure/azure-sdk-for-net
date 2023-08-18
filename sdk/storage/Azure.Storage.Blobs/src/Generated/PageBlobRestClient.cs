@@ -180,7 +180,7 @@ namespace Azure.Storage.Blobs
         /// <param name="immutabilityPolicyMode"> Specifies the immutability policy mode to set on the blob. </param>
         /// <param name="legalHold"> Specified if a legal hold should be set on the blob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PageBlobCreateHeaders>> CreateAsync(long contentLength, long blobContentLength, int? timeout = null, PremiumPageBlobAccessTier? tier = null, string blobContentType = null, string blobContentEncoding = null, string blobContentLanguage = null, byte[] blobContentMD5 = null, string blobCacheControl = null, IDictionary<string, string> metadata = null, string leaseId = null, string blobContentDisposition = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, long? blobSequenceNumber = null, string blobTagsString = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, bool? legalHold = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<PageBlobCreateHeaders>> CreateAsync(long contentLength, long blobContentLength, int? timeout = null, PremiumPageBlobAccessTier? tier = null, string blobContentType = null, string blobContentEncoding = null, string blobContentLanguage = null, byte[] blobContentMD5 = null, string blobCacheControl = null, IDictionary<string, string> metadata = null, string leaseId = null, string blobContentDisposition = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, long? blobSequenceNumber = null, string blobTagsString = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, bool? legalHold = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCreateRequest(contentLength, blobContentLength, timeout, tier, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMD5, blobCacheControl, metadata, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobSequenceNumber, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -188,7 +188,7 @@ namespace Azure.Storage.Blobs
             switch (message.Response.Status)
             {
                 case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -222,7 +222,7 @@ namespace Azure.Storage.Blobs
         /// <param name="immutabilityPolicyMode"> Specifies the immutability policy mode to set on the blob. </param>
         /// <param name="legalHold"> Specified if a legal hold should be set on the blob. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PageBlobCreateHeaders> Create(long contentLength, long blobContentLength, int? timeout = null, PremiumPageBlobAccessTier? tier = null, string blobContentType = null, string blobContentEncoding = null, string blobContentLanguage = null, byte[] blobContentMD5 = null, string blobCacheControl = null, IDictionary<string, string> metadata = null, string leaseId = null, string blobContentDisposition = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, long? blobSequenceNumber = null, string blobTagsString = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, bool? legalHold = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<PageBlobCreateHeaders> Create(long contentLength, long blobContentLength, int? timeout = null, PremiumPageBlobAccessTier? tier = null, string blobContentType = null, string blobContentEncoding = null, string blobContentLanguage = null, byte[] blobContentMD5 = null, string blobCacheControl = null, IDictionary<string, string> metadata = null, string leaseId = null, string blobContentDisposition = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, long? blobSequenceNumber = null, string blobTagsString = null, DateTimeOffset? immutabilityPolicyExpiry = null, BlobImmutabilityPolicyMode? immutabilityPolicyMode = null, bool? legalHold = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateCreateRequest(contentLength, blobContentLength, timeout, tier, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMD5, blobCacheControl, metadata, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobSequenceNumber, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold);
             _pipeline.Send(message, cancellationToken);
@@ -230,7 +230,7 @@ namespace Azure.Storage.Blobs
             switch (message.Response.Status)
             {
                 case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -344,7 +344,7 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageBlobUploadPagesHeaders>> UploadPagesAsync(long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, string range = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<PageBlobUploadPagesHeaders>> UploadPagesAsync(long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, string range = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -357,7 +357,7 @@ namespace Azure.Storage.Blobs
             switch (message.Response.Status)
             {
                 case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -385,7 +385,7 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<PageBlobUploadPagesHeaders> UploadPages(long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, string range = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<PageBlobUploadPagesHeaders> UploadPages(long contentLength, Stream body, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, int? timeout = null, string range = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -398,7 +398,7 @@ namespace Azure.Storage.Blobs
             switch (message.Response.Status)
             {
                 case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -497,7 +497,7 @@ namespace Azure.Storage.Blobs
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PageBlobClearPagesHeaders>> ClearPagesAsync(long contentLength, int? timeout = null, string range = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<PageBlobClearPagesHeaders>> ClearPagesAsync(long contentLength, int? timeout = null, string range = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateClearPagesRequest(contentLength, timeout, range, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -505,7 +505,7 @@ namespace Azure.Storage.Blobs
             switch (message.Response.Status)
             {
                 case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -529,7 +529,7 @@ namespace Azure.Storage.Blobs
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PageBlobClearPagesHeaders> ClearPages(long contentLength, int? timeout = null, string range = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<PageBlobClearPagesHeaders> ClearPages(long contentLength, int? timeout = null, string range = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateClearPagesRequest(contentLength, timeout, range, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             _pipeline.Send(message, cancellationToken);
@@ -537,7 +537,7 @@ namespace Azure.Storage.Blobs
             switch (message.Response.Status)
             {
                 case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -673,7 +673,7 @@ namespace Azure.Storage.Blobs
         /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceUrl"/>, <paramref name="sourceRange"/> or <paramref name="range"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders>> UploadPagesFromURLAsync(string sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, string leaseId = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string copySourceAuthorization = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders>> UploadPagesFromURLAsync(string sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, string leaseId = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string copySourceAuthorization = null, CancellationToken cancellationToken = default)
         {
             if (sourceUrl == null)
             {
@@ -694,7 +694,7 @@ namespace Azure.Storage.Blobs
             switch (message.Response.Status)
             {
                 case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -728,7 +728,7 @@ namespace Azure.Storage.Blobs
         /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceUrl"/>, <paramref name="sourceRange"/> or <paramref name="range"/> is null. </exception>
-        public ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders> UploadPagesFromURL(string sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, string leaseId = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string copySourceAuthorization = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders> UploadPagesFromURL(string sourceUrl, string sourceRange, long contentLength, string range, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, string leaseId = null, long? ifSequenceNumberLessThanOrEqualTo = null, long? ifSequenceNumberLessThan = null, long? ifSequenceNumberEqualTo = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string copySourceAuthorization = null, CancellationToken cancellationToken = default)
         {
             if (sourceUrl == null)
             {
@@ -749,7 +749,7 @@ namespace Azure.Storage.Blobs
             switch (message.Response.Status)
             {
                 case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -826,7 +826,7 @@ namespace Azure.Storage.Blobs
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders>> GetPageRangesAsync(string snapshot = null, int? timeout = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders>> GetPageRangesAsync(string snapshot = null, int? timeout = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPageRangesRequest(snapshot, timeout, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, marker, maxresults);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -841,7 +841,7 @@ namespace Azure.Storage.Blobs
                         {
                             value = PageList.DeserializePageList(pageListElement);
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -861,7 +861,7 @@ namespace Azure.Storage.Blobs
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> GetPageRanges(string snapshot = null, int? timeout = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> GetPageRanges(string snapshot = null, int? timeout = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPageRangesRequest(snapshot, timeout, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, marker, maxresults);
             _pipeline.Send(message, cancellationToken);
@@ -876,7 +876,7 @@ namespace Azure.Storage.Blobs
                         {
                             value = PageList.DeserializePageList(pageListElement);
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -964,7 +964,7 @@ namespace Azure.Storage.Blobs
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders>> GetPageRangesDiffAsync(string snapshot = null, int? timeout = null, string prevsnapshot = null, string prevSnapshotUrl = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders>> GetPageRangesDiffAsync(string snapshot = null, int? timeout = null, string prevsnapshot = null, string prevSnapshotUrl = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPageRangesDiffRequest(snapshot, timeout, prevsnapshot, prevSnapshotUrl, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, marker, maxresults);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -979,7 +979,7 @@ namespace Azure.Storage.Blobs
                         {
                             value = PageList.DeserializePageList(pageListElement);
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1001,7 +1001,7 @@ namespace Azure.Storage.Blobs
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> GetPageRangesDiff(string snapshot = null, int? timeout = null, string prevsnapshot = null, string prevSnapshotUrl = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> GetPageRangesDiff(string snapshot = null, int? timeout = null, string prevsnapshot = null, string prevSnapshotUrl = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPageRangesDiffRequest(snapshot, timeout, prevsnapshot, prevSnapshotUrl, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, marker, maxresults);
             _pipeline.Send(message, cancellationToken);
@@ -1016,7 +1016,7 @@ namespace Azure.Storage.Blobs
                         {
                             value = PageList.DeserializePageList(pageListElement);
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1096,7 +1096,7 @@ namespace Azure.Storage.Blobs
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PageBlobResizeHeaders>> ResizeAsync(long blobContentLength, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<PageBlobResizeHeaders>> ResizeAsync(long blobContentLength, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateResizeRequest(blobContentLength, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1104,7 +1104,7 @@ namespace Azure.Storage.Blobs
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1124,7 +1124,7 @@ namespace Azure.Storage.Blobs
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PageBlobResizeHeaders> Resize(long blobContentLength, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<PageBlobResizeHeaders> Resize(long blobContentLength, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateResizeRequest(blobContentLength, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
             _pipeline.Send(message, cancellationToken);
@@ -1132,7 +1132,7 @@ namespace Azure.Storage.Blobs
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1196,7 +1196,7 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="blobSequenceNumber"> Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PageBlobUpdateSequenceNumberHeaders>> UpdateSequenceNumberAsync(SequenceNumberAction sequenceNumberAction, int? timeout = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, long? blobSequenceNumber = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<PageBlobUpdateSequenceNumberHeaders>> UpdateSequenceNumberAsync(SequenceNumberAction sequenceNumberAction, int? timeout = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, long? blobSequenceNumber = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateUpdateSequenceNumberRequest(sequenceNumberAction, timeout, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobSequenceNumber);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1204,7 +1204,7 @@ namespace Azure.Storage.Blobs
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1221,7 +1221,7 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="blobSequenceNumber"> Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PageBlobUpdateSequenceNumberHeaders> UpdateSequenceNumber(SequenceNumberAction sequenceNumberAction, int? timeout = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, long? blobSequenceNumber = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<PageBlobUpdateSequenceNumberHeaders> UpdateSequenceNumber(SequenceNumberAction sequenceNumberAction, int? timeout = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, long? blobSequenceNumber = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateUpdateSequenceNumberRequest(sequenceNumberAction, timeout, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, blobSequenceNumber);
             _pipeline.Send(message, cancellationToken);
@@ -1229,7 +1229,7 @@ namespace Azure.Storage.Blobs
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1284,7 +1284,7 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="copySource"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageBlobCopyIncrementalHeaders>> CopyIncrementalAsync(string copySource, int? timeout = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<PageBlobCopyIncrementalHeaders>> CopyIncrementalAsync(string copySource, int? timeout = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             if (copySource == null)
             {
@@ -1297,7 +1297,7 @@ namespace Azure.Storage.Blobs
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1313,7 +1313,7 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="copySource"/> is null. </exception>
-        public ResponseWithHeaders<PageBlobCopyIncrementalHeaders> CopyIncremental(string copySource, int? timeout = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<PageBlobCopyIncrementalHeaders> CopyIncremental(string copySource, int? timeout = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
         {
             if (copySource == null)
             {
@@ -1326,7 +1326,7 @@ namespace Azure.Storage.Blobs
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1389,7 +1389,7 @@ namespace Azure.Storage.Blobs
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders>> GetPageRangesNextPageAsync(string nextLink, string snapshot = null, int? timeout = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders>> GetPageRangesNextPageAsync(string nextLink, string snapshot = null, int? timeout = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1409,7 +1409,7 @@ namespace Azure.Storage.Blobs
                         {
                             value = PageList.DeserializePageList(pageListElement);
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1431,7 +1431,7 @@ namespace Azure.Storage.Blobs
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> GetPageRangesNextPage(string nextLink, string snapshot = null, int? timeout = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> GetPageRangesNextPage(string nextLink, string snapshot = null, int? timeout = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1451,7 +1451,7 @@ namespace Azure.Storage.Blobs
                         {
                             value = PageList.DeserializePageList(pageListElement);
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1521,7 +1521,7 @@ namespace Azure.Storage.Blobs
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders>> GetPageRangesDiffNextPageAsync(string nextLink, string snapshot = null, int? timeout = null, string prevsnapshot = null, string prevSnapshotUrl = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders>> GetPageRangesDiffNextPageAsync(string nextLink, string snapshot = null, int? timeout = null, string prevsnapshot = null, string prevSnapshotUrl = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1541,7 +1541,7 @@ namespace Azure.Storage.Blobs
                         {
                             value = PageList.DeserializePageList(pageListElement);
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1565,7 +1565,7 @@ namespace Azure.Storage.Blobs
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> GetPageRangesDiffNextPage(string nextLink, string snapshot = null, int? timeout = null, string prevsnapshot = null, string prevSnapshotUrl = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> GetPageRangesDiffNextPage(string nextLink, string snapshot = null, int? timeout = null, string prevsnapshot = null, string prevSnapshotUrl = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1585,7 +1585,7 @@ namespace Azure.Storage.Blobs
                         {
                             value = PageList.DeserializePageList(pageListElement);
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);

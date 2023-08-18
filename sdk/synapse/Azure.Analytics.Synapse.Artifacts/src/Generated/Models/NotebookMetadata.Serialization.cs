@@ -14,17 +14,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(NotebookMetadataConverter))]
-    public partial class NotebookMetadata : IUtf8JsonSerializable
+    public partial class NotebookMetadata : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kernelspec))
+            if (Core.Optional.IsDefined(Kernelspec))
             {
                 writer.WritePropertyName("kernelspec"u8);
                 writer.WriteObjectValue(Kernelspec);
             }
-            if (Optional.IsDefined(LanguageInfo))
+            if (Core.Optional.IsDefined(LanguageInfo))
             {
                 if (LanguageInfo != null)
                 {
@@ -50,8 +50,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<NotebookKernelSpec> kernelspec = default;
-            Optional<NotebookLanguageInfo> languageInfo = default;
+            Core.Optional<NotebookKernelSpec> kernelspec = default;
+            Core.Optional<NotebookLanguageInfo> languageInfo = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())

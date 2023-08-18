@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    internal partial class AppServiceBlobStorageTokenStore : IUtf8JsonSerializable
+    internal partial class AppServiceBlobStorageTokenStore : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SasUrlSettingName))
+            if (Core.Optional.IsDefined(SasUrlSettingName))
             {
                 writer.WritePropertyName("sasUrlSettingName"u8);
                 writer.WriteStringValue(SasUrlSettingName);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> sasUrlSettingName = default;
+            Core.Optional<string> sasUrlSettingName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sasUrlSettingName"u8))

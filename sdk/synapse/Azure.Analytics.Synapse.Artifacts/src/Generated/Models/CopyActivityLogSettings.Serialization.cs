@@ -13,17 +13,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(CopyActivityLogSettingsConverter))]
-    public partial class CopyActivityLogSettings : IUtf8JsonSerializable
+    public partial class CopyActivityLogSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LogLevel))
+            if (Core.Optional.IsDefined(LogLevel))
             {
                 writer.WritePropertyName("logLevel"u8);
                 writer.WriteObjectValue(LogLevel);
             }
-            if (Optional.IsDefined(EnableReliableLogging))
+            if (Core.Optional.IsDefined(EnableReliableLogging))
             {
                 writer.WritePropertyName("enableReliableLogging"u8);
                 writer.WriteObjectValue(EnableReliableLogging);
@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> logLevel = default;
-            Optional<object> enableReliableLogging = default;
+            Core.Optional<object> logLevel = default;
+            Core.Optional<object> enableReliableLogging = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logLevel"u8))

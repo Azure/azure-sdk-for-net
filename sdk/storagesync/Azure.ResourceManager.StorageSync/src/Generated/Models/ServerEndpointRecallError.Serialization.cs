@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<int> errorCode = default;
-            Optional<long> count = default;
+            Core.Optional<int> errorCode = default;
+            Core.Optional<long> count = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorCode"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     continue;
                 }
             }
-            return new ServerEndpointRecallError(Optional.ToNullable(errorCode), Optional.ToNullable(count));
+            return new ServerEndpointRecallError(Core.Optional.ToNullable(errorCode), Core.Optional.ToNullable(count));
         }
     }
 }

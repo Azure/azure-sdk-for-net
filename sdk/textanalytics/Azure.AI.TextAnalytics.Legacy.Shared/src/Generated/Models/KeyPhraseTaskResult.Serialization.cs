@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             {
                 return null;
             }
-            Optional<KeyPhraseResult> results = default;
+            Core.Optional<KeyPhraseResult> results = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"u8))

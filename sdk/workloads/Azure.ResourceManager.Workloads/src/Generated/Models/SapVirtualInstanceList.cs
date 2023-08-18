@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of SapVirtualInstanceList. </summary>
         internal SapVirtualInstanceList()
         {
-            Value = new ChangeTrackingList<SapVirtualInstanceData>();
+            Value = new Core.ChangeTrackingList<SapVirtualInstanceData>();
         }
 
         /// <summary> Initializes a new instance of SapVirtualInstanceList. </summary>

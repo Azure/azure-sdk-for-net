@@ -13,19 +13,19 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseMaintenanceWindowOptionData : IUtf8JsonSerializable
+    public partial class SynapseMaintenanceWindowOptionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (Core.Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(MaintenanceWindowCycles))
+            if (Core.Optional.IsCollectionDefined(MaintenanceWindowCycles))
             {
                 writer.WritePropertyName("maintenanceWindowCycles"u8);
                 writer.WriteStartArray();
@@ -35,27 +35,27 @@ namespace Azure.ResourceManager.Synapse
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MinDurationInMinutes))
+            if (Core.Optional.IsDefined(MinDurationInMinutes))
             {
                 writer.WritePropertyName("minDurationInMinutes"u8);
                 writer.WriteNumberValue(MinDurationInMinutes.Value);
             }
-            if (Optional.IsDefined(DefaultDurationInMinutes))
+            if (Core.Optional.IsDefined(DefaultDurationInMinutes))
             {
                 writer.WritePropertyName("defaultDurationInMinutes"u8);
                 writer.WriteNumberValue(DefaultDurationInMinutes.Value);
             }
-            if (Optional.IsDefined(MinCycles))
+            if (Core.Optional.IsDefined(MinCycles))
             {
                 writer.WritePropertyName("minCycles"u8);
                 writer.WriteNumberValue(MinCycles.Value);
             }
-            if (Optional.IsDefined(TimeGranularityInMinutes))
+            if (Core.Optional.IsDefined(TimeGranularityInMinutes))
             {
                 writer.WritePropertyName("timeGranularityInMinutes"u8);
                 writer.WriteNumberValue(TimeGranularityInMinutes.Value);
             }
-            if (Optional.IsDefined(AllowMultipleMaintenanceWindowsPerCycle))
+            if (Core.Optional.IsDefined(AllowMultipleMaintenanceWindowsPerCycle))
             {
                 writer.WritePropertyName("allowMultipleMaintenanceWindowsPerCycle"u8);
                 writer.WriteBooleanValue(AllowMultipleMaintenanceWindowsPerCycle.Value);
@@ -73,14 +73,14 @@ namespace Azure.ResourceManager.Synapse
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isEnabled = default;
-            Optional<IList<SynapseMaintenanceWindowTimeRange>> maintenanceWindowCycles = default;
-            Optional<int> minDurationInMinutes = default;
-            Optional<int> defaultDurationInMinutes = default;
-            Optional<int> minCycles = default;
-            Optional<int> timeGranularityInMinutes = default;
-            Optional<bool> allowMultipleMaintenanceWindowsPerCycle = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<bool> isEnabled = default;
+            Core.Optional<IList<SynapseMaintenanceWindowTimeRange>> maintenanceWindowCycles = default;
+            Core.Optional<int> minDurationInMinutes = default;
+            Core.Optional<int> defaultDurationInMinutes = default;
+            Core.Optional<int> minCycles = default;
+            Core.Optional<int> timeGranularityInMinutes = default;
+            Core.Optional<bool> allowMultipleMaintenanceWindowsPerCycle = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Synapse
                     continue;
                 }
             }
-            return new SynapseMaintenanceWindowOptionData(id, name, type, systemData.Value, Optional.ToNullable(isEnabled), Optional.ToList(maintenanceWindowCycles), Optional.ToNullable(minDurationInMinutes), Optional.ToNullable(defaultDurationInMinutes), Optional.ToNullable(minCycles), Optional.ToNullable(timeGranularityInMinutes), Optional.ToNullable(allowMultipleMaintenanceWindowsPerCycle));
+            return new SynapseMaintenanceWindowOptionData(id, name, type, systemData.Value, Core.Optional.ToNullable(isEnabled), Core.Optional.ToList(maintenanceWindowCycles), Core.Optional.ToNullable(minDurationInMinutes), Core.Optional.ToNullable(defaultDurationInMinutes), Core.Optional.ToNullable(minCycles), Core.Optional.ToNullable(timeGranularityInMinutes), Core.Optional.ToNullable(allowMultipleMaintenanceWindowsPerCycle));
         }
     }
 }

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceAadAllowedPrincipals : IUtf8JsonSerializable
+    public partial class AppServiceAadAllowedPrincipals : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Groups))
+            if (Core.Optional.IsCollectionDefined(Groups))
             {
                 writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Identities))
+            if (Core.Optional.IsCollectionDefined(Identities))
             {
                 writer.WritePropertyName("identities"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IList<string>> groups = default;
-            Optional<IList<string>> identities = default;
+            Core.Optional<IList<string>> groups = default;
+            Core.Optional<IList<string>> identities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groups"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceAadAllowedPrincipals(Optional.ToList(groups), Optional.ToList(identities));
+            return new AppServiceAadAllowedPrincipals(Core.Optional.ToList(groups), Core.Optional.ToList(identities));
         }
     }
 }

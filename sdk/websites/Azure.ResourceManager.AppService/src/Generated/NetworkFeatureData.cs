@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of NetworkFeatureData. </summary>
         public NetworkFeatureData()
         {
-            HybridConnections = new ChangeTrackingList<RelayServiceConnectionEntityData>();
-            HybridConnectionsV2 = new ChangeTrackingList<HybridConnectionData>();
+            HybridConnections = new Core.ChangeTrackingList<RelayServiceConnectionEntityData>();
+            HybridConnectionsV2 = new Core.ChangeTrackingList<HybridConnectionData>();
         }
 
         /// <summary> Initializes a new instance of NetworkFeatureData. </summary>

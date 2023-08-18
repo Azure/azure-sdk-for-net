@@ -12,12 +12,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceUsage : IUtf8JsonSerializable
+    public partial class AppServiceUsage : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -34,19 +34,19 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> resourceName = default;
-            Optional<string> unit = default;
-            Optional<long> currentValue = default;
-            Optional<long> limit = default;
-            Optional<DateTimeOffset> nextResetTime = default;
-            Optional<ComputeModeOption> computeMode = default;
-            Optional<string> siteMode = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> resourceName = default;
+            Core.Optional<string> unit = default;
+            Core.Optional<long> currentValue = default;
+            Core.Optional<long> limit = default;
+            Core.Optional<DateTimeOffset> nextResetTime = default;
+            Core.Optional<ComputeModeOption> computeMode = default;
+            Core.Optional<string> siteMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceUsage(id, name, type, systemData.Value, displayName.Value, resourceName.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), Optional.ToNullable(nextResetTime), Optional.ToNullable(computeMode), siteMode.Value, kind.Value);
+            return new AppServiceUsage(id, name, type, systemData.Value, displayName.Value, resourceName.Value, unit.Value, Core.Optional.ToNullable(currentValue), Core.Optional.ToNullable(limit), Core.Optional.ToNullable(nextResetTime), Core.Optional.ToNullable(computeMode), siteMode.Value, kind.Value);
         }
     }
 }

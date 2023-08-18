@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = await _amlFileSystemamlFilesystemsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageCacheArmOperation(_amlFileSystemamlFilesystemsClientDiagnostics, Pipeline, _amlFileSystemamlFilesystemsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageCacheArmOperation(_amlFileSystemamlFilesystemsClientDiagnostics, Pipeline, _amlFileSystemamlFilesystemsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = _amlFileSystemamlFilesystemsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new StorageCacheArmOperation(_amlFileSystemamlFilesystemsClientDiagnostics, Pipeline, _amlFileSystemamlFilesystemsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageCacheArmOperation(_amlFileSystemamlFilesystemsClientDiagnostics, Pipeline, _amlFileSystemamlFilesystemsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = await _amlFileSystemamlFilesystemsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageCacheArmOperation<AmlFileSystemResource>(new AmlFileSystemOperationSource(Client), _amlFileSystemamlFilesystemsClientDiagnostics, Pipeline, _amlFileSystemamlFilesystemsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StorageCacheArmOperation<AmlFileSystemResource>(new AmlFileSystemOperationSource(Client), _amlFileSystemamlFilesystemsClientDiagnostics, Pipeline, _amlFileSystemamlFilesystemsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = _amlFileSystemamlFilesystemsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new StorageCacheArmOperation<AmlFileSystemResource>(new AmlFileSystemOperationSource(Client), _amlFileSystemamlFilesystemsClientDiagnostics, Pipeline, _amlFileSystemamlFilesystemsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StorageCacheArmOperation<AmlFileSystemResource>(new AmlFileSystemOperationSource(Client), _amlFileSystemamlFilesystemsClientDiagnostics, Pipeline, _amlFileSystemamlFilesystemsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

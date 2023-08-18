@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BlobServiceData>> value = default;
+            Core.Optional<IReadOnlyList<BlobServiceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new BlobServiceItems(Optional.ToList(value));
+            return new BlobServiceItems(Core.Optional.ToList(value));
         }
     }
 }

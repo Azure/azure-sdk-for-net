@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
-    internal class SynapseClusterPrincipalAssignmentOperationSource : IOperationSource<SynapseClusterPrincipalAssignmentResource>
+    internal class SynapseClusterPrincipalAssignmentOperationSource : Core.IOperationSource<SynapseClusterPrincipalAssignmentResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Synapse
             _client = client;
         }
 
-        SynapseClusterPrincipalAssignmentResource IOperationSource<SynapseClusterPrincipalAssignmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SynapseClusterPrincipalAssignmentResource Core.IOperationSource<SynapseClusterPrincipalAssignmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SynapseClusterPrincipalAssignmentData.DeserializeSynapseClusterPrincipalAssignmentData(document.RootElement);
             return new SynapseClusterPrincipalAssignmentResource(_client, data);
         }
 
-        async ValueTask<SynapseClusterPrincipalAssignmentResource> IOperationSource<SynapseClusterPrincipalAssignmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SynapseClusterPrincipalAssignmentResource> Core.IOperationSource<SynapseClusterPrincipalAssignmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SynapseClusterPrincipalAssignmentData.DeserializeSynapseClusterPrincipalAssignmentData(document.RootElement);

@@ -13,27 +13,27 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SsisObjectMetadataStatusResponseConverter))]
-    public partial class SsisObjectMetadataStatusResponse : IUtf8JsonSerializable
+    public partial class SsisObjectMetadataStatusResponse : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStringValue(Properties);
             }
-            if (Optional.IsDefined(Error))
+            if (Core.Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);
@@ -47,10 +47,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<string> name = default;
-            Optional<string> properties = default;
-            Optional<string> error = default;
+            Core.Optional<string> status = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> properties = default;
+            Core.Optional<string> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))

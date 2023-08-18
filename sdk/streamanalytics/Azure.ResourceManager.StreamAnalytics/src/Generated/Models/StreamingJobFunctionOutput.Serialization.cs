@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamingJobFunctionOutput : IUtf8JsonSerializable
+    public partial class StreamingJobFunctionOutput : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataType))
+            if (Core.Optional.IsDefined(DataType))
             {
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<string> dataType = default;
+            Core.Optional<string> dataType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataType"u8))

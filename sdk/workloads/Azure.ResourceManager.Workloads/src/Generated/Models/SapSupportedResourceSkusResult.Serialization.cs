@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SapSupportedSku>> supportedSkus = default;
+            Core.Optional<IReadOnlyList<SapSupportedSku>> supportedSkus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("supportedSkus"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new SapSupportedResourceSkusResult(Optional.ToList(supportedSkus));
+            return new SapSupportedResourceSkusResult(Core.Optional.ToList(supportedSkus));
         }
     }
 }

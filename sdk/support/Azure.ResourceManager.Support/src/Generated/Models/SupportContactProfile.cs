@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Support.Models
             LastName = lastName;
             PreferredContactMethod = preferredContactMethod;
             PrimaryEmailAddress = primaryEmailAddress;
-            AdditionalEmailAddresses = new ChangeTrackingList<string>();
+            AdditionalEmailAddresses = new Core.ChangeTrackingList<string>();
             PreferredTimeZone = preferredTimeZone;
             Country = country;
             PreferredSupportLanguage = preferredSupportLanguage;

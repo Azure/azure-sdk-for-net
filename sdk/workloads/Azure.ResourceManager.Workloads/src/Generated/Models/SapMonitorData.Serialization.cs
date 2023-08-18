@@ -14,17 +14,17 @@ using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
 {
-    public partial class SapMonitorData : IUtf8JsonSerializable
+    public partial class SapMonitorData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,32 +39,32 @@ namespace Azure.ResourceManager.Workloads
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AppLocation))
+            if (Core.Optional.IsDefined(AppLocation))
             {
                 writer.WritePropertyName("appLocation"u8);
                 writer.WriteStringValue(AppLocation.Value);
             }
-            if (Optional.IsDefined(RoutingPreference))
+            if (Core.Optional.IsDefined(RoutingPreference))
             {
                 writer.WritePropertyName("routingPreference"u8);
                 writer.WriteStringValue(RoutingPreference.Value.ToString());
             }
-            if (Optional.IsDefined(ZoneRedundancyPreference))
+            if (Core.Optional.IsDefined(ZoneRedundancyPreference))
             {
                 writer.WritePropertyName("zoneRedundancyPreference"u8);
                 writer.WriteStringValue(ZoneRedundancyPreference);
             }
-            if (Optional.IsDefined(ManagedResourceGroupConfiguration))
+            if (Core.Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
                 writer.WriteObjectValue(ManagedResourceGroupConfiguration);
             }
-            if (Optional.IsDefined(LogAnalyticsWorkspaceArmId))
+            if (Core.Optional.IsDefined(LogAnalyticsWorkspaceArmId))
             {
                 writer.WritePropertyName("logAnalyticsWorkspaceArmId"u8);
                 writer.WriteStringValue(LogAnalyticsWorkspaceArmId);
             }
-            if (Optional.IsDefined(MonitorSubnetId))
+            if (Core.Optional.IsDefined(MonitorSubnetId))
             {
                 writer.WritePropertyName("monitorSubnet"u8);
                 writer.WriteStringValue(MonitorSubnetId);
@@ -79,23 +79,23 @@ namespace Azure.ResourceManager.Workloads
             {
                 return null;
             }
-            Optional<UserAssignedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<UserAssignedServiceIdentity> identity = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<WorkloadMonitorProvisioningState> provisioningState = default;
-            Optional<ResponseError> errors = default;
-            Optional<AzureLocation> appLocation = default;
-            Optional<SapRoutingPreference> routingPreference = default;
-            Optional<string> zoneRedundancyPreference = default;
-            Optional<ManagedRGConfiguration> managedResourceGroupConfiguration = default;
-            Optional<ResourceIdentifier> logAnalyticsWorkspaceArmId = default;
-            Optional<ResourceIdentifier> monitorSubnet = default;
-            Optional<ResourceIdentifier> msiArmId = default;
-            Optional<ResourceIdentifier> storageAccountArmId = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<WorkloadMonitorProvisioningState> provisioningState = default;
+            Core.Optional<ResponseError> errors = default;
+            Core.Optional<AzureLocation> appLocation = default;
+            Core.Optional<SapRoutingPreference> routingPreference = default;
+            Core.Optional<string> zoneRedundancyPreference = default;
+            Core.Optional<ManagedRGConfiguration> managedResourceGroupConfiguration = default;
+            Core.Optional<ResourceIdentifier> logAnalyticsWorkspaceArmId = default;
+            Core.Optional<ResourceIdentifier> monitorSubnet = default;
+            Core.Optional<ResourceIdentifier> msiArmId = default;
+            Core.Optional<ResourceIdentifier> storageAccountArmId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Workloads
                     continue;
                 }
             }
-            return new SapMonitorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, Optional.ToNullable(provisioningState), errors.Value, Optional.ToNullable(appLocation), Optional.ToNullable(routingPreference), zoneRedundancyPreference.Value, managedResourceGroupConfiguration.Value, logAnalyticsWorkspaceArmId.Value, monitorSubnet.Value, msiArmId.Value, storageAccountArmId.Value);
+            return new SapMonitorData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity.Value, Core.Optional.ToNullable(provisioningState), errors.Value, Core.Optional.ToNullable(appLocation), Core.Optional.ToNullable(routingPreference), zoneRedundancyPreference.Value, managedResourceGroupConfiguration.Value, logAnalyticsWorkspaceArmId.Value, monitorSubnet.Value, msiArmId.Value, storageAccountArmId.Value);
         }
     }
 }

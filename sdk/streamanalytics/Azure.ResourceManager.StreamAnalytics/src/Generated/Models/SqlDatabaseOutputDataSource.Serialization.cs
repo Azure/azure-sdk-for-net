@@ -10,51 +10,51 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class SqlDatabaseOutputDataSource : IUtf8JsonSerializable
+    public partial class SqlDatabaseOutputDataSource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(OutputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Server))
+            if (Core.Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
                 writer.WriteStringValue(Server);
             }
-            if (Optional.IsDefined(Database))
+            if (Core.Optional.IsDefined(Database))
             {
                 writer.WritePropertyName("database"u8);
                 writer.WriteStringValue(Database);
             }
-            if (Optional.IsDefined(User))
+            if (Core.Optional.IsDefined(User))
             {
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
             }
-            if (Optional.IsDefined(Password))
+            if (Core.Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(Table))
+            if (Core.Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
                 writer.WriteStringValue(Table);
             }
-            if (Optional.IsDefined(MaxBatchCount))
+            if (Core.Optional.IsDefined(MaxBatchCount))
             {
                 writer.WritePropertyName("maxBatchCount"u8);
                 writer.WriteNumberValue(MaxBatchCount.Value);
             }
-            if (Optional.IsDefined(MaxWriterCount))
+            if (Core.Optional.IsDefined(MaxWriterCount))
             {
                 writer.WritePropertyName("maxWriterCount"u8);
                 writer.WriteNumberValue(MaxWriterCount.Value);
             }
-            if (Optional.IsDefined(AuthenticationMode))
+            if (Core.Optional.IsDefined(AuthenticationMode))
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> server = default;
-            Optional<string> database = default;
-            Optional<string> user = default;
-            Optional<string> password = default;
-            Optional<string> table = default;
-            Optional<int> maxBatchCount = default;
-            Optional<int> maxWriterCount = default;
-            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
+            Core.Optional<string> server = default;
+            Core.Optional<string> database = default;
+            Core.Optional<string> user = default;
+            Core.Optional<string> password = default;
+            Core.Optional<string> table = default;
+            Core.Optional<int> maxBatchCount = default;
+            Core.Optional<int> maxWriterCount = default;
+            Core.Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new SqlDatabaseOutputDataSource(type, server.Value, database.Value, user.Value, password.Value, table.Value, Optional.ToNullable(maxBatchCount), Optional.ToNullable(maxWriterCount), Optional.ToNullable(authenticationMode));
+            return new SqlDatabaseOutputDataSource(type, server.Value, database.Value, user.Value, password.Value, table.Value, Core.Optional.ToNullable(maxBatchCount), Core.Optional.ToNullable(maxWriterCount), Core.Optional.ToNullable(authenticationMode));
         }
     }
 }

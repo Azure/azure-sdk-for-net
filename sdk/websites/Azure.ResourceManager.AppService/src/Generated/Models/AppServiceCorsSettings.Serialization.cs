@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceCorsSettings : IUtf8JsonSerializable
+    public partial class AppServiceCorsSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AllowedOrigins))
+            if (Core.Optional.IsCollectionDefined(AllowedOrigins))
             {
                 writer.WritePropertyName("allowedOrigins"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsCredentialsSupported))
+            if (Core.Optional.IsDefined(IsCredentialsSupported))
             {
                 writer.WritePropertyName("supportCredentials"u8);
                 writer.WriteBooleanValue(IsCredentialsSupported.Value);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IList<string>> allowedOrigins = default;
-            Optional<bool> supportCredentials = default;
+            Core.Optional<IList<string>> allowedOrigins = default;
+            Core.Optional<bool> supportCredentials = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedOrigins"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceCorsSettings(Optional.ToList(allowedOrigins), Optional.ToNullable(supportCredentials));
+            return new AppServiceCorsSettings(Core.Optional.ToList(allowedOrigins), Core.Optional.ToNullable(supportCredentials));
         }
     }
 }

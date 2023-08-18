@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class LegalHold : IUtf8JsonSerializable
+    public partial class LegalHold : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("tags"u8);
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(AllowProtectedAppendWritesAll))
+            if (Core.Optional.IsDefined(AllowProtectedAppendWritesAll))
             {
                 writer.WritePropertyName("allowProtectedAppendWritesAll"u8);
                 writer.WriteBooleanValue(AllowProtectedAppendWritesAll.Value);
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<bool> hasLegalHold = default;
+            Core.Optional<bool> hasLegalHold = default;
             IList<string> tags = default;
-            Optional<bool> allowProtectedAppendWritesAll = default;
+            Core.Optional<bool> allowProtectedAppendWritesAll = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hasLegalHold"u8))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new LegalHold(Optional.ToNullable(hasLegalHold), tags, Optional.ToNullable(allowProtectedAppendWritesAll));
+            return new LegalHold(Core.Optional.ToNullable(hasLegalHold), tags, Core.Optional.ToNullable(allowProtectedAppendWritesAll));
         }
     }
 }

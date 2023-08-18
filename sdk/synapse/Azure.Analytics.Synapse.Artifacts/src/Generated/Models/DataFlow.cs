@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DataFlow. </summary>
         public DataFlow()
         {
-            Annotations = new ChangeTrackingList<object>();
+            Annotations = new Core.ChangeTrackingList<object>();
         }
 
         /// <summary> Initializes a new instance of DataFlow. </summary>

@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<RequestStatus> status = default;
+            Core.Optional<RequestStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new MetastoreUpdationResponse(Optional.ToNullable(status));
+            return new MetastoreUpdationResponse(Core.Optional.ToNullable(status));
         }
 
         internal partial class MetastoreUpdationResponseConverter : JsonConverter<MetastoreUpdationResponse>

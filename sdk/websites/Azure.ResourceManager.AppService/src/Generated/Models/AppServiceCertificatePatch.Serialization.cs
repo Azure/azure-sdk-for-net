@@ -11,24 +11,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceCertificatePatch : IUtf8JsonSerializable
+    public partial class AppServiceCertificatePatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyVaultId))
+            if (Core.Optional.IsDefined(KeyVaultId))
             {
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
             }
-            if (Optional.IsDefined(KeyVaultSecretName))
+            if (Core.Optional.IsDefined(KeyVaultSecretName))
             {
                 writer.WritePropertyName("keyVaultSecretName"u8);
                 writer.WriteStringValue(KeyVaultSecretName);
@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> keyVaultId = default;
-            Optional<string> keyVaultSecretName = default;
-            Optional<KeyVaultSecretStatus> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ResourceIdentifier> keyVaultId = default;
+            Core.Optional<string> keyVaultSecretName = default;
+            Core.Optional<KeyVaultSecretStatus> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceCertificatePatch(id, name, type, systemData.Value, keyVaultId.Value, keyVaultSecretName.Value, Optional.ToNullable(provisioningState), kind.Value);
+            return new AppServiceCertificatePatch(id, name, type, systemData.Value, keyVaultId.Value, keyVaultSecretName.Value, Core.Optional.ToNullable(provisioningState), kind.Value);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <summary> Initializes a new instance of StorageSyncServicePatch. </summary>
         public StorageSyncServicePatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The user-specified tags associated with the storage sync service. </summary>

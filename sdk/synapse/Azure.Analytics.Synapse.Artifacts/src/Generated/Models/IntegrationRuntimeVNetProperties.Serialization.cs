@@ -14,22 +14,22 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(IntegrationRuntimeVNetPropertiesConverter))]
-    public partial class IntegrationRuntimeVNetProperties : IUtf8JsonSerializable
+    public partial class IntegrationRuntimeVNetProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(VNetId))
+            if (Core.Optional.IsDefined(VNetId))
             {
                 writer.WritePropertyName("vNetId"u8);
                 writer.WriteStringValue(VNetId);
             }
-            if (Optional.IsDefined(Subnet))
+            if (Core.Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteStringValue(Subnet);
             }
-            if (Optional.IsCollectionDefined(PublicIPs))
+            if (Core.Optional.IsCollectionDefined(PublicIPs))
             {
                 writer.WritePropertyName("publicIPs"u8);
                 writer.WriteStartArray();
@@ -53,9 +53,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> vNetId = default;
-            Optional<string> subnet = default;
-            Optional<IList<string>> publicIPs = default;
+            Core.Optional<string> vNetId = default;
+            Core.Optional<string> subnet = default;
+            Core.Optional<IList<string>> publicIPs = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeVNetProperties(vNetId.Value, subnet.Value, Optional.ToList(publicIPs), additionalProperties);
+            return new IntegrationRuntimeVNetProperties(vNetId.Value, subnet.Value, Core.Optional.ToList(publicIPs), additionalProperties);
         }
 
         internal partial class IntegrationRuntimeVNetPropertiesConverter : JsonConverter<IntegrationRuntimeVNetProperties>

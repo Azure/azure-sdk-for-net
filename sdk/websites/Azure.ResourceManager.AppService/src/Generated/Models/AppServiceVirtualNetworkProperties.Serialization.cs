@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> vnetResourceId = default;
-            Optional<string> certThumbprint = default;
-            Optional<string> certBlob = default;
-            Optional<IReadOnlyList<AppServiceVirtualNetworkRoute>> routes = default;
-            Optional<bool> resyncRequired = default;
-            Optional<string> dnsServers = default;
-            Optional<bool> isSwift = default;
+            Core.Optional<ResourceIdentifier> vnetResourceId = default;
+            Core.Optional<string> certThumbprint = default;
+            Core.Optional<string> certBlob = default;
+            Core.Optional<IReadOnlyList<AppServiceVirtualNetworkRoute>> routes = default;
+            Core.Optional<bool> resyncRequired = default;
+            Core.Optional<string> dnsServers = default;
+            Core.Optional<bool> isSwift = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vnetResourceId"u8))
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceVirtualNetworkProperties(vnetResourceId.Value, certThumbprint.Value, certBlob.Value, Optional.ToList(routes), Optional.ToNullable(resyncRequired), dnsServers.Value, Optional.ToNullable(isSwift));
+            return new AppServiceVirtualNetworkProperties(vnetResourceId.Value, certThumbprint.Value, certBlob.Value, Core.Optional.ToList(routes), Core.Optional.ToNullable(resyncRequired), dnsServers.Value, Core.Optional.ToNullable(isSwift));
         }
     }
 }

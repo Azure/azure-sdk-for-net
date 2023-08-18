@@ -13,19 +13,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class TriggeredJobHistoryData : IUtf8JsonSerializable
+    public partial class TriggeredJobHistoryData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Runs))
+            if (Core.Optional.IsCollectionDefined(Runs))
             {
                 writer.WritePropertyName("runs"u8);
                 writer.WriteStartArray();
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<TriggeredJobRun>> runs = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IList<TriggeredJobRun>> runs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new TriggeredJobHistoryData(id, name, type, systemData.Value, Optional.ToList(runs), kind.Value);
+            return new TriggeredJobHistoryData(id, name, type, systemData.Value, Core.Optional.ToList(runs), kind.Value);
         }
     }
 }

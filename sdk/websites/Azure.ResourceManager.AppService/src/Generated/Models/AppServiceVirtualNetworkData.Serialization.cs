@@ -13,34 +13,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class AppServiceVirtualNetworkData : IUtf8JsonSerializable
+    public partial class AppServiceVirtualNetworkData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(VnetResourceId))
+            if (Core.Optional.IsDefined(VnetResourceId))
             {
                 writer.WritePropertyName("vnetResourceId"u8);
                 writer.WriteStringValue(VnetResourceId);
             }
-            if (Optional.IsDefined(CertBlob))
+            if (Core.Optional.IsDefined(CertBlob))
             {
                 writer.WritePropertyName("certBlob"u8);
                 writer.WriteStringValue(CertBlob);
             }
-            if (Optional.IsDefined(DnsServers))
+            if (Core.Optional.IsDefined(DnsServers))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStringValue(DnsServers);
             }
-            if (Optional.IsDefined(IsSwift))
+            if (Core.Optional.IsDefined(IsSwift))
             {
                 writer.WritePropertyName("isSwift"u8);
                 writer.WriteBooleanValue(IsSwift.Value);
@@ -55,18 +55,18 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> vnetResourceId = default;
-            Optional<string> certThumbprint = default;
-            Optional<string> certBlob = default;
-            Optional<IReadOnlyList<AppServiceVirtualNetworkRoute>> routes = default;
-            Optional<bool> resyncRequired = default;
-            Optional<string> dnsServers = default;
-            Optional<bool> isSwift = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ResourceIdentifier> vnetResourceId = default;
+            Core.Optional<string> certThumbprint = default;
+            Core.Optional<string> certBlob = default;
+            Core.Optional<IReadOnlyList<AppServiceVirtualNetworkRoute>> routes = default;
+            Core.Optional<bool> resyncRequired = default;
+            Core.Optional<string> dnsServers = default;
+            Core.Optional<bool> isSwift = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new AppServiceVirtualNetworkData(id, name, type, systemData.Value, vnetResourceId.Value, certThumbprint.Value, certBlob.Value, Optional.ToList(routes), Optional.ToNullable(resyncRequired), dnsServers.Value, Optional.ToNullable(isSwift), kind.Value);
+            return new AppServiceVirtualNetworkData(id, name, type, systemData.Value, vnetResourceId.Value, certThumbprint.Value, certBlob.Value, Core.Optional.ToList(routes), Core.Optional.ToNullable(resyncRequired), dnsServers.Value, Core.Optional.ToNullable(isSwift), kind.Value);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             {
                 return null;
             }
-            Optional<EntityLinkingResult> results = default;
+            Core.Optional<EntityLinkingResult> results = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"u8))

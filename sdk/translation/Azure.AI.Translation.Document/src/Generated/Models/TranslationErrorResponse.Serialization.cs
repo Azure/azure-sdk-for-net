@@ -18,7 +18,7 @@ namespace Azure.AI.Translation.Document.Models
             {
                 return null;
             }
-            Optional<TranslationError> error = default;
+            Core.Optional<TranslationError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))

@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    public partial class TenantPolicyCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class TenantPolicyCreateOrUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BlockSubscriptionsLeavingTenant))
+            if (Core.Optional.IsDefined(BlockSubscriptionsLeavingTenant))
             {
                 writer.WritePropertyName("blockSubscriptionsLeavingTenant"u8);
                 writer.WriteBooleanValue(BlockSubscriptionsLeavingTenant.Value);
             }
-            if (Optional.IsDefined(BlockSubscriptionsIntoTenant))
+            if (Core.Optional.IsDefined(BlockSubscriptionsIntoTenant))
             {
                 writer.WritePropertyName("blockSubscriptionsIntoTenant"u8);
                 writer.WriteBooleanValue(BlockSubscriptionsIntoTenant.Value);
             }
-            if (Optional.IsCollectionDefined(ExemptedPrincipals))
+            if (Core.Optional.IsCollectionDefined(ExemptedPrincipals))
             {
                 writer.WritePropertyName("exemptedPrincipals"u8);
                 writer.WriteStartArray();

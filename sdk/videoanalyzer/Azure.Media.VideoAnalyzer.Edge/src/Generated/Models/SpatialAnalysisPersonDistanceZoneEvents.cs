@@ -26,7 +26,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Argument.AssertNotNull(zone, nameof(zone));
 
             Zone = zone;
-            Events = new ChangeTrackingList<SpatialAnalysisPersonDistanceEvent>();
+            Events = new Core.ChangeTrackingList<SpatialAnalysisPersonDistanceEvent>();
         }
 
         /// <summary> Initializes a new instance of SpatialAnalysisPersonDistanceZoneEvents. </summary>

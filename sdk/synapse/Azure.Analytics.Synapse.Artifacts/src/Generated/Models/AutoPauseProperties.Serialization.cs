@@ -13,17 +13,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AutoPausePropertiesConverter))]
-    public partial class AutoPauseProperties : IUtf8JsonSerializable
+    public partial class AutoPauseProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DelayInMinutes))
+            if (Core.Optional.IsDefined(DelayInMinutes))
             {
                 writer.WritePropertyName("delayInMinutes"u8);
                 writer.WriteNumberValue(DelayInMinutes.Value);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Core.Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<int> delayInMinutes = default;
-            Optional<bool> enabled = default;
+            Core.Optional<int> delayInMinutes = default;
+            Core.Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("delayInMinutes"u8))
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new AutoPauseProperties(Optional.ToNullable(delayInMinutes), Optional.ToNullable(enabled));
+            return new AutoPauseProperties(Core.Optional.ToNullable(delayInMinutes), Core.Optional.ToNullable(enabled));
         }
 
         internal partial class AutoPausePropertiesConverter : JsonConverter<AutoPauseProperties>

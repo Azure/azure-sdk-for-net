@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of StreamAnalyticsPrivateEndpointProperties. </summary>
         public StreamAnalyticsPrivateEndpointProperties()
         {
-            ManualPrivateLinkServiceConnections = new ChangeTrackingList<StreamAnalyticsPrivateLinkServiceConnection>();
+            ManualPrivateLinkServiceConnections = new Core.ChangeTrackingList<StreamAnalyticsPrivateLinkServiceConnection>();
         }
 
         /// <summary> Initializes a new instance of StreamAnalyticsPrivateEndpointProperties. </summary>

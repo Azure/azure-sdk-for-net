@@ -13,34 +13,34 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseSensitivityLabelData : IUtf8JsonSerializable
+    public partial class SynapseSensitivityLabelData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(LabelName))
+            if (Core.Optional.IsDefined(LabelName))
             {
                 writer.WritePropertyName("labelName"u8);
                 writer.WriteStringValue(LabelName);
             }
-            if (Optional.IsDefined(LabelId))
+            if (Core.Optional.IsDefined(LabelId))
             {
                 writer.WritePropertyName("labelId"u8);
                 writer.WriteStringValue(LabelId.Value);
             }
-            if (Optional.IsDefined(InformationType))
+            if (Core.Optional.IsDefined(InformationType))
             {
                 writer.WritePropertyName("informationType"u8);
                 writer.WriteStringValue(InformationType);
             }
-            if (Optional.IsDefined(InformationTypeId))
+            if (Core.Optional.IsDefined(InformationTypeId))
             {
                 writer.WritePropertyName("informationTypeId"u8);
                 writer.WriteStringValue(InformationTypeId.Value);
             }
-            if (Optional.IsDefined(Rank))
+            if (Core.Optional.IsDefined(Rank))
             {
                 writer.WritePropertyName("rank"u8);
                 writer.WriteStringValue(Rank.Value.ToSerialString());
@@ -55,20 +55,20 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<string> managedBy = default;
+            Core.Optional<string> managedBy = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> schemaName = default;
-            Optional<string> tableName = default;
-            Optional<string> columnName = default;
-            Optional<string> labelName = default;
-            Optional<Guid> labelId = default;
-            Optional<string> informationType = default;
-            Optional<Guid> informationTypeId = default;
-            Optional<bool> isDisabled = default;
-            Optional<SynapseSensitivityLabelRank> rank = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> schemaName = default;
+            Core.Optional<string> tableName = default;
+            Core.Optional<string> columnName = default;
+            Core.Optional<string> labelName = default;
+            Core.Optional<Guid> labelId = default;
+            Core.Optional<string> informationType = default;
+            Core.Optional<Guid> informationTypeId = default;
+            Core.Optional<bool> isDisabled = default;
+            Core.Optional<SynapseSensitivityLabelRank> rank = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Synapse
                     continue;
                 }
             }
-            return new SynapseSensitivityLabelData(id, name, type, systemData.Value, managedBy.Value, schemaName.Value, tableName.Value, columnName.Value, labelName.Value, Optional.ToNullable(labelId), informationType.Value, Optional.ToNullable(informationTypeId), Optional.ToNullable(isDisabled), Optional.ToNullable(rank));
+            return new SynapseSensitivityLabelData(id, name, type, systemData.Value, managedBy.Value, schemaName.Value, tableName.Value, columnName.Value, labelName.Value, Core.Optional.ToNullable(labelId), informationType.Value, Core.Optional.ToNullable(informationTypeId), Core.Optional.ToNullable(isDisabled), Core.Optional.ToNullable(rank));
         }
     }
 }

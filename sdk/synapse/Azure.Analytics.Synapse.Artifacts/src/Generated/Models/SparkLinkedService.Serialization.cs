@@ -14,24 +14,24 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SparkLinkedServiceConverter))]
-    public partial class SparkLinkedService : IUtf8JsonSerializable
+    public partial class SparkLinkedService : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(ConnectVia))
+            if (Core.Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (Core.Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (Core.Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -63,59 +63,59 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteObjectValue(Host);
             writer.WritePropertyName("port"u8);
             writer.WriteObjectValue(Port);
-            if (Optional.IsDefined(ServerType))
+            if (Core.Optional.IsDefined(ServerType))
             {
                 writer.WritePropertyName("serverType"u8);
                 writer.WriteStringValue(ServerType.Value.ToString());
             }
-            if (Optional.IsDefined(ThriftTransportProtocol))
+            if (Core.Optional.IsDefined(ThriftTransportProtocol))
             {
                 writer.WritePropertyName("thriftTransportProtocol"u8);
                 writer.WriteStringValue(ThriftTransportProtocol.Value.ToString());
             }
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
-            if (Optional.IsDefined(Username))
+            if (Core.Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteObjectValue(Username);
             }
-            if (Optional.IsDefined(Password))
+            if (Core.Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteObjectValue(Password);
             }
-            if (Optional.IsDefined(HttpPath))
+            if (Core.Optional.IsDefined(HttpPath))
             {
                 writer.WritePropertyName("httpPath"u8);
                 writer.WriteObjectValue(HttpPath);
             }
-            if (Optional.IsDefined(EnableSsl))
+            if (Core.Optional.IsDefined(EnableSsl))
             {
                 writer.WritePropertyName("enableSsl"u8);
                 writer.WriteObjectValue(EnableSsl);
             }
-            if (Optional.IsDefined(TrustedCertPath))
+            if (Core.Optional.IsDefined(TrustedCertPath))
             {
                 writer.WritePropertyName("trustedCertPath"u8);
                 writer.WriteObjectValue(TrustedCertPath);
             }
-            if (Optional.IsDefined(UseSystemTrustStore))
+            if (Core.Optional.IsDefined(UseSystemTrustStore))
             {
                 writer.WritePropertyName("useSystemTrustStore"u8);
                 writer.WriteObjectValue(UseSystemTrustStore);
             }
-            if (Optional.IsDefined(AllowHostNameCNMismatch))
+            if (Core.Optional.IsDefined(AllowHostNameCNMismatch))
             {
                 writer.WritePropertyName("allowHostNameCNMismatch"u8);
                 writer.WriteObjectValue(AllowHostNameCNMismatch);
             }
-            if (Optional.IsDefined(AllowSelfSignedServerCert))
+            if (Core.Optional.IsDefined(AllowSelfSignedServerCert))
             {
                 writer.WritePropertyName("allowSelfSignedServerCert"u8);
                 writer.WriteObjectValue(AllowSelfSignedServerCert);
             }
-            if (Optional.IsDefined(EncryptedCredential))
+            if (Core.Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteObjectValue(EncryptedCredential);
@@ -136,24 +136,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            Core.Optional<IntegrationRuntimeReference> connectVia = default;
+            Core.Optional<string> description = default;
+            Core.Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            Core.Optional<IList<object>> annotations = default;
             object host = default;
             object port = default;
-            Optional<SparkServerType> serverType = default;
-            Optional<SparkThriftTransportProtocol> thriftTransportProtocol = default;
+            Core.Optional<SparkServerType> serverType = default;
+            Core.Optional<SparkThriftTransportProtocol> thriftTransportProtocol = default;
             SparkAuthenticationType authenticationType = default;
-            Optional<object> username = default;
-            Optional<SecretBase> password = default;
-            Optional<object> httpPath = default;
-            Optional<object> enableSsl = default;
-            Optional<object> trustedCertPath = default;
-            Optional<object> useSystemTrustStore = default;
-            Optional<object> allowHostNameCNMismatch = default;
-            Optional<object> allowSelfSignedServerCert = default;
-            Optional<object> encryptedCredential = default;
+            Core.Optional<object> username = default;
+            Core.Optional<SecretBase> password = default;
+            Core.Optional<object> httpPath = default;
+            Core.Optional<object> enableSsl = default;
+            Core.Optional<object> trustedCertPath = default;
+            Core.Optional<object> useSystemTrustStore = default;
+            Core.Optional<object> allowHostNameCNMismatch = default;
+            Core.Optional<object> allowSelfSignedServerCert = default;
+            Core.Optional<object> encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -341,7 +341,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SparkLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, host, port, Optional.ToNullable(serverType), Optional.ToNullable(thriftTransportProtocol), authenticationType, username.Value, password.Value, httpPath.Value, enableSsl.Value, trustedCertPath.Value, useSystemTrustStore.Value, allowHostNameCNMismatch.Value, allowSelfSignedServerCert.Value, encryptedCredential.Value);
+            return new SparkLinkedService(type, connectVia.Value, description.Value, Core.Optional.ToDictionary(parameters), Core.Optional.ToList(annotations), additionalProperties, host, port, Core.Optional.ToNullable(serverType), Core.Optional.ToNullable(thriftTransportProtocol), authenticationType, username.Value, password.Value, httpPath.Value, enableSsl.Value, trustedCertPath.Value, useSystemTrustStore.Value, allowHostNameCNMismatch.Value, allowSelfSignedServerCert.Value, encryptedCredential.Value);
         }
 
         internal partial class SparkLinkedServiceConverter : JsonConverter<SparkLinkedService>

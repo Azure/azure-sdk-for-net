@@ -11,19 +11,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class TopLevelDomainData : IUtf8JsonSerializable
+    public partial class TopLevelDomainData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsDomainPrivacySupported))
+            if (Core.Optional.IsDefined(IsDomainPrivacySupported))
             {
                 writer.WritePropertyName("privacy"u8);
                 writer.WriteBooleanValue(IsDomainPrivacySupported.Value);
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> privacy = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<bool> privacy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new TopLevelDomainData(id, name, type, systemData.Value, Optional.ToNullable(privacy), kind.Value);
+            return new TopLevelDomainData(id, name, type, systemData.Value, Core.Optional.ToNullable(privacy), kind.Value);
         }
     }
 }

@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class WebPubSubEventHandler : IUtf8JsonSerializable
+    public partial class WebPubSubEventHandler : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("urlTemplate"u8);
             writer.WriteStringValue(UrlTemplate);
-            if (Optional.IsDefined(UserEventPattern))
+            if (Core.Optional.IsDefined(UserEventPattern))
             {
                 writer.WritePropertyName("userEventPattern"u8);
                 writer.WriteStringValue(UserEventPattern);
             }
-            if (Optional.IsCollectionDefined(SystemEvents))
+            if (Core.Optional.IsCollectionDefined(SystemEvents))
             {
                 writer.WritePropertyName("systemEvents"u8);
                 writer.WriteStartArray();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Auth))
+            if (Core.Optional.IsDefined(Auth))
             {
                 writer.WritePropertyName("auth"u8);
                 writer.WriteObjectValue(Auth);
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 return null;
             }
             string urlTemplate = default;
-            Optional<string> userEventPattern = default;
-            Optional<IList<string>> systemEvents = default;
-            Optional<UpstreamAuthSettings> auth = default;
+            Core.Optional<string> userEventPattern = default;
+            Core.Optional<IList<string>> systemEvents = default;
+            Core.Optional<UpstreamAuthSettings> auth = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("urlTemplate"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     continue;
                 }
             }
-            return new WebPubSubEventHandler(urlTemplate, userEventPattern.Value, Optional.ToList(systemEvents), auth.Value);
+            return new WebPubSubEventHandler(urlTemplate, userEventPattern.Value, Core.Optional.ToList(systemEvents), auth.Value);
         }
     }
 }

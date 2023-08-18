@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class UpdateModelSettingsRequest : IUtf8JsonSerializable
+    internal partial class UpdateModelSettingsRequest : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DefaultTypeId))
+            if (Core.Optional.IsDefined(DefaultTypeId))
             {
                 writer.WritePropertyName("defaultTypeId"u8);
                 writer.WriteStringValue(DefaultTypeId);

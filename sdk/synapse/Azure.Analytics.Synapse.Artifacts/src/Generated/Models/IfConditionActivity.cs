@@ -24,8 +24,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Argument.AssertNotNull(expression, nameof(expression));
 
             Expression = expression;
-            IfTrueActivities = new ChangeTrackingList<Activity>();
-            IfFalseActivities = new ChangeTrackingList<Activity>();
+            IfTrueActivities = new Core.ChangeTrackingList<Activity>();
+            IfFalseActivities = new Core.ChangeTrackingList<Activity>();
             Type = "IfCondition";
         }
 

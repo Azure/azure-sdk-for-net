@@ -10,39 +10,39 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    public partial class SubscriptionAliasCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class SubscriptionAliasCreateOrUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Workload))
+            if (Core.Optional.IsDefined(Workload))
             {
                 writer.WritePropertyName("workload"u8);
                 writer.WriteStringValue(Workload.Value.ToString());
             }
-            if (Optional.IsDefined(BillingScope))
+            if (Core.Optional.IsDefined(BillingScope))
             {
                 writer.WritePropertyName("billingScope"u8);
                 writer.WriteStringValue(BillingScope);
             }
-            if (Optional.IsDefined(SubscriptionId))
+            if (Core.Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (Optional.IsDefined(ResellerId))
+            if (Core.Optional.IsDefined(ResellerId))
             {
                 writer.WritePropertyName("resellerId"u8);
                 writer.WriteStringValue(ResellerId);
             }
-            if (Optional.IsDefined(AdditionalProperties))
+            if (Core.Optional.IsDefined(AdditionalProperties))
             {
                 writer.WritePropertyName("additionalProperties"u8);
                 writer.WriteObjectValue(AdditionalProperties);

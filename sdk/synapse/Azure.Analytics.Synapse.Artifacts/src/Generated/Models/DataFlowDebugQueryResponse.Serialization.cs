@@ -13,12 +13,12 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DataFlowDebugQueryResponseConverter))]
-    public partial class DataFlowDebugQueryResponse : IUtf8JsonSerializable
+    public partial class DataFlowDebugQueryResponse : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RunId))
+            if (Core.Optional.IsDefined(RunId))
             {
                 writer.WritePropertyName("runId"u8);
                 writer.WriteStringValue(RunId);
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> runId = default;
+            Core.Optional<string> runId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("runId"u8))

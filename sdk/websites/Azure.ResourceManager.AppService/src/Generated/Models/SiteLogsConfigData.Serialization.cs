@@ -12,34 +12,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class SiteLogsConfigData : IUtf8JsonSerializable
+    public partial class SiteLogsConfigData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ApplicationLogs))
+            if (Core.Optional.IsDefined(ApplicationLogs))
             {
                 writer.WritePropertyName("applicationLogs"u8);
                 writer.WriteObjectValue(ApplicationLogs);
             }
-            if (Optional.IsDefined(HttpLogs))
+            if (Core.Optional.IsDefined(HttpLogs))
             {
                 writer.WritePropertyName("httpLogs"u8);
                 writer.WriteObjectValue(HttpLogs);
             }
-            if (Optional.IsDefined(IsFailedRequestsTracing))
+            if (Core.Optional.IsDefined(IsFailedRequestsTracing))
             {
                 writer.WritePropertyName("failedRequestsTracing"u8);
                 writer.WriteObjectValue(IsFailedRequestsTracing);
             }
-            if (Optional.IsDefined(IsDetailedErrorMessages))
+            if (Core.Optional.IsDefined(IsDetailedErrorMessages))
             {
                 writer.WritePropertyName("detailedErrorMessages"u8);
                 writer.WriteObjectValue(IsDetailedErrorMessages);
@@ -54,15 +54,15 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ApplicationLogsConfig> applicationLogs = default;
-            Optional<AppServiceHttpLogsConfig> httpLogs = default;
-            Optional<WebAppEnabledConfig> failedRequestsTracing = default;
-            Optional<WebAppEnabledConfig> detailedErrorMessages = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ApplicationLogsConfig> applicationLogs = default;
+            Core.Optional<AppServiceHttpLogsConfig> httpLogs = default;
+            Core.Optional<WebAppEnabledConfig> failedRequestsTracing = default;
+            Core.Optional<WebAppEnabledConfig> detailedErrorMessages = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))

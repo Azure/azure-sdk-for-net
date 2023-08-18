@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class ArrowTextConfigurationInternal : IXmlSerializable
+    internal partial class ArrowTextConfigurationInternal : Core.IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "ArrowConfiguration");
             writer.WriteStartElement("Schema");

@@ -14,15 +14,15 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    internal class SynapseSsisObjectMetadataStatusResultOperationSource : IOperationSource<SynapseSsisObjectMetadataStatusResult>
+    internal class SynapseSsisObjectMetadataStatusResultOperationSource : Core.IOperationSource<SynapseSsisObjectMetadataStatusResult>
     {
-        SynapseSsisObjectMetadataStatusResult IOperationSource<SynapseSsisObjectMetadataStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        SynapseSsisObjectMetadataStatusResult Core.IOperationSource<SynapseSsisObjectMetadataStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return SynapseSsisObjectMetadataStatusResult.DeserializeSynapseSsisObjectMetadataStatusResult(document.RootElement);
         }
 
-        async ValueTask<SynapseSsisObjectMetadataStatusResult> IOperationSource<SynapseSsisObjectMetadataStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SynapseSsisObjectMetadataStatusResult> Core.IOperationSource<SynapseSsisObjectMetadataStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return SynapseSsisObjectMetadataStatusResult.DeserializeSynapseSsisObjectMetadataStatusResult(document.RootElement);

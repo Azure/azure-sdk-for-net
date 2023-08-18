@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<ServiceSpecification> serviceSpecification = default;
+            Core.Optional<ServiceSpecification> serviceSpecification = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceSpecification"u8))

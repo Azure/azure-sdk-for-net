@@ -17,9 +17,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of TriggerRun. </summary>
         internal TriggerRun()
         {
-            Properties = new ChangeTrackingDictionary<string, string>();
-            TriggeredPipelines = new ChangeTrackingDictionary<string, string>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            Properties = new Core.ChangeTrackingDictionary<string, string>();
+            TriggeredPipelines = new Core.ChangeTrackingDictionary<string, string>();
+            AdditionalProperties = new Core.ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of TriggerRun. </summary>

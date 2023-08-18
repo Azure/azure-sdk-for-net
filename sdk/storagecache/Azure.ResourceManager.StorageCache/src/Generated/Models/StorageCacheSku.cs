@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <summary> Initializes a new instance of StorageCacheSku. </summary>
         internal StorageCacheSku()
         {
-            Capabilities = new ChangeTrackingList<StorageCacheSkuCapability>();
-            Locations = new ChangeTrackingList<string>();
-            LocationInfo = new ChangeTrackingList<StorageCacheSkuLocationInfo>();
-            Restrictions = new ChangeTrackingList<StorageCacheRestriction>();
+            Capabilities = new Core.ChangeTrackingList<StorageCacheSkuCapability>();
+            Locations = new Core.ChangeTrackingList<string>();
+            LocationInfo = new Core.ChangeTrackingList<StorageCacheSkuLocationInfo>();
+            Restrictions = new Core.ChangeTrackingList<StorageCacheRestriction>();
         }
 
         /// <summary> Initializes a new instance of StorageCacheSku. </summary>

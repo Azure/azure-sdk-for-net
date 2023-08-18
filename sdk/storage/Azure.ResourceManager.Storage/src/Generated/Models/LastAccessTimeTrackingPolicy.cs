@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Storage.Models
         public LastAccessTimeTrackingPolicy(bool isEnabled)
         {
             IsEnabled = isEnabled;
-            BlobType = new ChangeTrackingList<string>();
+            BlobType = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of LastAccessTimeTrackingPolicy. </summary>

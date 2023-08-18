@@ -14,17 +14,17 @@ using Azure.ResourceManager.StoragePool.Models;
 
 namespace Azure.ResourceManager.StoragePool
 {
-    public partial class DiskPoolData : IUtf8JsonSerializable
+    public partial class DiskPoolData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.StoragePool
             writer.WriteEndArray();
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (Optional.IsCollectionDefined(Disks))
+            if (Core.Optional.IsCollectionDefined(Disks))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.StoragePool
             }
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
-            if (Optional.IsCollectionDefined(AdditionalCapabilities))
+            if (Core.Optional.IsCollectionDefined(AdditionalCapabilities))
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
                 writer.WriteStartArray();
@@ -80,21 +80,21 @@ namespace Azure.ResourceManager.StoragePool
             {
                 return null;
             }
-            Optional<StoragePoolSku> sku = default;
-            Optional<string> managedBy = default;
-            Optional<IReadOnlyList<string>> managedByExtended = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<StoragePoolSku> sku = default;
+            Core.Optional<string> managedBy = default;
+            Core.Optional<IReadOnlyList<string>> managedByExtended = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             DiskPoolIscsiTargetProvisioningState provisioningState = default;
             IList<string> availabilityZones = default;
             StoragePoolOperationalStatus status = default;
-            Optional<IList<WritableSubResource>> disks = default;
+            Core.Optional<IList<WritableSubResource>> disks = default;
             ResourceIdentifier subnetId = default;
-            Optional<IList<string>> additionalCapabilities = default;
+            Core.Optional<IList<string>> additionalCapabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.StoragePool
                     continue;
                 }
             }
-            return new DiskPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, managedBy.Value, Optional.ToList(managedByExtended), provisioningState, availabilityZones, status, Optional.ToList(disks), subnetId, Optional.ToList(additionalCapabilities));
+            return new DiskPoolData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku.Value, managedBy.Value, Core.Optional.ToList(managedByExtended), provisioningState, availabilityZones, status, Core.Optional.ToList(disks), subnetId, Core.Optional.ToList(additionalCapabilities));
         }
     }
 }

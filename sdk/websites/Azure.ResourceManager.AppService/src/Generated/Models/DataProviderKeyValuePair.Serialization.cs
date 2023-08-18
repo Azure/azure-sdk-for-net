@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> key = default;
-            Optional<BinaryData> value = default;
+            Core.Optional<string> key = default;
+            Core.Optional<BinaryData> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))

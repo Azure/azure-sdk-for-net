@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of SapLandscapeMonitorListResult. </summary>
         internal SapLandscapeMonitorListResult()
         {
-            Value = new ChangeTrackingList<SapLandscapeMonitorData>();
+            Value = new Core.ChangeTrackingList<SapLandscapeMonitorData>();
         }
 
         /// <summary> Initializes a new instance of SapLandscapeMonitorListResult. </summary>

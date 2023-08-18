@@ -13,24 +13,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class PublicCertificateData : IUtf8JsonSerializable
+    public partial class PublicCertificateData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Blob))
+            if (Core.Optional.IsDefined(Blob))
             {
                 writer.WritePropertyName("blob"u8);
                 writer.WriteBase64StringValue(Blob, "D");
             }
-            if (Optional.IsDefined(PublicCertificateLocation))
+            if (Core.Optional.IsDefined(PublicCertificateLocation))
             {
                 writer.WritePropertyName("publicCertificateLocation"u8);
                 writer.WriteStringValue(PublicCertificateLocation.Value.ToSerialString());
@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<byte[]> blob = default;
-            Optional<PublicCertificateLocation> publicCertificateLocation = default;
-            Optional<string> thumbprint = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<byte[]> blob = default;
+            Core.Optional<PublicCertificateLocation> publicCertificateLocation = default;
+            Core.Optional<string> thumbprint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new PublicCertificateData(id, name, type, systemData.Value, blob.Value, Optional.ToNullable(publicCertificateLocation), thumbprint.Value, kind.Value);
+            return new PublicCertificateData(id, name, type, systemData.Value, blob.Value, Core.Optional.ToNullable(publicCertificateLocation), thumbprint.Value, kind.Value);
         }
     }
 }

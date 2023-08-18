@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class BigDataPoolLibraryRequirements : IUtf8JsonSerializable
+    public partial class BigDataPoolLibraryRequirements : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Content))
+            if (Core.Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Optional.IsDefined(Filename))
+            if (Core.Optional.IsDefined(Filename))
             {
                 writer.WritePropertyName("filename"u8);
                 writer.WriteStringValue(Filename);
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> time = default;
-            Optional<string> content = default;
-            Optional<string> filename = default;
+            Core.Optional<DateTimeOffset> time = default;
+            Core.Optional<string> content = default;
+            Core.Optional<string> filename = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("time"u8))
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new BigDataPoolLibraryRequirements(Optional.ToNullable(time), content.Value, filename.Value);
+            return new BigDataPoolLibraryRequirements(Core.Optional.ToNullable(time), content.Value, filename.Value);
         }
     }
 }

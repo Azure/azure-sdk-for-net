@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StreamingJobInputData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<StreamingJobInputData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new StreamingJobInputListResult(Optional.ToList(value), nextLink.Value);
+            return new StreamingJobInputListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

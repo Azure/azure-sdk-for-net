@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SlowRequestsBasedTrigger : IUtf8JsonSerializable
+    public partial class SlowRequestsBasedTrigger : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TimeTaken))
+            if (Core.Optional.IsDefined(TimeTaken))
             {
                 writer.WritePropertyName("timeTaken"u8);
                 writer.WriteStringValue(TimeTaken);
             }
-            if (Optional.IsDefined(Path))
+            if (Core.Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsDefined(Count))
+            if (Core.Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(TimeInterval))
+            if (Core.Optional.IsDefined(TimeInterval))
             {
                 writer.WritePropertyName("timeInterval"u8);
                 writer.WriteStringValue(TimeInterval);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> timeTaken = default;
-            Optional<string> path = default;
-            Optional<int> count = default;
-            Optional<string> timeInterval = default;
+            Core.Optional<string> timeTaken = default;
+            Core.Optional<string> path = default;
+            Core.Optional<int> count = default;
+            Core.Optional<string> timeInterval = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeTaken"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new SlowRequestsBasedTrigger(timeTaken.Value, path.Value, Optional.ToNullable(count), timeInterval.Value);
+            return new SlowRequestsBasedTrigger(timeTaken.Value, path.Value, Core.Optional.ToNullable(count), timeInterval.Value);
         }
     }
 }

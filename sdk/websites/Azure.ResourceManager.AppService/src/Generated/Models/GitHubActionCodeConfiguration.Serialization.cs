@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class GitHubActionCodeConfiguration : IUtf8JsonSerializable
+    public partial class GitHubActionCodeConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RuntimeStack))
+            if (Core.Optional.IsDefined(RuntimeStack))
             {
                 writer.WritePropertyName("runtimeStack"u8);
                 writer.WriteStringValue(RuntimeStack);
             }
-            if (Optional.IsDefined(RuntimeVersion))
+            if (Core.Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> runtimeStack = default;
-            Optional<string> runtimeVersion = default;
+            Core.Optional<string> runtimeStack = default;
+            Core.Optional<string> runtimeVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("runtimeStack"u8))

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of StreamAnalyticsPrivateLinkServiceConnection. </summary>
         public StreamAnalyticsPrivateLinkServiceConnection()
         {
-            GroupIds = new ChangeTrackingList<string>();
+            GroupIds = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of StreamAnalyticsPrivateLinkServiceConnection. </summary>

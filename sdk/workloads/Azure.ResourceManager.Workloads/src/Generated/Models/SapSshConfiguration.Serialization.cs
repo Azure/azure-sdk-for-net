@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    internal partial class SapSshConfiguration : IUtf8JsonSerializable
+    internal partial class SapSshConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PublicKeys))
+            if (Core.Optional.IsCollectionDefined(PublicKeys))
             {
                 writer.WritePropertyName("publicKeys"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<IList<SapSshPublicKey>> publicKeys = default;
+            Core.Optional<IList<SapSshPublicKey>> publicKeys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicKeys"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new SapSshConfiguration(Optional.ToList(publicKeys));
+            return new SapSshConfiguration(Core.Optional.ToList(publicKeys));
         }
     }
 }

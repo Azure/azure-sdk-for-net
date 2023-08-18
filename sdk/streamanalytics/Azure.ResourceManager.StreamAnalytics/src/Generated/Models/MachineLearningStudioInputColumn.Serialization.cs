@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class MachineLearningStudioInputColumn : IUtf8JsonSerializable
+    public partial class MachineLearningStudioInputColumn : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DataType))
+            if (Core.Optional.IsDefined(DataType))
             {
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType);
             }
-            if (Optional.IsDefined(MapTo))
+            if (Core.Optional.IsDefined(MapTo))
             {
                 writer.WritePropertyName("mapTo"u8);
                 writer.WriteNumberValue(MapTo.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> dataType = default;
-            Optional<int> mapTo = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> dataType = default;
+            Core.Optional<int> mapTo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new MachineLearningStudioInputColumn(name.Value, dataType.Value, Optional.ToNullable(mapTo));
+            return new MachineLearningStudioInputColumn(name.Value, dataType.Value, Core.Optional.ToNullable(mapTo));
         }
     }
 }

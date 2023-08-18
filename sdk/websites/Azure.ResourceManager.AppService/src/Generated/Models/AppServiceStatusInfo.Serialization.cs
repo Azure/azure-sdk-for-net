@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceStatusInfo : IUtf8JsonSerializable
+    public partial class AppServiceStatusInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Message))
+            if (Core.Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(StatusId))
+            if (Core.Optional.IsDefined(StatusId))
             {
                 writer.WritePropertyName("statusId"u8);
                 writer.WriteStringValue(StatusId.Value.ToSerialString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> message = default;
-            Optional<DetectorInsightStatus> statusId = default;
+            Core.Optional<string> message = default;
+            Core.Optional<DetectorInsightStatus> statusId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceStatusInfo(message.Value, Optional.ToNullable(statusId));
+            return new AppServiceStatusInfo(message.Value, Core.Optional.ToNullable(statusId));
         }
     }
 }

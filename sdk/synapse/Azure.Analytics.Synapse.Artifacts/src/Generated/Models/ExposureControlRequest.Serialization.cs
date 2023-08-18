@@ -13,17 +13,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(ExposureControlRequestConverter))]
-    public partial class ExposureControlRequest : IUtf8JsonSerializable
+    public partial class ExposureControlRequest : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FeatureName))
+            if (Core.Optional.IsDefined(FeatureName))
             {
                 writer.WritePropertyName("featureName"u8);
                 writer.WriteStringValue(FeatureName);
             }
-            if (Optional.IsDefined(FeatureType))
+            if (Core.Optional.IsDefined(FeatureType))
             {
                 writer.WritePropertyName("featureType"u8);
                 writer.WriteStringValue(FeatureType);
@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> featureName = default;
-            Optional<string> featureType = default;
+            Core.Optional<string> featureName = default;
+            Core.Optional<string> featureType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("featureName"u8))

@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamAnalyticsPrivateLinkServiceConnection : IUtf8JsonSerializable
+    public partial class StreamAnalyticsPrivateLinkServiceConnection : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateLinkServiceId))
+            if (Core.Optional.IsDefined(PrivateLinkServiceId))
             {
                 writer.WritePropertyName("privateLinkServiceId"u8);
                 writer.WriteStringValue(PrivateLinkServiceId);
             }
-            if (Optional.IsCollectionDefined(GroupIds))
+            if (Core.Optional.IsCollectionDefined(GroupIds))
             {
                 writer.WritePropertyName("groupIds"u8);
                 writer.WriteStartArray();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (Core.Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(PrivateLinkServiceConnectionState);
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> privateLinkServiceId = default;
-            Optional<IList<string>> groupIds = default;
-            Optional<string> requestMessage = default;
-            Optional<StreamAnalyticsPrivateLinkConnectionState> privateLinkServiceConnectionState = default;
+            Core.Optional<ResourceIdentifier> privateLinkServiceId = default;
+            Core.Optional<IList<string>> groupIds = default;
+            Core.Optional<string> requestMessage = default;
+            Core.Optional<StreamAnalyticsPrivateLinkConnectionState> privateLinkServiceConnectionState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new StreamAnalyticsPrivateLinkServiceConnection(privateLinkServiceId.Value, Optional.ToList(groupIds), requestMessage.Value, privateLinkServiceConnectionState.Value);
+            return new StreamAnalyticsPrivateLinkServiceConnection(privateLinkServiceId.Value, Core.Optional.ToList(groupIds), requestMessage.Value, privateLinkServiceConnectionState.Value);
         }
     }
 }

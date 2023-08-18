@@ -14,44 +14,44 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(HttpReadSettingsConverter))]
-    public partial class HttpReadSettings : IUtf8JsonSerializable
+    public partial class HttpReadSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RequestMethod))
+            if (Core.Optional.IsDefined(RequestMethod))
             {
                 writer.WritePropertyName("requestMethod"u8);
                 writer.WriteObjectValue(RequestMethod);
             }
-            if (Optional.IsDefined(RequestBody))
+            if (Core.Optional.IsDefined(RequestBody))
             {
                 writer.WritePropertyName("requestBody"u8);
                 writer.WriteObjectValue(RequestBody);
             }
-            if (Optional.IsDefined(AdditionalHeaders))
+            if (Core.Optional.IsDefined(AdditionalHeaders))
             {
                 writer.WritePropertyName("additionalHeaders"u8);
                 writer.WriteObjectValue(AdditionalHeaders);
             }
-            if (Optional.IsDefined(RequestTimeout))
+            if (Core.Optional.IsDefined(RequestTimeout))
             {
                 writer.WritePropertyName("requestTimeout"u8);
                 writer.WriteObjectValue(RequestTimeout);
             }
-            if (Optional.IsDefined(EnablePartitionDiscovery))
+            if (Core.Optional.IsDefined(EnablePartitionDiscovery))
             {
                 writer.WritePropertyName("enablePartitionDiscovery"u8);
                 writer.WriteBooleanValue(EnablePartitionDiscovery.Value);
             }
-            if (Optional.IsDefined(PartitionRootPath))
+            if (Core.Optional.IsDefined(PartitionRootPath))
             {
                 writer.WritePropertyName("partitionRootPath"u8);
                 writer.WriteObjectValue(PartitionRootPath);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (Core.Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
@@ -70,14 +70,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> requestMethod = default;
-            Optional<object> requestBody = default;
-            Optional<object> additionalHeaders = default;
-            Optional<object> requestTimeout = default;
-            Optional<bool> enablePartitionDiscovery = default;
-            Optional<object> partitionRootPath = default;
+            Core.Optional<object> requestMethod = default;
+            Core.Optional<object> requestBody = default;
+            Core.Optional<object> additionalHeaders = default;
+            Core.Optional<object> requestTimeout = default;
+            Core.Optional<bool> enablePartitionDiscovery = default;
+            Core.Optional<object> partitionRootPath = default;
             string type = default;
-            Optional<object> maxConcurrentConnections = default;
+            Core.Optional<object> maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -153,7 +153,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HttpReadSettings(type, maxConcurrentConnections.Value, additionalProperties, requestMethod.Value, requestBody.Value, additionalHeaders.Value, requestTimeout.Value, Optional.ToNullable(enablePartitionDiscovery), partitionRootPath.Value);
+            return new HttpReadSettings(type, maxConcurrentConnections.Value, additionalProperties, requestMethod.Value, requestBody.Value, additionalHeaders.Value, requestTimeout.Value, Core.Optional.ToNullable(enablePartitionDiscovery), partitionRootPath.Value);
         }
 
         internal partial class HttpReadSettingsConverter : JsonConverter<HttpReadSettings>

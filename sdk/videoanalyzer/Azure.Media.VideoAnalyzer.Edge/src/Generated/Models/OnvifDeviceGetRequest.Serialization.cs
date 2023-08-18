@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class OnvifDeviceGetRequest : IUtf8JsonSerializable
+    public partial class OnvifDeviceGetRequest : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
             writer.WriteObjectValue(Endpoint);
-            if (Optional.IsDefined(ApiVersion))
+            if (Core.Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("@apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
@@ -33,7 +33,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             EndpointBase endpoint = default;
             string methodName = default;
-            Optional<string> apiVersion = default;
+            Core.Optional<string> apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpoint"u8))

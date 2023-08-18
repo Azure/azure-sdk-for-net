@@ -14,24 +14,24 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(RestServiceLinkedServiceConverter))]
-    public partial class RestServiceLinkedService : IUtf8JsonSerializable
+    public partial class RestServiceLinkedService : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(ConnectVia))
+            if (Core.Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (Core.Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (Core.Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -61,84 +61,84 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("url"u8);
             writer.WriteObjectValue(Url);
-            if (Optional.IsDefined(EnableServerCertificateValidation))
+            if (Core.Optional.IsDefined(EnableServerCertificateValidation))
             {
                 writer.WritePropertyName("enableServerCertificateValidation"u8);
                 writer.WriteObjectValue(EnableServerCertificateValidation);
             }
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
-            if (Optional.IsDefined(UserName))
+            if (Core.Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteObjectValue(UserName);
             }
-            if (Optional.IsDefined(Password))
+            if (Core.Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteObjectValue(Password);
             }
-            if (Optional.IsDefined(AuthHeaders))
+            if (Core.Optional.IsDefined(AuthHeaders))
             {
                 writer.WritePropertyName("authHeaders"u8);
                 writer.WriteObjectValue(AuthHeaders);
             }
-            if (Optional.IsDefined(ServicePrincipalId))
+            if (Core.Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
                 writer.WriteObjectValue(ServicePrincipalId);
             }
-            if (Optional.IsDefined(ServicePrincipalKey))
+            if (Core.Optional.IsDefined(ServicePrincipalKey))
             {
                 writer.WritePropertyName("servicePrincipalKey"u8);
                 writer.WriteObjectValue(ServicePrincipalKey);
             }
-            if (Optional.IsDefined(Tenant))
+            if (Core.Optional.IsDefined(Tenant))
             {
                 writer.WritePropertyName("tenant"u8);
                 writer.WriteObjectValue(Tenant);
             }
-            if (Optional.IsDefined(AzureCloudType))
+            if (Core.Optional.IsDefined(AzureCloudType))
             {
                 writer.WritePropertyName("azureCloudType"u8);
                 writer.WriteObjectValue(AzureCloudType);
             }
-            if (Optional.IsDefined(AadResourceId))
+            if (Core.Optional.IsDefined(AadResourceId))
             {
                 writer.WritePropertyName("aadResourceId"u8);
                 writer.WriteObjectValue(AadResourceId);
             }
-            if (Optional.IsDefined(EncryptedCredential))
+            if (Core.Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteObjectValue(EncryptedCredential);
             }
-            if (Optional.IsDefined(Credential))
+            if (Core.Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential);
             }
-            if (Optional.IsDefined(ClientId))
+            if (Core.Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteObjectValue(ClientId);
             }
-            if (Optional.IsDefined(ClientSecret))
+            if (Core.Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteObjectValue(ClientSecret);
             }
-            if (Optional.IsDefined(TokenEndpoint))
+            if (Core.Optional.IsDefined(TokenEndpoint))
             {
                 writer.WritePropertyName("tokenEndpoint"u8);
                 writer.WriteObjectValue(TokenEndpoint);
             }
-            if (Optional.IsDefined(Resource))
+            if (Core.Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
                 writer.WriteObjectValue(Resource);
             }
-            if (Optional.IsDefined(Scope))
+            if (Core.Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteObjectValue(Scope);
@@ -159,28 +159,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            Core.Optional<IntegrationRuntimeReference> connectVia = default;
+            Core.Optional<string> description = default;
+            Core.Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            Core.Optional<IList<object>> annotations = default;
             object url = default;
-            Optional<object> enableServerCertificateValidation = default;
+            Core.Optional<object> enableServerCertificateValidation = default;
             RestServiceAuthenticationType authenticationType = default;
-            Optional<object> userName = default;
-            Optional<SecretBase> password = default;
-            Optional<object> authHeaders = default;
-            Optional<object> servicePrincipalId = default;
-            Optional<SecretBase> servicePrincipalKey = default;
-            Optional<object> tenant = default;
-            Optional<object> azureCloudType = default;
-            Optional<object> aadResourceId = default;
-            Optional<object> encryptedCredential = default;
-            Optional<CredentialReference> credential = default;
-            Optional<object> clientId = default;
-            Optional<SecretBase> clientSecret = default;
-            Optional<object> tokenEndpoint = default;
-            Optional<object> resource = default;
-            Optional<object> scope = default;
+            Core.Optional<object> userName = default;
+            Core.Optional<SecretBase> password = default;
+            Core.Optional<object> authHeaders = default;
+            Core.Optional<object> servicePrincipalId = default;
+            Core.Optional<SecretBase> servicePrincipalKey = default;
+            Core.Optional<object> tenant = default;
+            Core.Optional<object> azureCloudType = default;
+            Core.Optional<object> aadResourceId = default;
+            Core.Optional<object> encryptedCredential = default;
+            Core.Optional<CredentialReference> credential = default;
+            Core.Optional<object> clientId = default;
+            Core.Optional<SecretBase> clientSecret = default;
+            Core.Optional<object> tokenEndpoint = default;
+            Core.Optional<object> resource = default;
+            Core.Optional<object> scope = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -408,7 +408,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RestServiceLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, url, enableServerCertificateValidation.Value, authenticationType, userName.Value, password.Value, authHeaders.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, azureCloudType.Value, aadResourceId.Value, encryptedCredential.Value, credential.Value, clientId.Value, clientSecret.Value, tokenEndpoint.Value, resource.Value, scope.Value);
+            return new RestServiceLinkedService(type, connectVia.Value, description.Value, Core.Optional.ToDictionary(parameters), Core.Optional.ToList(annotations), additionalProperties, url, enableServerCertificateValidation.Value, authenticationType, userName.Value, password.Value, authHeaders.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, azureCloudType.Value, aadResourceId.Value, encryptedCredential.Value, credential.Value, clientId.Value, clientSecret.Value, tokenEndpoint.Value, resource.Value, scope.Value);
         }
 
         internal partial class RestServiceLinkedServiceConverter : JsonConverter<RestServiceLinkedService>

@@ -10,41 +10,41 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class NfsAccessRule : IUtf8JsonSerializable
+    public partial class NfsAccessRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("scope"u8);
             writer.WriteStringValue(Scope.ToString());
-            if (Optional.IsDefined(Filter))
+            if (Core.Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteStringValue(Filter);
             }
             writer.WritePropertyName("access"u8);
             writer.WriteStringValue(Access.ToString());
-            if (Optional.IsDefined(AllowSuid))
+            if (Core.Optional.IsDefined(AllowSuid))
             {
                 writer.WritePropertyName("suid"u8);
                 writer.WriteBooleanValue(AllowSuid.Value);
             }
-            if (Optional.IsDefined(AllowSubmountAccess))
+            if (Core.Optional.IsDefined(AllowSubmountAccess))
             {
                 writer.WritePropertyName("submountAccess"u8);
                 writer.WriteBooleanValue(AllowSubmountAccess.Value);
             }
-            if (Optional.IsDefined(EnableRootSquash))
+            if (Core.Optional.IsDefined(EnableRootSquash))
             {
                 writer.WritePropertyName("rootSquash"u8);
                 writer.WriteBooleanValue(EnableRootSquash.Value);
             }
-            if (Optional.IsDefined(AnonymousUID))
+            if (Core.Optional.IsDefined(AnonymousUID))
             {
                 writer.WritePropertyName("anonymousUID"u8);
                 writer.WriteStringValue(AnonymousUID);
             }
-            if (Optional.IsDefined(AnonymousGID))
+            if (Core.Optional.IsDefined(AnonymousGID))
             {
                 writer.WritePropertyName("anonymousGID"u8);
                 writer.WriteStringValue(AnonymousGID);
@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.StorageCache.Models
                 return null;
             }
             NfsAccessRuleScope scope = default;
-            Optional<string> filter = default;
+            Core.Optional<string> filter = default;
             NfsAccessRuleAccess access = default;
-            Optional<bool> suid = default;
-            Optional<bool> submountAccess = default;
-            Optional<bool> rootSquash = default;
-            Optional<string> anonymousUID = default;
-            Optional<string> anonymousGID = default;
+            Core.Optional<bool> suid = default;
+            Core.Optional<bool> submountAccess = default;
+            Core.Optional<bool> rootSquash = default;
+            Core.Optional<string> anonymousUID = default;
+            Core.Optional<string> anonymousGID = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scope"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new NfsAccessRule(scope, filter.Value, access, Optional.ToNullable(suid), Optional.ToNullable(submountAccess), Optional.ToNullable(rootSquash), anonymousUID.Value, anonymousGID.Value);
+            return new NfsAccessRule(scope, filter.Value, access, Core.Optional.ToNullable(suid), Core.Optional.ToNullable(submountAccess), Core.Optional.ToNullable(rootSquash), anonymousUID.Value, anonymousGID.Value);
         }
     }
 }

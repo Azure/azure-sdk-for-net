@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of ManagedVirtualNetworkSettings. </summary>
         public ManagedVirtualNetworkSettings()
         {
-            AllowedAadTenantIdsForLinking = new ChangeTrackingList<string>();
+            AllowedAadTenantIdsForLinking = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ManagedVirtualNetworkSettings. </summary>

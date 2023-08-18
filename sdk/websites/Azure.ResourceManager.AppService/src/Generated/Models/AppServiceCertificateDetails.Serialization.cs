@@ -19,15 +19,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<int> version = default;
-            Optional<string> serialNumber = default;
-            Optional<string> thumbprint = default;
-            Optional<string> subject = default;
-            Optional<DateTimeOffset> notBefore = default;
-            Optional<DateTimeOffset> notAfter = default;
-            Optional<string> signatureAlgorithm = default;
-            Optional<string> issuer = default;
-            Optional<string> rawData = default;
+            Core.Optional<int> version = default;
+            Core.Optional<string> serialNumber = default;
+            Core.Optional<string> thumbprint = default;
+            Core.Optional<string> subject = default;
+            Core.Optional<DateTimeOffset> notBefore = default;
+            Core.Optional<DateTimeOffset> notAfter = default;
+            Core.Optional<string> signatureAlgorithm = default;
+            Core.Optional<string> issuer = default;
+            Core.Optional<string> rawData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("version"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceCertificateDetails(Optional.ToNullable(version), serialNumber.Value, thumbprint.Value, subject.Value, Optional.ToNullable(notBefore), Optional.ToNullable(notAfter), signatureAlgorithm.Value, issuer.Value, rawData.Value);
+            return new AppServiceCertificateDetails(Core.Optional.ToNullable(version), serialNumber.Value, thumbprint.Value, subject.Value, Core.Optional.ToNullable(notBefore), Core.Optional.ToNullable(notAfter), signatureAlgorithm.Value, issuer.Value, rawData.Value);
         }
     }
 }

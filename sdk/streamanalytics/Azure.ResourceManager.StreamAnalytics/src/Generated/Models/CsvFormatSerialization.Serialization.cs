@@ -10,21 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class CsvFormatSerialization : IUtf8JsonSerializable
+    public partial class CsvFormatSerialization : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(EventSerializationType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(FieldDelimiter))
+            if (Core.Optional.IsDefined(FieldDelimiter))
             {
                 writer.WritePropertyName("fieldDelimiter"u8);
                 writer.WriteStringValue(FieldDelimiter);
             }
-            if (Optional.IsDefined(Encoding))
+            if (Core.Optional.IsDefined(Encoding))
             {
                 writer.WritePropertyName("encoding"u8);
                 writer.WriteStringValue(Encoding.Value.ToString());
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             EventSerializationType type = default;
-            Optional<string> fieldDelimiter = default;
-            Optional<StreamAnalyticsDataSerializationEncoding> encoding = default;
+            Core.Optional<string> fieldDelimiter = default;
+            Core.Optional<StreamAnalyticsDataSerializationEncoding> encoding = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new CsvFormatSerialization(type, fieldDelimiter.Value, Optional.ToNullable(encoding));
+            return new CsvFormatSerialization(type, fieldDelimiter.Value, Core.Optional.ToNullable(encoding));
         }
     }
 }

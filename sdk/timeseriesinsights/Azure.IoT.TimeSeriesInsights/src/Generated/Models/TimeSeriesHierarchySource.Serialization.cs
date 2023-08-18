@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class TimeSeriesHierarchySource : IUtf8JsonSerializable
+    public partial class TimeSeriesHierarchySource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(InstanceFieldNames))
+            if (Core.Optional.IsCollectionDefined(InstanceFieldNames))
             {
                 writer.WritePropertyName("instanceFieldNames"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<IList<string>> instanceFieldNames = default;
+            Core.Optional<IList<string>> instanceFieldNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instanceFieldNames"u8))
@@ -53,7 +53,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new TimeSeriesHierarchySource(Optional.ToList(instanceFieldNames));
+            return new TimeSeriesHierarchySource(Core.Optional.ToList(instanceFieldNames));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of StorageAccountListResult. </summary>
         internal StorageAccountListResult()
         {
-            Value = new ChangeTrackingList<StorageAccountData>();
+            Value = new Core.ChangeTrackingList<StorageAccountData>();
         }
 
         /// <summary> Initializes a new instance of StorageAccountListResult. </summary>

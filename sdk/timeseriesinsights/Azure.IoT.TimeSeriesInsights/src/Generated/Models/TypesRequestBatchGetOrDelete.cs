@@ -16,8 +16,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of TypesRequestBatchGetOrDelete. </summary>
         public TypesRequestBatchGetOrDelete()
         {
-            TypeIds = new ChangeTrackingList<string>();
-            Names = new ChangeTrackingList<string>();
+            TypeIds = new Core.ChangeTrackingList<string>();
+            Names = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> List of IDs of time series types to return or delete. </summary>

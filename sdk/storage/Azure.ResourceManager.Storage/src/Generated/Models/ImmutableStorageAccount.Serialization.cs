@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ImmutableStorageAccount : IUtf8JsonSerializable
+    public partial class ImmutableStorageAccount : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (Core.Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(ImmutabilityPolicy))
+            if (Core.Optional.IsDefined(ImmutabilityPolicy))
             {
                 writer.WritePropertyName("immutabilityPolicy"u8);
                 writer.WriteObjectValue(ImmutabilityPolicy);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<AccountImmutabilityPolicy> immutabilityPolicy = default;
+            Core.Optional<bool> enabled = default;
+            Core.Optional<AccountImmutabilityPolicy> immutabilityPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new ImmutableStorageAccount(Optional.ToNullable(enabled), immutabilityPolicy.Value);
+            return new ImmutableStorageAccount(Core.Optional.ToNullable(enabled), immutabilityPolicy.Value);
         }
     }
 }

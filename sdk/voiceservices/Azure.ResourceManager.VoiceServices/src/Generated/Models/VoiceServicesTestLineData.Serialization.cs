@@ -13,12 +13,12 @@ using Azure.ResourceManager.VoiceServices.Models;
 
 namespace Azure.ResourceManager.VoiceServices
 {
-    public partial class VoiceServicesTestLineData : IUtf8JsonSerializable
+    public partial class VoiceServicesTestLineData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.VoiceServices
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PhoneNumber))
+            if (Core.Optional.IsDefined(PhoneNumber))
             {
                 writer.WritePropertyName("phoneNumber"u8);
                 writer.WriteStringValue(PhoneNumber);
             }
-            if (Optional.IsDefined(Purpose))
+            if (Core.Optional.IsDefined(Purpose))
             {
                 writer.WritePropertyName("purpose"u8);
                 writer.WriteStringValue(Purpose.Value.ToString());
@@ -53,15 +53,15 @@ namespace Azure.ResourceManager.VoiceServices
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<VoiceServicesProvisioningState> provisioningState = default;
-            Optional<string> phoneNumber = default;
-            Optional<VoiceServicesTestLinePurpose> purpose = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<VoiceServicesProvisioningState> provisioningState = default;
+            Core.Optional<string> phoneNumber = default;
+            Core.Optional<VoiceServicesTestLinePurpose> purpose = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.VoiceServices
                     continue;
                 }
             }
-            return new VoiceServicesTestLineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), phoneNumber.Value, Optional.ToNullable(purpose));
+            return new VoiceServicesTestLineData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(provisioningState), phoneNumber.Value, Core.Optional.ToNullable(purpose));
         }
     }
 }

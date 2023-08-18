@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <summary> Initializes a new instance of SupportContactProfileContent. </summary>
         public SupportContactProfileContent()
         {
-            AdditionalEmailAddresses = new ChangeTrackingList<string>();
+            AdditionalEmailAddresses = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> First name. </summary>

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    public partial class QueueCorsRule : IXmlSerializable
+    public partial class QueueCorsRule : Core.IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "CorsRule");
             writer.WriteStartElement("AllowedOrigins");

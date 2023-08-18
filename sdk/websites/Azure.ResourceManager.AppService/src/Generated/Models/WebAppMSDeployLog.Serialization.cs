@@ -12,12 +12,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class WebAppMSDeployLog : IUtf8JsonSerializable
+    public partial class WebAppMSDeployLog : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<WebAppMSDeployLogEntry>> entries = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IReadOnlyList<WebAppMSDeployLogEntry>> entries = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new WebAppMSDeployLog(id, name, type, systemData.Value, Optional.ToList(entries), kind.Value);
+            return new WebAppMSDeployLog(id, name, type, systemData.Value, Core.Optional.ToList(entries), kind.Value);
         }
     }
 }

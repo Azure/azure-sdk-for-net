@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Subscription.Models
             Argument.AssertNotNull(displayName, nameof(displayName));
 
             DisplayName = displayName;
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The friendly name of the subscription. </summary>

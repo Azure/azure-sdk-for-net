@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
-    public partial class TrafficManagerEndpointSubnetInfo : IUtf8JsonSerializable
+    public partial class TrafficManagerEndpointSubnetInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(First))
+            if (Core.Optional.IsDefined(First))
             {
                 writer.WritePropertyName("first"u8);
                 writer.WriteStringValue(First.ToString());
             }
-            if (Optional.IsDefined(Last))
+            if (Core.Optional.IsDefined(Last))
             {
                 writer.WritePropertyName("last"u8);
                 writer.WriteStringValue(Last.ToString());
             }
-            if (Optional.IsDefined(Scope))
+            if (Core.Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteNumberValue(Scope.Value);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            Optional<IPAddress> first = default;
-            Optional<IPAddress> last = default;
-            Optional<int> scope = default;
+            Core.Optional<IPAddress> first = default;
+            Core.Optional<IPAddress> last = default;
+            Core.Optional<int> scope = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("first"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     continue;
                 }
             }
-            return new TrafficManagerEndpointSubnetInfo(first.Value, last.Value, Optional.ToNullable(scope));
+            return new TrafficManagerEndpointSubnetInfo(first.Value, last.Value, Core.Optional.ToNullable(scope));
         }
     }
 }

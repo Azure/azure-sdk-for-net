@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.StoragePool
             try
             {
                 var response = await _diskPoolIscsiTargetIscsiTargetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new StoragePoolArmOperation<DiskPoolIscsiTargetResource>(new DiskPoolIscsiTargetOperationSource(Client), _diskPoolIscsiTargetIscsiTargetsClientDiagnostics, Pipeline, _diskPoolIscsiTargetIscsiTargetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StoragePoolArmOperation<DiskPoolIscsiTargetResource>(new DiskPoolIscsiTargetOperationSource(Client), _diskPoolIscsiTargetIscsiTargetsClientDiagnostics, Pipeline, _diskPoolIscsiTargetIscsiTargetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.StoragePool
             try
             {
                 var response = _diskPoolIscsiTargetIscsiTargetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, content, cancellationToken);
-                var operation = new StoragePoolArmOperation<DiskPoolIscsiTargetResource>(new DiskPoolIscsiTargetOperationSource(Client), _diskPoolIscsiTargetIscsiTargetsClientDiagnostics, Pipeline, _diskPoolIscsiTargetIscsiTargetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new StoragePoolArmOperation<DiskPoolIscsiTargetResource>(new DiskPoolIscsiTargetOperationSource(Client), _diskPoolIscsiTargetIscsiTargetsClientDiagnostics, Pipeline, _diskPoolIscsiTargetIscsiTargetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, iscsiTargetName, content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskPoolIscsiTargetIscsiTargetsRestClient.CreateListByDiskPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _diskPoolIscsiTargetIscsiTargetsRestClient.CreateListByDiskPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DiskPoolIscsiTargetResource(Client, DiskPoolIscsiTargetData.DeserializeDiskPoolIscsiTargetData(e)), _diskPoolIscsiTargetIscsiTargetsClientDiagnostics, Pipeline, "DiskPoolIscsiTargetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DiskPoolIscsiTargetResource(Client, DiskPoolIscsiTargetData.DeserializeDiskPoolIscsiTargetData(e)), _diskPoolIscsiTargetIscsiTargetsClientDiagnostics, Pipeline, "DiskPoolIscsiTargetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskPoolIscsiTargetIscsiTargetsRestClient.CreateListByDiskPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _diskPoolIscsiTargetIscsiTargetsRestClient.CreateListByDiskPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DiskPoolIscsiTargetResource(Client, DiskPoolIscsiTargetData.DeserializeDiskPoolIscsiTargetData(e)), _diskPoolIscsiTargetIscsiTargetsClientDiagnostics, Pipeline, "DiskPoolIscsiTargetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DiskPoolIscsiTargetResource(Client, DiskPoolIscsiTargetData.DeserializeDiskPoolIscsiTargetData(e)), _diskPoolIscsiTargetIscsiTargetsClientDiagnostics, Pipeline, "DiskPoolIscsiTargetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

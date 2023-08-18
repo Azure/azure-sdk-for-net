@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StartStreamingJobContent : IUtf8JsonSerializable
+    public partial class StartStreamingJobContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(OutputStartMode))
+            if (Core.Optional.IsDefined(OutputStartMode))
             {
                 writer.WritePropertyName("outputStartMode"u8);
                 writer.WriteStringValue(OutputStartMode.Value.ToString());
             }
-            if (Optional.IsDefined(OutputStartOn))
+            if (Core.Optional.IsDefined(OutputStartOn))
             {
                 writer.WritePropertyName("outputStartTime"u8);
                 writer.WriteStringValue(OutputStartOn.Value, "O");

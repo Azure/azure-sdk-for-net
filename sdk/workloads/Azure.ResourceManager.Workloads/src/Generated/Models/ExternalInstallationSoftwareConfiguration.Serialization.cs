@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class ExternalInstallationSoftwareConfiguration : IUtf8JsonSerializable
+    public partial class ExternalInstallationSoftwareConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CentralServerVmId))
+            if (Core.Optional.IsDefined(CentralServerVmId))
             {
                 writer.WritePropertyName("centralServerVmId"u8);
                 writer.WriteStringValue(CentralServerVmId);
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> centralServerVmId = default;
+            Core.Optional<ResourceIdentifier> centralServerVmId = default;
             SapSoftwareInstallationType softwareInstallationType = default;
             foreach (var property in element.EnumerateObject())
             {

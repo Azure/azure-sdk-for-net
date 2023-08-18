@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
-    internal class SynapseManagedIdentitySqlControlSettingOperationSource : IOperationSource<SynapseManagedIdentitySqlControlSettingResource>
+    internal class SynapseManagedIdentitySqlControlSettingOperationSource : Core.IOperationSource<SynapseManagedIdentitySqlControlSettingResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Synapse
             _client = client;
         }
 
-        SynapseManagedIdentitySqlControlSettingResource IOperationSource<SynapseManagedIdentitySqlControlSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SynapseManagedIdentitySqlControlSettingResource Core.IOperationSource<SynapseManagedIdentitySqlControlSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SynapseManagedIdentitySqlControlSettingData.DeserializeSynapseManagedIdentitySqlControlSettingData(document.RootElement);
             return new SynapseManagedIdentitySqlControlSettingResource(_client, data);
         }
 
-        async ValueTask<SynapseManagedIdentitySqlControlSettingResource> IOperationSource<SynapseManagedIdentitySqlControlSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SynapseManagedIdentitySqlControlSettingResource> Core.IOperationSource<SynapseManagedIdentitySqlControlSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SynapseManagedIdentitySqlControlSettingData.DeserializeSynapseManagedIdentitySqlControlSettingData(document.RootElement);

@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceAadAllowedPrincipals. </summary>
         public AppServiceAadAllowedPrincipals()
         {
-            Groups = new ChangeTrackingList<string>();
-            Identities = new ChangeTrackingList<string>();
+            Groups = new Core.ChangeTrackingList<string>();
+            Identities = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AppServiceAadAllowedPrincipals. </summary>

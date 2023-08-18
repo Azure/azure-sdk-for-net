@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SapSizingRecommendationContent : IUtf8JsonSerializable
+    public partial class SapSizingRecommendationContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("appLocation"u8);
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteNumberValue(DBMemory);
             writer.WritePropertyName("databaseType"u8);
             writer.WriteStringValue(DatabaseType.ToString());
-            if (Optional.IsDefined(DBScaleMethod))
+            if (Core.Optional.IsDefined(DBScaleMethod))
             {
                 writer.WritePropertyName("dbScaleMethod"u8);
                 writer.WriteStringValue(DBScaleMethod.Value.ToString());
             }
-            if (Optional.IsDefined(HighAvailabilityType))
+            if (Core.Optional.IsDefined(HighAvailabilityType))
             {
                 writer.WritePropertyName("highAvailabilityType"u8);
                 writer.WriteStringValue(HighAvailabilityType.Value.ToString());

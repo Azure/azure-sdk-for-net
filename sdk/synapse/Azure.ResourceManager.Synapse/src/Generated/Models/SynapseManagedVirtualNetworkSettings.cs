@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseManagedVirtualNetworkSettings. </summary>
         public SynapseManagedVirtualNetworkSettings()
         {
-            AllowedAadTenantIdsForLinking = new ChangeTrackingList<string>();
+            AllowedAadTenantIdsForLinking = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SynapseManagedVirtualNetworkSettings. </summary>

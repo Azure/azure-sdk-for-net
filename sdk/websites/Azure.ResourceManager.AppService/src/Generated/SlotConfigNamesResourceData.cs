@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of SlotConfigNamesResourceData. </summary>
         public SlotConfigNamesResourceData()
         {
-            ConnectionStringNames = new ChangeTrackingList<string>();
-            AppSettingNames = new ChangeTrackingList<string>();
-            AzureStorageConfigNames = new ChangeTrackingList<string>();
+            ConnectionStringNames = new Core.ChangeTrackingList<string>();
+            AppSettingNames = new Core.ChangeTrackingList<string>();
+            AzureStorageConfigNames = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SlotConfigNamesResourceData. </summary>

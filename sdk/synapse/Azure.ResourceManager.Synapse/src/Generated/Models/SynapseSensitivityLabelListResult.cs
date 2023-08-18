@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseSensitivityLabelListResult. </summary>
         internal SynapseSensitivityLabelListResult()
         {
-            Value = new ChangeTrackingList<SynapseSensitivityLabelData>();
+            Value = new Core.ChangeTrackingList<SynapseSensitivityLabelData>();
         }
 
         /// <summary> Initializes a new instance of SynapseSensitivityLabelListResult. </summary>

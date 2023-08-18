@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Type = type;
             ReferenceName = referenceName;
-            Parameters = new ChangeTrackingDictionary<string, object>();
+            Parameters = new Core.ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of LinkedServiceReference. </summary>

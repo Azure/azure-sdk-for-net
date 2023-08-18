@@ -29,7 +29,7 @@ namespace Azure.Storage.Queues.Models
             ServiceEndpoint = serviceEndpoint;
             Prefix = prefix;
             MaxResults = maxResults;
-            QueueItems = new ChangeTrackingList<QueueItem>();
+            QueueItems = new Core.ChangeTrackingList<QueueItem>();
             NextMarker = nextMarker;
         }
 

@@ -12,31 +12,31 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseManagedIntegrationRuntime : IUtf8JsonSerializable
+    public partial class SynapseManagedIntegrationRuntime : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(IntegrationRuntimeType.ToString());
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("managedVirtualNetwork"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReferenceName))
+            if (Core.Optional.IsDefined(ReferenceName))
             {
                 writer.WritePropertyName("referenceName"u8);
                 writer.WriteStringValue(ReferenceName);
             }
-            if (Optional.IsDefined(TypeManagedVirtualNetworkType))
+            if (Core.Optional.IsDefined(TypeManagedVirtualNetworkType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TypeManagedVirtualNetworkType);
             }
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteEndObject();
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComputeProperties))
+            if (Core.Optional.IsDefined(ComputeProperties))
             {
                 writer.WritePropertyName("computeProperties"u8);
                 writer.WriteObjectValue(ComputeProperties);
             }
-            if (Optional.IsDefined(SsisProperties))
+            if (Core.Optional.IsDefined(SsisProperties))
             {
                 writer.WritePropertyName("ssisProperties"u8);
                 writer.WriteObjectValue(SsisProperties);
@@ -73,14 +73,14 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<SynapseIntegrationRuntimeState> state = default;
+            Core.Optional<SynapseIntegrationRuntimeState> state = default;
             IntegrationRuntimeType type = default;
-            Optional<string> description = default;
-            Optional<string> referenceName = default;
-            Optional<string> type0 = default;
-            Optional<string> id = default;
-            Optional<SynapseIntegrationRuntimeComputeProperties> computeProperties = default;
-            Optional<SynapseIntegrationRuntimeSsisProperties> ssisProperties = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> referenceName = default;
+            Core.Optional<string> type0 = default;
+            Core.Optional<string> id = default;
+            Core.Optional<SynapseIntegrationRuntimeComputeProperties> computeProperties = default;
+            Core.Optional<SynapseIntegrationRuntimeSsisProperties> ssisProperties = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseManagedIntegrationRuntime(type, description.Value, additionalProperties, Optional.ToNullable(state), referenceName.Value, type0.Value, id.Value, computeProperties.Value, ssisProperties.Value);
+            return new SynapseManagedIntegrationRuntime(type, description.Value, additionalProperties, Core.Optional.ToNullable(state), referenceName.Value, type0.Value, id.Value, computeProperties.Value, ssisProperties.Value);
         }
     }
 }

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SapSupportedSkusContent : IUtf8JsonSerializable
+    public partial class SapSupportedSkusContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("appLocation"u8);
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStringValue(DeploymentType.ToString());
             writer.WritePropertyName("databaseType"u8);
             writer.WriteStringValue(DatabaseType.ToString());
-            if (Optional.IsDefined(HighAvailabilityType))
+            if (Core.Optional.IsDefined(HighAvailabilityType))
             {
                 writer.WritePropertyName("highAvailabilityType"u8);
                 writer.WriteStringValue(HighAvailabilityType.Value.ToString());

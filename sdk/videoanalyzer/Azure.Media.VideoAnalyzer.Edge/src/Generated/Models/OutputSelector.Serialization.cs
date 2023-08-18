@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class OutputSelector : IUtf8JsonSerializable
+    public partial class OutputSelector : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Property))
+            if (Core.Optional.IsDefined(Property))
             {
                 writer.WritePropertyName("property"u8);
                 writer.WriteStringValue(Property.Value.ToString());
             }
-            if (Optional.IsDefined(Operator))
+            if (Core.Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToString());
             }
-            if (Optional.IsDefined(Value))
+            if (Core.Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -39,9 +39,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<OutputSelectorProperty> property = default;
-            Optional<OutputSelectorOperator> @operator = default;
-            Optional<string> value = default;
+            Core.Optional<OutputSelectorProperty> property = default;
+            Core.Optional<OutputSelectorOperator> @operator = default;
+            Core.Optional<string> value = default;
             foreach (var property0 in element.EnumerateObject())
             {
                 if (property0.NameEquals("property"u8))
@@ -68,7 +68,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new OutputSelector(Optional.ToNullable(property), Optional.ToNullable(@operator), value.Value);
+            return new OutputSelector(Core.Optional.ToNullable(property), Core.Optional.ToNullable(@operator), value.Value);
         }
     }
 }

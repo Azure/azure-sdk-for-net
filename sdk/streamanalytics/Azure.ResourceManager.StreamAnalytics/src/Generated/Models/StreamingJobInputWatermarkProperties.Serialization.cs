@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    internal partial class StreamingJobInputWatermarkProperties : IUtf8JsonSerializable
+    internal partial class StreamingJobInputWatermarkProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(WatermarkMode))
+            if (Core.Optional.IsDefined(WatermarkMode))
             {
                 writer.WritePropertyName("watermarkMode"u8);
                 writer.WriteStringValue(WatermarkMode.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<StreamingJobInputWatermarkMode> watermarkMode = default;
+            Core.Optional<StreamingJobInputWatermarkMode> watermarkMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("watermarkMode"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new StreamingJobInputWatermarkProperties(Optional.ToNullable(watermarkMode));
+            return new StreamingJobInputWatermarkProperties(Core.Optional.ToNullable(watermarkMode));
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class TypesRequestBatchGetOrDelete : IUtf8JsonSerializable
+    internal partial class TypesRequestBatchGetOrDelete : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TypeIds))
+            if (Core.Optional.IsCollectionDefined(TypeIds))
             {
                 writer.WritePropertyName("typeIds"u8);
                 writer.WriteStartArray();
@@ -25,7 +25,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Names))
+            if (Core.Optional.IsCollectionDefined(Names))
             {
                 writer.WritePropertyName("names"u8);
                 writer.WriteStartArray();

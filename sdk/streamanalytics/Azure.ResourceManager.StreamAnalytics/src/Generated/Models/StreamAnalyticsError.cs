@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of StreamAnalyticsError. </summary>
         internal StreamAnalyticsError()
         {
-            Details = new ChangeTrackingList<StreamAnalyticsErrorDetails>();
+            Details = new Core.ChangeTrackingList<StreamAnalyticsErrorDetails>();
         }
 
         /// <summary> Initializes a new instance of StreamAnalyticsError. </summary>

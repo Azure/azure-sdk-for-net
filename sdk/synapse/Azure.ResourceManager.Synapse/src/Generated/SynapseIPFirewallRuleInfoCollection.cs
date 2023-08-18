@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, info, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapseIPFirewallRuleInfoResource>(new SynapseIPFirewallRuleInfoOperationSource(Client), _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics, Pipeline, _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, info).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<SynapseIPFirewallRuleInfoResource>(new SynapseIPFirewallRuleInfoOperationSource(Client), _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics, Pipeline, _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, info).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, info, cancellationToken);
-                var operation = new SynapseArmOperation<SynapseIPFirewallRuleInfoResource>(new SynapseIPFirewallRuleInfoOperationSource(Client), _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics, Pipeline, _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, info).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<SynapseIPFirewallRuleInfoResource>(new SynapseIPFirewallRuleInfoOperationSource(Client), _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics, Pipeline, _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, info).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseIPFirewallRuleInfoResource(Client, SynapseIPFirewallRuleInfoData.DeserializeSynapseIPFirewallRuleInfoData(e)), _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics, Pipeline, "SynapseIPFirewallRuleInfoCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseIPFirewallRuleInfoResource(Client, SynapseIPFirewallRuleInfoData.DeserializeSynapseIPFirewallRuleInfoData(e)), _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics, Pipeline, "SynapseIPFirewallRuleInfoCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseIPFirewallRuleInfoResource(Client, SynapseIPFirewallRuleInfoData.DeserializeSynapseIPFirewallRuleInfoData(e)), _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics, Pipeline, "SynapseIPFirewallRuleInfoCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseIPFirewallRuleInfoResource(Client, SynapseIPFirewallRuleInfoData.DeserializeSynapseIPFirewallRuleInfoData(e)), _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics, Pipeline, "SynapseIPFirewallRuleInfoCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -25,7 +25,7 @@ namespace Azure.AI.TextAnalytics.Legacy
 
             Code = code;
             Message = message;
-            Details = new ChangeTrackingList<TextAnalyticsError>();
+            Details = new Core.ChangeTrackingList<TextAnalyticsError>();
         }
 
         /// <summary> Initializes a new instance of TextAnalyticsError. </summary>

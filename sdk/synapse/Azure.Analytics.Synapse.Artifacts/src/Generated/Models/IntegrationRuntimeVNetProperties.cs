@@ -16,8 +16,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of IntegrationRuntimeVNetProperties. </summary>
         public IntegrationRuntimeVNetProperties()
         {
-            PublicIPs = new ChangeTrackingList<string>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            PublicIPs = new Core.ChangeTrackingList<string>();
+            AdditionalProperties = new Core.ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeVNetProperties. </summary>

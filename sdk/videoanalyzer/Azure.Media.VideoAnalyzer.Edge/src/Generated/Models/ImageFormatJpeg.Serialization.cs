@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class ImageFormatJpeg : IUtf8JsonSerializable
+    public partial class ImageFormatJpeg : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Quality))
+            if (Core.Optional.IsDefined(Quality))
             {
                 writer.WritePropertyName("quality"u8);
                 writer.WriteStringValue(Quality);
@@ -31,7 +31,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> quality = default;
+            Core.Optional<string> quality = default;
             string type = default;
             foreach (var property in element.EnumerateObject())
             {

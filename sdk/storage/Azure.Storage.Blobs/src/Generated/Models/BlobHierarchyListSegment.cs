@@ -22,7 +22,7 @@ namespace Azure.Storage.Blobs.Models
         {
             Argument.AssertNotNull(blobItems, nameof(blobItems));
 
-            BlobPrefixes = new ChangeTrackingList<BlobPrefix>();
+            BlobPrefixes = new Core.ChangeTrackingList<BlobPrefix>();
             BlobItems = blobItems.ToList();
         }
 

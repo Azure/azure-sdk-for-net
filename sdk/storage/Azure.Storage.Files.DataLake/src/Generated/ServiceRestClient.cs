@@ -77,7 +77,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> List filesystems and their properties in given account. </remarks>
-        public async Task<ResponseWithHeaders<FileSystemList, ServiceListFileSystemsHeaders>> ListFileSystemsAsync(string prefix = null, string continuation = null, int? maxResults = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<FileSystemList, ServiceListFileSystemsHeaders>> ListFileSystemsAsync(string prefix = null, string continuation = null, int? maxResults = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListFileSystemsRequest(prefix, continuation, maxResults, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -89,7 +89,7 @@ namespace Azure.Storage.Files.DataLake
                         FileSystemList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = FileSystemList.DeserializeFileSystemList(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -103,7 +103,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> List filesystems and their properties in given account. </remarks>
-        public ResponseWithHeaders<FileSystemList, ServiceListFileSystemsHeaders> ListFileSystems(string prefix = null, string continuation = null, int? maxResults = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<FileSystemList, ServiceListFileSystemsHeaders> ListFileSystems(string prefix = null, string continuation = null, int? maxResults = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListFileSystemsRequest(prefix, continuation, maxResults, timeout);
             _pipeline.Send(message, cancellationToken);
@@ -115,7 +115,7 @@ namespace Azure.Storage.Files.DataLake
                         FileSystemList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = FileSystemList.DeserializeFileSystemList(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);

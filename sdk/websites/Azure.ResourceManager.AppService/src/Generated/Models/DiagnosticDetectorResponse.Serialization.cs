@@ -13,39 +13,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DiagnosticDetectorResponse : IUtf8JsonSerializable
+    public partial class DiagnosticDetectorResponse : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartOn))
+            if (Core.Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Core.Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(IssueDetected))
+            if (Core.Optional.IsDefined(IssueDetected))
             {
                 writer.WritePropertyName("issueDetected"u8);
                 writer.WriteBooleanValue(IssueDetected.Value);
             }
-            if (Optional.IsDefined(DetectorDefinition))
+            if (Core.Optional.IsDefined(DetectorDefinition))
             {
                 writer.WritePropertyName("detectorDefinition"u8);
                 writer.WriteObjectValue(DetectorDefinition);
             }
-            if (Optional.IsCollectionDefined(Metrics))
+            if (Core.Optional.IsCollectionDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AbnormalTimePeriods))
+            if (Core.Optional.IsCollectionDefined(AbnormalTimePeriods))
             {
                 writer.WritePropertyName("abnormalTimePeriods"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Data))
+            if (Core.Optional.IsCollectionDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ResponseMetaData))
+            if (Core.Optional.IsDefined(ResponseMetaData))
             {
                 writer.WritePropertyName("responseMetaData"u8);
                 writer.WriteObjectValue(ResponseMetaData);
@@ -100,19 +100,19 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<bool> issueDetected = default;
-            Optional<DetectorDefinition> detectorDefinition = default;
-            Optional<IList<DiagnosticMetricSet>> metrics = default;
-            Optional<IList<DetectorAbnormalTimePeriod>> abnormalTimePeriods = default;
-            Optional<IList<IList<AppServiceNameValuePair>>> data = default;
-            Optional<DetectorMetadata> responseMetaData = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<bool> issueDetected = default;
+            Core.Optional<DetectorDefinition> detectorDefinition = default;
+            Core.Optional<IList<DiagnosticMetricSet>> metrics = default;
+            Core.Optional<IList<DetectorAbnormalTimePeriod>> abnormalTimePeriods = default;
+            Core.Optional<IList<IList<AppServiceNameValuePair>>> data = default;
+            Core.Optional<DetectorMetadata> responseMetaData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new DiagnosticDetectorResponse(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(issueDetected), detectorDefinition.Value, Optional.ToList(metrics), Optional.ToList(abnormalTimePeriods), Optional.ToList(data), responseMetaData.Value, kind.Value);
+            return new DiagnosticDetectorResponse(id, name, type, systemData.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToNullable(issueDetected), detectorDefinition.Value, Core.Optional.ToList(metrics), Core.Optional.ToList(abnormalTimePeriods), Core.Optional.ToList(data), responseMetaData.Value, kind.Value);
         }
     }
 }

@@ -11,47 +11,47 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
-    public partial class TrafficManagerMonitorConfig : IUtf8JsonSerializable
+    public partial class TrafficManagerMonitorConfig : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProfileMonitorStatus))
+            if (Core.Optional.IsDefined(ProfileMonitorStatus))
             {
                 writer.WritePropertyName("profileMonitorStatus"u8);
                 writer.WriteStringValue(ProfileMonitorStatus.Value.ToString());
             }
-            if (Optional.IsDefined(Protocol))
+            if (Core.Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsDefined(Port))
+            if (Core.Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Optional.IsDefined(Path))
+            if (Core.Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsDefined(IntervalInSeconds))
+            if (Core.Optional.IsDefined(IntervalInSeconds))
             {
                 writer.WritePropertyName("intervalInSeconds"u8);
                 writer.WriteNumberValue(IntervalInSeconds.Value);
             }
-            if (Optional.IsDefined(TimeoutInSeconds))
+            if (Core.Optional.IsDefined(TimeoutInSeconds))
             {
                 writer.WritePropertyName("timeoutInSeconds"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
-            if (Optional.IsDefined(ToleratedNumberOfFailures))
+            if (Core.Optional.IsDefined(ToleratedNumberOfFailures))
             {
                 writer.WritePropertyName("toleratedNumberOfFailures"u8);
                 writer.WriteNumberValue(ToleratedNumberOfFailures.Value);
             }
-            if (Optional.IsCollectionDefined(CustomHeaders))
+            if (Core.Optional.IsCollectionDefined(CustomHeaders))
             {
                 writer.WritePropertyName("customHeaders"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExpectedStatusCodeRanges))
+            if (Core.Optional.IsCollectionDefined(ExpectedStatusCodeRanges))
             {
                 writer.WritePropertyName("expectedStatusCodeRanges"u8);
                 writer.WriteStartArray();
@@ -80,15 +80,15 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            Optional<TrafficManagerProfileMonitorStatus> profileMonitorStatus = default;
-            Optional<TrafficManagerMonitorProtocol> protocol = default;
-            Optional<long> port = default;
-            Optional<string> path = default;
-            Optional<long> intervalInSeconds = default;
-            Optional<long> timeoutInSeconds = default;
-            Optional<long> toleratedNumberOfFailures = default;
-            Optional<IList<TrafficManagerMonitorConfigCustomHeaderInfo>> customHeaders = default;
-            Optional<IList<ExpectedStatusCodeRangeInfo>> expectedStatusCodeRanges = default;
+            Core.Optional<TrafficManagerProfileMonitorStatus> profileMonitorStatus = default;
+            Core.Optional<TrafficManagerMonitorProtocol> protocol = default;
+            Core.Optional<long> port = default;
+            Core.Optional<string> path = default;
+            Core.Optional<long> intervalInSeconds = default;
+            Core.Optional<long> timeoutInSeconds = default;
+            Core.Optional<long> toleratedNumberOfFailures = default;
+            Core.Optional<IList<TrafficManagerMonitorConfigCustomHeaderInfo>> customHeaders = default;
+            Core.Optional<IList<ExpectedStatusCodeRangeInfo>> expectedStatusCodeRanges = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("profileMonitorStatus"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     continue;
                 }
             }
-            return new TrafficManagerMonitorConfig(Optional.ToNullable(profileMonitorStatus), Optional.ToNullable(protocol), Optional.ToNullable(port), path.Value, Optional.ToNullable(intervalInSeconds), Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(toleratedNumberOfFailures), Optional.ToList(customHeaders), Optional.ToList(expectedStatusCodeRanges));
+            return new TrafficManagerMonitorConfig(Core.Optional.ToNullable(profileMonitorStatus), Core.Optional.ToNullable(protocol), Core.Optional.ToNullable(port), path.Value, Core.Optional.ToNullable(intervalInSeconds), Core.Optional.ToNullable(timeoutInSeconds), Core.Optional.ToNullable(toleratedNumberOfFailures), Core.Optional.ToList(customHeaders), Core.Optional.ToList(expectedStatusCodeRanges));
         }
     }
 }

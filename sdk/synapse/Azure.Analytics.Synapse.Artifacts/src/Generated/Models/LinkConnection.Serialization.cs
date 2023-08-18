@@ -13,27 +13,27 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LinkConnectionConverter))]
-    public partial class LinkConnection : IUtf8JsonSerializable
+    public partial class LinkConnection : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceDatabase))
+            if (Core.Optional.IsDefined(SourceDatabase))
             {
                 writer.WritePropertyName("sourceDatabase"u8);
                 writer.WriteObjectValue(SourceDatabase);
             }
-            if (Optional.IsDefined(TargetDatabase))
+            if (Core.Optional.IsDefined(TargetDatabase))
             {
                 writer.WritePropertyName("targetDatabase"u8);
                 writer.WriteObjectValue(TargetDatabase);
             }
-            if (Optional.IsDefined(LandingZone))
+            if (Core.Optional.IsDefined(LandingZone))
             {
                 writer.WritePropertyName("landingZone"u8);
                 writer.WriteObjectValue(LandingZone);
             }
-            if (Optional.IsDefined(Compute))
+            if (Core.Optional.IsDefined(Compute))
             {
                 writer.WritePropertyName("compute"u8);
                 writer.WriteObjectValue(Compute);
@@ -47,10 +47,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkConnectionSourceDatabase> sourceDatabase = default;
-            Optional<LinkConnectionTargetDatabase> targetDatabase = default;
-            Optional<LinkConnectionLandingZone> landingZone = default;
-            Optional<LinkConnectionCompute> compute = default;
+            Core.Optional<LinkConnectionSourceDatabase> sourceDatabase = default;
+            Core.Optional<LinkConnectionTargetDatabase> targetDatabase = default;
+            Core.Optional<LinkConnectionLandingZone> landingZone = default;
+            Core.Optional<LinkConnectionCompute> compute = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceDatabase"u8))

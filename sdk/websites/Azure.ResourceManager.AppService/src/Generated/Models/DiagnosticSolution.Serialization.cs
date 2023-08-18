@@ -11,37 +11,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DiagnosticSolution : IUtf8JsonSerializable
+    public partial class DiagnosticSolution : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Order))
+            if (Core.Optional.IsDefined(Order))
             {
                 writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(SolutionType))
+            if (Core.Optional.IsDefined(SolutionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SolutionType.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(Data))
+            if (Core.Optional.IsCollectionDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (Core.Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
@@ -90,13 +90,13 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<double> id = default;
-            Optional<string> displayName = default;
-            Optional<double> order = default;
-            Optional<string> description = default;
-            Optional<DiagnosticSolutionType> type = default;
-            Optional<IList<IList<AppServiceNameValuePair>>> data = default;
-            Optional<IList<IList<AppServiceNameValuePair>>> metadata = default;
+            Core.Optional<double> id = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<double> order = default;
+            Core.Optional<string> description = default;
+            Core.Optional<DiagnosticSolutionType> type = default;
+            Core.Optional<IList<IList<AppServiceNameValuePair>>> data = default;
+            Core.Optional<IList<IList<AppServiceNameValuePair>>> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new DiagnosticSolution(Optional.ToNullable(id), displayName.Value, Optional.ToNullable(order), description.Value, Optional.ToNullable(type), Optional.ToList(data), Optional.ToList(metadata));
+            return new DiagnosticSolution(Core.Optional.ToNullable(id), displayName.Value, Core.Optional.ToNullable(order), description.Value, Core.Optional.ToNullable(type), Core.Optional.ToList(data), Core.Optional.ToList(metadata));
         }
     }
 }

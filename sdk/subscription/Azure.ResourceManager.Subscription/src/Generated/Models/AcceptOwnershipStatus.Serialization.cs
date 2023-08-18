@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 return null;
             }
-            Optional<string> subscriptionId = default;
-            Optional<AcceptOwnershipState> acceptOwnershipState = default;
-            Optional<AcceptOwnershipProvisioningState> provisioningState = default;
-            Optional<string> billingOwner = default;
-            Optional<Guid> subscriptionTenantId = default;
-            Optional<string> displayName = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Core.Optional<string> subscriptionId = default;
+            Core.Optional<AcceptOwnershipState> acceptOwnershipState = default;
+            Core.Optional<AcceptOwnershipProvisioningState> provisioningState = default;
+            Core.Optional<string> billingOwner = default;
+            Core.Optional<Guid> subscriptionTenantId = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subscriptionId"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Subscription.Models
                     continue;
                 }
             }
-            return new AcceptOwnershipStatus(subscriptionId.Value, Optional.ToNullable(acceptOwnershipState), Optional.ToNullable(provisioningState), billingOwner.Value, Optional.ToNullable(subscriptionTenantId), displayName.Value, Optional.ToDictionary(tags));
+            return new AcceptOwnershipStatus(subscriptionId.Value, Core.Optional.ToNullable(acceptOwnershipState), Core.Optional.ToNullable(provisioningState), billingOwner.Value, Core.Optional.ToNullable(subscriptionTenantId), displayName.Value, Core.Optional.ToDictionary(tags));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
         /// <summary> Initializes a new instance of ManagedPrivateEndpointProperties. </summary>
         public ManagedPrivateEndpointProperties()
         {
-            Fqdns = new ChangeTrackingList<string>();
+            Fqdns = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ManagedPrivateEndpointProperties. </summary>

@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseTableLevelSharingProperties. </summary>
         public SynapseTableLevelSharingProperties()
         {
-            TablesToInclude = new ChangeTrackingList<string>();
-            TablesToExclude = new ChangeTrackingList<string>();
-            ExternalTablesToInclude = new ChangeTrackingList<string>();
-            ExternalTablesToExclude = new ChangeTrackingList<string>();
-            MaterializedViewsToInclude = new ChangeTrackingList<string>();
-            MaterializedViewsToExclude = new ChangeTrackingList<string>();
+            TablesToInclude = new Core.ChangeTrackingList<string>();
+            TablesToExclude = new Core.ChangeTrackingList<string>();
+            ExternalTablesToInclude = new Core.ChangeTrackingList<string>();
+            ExternalTablesToExclude = new Core.ChangeTrackingList<string>();
+            MaterializedViewsToInclude = new Core.ChangeTrackingList<string>();
+            MaterializedViewsToExclude = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SynapseTableLevelSharingProperties. </summary>

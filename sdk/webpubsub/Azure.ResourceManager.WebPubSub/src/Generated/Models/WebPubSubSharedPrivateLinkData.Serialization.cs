@@ -12,24 +12,24 @@ using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    public partial class WebPubSubSharedPrivateLinkData : IUtf8JsonSerializable
+    public partial class WebPubSubSharedPrivateLinkData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroupId))
+            if (Core.Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (Optional.IsDefined(PrivateLinkResourceId))
+            if (Core.Optional.IsDefined(PrivateLinkResourceId))
             {
                 writer.WritePropertyName("privateLinkResourceId"u8);
                 writer.WriteStringValue(PrivateLinkResourceId);
             }
-            if (Optional.IsDefined(RequestMessage))
+            if (Core.Optional.IsDefined(RequestMessage))
             {
                 writer.WritePropertyName("requestMessage"u8);
                 writer.WriteStringValue(RequestMessage);
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.WebPubSub
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> groupId = default;
-            Optional<ResourceIdentifier> privateLinkResourceId = default;
-            Optional<WebPubSubProvisioningState> provisioningState = default;
-            Optional<string> requestMessage = default;
-            Optional<WebPubSubSharedPrivateLinkStatus> status = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> groupId = default;
+            Core.Optional<ResourceIdentifier> privateLinkResourceId = default;
+            Core.Optional<WebPubSubProvisioningState> provisioningState = default;
+            Core.Optional<string> requestMessage = default;
+            Core.Optional<WebPubSubSharedPrivateLinkStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.WebPubSub
                     continue;
                 }
             }
-            return new WebPubSubSharedPrivateLinkData(id, name, type, systemData.Value, groupId.Value, privateLinkResourceId.Value, Optional.ToNullable(provisioningState), requestMessage.Value, Optional.ToNullable(status));
+            return new WebPubSubSharedPrivateLinkData(id, name, type, systemData.Value, groupId.Value, privateLinkResourceId.Value, Core.Optional.ToNullable(provisioningState), requestMessage.Value, Core.Optional.ToNullable(status));
         }
     }
 }

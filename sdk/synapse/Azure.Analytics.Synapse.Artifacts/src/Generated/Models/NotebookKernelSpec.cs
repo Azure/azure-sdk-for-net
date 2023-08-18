@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Name = name;
             DisplayName = displayName;
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new Core.ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of NotebookKernelSpec. </summary>

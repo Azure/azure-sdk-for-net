@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="location"> The location. </param>
         public SapDatabaseInstanceData(AzureLocation location) : base(location)
         {
-            VmDetails = new ChangeTrackingList<DatabaseVmDetails>();
+            VmDetails = new Core.ChangeTrackingList<DatabaseVmDetails>();
         }
 
         /// <summary> Initializes a new instance of SapDatabaseInstanceData. </summary>

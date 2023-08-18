@@ -10,21 +10,21 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
-    public partial class TranslationTarget : IUtf8JsonSerializable
+    public partial class TranslationTarget : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("targetUrl"u8);
             writer.WriteStringValue(TargetUri.AbsoluteUri);
-            if (Optional.IsDefined(CategoryId))
+            if (Core.Optional.IsDefined(CategoryId))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(CategoryId);
             }
             writer.WritePropertyName("language"u8);
             writer.WriteStringValue(LanguageCode);
-            if (Optional.IsCollectionDefined(Glossaries))
+            if (Core.Optional.IsCollectionDefined(Glossaries))
             {
                 writer.WritePropertyName("glossaries"u8);
                 writer.WriteStartArray();
@@ -34,7 +34,7 @@ namespace Azure.AI.Translation.Document
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(StorageSource))
+            if (Core.Optional.IsDefined(StorageSource))
             {
                 writer.WritePropertyName("storageSource"u8);
                 writer.WriteStringValue(StorageSource);

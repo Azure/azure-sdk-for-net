@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _appServicePlanRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<AppServicePlanResource>(new AppServicePlanOperationSource(Client), _appServicePlanClientDiagnostics, Pipeline, _appServicePlanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<AppServicePlanResource>(new AppServicePlanOperationSource(Client), _appServicePlanClientDiagnostics, Pipeline, _appServicePlanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _appServicePlanRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, data, cancellationToken);
-                var operation = new AppServiceArmOperation<AppServicePlanResource>(new AppServicePlanOperationSource(Client), _appServicePlanClientDiagnostics, Pipeline, _appServicePlanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<AppServicePlanResource>(new AppServicePlanOperationSource(Client), _appServicePlanClientDiagnostics, Pipeline, _appServicePlanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServicePlanRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServicePlanRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppServicePlanResource(Client, AppServicePlanData.DeserializeAppServicePlanData(e)), _appServicePlanClientDiagnostics, Pipeline, "AppServicePlanCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppServicePlanResource(Client, AppServicePlanData.DeserializeAppServicePlanData(e)), _appServicePlanClientDiagnostics, Pipeline, "AppServicePlanCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServicePlanRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServicePlanRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppServicePlanResource(Client, AppServicePlanData.DeserializeAppServicePlanData(e)), _appServicePlanClientDiagnostics, Pipeline, "AppServicePlanCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppServicePlanResource(Client, AppServicePlanData.DeserializeAppServicePlanData(e)), _appServicePlanClientDiagnostics, Pipeline, "AppServicePlanCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

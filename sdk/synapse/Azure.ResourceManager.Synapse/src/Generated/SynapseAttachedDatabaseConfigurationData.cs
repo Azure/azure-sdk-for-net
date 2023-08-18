@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Synapse
         /// <summary> Initializes a new instance of SynapseAttachedDatabaseConfigurationData. </summary>
         public SynapseAttachedDatabaseConfigurationData()
         {
-            AttachedDatabaseNames = new ChangeTrackingList<string>();
+            AttachedDatabaseNames = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SynapseAttachedDatabaseConfigurationData. </summary>

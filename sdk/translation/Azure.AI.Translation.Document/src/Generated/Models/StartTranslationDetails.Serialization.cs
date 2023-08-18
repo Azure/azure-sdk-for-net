@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Models
 {
-    internal partial class StartTranslationDetails : IUtf8JsonSerializable
+    internal partial class StartTranslationDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("inputs"u8);

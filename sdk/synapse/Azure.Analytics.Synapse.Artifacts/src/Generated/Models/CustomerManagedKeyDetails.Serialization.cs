@@ -13,12 +13,12 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(CustomerManagedKeyDetailsConverter))]
-    public partial class CustomerManagedKeyDetails : IUtf8JsonSerializable
+    public partial class CustomerManagedKeyDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Key))
+            if (Core.Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteObjectValue(Key);
@@ -32,8 +32,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<WorkspaceKeyDetails> key = default;
+            Core.Optional<string> status = default;
+            Core.Optional<WorkspaceKeyDetails> key = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))

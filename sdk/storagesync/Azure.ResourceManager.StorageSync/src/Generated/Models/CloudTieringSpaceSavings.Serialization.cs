@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Optional<long> volumeSizeBytes = default;
-            Optional<long> totalSizeCloudBytes = default;
-            Optional<long> cachedSizeBytes = default;
-            Optional<int> spaceSavingsPercent = default;
-            Optional<long> spaceSavingsBytes = default;
+            Core.Optional<DateTimeOffset> lastUpdatedTimestamp = default;
+            Core.Optional<long> volumeSizeBytes = default;
+            Core.Optional<long> totalSizeCloudBytes = default;
+            Core.Optional<long> cachedSizeBytes = default;
+            Core.Optional<int> spaceSavingsPercent = default;
+            Core.Optional<long> spaceSavingsBytes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastUpdatedTimestamp"u8))
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     continue;
                 }
             }
-            return new CloudTieringSpaceSavings(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(volumeSizeBytes), Optional.ToNullable(totalSizeCloudBytes), Optional.ToNullable(cachedSizeBytes), Optional.ToNullable(spaceSavingsPercent), Optional.ToNullable(spaceSavingsBytes));
+            return new CloudTieringSpaceSavings(Core.Optional.ToNullable(lastUpdatedTimestamp), Core.Optional.ToNullable(volumeSizeBytes), Core.Optional.ToNullable(totalSizeCloudBytes), Core.Optional.ToNullable(cachedSizeBytes), Core.Optional.ToNullable(spaceSavingsPercent), Core.Optional.ToNullable(spaceSavingsBytes));
         }
     }
 }

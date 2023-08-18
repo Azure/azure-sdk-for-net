@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class TlsEndpoint : IUtf8JsonSerializable
+    public partial class TlsEndpoint : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TrustedCertificates))
+            if (Core.Optional.IsDefined(TrustedCertificates))
             {
                 writer.WritePropertyName("trustedCertificates"u8);
                 writer.WriteObjectValue(TrustedCertificates);
             }
-            if (Optional.IsDefined(ValidationOptions))
+            if (Core.Optional.IsDefined(ValidationOptions))
             {
                 writer.WritePropertyName("validationOptions"u8);
                 writer.WriteObjectValue(ValidationOptions);
             }
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Credentials))
+            if (Core.Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
@@ -43,10 +43,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<CertificateSource> trustedCertificates = default;
-            Optional<TlsValidationOptions> validationOptions = default;
+            Core.Optional<CertificateSource> trustedCertificates = default;
+            Core.Optional<TlsValidationOptions> validationOptions = default;
             string type = default;
-            Optional<CredentialsBase> credentials = default;
+            Core.Optional<CredentialsBase> credentials = default;
             string url = default;
             foreach (var property in element.EnumerateObject())
             {

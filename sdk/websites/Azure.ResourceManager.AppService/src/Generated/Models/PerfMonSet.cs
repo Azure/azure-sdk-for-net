@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of PerfMonSet. </summary>
         internal PerfMonSet()
         {
-            Values = new ChangeTrackingList<PerfMonSample>();
+            Values = new Core.ChangeTrackingList<PerfMonSample>();
         }
 
         /// <summary> Initializes a new instance of PerfMonSet. </summary>

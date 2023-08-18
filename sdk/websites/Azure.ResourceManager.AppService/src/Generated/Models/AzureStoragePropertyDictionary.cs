@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AzureStoragePropertyDictionary. </summary>
         public AzureStoragePropertyDictionary()
         {
-            Properties = new ChangeTrackingDictionary<string, AppServiceStorageAccessInfo>();
+            Properties = new Core.ChangeTrackingDictionary<string, AppServiceStorageAccessInfo>();
         }
 
         /// <summary> Initializes a new instance of AzureStoragePropertyDictionary. </summary>

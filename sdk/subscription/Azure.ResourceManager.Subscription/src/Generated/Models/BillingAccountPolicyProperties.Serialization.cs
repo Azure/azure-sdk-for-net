@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ServiceTenant>> serviceTenants = default;
-            Optional<bool> allowTransfers = default;
+            Core.Optional<IReadOnlyList<ServiceTenant>> serviceTenants = default;
+            Core.Optional<bool> allowTransfers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceTenants"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Subscription.Models
                     continue;
                 }
             }
-            return new BillingAccountPolicyProperties(Optional.ToList(serviceTenants), Optional.ToNullable(allowTransfers));
+            return new BillingAccountPolicyProperties(Core.Optional.ToList(serviceTenants), Core.Optional.ToNullable(allowTransfers));
         }
     }
 }

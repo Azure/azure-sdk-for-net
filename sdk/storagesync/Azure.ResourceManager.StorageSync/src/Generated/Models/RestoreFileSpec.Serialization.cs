@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class RestoreFileSpec : IUtf8JsonSerializable
+    public partial class RestoreFileSpec : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Path))
+            if (Core.Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsDefined(IsDirectory))
+            if (Core.Optional.IsDefined(IsDirectory))
             {
                 writer.WritePropertyName("isdir"u8);
                 writer.WriteBooleanValue(IsDirectory.Value);

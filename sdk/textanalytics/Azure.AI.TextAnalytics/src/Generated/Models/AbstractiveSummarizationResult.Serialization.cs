@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class AbstractiveSummarizationResult : IUtf8JsonSerializable
+    internal partial class AbstractiveSummarizationResult : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("errors"u8);
@@ -24,7 +24,7 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Statistics))
+            if (Core.Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics);
@@ -48,7 +48,7 @@ namespace Azure.AI.TextAnalytics.Models
                 return null;
             }
             IList<DocumentError> errors = default;
-            Optional<TextDocumentBatchStatistics> statistics = default;
+            Core.Optional<TextDocumentBatchStatistics> statistics = default;
             string modelVersion = default;
             IList<AbstractiveSummaryDocumentResult> documents = default;
             foreach (var property in element.EnumerateObject())

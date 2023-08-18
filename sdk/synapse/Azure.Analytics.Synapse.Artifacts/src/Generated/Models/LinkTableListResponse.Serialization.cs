@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<LinkTableResource>> value = default;
+            Core.Optional<IReadOnlyList<LinkTableResource>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkTableListResponse(Optional.ToList(value));
+            return new LinkTableListResponse(Core.Optional.ToList(value));
         }
 
         internal partial class LinkTableListResponseConverter : JsonConverter<LinkTableListResponse>

@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Argument.AssertNotNull(location, nameof(location));
 
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
             Location = location;
         }
 

@@ -10,37 +10,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceAadRegistration : IUtf8JsonSerializable
+    public partial class AppServiceAadRegistration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(OpenIdIssuer))
+            if (Core.Optional.IsDefined(OpenIdIssuer))
             {
                 writer.WritePropertyName("openIdIssuer"u8);
                 writer.WriteStringValue(OpenIdIssuer);
             }
-            if (Optional.IsDefined(ClientId))
+            if (Core.Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (Optional.IsDefined(ClientSecretSettingName))
+            if (Core.Optional.IsDefined(ClientSecretSettingName))
             {
                 writer.WritePropertyName("clientSecretSettingName"u8);
                 writer.WriteStringValue(ClientSecretSettingName);
             }
-            if (Optional.IsDefined(ClientSecretCertificateThumbprintString))
+            if (Core.Optional.IsDefined(ClientSecretCertificateThumbprintString))
             {
                 writer.WritePropertyName("clientSecretCertificateThumbprint"u8);
                 writer.WriteStringValue(ClientSecretCertificateThumbprintString);
             }
-            if (Optional.IsDefined(ClientSecretCertificateSubjectAlternativeName))
+            if (Core.Optional.IsDefined(ClientSecretCertificateSubjectAlternativeName))
             {
                 writer.WritePropertyName("clientSecretCertificateSubjectAlternativeName"u8);
                 writer.WriteStringValue(ClientSecretCertificateSubjectAlternativeName);
             }
-            if (Optional.IsDefined(ClientSecretCertificateIssuer))
+            if (Core.Optional.IsDefined(ClientSecretCertificateIssuer))
             {
                 writer.WritePropertyName("clientSecretCertificateIssuer"u8);
                 writer.WriteStringValue(ClientSecretCertificateIssuer);
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> openIdIssuer = default;
-            Optional<string> clientId = default;
-            Optional<string> clientSecretSettingName = default;
-            Optional<string> clientSecretCertificateThumbprint = default;
-            Optional<string> clientSecretCertificateSubjectAlternativeName = default;
-            Optional<string> clientSecretCertificateIssuer = default;
+            Core.Optional<string> openIdIssuer = default;
+            Core.Optional<string> clientId = default;
+            Core.Optional<string> clientSecretSettingName = default;
+            Core.Optional<string> clientSecretCertificateThumbprint = default;
+            Core.Optional<string> clientSecretCertificateSubjectAlternativeName = default;
+            Core.Optional<string> clientSecretCertificateIssuer = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("openIdIssuer"u8))

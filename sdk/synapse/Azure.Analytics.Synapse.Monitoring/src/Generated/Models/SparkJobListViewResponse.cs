@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
         /// <summary> Initializes a new instance of SparkJobListViewResponse. </summary>
         internal SparkJobListViewResponse()
         {
-            SparkJobs = new ChangeTrackingList<SparkJob>();
+            SparkJobs = new Core.ChangeTrackingList<SparkJob>();
         }
 
         /// <summary> Initializes a new instance of SparkJobListViewResponse. </summary>

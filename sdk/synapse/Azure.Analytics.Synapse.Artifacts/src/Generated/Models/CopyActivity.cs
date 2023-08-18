@@ -33,12 +33,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Argument.AssertNotNull(source, nameof(source));
             Argument.AssertNotNull(sink, nameof(sink));
 
-            Inputs = new ChangeTrackingList<DatasetReference>();
-            Outputs = new ChangeTrackingList<DatasetReference>();
+            Inputs = new Core.ChangeTrackingList<DatasetReference>();
+            Outputs = new Core.ChangeTrackingList<DatasetReference>();
             Source = source;
             Sink = sink;
-            PreserveRules = new ChangeTrackingList<object>();
-            Preserve = new ChangeTrackingList<object>();
+            PreserveRules = new Core.ChangeTrackingList<object>();
+            Preserve = new Core.ChangeTrackingList<object>();
             Type = "Copy";
         }
 

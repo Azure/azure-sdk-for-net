@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseRestorableDroppedSqlPoolData : IUtf8JsonSerializable
+    public partial class SynapseRestorableDroppedSqlPoolData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -29,19 +29,19 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            Core.Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> databaseName = default;
-            Optional<string> edition = default;
-            Optional<string> maxSizeBytes = default;
-            Optional<string> serviceLevelObjective = default;
-            Optional<string> elasticPoolName = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<DateTimeOffset> deletionDate = default;
-            Optional<DateTimeOffset> earliestRestoreDate = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> databaseName = default;
+            Core.Optional<string> edition = default;
+            Core.Optional<string> maxSizeBytes = default;
+            Core.Optional<string> serviceLevelObjective = default;
+            Core.Optional<string> elasticPoolName = default;
+            Core.Optional<DateTimeOffset> creationDate = default;
+            Core.Optional<DateTimeOffset> deletionDate = default;
+            Core.Optional<DateTimeOffset> earliestRestoreDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Synapse
                     continue;
                 }
             }
-            return new SynapseRestorableDroppedSqlPoolData(id, name, type, systemData.Value, Optional.ToNullable(location), databaseName.Value, edition.Value, maxSizeBytes.Value, serviceLevelObjective.Value, elasticPoolName.Value, Optional.ToNullable(creationDate), Optional.ToNullable(deletionDate), Optional.ToNullable(earliestRestoreDate));
+            return new SynapseRestorableDroppedSqlPoolData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), databaseName.Value, edition.Value, maxSizeBytes.Value, serviceLevelObjective.Value, elasticPoolName.Value, Core.Optional.ToNullable(creationDate), Core.Optional.ToNullable(deletionDate), Core.Optional.ToNullable(earliestRestoreDate));
         }
     }
 }

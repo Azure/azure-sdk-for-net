@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> isDataAction = default;
-            Optional<CsmOperationDisplay> display = default;
-            Optional<string> origin = default;
-            Optional<CsmOperationDescriptionProperties> properties = default;
+            Core.Optional<string> name = default;
+            Core.Optional<bool> isDataAction = default;
+            Core.Optional<CsmOperationDisplay> display = default;
+            Core.Optional<string> origin = default;
+            Core.Optional<CsmOperationDescriptionProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new CsmOperationDescription(name.Value, Optional.ToNullable(isDataAction), display.Value, origin.Value, properties.Value);
+            return new CsmOperationDescription(name.Value, Core.Optional.ToNullable(isDataAction), display.Value, origin.Value, properties.Value);
         }
     }
 }

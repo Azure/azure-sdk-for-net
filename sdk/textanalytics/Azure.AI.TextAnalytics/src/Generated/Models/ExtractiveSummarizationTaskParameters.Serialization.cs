@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class ExtractiveSummarizationTaskParameters : IUtf8JsonSerializable
+    internal partial class ExtractiveSummarizationTaskParameters : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SentenceCount))
+            if (Core.Optional.IsDefined(SentenceCount))
             {
                 writer.WritePropertyName("sentenceCount"u8);
                 writer.WriteNumberValue(SentenceCount.Value);
             }
-            if (Optional.IsDefined(SortBy))
+            if (Core.Optional.IsDefined(SortBy))
             {
                 writer.WritePropertyName("sortBy"u8);
                 writer.WriteStringValue(SortBy.Value.ToString());
             }
-            if (Optional.IsDefined(StringIndexType))
+            if (Core.Optional.IsDefined(StringIndexType))
             {
                 writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());
             }
-            if (Optional.IsDefined(ModelVersion))
+            if (Core.Optional.IsDefined(ModelVersion))
             {
                 writer.WritePropertyName("modelVersion"u8);
                 writer.WriteStringValue(ModelVersion);
             }
-            if (Optional.IsDefined(LoggingOptOut))
+            if (Core.Optional.IsDefined(LoggingOptOut))
             {
                 writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
@@ -50,11 +50,11 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            Optional<int> sentenceCount = default;
-            Optional<ExtractiveSummarySentencesOrder> sortBy = default;
-            Optional<StringIndexType> stringIndexType = default;
-            Optional<string> modelVersion = default;
-            Optional<bool> loggingOptOut = default;
+            Core.Optional<int> sentenceCount = default;
+            Core.Optional<ExtractiveSummarySentencesOrder> sortBy = default;
+            Core.Optional<StringIndexType> stringIndexType = default;
+            Core.Optional<string> modelVersion = default;
+            Core.Optional<bool> loggingOptOut = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sentenceCount"u8))
@@ -99,7 +99,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new ExtractiveSummarizationTaskParameters(Optional.ToNullable(loggingOptOut), modelVersion.Value, Optional.ToNullable(sentenceCount), Optional.ToNullable(sortBy), Optional.ToNullable(stringIndexType));
+            return new ExtractiveSummarizationTaskParameters(Core.Optional.ToNullable(loggingOptOut), modelVersion.Value, Core.Optional.ToNullable(sentenceCount), Core.Optional.ToNullable(sortBy), Core.Optional.ToNullable(stringIndexType));
         }
     }
 }

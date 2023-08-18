@@ -10,21 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class JsonFormatSerialization : IUtf8JsonSerializable
+    public partial class JsonFormatSerialization : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(EventSerializationType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Encoding))
+            if (Core.Optional.IsDefined(Encoding))
             {
                 writer.WritePropertyName("encoding"u8);
                 writer.WriteStringValue(Encoding.Value.ToString());
             }
-            if (Optional.IsDefined(Format))
+            if (Core.Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format.Value.ToString());
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             EventSerializationType type = default;
-            Optional<StreamAnalyticsDataSerializationEncoding> encoding = default;
-            Optional<JsonOutputSerializationFormat> format = default;
+            Core.Optional<StreamAnalyticsDataSerializationEncoding> encoding = default;
+            Core.Optional<JsonOutputSerializationFormat> format = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new JsonFormatSerialization(type, Optional.ToNullable(encoding), Optional.ToNullable(format));
+            return new JsonFormatSerialization(type, Core.Optional.ToNullable(encoding), Core.Optional.ToNullable(format));
         }
     }
 }

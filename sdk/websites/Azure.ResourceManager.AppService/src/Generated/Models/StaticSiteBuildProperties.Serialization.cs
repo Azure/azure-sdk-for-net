@@ -10,47 +10,47 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StaticSiteBuildProperties : IUtf8JsonSerializable
+    public partial class StaticSiteBuildProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AppLocation))
+            if (Core.Optional.IsDefined(AppLocation))
             {
                 writer.WritePropertyName("appLocation"u8);
                 writer.WriteStringValue(AppLocation);
             }
-            if (Optional.IsDefined(ApiLocation))
+            if (Core.Optional.IsDefined(ApiLocation))
             {
                 writer.WritePropertyName("apiLocation"u8);
                 writer.WriteStringValue(ApiLocation);
             }
-            if (Optional.IsDefined(AppArtifactLocation))
+            if (Core.Optional.IsDefined(AppArtifactLocation))
             {
                 writer.WritePropertyName("appArtifactLocation"u8);
                 writer.WriteStringValue(AppArtifactLocation);
             }
-            if (Optional.IsDefined(OutputLocation))
+            if (Core.Optional.IsDefined(OutputLocation))
             {
                 writer.WritePropertyName("outputLocation"u8);
                 writer.WriteStringValue(OutputLocation);
             }
-            if (Optional.IsDefined(AppBuildCommand))
+            if (Core.Optional.IsDefined(AppBuildCommand))
             {
                 writer.WritePropertyName("appBuildCommand"u8);
                 writer.WriteStringValue(AppBuildCommand);
             }
-            if (Optional.IsDefined(ApiBuildCommand))
+            if (Core.Optional.IsDefined(ApiBuildCommand))
             {
                 writer.WritePropertyName("apiBuildCommand"u8);
                 writer.WriteStringValue(ApiBuildCommand);
             }
-            if (Optional.IsDefined(SkipGithubActionWorkflowGeneration))
+            if (Core.Optional.IsDefined(SkipGithubActionWorkflowGeneration))
             {
                 writer.WritePropertyName("skipGithubActionWorkflowGeneration"u8);
                 writer.WriteBooleanValue(SkipGithubActionWorkflowGeneration.Value);
             }
-            if (Optional.IsDefined(GithubActionSecretNameOverride))
+            if (Core.Optional.IsDefined(GithubActionSecretNameOverride))
             {
                 writer.WritePropertyName("githubActionSecretNameOverride"u8);
                 writer.WriteStringValue(GithubActionSecretNameOverride);
@@ -64,14 +64,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> appLocation = default;
-            Optional<string> apiLocation = default;
-            Optional<string> appArtifactLocation = default;
-            Optional<string> outputLocation = default;
-            Optional<string> appBuildCommand = default;
-            Optional<string> apiBuildCommand = default;
-            Optional<bool> skipGithubActionWorkflowGeneration = default;
-            Optional<string> githubActionSecretNameOverride = default;
+            Core.Optional<string> appLocation = default;
+            Core.Optional<string> apiLocation = default;
+            Core.Optional<string> appArtifactLocation = default;
+            Core.Optional<string> outputLocation = default;
+            Core.Optional<string> appBuildCommand = default;
+            Core.Optional<string> apiBuildCommand = default;
+            Core.Optional<bool> skipGithubActionWorkflowGeneration = default;
+            Core.Optional<string> githubActionSecretNameOverride = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appLocation"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StaticSiteBuildProperties(appLocation.Value, apiLocation.Value, appArtifactLocation.Value, outputLocation.Value, appBuildCommand.Value, apiBuildCommand.Value, Optional.ToNullable(skipGithubActionWorkflowGeneration), githubActionSecretNameOverride.Value);
+            return new StaticSiteBuildProperties(appLocation.Value, apiLocation.Value, appArtifactLocation.Value, outputLocation.Value, appBuildCommand.Value, apiBuildCommand.Value, Core.Optional.ToNullable(skipGithubActionWorkflowGeneration), githubActionSecretNameOverride.Value);
         }
     }
 }

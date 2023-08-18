@@ -14,17 +14,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class AppCertificateData : IUtf8JsonSerializable
+    public partial class AppCertificateData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.AppService
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Password))
+            if (Core.Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsCollectionDefined(HostNames))
+            if (Core.Optional.IsCollectionDefined(HostNames))
             {
                 writer.WritePropertyName("hostNames"u8);
                 writer.WriteStartArray();
@@ -54,32 +54,32 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PfxBlob))
+            if (Core.Optional.IsDefined(PfxBlob))
             {
                 writer.WritePropertyName("pfxBlob"u8);
                 writer.WriteBase64StringValue(PfxBlob, "D");
             }
-            if (Optional.IsDefined(KeyVaultId))
+            if (Core.Optional.IsDefined(KeyVaultId))
             {
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
             }
-            if (Optional.IsDefined(KeyVaultSecretName))
+            if (Core.Optional.IsDefined(KeyVaultSecretName))
             {
                 writer.WritePropertyName("keyVaultSecretName"u8);
                 writer.WriteStringValue(KeyVaultSecretName);
             }
-            if (Optional.IsDefined(ServerFarmId))
+            if (Core.Optional.IsDefined(ServerFarmId))
             {
                 writer.WritePropertyName("serverFarmId"u8);
                 writer.WriteStringValue(ServerFarmId);
             }
-            if (Optional.IsDefined(CanonicalName))
+            if (Core.Optional.IsDefined(CanonicalName))
             {
                 writer.WritePropertyName("canonicalName"u8);
                 writer.WriteStringValue(CanonicalName);
             }
-            if (Optional.IsDefined(DomainValidationMethod))
+            if (Core.Optional.IsDefined(DomainValidationMethod))
             {
                 writer.WritePropertyName("domainValidationMethod"u8);
                 writer.WriteStringValue(DomainValidationMethod);

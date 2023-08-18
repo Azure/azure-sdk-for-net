@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SynapseKustoPoolData>> value = default;
+            Core.Optional<IReadOnlyList<SynapseKustoPoolData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new KustoPoolListResult(Optional.ToList(value));
+            return new KustoPoolListResult(Core.Optional.ToList(value));
         }
     }
 }

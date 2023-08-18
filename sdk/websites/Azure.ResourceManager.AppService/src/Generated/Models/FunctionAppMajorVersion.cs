@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of FunctionAppMajorVersion. </summary>
         internal FunctionAppMajorVersion()
         {
-            MinorVersions = new ChangeTrackingList<FunctionAppMinorVersion>();
+            MinorVersions = new Core.ChangeTrackingList<FunctionAppMinorVersion>();
         }
 
         /// <summary> Initializes a new instance of FunctionAppMajorVersion. </summary>

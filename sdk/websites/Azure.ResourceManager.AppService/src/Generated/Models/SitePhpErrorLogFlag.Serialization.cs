@@ -11,34 +11,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SitePhpErrorLogFlag : IUtf8JsonSerializable
+    public partial class SitePhpErrorLogFlag : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(LocalLogErrors))
+            if (Core.Optional.IsDefined(LocalLogErrors))
             {
                 writer.WritePropertyName("localLogErrors"u8);
                 writer.WriteStringValue(LocalLogErrors);
             }
-            if (Optional.IsDefined(MasterLogErrors))
+            if (Core.Optional.IsDefined(MasterLogErrors))
             {
                 writer.WritePropertyName("masterLogErrors"u8);
                 writer.WriteStringValue(MasterLogErrors);
             }
-            if (Optional.IsDefined(LocalLogErrorsMaxLength))
+            if (Core.Optional.IsDefined(LocalLogErrorsMaxLength))
             {
                 writer.WritePropertyName("localLogErrorsMaxLength"u8);
                 writer.WriteStringValue(LocalLogErrorsMaxLength);
             }
-            if (Optional.IsDefined(MasterLogErrorsMaxLength))
+            if (Core.Optional.IsDefined(MasterLogErrorsMaxLength))
             {
                 writer.WritePropertyName("masterLogErrorsMaxLength"u8);
                 writer.WriteStringValue(MasterLogErrorsMaxLength);
@@ -53,15 +53,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> localLogErrors = default;
-            Optional<string> masterLogErrors = default;
-            Optional<string> localLogErrorsMaxLength = default;
-            Optional<string> masterLogErrorsMaxLength = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> localLogErrors = default;
+            Core.Optional<string> masterLogErrors = default;
+            Core.Optional<string> localLogErrorsMaxLength = default;
+            Core.Optional<string> masterLogErrorsMaxLength = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))

@@ -16,8 +16,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of CustomActivityReferenceObject. </summary>
         public CustomActivityReferenceObject()
         {
-            LinkedServices = new ChangeTrackingList<LinkedServiceReference>();
-            Datasets = new ChangeTrackingList<DatasetReference>();
+            LinkedServices = new Core.ChangeTrackingList<LinkedServiceReference>();
+            Datasets = new Core.ChangeTrackingList<DatasetReference>();
         }
 
         /// <summary> Initializes a new instance of CustomActivityReferenceObject. </summary>

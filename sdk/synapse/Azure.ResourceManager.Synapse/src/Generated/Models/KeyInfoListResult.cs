@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of KeyInfoListResult. </summary>
         internal KeyInfoListResult()
         {
-            Value = new ChangeTrackingList<SynapseKeyData>();
+            Value = new Core.ChangeTrackingList<SynapseKeyData>();
         }
 
         /// <summary> Initializes a new instance of KeyInfoListResult. </summary>

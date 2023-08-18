@@ -12,39 +12,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class PublishingUserData : IUtf8JsonSerializable
+    public partial class PublishingUserData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PublishingUserName))
+            if (Core.Optional.IsDefined(PublishingUserName))
             {
                 writer.WritePropertyName("publishingUserName"u8);
                 writer.WriteStringValue(PublishingUserName);
             }
-            if (Optional.IsDefined(PublishingPassword))
+            if (Core.Optional.IsDefined(PublishingPassword))
             {
                 writer.WritePropertyName("publishingPassword"u8);
                 writer.WriteStringValue(PublishingPassword);
             }
-            if (Optional.IsDefined(PublishingPasswordHash))
+            if (Core.Optional.IsDefined(PublishingPasswordHash))
             {
                 writer.WritePropertyName("publishingPasswordHash"u8);
                 writer.WriteStringValue(PublishingPasswordHash);
             }
-            if (Optional.IsDefined(PublishingPasswordHashSalt))
+            if (Core.Optional.IsDefined(PublishingPasswordHashSalt))
             {
                 writer.WritePropertyName("publishingPasswordHashSalt"u8);
                 writer.WriteStringValue(PublishingPasswordHashSalt);
             }
-            if (Optional.IsDefined(ScmUri))
+            if (Core.Optional.IsDefined(ScmUri))
             {
                 writer.WritePropertyName("scmUri"u8);
                 writer.WriteStringValue(ScmUri.AbsoluteUri);
@@ -59,16 +59,16 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> publishingUserName = default;
-            Optional<string> publishingPassword = default;
-            Optional<string> publishingPasswordHash = default;
-            Optional<string> publishingPasswordHashSalt = default;
-            Optional<Uri> scmUri = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> publishingUserName = default;
+            Core.Optional<string> publishingPassword = default;
+            Core.Optional<string> publishingPasswordHash = default;
+            Core.Optional<string> publishingPasswordHashSalt = default;
+            Core.Optional<Uri> scmUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))

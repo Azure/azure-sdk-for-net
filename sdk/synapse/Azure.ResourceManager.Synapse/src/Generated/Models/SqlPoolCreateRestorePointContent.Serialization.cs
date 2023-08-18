@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SqlPoolCreateRestorePointContent : IUtf8JsonSerializable
+    public partial class SqlPoolCreateRestorePointContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("restorePointLabel"u8);

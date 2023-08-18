@@ -12,9 +12,9 @@ using Azure.Data.Tables;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class TableAnalyticsLoggingSettings : IXmlSerializable
+    public partial class TableAnalyticsLoggingSettings : Core.IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "Logging");
             writer.WriteStartElement("Version");

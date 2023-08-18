@@ -11,29 +11,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class RenewCertificateOrderContent : IUtf8JsonSerializable
+    public partial class RenewCertificateOrderContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeySize))
+            if (Core.Optional.IsDefined(KeySize))
             {
                 writer.WritePropertyName("keySize"u8);
                 writer.WriteNumberValue(KeySize.Value);
             }
-            if (Optional.IsDefined(Csr))
+            if (Core.Optional.IsDefined(Csr))
             {
                 writer.WritePropertyName("csr"u8);
                 writer.WriteStringValue(Csr);
             }
-            if (Optional.IsDefined(IsPrivateKeyExternal))
+            if (Core.Optional.IsDefined(IsPrivateKeyExternal))
             {
                 writer.WritePropertyName("isPrivateKeyExternal"u8);
                 writer.WriteBooleanValue(IsPrivateKeyExternal.Value);
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> keySize = default;
-            Optional<string> csr = default;
-            Optional<bool> isPrivateKeyExternal = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<int> keySize = default;
+            Core.Optional<string> csr = default;
+            Core.Optional<bool> isPrivateKeyExternal = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new RenewCertificateOrderContent(id, name, type, systemData.Value, Optional.ToNullable(keySize), csr.Value, Optional.ToNullable(isPrivateKeyExternal), kind.Value);
+            return new RenewCertificateOrderContent(id, name, type, systemData.Value, Core.Optional.ToNullable(keySize), csr.Value, Core.Optional.ToNullable(isPrivateKeyExternal), kind.Value);
         }
     }
 }

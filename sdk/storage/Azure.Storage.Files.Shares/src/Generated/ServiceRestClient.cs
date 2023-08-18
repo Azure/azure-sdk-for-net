@@ -58,7 +58,7 @@ namespace Azure.Storage.Files.Shares
             request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Type", "application/xml");
-            var content = new XmlWriterContent();
+            var content = new Core.XmlWriterContent();
             content.XmlWriter.WriteObjectValue(storageServiceProperties, "StorageServiceProperties");
             request.Content = content;
             return message;
@@ -69,7 +69,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageServiceProperties"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(ShareServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(ShareServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (storageServiceProperties == null)
             {
@@ -82,7 +82,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -93,7 +93,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageServiceProperties"/> is null. </exception>
-        public ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(ShareServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(ShareServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (storageServiceProperties == null)
             {
@@ -106,7 +106,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -135,7 +135,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary> Gets the properties of a storage account's File service, including properties for Storage Analytics metrics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareServiceProperties, ServiceGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<ShareServiceProperties, ServiceGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPropertiesRequest(timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -150,7 +150,7 @@ namespace Azure.Storage.Files.Shares
                         {
                             value = ShareServiceProperties.DeserializeShareServiceProperties(storageServicePropertiesElement);
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -160,7 +160,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary> Gets the properties of a storage account's File service, including properties for Storage Analytics metrics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareServiceProperties, ServiceGetPropertiesHeaders> GetProperties(int? timeout = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<ShareServiceProperties, ServiceGetPropertiesHeaders> GetProperties(int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPropertiesRequest(timeout);
             _pipeline.Send(message, cancellationToken);
@@ -175,7 +175,7 @@ namespace Azure.Storage.Files.Shares
                         {
                             value = ShareServiceProperties.DeserializeShareServiceProperties(storageServicePropertiesElement);
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -203,7 +203,7 @@ namespace Azure.Storage.Files.Shares
             {
                 uri.AppendQuery("maxresults", maxresults.Value, true);
             }
-            if (include != null && Optional.IsCollectionDefined(include))
+            if (include != null && Core.Optional.IsCollectionDefined(include))
             {
                 uri.AppendQueryDelimited("include", include, ",", true);
             }
@@ -224,7 +224,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ListSharesResponse, ServiceListSharesSegmentHeaders>> ListSharesSegmentAsync(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListSharesIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<ListSharesResponse, ServiceListSharesSegmentHeaders>> ListSharesSegmentAsync(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListSharesIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListSharesSegmentRequest(prefix, marker, maxresults, include, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -239,7 +239,7 @@ namespace Azure.Storage.Files.Shares
                         {
                             value = ListSharesResponse.DeserializeListSharesResponse(enumerationResultsElement);
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -253,7 +253,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ListSharesResponse, ServiceListSharesSegmentHeaders> ListSharesSegment(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListSharesIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<ListSharesResponse, ServiceListSharesSegmentHeaders> ListSharesSegment(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListSharesIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListSharesSegmentRequest(prefix, marker, maxresults, include, timeout);
             _pipeline.Send(message, cancellationToken);
@@ -268,7 +268,7 @@ namespace Azure.Storage.Files.Shares
                         {
                             value = ListSharesResponse.DeserializeListSharesResponse(enumerationResultsElement);
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -298,7 +298,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ListSharesResponse, ServiceListSharesSegmentHeaders>> ListSharesSegmentNextPageAsync(string nextLink, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListSharesIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<ListSharesResponse, ServiceListSharesSegmentHeaders>> ListSharesSegmentNextPageAsync(string nextLink, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListSharesIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -318,7 +318,7 @@ namespace Azure.Storage.Files.Shares
                         {
                             value = ListSharesResponse.DeserializeListSharesResponse(enumerationResultsElement);
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -334,7 +334,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public ResponseWithHeaders<ListSharesResponse, ServiceListSharesSegmentHeaders> ListSharesSegmentNextPage(string nextLink, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListSharesIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<ListSharesResponse, ServiceListSharesSegmentHeaders> ListSharesSegmentNextPage(string nextLink, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListSharesIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -354,7 +354,7 @@ namespace Azure.Storage.Files.Shares
                         {
                             value = ListSharesResponse.DeserializeListSharesResponse(enumerationResultsElement);
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);

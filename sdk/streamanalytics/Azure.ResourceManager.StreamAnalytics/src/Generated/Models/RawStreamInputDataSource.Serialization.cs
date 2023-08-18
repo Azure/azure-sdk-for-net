@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class RawStreamInputDataSource : IUtf8JsonSerializable
+    public partial class RawStreamInputDataSource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StreamInputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Payload))
+            if (Core.Optional.IsDefined(Payload))
             {
                 writer.WritePropertyName("payload"u8);
 #if NET6_0_OR_GREATER
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Payload.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(PayloadUri))
+            if (Core.Optional.IsDefined(PayloadUri))
             {
                 writer.WritePropertyName("payloadUri"u8);
                 writer.WriteStringValue(PayloadUri.AbsoluteUri);
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<BinaryData> payload = default;
-            Optional<Uri> payloadUri = default;
+            Core.Optional<BinaryData> payload = default;
+            Core.Optional<Uri> payloadUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))

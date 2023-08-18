@@ -10,29 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamingJobInputProperties : IUtf8JsonSerializable
+    public partial class StreamingJobInputProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(InputPropertiesType);
-            if (Optional.IsDefined(Serialization))
+            if (Core.Optional.IsDefined(Serialization))
             {
                 writer.WritePropertyName("serialization"u8);
                 writer.WriteObjectValue(Serialization);
             }
-            if (Optional.IsDefined(Compression))
+            if (Core.Optional.IsDefined(Compression))
             {
                 writer.WritePropertyName("compression"u8);
                 writer.WriteObjectValue(Compression);
             }
-            if (Optional.IsDefined(PartitionKey))
+            if (Core.Optional.IsDefined(PartitionKey))
             {
                 writer.WritePropertyName("partitionKey"u8);
                 writer.WriteStringValue(PartitionKey);
             }
-            if (Optional.IsDefined(WatermarkSettings))
+            if (Core.Optional.IsDefined(WatermarkSettings))
             {
                 writer.WritePropertyName("watermarkSettings"u8);
                 writer.WriteObjectValue(WatermarkSettings);

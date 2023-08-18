@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of ServiceSpecification. </summary>
         internal ServiceSpecification()
         {
-            MetricSpecifications = new ChangeTrackingList<MetricSpecification>();
-            LogSpecifications = new ChangeTrackingList<LogSpecification>();
+            MetricSpecifications = new Core.ChangeTrackingList<MetricSpecification>();
+            LogSpecifications = new Core.ChangeTrackingList<LogSpecification>();
         }
 
         /// <summary> Initializes a new instance of ServiceSpecification. </summary>

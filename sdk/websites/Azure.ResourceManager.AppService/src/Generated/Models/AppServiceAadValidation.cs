@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceAadValidation. </summary>
         public AppServiceAadValidation()
         {
-            AllowedAudiences = new ChangeTrackingList<string>();
+            AllowedAudiences = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AppServiceAadValidation. </summary>

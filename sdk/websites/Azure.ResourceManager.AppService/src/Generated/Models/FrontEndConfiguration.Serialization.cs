@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    internal partial class FrontEndConfiguration : IUtf8JsonSerializable
+    internal partial class FrontEndConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToSerialString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<FrontEndServiceType> kind = default;
+            Core.Optional<FrontEndServiceType> kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new FrontEndConfiguration(Optional.ToNullable(kind));
+            return new FrontEndConfiguration(Core.Optional.ToNullable(kind));
         }
     }
 }

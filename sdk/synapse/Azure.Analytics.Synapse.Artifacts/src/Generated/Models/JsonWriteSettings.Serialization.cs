@@ -14,12 +14,12 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(JsonWriteSettingsConverter))]
-    public partial class JsonWriteSettings : IUtf8JsonSerializable
+    public partial class JsonWriteSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FilePattern))
+            if (Core.Optional.IsDefined(FilePattern))
             {
                 writer.WritePropertyName("filePattern"u8);
                 writer.WriteObjectValue(FilePattern);
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> filePattern = default;
+            Core.Optional<object> filePattern = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();

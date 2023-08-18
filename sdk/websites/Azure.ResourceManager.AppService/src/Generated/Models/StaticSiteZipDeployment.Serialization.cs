@@ -12,39 +12,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StaticSiteZipDeployment : IUtf8JsonSerializable
+    public partial class StaticSiteZipDeployment : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AppZipUri))
+            if (Core.Optional.IsDefined(AppZipUri))
             {
                 writer.WritePropertyName("appZipUrl"u8);
                 writer.WriteStringValue(AppZipUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ApiZipUri))
+            if (Core.Optional.IsDefined(ApiZipUri))
             {
                 writer.WritePropertyName("apiZipUrl"u8);
                 writer.WriteStringValue(ApiZipUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(DeploymentTitle))
+            if (Core.Optional.IsDefined(DeploymentTitle))
             {
                 writer.WritePropertyName("deploymentTitle"u8);
                 writer.WriteStringValue(DeploymentTitle);
             }
-            if (Optional.IsDefined(Provider))
+            if (Core.Optional.IsDefined(Provider))
             {
                 writer.WritePropertyName("provider"u8);
                 writer.WriteStringValue(Provider);
             }
-            if (Optional.IsDefined(FunctionLanguage))
+            if (Core.Optional.IsDefined(FunctionLanguage))
             {
                 writer.WritePropertyName("functionLanguage"u8);
                 writer.WriteStringValue(FunctionLanguage);
@@ -59,16 +59,16 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> appZipUrl = default;
-            Optional<Uri> apiZipUrl = default;
-            Optional<string> deploymentTitle = default;
-            Optional<string> provider = default;
-            Optional<string> functionLanguage = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<Uri> appZipUrl = default;
+            Core.Optional<Uri> apiZipUrl = default;
+            Core.Optional<string> deploymentTitle = default;
+            Core.Optional<string> provider = default;
+            Core.Optional<string> functionLanguage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))

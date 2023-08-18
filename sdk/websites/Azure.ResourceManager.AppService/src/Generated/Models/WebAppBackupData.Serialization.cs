@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class WebAppBackupData : IUtf8JsonSerializable
+    public partial class WebAppBackupData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -36,25 +36,25 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> id0 = default;
-            Optional<Uri> storageAccountUrl = default;
-            Optional<string> blobName = default;
-            Optional<string> name0 = default;
-            Optional<WebAppBackupStatus> status = default;
-            Optional<long> sizeInBytes = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<string> log = default;
-            Optional<IReadOnlyList<AppServiceDatabaseBackupSetting>> databases = default;
-            Optional<bool> scheduled = default;
-            Optional<DateTimeOffset> lastRestoreTimeStamp = default;
-            Optional<DateTimeOffset> finishedTimeStamp = default;
-            Optional<string> correlationId = default;
-            Optional<long> websiteSizeInBytes = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<int> id0 = default;
+            Core.Optional<Uri> storageAccountUrl = default;
+            Core.Optional<string> blobName = default;
+            Core.Optional<string> name0 = default;
+            Core.Optional<WebAppBackupStatus> status = default;
+            Core.Optional<long> sizeInBytes = default;
+            Core.Optional<DateTimeOffset> created = default;
+            Core.Optional<string> log = default;
+            Core.Optional<IReadOnlyList<AppServiceDatabaseBackupSetting>> databases = default;
+            Core.Optional<bool> scheduled = default;
+            Core.Optional<DateTimeOffset> lastRestoreTimeStamp = default;
+            Core.Optional<DateTimeOffset> finishedTimeStamp = default;
+            Core.Optional<string> correlationId = default;
+            Core.Optional<long> websiteSizeInBytes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new WebAppBackupData(id, name, type, systemData.Value, Optional.ToNullable(id0), storageAccountUrl.Value, blobName.Value, name0.Value, Optional.ToNullable(status), Optional.ToNullable(sizeInBytes), Optional.ToNullable(created), log.Value, Optional.ToList(databases), Optional.ToNullable(scheduled), Optional.ToNullable(lastRestoreTimeStamp), Optional.ToNullable(finishedTimeStamp), correlationId.Value, Optional.ToNullable(websiteSizeInBytes), kind.Value);
+            return new WebAppBackupData(id, name, type, systemData.Value, Core.Optional.ToNullable(id0), storageAccountUrl.Value, blobName.Value, name0.Value, Core.Optional.ToNullable(status), Core.Optional.ToNullable(sizeInBytes), Core.Optional.ToNullable(created), log.Value, Core.Optional.ToList(databases), Core.Optional.ToNullable(scheduled), Core.Optional.ToNullable(lastRestoreTimeStamp), Core.Optional.ToNullable(finishedTimeStamp), correlationId.Value, Core.Optional.ToNullable(websiteSizeInBytes), kind.Value);
         }
     }
 }

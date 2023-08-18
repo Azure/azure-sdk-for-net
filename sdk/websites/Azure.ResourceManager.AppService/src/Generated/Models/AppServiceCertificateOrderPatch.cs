@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceCertificateOrderPatch. </summary>
         public AppServiceCertificateOrderPatch()
         {
-            Certificates = new ChangeTrackingDictionary<string, AppServiceCertificateProperties>();
-            AppServiceCertificateNotRenewableReasons = new ChangeTrackingList<AppServiceCertificateNotRenewableReason>();
+            Certificates = new Core.ChangeTrackingDictionary<string, AppServiceCertificateProperties>();
+            AppServiceCertificateNotRenewableReasons = new Core.ChangeTrackingList<AppServiceCertificateNotRenewableReason>();
         }
 
         /// <summary> Initializes a new instance of AppServiceCertificateOrderPatch. </summary>

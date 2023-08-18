@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseGeoBackupPolicyListResult. </summary>
         internal SynapseGeoBackupPolicyListResult()
         {
-            Value = new ChangeTrackingList<SynapseGeoBackupPolicyData>();
+            Value = new Core.ChangeTrackingList<SynapseGeoBackupPolicyData>();
         }
 
         /// <summary> Initializes a new instance of SynapseGeoBackupPolicyListResult. </summary>

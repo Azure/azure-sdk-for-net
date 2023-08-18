@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> available = default;
-            Optional<AppServiceDomainType> domainType = default;
+            Core.Optional<string> name = default;
+            Core.Optional<bool> available = default;
+            Core.Optional<AppServiceDomainType> domainType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new DomainAvailabilityCheckResult(name.Value, Optional.ToNullable(available), Optional.ToNullable(domainType));
+            return new DomainAvailabilityCheckResult(name.Value, Core.Optional.ToNullable(available), Core.Optional.ToNullable(domainType));
         }
     }
 }

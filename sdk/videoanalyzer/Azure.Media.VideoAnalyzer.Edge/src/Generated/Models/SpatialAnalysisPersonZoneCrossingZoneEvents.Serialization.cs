@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class SpatialAnalysisPersonZoneCrossingZoneEvents : IUtf8JsonSerializable
+    public partial class SpatialAnalysisPersonZoneCrossingZoneEvents : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("zone"u8);
             writer.WriteObjectValue(Zone);
-            if (Optional.IsCollectionDefined(Events))
+            if (Core.Optional.IsCollectionDefined(Events))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             NamedPolygonBase zone = default;
-            Optional<IList<SpatialAnalysisPersonZoneCrossingEvent>> events = default;
+            Core.Optional<IList<SpatialAnalysisPersonZoneCrossingEvent>> events = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zone"u8))
@@ -61,7 +61,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new SpatialAnalysisPersonZoneCrossingZoneEvents(zone, Optional.ToList(events));
+            return new SpatialAnalysisPersonZoneCrossingZoneEvents(zone, Core.Optional.ToList(events));
         }
     }
 }

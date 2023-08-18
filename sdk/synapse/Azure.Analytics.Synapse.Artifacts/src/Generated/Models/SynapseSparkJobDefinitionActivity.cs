@@ -24,11 +24,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Argument.AssertNotNull(sparkJob, nameof(sparkJob));
 
             SparkJob = sparkJob;
-            Arguments = new ChangeTrackingList<object>();
-            Files = new ChangeTrackingList<object>();
-            PythonCodeReference = new ChangeTrackingList<object>();
-            FilesV2 = new ChangeTrackingList<object>();
-            SparkConfig = new ChangeTrackingDictionary<string, object>();
+            Arguments = new Core.ChangeTrackingList<object>();
+            Files = new Core.ChangeTrackingList<object>();
+            PythonCodeReference = new Core.ChangeTrackingList<object>();
+            FilesV2 = new Core.ChangeTrackingList<object>();
+            SparkConfig = new Core.ChangeTrackingDictionary<string, object>();
             Type = "SparkJob";
         }
 

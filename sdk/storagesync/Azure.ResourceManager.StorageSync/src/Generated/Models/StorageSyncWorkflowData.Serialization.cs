@@ -13,34 +13,34 @@ using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
 {
-    public partial class StorageSyncWorkflowData : IUtf8JsonSerializable
+    public partial class StorageSyncWorkflowData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(LastStepName))
+            if (Core.Optional.IsDefined(LastStepName))
             {
                 writer.WritePropertyName("lastStepName"u8);
                 writer.WriteStringValue(LastStepName);
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Operation))
+            if (Core.Optional.IsDefined(Operation))
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation.Value.ToString());
             }
-            if (Optional.IsDefined(Steps))
+            if (Core.Optional.IsDefined(Steps))
             {
                 writer.WritePropertyName("steps"u8);
                 writer.WriteStringValue(Steps);
             }
-            if (Optional.IsDefined(LastOperationId))
+            if (Core.Optional.IsDefined(LastOperationId))
             {
                 writer.WritePropertyName("lastOperationId"u8);
                 writer.WriteStringValue(LastOperationId.Value);
@@ -58,15 +58,15 @@ namespace Azure.ResourceManager.StorageSync
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> lastStepName = default;
-            Optional<StorageSyncWorkflowStatus> status = default;
-            Optional<StorageSyncOperationDirection> operation = default;
-            Optional<string> steps = default;
-            Optional<Guid> lastOperationId = default;
-            Optional<string> commandName = default;
-            Optional<DateTimeOffset> createdTimestamp = default;
-            Optional<DateTimeOffset> lastStatusTimestamp = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> lastStepName = default;
+            Core.Optional<StorageSyncWorkflowStatus> status = default;
+            Core.Optional<StorageSyncOperationDirection> operation = default;
+            Core.Optional<string> steps = default;
+            Core.Optional<Guid> lastOperationId = default;
+            Core.Optional<string> commandName = default;
+            Core.Optional<DateTimeOffset> createdTimestamp = default;
+            Core.Optional<DateTimeOffset> lastStatusTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.StorageSync
                     continue;
                 }
             }
-            return new StorageSyncWorkflowData(id, name, type, systemData.Value, lastStepName.Value, Optional.ToNullable(status), Optional.ToNullable(operation), steps.Value, Optional.ToNullable(lastOperationId), commandName.Value, Optional.ToNullable(createdTimestamp), Optional.ToNullable(lastStatusTimestamp));
+            return new StorageSyncWorkflowData(id, name, type, systemData.Value, lastStepName.Value, Core.Optional.ToNullable(status), Core.Optional.ToNullable(operation), steps.Value, Core.Optional.ToNullable(lastOperationId), commandName.Value, Core.Optional.ToNullable(createdTimestamp), Core.Optional.ToNullable(lastStatusTimestamp));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceAadLoginFlow. </summary>
         public AppServiceAadLoginFlow()
         {
-            LoginParameters = new ChangeTrackingList<string>();
+            LoginParameters = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AppServiceAadLoginFlow. </summary>

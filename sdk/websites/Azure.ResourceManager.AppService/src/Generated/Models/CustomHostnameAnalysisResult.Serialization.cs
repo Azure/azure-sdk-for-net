@@ -13,19 +13,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class CustomHostnameAnalysisResult : IUtf8JsonSerializable
+    public partial class CustomHostnameAnalysisResult : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(CNameRecords))
+            if (Core.Optional.IsCollectionDefined(CNameRecords))
             {
                 writer.WritePropertyName("cNameRecords"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TxtRecords))
+            if (Core.Optional.IsCollectionDefined(TxtRecords))
             {
                 writer.WritePropertyName("txtRecords"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ARecords))
+            if (Core.Optional.IsCollectionDefined(ARecords))
             {
                 writer.WritePropertyName("aRecords"u8);
                 writer.WriteStartArray();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AlternateCNameRecords))
+            if (Core.Optional.IsCollectionDefined(AlternateCNameRecords))
             {
                 writer.WritePropertyName("alternateCNameRecords"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AlternateTxtRecords))
+            if (Core.Optional.IsCollectionDefined(AlternateTxtRecords))
             {
                 writer.WritePropertyName("alternateTxtRecords"u8);
                 writer.WriteStartArray();
@@ -85,22 +85,22 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isHostnameAlreadyVerified = default;
-            Optional<DnsVerificationTestResult> customDomainVerificationTest = default;
-            Optional<ResponseError> customDomainVerificationFailureInfo = default;
-            Optional<bool> hasConflictOnScaleUnit = default;
-            Optional<bool> hasConflictAcrossSubscription = default;
-            Optional<string> conflictingAppResourceId = default;
-            Optional<IList<string>> cNameRecords = default;
-            Optional<IList<string>> txtRecords = default;
-            Optional<IList<string>> aRecords = default;
-            Optional<IList<string>> alternateCNameRecords = default;
-            Optional<IList<string>> alternateTxtRecords = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<bool> isHostnameAlreadyVerified = default;
+            Core.Optional<DnsVerificationTestResult> customDomainVerificationTest = default;
+            Core.Optional<ResponseError> customDomainVerificationFailureInfo = default;
+            Core.Optional<bool> hasConflictOnScaleUnit = default;
+            Core.Optional<bool> hasConflictAcrossSubscription = default;
+            Core.Optional<string> conflictingAppResourceId = default;
+            Core.Optional<IList<string>> cNameRecords = default;
+            Core.Optional<IList<string>> txtRecords = default;
+            Core.Optional<IList<string>> aRecords = default;
+            Core.Optional<IList<string>> alternateCNameRecords = default;
+            Core.Optional<IList<string>> alternateTxtRecords = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new CustomHostnameAnalysisResult(id, name, type, systemData.Value, Optional.ToNullable(isHostnameAlreadyVerified), Optional.ToNullable(customDomainVerificationTest), customDomainVerificationFailureInfo.Value, Optional.ToNullable(hasConflictOnScaleUnit), Optional.ToNullable(hasConflictAcrossSubscription), conflictingAppResourceId.Value, Optional.ToList(cNameRecords), Optional.ToList(txtRecords), Optional.ToList(aRecords), Optional.ToList(alternateCNameRecords), Optional.ToList(alternateTxtRecords), kind.Value);
+            return new CustomHostnameAnalysisResult(id, name, type, systemData.Value, Core.Optional.ToNullable(isHostnameAlreadyVerified), Core.Optional.ToNullable(customDomainVerificationTest), customDomainVerificationFailureInfo.Value, Core.Optional.ToNullable(hasConflictOnScaleUnit), Core.Optional.ToNullable(hasConflictAcrossSubscription), conflictingAppResourceId.Value, Core.Optional.ToList(cNameRecords), Core.Optional.ToList(txtRecords), Core.Optional.ToList(aRecords), Core.Optional.ToList(alternateCNameRecords), Core.Optional.ToList(alternateTxtRecords), kind.Value);
         }
     }
 }

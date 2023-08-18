@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of BlobStreamInputDataSource. </summary>
         public BlobStreamInputDataSource()
         {
-            StorageAccounts = new ChangeTrackingList<StreamAnalyticsStorageAccount>();
+            StorageAccounts = new Core.ChangeTrackingList<StreamAnalyticsStorageAccount>();
             StreamInputDataSourceType = "Microsoft.Storage/Blob";
         }
 

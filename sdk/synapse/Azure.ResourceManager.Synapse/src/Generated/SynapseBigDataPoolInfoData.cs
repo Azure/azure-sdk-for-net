@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="location"> The location. </param>
         public SynapseBigDataPoolInfoData(AzureLocation location) : base(location)
         {
-            CustomLibraries = new ChangeTrackingList<BigDataPoolLibraryInfo>();
+            CustomLibraries = new Core.ChangeTrackingList<BigDataPoolLibraryInfo>();
         }
 
         /// <summary> Initializes a new instance of SynapseBigDataPoolInfoData. </summary>

@@ -14,12 +14,12 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(BigDataPoolResourceInfoConverter))]
-    public partial class BigDataPoolResourceInfo : IUtf8JsonSerializable
+    public partial class BigDataPoolResourceInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,62 +34,62 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (Core.Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(AutoScale))
+            if (Core.Optional.IsDefined(AutoScale))
             {
                 writer.WritePropertyName("autoScale"u8);
                 writer.WriteObjectValue(AutoScale);
             }
-            if (Optional.IsDefined(CreationDate))
+            if (Core.Optional.IsDefined(CreationDate))
             {
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreationDate.Value, "O");
             }
-            if (Optional.IsDefined(AutoPause))
+            if (Core.Optional.IsDefined(AutoPause))
             {
                 writer.WritePropertyName("autoPause"u8);
                 writer.WriteObjectValue(AutoPause);
             }
-            if (Optional.IsDefined(IsComputeIsolationEnabled))
+            if (Core.Optional.IsDefined(IsComputeIsolationEnabled))
             {
                 writer.WritePropertyName("isComputeIsolationEnabled"u8);
                 writer.WriteBooleanValue(IsComputeIsolationEnabled.Value);
             }
-            if (Optional.IsDefined(SessionLevelPackagesEnabled))
+            if (Core.Optional.IsDefined(SessionLevelPackagesEnabled))
             {
                 writer.WritePropertyName("sessionLevelPackagesEnabled"u8);
                 writer.WriteBooleanValue(SessionLevelPackagesEnabled.Value);
             }
-            if (Optional.IsDefined(CacheSize))
+            if (Core.Optional.IsDefined(CacheSize))
             {
                 writer.WritePropertyName("cacheSize"u8);
                 writer.WriteNumberValue(CacheSize.Value);
             }
-            if (Optional.IsDefined(DynamicExecutorAllocation))
+            if (Core.Optional.IsDefined(DynamicExecutorAllocation))
             {
                 writer.WritePropertyName("dynamicExecutorAllocation"u8);
                 writer.WriteObjectValue(DynamicExecutorAllocation);
             }
-            if (Optional.IsDefined(SparkEventsFolder))
+            if (Core.Optional.IsDefined(SparkEventsFolder))
             {
                 writer.WritePropertyName("sparkEventsFolder"u8);
                 writer.WriteStringValue(SparkEventsFolder);
             }
-            if (Optional.IsDefined(NodeCount))
+            if (Core.Optional.IsDefined(NodeCount))
             {
                 writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
             }
-            if (Optional.IsDefined(LibraryRequirements))
+            if (Core.Optional.IsDefined(LibraryRequirements))
             {
                 writer.WritePropertyName("libraryRequirements"u8);
                 writer.WriteObjectValue(LibraryRequirements);
             }
-            if (Optional.IsCollectionDefined(CustomLibraries))
+            if (Core.Optional.IsCollectionDefined(CustomLibraries))
             {
                 writer.WritePropertyName("customLibraries"u8);
                 writer.WriteStartArray();
@@ -99,27 +99,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SparkConfigProperties))
+            if (Core.Optional.IsDefined(SparkConfigProperties))
             {
                 writer.WritePropertyName("sparkConfigProperties"u8);
                 writer.WriteObjectValue(SparkConfigProperties);
             }
-            if (Optional.IsDefined(SparkVersion))
+            if (Core.Optional.IsDefined(SparkVersion))
             {
                 writer.WritePropertyName("sparkVersion"u8);
                 writer.WriteStringValue(SparkVersion);
             }
-            if (Optional.IsDefined(DefaultSparkLogFolder))
+            if (Core.Optional.IsDefined(DefaultSparkLogFolder))
             {
                 writer.WritePropertyName("defaultSparkLogFolder"u8);
                 writer.WriteStringValue(DefaultSparkLogFolder);
             }
-            if (Optional.IsDefined(NodeSize))
+            if (Core.Optional.IsDefined(NodeSize))
             {
                 writer.WritePropertyName("nodeSize"u8);
                 writer.WriteStringValue(NodeSize.Value.ToString());
             }
-            if (Optional.IsDefined(NodeSizeFamily))
+            if (Core.Optional.IsDefined(NodeSizeFamily))
             {
                 writer.WritePropertyName("nodeSizeFamily"u8);
                 writer.WriteStringValue(NodeSizeFamily.Value.ToString());
@@ -134,29 +134,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             string location = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> provisioningState = default;
-            Optional<AutoScaleProperties> autoScale = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<AutoPauseProperties> autoPause = default;
-            Optional<bool> isComputeIsolationEnabled = default;
-            Optional<bool> sessionLevelPackagesEnabled = default;
-            Optional<int> cacheSize = default;
-            Optional<DynamicExecutorAllocation> dynamicExecutorAllocation = default;
-            Optional<string> sparkEventsFolder = default;
-            Optional<int> nodeCount = default;
-            Optional<LibraryRequirements> libraryRequirements = default;
-            Optional<IList<LibraryInfo>> customLibraries = default;
-            Optional<LibraryRequirements> sparkConfigProperties = default;
-            Optional<string> sparkVersion = default;
-            Optional<string> defaultSparkLogFolder = default;
-            Optional<NodeSize> nodeSize = default;
-            Optional<NodeSizeFamily> nodeSizeFamily = default;
-            Optional<DateTimeOffset> lastSucceededTimestamp = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> type = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<AutoScaleProperties> autoScale = default;
+            Core.Optional<DateTimeOffset> creationDate = default;
+            Core.Optional<AutoPauseProperties> autoPause = default;
+            Core.Optional<bool> isComputeIsolationEnabled = default;
+            Core.Optional<bool> sessionLevelPackagesEnabled = default;
+            Core.Optional<int> cacheSize = default;
+            Core.Optional<DynamicExecutorAllocation> dynamicExecutorAllocation = default;
+            Core.Optional<string> sparkEventsFolder = default;
+            Core.Optional<int> nodeCount = default;
+            Core.Optional<LibraryRequirements> libraryRequirements = default;
+            Core.Optional<IList<LibraryInfo>> customLibraries = default;
+            Core.Optional<LibraryRequirements> sparkConfigProperties = default;
+            Core.Optional<string> sparkVersion = default;
+            Core.Optional<string> defaultSparkLogFolder = default;
+            Core.Optional<NodeSize> nodeSize = default;
+            Core.Optional<NodeSizeFamily> nodeSizeFamily = default;
+            Core.Optional<DateTimeOffset> lastSucceededTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -357,7 +357,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new BigDataPoolResourceInfo(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, provisioningState.Value, autoScale.Value, Optional.ToNullable(creationDate), autoPause.Value, Optional.ToNullable(isComputeIsolationEnabled), Optional.ToNullable(sessionLevelPackagesEnabled), Optional.ToNullable(cacheSize), dynamicExecutorAllocation.Value, sparkEventsFolder.Value, Optional.ToNullable(nodeCount), libraryRequirements.Value, Optional.ToList(customLibraries), sparkConfigProperties.Value, sparkVersion.Value, defaultSparkLogFolder.Value, Optional.ToNullable(nodeSize), Optional.ToNullable(nodeSizeFamily), Optional.ToNullable(lastSucceededTimestamp));
+            return new BigDataPoolResourceInfo(id.Value, name.Value, type.Value, Core.Optional.ToDictionary(tags), location, provisioningState.Value, autoScale.Value, Core.Optional.ToNullable(creationDate), autoPause.Value, Core.Optional.ToNullable(isComputeIsolationEnabled), Core.Optional.ToNullable(sessionLevelPackagesEnabled), Core.Optional.ToNullable(cacheSize), dynamicExecutorAllocation.Value, sparkEventsFolder.Value, Core.Optional.ToNullable(nodeCount), libraryRequirements.Value, Core.Optional.ToList(customLibraries), sparkConfigProperties.Value, sparkVersion.Value, defaultSparkLogFolder.Value, Core.Optional.ToNullable(nodeSize), Core.Optional.ToNullable(nodeSizeFamily), Core.Optional.ToNullable(lastSucceededTimestamp));
         }
 
         internal partial class BigDataPoolResourceInfoConverter : JsonConverter<BigDataPoolResourceInfo>

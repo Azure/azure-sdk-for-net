@@ -12,29 +12,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class CloudEndpointCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class CloudEndpointCreateOrUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageAccountResourceId))
+            if (Core.Optional.IsDefined(StorageAccountResourceId))
             {
                 writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
             }
-            if (Optional.IsDefined(AzureFileShareName))
+            if (Core.Optional.IsDefined(AzureFileShareName))
             {
                 writer.WritePropertyName("azureFileShareName"u8);
                 writer.WriteStringValue(AzureFileShareName);
             }
-            if (Optional.IsDefined(StorageAccountTenantId))
+            if (Core.Optional.IsDefined(StorageAccountTenantId))
             {
                 writer.WritePropertyName("storageAccountTenantId"u8);
                 writer.WriteStringValue(StorageAccountTenantId.Value);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (Core.Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.StorageSync.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> storageAccountResourceId = default;
-            Optional<string> azureFileShareName = default;
-            Optional<Guid> storageAccountTenantId = default;
-            Optional<string> friendlyName = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ResourceIdentifier> storageAccountResourceId = default;
+            Core.Optional<string> azureFileShareName = default;
+            Core.Optional<Guid> storageAccountTenantId = default;
+            Core.Optional<string> friendlyName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     continue;
                 }
             }
-            return new CloudEndpointCreateOrUpdateContent(id, name, type, systemData.Value, storageAccountResourceId.Value, azureFileShareName.Value, Optional.ToNullable(storageAccountTenantId), friendlyName.Value);
+            return new CloudEndpointCreateOrUpdateContent(id, name, type, systemData.Value, storageAccountResourceId.Value, azureFileShareName.Value, Core.Optional.ToNullable(storageAccountTenantId), friendlyName.Value);
         }
     }
 }

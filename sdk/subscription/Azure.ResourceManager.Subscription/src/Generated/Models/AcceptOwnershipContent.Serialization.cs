@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    public partial class AcceptOwnershipContent : IUtf8JsonSerializable
+    public partial class AcceptOwnershipContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);

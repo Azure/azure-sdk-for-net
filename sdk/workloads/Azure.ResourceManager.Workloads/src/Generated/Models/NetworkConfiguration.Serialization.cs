@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    internal partial class NetworkConfiguration : IUtf8JsonSerializable
+    internal partial class NetworkConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsSecondaryIPEnabled))
+            if (Core.Optional.IsDefined(IsSecondaryIPEnabled))
             {
                 writer.WritePropertyName("isSecondaryIpEnabled"u8);
                 writer.WriteBooleanValue(IsSecondaryIPEnabled.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<bool> isSecondaryIPEnabled = default;
+            Core.Optional<bool> isSecondaryIPEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isSecondaryIpEnabled"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new NetworkConfiguration(Optional.ToNullable(isSecondaryIPEnabled));
+            return new NetworkConfiguration(Core.Optional.ToNullable(isSecondaryIPEnabled));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of StorageAccountPatch. </summary>
         public StorageAccountPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Gets or sets the SKU name. Note that the SKU name cannot be updated to Standard_ZRS, Premium_LRS or Premium_ZRS, nor can accounts of those SKU names be updated to any other value. </summary>

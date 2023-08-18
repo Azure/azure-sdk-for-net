@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageAccountIPRule : IUtf8JsonSerializable
+    public partial class StorageAccountIPRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(IPAddressOrRange);
-            if (Optional.IsDefined(Action))
+            if (Core.Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             string value = default;
-            Optional<StorageAccountNetworkRuleAction> action = default;
+            Core.Optional<StorageAccountNetworkRuleAction> action = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new StorageAccountIPRule(value, Optional.ToNullable(action));
+            return new StorageAccountIPRule(value, Core.Optional.ToNullable(action));
         }
     }
 }

@@ -14,31 +14,31 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DelimitedTextDatasetConverter))]
-    public partial class DelimitedTextDataset : IUtf8JsonSerializable
+    public partial class DelimitedTextDataset : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Structure))
+            if (Core.Optional.IsDefined(Structure))
             {
                 writer.WritePropertyName("structure"u8);
                 writer.WriteObjectValue(Structure);
             }
-            if (Optional.IsDefined(Schema))
+            if (Core.Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 writer.WriteObjectValue(Schema);
             }
             writer.WritePropertyName("linkedServiceName"u8);
             writer.WriteObjectValue(LinkedServiceName);
-            if (Optional.IsCollectionDefined(Parameters))
+            if (Core.Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (Core.Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -64,59 +64,59 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Folder))
+            if (Core.Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteObjectValue(Location);
             }
-            if (Optional.IsDefined(ColumnDelimiter))
+            if (Core.Optional.IsDefined(ColumnDelimiter))
             {
                 writer.WritePropertyName("columnDelimiter"u8);
                 writer.WriteObjectValue(ColumnDelimiter);
             }
-            if (Optional.IsDefined(RowDelimiter))
+            if (Core.Optional.IsDefined(RowDelimiter))
             {
                 writer.WritePropertyName("rowDelimiter"u8);
                 writer.WriteObjectValue(RowDelimiter);
             }
-            if (Optional.IsDefined(EncodingName))
+            if (Core.Optional.IsDefined(EncodingName))
             {
                 writer.WritePropertyName("encodingName"u8);
                 writer.WriteObjectValue(EncodingName);
             }
-            if (Optional.IsDefined(CompressionCodec))
+            if (Core.Optional.IsDefined(CompressionCodec))
             {
                 writer.WritePropertyName("compressionCodec"u8);
                 writer.WriteObjectValue(CompressionCodec);
             }
-            if (Optional.IsDefined(CompressionLevel))
+            if (Core.Optional.IsDefined(CompressionLevel))
             {
                 writer.WritePropertyName("compressionLevel"u8);
                 writer.WriteObjectValue(CompressionLevel);
             }
-            if (Optional.IsDefined(QuoteChar))
+            if (Core.Optional.IsDefined(QuoteChar))
             {
                 writer.WritePropertyName("quoteChar"u8);
                 writer.WriteObjectValue(QuoteChar);
             }
-            if (Optional.IsDefined(EscapeChar))
+            if (Core.Optional.IsDefined(EscapeChar))
             {
                 writer.WritePropertyName("escapeChar"u8);
                 writer.WriteObjectValue(EscapeChar);
             }
-            if (Optional.IsDefined(FirstRowAsHeader))
+            if (Core.Optional.IsDefined(FirstRowAsHeader))
             {
                 writer.WritePropertyName("firstRowAsHeader"u8);
                 writer.WriteObjectValue(FirstRowAsHeader);
             }
-            if (Optional.IsDefined(NullValue))
+            if (Core.Optional.IsDefined(NullValue))
             {
                 writer.WritePropertyName("nullValue"u8);
                 writer.WriteObjectValue(NullValue);
@@ -137,23 +137,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
-            Optional<object> structure = default;
-            Optional<object> schema = default;
+            Core.Optional<string> description = default;
+            Core.Optional<object> structure = default;
+            Core.Optional<object> schema = default;
             LinkedServiceReference linkedServiceName = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
-            Optional<DatasetFolder> folder = default;
-            Optional<DatasetLocation> location = default;
-            Optional<object> columnDelimiter = default;
-            Optional<object> rowDelimiter = default;
-            Optional<object> encodingName = default;
-            Optional<object> compressionCodec = default;
-            Optional<object> compressionLevel = default;
-            Optional<object> quoteChar = default;
-            Optional<object> escapeChar = default;
-            Optional<object> firstRowAsHeader = default;
-            Optional<object> nullValue = default;
+            Core.Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            Core.Optional<IList<object>> annotations = default;
+            Core.Optional<DatasetFolder> folder = default;
+            Core.Optional<DatasetLocation> location = default;
+            Core.Optional<object> columnDelimiter = default;
+            Core.Optional<object> rowDelimiter = default;
+            Core.Optional<object> encodingName = default;
+            Core.Optional<object> compressionCodec = default;
+            Core.Optional<object> compressionLevel = default;
+            Core.Optional<object> quoteChar = default;
+            Core.Optional<object> escapeChar = default;
+            Core.Optional<object> firstRowAsHeader = default;
+            Core.Optional<object> nullValue = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -340,7 +340,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DelimitedTextDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, location.Value, columnDelimiter.Value, rowDelimiter.Value, encodingName.Value, compressionCodec.Value, compressionLevel.Value, quoteChar.Value, escapeChar.Value, firstRowAsHeader.Value, nullValue.Value);
+            return new DelimitedTextDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Core.Optional.ToDictionary(parameters), Core.Optional.ToList(annotations), folder.Value, additionalProperties, location.Value, columnDelimiter.Value, rowDelimiter.Value, encodingName.Value, compressionCodec.Value, compressionLevel.Value, quoteChar.Value, escapeChar.Value, firstRowAsHeader.Value, nullValue.Value);
         }
 
         internal partial class DelimitedTextDatasetConverter : JsonConverter<DelimitedTextDataset>

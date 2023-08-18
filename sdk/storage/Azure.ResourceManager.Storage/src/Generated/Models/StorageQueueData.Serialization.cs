@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    public partial class StorageQueueData : IUtf8JsonSerializable
+    public partial class StorageQueueData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Metadata))
+            if (Core.Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IDictionary<string, string>> metadata = default;
-            Optional<int> approximateMessageCount = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IDictionary<string, string>> metadata = default;
+            Core.Optional<int> approximateMessageCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Storage
                     continue;
                 }
             }
-            return new StorageQueueData(id, name, type, systemData.Value, Optional.ToDictionary(metadata), Optional.ToNullable(approximateMessageCount));
+            return new StorageQueueData(id, name, type, systemData.Value, Core.Optional.ToDictionary(metadata), Core.Optional.ToNullable(approximateMessageCount));
         }
     }
 }

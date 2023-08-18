@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteSlotExtensionWebAppsRestClient.InstallSiteExtensionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<WebSiteSlotExtensionResource>(new WebSiteSlotExtensionOperationSource(Client), _webSiteSlotExtensionWebAppsClientDiagnostics, Pipeline, _webSiteSlotExtensionWebAppsRestClient.CreateInstallSiteExtensionSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<WebSiteSlotExtensionResource>(new WebSiteSlotExtensionOperationSource(Client), _webSiteSlotExtensionWebAppsClientDiagnostics, Pipeline, _webSiteSlotExtensionWebAppsRestClient.CreateInstallSiteExtensionSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteSlotExtensionWebAppsRestClient.InstallSiteExtensionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId, cancellationToken);
-                var operation = new AppServiceArmOperation<WebSiteSlotExtensionResource>(new WebSiteSlotExtensionOperationSource(Client), _webSiteSlotExtensionWebAppsClientDiagnostics, Pipeline, _webSiteSlotExtensionWebAppsRestClient.CreateInstallSiteExtensionSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<WebSiteSlotExtensionResource>(new WebSiteSlotExtensionOperationSource(Client), _webSiteSlotExtensionWebAppsClientDiagnostics, Pipeline, _webSiteSlotExtensionWebAppsRestClient.CreateInstallSiteExtensionSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, siteExtensionId).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotExtensionWebAppsRestClient.CreateListSiteExtensionsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteSlotExtensionWebAppsRestClient.CreateListSiteExtensionsSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebSiteSlotExtensionResource(Client, SiteExtensionInfoData.DeserializeSiteExtensionInfoData(e)), _webSiteSlotExtensionWebAppsClientDiagnostics, Pipeline, "WebSiteSlotExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebSiteSlotExtensionResource(Client, SiteExtensionInfoData.DeserializeSiteExtensionInfoData(e)), _webSiteSlotExtensionWebAppsClientDiagnostics, Pipeline, "WebSiteSlotExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotExtensionWebAppsRestClient.CreateListSiteExtensionsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteSlotExtensionWebAppsRestClient.CreateListSiteExtensionsSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebSiteSlotExtensionResource(Client, SiteExtensionInfoData.DeserializeSiteExtensionInfoData(e)), _webSiteSlotExtensionWebAppsClientDiagnostics, Pipeline, "WebSiteSlotExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebSiteSlotExtensionResource(Client, SiteExtensionInfoData.DeserializeSiteExtensionInfoData(e)), _webSiteSlotExtensionWebAppsClientDiagnostics, Pipeline, "WebSiteSlotExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

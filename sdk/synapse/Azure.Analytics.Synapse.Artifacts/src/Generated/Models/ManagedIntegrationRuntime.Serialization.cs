@@ -14,31 +14,31 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(ManagedIntegrationRuntimeConverter))]
-    public partial class ManagedIntegrationRuntime : IUtf8JsonSerializable
+    public partial class ManagedIntegrationRuntime : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ManagedVirtualNetwork))
+            if (Core.Optional.IsDefined(ManagedVirtualNetwork))
             {
                 writer.WritePropertyName("managedVirtualNetwork"u8);
                 writer.WriteObjectValue(ManagedVirtualNetwork);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComputeProperties))
+            if (Core.Optional.IsDefined(ComputeProperties))
             {
                 writer.WritePropertyName("computeProperties"u8);
                 writer.WriteObjectValue(ComputeProperties);
             }
-            if (Optional.IsDefined(SsisProperties))
+            if (Core.Optional.IsDefined(SsisProperties))
             {
                 writer.WritePropertyName("ssisProperties"u8);
                 writer.WriteObjectValue(SsisProperties);
@@ -58,12 +58,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IntegrationRuntimeState> state = default;
-            Optional<ManagedVirtualNetworkReference> managedVirtualNetwork = default;
+            Core.Optional<IntegrationRuntimeState> state = default;
+            Core.Optional<ManagedVirtualNetworkReference> managedVirtualNetwork = default;
             IntegrationRuntimeType type = default;
-            Optional<string> description = default;
-            Optional<IntegrationRuntimeComputeProperties> computeProperties = default;
-            Optional<IntegrationRuntimeSsisProperties> ssisProperties = default;
+            Core.Optional<string> description = default;
+            Core.Optional<IntegrationRuntimeComputeProperties> computeProperties = default;
+            Core.Optional<IntegrationRuntimeSsisProperties> ssisProperties = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ManagedIntegrationRuntime(type, description.Value, additionalProperties, Optional.ToNullable(state), managedVirtualNetwork.Value, computeProperties.Value, ssisProperties.Value);
+            return new ManagedIntegrationRuntime(type, description.Value, additionalProperties, Core.Optional.ToNullable(state), managedVirtualNetwork.Value, computeProperties.Value, ssisProperties.Value);
         }
 
         internal partial class ManagedIntegrationRuntimeConverter : JsonConverter<ManagedIntegrationRuntime>

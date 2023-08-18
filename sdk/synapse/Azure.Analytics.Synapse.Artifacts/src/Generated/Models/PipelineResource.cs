@@ -16,12 +16,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of PipelineResource. </summary>
         public PipelineResource()
         {
-            Activities = new ChangeTrackingList<Activity>();
-            Parameters = new ChangeTrackingDictionary<string, ParameterSpecification>();
-            Variables = new ChangeTrackingDictionary<string, VariableSpecification>();
-            Annotations = new ChangeTrackingList<object>();
-            RunDimensions = new ChangeTrackingDictionary<string, object>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            Activities = new Core.ChangeTrackingList<Activity>();
+            Parameters = new Core.ChangeTrackingDictionary<string, ParameterSpecification>();
+            Variables = new Core.ChangeTrackingDictionary<string, VariableSpecification>();
+            Annotations = new Core.ChangeTrackingList<object>();
+            RunDimensions = new Core.ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new Core.ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of PipelineResource. </summary>

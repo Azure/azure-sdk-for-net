@@ -16,7 +16,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary> Initializes a new instance of SetAccessControlRecursiveResponse. </summary>
         internal SetAccessControlRecursiveResponse()
         {
-            FailedEntries = new ChangeTrackingList<AclFailedEntry>();
+            FailedEntries = new Core.ChangeTrackingList<AclFailedEntry>();
         }
 
         /// <summary> Initializes a new instance of SetAccessControlRecursiveResponse. </summary>

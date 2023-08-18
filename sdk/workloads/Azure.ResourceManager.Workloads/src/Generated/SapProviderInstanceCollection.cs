@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Workloads
             try
             {
                 var response = await _sapProviderInstanceProviderInstancesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WorkloadsArmOperation<SapProviderInstanceResource>(new SapProviderInstanceOperationSource(Client), _sapProviderInstanceProviderInstancesClientDiagnostics, Pipeline, _sapProviderInstanceProviderInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new WorkloadsArmOperation<SapProviderInstanceResource>(new SapProviderInstanceOperationSource(Client), _sapProviderInstanceProviderInstancesClientDiagnostics, Pipeline, _sapProviderInstanceProviderInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Workloads
             try
             {
                 var response = _sapProviderInstanceProviderInstancesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, data, cancellationToken);
-                var operation = new WorkloadsArmOperation<SapProviderInstanceResource>(new SapProviderInstanceOperationSource(Client), _sapProviderInstanceProviderInstancesClientDiagnostics, Pipeline, _sapProviderInstanceProviderInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new WorkloadsArmOperation<SapProviderInstanceResource>(new SapProviderInstanceOperationSource(Client), _sapProviderInstanceProviderInstancesClientDiagnostics, Pipeline, _sapProviderInstanceProviderInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Workloads
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sapProviderInstanceProviderInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sapProviderInstanceProviderInstancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapProviderInstanceResource(Client, SapProviderInstanceData.DeserializeSapProviderInstanceData(e)), _sapProviderInstanceProviderInstancesClientDiagnostics, Pipeline, "SapProviderInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapProviderInstanceResource(Client, SapProviderInstanceData.DeserializeSapProviderInstanceData(e)), _sapProviderInstanceProviderInstancesClientDiagnostics, Pipeline, "SapProviderInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Workloads
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sapProviderInstanceProviderInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sapProviderInstanceProviderInstancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapProviderInstanceResource(Client, SapProviderInstanceData.DeserializeSapProviderInstanceData(e)), _sapProviderInstanceProviderInstancesClientDiagnostics, Pipeline, "SapProviderInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapProviderInstanceResource(Client, SapProviderInstanceData.DeserializeSapProviderInstanceData(e)), _sapProviderInstanceProviderInstancesClientDiagnostics, Pipeline, "SapProviderInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

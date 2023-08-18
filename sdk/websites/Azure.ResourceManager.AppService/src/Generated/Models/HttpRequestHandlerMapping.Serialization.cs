@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class HttpRequestHandlerMapping : IUtf8JsonSerializable
+    public partial class HttpRequestHandlerMapping : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Extension))
+            if (Core.Optional.IsDefined(Extension))
             {
                 writer.WritePropertyName("extension"u8);
                 writer.WriteStringValue(Extension);
             }
-            if (Optional.IsDefined(ScriptProcessor))
+            if (Core.Optional.IsDefined(ScriptProcessor))
             {
                 writer.WritePropertyName("scriptProcessor"u8);
                 writer.WriteStringValue(ScriptProcessor);
             }
-            if (Optional.IsDefined(Arguments))
+            if (Core.Optional.IsDefined(Arguments))
             {
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStringValue(Arguments);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> extension = default;
-            Optional<string> scriptProcessor = default;
-            Optional<string> arguments = default;
+            Core.Optional<string> extension = default;
+            Core.Optional<string> scriptProcessor = default;
+            Core.Optional<string> arguments = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extension"u8))

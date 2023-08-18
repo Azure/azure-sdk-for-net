@@ -12,12 +12,12 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseDataConnectionData : IUtf8JsonSerializable
+    public partial class SynapseDataConnectionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Synapse
                     case "IotHub": return SynapseIotHubDataConnection.DeserializeSynapseIotHubDataConnection(element);
                 }
             }
-            Optional<AzureLocation> location = default;
+            Core.Optional<AzureLocation> location = default;
             SynapseDataConnectionKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Synapse
                     continue;
                 }
             }
-            return new SynapseDataConnectionData(id, name, type, systemData.Value, Optional.ToNullable(location), kind);
+            return new SynapseDataConnectionData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), kind);
         }
     }
 }

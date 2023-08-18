@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Storage.Models
         internal StorageSkuInformation(StorageSkuName name)
         {
             Name = name;
-            Locations = new ChangeTrackingList<string>();
-            Capabilities = new ChangeTrackingList<StorageSkuCapability>();
-            Restrictions = new ChangeTrackingList<StorageSkuRestriction>();
+            Locations = new Core.ChangeTrackingList<string>();
+            Capabilities = new Core.ChangeTrackingList<StorageSkuCapability>();
+            Restrictions = new Core.ChangeTrackingList<StorageSkuRestriction>();
         }
 
         /// <summary> Initializes a new instance of StorageSkuInformation. </summary>

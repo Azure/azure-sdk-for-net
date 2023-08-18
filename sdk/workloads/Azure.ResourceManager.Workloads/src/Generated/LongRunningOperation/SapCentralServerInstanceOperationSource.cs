@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Workloads
 {
-    internal class SapCentralServerInstanceOperationSource : IOperationSource<SapCentralServerInstanceResource>
+    internal class SapCentralServerInstanceOperationSource : Core.IOperationSource<SapCentralServerInstanceResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Workloads
             _client = client;
         }
 
-        SapCentralServerInstanceResource IOperationSource<SapCentralServerInstanceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SapCentralServerInstanceResource Core.IOperationSource<SapCentralServerInstanceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SapCentralServerInstanceData.DeserializeSapCentralServerInstanceData(document.RootElement);
             return new SapCentralServerInstanceResource(_client, data);
         }
 
-        async ValueTask<SapCentralServerInstanceResource> IOperationSource<SapCentralServerInstanceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SapCentralServerInstanceResource> Core.IOperationSource<SapCentralServerInstanceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SapCentralServerInstanceData.DeserializeSapCentralServerInstanceData(document.RootElement);

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<SynapsePrivateEndpointConnectionProperties> properties = default;
+            Core.Optional<string> id = default;
+            Core.Optional<SynapsePrivateEndpointConnectionProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

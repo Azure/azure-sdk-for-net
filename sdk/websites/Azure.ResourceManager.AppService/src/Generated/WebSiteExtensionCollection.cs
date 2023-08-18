@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteExtensionWebAppsRestClient.InstallSiteExtensionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<WebSiteExtensionResource>(new WebSiteExtensionOperationSource(Client), _webSiteExtensionWebAppsClientDiagnostics, Pipeline, _webSiteExtensionWebAppsRestClient.CreateInstallSiteExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<WebSiteExtensionResource>(new WebSiteExtensionOperationSource(Client), _webSiteExtensionWebAppsClientDiagnostics, Pipeline, _webSiteExtensionWebAppsRestClient.CreateInstallSiteExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteExtensionWebAppsRestClient.InstallSiteExtension(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId, cancellationToken);
-                var operation = new AppServiceArmOperation<WebSiteExtensionResource>(new WebSiteExtensionOperationSource(Client), _webSiteExtensionWebAppsClientDiagnostics, Pipeline, _webSiteExtensionWebAppsRestClient.CreateInstallSiteExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<WebSiteExtensionResource>(new WebSiteExtensionOperationSource(Client), _webSiteExtensionWebAppsClientDiagnostics, Pipeline, _webSiteExtensionWebAppsRestClient.CreateInstallSiteExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteExtensionId).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteExtensionWebAppsRestClient.CreateListSiteExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteExtensionWebAppsRestClient.CreateListSiteExtensionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebSiteExtensionResource(Client, SiteExtensionInfoData.DeserializeSiteExtensionInfoData(e)), _webSiteExtensionWebAppsClientDiagnostics, Pipeline, "WebSiteExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebSiteExtensionResource(Client, SiteExtensionInfoData.DeserializeSiteExtensionInfoData(e)), _webSiteExtensionWebAppsClientDiagnostics, Pipeline, "WebSiteExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteExtensionWebAppsRestClient.CreateListSiteExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteExtensionWebAppsRestClient.CreateListSiteExtensionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebSiteExtensionResource(Client, SiteExtensionInfoData.DeserializeSiteExtensionInfoData(e)), _webSiteExtensionWebAppsClientDiagnostics, Pipeline, "WebSiteExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebSiteExtensionResource(Client, SiteExtensionInfoData.DeserializeSiteExtensionInfoData(e)), _webSiteExtensionWebAppsClientDiagnostics, Pipeline, "WebSiteExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

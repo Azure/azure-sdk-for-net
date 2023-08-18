@@ -14,27 +14,27 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(IntegrationRuntimeDataFlowPropertiesConverter))]
-    public partial class IntegrationRuntimeDataFlowProperties : IUtf8JsonSerializable
+    public partial class IntegrationRuntimeDataFlowProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComputeType))
+            if (Core.Optional.IsDefined(ComputeType))
             {
                 writer.WritePropertyName("computeType"u8);
                 writer.WriteStringValue(ComputeType.Value.ToString());
             }
-            if (Optional.IsDefined(CoreCount))
+            if (Core.Optional.IsDefined(CoreCount))
             {
                 writer.WritePropertyName("coreCount"u8);
                 writer.WriteNumberValue(CoreCount.Value);
             }
-            if (Optional.IsDefined(TimeToLive))
+            if (Core.Optional.IsDefined(TimeToLive))
             {
                 writer.WritePropertyName("timeToLive"u8);
                 writer.WriteNumberValue(TimeToLive.Value);
             }
-            if (Optional.IsDefined(Cleanup))
+            if (Core.Optional.IsDefined(Cleanup))
             {
                 writer.WritePropertyName("cleanup"u8);
                 writer.WriteBooleanValue(Cleanup.Value);
@@ -53,10 +53,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<DataFlowComputeType> computeType = default;
-            Optional<int> coreCount = default;
-            Optional<int> timeToLive = default;
-            Optional<bool> cleanup = default;
+            Core.Optional<DataFlowComputeType> computeType = default;
+            Core.Optional<int> coreCount = default;
+            Core.Optional<int> timeToLive = default;
+            Core.Optional<bool> cleanup = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeDataFlowProperties(Optional.ToNullable(computeType), Optional.ToNullable(coreCount), Optional.ToNullable(timeToLive), Optional.ToNullable(cleanup), additionalProperties);
+            return new IntegrationRuntimeDataFlowProperties(Core.Optional.ToNullable(computeType), Core.Optional.ToNullable(coreCount), Core.Optional.ToNullable(timeToLive), Core.Optional.ToNullable(cleanup), additionalProperties);
         }
 
         internal partial class IntegrationRuntimeDataFlowPropertiesConverter : JsonConverter<IntegrationRuntimeDataFlowProperties>

@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class CustomLabelClassificationResultDocumentsItem : IUtf8JsonSerializable
+    internal partial class CustomLabelClassificationResultDocumentsItem : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("class"u8);
@@ -33,7 +33,7 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Statistics))
+            if (Core.Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics.Value);
@@ -50,7 +50,7 @@ namespace Azure.AI.TextAnalytics.Models
             IList<ClassificationResult> @class = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
-            Optional<TextDocumentStatistics> statistics = default;
+            Core.Optional<TextDocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("class"u8))
@@ -88,7 +88,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new CustomLabelClassificationResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), @class);
+            return new CustomLabelClassificationResultDocumentsItem(id, warnings, Core.Optional.ToNullable(statistics), @class);
         }
     }
 }

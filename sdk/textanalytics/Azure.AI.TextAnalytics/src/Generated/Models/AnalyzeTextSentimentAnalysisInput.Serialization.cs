@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class AnalyzeTextSentimentAnalysisInput : IUtf8JsonSerializable
+    internal partial class AnalyzeTextSentimentAnalysisInput : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AnalysisInput))
+            if (Core.Optional.IsDefined(AnalysisInput))
             {
                 writer.WritePropertyName("analysisInput"u8);
                 writer.WriteObjectValue(AnalysisInput);
             }
-            if (Optional.IsDefined(Parameters))
+            if (Core.Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteObjectValue(Parameters);

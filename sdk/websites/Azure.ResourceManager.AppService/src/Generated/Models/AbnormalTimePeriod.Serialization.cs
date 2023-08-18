@@ -12,22 +12,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AbnormalTimePeriod : IUtf8JsonSerializable
+    public partial class AbnormalTimePeriod : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartOn))
+            if (Core.Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Core.Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Events))
+            if (Core.Optional.IsCollectionDefined(Events))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Solutions))
+            if (Core.Optional.IsCollectionDefined(Solutions))
             {
                 writer.WritePropertyName("solutions"u8);
                 writer.WriteStartArray();
@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<IList<DetectorAbnormalTimePeriod>> events = default;
-            Optional<IList<DiagnosticSolution>> solutions = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<IList<DetectorAbnormalTimePeriod>> events = default;
+            Core.Optional<IList<DiagnosticSolution>> solutions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AbnormalTimePeriod(Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(events), Optional.ToList(solutions));
+            return new AbnormalTimePeriod(Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToList(events), Core.Optional.ToList(solutions));
         }
     }
 }

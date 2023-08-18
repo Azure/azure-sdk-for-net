@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Synapse.Artifacts
 {
     /// <summary> Creates or updates a Sql Script. </summary>
-    public partial class SqlScriptCreateOrUpdateSqlScriptOperation : Operation<SqlScriptResource>, IOperationSource<SqlScriptResource>
+    public partial class SqlScriptCreateOrUpdateSqlScriptOperation : Operation<SqlScriptResource>, Core.IOperationSource<SqlScriptResource>
     {
         private readonly OperationInternal<SqlScriptResource> _operation;
 
@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal SqlScriptCreateOrUpdateSqlScriptOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            IOperation<SqlScriptResource> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
+            IOperation<SqlScriptResource> nextLinkOperation = Core.NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, Core.OperationFinalStateVia.Location);
             _operation = new OperationInternal<SqlScriptResource>(nextLinkOperation, clientDiagnostics, response, "SqlScriptCreateOrUpdateSqlScriptOperation");
         }
 
@@ -67,13 +67,13 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <inheritdoc />
         public override ValueTask<Response<SqlScriptResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        SqlScriptResource IOperationSource<SqlScriptResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SqlScriptResource Core.IOperationSource<SqlScriptResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return SqlScriptResource.DeserializeSqlScriptResource(document.RootElement);
         }
 
-        async ValueTask<SqlScriptResource> IOperationSource<SqlScriptResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SqlScriptResource> Core.IOperationSource<SqlScriptResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return SqlScriptResource.DeserializeSqlScriptResource(document.RootElement);

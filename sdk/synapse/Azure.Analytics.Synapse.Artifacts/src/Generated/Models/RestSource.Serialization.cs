@@ -14,59 +14,59 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(RestSourceConverter))]
-    public partial class RestSource : IUtf8JsonSerializable
+    public partial class RestSource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RequestMethod))
+            if (Core.Optional.IsDefined(RequestMethod))
             {
                 writer.WritePropertyName("requestMethod"u8);
                 writer.WriteObjectValue(RequestMethod);
             }
-            if (Optional.IsDefined(RequestBody))
+            if (Core.Optional.IsDefined(RequestBody))
             {
                 writer.WritePropertyName("requestBody"u8);
                 writer.WriteObjectValue(RequestBody);
             }
-            if (Optional.IsDefined(AdditionalHeaders))
+            if (Core.Optional.IsDefined(AdditionalHeaders))
             {
                 writer.WritePropertyName("additionalHeaders"u8);
                 writer.WriteObjectValue(AdditionalHeaders);
             }
-            if (Optional.IsDefined(PaginationRules))
+            if (Core.Optional.IsDefined(PaginationRules))
             {
                 writer.WritePropertyName("paginationRules"u8);
                 writer.WriteObjectValue(PaginationRules);
             }
-            if (Optional.IsDefined(HttpRequestTimeout))
+            if (Core.Optional.IsDefined(HttpRequestTimeout))
             {
                 writer.WritePropertyName("httpRequestTimeout"u8);
                 writer.WriteObjectValue(HttpRequestTimeout);
             }
-            if (Optional.IsDefined(RequestInterval))
+            if (Core.Optional.IsDefined(RequestInterval))
             {
                 writer.WritePropertyName("requestInterval"u8);
                 writer.WriteObjectValue(RequestInterval);
             }
-            if (Optional.IsDefined(AdditionalColumns))
+            if (Core.Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
                 writer.WriteObjectValue(AdditionalColumns);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(SourceRetryCount))
+            if (Core.Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 writer.WriteObjectValue(SourceRetryCount);
             }
-            if (Optional.IsDefined(SourceRetryWait))
+            if (Core.Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 writer.WriteObjectValue(SourceRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (Core.Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
@@ -85,17 +85,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> requestMethod = default;
-            Optional<object> requestBody = default;
-            Optional<object> additionalHeaders = default;
-            Optional<object> paginationRules = default;
-            Optional<object> httpRequestTimeout = default;
-            Optional<object> requestInterval = default;
-            Optional<object> additionalColumns = default;
+            Core.Optional<object> requestMethod = default;
+            Core.Optional<object> requestBody = default;
+            Core.Optional<object> additionalHeaders = default;
+            Core.Optional<object> paginationRules = default;
+            Core.Optional<object> httpRequestTimeout = default;
+            Core.Optional<object> requestInterval = default;
+            Core.Optional<object> additionalColumns = default;
             string type = default;
-            Optional<object> sourceRetryCount = default;
-            Optional<object> sourceRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            Core.Optional<object> sourceRetryCount = default;
+            Core.Optional<object> sourceRetryWait = default;
+            Core.Optional<object> maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())

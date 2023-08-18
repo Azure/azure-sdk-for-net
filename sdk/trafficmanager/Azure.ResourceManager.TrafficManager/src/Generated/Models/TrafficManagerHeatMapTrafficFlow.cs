@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         /// <summary> Initializes a new instance of TrafficManagerHeatMapTrafficFlow. </summary>
         public TrafficManagerHeatMapTrafficFlow()
         {
-            QueryExperiences = new ChangeTrackingList<TrafficManagerHeatMapQueryExperience>();
+            QueryExperiences = new Core.ChangeTrackingList<TrafficManagerHeatMapQueryExperience>();
         }
 
         /// <summary> Initializes a new instance of TrafficManagerHeatMapTrafficFlow. </summary>

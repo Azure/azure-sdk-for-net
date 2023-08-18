@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> vmSku = default;
-            Optional<bool> isAppServerCertified = default;
-            Optional<bool> isDatabaseCertified = default;
+            Core.Optional<string> vmSku = default;
+            Core.Optional<bool> isAppServerCertified = default;
+            Core.Optional<bool> isDatabaseCertified = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmSku"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new SapSupportedSku(vmSku.Value, Optional.ToNullable(isAppServerCertified), Optional.ToNullable(isDatabaseCertified));
+            return new SapSupportedSku(vmSku.Value, Core.Optional.ToNullable(isAppServerCertified), Core.Optional.ToNullable(isDatabaseCertified));
         }
     }
 }

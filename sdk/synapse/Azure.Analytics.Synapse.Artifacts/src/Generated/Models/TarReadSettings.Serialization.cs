@@ -14,12 +14,12 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(TarReadSettingsConverter))]
-    public partial class TarReadSettings : IUtf8JsonSerializable
+    public partial class TarReadSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PreserveCompressionFileNameAsFolder))
+            if (Core.Optional.IsDefined(PreserveCompressionFileNameAsFolder))
             {
                 writer.WritePropertyName("preserveCompressionFileNameAsFolder"u8);
                 writer.WriteObjectValue(PreserveCompressionFileNameAsFolder);
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> preserveCompressionFileNameAsFolder = default;
+            Core.Optional<object> preserveCompressionFileNameAsFolder = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();

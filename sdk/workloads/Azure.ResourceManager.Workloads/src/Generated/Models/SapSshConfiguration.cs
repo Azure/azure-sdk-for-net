@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of SapSshConfiguration. </summary>
         public SapSshConfiguration()
         {
-            PublicKeys = new ChangeTrackingList<SapSshPublicKey>();
+            PublicKeys = new Core.ChangeTrackingList<SapSshPublicKey>();
         }
 
         /// <summary> Initializes a new instance of SapSshConfiguration. </summary>

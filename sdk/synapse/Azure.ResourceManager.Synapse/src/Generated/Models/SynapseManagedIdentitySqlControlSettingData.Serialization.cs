@@ -12,14 +12,14 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseManagedIdentitySqlControlSettingData : IUtf8JsonSerializable
+    public partial class SynapseManagedIdentitySqlControlSettingData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(GrantSqlControlToManagedIdentity))
+            if (Core.Optional.IsDefined(GrantSqlControlToManagedIdentity))
             {
                 writer.WritePropertyName("grantSqlControlToManagedIdentity"u8);
                 writer.WriteObjectValue(GrantSqlControlToManagedIdentity);
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Synapse
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SynapseGrantSqlControlToManagedIdentity> grantSqlControlToManagedIdentity = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<SynapseGrantSqlControlToManagedIdentity> grantSqlControlToManagedIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

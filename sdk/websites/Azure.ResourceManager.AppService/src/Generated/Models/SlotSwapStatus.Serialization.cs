@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> timestampUtc = default;
-            Optional<string> sourceSlotName = default;
-            Optional<string> destinationSlotName = default;
+            Core.Optional<DateTimeOffset> timestampUtc = default;
+            Core.Optional<string> sourceSlotName = default;
+            Core.Optional<string> destinationSlotName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestampUtc"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new SlotSwapStatus(Optional.ToNullable(timestampUtc), sourceSlotName.Value, destinationSlotName.Value);
+            return new SlotSwapStatus(Core.Optional.ToNullable(timestampUtc), sourceSlotName.Value, destinationSlotName.Value);
         }
     }
 }

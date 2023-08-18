@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StoragePrivateLinkResourceData : IUtf8JsonSerializable
+    public partial class StoragePrivateLinkResourceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(RequiredZoneNames))
+            if (Core.Optional.IsCollectionDefined(RequiredZoneNames))
             {
                 writer.WritePropertyName("requiredZoneNames"u8);
                 writer.WriteStartArray();
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.Storage.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> groupId = default;
-            Optional<IReadOnlyList<string>> requiredMembers = default;
-            Optional<IList<string>> requiredZoneNames = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ResourceIdentifier> groupId = default;
+            Core.Optional<IReadOnlyList<string>> requiredMembers = default;
+            Core.Optional<IList<string>> requiredZoneNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new StoragePrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
+            return new StoragePrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, Core.Optional.ToList(requiredMembers), Core.Optional.ToList(requiredZoneNames));
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of TriggeredJobHistoryData. </summary>
         public TriggeredJobHistoryData()
         {
-            Runs = new ChangeTrackingList<TriggeredJobRun>();
+            Runs = new Core.ChangeTrackingList<TriggeredJobRun>();
         }
 
         /// <summary> Initializes a new instance of TriggeredJobHistoryData. </summary>

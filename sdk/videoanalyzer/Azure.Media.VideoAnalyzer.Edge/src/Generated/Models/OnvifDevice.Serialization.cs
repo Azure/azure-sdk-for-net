@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class OnvifDevice : IUtf8JsonSerializable
+    public partial class OnvifDevice : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Hostname))
+            if (Core.Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteObjectValue(Hostname);
             }
-            if (Optional.IsDefined(SystemDateTime))
+            if (Core.Optional.IsDefined(SystemDateTime))
             {
                 writer.WritePropertyName("systemDateTime"u8);
                 writer.WriteObjectValue(SystemDateTime);
             }
-            if (Optional.IsDefined(Dns))
+            if (Core.Optional.IsDefined(Dns))
             {
                 writer.WritePropertyName("dns"u8);
                 writer.WriteObjectValue(Dns);
             }
-            if (Optional.IsCollectionDefined(MediaProfiles))
+            if (Core.Optional.IsCollectionDefined(MediaProfiles))
             {
                 writer.WritePropertyName("mediaProfiles"u8);
                 writer.WriteStartArray();
@@ -50,10 +50,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<OnvifHostName> hostname = default;
-            Optional<OnvifSystemDateTime> systemDateTime = default;
-            Optional<OnvifDns> dns = default;
-            Optional<IList<MediaProfile>> mediaProfiles = default;
+            Core.Optional<OnvifHostName> hostname = default;
+            Core.Optional<OnvifSystemDateTime> systemDateTime = default;
+            Core.Optional<OnvifDns> dns = default;
+            Core.Optional<IList<MediaProfile>> mediaProfiles = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hostname"u8))
@@ -98,7 +98,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new OnvifDevice(hostname.Value, systemDateTime.Value, dns.Value, Optional.ToList(mediaProfiles));
+            return new OnvifDevice(hostname.Value, systemDateTime.Value, dns.Value, Core.Optional.ToList(mediaProfiles));
         }
     }
 }

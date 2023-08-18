@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SharedStorageResourceNames : IUtf8JsonSerializable
+    public partial class SharedStorageResourceNames : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SharedStorageAccountName))
+            if (Core.Optional.IsDefined(SharedStorageAccountName))
             {
                 writer.WritePropertyName("sharedStorageAccountName"u8);
                 writer.WriteStringValue(SharedStorageAccountName);
             }
-            if (Optional.IsDefined(SharedStorageAccountPrivateEndPointName))
+            if (Core.Optional.IsDefined(SharedStorageAccountPrivateEndPointName))
             {
                 writer.WritePropertyName("sharedStorageAccountPrivateEndPointName"u8);
                 writer.WriteStringValue(SharedStorageAccountPrivateEndPointName);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> sharedStorageAccountName = default;
-            Optional<string> sharedStorageAccountPrivateEndPointName = default;
+            Core.Optional<string> sharedStorageAccountName = default;
+            Core.Optional<string> sharedStorageAccountPrivateEndPointName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sharedStorageAccountName"u8))

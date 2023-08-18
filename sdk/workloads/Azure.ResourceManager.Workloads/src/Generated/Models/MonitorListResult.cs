@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of MonitorListResult. </summary>
         internal MonitorListResult()
         {
-            Value = new ChangeTrackingList<SapMonitorData>();
+            Value = new Core.ChangeTrackingList<SapMonitorData>();
         }
 
         /// <summary> Initializes a new instance of MonitorListResult. </summary>

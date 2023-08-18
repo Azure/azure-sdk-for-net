@@ -56,7 +56,7 @@ namespace Azure.AI.TextAnalytics
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -133,7 +133,7 @@ namespace Azure.AI.TextAnalytics
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -144,7 +144,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <remarks> Submit a collection of text documents for analysis. Specify one or more unique tasks to be executed as a long-running operation. </remarks>
-        public async Task<ResponseWithHeaders<MicrosoftCognitiveLanguageServiceTextAnalysisAnalyzeBatchSubmitJobHeaders>> AnalyzeBatchSubmitJobAsync(AnalyzeTextJobsInput body, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<MicrosoftCognitiveLanguageServiceTextAnalysisAnalyzeBatchSubmitJobHeaders>> AnalyzeBatchSubmitJobAsync(AnalyzeTextJobsInput body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -157,7 +157,7 @@ namespace Azure.AI.TextAnalytics
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -168,7 +168,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <remarks> Submit a collection of text documents for analysis. Specify one or more unique tasks to be executed as a long-running operation. </remarks>
-        public ResponseWithHeaders<MicrosoftCognitiveLanguageServiceTextAnalysisAnalyzeBatchSubmitJobHeaders> AnalyzeBatchSubmitJob(AnalyzeTextJobsInput body, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<MicrosoftCognitiveLanguageServiceTextAnalysisAnalyzeBatchSubmitJobHeaders> AnalyzeBatchSubmitJob(AnalyzeTextJobsInput body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -181,7 +181,7 @@ namespace Azure.AI.TextAnalytics
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -286,7 +286,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="jobId"> Job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Cancel a long-running Text Analysis job. </remarks>
-        public async Task<ResponseWithHeaders<MicrosoftCognitiveLanguageServiceTextAnalysisAnalyzeBatchCancelJobHeaders>> AnalyzeBatchCancelJobAsync(Guid jobId, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<MicrosoftCognitiveLanguageServiceTextAnalysisAnalyzeBatchCancelJobHeaders>> AnalyzeBatchCancelJobAsync(Guid jobId, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeBatchCancelJobRequest(jobId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -294,7 +294,7 @@ namespace Azure.AI.TextAnalytics
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -304,7 +304,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="jobId"> Job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Cancel a long-running Text Analysis job. </remarks>
-        public ResponseWithHeaders<MicrosoftCognitiveLanguageServiceTextAnalysisAnalyzeBatchCancelJobHeaders> AnalyzeBatchCancelJob(Guid jobId, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<MicrosoftCognitiveLanguageServiceTextAnalysisAnalyzeBatchCancelJobHeaders> AnalyzeBatchCancelJob(Guid jobId, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeBatchCancelJobRequest(jobId);
             _pipeline.Send(message, cancellationToken);
@@ -312,7 +312,7 @@ namespace Azure.AI.TextAnalytics
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

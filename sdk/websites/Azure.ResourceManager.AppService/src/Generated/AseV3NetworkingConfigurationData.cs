@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of AseV3NetworkingConfigurationData. </summary>
         public AseV3NetworkingConfigurationData()
         {
-            WindowsOutboundIPAddresses = new ChangeTrackingList<IPAddress>();
-            LinuxOutboundIPAddresses = new ChangeTrackingList<IPAddress>();
-            ExternalInboundIPAddresses = new ChangeTrackingList<IPAddress>();
-            InternalInboundIPAddresses = new ChangeTrackingList<IPAddress>();
+            WindowsOutboundIPAddresses = new Core.ChangeTrackingList<IPAddress>();
+            LinuxOutboundIPAddresses = new Core.ChangeTrackingList<IPAddress>();
+            ExternalInboundIPAddresses = new Core.ChangeTrackingList<IPAddress>();
+            InternalInboundIPAddresses = new Core.ChangeTrackingList<IPAddress>();
         }
 
         /// <summary> Initializes a new instance of AseV3NetworkingConfigurationData. </summary>

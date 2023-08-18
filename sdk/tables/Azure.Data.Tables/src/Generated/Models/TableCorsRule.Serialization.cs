@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class TableCorsRule : IXmlSerializable
+    public partial class TableCorsRule : Core.IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "CorsRule");
             writer.WriteStartElement("AllowedOrigins");

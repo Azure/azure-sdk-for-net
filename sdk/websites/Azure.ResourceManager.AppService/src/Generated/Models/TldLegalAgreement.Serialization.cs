@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService.Models
             string agreementKey = default;
             string title = default;
             string content = default;
-            Optional<Uri> url = default;
+            Core.Optional<Uri> url = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("agreementKey"u8))

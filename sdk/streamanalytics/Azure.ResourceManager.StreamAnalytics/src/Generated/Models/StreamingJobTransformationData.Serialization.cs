@@ -12,24 +12,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics
 {
-    public partial class StreamingJobTransformationData : IUtf8JsonSerializable
+    public partial class StreamingJobTransformationData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StreamingUnits))
+            if (Core.Optional.IsDefined(StreamingUnits))
             {
                 writer.WritePropertyName("streamingUnits"u8);
                 writer.WriteNumberValue(StreamingUnits.Value);
             }
-            if (Optional.IsCollectionDefined(ValidStreamingUnits))
+            if (Core.Optional.IsCollectionDefined(ValidStreamingUnits))
             {
                 writer.WritePropertyName("validStreamingUnits"u8);
                 writer.WriteStartArray();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Query))
+            if (Core.Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
@@ -54,13 +54,13 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<int> streamingUnits = default;
-            Optional<IList<int>> validStreamingUnits = default;
-            Optional<string> query = default;
-            Optional<ETag> etag = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceType> type = default;
+            Core.Optional<int> streamingUnits = default;
+            Core.Optional<IList<int>> validStreamingUnits = default;
+            Core.Optional<string> query = default;
+            Core.Optional<ETag> etag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     continue;
                 }
             }
-            return new StreamingJobTransformationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(streamingUnits), Optional.ToList(validStreamingUnits), query.Value, Optional.ToNullable(etag));
+            return new StreamingJobTransformationData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(streamingUnits), Core.Optional.ToList(validStreamingUnits), query.Value, Core.Optional.ToNullable(etag));
         }
     }
 }

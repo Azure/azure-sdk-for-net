@@ -13,17 +13,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LinkConnectionSourceDatabaseConverter))]
-    public partial class LinkConnectionSourceDatabase : IUtf8JsonSerializable
+    public partial class LinkConnectionSourceDatabase : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedService))
+            if (Core.Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
                 writer.WriteObjectValue(LinkedService);
             }
-            if (Optional.IsDefined(TypeProperties))
+            if (Core.Optional.IsDefined(TypeProperties))
             {
                 writer.WritePropertyName("typeProperties"u8);
                 writer.WriteObjectValue(TypeProperties);
@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> linkedService = default;
-            Optional<LinkConnectionSourceDatabaseTypeProperties> typeProperties = default;
+            Core.Optional<LinkedServiceReference> linkedService = default;
+            Core.Optional<LinkConnectionSourceDatabaseTypeProperties> typeProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedService"u8))

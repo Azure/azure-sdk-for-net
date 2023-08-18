@@ -16,7 +16,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of OnvifDevice. </summary>
         public OnvifDevice()
         {
-            MediaProfiles = new ChangeTrackingList<MediaProfile>();
+            MediaProfiles = new Core.ChangeTrackingList<MediaProfile>();
         }
 
         /// <summary> Initializes a new instance of OnvifDevice. </summary>

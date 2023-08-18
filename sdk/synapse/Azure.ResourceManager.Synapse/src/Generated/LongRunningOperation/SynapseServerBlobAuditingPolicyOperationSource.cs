@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
-    internal class SynapseServerBlobAuditingPolicyOperationSource : IOperationSource<SynapseServerBlobAuditingPolicyResource>
+    internal class SynapseServerBlobAuditingPolicyOperationSource : Core.IOperationSource<SynapseServerBlobAuditingPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Synapse
             _client = client;
         }
 
-        SynapseServerBlobAuditingPolicyResource IOperationSource<SynapseServerBlobAuditingPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SynapseServerBlobAuditingPolicyResource Core.IOperationSource<SynapseServerBlobAuditingPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SynapseServerBlobAuditingPolicyData.DeserializeSynapseServerBlobAuditingPolicyData(document.RootElement);
             return new SynapseServerBlobAuditingPolicyResource(_client, data);
         }
 
-        async ValueTask<SynapseServerBlobAuditingPolicyResource> IOperationSource<SynapseServerBlobAuditingPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SynapseServerBlobAuditingPolicyResource> Core.IOperationSource<SynapseServerBlobAuditingPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SynapseServerBlobAuditingPolicyData.DeserializeSynapseServerBlobAuditingPolicyData(document.RootElement);

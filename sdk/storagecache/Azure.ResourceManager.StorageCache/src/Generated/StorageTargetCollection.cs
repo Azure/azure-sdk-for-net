@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = await _storageTargetRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageTargetName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageCacheArmOperation<StorageTargetResource>(new StorageTargetOperationSource(Client), _storageTargetClientDiagnostics, Pipeline, _storageTargetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageTargetName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageCacheArmOperation<StorageTargetResource>(new StorageTargetOperationSource(Client), _storageTargetClientDiagnostics, Pipeline, _storageTargetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageTargetName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = _storageTargetRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageTargetName, data, cancellationToken);
-                var operation = new StorageCacheArmOperation<StorageTargetResource>(new StorageTargetOperationSource(Client), _storageTargetClientDiagnostics, Pipeline, _storageTargetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageTargetName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new StorageCacheArmOperation<StorageTargetResource>(new StorageTargetOperationSource(Client), _storageTargetClientDiagnostics, Pipeline, _storageTargetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageTargetName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageTargetRestClient.CreateListByCacheRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageTargetRestClient.CreateListByCacheNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageTargetResource(Client, StorageTargetData.DeserializeStorageTargetData(e)), _storageTargetClientDiagnostics, Pipeline, "StorageTargetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageTargetResource(Client, StorageTargetData.DeserializeStorageTargetData(e)), _storageTargetClientDiagnostics, Pipeline, "StorageTargetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageTargetRestClient.CreateListByCacheRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageTargetRestClient.CreateListByCacheNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageTargetResource(Client, StorageTargetData.DeserializeStorageTargetData(e)), _storageTargetClientDiagnostics, Pipeline, "StorageTargetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageTargetResource(Client, StorageTargetData.DeserializeStorageTargetData(e)), _storageTargetClientDiagnostics, Pipeline, "StorageTargetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

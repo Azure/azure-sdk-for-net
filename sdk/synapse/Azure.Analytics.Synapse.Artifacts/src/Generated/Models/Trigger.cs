@@ -20,8 +20,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of Trigger. </summary>
         public Trigger()
         {
-            Annotations = new ChangeTrackingList<object>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            Annotations = new Core.ChangeTrackingList<object>();
+            AdditionalProperties = new Core.ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of Trigger. </summary>

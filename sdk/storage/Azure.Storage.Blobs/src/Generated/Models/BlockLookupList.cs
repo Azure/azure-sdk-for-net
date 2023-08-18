@@ -16,9 +16,9 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> Initializes a new instance of BlockLookupList. </summary>
         public BlockLookupList()
         {
-            Committed = new ChangeTrackingList<string>();
-            Uncommitted = new ChangeTrackingList<string>();
-            Latest = new ChangeTrackingList<string>();
+            Committed = new Core.ChangeTrackingList<string>();
+            Uncommitted = new Core.ChangeTrackingList<string>();
+            Latest = new Core.ChangeTrackingList<string>();
         }
     }
 }

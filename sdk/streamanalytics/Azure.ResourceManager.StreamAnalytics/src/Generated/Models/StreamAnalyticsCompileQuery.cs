@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Argument.AssertNotNull(query, nameof(query));
 
             Query = query;
-            Inputs = new ChangeTrackingList<StreamAnalyticsQueryInput>();
-            Functions = new ChangeTrackingList<StreamAnalyticsQueryFunction>();
+            Inputs = new Core.ChangeTrackingList<StreamAnalyticsQueryInput>();
+            Functions = new Core.ChangeTrackingList<StreamAnalyticsQueryFunction>();
             JobType = jobType;
         }
 

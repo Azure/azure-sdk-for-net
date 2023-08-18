@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class GitHubActionContainerConfiguration : IUtf8JsonSerializable
+    public partial class GitHubActionContainerConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServerUri))
+            if (Core.Optional.IsDefined(ServerUri))
             {
                 writer.WritePropertyName("serverUrl"u8);
                 writer.WriteStringValue(ServerUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ImageName))
+            if (Core.Optional.IsDefined(ImageName))
             {
                 writer.WritePropertyName("imageName"u8);
                 writer.WriteStringValue(ImageName);
             }
-            if (Optional.IsDefined(Username))
+            if (Core.Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Optional.IsDefined(Password))
+            if (Core.Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<Uri> serverUrl = default;
-            Optional<string> imageName = default;
-            Optional<string> username = default;
-            Optional<string> password = default;
+            Core.Optional<Uri> serverUrl = default;
+            Core.Optional<string> imageName = default;
+            Core.Optional<string> username = default;
+            Core.Optional<string> password = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serverUrl"u8))

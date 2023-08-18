@@ -21,7 +21,7 @@ namespace Azure.Storage.Files.Shares.Models
         {
             Argument.AssertNotNull(nextMarker, nameof(nextMarker));
 
-            HandleList = new ChangeTrackingList<HandleItem>();
+            HandleList = new Core.ChangeTrackingList<HandleItem>();
             NextMarker = nextMarker;
         }
 

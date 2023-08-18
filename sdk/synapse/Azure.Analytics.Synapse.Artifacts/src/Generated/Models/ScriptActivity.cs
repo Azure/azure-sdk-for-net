@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            Scripts = new ChangeTrackingList<ScriptActivityScriptBlock>();
+            Scripts = new Core.ChangeTrackingList<ScriptActivityScriptBlock>();
             Type = "Script";
         }
 

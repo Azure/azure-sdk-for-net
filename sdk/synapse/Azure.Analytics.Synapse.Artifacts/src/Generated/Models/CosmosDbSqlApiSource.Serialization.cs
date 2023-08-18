@@ -14,49 +14,49 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(CosmosDbSqlApiSourceConverter))]
-    public partial class CosmosDbSqlApiSource : IUtf8JsonSerializable
+    public partial class CosmosDbSqlApiSource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Query))
+            if (Core.Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteObjectValue(Query);
             }
-            if (Optional.IsDefined(PageSize))
+            if (Core.Optional.IsDefined(PageSize))
             {
                 writer.WritePropertyName("pageSize"u8);
                 writer.WriteObjectValue(PageSize);
             }
-            if (Optional.IsDefined(PreferredRegions))
+            if (Core.Optional.IsDefined(PreferredRegions))
             {
                 writer.WritePropertyName("preferredRegions"u8);
                 writer.WriteObjectValue(PreferredRegions);
             }
-            if (Optional.IsDefined(DetectDatetime))
+            if (Core.Optional.IsDefined(DetectDatetime))
             {
                 writer.WritePropertyName("detectDatetime"u8);
                 writer.WriteObjectValue(DetectDatetime);
             }
-            if (Optional.IsDefined(AdditionalColumns))
+            if (Core.Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
                 writer.WriteObjectValue(AdditionalColumns);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(SourceRetryCount))
+            if (Core.Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 writer.WriteObjectValue(SourceRetryCount);
             }
-            if (Optional.IsDefined(SourceRetryWait))
+            if (Core.Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 writer.WriteObjectValue(SourceRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (Core.Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
@@ -75,15 +75,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> query = default;
-            Optional<object> pageSize = default;
-            Optional<object> preferredRegions = default;
-            Optional<object> detectDatetime = default;
-            Optional<object> additionalColumns = default;
+            Core.Optional<object> query = default;
+            Core.Optional<object> pageSize = default;
+            Core.Optional<object> preferredRegions = default;
+            Core.Optional<object> detectDatetime = default;
+            Core.Optional<object> additionalColumns = default;
             string type = default;
-            Optional<object> sourceRetryCount = default;
-            Optional<object> sourceRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            Core.Optional<object> sourceRetryCount = default;
+            Core.Optional<object> sourceRetryWait = default;
+            Core.Optional<object> maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())

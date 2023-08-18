@@ -13,16 +13,16 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DistcpSettingsConverter))]
-    public partial class DistcpSettings : IUtf8JsonSerializable
+    public partial class DistcpSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("resourceManagerEndpoint"u8);
             writer.WriteObjectValue(ResourceManagerEndpoint);
             writer.WritePropertyName("tempScriptPath"u8);
             writer.WriteObjectValue(TempScriptPath);
-            if (Optional.IsDefined(DistcpOptions))
+            if (Core.Optional.IsDefined(DistcpOptions))
             {
                 writer.WritePropertyName("distcpOptions"u8);
                 writer.WriteObjectValue(DistcpOptions);
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             object resourceManagerEndpoint = default;
             object tempScriptPath = default;
-            Optional<object> distcpOptions = default;
+            Core.Optional<object> distcpOptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceManagerEndpoint"u8))

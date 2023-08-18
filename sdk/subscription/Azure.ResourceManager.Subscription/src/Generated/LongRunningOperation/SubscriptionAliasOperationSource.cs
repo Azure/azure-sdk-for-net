@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Subscription
 {
-    internal class SubscriptionAliasOperationSource : IOperationSource<SubscriptionAliasResource>
+    internal class SubscriptionAliasOperationSource : Core.IOperationSource<SubscriptionAliasResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Subscription
             _client = client;
         }
 
-        SubscriptionAliasResource IOperationSource<SubscriptionAliasResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SubscriptionAliasResource Core.IOperationSource<SubscriptionAliasResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SubscriptionAliasData.DeserializeSubscriptionAliasData(document.RootElement);
             return new SubscriptionAliasResource(_client, data);
         }
 
-        async ValueTask<SubscriptionAliasResource> IOperationSource<SubscriptionAliasResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SubscriptionAliasResource> Core.IOperationSource<SubscriptionAliasResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SubscriptionAliasData.DeserializeSubscriptionAliasData(document.RootElement);

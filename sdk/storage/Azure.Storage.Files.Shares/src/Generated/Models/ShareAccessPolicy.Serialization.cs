@@ -12,24 +12,24 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class ShareAccessPolicy : IXmlSerializable
+    public partial class ShareAccessPolicy : Core.IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "AccessPolicy");
-            if (Optional.IsDefined(PolicyStartsOn))
+            if (Core.Optional.IsDefined(PolicyStartsOn))
             {
                 writer.WriteStartElement("Start");
                 writer.WriteValue(PolicyStartsOn.Value, "O");
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(PolicyExpiresOn))
+            if (Core.Optional.IsDefined(PolicyExpiresOn))
             {
                 writer.WriteStartElement("Expiry");
                 writer.WriteValue(PolicyExpiresOn.Value, "O");
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(Permissions))
+            if (Core.Optional.IsDefined(Permissions))
             {
                 writer.WriteStartElement("Permission");
                 writer.WriteValue(Permissions);

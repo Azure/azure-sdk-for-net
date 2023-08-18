@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of StaticSiteBuildData. </summary>
         public StaticSiteBuildData()
         {
-            UserProvidedFunctionApps = new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>();
+            UserProvidedFunctionApps = new Core.ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>();
         }
 
         /// <summary> Initializes a new instance of StaticSiteBuildData. </summary>

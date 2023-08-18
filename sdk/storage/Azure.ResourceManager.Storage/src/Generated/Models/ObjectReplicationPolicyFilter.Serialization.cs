@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ObjectReplicationPolicyFilter : IUtf8JsonSerializable
+    public partial class ObjectReplicationPolicyFilter : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PrefixMatch))
+            if (Core.Optional.IsCollectionDefined(PrefixMatch))
             {
                 writer.WritePropertyName("prefixMatch"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MinCreationTime))
+            if (Core.Optional.IsDefined(MinCreationTime))
             {
                 writer.WritePropertyName("minCreationTime"u8);
                 writer.WriteStringValue(MinCreationTime);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<IList<string>> prefixMatch = default;
-            Optional<string> minCreationTime = default;
+            Core.Optional<IList<string>> prefixMatch = default;
+            Core.Optional<string> minCreationTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("prefixMatch"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new ObjectReplicationPolicyFilter(Optional.ToList(prefixMatch), minCreationTime.Value);
+            return new ObjectReplicationPolicyFilter(Core.Optional.ToList(prefixMatch), minCreationTime.Value);
         }
     }
 }

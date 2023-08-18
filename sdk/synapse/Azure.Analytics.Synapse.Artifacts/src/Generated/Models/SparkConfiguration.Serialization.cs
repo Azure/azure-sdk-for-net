@@ -14,12 +14,12 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SparkConfigurationConverter))]
-    public partial class SparkConfiguration : IUtf8JsonSerializable
+    public partial class SparkConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(item.Value);
             }
             writer.WriteEndObject();
-            if (Optional.IsCollectionDefined(Annotations))
+            if (Core.Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -42,22 +42,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Notes))
+            if (Core.Optional.IsDefined(Notes))
             {
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
             }
-            if (Optional.IsDefined(CreatedBy))
+            if (Core.Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (Optional.IsDefined(Created))
+            if (Core.Optional.IsDefined(Created))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(Created.Value, "O");
             }
-            if (Optional.IsCollectionDefined(ConfigMergeRule))
+            if (Core.Optional.IsCollectionDefined(ConfigMergeRule))
             {
                 writer.WritePropertyName("configMergeRule"u8);
                 writer.WriteStartObject();
@@ -77,13 +77,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> description = default;
+            Core.Optional<string> description = default;
             IDictionary<string, string> configs = default;
-            Optional<IList<string>> annotations = default;
-            Optional<string> notes = default;
-            Optional<string> createdBy = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<IDictionary<string, string>> configMergeRule = default;
+            Core.Optional<IList<string>> annotations = default;
+            Core.Optional<string> notes = default;
+            Core.Optional<string> createdBy = default;
+            Core.Optional<DateTimeOffset> created = default;
+            Core.Optional<IDictionary<string, string>> configMergeRule = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -149,7 +149,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SparkConfiguration(description.Value, configs, Optional.ToList(annotations), notes.Value, createdBy.Value, Optional.ToNullable(created), Optional.ToDictionary(configMergeRule));
+            return new SparkConfiguration(description.Value, configs, Core.Optional.ToList(annotations), notes.Value, createdBy.Value, Core.Optional.ToNullable(created), Core.Optional.ToDictionary(configMergeRule));
         }
 
         internal partial class SparkConfigurationConverter : JsonConverter<SparkConfiguration>

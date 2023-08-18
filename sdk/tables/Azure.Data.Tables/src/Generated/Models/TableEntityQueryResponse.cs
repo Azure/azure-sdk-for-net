@@ -16,7 +16,7 @@ namespace Azure.Data.Tables.Models
         /// <summary> Initializes a new instance of TableEntityQueryResponse. </summary>
         internal TableEntityQueryResponse()
         {
-            Value = new ChangeTrackingList<IDictionary<string, object>>();
+            Value = new Core.ChangeTrackingList<IDictionary<string, object>>();
         }
 
         /// <summary> Initializes a new instance of TableEntityQueryResponse. </summary>

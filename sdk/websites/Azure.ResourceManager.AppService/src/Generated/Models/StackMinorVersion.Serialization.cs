@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StackMinorVersion : IUtf8JsonSerializable
+    public partial class StackMinorVersion : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayVersion))
+            if (Core.Optional.IsDefined(DisplayVersion))
             {
                 writer.WritePropertyName("displayVersion"u8);
                 writer.WriteStringValue(DisplayVersion);
             }
-            if (Optional.IsDefined(RuntimeVersion))
+            if (Core.Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
-            if (Optional.IsDefined(IsDefault))
+            if (Core.Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (Optional.IsDefined(IsRemoteDebuggingEnabled))
+            if (Core.Optional.IsDefined(IsRemoteDebuggingEnabled))
             {
                 writer.WritePropertyName("isRemoteDebuggingEnabled"u8);
                 writer.WriteBooleanValue(IsRemoteDebuggingEnabled.Value);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> displayVersion = default;
-            Optional<string> runtimeVersion = default;
-            Optional<bool> isDefault = default;
-            Optional<bool> isRemoteDebuggingEnabled = default;
+            Core.Optional<string> displayVersion = default;
+            Core.Optional<string> runtimeVersion = default;
+            Core.Optional<bool> isDefault = default;
+            Core.Optional<bool> isRemoteDebuggingEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayVersion"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StackMinorVersion(displayVersion.Value, runtimeVersion.Value, Optional.ToNullable(isDefault), Optional.ToNullable(isRemoteDebuggingEnabled));
+            return new StackMinorVersion(displayVersion.Value, runtimeVersion.Value, Core.Optional.ToNullable(isDefault), Core.Optional.ToNullable(isRemoteDebuggingEnabled));
         }
     }
 }

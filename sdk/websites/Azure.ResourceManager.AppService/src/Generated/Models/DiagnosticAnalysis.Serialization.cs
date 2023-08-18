@@ -13,29 +13,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DiagnosticAnalysis : IUtf8JsonSerializable
+    public partial class DiagnosticAnalysis : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartOn))
+            if (Core.Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Core.Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(AbnormalTimePeriods))
+            if (Core.Optional.IsCollectionDefined(AbnormalTimePeriods))
             {
                 writer.WritePropertyName("abnormalTimePeriods"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Payload))
+            if (Core.Optional.IsCollectionDefined(Payload))
             {
                 writer.WritePropertyName("payload"u8);
                 writer.WriteStartArray();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NonCorrelatedDetectors))
+            if (Core.Optional.IsCollectionDefined(NonCorrelatedDetectors))
             {
                 writer.WritePropertyName("nonCorrelatedDetectors"u8);
                 writer.WriteStartArray();
@@ -75,16 +75,16 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<IList<AbnormalTimePeriod>> abnormalTimePeriods = default;
-            Optional<IList<AnalysisDetectorEvidences>> payload = default;
-            Optional<IList<DetectorDefinition>> nonCorrelatedDetectors = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<IList<AbnormalTimePeriod>> abnormalTimePeriods = default;
+            Core.Optional<IList<AnalysisDetectorEvidences>> payload = default;
+            Core.Optional<IList<DetectorDefinition>> nonCorrelatedDetectors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new DiagnosticAnalysis(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(abnormalTimePeriods), Optional.ToList(payload), Optional.ToList(nonCorrelatedDetectors), kind.Value);
+            return new DiagnosticAnalysis(id, name, type, systemData.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToList(abnormalTimePeriods), Core.Optional.ToList(payload), Core.Optional.ToList(nonCorrelatedDetectors), kind.Value);
         }
     }
 }

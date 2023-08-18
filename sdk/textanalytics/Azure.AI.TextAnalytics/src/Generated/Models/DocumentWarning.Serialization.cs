@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class DocumentWarning : IUtf8JsonSerializable
+    internal partial class DocumentWarning : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("code"u8);
             writer.WriteStringValue(Code.ToSerialString());
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (Optional.IsDefined(TargetRef))
+            if (Core.Optional.IsDefined(TargetRef))
             {
                 writer.WritePropertyName("targetRef"u8);
                 writer.WriteStringValue(TargetRef);
@@ -35,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Models
             }
             WarningCodeValue code = default;
             string message = default;
-            Optional<string> targetRef = default;
+            Core.Optional<string> targetRef = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))

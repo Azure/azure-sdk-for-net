@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <summary> Initializes a new instance of CloudTieringFilesNotTiering. </summary>
         internal CloudTieringFilesNotTiering()
         {
-            Errors = new ChangeTrackingList<FilesNotTieringError>();
+            Errors = new Core.ChangeTrackingList<FilesNotTieringError>();
         }
 
         /// <summary> Initializes a new instance of CloudTieringFilesNotTiering. </summary>

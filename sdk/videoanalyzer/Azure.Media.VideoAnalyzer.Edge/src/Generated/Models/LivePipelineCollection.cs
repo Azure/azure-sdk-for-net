@@ -16,7 +16,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of LivePipelineCollection. </summary>
         public LivePipelineCollection()
         {
-            Value = new ChangeTrackingList<LivePipeline>();
+            Value = new Core.ChangeTrackingList<LivePipeline>();
         }
 
         /// <summary> Initializes a new instance of LivePipelineCollection. </summary>

@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Synapse.Artifacts
 {
     /// <summary> Creates or updates a linked service. </summary>
-    public partial class LinkedServiceCreateOrUpdateLinkedServiceOperation : Operation<LinkedServiceResource>, IOperationSource<LinkedServiceResource>
+    public partial class LinkedServiceCreateOrUpdateLinkedServiceOperation : Operation<LinkedServiceResource>, Core.IOperationSource<LinkedServiceResource>
     {
         private readonly OperationInternal<LinkedServiceResource> _operation;
 
@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal LinkedServiceCreateOrUpdateLinkedServiceOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            IOperation<LinkedServiceResource> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
+            IOperation<LinkedServiceResource> nextLinkOperation = Core.NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, Core.OperationFinalStateVia.Location);
             _operation = new OperationInternal<LinkedServiceResource>(nextLinkOperation, clientDiagnostics, response, "LinkedServiceCreateOrUpdateLinkedServiceOperation");
         }
 
@@ -67,13 +67,13 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <inheritdoc />
         public override ValueTask<Response<LinkedServiceResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        LinkedServiceResource IOperationSource<LinkedServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        LinkedServiceResource Core.IOperationSource<LinkedServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return LinkedServiceResource.DeserializeLinkedServiceResource(document.RootElement);
         }
 
-        async ValueTask<LinkedServiceResource> IOperationSource<LinkedServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<LinkedServiceResource> Core.IOperationSource<LinkedServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return LinkedServiceResource.DeserializeLinkedServiceResource(document.RootElement);

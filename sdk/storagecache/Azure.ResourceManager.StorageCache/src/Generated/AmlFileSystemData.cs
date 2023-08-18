@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="location"> The location. </param>
         public AmlFileSystemData(AzureLocation location) : base(location)
         {
-            Zones = new ChangeTrackingList<string>();
+            Zones = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AmlFileSystemData. </summary>

@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> virtualMachineId = default;
-            Optional<SapVirtualInstanceStatus> status = default;
-            Optional<IReadOnlyList<SubResource>> storageDetails = default;
+            Core.Optional<ResourceIdentifier> virtualMachineId = default;
+            Core.Optional<SapVirtualInstanceStatus> status = default;
+            Core.Optional<IReadOnlyList<SubResource>> storageDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualMachineId"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new DatabaseVmDetails(virtualMachineId.Value, Optional.ToNullable(status), Optional.ToList(storageDetails));
+            return new DatabaseVmDetails(virtualMachineId.Value, Core.Optional.ToNullable(status), Core.Optional.ToList(storageDetails));
         }
     }
 }

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> dbVmSku = default;
-            Optional<long> databaseInstanceCount = default;
-            Optional<string> centralServerVmSku = default;
-            Optional<long> centralServerInstanceCount = default;
-            Optional<string> applicationServerVmSku = default;
-            Optional<long> applicationServerInstanceCount = default;
+            Core.Optional<string> dbVmSku = default;
+            Core.Optional<long> databaseInstanceCount = default;
+            Core.Optional<string> centralServerVmSku = default;
+            Core.Optional<long> centralServerInstanceCount = default;
+            Core.Optional<string> applicationServerVmSku = default;
+            Core.Optional<long> applicationServerInstanceCount = default;
             SapDeploymentType deploymentType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new ThreeTierRecommendationResult(deploymentType, dbVmSku.Value, Optional.ToNullable(databaseInstanceCount), centralServerVmSku.Value, Optional.ToNullable(centralServerInstanceCount), applicationServerVmSku.Value, Optional.ToNullable(applicationServerInstanceCount));
+            return new ThreeTierRecommendationResult(deploymentType, dbVmSku.Value, Core.Optional.ToNullable(databaseInstanceCount), centralServerVmSku.Value, Core.Optional.ToNullable(centralServerInstanceCount), applicationServerVmSku.Value, Core.Optional.ToNullable(applicationServerInstanceCount));
         }
     }
 }

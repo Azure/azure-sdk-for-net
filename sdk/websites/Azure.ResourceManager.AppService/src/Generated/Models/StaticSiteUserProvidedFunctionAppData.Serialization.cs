@@ -12,24 +12,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class StaticSiteUserProvidedFunctionAppData : IUtf8JsonSerializable
+    public partial class StaticSiteUserProvidedFunctionAppData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(FunctionAppResourceId))
+            if (Core.Optional.IsDefined(FunctionAppResourceId))
             {
                 writer.WritePropertyName("functionAppResourceId"u8);
                 writer.WriteStringValue(FunctionAppResourceId);
             }
-            if (Optional.IsDefined(FunctionAppRegion))
+            if (Core.Optional.IsDefined(FunctionAppRegion))
             {
                 writer.WritePropertyName("functionAppRegion"u8);
                 writer.WriteStringValue(FunctionAppRegion);
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> functionAppResourceId = default;
-            Optional<string> functionAppRegion = default;
-            Optional<DateTimeOffset> createdOn = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ResourceIdentifier> functionAppResourceId = default;
+            Core.Optional<string> functionAppRegion = default;
+            Core.Optional<DateTimeOffset> createdOn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new StaticSiteUserProvidedFunctionAppData(id, name, type, systemData.Value, functionAppResourceId.Value, functionAppRegion.Value, Optional.ToNullable(createdOn), kind.Value);
+            return new StaticSiteUserProvidedFunctionAppData(id, name, type, systemData.Value, functionAppResourceId.Value, functionAppRegion.Value, Core.Optional.ToNullable(createdOn), kind.Value);
         }
     }
 }

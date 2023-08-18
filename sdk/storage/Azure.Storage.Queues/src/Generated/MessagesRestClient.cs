@@ -71,7 +71,7 @@ namespace Azure.Storage.Queues
         /// <param name="visibilitytimeout"> Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<IReadOnlyList<DequeuedMessageItem>, MessagesDequeueHeaders>> DequeueAsync(int? numberOfMessages = null, int? visibilitytimeout = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<IReadOnlyList<DequeuedMessageItem>, MessagesDequeueHeaders>> DequeueAsync(int? numberOfMessages = null, int? visibilitytimeout = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateDequeueRequest(numberOfMessages, visibilitytimeout, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -91,7 +91,7 @@ namespace Azure.Storage.Queues
                             }
                             value = array;
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -103,7 +103,7 @@ namespace Azure.Storage.Queues
         /// <param name="visibilitytimeout"> Optional. Specifies the new visibility timeout value, in seconds, relative to server time. The default value is 30 seconds. A specified value must be larger than or equal to 1 second, and cannot be larger than 7 days, or larger than 2 hours on REST protocol versions prior to version 2011-08-18. The visibility timeout of a message can be set to a value later than the expiry time. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<IReadOnlyList<DequeuedMessageItem>, MessagesDequeueHeaders> Dequeue(int? numberOfMessages = null, int? visibilitytimeout = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<IReadOnlyList<DequeuedMessageItem>, MessagesDequeueHeaders> Dequeue(int? numberOfMessages = null, int? visibilitytimeout = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateDequeueRequest(numberOfMessages, visibilitytimeout, timeout);
             _pipeline.Send(message, cancellationToken);
@@ -123,7 +123,7 @@ namespace Azure.Storage.Queues
                             }
                             value = array;
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -151,7 +151,7 @@ namespace Azure.Storage.Queues
         /// <summary> The Clear operation deletes all messages from the specified queue. </summary>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<MessagesClearHeaders>> ClearAsync(int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<MessagesClearHeaders>> ClearAsync(int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateClearRequest(timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -159,7 +159,7 @@ namespace Azure.Storage.Queues
             switch (message.Response.Status)
             {
                 case 204:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -168,7 +168,7 @@ namespace Azure.Storage.Queues
         /// <summary> The Clear operation deletes all messages from the specified queue. </summary>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<MessagesClearHeaders> Clear(int? timeout = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<MessagesClearHeaders> Clear(int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateClearRequest(timeout);
             _pipeline.Send(message, cancellationToken);
@@ -176,7 +176,7 @@ namespace Azure.Storage.Queues
             switch (message.Response.Status)
             {
                 case 204:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -206,7 +206,7 @@ namespace Azure.Storage.Queues
             request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Type", "application/xml");
-            var content = new XmlWriterContent();
+            var content = new Core.XmlWriterContent();
             content.XmlWriter.WriteObjectValue(queueMessage, "QueueMessage");
             request.Content = content;
             return message;
@@ -219,7 +219,7 @@ namespace Azure.Storage.Queues
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueMessage"/> is null. </exception>
-        public async Task<ResponseWithHeaders<IReadOnlyList<SendReceipt>, MessagesEnqueueHeaders>> EnqueueAsync(QueueMessage queueMessage, int? visibilitytimeout = null, int? messageTimeToLive = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<IReadOnlyList<SendReceipt>, MessagesEnqueueHeaders>> EnqueueAsync(QueueMessage queueMessage, int? visibilitytimeout = null, int? messageTimeToLive = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (queueMessage == null)
             {
@@ -244,7 +244,7 @@ namespace Azure.Storage.Queues
                             }
                             value = array;
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -258,7 +258,7 @@ namespace Azure.Storage.Queues
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueMessage"/> is null. </exception>
-        public ResponseWithHeaders<IReadOnlyList<SendReceipt>, MessagesEnqueueHeaders> Enqueue(QueueMessage queueMessage, int? visibilitytimeout = null, int? messageTimeToLive = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<IReadOnlyList<SendReceipt>, MessagesEnqueueHeaders> Enqueue(QueueMessage queueMessage, int? visibilitytimeout = null, int? messageTimeToLive = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (queueMessage == null)
             {
@@ -283,7 +283,7 @@ namespace Azure.Storage.Queues
                             }
                             value = array;
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -317,7 +317,7 @@ namespace Azure.Storage.Queues
         /// <param name="numberOfMessages"> Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32. If fewer are visible, the visible messages are returned. By default, a single message is retrieved from the queue with this operation. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<IReadOnlyList<PeekedMessageItem>, MessagesPeekHeaders>> PeekAsync(int? numberOfMessages = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<IReadOnlyList<PeekedMessageItem>, MessagesPeekHeaders>> PeekAsync(int? numberOfMessages = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePeekRequest(numberOfMessages, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -337,7 +337,7 @@ namespace Azure.Storage.Queues
                             }
                             value = array;
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -348,7 +348,7 @@ namespace Azure.Storage.Queues
         /// <param name="numberOfMessages"> Optional. A nonzero integer value that specifies the number of messages to retrieve from the queue, up to a maximum of 32. If fewer are visible, the visible messages are returned. By default, a single message is retrieved from the queue with this operation. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<IReadOnlyList<PeekedMessageItem>, MessagesPeekHeaders> Peek(int? numberOfMessages = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<IReadOnlyList<PeekedMessageItem>, MessagesPeekHeaders> Peek(int? numberOfMessages = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePeekRequest(numberOfMessages, timeout);
             _pipeline.Send(message, cancellationToken);
@@ -368,7 +368,7 @@ namespace Azure.Storage.Queues
                             }
                             value = array;
                         }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of DiagnosticDetectorResponse. </summary>
         public DiagnosticDetectorResponse()
         {
-            Metrics = new ChangeTrackingList<DiagnosticMetricSet>();
-            AbnormalTimePeriods = new ChangeTrackingList<DetectorAbnormalTimePeriod>();
-            Data = new ChangeTrackingList<IList<AppServiceNameValuePair>>();
+            Metrics = new Core.ChangeTrackingList<DiagnosticMetricSet>();
+            AbnormalTimePeriods = new Core.ChangeTrackingList<DetectorAbnormalTimePeriod>();
+            Data = new Core.ChangeTrackingList<IList<AppServiceNameValuePair>>();
         }
 
         /// <summary> Initializes a new instance of DiagnosticDetectorResponse. </summary>

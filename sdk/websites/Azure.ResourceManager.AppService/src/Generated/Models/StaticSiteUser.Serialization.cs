@@ -11,19 +11,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StaticSiteUser : IUtf8JsonSerializable
+    public partial class StaticSiteUser : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Roles))
+            if (Core.Optional.IsDefined(Roles))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStringValue(Roles);
@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provider = default;
-            Optional<string> userId = default;
-            Optional<string> displayName = default;
-            Optional<string> roles = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> provider = default;
+            Core.Optional<string> userId = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> roles = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))

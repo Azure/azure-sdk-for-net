@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
 {
-    public partial class ManagedPrivateEndpoint : IUtf8JsonSerializable
+    public partial class ManagedPrivateEndpoint : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -29,10 +29,10 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<ManagedPrivateEndpointProperties> properties = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> type = default;
+            Core.Optional<ManagedPrivateEndpointProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

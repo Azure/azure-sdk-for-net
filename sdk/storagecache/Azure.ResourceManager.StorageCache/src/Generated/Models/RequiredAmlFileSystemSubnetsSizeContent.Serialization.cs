@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class RequiredAmlFileSystemSubnetsSizeContent : IUtf8JsonSerializable
+    public partial class RequiredAmlFileSystemSubnetsSizeContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageCapacityTiB))
+            if (Core.Optional.IsDefined(StorageCapacityTiB))
             {
                 writer.WritePropertyName("storageCapacityTiB"u8);
                 writer.WriteNumberValue(StorageCapacityTiB.Value);
             }
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AutoHealCustomAction : IUtf8JsonSerializable
+    public partial class AutoHealCustomAction : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Exe))
+            if (Core.Optional.IsDefined(Exe))
             {
                 writer.WritePropertyName("exe"u8);
                 writer.WriteStringValue(Exe);
             }
-            if (Optional.IsDefined(Parameters))
+            if (Core.Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStringValue(Parameters);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> exe = default;
-            Optional<string> parameters = default;
+            Core.Optional<string> exe = default;
+            Core.Optional<string> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("exe"u8))

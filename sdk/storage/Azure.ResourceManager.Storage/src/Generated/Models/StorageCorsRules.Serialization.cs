@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    internal partial class StorageCorsRules : IUtf8JsonSerializable
+    internal partial class StorageCorsRules : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(CorsRules))
+            if (Core.Optional.IsCollectionDefined(CorsRules))
             {
                 writer.WritePropertyName("corsRules"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<IList<StorageCorsRule>> corsRules = default;
+            Core.Optional<IList<StorageCorsRule>> corsRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("corsRules"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new StorageCorsRules(Optional.ToList(corsRules));
+            return new StorageCorsRules(Core.Optional.ToList(corsRules));
         }
     }
 }

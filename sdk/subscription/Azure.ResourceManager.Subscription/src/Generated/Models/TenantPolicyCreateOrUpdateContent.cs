@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <summary> Initializes a new instance of TenantPolicyCreateOrUpdateContent. </summary>
         public TenantPolicyCreateOrUpdateContent()
         {
-            ExemptedPrincipals = new ChangeTrackingList<Guid>();
+            ExemptedPrincipals = new Core.ChangeTrackingList<Guid>();
         }
 
         /// <summary> Blocks the leaving of subscriptions from user's tenant. </summary>

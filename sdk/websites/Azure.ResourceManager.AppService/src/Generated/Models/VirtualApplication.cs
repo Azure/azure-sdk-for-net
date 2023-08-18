@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of VirtualApplication. </summary>
         public VirtualApplication()
         {
-            VirtualDirectories = new ChangeTrackingList<VirtualDirectory>();
+            VirtualDirectories = new Core.ChangeTrackingList<VirtualDirectory>();
         }
 
         /// <summary> Initializes a new instance of VirtualApplication. </summary>

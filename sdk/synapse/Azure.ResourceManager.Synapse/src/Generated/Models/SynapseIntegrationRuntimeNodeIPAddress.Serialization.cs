@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IPAddress> ipAddress = default;
+            Core.Optional<IPAddress> ipAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipAddress"u8))

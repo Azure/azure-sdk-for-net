@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StoragePool
 {
-    internal class DiskPoolIscsiTargetOperationSource : IOperationSource<DiskPoolIscsiTargetResource>
+    internal class DiskPoolIscsiTargetOperationSource : Core.IOperationSource<DiskPoolIscsiTargetResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.StoragePool
             _client = client;
         }
 
-        DiskPoolIscsiTargetResource IOperationSource<DiskPoolIscsiTargetResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DiskPoolIscsiTargetResource Core.IOperationSource<DiskPoolIscsiTargetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DiskPoolIscsiTargetData.DeserializeDiskPoolIscsiTargetData(document.RootElement);
             return new DiskPoolIscsiTargetResource(_client, data);
         }
 
-        async ValueTask<DiskPoolIscsiTargetResource> IOperationSource<DiskPoolIscsiTargetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DiskPoolIscsiTargetResource> Core.IOperationSource<DiskPoolIscsiTargetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DiskPoolIscsiTargetData.DeserializeDiskPoolIscsiTargetData(document.RootElement);

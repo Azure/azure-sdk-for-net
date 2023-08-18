@@ -12,14 +12,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    internal partial class UnknownIntegrationRuntime : IUtf8JsonSerializable
+    internal partial class UnknownIntegrationRuntime : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(IntegrationRuntimeType.ToString());
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 return null;
             }
             IntegrationRuntimeType type = "Unknown";
-            Optional<string> description = default;
+            Core.Optional<string> description = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

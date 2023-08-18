@@ -11,21 +11,21 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlobRetentionPolicy : IXmlSerializable
+    public partial class BlobRetentionPolicy : Core.IXmlSerializable
     {
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "RetentionPolicy");
             writer.WriteStartElement("Enabled");
             writer.WriteValue(Enabled);
             writer.WriteEndElement();
-            if (Optional.IsDefined(Days))
+            if (Core.Optional.IsDefined(Days))
             {
                 writer.WriteStartElement("Days");
                 writer.WriteValue(Days.Value);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(AllowPermanentDelete))
+            if (Core.Optional.IsDefined(AllowPermanentDelete))
             {
                 writer.WriteStartElement("AllowPermanentDelete");
                 writer.WriteValue(AllowPermanentDelete.Value);

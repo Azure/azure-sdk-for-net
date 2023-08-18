@@ -12,29 +12,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class VirtualNetworkValidationFailureDetails : IUtf8JsonSerializable
+    public partial class VirtualNetworkValidationFailureDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Message))
+            if (Core.Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(IsFailed))
+            if (Core.Optional.IsDefined(IsFailed))
             {
                 writer.WritePropertyName("failed"u8);
                 writer.WriteBooleanValue(IsFailed.Value);
             }
-            if (Optional.IsCollectionDefined(FailedTests))
+            if (Core.Optional.IsCollectionDefined(FailedTests))
             {
                 writer.WritePropertyName("failedTests"u8);
                 writer.WriteStartArray();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Warnings))
+            if (Core.Optional.IsCollectionDefined(Warnings))
             {
                 writer.WritePropertyName("warnings"u8);
                 writer.WriteStartArray();
@@ -64,15 +64,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> message = default;
-            Optional<bool> failed = default;
-            Optional<IList<VirtualNetworkValidationTestFailure>> failedTests = default;
-            Optional<IList<VirtualNetworkValidationTestFailure>> warnings = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> message = default;
+            Core.Optional<bool> failed = default;
+            Core.Optional<IList<VirtualNetworkValidationTestFailure>> failedTests = default;
+            Core.Optional<IList<VirtualNetworkValidationTestFailure>> warnings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new VirtualNetworkValidationFailureDetails(id, name, type, systemData.Value, message.Value, Optional.ToNullable(failed), Optional.ToList(failedTests), Optional.ToList(warnings), kind.Value);
+            return new VirtualNetworkValidationFailureDetails(id, name, type, systemData.Value, message.Value, Core.Optional.ToNullable(failed), Core.Optional.ToList(failedTests), Core.Optional.ToList(warnings), kind.Value);
         }
     }
 }

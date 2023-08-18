@@ -18,8 +18,8 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<string> searchString = default;
-            Optional<string> highlightedSearchString = default;
+            Core.Optional<string> searchString = default;
+            Core.Optional<string> highlightedSearchString = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("searchString"u8))

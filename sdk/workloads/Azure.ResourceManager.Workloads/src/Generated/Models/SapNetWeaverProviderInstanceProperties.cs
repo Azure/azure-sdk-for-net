@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of SapNetWeaverProviderInstanceProperties. </summary>
         public SapNetWeaverProviderInstanceProperties()
         {
-            SapHostFileEntries = new ChangeTrackingList<string>();
+            SapHostFileEntries = new Core.ChangeTrackingList<string>();
             ProviderType = "SapNetWeaver";
         }
 

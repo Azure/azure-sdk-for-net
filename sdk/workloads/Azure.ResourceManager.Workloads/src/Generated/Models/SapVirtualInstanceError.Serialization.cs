@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<SapVirtualInstanceErrorDetail> properties = default;
+            Core.Optional<SapVirtualInstanceErrorDetail> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))

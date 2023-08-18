@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class AmlFileSystemSubnetContent : IUtf8JsonSerializable
+    public partial class AmlFileSystemSubnetContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FilesystemSubnet))
+            if (Core.Optional.IsDefined(FilesystemSubnet))
             {
                 writer.WritePropertyName("filesystemSubnet"u8);
                 writer.WriteStringValue(FilesystemSubnet);
             }
-            if (Optional.IsDefined(StorageCapacityTiB))
+            if (Core.Optional.IsDefined(StorageCapacityTiB))
             {
                 writer.WritePropertyName("storageCapacityTiB"u8);
                 writer.WriteNumberValue(StorageCapacityTiB.Value);
             }
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);

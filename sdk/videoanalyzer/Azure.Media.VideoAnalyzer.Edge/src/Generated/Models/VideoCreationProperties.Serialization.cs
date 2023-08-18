@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class VideoCreationProperties : IUtf8JsonSerializable
+    public partial class VideoCreationProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Title))
+            if (Core.Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(SegmentLength))
+            if (Core.Optional.IsDefined(SegmentLength))
             {
                 writer.WritePropertyName("segmentLength"u8);
                 writer.WriteStringValue(SegmentLength);
             }
-            if (Optional.IsDefined(RetentionPeriod))
+            if (Core.Optional.IsDefined(RetentionPeriod))
             {
                 writer.WritePropertyName("retentionPeriod"u8);
                 writer.WriteStringValue(RetentionPeriod);
@@ -44,10 +44,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<string> segmentLength = default;
-            Optional<string> retentionPeriod = default;
+            Core.Optional<string> title = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> segmentLength = default;
+            Core.Optional<string> retentionPeriod = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("title"u8))

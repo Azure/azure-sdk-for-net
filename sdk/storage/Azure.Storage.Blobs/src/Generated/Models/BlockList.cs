@@ -16,8 +16,8 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> Initializes a new instance of BlockList. </summary>
         internal BlockList()
         {
-            CommittedBlocks = new ChangeTrackingList<BlobBlock>();
-            UncommittedBlocks = new ChangeTrackingList<BlobBlock>();
+            CommittedBlocks = new Core.ChangeTrackingList<BlobBlock>();
+            UncommittedBlocks = new Core.ChangeTrackingList<BlobBlock>();
         }
 
         /// <summary> Initializes a new instance of BlockList. </summary>

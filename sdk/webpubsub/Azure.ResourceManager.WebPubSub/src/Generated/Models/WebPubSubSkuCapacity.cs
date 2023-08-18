@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary> Initializes a new instance of WebPubSubSkuCapacity. </summary>
         internal WebPubSubSkuCapacity()
         {
-            AllowedValues = new ChangeTrackingList<int>();
+            AllowedValues = new Core.ChangeTrackingList<int>();
         }
 
         /// <summary> Initializes a new instance of WebPubSubSkuCapacity. </summary>

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseFollowerDatabaseDefinition : IUtf8JsonSerializable
+    public partial class SynapseFollowerDatabaseDefinition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("clusterResourceId"u8);
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             ResourceIdentifier clusterResourceId = default;
             string attachedDatabaseConfigurationName = default;
-            Optional<string> databaseName = default;
+            Core.Optional<string> databaseName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterResourceId"u8))

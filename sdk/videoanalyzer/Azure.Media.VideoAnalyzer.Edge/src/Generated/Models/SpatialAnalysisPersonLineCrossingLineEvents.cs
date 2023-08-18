@@ -26,7 +26,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Argument.AssertNotNull(line, nameof(line));
 
             Line = line;
-            Events = new ChangeTrackingList<SpatialAnalysisPersonLineCrossingEvent>();
+            Events = new Core.ChangeTrackingList<SpatialAnalysisPersonLineCrossingEvent>();
         }
 
         /// <summary> Initializes a new instance of SpatialAnalysisPersonLineCrossingLineEvents. </summary>

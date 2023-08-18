@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageSshPublicKey : IUtf8JsonSerializable
+    public partial class StorageSshPublicKey : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Key))
+            if (Core.Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> key = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> key = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))

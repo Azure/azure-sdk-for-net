@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    internal partial class UnknownOSConfiguration : IUtf8JsonSerializable
+    internal partial class UnknownOSConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("osType"u8);
