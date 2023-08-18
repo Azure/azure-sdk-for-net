@@ -57,7 +57,9 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(HttpMessage))]
+        // This method writes HttpMessages and Exceptions to the DiagnosticSource held within DiagnosticScope. These attributes
+        // preserve the public properties on these types so they can be used by ApplicationInsights.
+        [DynamicDependency(DynamicallyAccessedMemberTypes.PublicProperties, typeof(HttpMessage))]
         [DynamicDependency(DynamicallyAccessedMemberTypes.PublicProperties, typeof(Exception))]
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
