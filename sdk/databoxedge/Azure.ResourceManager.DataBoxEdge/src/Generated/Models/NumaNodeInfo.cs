@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of NumaNodeInfo. </summary>
         public NumaNodeInfo()
         {
-            FreeVCpuIndexesForHpn = new ChangeTrackingList<int>();
-            VCpuIndexesForHpn = new ChangeTrackingList<int>();
-            VCpuIndexesForRoot = new ChangeTrackingList<int>();
+            FreeVCpuIndexesForHpn = new Core.ChangeTrackingList<int>();
+            VCpuIndexesForHpn = new Core.ChangeTrackingList<int>();
+            VCpuIndexesForRoot = new Core.ChangeTrackingList<int>();
         }
 
         /// <summary> Initializes a new instance of NumaNodeInfo. </summary>

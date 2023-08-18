@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
 {
-    public partial class ContactInformation : IUtf8JsonSerializable
+    public partial class ContactInformation : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Phone))
+            if (Core.Optional.IsDefined(Phone))
             {
                 writer.WritePropertyName("phone"u8);
                 writer.WriteStringValue(Phone);
             }
-            if (Optional.IsDefined(Email))
+            if (Core.Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
@@ -39,9 +39,9 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> phone = default;
-            Optional<string> email = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> phone = default;
+            Core.Optional<string> email = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

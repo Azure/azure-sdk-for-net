@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    internal partial class ContainerExec : IUtf8JsonSerializable
+    internal partial class ContainerExec : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Command))
+            if (Core.Optional.IsCollectionDefined(Command))
             {
                 writer.WritePropertyName("command"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<IList<string>> command = default;
+            Core.Optional<IList<string>> command = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("command"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new ContainerExec(Optional.ToList(command));
+            return new ContainerExec(Core.Optional.ToList(command));
         }
     }
 }

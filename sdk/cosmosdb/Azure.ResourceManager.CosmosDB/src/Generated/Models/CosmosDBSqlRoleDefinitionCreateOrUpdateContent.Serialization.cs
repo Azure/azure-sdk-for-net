@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBSqlRoleDefinitionCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class CosmosDBSqlRoleDefinitionCreateOrUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RoleName))
+            if (Core.Optional.IsDefined(RoleName))
             {
                 writer.WritePropertyName("roleName"u8);
                 writer.WriteStringValue(RoleName);
             }
-            if (Optional.IsDefined(RoleDefinitionType))
+            if (Core.Optional.IsDefined(RoleDefinitionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RoleDefinitionType.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(AssignableScopes))
+            if (Core.Optional.IsCollectionDefined(AssignableScopes))
             {
                 writer.WritePropertyName("assignableScopes"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Permissions))
+            if (Core.Optional.IsCollectionDefined(Permissions))
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStartArray();

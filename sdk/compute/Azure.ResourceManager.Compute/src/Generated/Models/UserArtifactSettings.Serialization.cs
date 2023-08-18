@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class UserArtifactSettings : IUtf8JsonSerializable
+    public partial class UserArtifactSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PackageFileName))
+            if (Core.Optional.IsDefined(PackageFileName))
             {
                 writer.WritePropertyName("packageFileName"u8);
                 writer.WriteStringValue(PackageFileName);
             }
-            if (Optional.IsDefined(ConfigFileName))
+            if (Core.Optional.IsDefined(ConfigFileName))
             {
                 writer.WritePropertyName("configFileName"u8);
                 writer.WriteStringValue(ConfigFileName);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> packageFileName = default;
-            Optional<string> configFileName = default;
+            Core.Optional<string> packageFileName = default;
+            Core.Optional<string> configFileName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("packageFileName"u8))

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of DedicatedHostAvailableCapacity. </summary>
         internal DedicatedHostAvailableCapacity()
         {
-            AllocatableVms = new ChangeTrackingList<DedicatedHostAllocatableVm>();
+            AllocatableVms = new Core.ChangeTrackingList<DedicatedHostAllocatableVm>();
         }
 
         /// <summary> Initializes a new instance of DedicatedHostAvailableCapacity. </summary>

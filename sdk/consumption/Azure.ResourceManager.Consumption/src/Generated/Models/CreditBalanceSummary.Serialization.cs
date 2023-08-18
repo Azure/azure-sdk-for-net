@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ConsumptionAmount> estimatedBalance = default;
-            Optional<ConsumptionAmount> currentBalance = default;
-            Optional<ConsumptionAmountWithExchangeRate> estimatedBalanceInBillingCurrency = default;
+            Core.Optional<ConsumptionAmount> estimatedBalance = default;
+            Core.Optional<ConsumptionAmount> currentBalance = default;
+            Core.Optional<ConsumptionAmountWithExchangeRate> estimatedBalanceInBillingCurrency = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("estimatedBalance"u8))

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CosmosDBLocationListResult. </summary>
         internal CosmosDBLocationListResult()
         {
-            Value = new ChangeTrackingList<CosmosDBLocationData>();
+            Value = new Core.ChangeTrackingList<CosmosDBLocationData>();
         }
 
         /// <summary> Initializes a new instance of CosmosDBLocationListResult. </summary>

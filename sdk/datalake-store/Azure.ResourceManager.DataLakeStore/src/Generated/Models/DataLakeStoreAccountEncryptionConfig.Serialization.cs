@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    public partial class DataLakeStoreAccountEncryptionConfig : IUtf8JsonSerializable
+    public partial class DataLakeStoreAccountEncryptionConfig : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ConfigType.ToSerialString());
-            if (Optional.IsDefined(KeyVaultMetaInfo))
+            if (Core.Optional.IsDefined(KeyVaultMetaInfo))
             {
                 writer.WritePropertyName("keyVaultMetaInfo"u8);
                 writer.WriteObjectValue(KeyVaultMetaInfo);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 return null;
             }
             DataLakeStoreAccountEncryptionConfigType type = default;
-            Optional<DataLakeStoreAccountKeyVaultMetaInfo> keyVaultMetaInfo = default;
+            Core.Optional<DataLakeStoreAccountKeyVaultMetaInfo> keyVaultMetaInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))

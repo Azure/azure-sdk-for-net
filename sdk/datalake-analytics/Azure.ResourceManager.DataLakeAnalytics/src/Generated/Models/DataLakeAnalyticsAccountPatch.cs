@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// <summary> Initializes a new instance of DataLakeAnalyticsAccountPatch. </summary>
         public DataLakeAnalyticsAccountPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            DataLakeStoreAccounts = new ChangeTrackingList<DataLakeStoreForDataLakeAnalyticsAccountUpdateContent>();
-            StorageAccounts = new ChangeTrackingList<StorageAccountForDataLakeAnalyticsAccountUpdateContent>();
-            ComputePolicies = new ChangeTrackingList<ComputePolicyForDataLakeAnalyticsAccountUpdateContent>();
-            FirewallRules = new ChangeTrackingList<FirewallRuleForDataLakeAnalyticsAccountUpdateContent>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            DataLakeStoreAccounts = new Core.ChangeTrackingList<DataLakeStoreForDataLakeAnalyticsAccountUpdateContent>();
+            StorageAccounts = new Core.ChangeTrackingList<StorageAccountForDataLakeAnalyticsAccountUpdateContent>();
+            ComputePolicies = new Core.ChangeTrackingList<ComputePolicyForDataLakeAnalyticsAccountUpdateContent>();
+            FirewallRules = new Core.ChangeTrackingList<FirewallRuleForDataLakeAnalyticsAccountUpdateContent>();
         }
 
         /// <summary>

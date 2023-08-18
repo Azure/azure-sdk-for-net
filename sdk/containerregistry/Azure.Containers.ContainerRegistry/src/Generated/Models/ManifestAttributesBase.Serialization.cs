@@ -21,17 +21,17 @@ namespace Azure.Containers.ContainerRegistry
                 return null;
             }
             string digest = default;
-            Optional<long> imageSize = default;
+            Core.Optional<long> imageSize = default;
             DateTimeOffset createdTime = default;
             DateTimeOffset lastUpdateTime = default;
-            Optional<ArtifactArchitecture?> architecture = default;
-            Optional<ArtifactOperatingSystem?> os = default;
-            Optional<IReadOnlyList<ArtifactManifestPlatform>> references = default;
-            Optional<IReadOnlyList<string>> tags = default;
-            Optional<bool> deleteEnabled = default;
-            Optional<bool> writeEnabled = default;
-            Optional<bool> listEnabled = default;
-            Optional<bool> readEnabled = default;
+            Core.Optional<ArtifactArchitecture?> architecture = default;
+            Core.Optional<ArtifactOperatingSystem?> os = default;
+            Core.Optional<IReadOnlyList<ArtifactManifestPlatform>> references = default;
+            Core.Optional<IReadOnlyList<string>> tags = default;
+            Core.Optional<bool> deleteEnabled = default;
+            Core.Optional<bool> writeEnabled = default;
+            Core.Optional<bool> listEnabled = default;
+            Core.Optional<bool> readEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("digest"u8))
@@ -155,7 +155,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ManifestAttributesBase(digest, Optional.ToNullable(imageSize), createdTime, lastUpdateTime, Optional.ToNullable(architecture), Optional.ToNullable(os), Optional.ToList(references), Optional.ToList(tags), Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
+            return new ManifestAttributesBase(digest, Core.Optional.ToNullable(imageSize), createdTime, lastUpdateTime, Core.Optional.ToNullable(architecture), Core.Optional.ToNullable(os), Core.Optional.ToList(references), Core.Optional.ToList(tags), Core.Optional.ToNullable(deleteEnabled), Core.Optional.ToNullable(writeEnabled), Core.Optional.ToNullable(listEnabled), Core.Optional.ToNullable(readEnabled));
         }
     }
 }

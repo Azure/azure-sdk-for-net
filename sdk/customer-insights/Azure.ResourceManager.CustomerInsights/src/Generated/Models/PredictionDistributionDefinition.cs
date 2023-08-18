@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <summary> Initializes a new instance of PredictionDistributionDefinition. </summary>
         internal PredictionDistributionDefinition()
         {
-            Distributions = new ChangeTrackingList<PredictionDistributionDefinitionDistributionsItem>();
+            Distributions = new Core.ChangeTrackingList<PredictionDistributionDefinitionDistributionsItem>();
         }
 
         /// <summary> Initializes a new instance of PredictionDistributionDefinition. </summary>

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    public partial class DomainsRecordVerificationContent : IUtf8JsonSerializable
+    public partial class DomainsRecordVerificationContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("verificationType"u8);

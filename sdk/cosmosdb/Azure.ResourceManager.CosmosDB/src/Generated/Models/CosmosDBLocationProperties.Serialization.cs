@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBLocationProperties : IUtf8JsonSerializable
+    public partial class CosmosDBLocationProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<bool> supportsAvailabilityZone = default;
-            Optional<bool> isResidencyRestricted = default;
-            Optional<IReadOnlyList<CosmosDBBackupStorageRedundancy>> backupStorageRedundancies = default;
-            Optional<bool> isSubscriptionRegionAccessAllowedForRegular = default;
-            Optional<bool> isSubscriptionRegionAccessAllowedForAz = default;
-            Optional<CosmosDBStatus> status = default;
+            Core.Optional<bool> supportsAvailabilityZone = default;
+            Core.Optional<bool> isResidencyRestricted = default;
+            Core.Optional<IReadOnlyList<CosmosDBBackupStorageRedundancy>> backupStorageRedundancies = default;
+            Core.Optional<bool> isSubscriptionRegionAccessAllowedForRegular = default;
+            Core.Optional<bool> isSubscriptionRegionAccessAllowedForAz = default;
+            Core.Optional<CosmosDBStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("supportsAvailabilityZone"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CosmosDBLocationProperties(Optional.ToNullable(supportsAvailabilityZone), Optional.ToNullable(isResidencyRestricted), Optional.ToList(backupStorageRedundancies), Optional.ToNullable(isSubscriptionRegionAccessAllowedForRegular), Optional.ToNullable(isSubscriptionRegionAccessAllowedForAz), Optional.ToNullable(status));
+            return new CosmosDBLocationProperties(Core.Optional.ToNullable(supportsAvailabilityZone), Core.Optional.ToNullable(isResidencyRestricted), Core.Optional.ToList(backupStorageRedundancies), Core.Optional.ToNullable(isSubscriptionRegionAccessAllowedForRegular), Core.Optional.ToNullable(isSubscriptionRegionAccessAllowedForAz), Core.Optional.ToNullable(status));
         }
     }
 }

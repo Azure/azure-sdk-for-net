@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<string> username = default;
-            Optional<IReadOnlyList<ContainerRegistryPassword>> passwords = default;
+            Core.Optional<string> username = default;
+            Core.Optional<IReadOnlyList<ContainerRegistryPassword>> passwords = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("username"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryListCredentialsResult(username.Value, Optional.ToList(passwords));
+            return new ContainerRegistryListCredentialsResult(username.Value, Core.Optional.ToList(passwords));
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    internal partial class LoginRoutes : IUtf8JsonSerializable
+    internal partial class LoginRoutes : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LogoutEndpoint))
+            if (Core.Optional.IsDefined(LogoutEndpoint))
             {
                 writer.WritePropertyName("logoutEndpoint"u8);
                 writer.WriteStringValue(LogoutEndpoint);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> logoutEndpoint = default;
+            Core.Optional<string> logoutEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logoutEndpoint"u8))

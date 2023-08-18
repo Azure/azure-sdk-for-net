@@ -13,9 +13,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    public partial class DataFactoryManagedVirtualNetworkData : IUtf8JsonSerializable
+    public partial class DataFactoryManagedVirtualNetworkData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.DataFactory
                 return null;
             }
             DataFactoryManagedVirtualNetworkProperties properties = default;
-            Optional<ETag> etag = default;
+            Core.Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataFactory
                     continue;
                 }
             }
-            return new DataFactoryManagedVirtualNetworkData(id, name, type, systemData.Value, properties, Optional.ToNullable(etag));
+            return new DataFactoryManagedVirtualNetworkData(id, name, type, systemData.Value, properties, Core.Optional.ToNullable(etag));
         }
     }
 }

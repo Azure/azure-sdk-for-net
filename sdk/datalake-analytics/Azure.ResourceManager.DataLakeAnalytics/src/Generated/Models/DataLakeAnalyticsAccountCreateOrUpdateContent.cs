@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             Argument.AssertNotNull(dataLakeStoreAccounts, nameof(dataLakeStoreAccounts));
 
             Location = location;
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
             DefaultDataLakeStoreAccount = defaultDataLakeStoreAccount;
             DataLakeStoreAccounts = dataLakeStoreAccounts.ToList();
-            StorageAccounts = new ChangeTrackingList<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent>();
-            ComputePolicies = new ChangeTrackingList<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>();
-            FirewallRules = new ChangeTrackingList<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent>();
+            StorageAccounts = new Core.ChangeTrackingList<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent>();
+            ComputePolicies = new Core.ChangeTrackingList<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>();
+            FirewallRules = new Core.ChangeTrackingList<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent>();
         }
 
         /// <summary>

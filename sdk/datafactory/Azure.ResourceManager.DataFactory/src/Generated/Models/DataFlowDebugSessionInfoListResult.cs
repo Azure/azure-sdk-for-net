@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of DataFlowDebugSessionInfoListResult. </summary>
         internal DataFlowDebugSessionInfoListResult()
         {
-            Value = new ChangeTrackingList<DataFlowDebugSessionInfo>();
+            Value = new Core.ChangeTrackingList<DataFlowDebugSessionInfo>();
         }
 
         /// <summary> Initializes a new instance of DataFlowDebugSessionInfoListResult. </summary>

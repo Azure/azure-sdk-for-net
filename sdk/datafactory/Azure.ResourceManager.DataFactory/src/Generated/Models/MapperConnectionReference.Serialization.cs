@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class MapperConnectionReference : IUtf8JsonSerializable
+    public partial class MapperConnectionReference : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectionName))
+            if (Core.Optional.IsDefined(ConnectionName))
             {
                 writer.WritePropertyName("connectionName"u8);
                 writer.WriteStringValue(ConnectionName);
             }
-            if (Optional.IsDefined(ConnectionType))
+            if (Core.Optional.IsDefined(ConnectionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ConnectionType.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> connectionName = default;
-            Optional<MapperConnectionType> type = default;
+            Core.Optional<string> connectionName = default;
+            Core.Optional<MapperConnectionType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionName"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new MapperConnectionReference(connectionName.Value, Optional.ToNullable(type));
+            return new MapperConnectionReference(connectionName.Value, Core.Optional.ToNullable(type));
         }
     }
 }

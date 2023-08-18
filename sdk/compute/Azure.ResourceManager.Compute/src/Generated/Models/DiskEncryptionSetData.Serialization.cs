@@ -14,17 +14,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class DiskEncryptionSetData : IUtf8JsonSerializable
+    public partial class DiskEncryptionSetData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.Compute
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(EncryptionType))
+            if (Core.Optional.IsDefined(EncryptionType))
             {
                 writer.WritePropertyName("encryptionType"u8);
                 writer.WriteStringValue(EncryptionType.Value.ToString());
             }
-            if (Optional.IsDefined(ActiveKey))
+            if (Core.Optional.IsDefined(ActiveKey))
             {
                 writer.WritePropertyName("activeKey"u8);
                 writer.WriteObjectValue(ActiveKey);
             }
-            if (Optional.IsDefined(RotationToLatestKeyVersionEnabled))
+            if (Core.Optional.IsDefined(RotationToLatestKeyVersionEnabled))
             {
                 writer.WritePropertyName("rotationToLatestKeyVersionEnabled"u8);
                 writer.WriteBooleanValue(RotationToLatestKeyVersionEnabled.Value);
             }
-            if (Optional.IsDefined(FederatedClientId))
+            if (Core.Optional.IsDefined(FederatedClientId))
             {
                 writer.WritePropertyName("federatedClientId"u8);
                 writer.WriteStringValue(FederatedClientId);
@@ -69,21 +69,21 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DiskEncryptionSetType> encryptionType = default;
-            Optional<KeyForDiskEncryptionSet> activeKey = default;
-            Optional<IReadOnlyList<KeyForDiskEncryptionSet>> previousKeys = default;
-            Optional<string> provisioningState = default;
-            Optional<bool> rotationToLatestKeyVersionEnabled = default;
-            Optional<DateTimeOffset> lastKeyRotationTimestamp = default;
-            Optional<ComputeApiError> autoKeyRotationError = default;
-            Optional<string> federatedClientId = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DiskEncryptionSetType> encryptionType = default;
+            Core.Optional<KeyForDiskEncryptionSet> activeKey = default;
+            Core.Optional<IReadOnlyList<KeyForDiskEncryptionSet>> previousKeys = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<bool> rotationToLatestKeyVersionEnabled = default;
+            Core.Optional<DateTimeOffset> lastKeyRotationTimestamp = default;
+            Core.Optional<ComputeApiError> autoKeyRotationError = default;
+            Core.Optional<string> federatedClientId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new DiskEncryptionSetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(encryptionType), activeKey.Value, Optional.ToList(previousKeys), provisioningState.Value, Optional.ToNullable(rotationToLatestKeyVersionEnabled), Optional.ToNullable(lastKeyRotationTimestamp), autoKeyRotationError.Value, federatedClientId.Value);
+            return new DiskEncryptionSetData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity, Core.Optional.ToNullable(encryptionType), activeKey.Value, Core.Optional.ToList(previousKeys), provisioningState.Value, Core.Optional.ToNullable(rotationToLatestKeyVersionEnabled), Core.Optional.ToNullable(lastKeyRotationTimestamp), autoKeyRotationError.Value, federatedClientId.Value);
         }
     }
 }

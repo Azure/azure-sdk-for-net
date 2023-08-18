@@ -17,7 +17,7 @@ namespace Azure.Communication.Rooms
         /// <summary> Initializes a new instance of CreateRoomRequest. </summary>
         public CreateRoomRequest()
         {
-            Participants = new ChangeTrackingDictionary<string, ParticipantProperties>();
+            Participants = new Core.ChangeTrackingDictionary<string, ParticipantProperties>();
         }
 
         /// <summary> The timestamp from when the room is open for joining. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. The default value is the current date time. </summary>

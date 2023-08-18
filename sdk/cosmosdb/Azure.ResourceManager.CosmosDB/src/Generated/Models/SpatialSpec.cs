@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of SpatialSpec. </summary>
         public SpatialSpec()
         {
-            Types = new ChangeTrackingList<CosmosDBSpatialType>();
+            Types = new Core.ChangeTrackingList<CosmosDBSpatialType>();
         }
 
         /// <summary> Initializes a new instance of SpatialSpec. </summary>

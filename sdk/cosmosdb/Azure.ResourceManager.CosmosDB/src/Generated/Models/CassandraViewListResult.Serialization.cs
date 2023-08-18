@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CassandraViewGetResultData>> value = default;
+            Core.Optional<IReadOnlyList<CassandraViewGetResultData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CassandraViewListResult(Optional.ToList(value));
+            return new CassandraViewListResult(Core.Optional.ToList(value));
         }
     }
 }

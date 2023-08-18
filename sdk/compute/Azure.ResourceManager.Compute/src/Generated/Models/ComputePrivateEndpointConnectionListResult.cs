@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ComputePrivateEndpointConnectionListResult. </summary>
         internal ComputePrivateEndpointConnectionListResult()
         {
-            Value = new ChangeTrackingList<ComputePrivateEndpointConnectionData>();
+            Value = new Core.ChangeTrackingList<ComputePrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of ComputePrivateEndpointConnectionListResult. </summary>

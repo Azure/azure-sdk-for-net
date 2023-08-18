@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<string> target = default;
+            Core.Optional<string> code = default;
+            Core.Optional<string> message = default;
+            Core.Optional<string> target = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))

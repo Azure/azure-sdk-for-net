@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             Activity = activity;
             DependencyConditions = dependencyConditions.ToList();
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of PipelineActivityDependency. </summary>

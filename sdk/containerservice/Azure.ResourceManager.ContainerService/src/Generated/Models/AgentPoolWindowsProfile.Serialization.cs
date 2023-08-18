@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    internal partial class AgentPoolWindowsProfile : IUtf8JsonSerializable
+    internal partial class AgentPoolWindowsProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisableOutboundNat))
+            if (Core.Optional.IsDefined(DisableOutboundNat))
             {
                 writer.WritePropertyName("disableOutboundNat"u8);
                 writer.WriteBooleanValue(DisableOutboundNat.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<bool> disableOutboundNat = default;
+            Core.Optional<bool> disableOutboundNat = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("disableOutboundNat"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new AgentPoolWindowsProfile(Optional.ToNullable(disableOutboundNat));
+            return new AgentPoolWindowsProfile(Core.Optional.ToNullable(disableOutboundNat));
         }
     }
 }

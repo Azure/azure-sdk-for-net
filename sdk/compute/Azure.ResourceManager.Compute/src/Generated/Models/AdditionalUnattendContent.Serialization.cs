@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class AdditionalUnattendContent : IUtf8JsonSerializable
+    public partial class AdditionalUnattendContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PassName))
+            if (Core.Optional.IsDefined(PassName))
             {
                 writer.WritePropertyName("passName"u8);
                 writer.WriteStringValue(PassName.Value.ToString());
             }
-            if (Optional.IsDefined(ComponentName))
+            if (Core.Optional.IsDefined(ComponentName))
             {
                 writer.WritePropertyName("componentName"u8);
                 writer.WriteStringValue(ComponentName.Value.ToString());
             }
-            if (Optional.IsDefined(SettingName))
+            if (Core.Optional.IsDefined(SettingName))
             {
                 writer.WritePropertyName("settingName"u8);
                 writer.WriteStringValue(SettingName.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Content))
+            if (Core.Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<PassName> passName = default;
-            Optional<ComponentName> componentName = default;
-            Optional<SettingName> settingName = default;
-            Optional<string> content = default;
+            Core.Optional<PassName> passName = default;
+            Core.Optional<ComponentName> componentName = default;
+            Core.Optional<SettingName> settingName = default;
+            Core.Optional<string> content = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("passName"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new AdditionalUnattendContent(Optional.ToNullable(passName), Optional.ToNullable(componentName), Optional.ToNullable(settingName), content.Value);
+            return new AdditionalUnattendContent(Core.Optional.ToNullable(passName), Core.Optional.ToNullable(componentName), Core.Optional.ToNullable(settingName), content.Value);
         }
     }
 }

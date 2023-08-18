@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of RestorePointData. </summary>
         public RestorePointData()
         {
-            ExcludeDisks = new ChangeTrackingList<WritableSubResource>();
+            ExcludeDisks = new Core.ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of RestorePointData. </summary>

@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         public DataLakeStoreAccountCreateOrUpdateContent(AzureLocation location)
         {
             Location = location;
-            Tags = new ChangeTrackingDictionary<string, string>();
-            FirewallRules = new ChangeTrackingList<FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent>();
-            VirtualNetworkRules = new ChangeTrackingList<VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent>();
-            TrustedIdProviders = new ChangeTrackingList<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            FirewallRules = new Core.ChangeTrackingList<FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent>();
+            VirtualNetworkRules = new Core.ChangeTrackingList<VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent>();
+            TrustedIdProviders = new Core.ChangeTrackingList<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent>();
         }
 
         /// <summary> The resource location. </summary>

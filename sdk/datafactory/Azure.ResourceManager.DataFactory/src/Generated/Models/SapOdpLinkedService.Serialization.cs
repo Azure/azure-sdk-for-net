@@ -13,24 +13,24 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SapOdpLinkedService : IUtf8JsonSerializable
+    public partial class SapOdpLinkedService : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (Optional.IsDefined(ConnectVia))
+            if (Core.Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (Core.Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (Core.Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -62,92 +62,92 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Server))
+            if (Core.Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
                 JsonSerializer.Serialize(writer, Server);
             }
-            if (Optional.IsDefined(SystemNumber))
+            if (Core.Optional.IsDefined(SystemNumber))
             {
                 writer.WritePropertyName("systemNumber"u8);
                 JsonSerializer.Serialize(writer, SystemNumber);
             }
-            if (Optional.IsDefined(ClientId))
+            if (Core.Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 JsonSerializer.Serialize(writer, ClientId);
             }
-            if (Optional.IsDefined(Language))
+            if (Core.Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 JsonSerializer.Serialize(writer, Language);
             }
-            if (Optional.IsDefined(SystemId))
+            if (Core.Optional.IsDefined(SystemId))
             {
                 writer.WritePropertyName("systemId"u8);
                 JsonSerializer.Serialize(writer, SystemId);
             }
-            if (Optional.IsDefined(UserName))
+            if (Core.Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 JsonSerializer.Serialize(writer, UserName);
             }
-            if (Optional.IsDefined(Password))
+            if (Core.Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 JsonSerializer.Serialize(writer, Password);
             }
-            if (Optional.IsDefined(MessageServer))
+            if (Core.Optional.IsDefined(MessageServer))
             {
                 writer.WritePropertyName("messageServer"u8);
                 JsonSerializer.Serialize(writer, MessageServer);
             }
-            if (Optional.IsDefined(MessageServerService))
+            if (Core.Optional.IsDefined(MessageServerService))
             {
                 writer.WritePropertyName("messageServerService"u8);
                 JsonSerializer.Serialize(writer, MessageServerService);
             }
-            if (Optional.IsDefined(SncMode))
+            if (Core.Optional.IsDefined(SncMode))
             {
                 writer.WritePropertyName("sncMode"u8);
                 JsonSerializer.Serialize(writer, SncMode);
             }
-            if (Optional.IsDefined(SncMyName))
+            if (Core.Optional.IsDefined(SncMyName))
             {
                 writer.WritePropertyName("sncMyName"u8);
                 JsonSerializer.Serialize(writer, SncMyName);
             }
-            if (Optional.IsDefined(SncPartnerName))
+            if (Core.Optional.IsDefined(SncPartnerName))
             {
                 writer.WritePropertyName("sncPartnerName"u8);
                 JsonSerializer.Serialize(writer, SncPartnerName);
             }
-            if (Optional.IsDefined(SncLibraryPath))
+            if (Core.Optional.IsDefined(SncLibraryPath))
             {
                 writer.WritePropertyName("sncLibraryPath"u8);
                 JsonSerializer.Serialize(writer, SncLibraryPath);
             }
-            if (Optional.IsDefined(SncQop))
+            if (Core.Optional.IsDefined(SncQop))
             {
                 writer.WritePropertyName("sncQop"u8);
                 JsonSerializer.Serialize(writer, SncQop);
             }
-            if (Optional.IsDefined(X509CertificatePath))
+            if (Core.Optional.IsDefined(X509CertificatePath))
             {
                 writer.WritePropertyName("x509CertificatePath"u8);
                 JsonSerializer.Serialize(writer, X509CertificatePath);
             }
-            if (Optional.IsDefined(LogonGroup))
+            if (Core.Optional.IsDefined(LogonGroup))
             {
                 writer.WritePropertyName("logonGroup"u8);
                 JsonSerializer.Serialize(writer, LogonGroup);
             }
-            if (Optional.IsDefined(SubscriberName))
+            if (Core.Optional.IsDefined(SubscriberName))
             {
                 writer.WritePropertyName("subscriberName"u8);
                 JsonSerializer.Serialize(writer, SubscriberName);
             }
-            if (Optional.IsDefined(EncryptedCredential))
+            if (Core.Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
@@ -172,28 +172,28 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
-            Optional<DataFactoryElement<string>> server = default;
-            Optional<DataFactoryElement<string>> systemNumber = default;
-            Optional<DataFactoryElement<string>> clientId = default;
-            Optional<DataFactoryElement<string>> language = default;
-            Optional<DataFactoryElement<string>> systemId = default;
-            Optional<DataFactoryElement<string>> userName = default;
-            Optional<DataFactorySecretBaseDefinition> password = default;
-            Optional<DataFactoryElement<string>> messageServer = default;
-            Optional<DataFactoryElement<string>> messageServerService = default;
-            Optional<DataFactoryElement<string>> sncMode = default;
-            Optional<DataFactoryElement<string>> sncMyName = default;
-            Optional<DataFactoryElement<string>> sncPartnerName = default;
-            Optional<DataFactoryElement<string>> sncLibraryPath = default;
-            Optional<DataFactoryElement<string>> sncQop = default;
-            Optional<DataFactoryElement<string>> x509CertificatePath = default;
-            Optional<DataFactoryElement<string>> logonGroup = default;
-            Optional<DataFactoryElement<string>> subscriberName = default;
-            Optional<string> encryptedCredential = default;
+            Core.Optional<IntegrationRuntimeReference> connectVia = default;
+            Core.Optional<string> description = default;
+            Core.Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
+            Core.Optional<IList<BinaryData>> annotations = default;
+            Core.Optional<DataFactoryElement<string>> server = default;
+            Core.Optional<DataFactoryElement<string>> systemNumber = default;
+            Core.Optional<DataFactoryElement<string>> clientId = default;
+            Core.Optional<DataFactoryElement<string>> language = default;
+            Core.Optional<DataFactoryElement<string>> systemId = default;
+            Core.Optional<DataFactoryElement<string>> userName = default;
+            Core.Optional<DataFactorySecretBaseDefinition> password = default;
+            Core.Optional<DataFactoryElement<string>> messageServer = default;
+            Core.Optional<DataFactoryElement<string>> messageServerService = default;
+            Core.Optional<DataFactoryElement<string>> sncMode = default;
+            Core.Optional<DataFactoryElement<string>> sncMyName = default;
+            Core.Optional<DataFactoryElement<string>> sncPartnerName = default;
+            Core.Optional<DataFactoryElement<string>> sncLibraryPath = default;
+            Core.Optional<DataFactoryElement<string>> sncQop = default;
+            Core.Optional<DataFactoryElement<string>> x509CertificatePath = default;
+            Core.Optional<DataFactoryElement<string>> logonGroup = default;
+            Core.Optional<DataFactoryElement<string>> subscriberName = default;
+            Core.Optional<string> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapOdpLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, server.Value, systemNumber.Value, clientId.Value, language.Value, systemId.Value, userName.Value, password, messageServer.Value, messageServerService.Value, sncMode.Value, sncMyName.Value, sncPartnerName.Value, sncLibraryPath.Value, sncQop.Value, x509CertificatePath.Value, logonGroup.Value, subscriberName.Value, encryptedCredential.Value);
+            return new SapOdpLinkedService(type, connectVia.Value, description.Value, Core.Optional.ToDictionary(parameters), Core.Optional.ToList(annotations), additionalProperties, server.Value, systemNumber.Value, clientId.Value, language.Value, systemId.Value, userName.Value, password, messageServer.Value, messageServerService.Value, sncMode.Value, sncMyName.Value, sncPartnerName.Value, sncLibraryPath.Value, sncQop.Value, x509CertificatePath.Value, logonGroup.Value, subscriberName.Value, encryptedCredential.Value);
         }
     }
 }

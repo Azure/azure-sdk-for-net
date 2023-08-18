@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContainerServicePrivateEndpointConnectionData>> value = default;
+            Core.Optional<IReadOnlyList<ContainerServicePrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ContainerServicePrivateEndpointConnectionListResult(Optional.ToList(value));
+            return new ContainerServicePrivateEndpointConnectionListResult(Core.Optional.ToList(value));
         }
     }
 }

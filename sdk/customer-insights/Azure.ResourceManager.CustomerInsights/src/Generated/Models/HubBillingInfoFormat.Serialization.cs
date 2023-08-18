@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class HubBillingInfoFormat : IUtf8JsonSerializable
+    public partial class HubBillingInfoFormat : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SkuName))
+            if (Core.Optional.IsDefined(SkuName))
             {
                 writer.WritePropertyName("skuName"u8);
                 writer.WriteStringValue(SkuName);
             }
-            if (Optional.IsDefined(MinUnits))
+            if (Core.Optional.IsDefined(MinUnits))
             {
                 writer.WritePropertyName("minUnits"u8);
                 writer.WriteNumberValue(MinUnits.Value);
             }
-            if (Optional.IsDefined(MaxUnits))
+            if (Core.Optional.IsDefined(MaxUnits))
             {
                 writer.WritePropertyName("maxUnits"u8);
                 writer.WriteNumberValue(MaxUnits.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<string> skuName = default;
-            Optional<int> minUnits = default;
-            Optional<int> maxUnits = default;
+            Core.Optional<string> skuName = default;
+            Core.Optional<int> minUnits = default;
+            Core.Optional<int> maxUnits = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("skuName"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new HubBillingInfoFormat(skuName.Value, Optional.ToNullable(minUnits), Optional.ToNullable(maxUnits));
+            return new HubBillingInfoFormat(skuName.Value, Core.Optional.ToNullable(minUnits), Core.Optional.ToNullable(maxUnits));
         }
     }
 }

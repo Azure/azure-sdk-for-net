@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class EntityReference : IUtf8JsonSerializable
+    public partial class EntityReference : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IntegrationRuntimeEntityReferenceType))
+            if (Core.Optional.IsDefined(IntegrationRuntimeEntityReferenceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IntegrationRuntimeEntityReferenceType.Value.ToString());
             }
-            if (Optional.IsDefined(ReferenceName))
+            if (Core.Optional.IsDefined(ReferenceName))
             {
                 writer.WritePropertyName("referenceName"u8);
                 writer.WriteStringValue(ReferenceName);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IntegrationRuntimeEntityReferenceType> type = default;
-            Optional<string> referenceName = default;
+            Core.Optional<IntegrationRuntimeEntityReferenceType> type = default;
+            Core.Optional<string> referenceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new EntityReference(Optional.ToNullable(type), referenceName.Value);
+            return new EntityReference(Core.Optional.ToNullable(type), referenceName.Value);
         }
     }
 }

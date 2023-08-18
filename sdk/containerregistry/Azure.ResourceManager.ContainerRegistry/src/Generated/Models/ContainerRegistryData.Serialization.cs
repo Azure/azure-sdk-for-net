@@ -14,19 +14,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    public partial class ContainerRegistryData : IUtf8JsonSerializable
+    public partial class ContainerRegistryData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -41,42 +41,42 @@ namespace Azure.ResourceManager.ContainerRegistry
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsAdminUserEnabled))
+            if (Core.Optional.IsDefined(IsAdminUserEnabled))
             {
                 writer.WritePropertyName("adminUserEnabled"u8);
                 writer.WriteBooleanValue(IsAdminUserEnabled.Value);
             }
-            if (Optional.IsDefined(NetworkRuleSet))
+            if (Core.Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkRuleSet"u8);
                 writer.WriteObjectValue(NetworkRuleSet);
             }
-            if (Optional.IsDefined(Policies))
+            if (Core.Optional.IsDefined(Policies))
             {
                 writer.WritePropertyName("policies"u8);
                 writer.WriteObjectValue(Policies);
             }
-            if (Optional.IsDefined(Encryption))
+            if (Core.Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsDefined(IsDataEndpointEnabled))
+            if (Core.Optional.IsDefined(IsDataEndpointEnabled))
             {
                 writer.WritePropertyName("dataEndpointEnabled"u8);
                 writer.WriteBooleanValue(IsDataEndpointEnabled.Value);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (Core.Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(NetworkRuleBypassOptions))
+            if (Core.Optional.IsDefined(NetworkRuleBypassOptions))
             {
                 writer.WritePropertyName("networkRuleBypassOptions"u8);
                 writer.WriteStringValue(NetworkRuleBypassOptions.Value.ToString());
             }
-            if (Optional.IsDefined(ZoneRedundancy))
+            if (Core.Optional.IsDefined(ZoneRedundancy))
             {
                 writer.WritePropertyName("zoneRedundancy"u8);
                 writer.WriteStringValue(ZoneRedundancy.Value.ToString());
@@ -92,27 +92,27 @@ namespace Azure.ResourceManager.ContainerRegistry
                 return null;
             }
             ContainerRegistrySku sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> loginServer = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<ContainerRegistryProvisioningState> provisioningState = default;
-            Optional<ContainerRegistryResourceStatus> status = default;
-            Optional<bool> adminUserEnabled = default;
-            Optional<ContainerRegistryNetworkRuleSet> networkRuleSet = default;
-            Optional<ContainerRegistryPolicies> policies = default;
-            Optional<ContainerRegistryEncryption> encryption = default;
-            Optional<bool> dataEndpointEnabled = default;
-            Optional<IReadOnlyList<string>> dataEndpointHostNames = default;
-            Optional<IReadOnlyList<ContainerRegistryPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<ContainerRegistryPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<ContainerRegistryNetworkRuleBypassOption> networkRuleBypassOptions = default;
-            Optional<ContainerRegistryZoneRedundancy> zoneRedundancy = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> loginServer = default;
+            Core.Optional<DateTimeOffset> creationDate = default;
+            Core.Optional<ContainerRegistryProvisioningState> provisioningState = default;
+            Core.Optional<ContainerRegistryResourceStatus> status = default;
+            Core.Optional<bool> adminUserEnabled = default;
+            Core.Optional<ContainerRegistryNetworkRuleSet> networkRuleSet = default;
+            Core.Optional<ContainerRegistryPolicies> policies = default;
+            Core.Optional<ContainerRegistryEncryption> encryption = default;
+            Core.Optional<bool> dataEndpointEnabled = default;
+            Core.Optional<IReadOnlyList<string>> dataEndpointHostNames = default;
+            Core.Optional<IReadOnlyList<ContainerRegistryPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Core.Optional<ContainerRegistryPublicNetworkAccess> publicNetworkAccess = default;
+            Core.Optional<ContainerRegistryNetworkRuleBypassOption> networkRuleBypassOptions = default;
+            Core.Optional<ContainerRegistryZoneRedundancy> zoneRedundancy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     continue;
                 }
             }
-            return new ContainerRegistryData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, loginServer.Value, Optional.ToNullable(creationDate), Optional.ToNullable(provisioningState), status.Value, Optional.ToNullable(adminUserEnabled), networkRuleSet.Value, policies.Value, encryption.Value, Optional.ToNullable(dataEndpointEnabled), Optional.ToList(dataEndpointHostNames), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(networkRuleBypassOptions), Optional.ToNullable(zoneRedundancy));
+            return new ContainerRegistryData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku, identity, loginServer.Value, Core.Optional.ToNullable(creationDate), Core.Optional.ToNullable(provisioningState), status.Value, Core.Optional.ToNullable(adminUserEnabled), networkRuleSet.Value, policies.Value, encryption.Value, Core.Optional.ToNullable(dataEndpointEnabled), Core.Optional.ToList(dataEndpointHostNames), Core.Optional.ToList(privateEndpointConnections), Core.Optional.ToNullable(publicNetworkAccess), Core.Optional.ToNullable(networkRuleBypassOptions), Core.Optional.ToNullable(zoneRedundancy));
         }
     }
 }

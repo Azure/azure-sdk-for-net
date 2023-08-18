@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<decimal> exchangeRate = default;
-            Optional<int> exchangeRateMonth = default;
-            Optional<string> currency = default;
-            Optional<decimal> value = default;
+            Core.Optional<decimal> exchangeRate = default;
+            Core.Optional<int> exchangeRateMonth = default;
+            Core.Optional<string> currency = default;
+            Core.Optional<decimal> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("exchangeRate"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ConsumptionAmountWithExchangeRate(currency.Value, Optional.ToNullable(value), Optional.ToNullable(exchangeRate), Optional.ToNullable(exchangeRateMonth));
+            return new ConsumptionAmountWithExchangeRate(currency.Value, Core.Optional.ToNullable(value), Core.Optional.ToNullable(exchangeRate), Core.Optional.ToNullable(exchangeRateMonth));
         }
     }
 }

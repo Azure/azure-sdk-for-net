@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of ContainerRegistryOverrideTaskStepProperties. </summary>
         public ContainerRegistryOverrideTaskStepProperties()
         {
-            Arguments = new ChangeTrackingList<ContainerRegistryRunArgument>();
-            Values = new ChangeTrackingList<ContainerRegistryTaskOverridableValue>();
+            Arguments = new Core.ChangeTrackingList<ContainerRegistryRunArgument>();
+            Values = new Core.ChangeTrackingList<ContainerRegistryTaskOverridableValue>();
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryOverrideTaskStepProperties. </summary>

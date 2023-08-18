@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of WinRMConfiguration. </summary>
         public WinRMConfiguration()
         {
-            Listeners = new ChangeTrackingList<WinRMListener>();
+            Listeners = new Core.ChangeTrackingList<WinRMListener>();
         }
 
         /// <summary> Initializes a new instance of WinRMConfiguration. </summary>

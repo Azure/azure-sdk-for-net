@@ -50,7 +50,7 @@ namespace Azure.Containers.ContainerRegistry
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
-            var content = new FormUrlEncodedContent();
+            var content = new Core.FormUrlEncodedContent();
             content.Add("grant_type", grantType.ToString());
             content.Add("service", service);
             if (tenant != null)
@@ -143,7 +143,7 @@ namespace Azure.Containers.ContainerRegistry
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
-            var content = new FormUrlEncodedContent();
+            var content = new Core.FormUrlEncodedContent();
             content.Add("service", service);
             content.Add("scope", scope);
             content.Add("refresh_token", refreshToken);

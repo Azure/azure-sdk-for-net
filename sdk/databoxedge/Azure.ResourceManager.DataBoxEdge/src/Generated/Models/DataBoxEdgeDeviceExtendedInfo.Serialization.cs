@@ -13,44 +13,44 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeDeviceExtendedInfo : IUtf8JsonSerializable
+    public partial class DataBoxEdgeDeviceExtendedInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(EncryptionKeyThumbprint))
+            if (Core.Optional.IsDefined(EncryptionKeyThumbprint))
             {
                 writer.WritePropertyName("encryptionKeyThumbprint"u8);
                 writer.WriteStringValue(EncryptionKeyThumbprint);
             }
-            if (Optional.IsDefined(EncryptionKey))
+            if (Core.Optional.IsDefined(EncryptionKey))
             {
                 writer.WritePropertyName("encryptionKey"u8);
                 writer.WriteStringValue(EncryptionKey);
             }
-            if (Optional.IsDefined(ClientSecretStoreId))
+            if (Core.Optional.IsDefined(ClientSecretStoreId))
             {
                 writer.WritePropertyName("clientSecretStoreId"u8);
                 writer.WriteStringValue(ClientSecretStoreId);
             }
-            if (Optional.IsDefined(ClientSecretStoreUri))
+            if (Core.Optional.IsDefined(ClientSecretStoreUri))
             {
                 writer.WritePropertyName("clientSecretStoreUrl"u8);
                 writer.WriteStringValue(ClientSecretStoreUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ChannelIntegrityKeyName))
+            if (Core.Optional.IsDefined(ChannelIntegrityKeyName))
             {
                 writer.WritePropertyName("channelIntegrityKeyName"u8);
                 writer.WriteStringValue(ChannelIntegrityKeyName);
             }
-            if (Optional.IsDefined(ChannelIntegrityKeyVersion))
+            if (Core.Optional.IsDefined(ChannelIntegrityKeyVersion))
             {
                 writer.WritePropertyName("channelIntegrityKeyVersion"u8);
                 writer.WriteStringValue(ChannelIntegrityKeyVersion);
             }
-            if (Optional.IsDefined(KeyVaultSyncStatus))
+            if (Core.Optional.IsDefined(KeyVaultSyncStatus))
             {
                 writer.WritePropertyName("keyVaultSyncStatus"u8);
                 writer.WriteStringValue(KeyVaultSyncStatus.Value.ToString());
@@ -68,22 +68,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> encryptionKeyThumbprint = default;
-            Optional<string> encryptionKey = default;
-            Optional<string> resourceKey = default;
-            Optional<ResourceIdentifier> clientSecretStoreId = default;
-            Optional<Uri> clientSecretStoreUrl = default;
-            Optional<string> channelIntegrityKeyName = default;
-            Optional<string> channelIntegrityKeyVersion = default;
-            Optional<EdgeKeyVaultSyncStatus> keyVaultSyncStatus = default;
-            Optional<IReadOnlyDictionary<string, DataBoxEdgeDeviceSecret>> deviceSecrets = default;
-            Optional<EdgeClusterWitnessType> clusterWitnessType = default;
-            Optional<string> fileShareWitnessLocation = default;
-            Optional<string> fileShareWitnessUsername = default;
-            Optional<string> cloudWitnessStorageAccountName = default;
-            Optional<string> cloudWitnessContainerName = default;
-            Optional<string> cloudWitnessStorageEndpoint = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> encryptionKeyThumbprint = default;
+            Core.Optional<string> encryptionKey = default;
+            Core.Optional<string> resourceKey = default;
+            Core.Optional<ResourceIdentifier> clientSecretStoreId = default;
+            Core.Optional<Uri> clientSecretStoreUrl = default;
+            Core.Optional<string> channelIntegrityKeyName = default;
+            Core.Optional<string> channelIntegrityKeyVersion = default;
+            Core.Optional<EdgeKeyVaultSyncStatus> keyVaultSyncStatus = default;
+            Core.Optional<IReadOnlyDictionary<string, DataBoxEdgeDeviceSecret>> deviceSecrets = default;
+            Core.Optional<EdgeClusterWitnessType> clusterWitnessType = default;
+            Core.Optional<string> fileShareWitnessLocation = default;
+            Core.Optional<string> fileShareWitnessUsername = default;
+            Core.Optional<string> cloudWitnessStorageAccountName = default;
+            Core.Optional<string> cloudWitnessContainerName = default;
+            Core.Optional<string> cloudWitnessStorageEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new DataBoxEdgeDeviceExtendedInfo(id, name, type, systemData.Value, encryptionKeyThumbprint.Value, encryptionKey.Value, resourceKey.Value, clientSecretStoreId.Value, clientSecretStoreUrl.Value, channelIntegrityKeyName.Value, channelIntegrityKeyVersion.Value, Optional.ToNullable(keyVaultSyncStatus), Optional.ToDictionary(deviceSecrets), Optional.ToNullable(clusterWitnessType), fileShareWitnessLocation.Value, fileShareWitnessUsername.Value, cloudWitnessStorageAccountName.Value, cloudWitnessContainerName.Value, cloudWitnessStorageEndpoint.Value);
+            return new DataBoxEdgeDeviceExtendedInfo(id, name, type, systemData.Value, encryptionKeyThumbprint.Value, encryptionKey.Value, resourceKey.Value, clientSecretStoreId.Value, clientSecretStoreUrl.Value, channelIntegrityKeyName.Value, channelIntegrityKeyVersion.Value, Core.Optional.ToNullable(keyVaultSyncStatus), Core.Optional.ToDictionary(deviceSecrets), Core.Optional.ToNullable(clusterWitnessType), fileShareWitnessLocation.Value, fileShareWitnessUsername.Value, cloudWitnessStorageAccountName.Value, cloudWitnessContainerName.Value, cloudWitnessStorageEndpoint.Value);
         }
     }
 }

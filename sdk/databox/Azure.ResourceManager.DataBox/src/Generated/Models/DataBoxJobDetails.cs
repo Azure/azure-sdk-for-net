@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             Argument.AssertNotNull(contactDetails, nameof(contactDetails));
 
-            CopyProgress = new ChangeTrackingList<DataBoxCopyProgress>();
+            CopyProgress = new Core.ChangeTrackingList<DataBoxCopyProgress>();
             JobDetailsType = DataBoxOrderType.DataBox;
         }
 

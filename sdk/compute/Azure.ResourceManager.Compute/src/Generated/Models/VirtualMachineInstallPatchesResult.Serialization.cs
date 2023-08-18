@@ -20,18 +20,18 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<PatchOperationStatus> status = default;
-            Optional<string> installationActivityId = default;
-            Optional<VmGuestPatchRebootStatus> rebootStatus = default;
-            Optional<bool> maintenanceWindowExceeded = default;
-            Optional<int> excludedPatchCount = default;
-            Optional<int> notSelectedPatchCount = default;
-            Optional<int> pendingPatchCount = default;
-            Optional<int> installedPatchCount = default;
-            Optional<int> failedPatchCount = default;
-            Optional<IReadOnlyList<PatchInstallationDetail>> patches = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<ComputeApiError> error = default;
+            Core.Optional<PatchOperationStatus> status = default;
+            Core.Optional<string> installationActivityId = default;
+            Core.Optional<VmGuestPatchRebootStatus> rebootStatus = default;
+            Core.Optional<bool> maintenanceWindowExceeded = default;
+            Core.Optional<int> excludedPatchCount = default;
+            Core.Optional<int> notSelectedPatchCount = default;
+            Core.Optional<int> pendingPatchCount = default;
+            Core.Optional<int> installedPatchCount = default;
+            Core.Optional<int> failedPatchCount = default;
+            Core.Optional<IReadOnlyList<PatchInstallationDetail>> patches = default;
+            Core.Optional<DateTimeOffset> startDateTime = default;
+            Core.Optional<ComputeApiError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineInstallPatchesResult(Optional.ToNullable(status), installationActivityId.Value, Optional.ToNullable(rebootStatus), Optional.ToNullable(maintenanceWindowExceeded), Optional.ToNullable(excludedPatchCount), Optional.ToNullable(notSelectedPatchCount), Optional.ToNullable(pendingPatchCount), Optional.ToNullable(installedPatchCount), Optional.ToNullable(failedPatchCount), Optional.ToList(patches), Optional.ToNullable(startDateTime), error.Value);
+            return new VirtualMachineInstallPatchesResult(Core.Optional.ToNullable(status), installationActivityId.Value, Core.Optional.ToNullable(rebootStatus), Core.Optional.ToNullable(maintenanceWindowExceeded), Core.Optional.ToNullable(excludedPatchCount), Core.Optional.ToNullable(notSelectedPatchCount), Core.Optional.ToNullable(pendingPatchCount), Core.Optional.ToNullable(installedPatchCount), Core.Optional.ToNullable(failedPatchCount), Core.Optional.ToList(patches), Core.Optional.ToNullable(startDateTime), error.Value);
         }
     }
 }

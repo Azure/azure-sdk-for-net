@@ -10,21 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerInstanceAzureFileVolume : IUtf8JsonSerializable
+    public partial class ContainerInstanceAzureFileVolume : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("shareName"u8);
             writer.WriteStringValue(ShareName);
-            if (Optional.IsDefined(IsReadOnly))
+            if (Core.Optional.IsDefined(IsReadOnly))
             {
                 writer.WritePropertyName("readOnly"u8);
                 writer.WriteBooleanValue(IsReadOnly.Value);
             }
             writer.WritePropertyName("storageAccountName"u8);
             writer.WriteStringValue(StorageAccountName);
-            if (Optional.IsDefined(StorageAccountKey))
+            if (Core.Optional.IsDefined(StorageAccountKey))
             {
                 writer.WritePropertyName("storageAccountKey"u8);
                 writer.WriteStringValue(StorageAccountKey);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return null;
             }
             string shareName = default;
-            Optional<bool> readOnly = default;
+            Core.Optional<bool> readOnly = default;
             string storageAccountName = default;
-            Optional<string> storageAccountKey = default;
+            Core.Optional<string> storageAccountKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("shareName"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new ContainerInstanceAzureFileVolume(shareName, Optional.ToNullable(readOnly), storageAccountName, storageAccountKey.Value);
+            return new ContainerInstanceAzureFileVolume(shareName, Core.Optional.ToNullable(readOnly), storageAccountName, storageAccountKey.Value);
         }
     }
 }

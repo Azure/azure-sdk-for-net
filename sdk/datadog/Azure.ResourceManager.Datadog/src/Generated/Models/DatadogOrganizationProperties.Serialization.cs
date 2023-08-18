@@ -11,37 +11,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    public partial class DatadogOrganizationProperties : IUtf8JsonSerializable
+    public partial class DatadogOrganizationProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkingAuthCode))
+            if (Core.Optional.IsDefined(LinkingAuthCode))
             {
                 writer.WritePropertyName("linkingAuthCode"u8);
                 writer.WriteStringValue(LinkingAuthCode);
             }
-            if (Optional.IsDefined(LinkingClientId))
+            if (Core.Optional.IsDefined(LinkingClientId))
             {
                 writer.WritePropertyName("linkingClientId"u8);
                 writer.WriteStringValue(LinkingClientId);
             }
-            if (Optional.IsDefined(RedirectUri))
+            if (Core.Optional.IsDefined(RedirectUri))
             {
                 writer.WritePropertyName("redirectUri"u8);
                 writer.WriteStringValue(RedirectUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ApiKey))
+            if (Core.Optional.IsDefined(ApiKey))
             {
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (Optional.IsDefined(ApplicationKey))
+            if (Core.Optional.IsDefined(ApplicationKey))
             {
                 writer.WritePropertyName("applicationKey"u8);
                 writer.WriteStringValue(ApplicationKey);
             }
-            if (Optional.IsDefined(EnterpriseAppId))
+            if (Core.Optional.IsDefined(EnterpriseAppId))
             {
                 writer.WritePropertyName("enterpriseAppId"u8);
                 writer.WriteStringValue(EnterpriseAppId);
@@ -55,14 +55,14 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<string> linkingAuthCode = default;
-            Optional<string> linkingClientId = default;
-            Optional<Uri> redirectUri = default;
-            Optional<string> apiKey = default;
-            Optional<string> applicationKey = default;
-            Optional<string> enterpriseAppId = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> linkingAuthCode = default;
+            Core.Optional<string> linkingClientId = default;
+            Core.Optional<Uri> redirectUri = default;
+            Core.Optional<string> apiKey = default;
+            Core.Optional<string> applicationKey = default;
+            Core.Optional<string> enterpriseAppId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

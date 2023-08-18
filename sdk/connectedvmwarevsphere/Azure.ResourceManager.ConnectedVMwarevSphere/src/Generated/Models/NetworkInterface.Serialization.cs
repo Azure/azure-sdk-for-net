@@ -11,37 +11,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class NetworkInterface : IUtf8JsonSerializable
+    public partial class NetworkInterface : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(NetworkId))
+            if (Core.Optional.IsDefined(NetworkId))
             {
                 writer.WritePropertyName("networkId"u8);
                 writer.WriteStringValue(NetworkId);
             }
-            if (Optional.IsDefined(NicType))
+            if (Core.Optional.IsDefined(NicType))
             {
                 writer.WritePropertyName("nicType"u8);
                 writer.WriteStringValue(NicType.Value.ToString());
             }
-            if (Optional.IsDefined(PowerOnBoot))
+            if (Core.Optional.IsDefined(PowerOnBoot))
             {
                 writer.WritePropertyName("powerOnBoot"u8);
                 writer.WriteStringValue(PowerOnBoot.Value.ToString());
             }
-            if (Optional.IsDefined(DeviceKey))
+            if (Core.Optional.IsDefined(DeviceKey))
             {
                 writer.WritePropertyName("deviceKey"u8);
                 writer.WriteNumberValue(DeviceKey.Value);
             }
-            if (Optional.IsDefined(IPSettings))
+            if (Core.Optional.IsDefined(IPSettings))
             {
                 writer.WritePropertyName("ipSettings"u8);
                 writer.WriteObjectValue(IPSettings);
@@ -55,17 +55,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> label = default;
-            Optional<IReadOnlyList<string>> ipAddresses = default;
-            Optional<string> macAddress = default;
-            Optional<string> networkId = default;
-            Optional<NICType> nicType = default;
-            Optional<PowerOnBootOption> powerOnBoot = default;
-            Optional<string> networkMoRefId = default;
-            Optional<string> networkMoName = default;
-            Optional<int> deviceKey = default;
-            Optional<NicIPSettings> ipSettings = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> label = default;
+            Core.Optional<IReadOnlyList<string>> ipAddresses = default;
+            Core.Optional<string> macAddress = default;
+            Core.Optional<string> networkId = default;
+            Core.Optional<NICType> nicType = default;
+            Core.Optional<PowerOnBootOption> powerOnBoot = default;
+            Core.Optional<string> networkMoRefId = default;
+            Core.Optional<string> networkMoName = default;
+            Core.Optional<int> deviceKey = default;
+            Core.Optional<NicIPSettings> ipSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     continue;
                 }
             }
-            return new NetworkInterface(name.Value, label.Value, Optional.ToList(ipAddresses), macAddress.Value, networkId.Value, Optional.ToNullable(nicType), Optional.ToNullable(powerOnBoot), networkMoRefId.Value, networkMoName.Value, Optional.ToNullable(deviceKey), ipSettings.Value);
+            return new NetworkInterface(name.Value, label.Value, Core.Optional.ToList(ipAddresses), macAddress.Value, networkId.Value, Core.Optional.ToNullable(nicType), Core.Optional.ToNullable(powerOnBoot), networkMoRefId.Value, networkMoName.Value, Core.Optional.ToNullable(deviceKey), ipSettings.Value);
         }
     }
 }

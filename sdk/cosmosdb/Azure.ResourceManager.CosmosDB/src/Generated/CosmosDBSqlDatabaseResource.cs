@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cosmosDBSqlDatabaseSqlResourcesRestClient.DeleteSqlDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation(_cosmosDBSqlDatabaseSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlDatabaseSqlResourcesRestClient.CreateDeleteSqlDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_cosmosDBSqlDatabaseSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlDatabaseSqlResourcesRestClient.CreateDeleteSqlDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cosmosDBSqlDatabaseSqlResourcesRestClient.DeleteSqlDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation(_cosmosDBSqlDatabaseSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlDatabaseSqlResourcesRestClient.CreateDeleteSqlDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_cosmosDBSqlDatabaseSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlDatabaseSqlResourcesRestClient.CreateDeleteSqlDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cosmosDBSqlDatabaseSqlResourcesRestClient.CreateUpdateSqlDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CosmosDBSqlDatabaseResource>(new CosmosDBSqlDatabaseOperationSource(Client), _cosmosDBSqlDatabaseSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlDatabaseSqlResourcesRestClient.CreateCreateUpdateSqlDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CosmosDBSqlDatabaseResource>(new CosmosDBSqlDatabaseOperationSource(Client), _cosmosDBSqlDatabaseSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlDatabaseSqlResourcesRestClient.CreateCreateUpdateSqlDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cosmosDBSqlDatabaseSqlResourcesRestClient.CreateUpdateSqlDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<CosmosDBSqlDatabaseResource>(new CosmosDBSqlDatabaseOperationSource(Client), _cosmosDBSqlDatabaseSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlDatabaseSqlResourcesRestClient.CreateCreateUpdateSqlDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CosmosDBSqlDatabaseResource>(new CosmosDBSqlDatabaseOperationSource(Client), _cosmosDBSqlDatabaseSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlDatabaseSqlResourcesRestClient.CreateCreateUpdateSqlDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cosmosDBSqlDatabaseSqlResourcesRestClient.SqlDatabasePartitionMergeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, mergeParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<PhysicalPartitionStorageInfoCollection>(new PhysicalPartitionStorageInfoCollectionOperationSource(), _cosmosDBSqlDatabaseSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlDatabaseSqlResourcesRestClient.CreateSqlDatabasePartitionMergeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, mergeParameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<PhysicalPartitionStorageInfoCollection>(new PhysicalPartitionStorageInfoCollectionOperationSource(), _cosmosDBSqlDatabaseSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlDatabaseSqlResourcesRestClient.CreateSqlDatabasePartitionMergeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, mergeParameters).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cosmosDBSqlDatabaseSqlResourcesRestClient.SqlDatabasePartitionMerge(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, mergeParameters, cancellationToken);
-                var operation = new CosmosDBArmOperation<PhysicalPartitionStorageInfoCollection>(new PhysicalPartitionStorageInfoCollectionOperationSource(), _cosmosDBSqlDatabaseSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlDatabaseSqlResourcesRestClient.CreateSqlDatabasePartitionMergeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, mergeParameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<PhysicalPartitionStorageInfoCollection>(new PhysicalPartitionStorageInfoCollectionOperationSource(), _cosmosDBSqlDatabaseSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlDatabaseSqlResourcesRestClient.CreateSqlDatabasePartitionMergeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, mergeParameters).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

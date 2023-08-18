@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <summary> Initializes a new instance of AuthorizationPolicyResourceFormatData. </summary>
         public AuthorizationPolicyResourceFormatData()
         {
-            Permissions = new ChangeTrackingList<PermissionType>();
+            Permissions = new Core.ChangeTrackingList<PermissionType>();
         }
 
         /// <summary> Initializes a new instance of AuthorizationPolicyResourceFormatData. </summary>

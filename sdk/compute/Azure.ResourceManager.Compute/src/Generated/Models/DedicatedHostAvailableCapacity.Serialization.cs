@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DedicatedHostAllocatableVm>> allocatableVms = default;
+            Core.Optional<IReadOnlyList<DedicatedHostAllocatableVm>> allocatableVms = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allocatableVMs"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new DedicatedHostAvailableCapacity(Optional.ToList(allocatableVms));
+            return new DedicatedHostAvailableCapacity(Core.Optional.ToList(allocatableVms));
         }
     }
 }

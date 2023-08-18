@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of CommunityGalleryImageData. </summary>
         internal CommunityGalleryImageData()
         {
-            Features = new ChangeTrackingList<GalleryImageFeature>();
+            Features = new Core.ChangeTrackingList<GalleryImageFeature>();
         }
 
         /// <summary> Initializes a new instance of CommunityGalleryImageData. </summary>

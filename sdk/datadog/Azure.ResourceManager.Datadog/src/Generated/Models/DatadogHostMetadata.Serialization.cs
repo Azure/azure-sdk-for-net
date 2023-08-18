@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<string> agentVersion = default;
-            Optional<DatadogInstallMethod> installMethod = default;
-            Optional<DatadogLogsAgent> logsAgent = default;
+            Core.Optional<string> agentVersion = default;
+            Core.Optional<DatadogInstallMethod> installMethod = default;
+            Core.Optional<DatadogLogsAgent> logsAgent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("agentVersion"u8))

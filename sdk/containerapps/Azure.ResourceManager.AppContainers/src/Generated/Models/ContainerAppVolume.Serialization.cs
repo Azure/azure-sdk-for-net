@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppVolume : IUtf8JsonSerializable
+    public partial class ContainerAppVolume : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(StorageType))
+            if (Core.Optional.IsDefined(StorageType))
             {
                 writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageType.Value.ToString());
             }
-            if (Optional.IsDefined(StorageName))
+            if (Core.Optional.IsDefined(StorageName))
             {
                 writer.WritePropertyName("storageName"u8);
                 writer.WriteStringValue(StorageName);
             }
-            if (Optional.IsCollectionDefined(Secrets))
+            if (Core.Optional.IsCollectionDefined(Secrets))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MountOptions))
+            if (Core.Optional.IsDefined(MountOptions))
             {
                 writer.WritePropertyName("mountOptions"u8);
                 writer.WriteStringValue(MountOptions);
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ContainerAppStorageType> storageType = default;
-            Optional<string> storageName = default;
-            Optional<IList<SecretVolumeItem>> secrets = default;
-            Optional<string> mountOptions = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ContainerAppStorageType> storageType = default;
+            Core.Optional<string> storageName = default;
+            Core.Optional<IList<SecretVolumeItem>> secrets = default;
+            Core.Optional<string> mountOptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppVolume(name.Value, Optional.ToNullable(storageType), storageName.Value, Optional.ToList(secrets), mountOptions.Value);
+            return new ContainerAppVolume(name.Value, Core.Optional.ToNullable(storageType), storageName.Value, Core.Optional.ToList(secrets), mountOptions.Value);
         }
     }
 }

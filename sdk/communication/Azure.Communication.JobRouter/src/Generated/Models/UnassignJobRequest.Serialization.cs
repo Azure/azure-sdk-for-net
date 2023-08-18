@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    internal partial class UnassignJobRequest : IUtf8JsonSerializable
+    internal partial class UnassignJobRequest : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SuspendMatching))
+            if (Core.Optional.IsDefined(SuspendMatching))
             {
                 writer.WritePropertyName("suspendMatching"u8);
                 writer.WriteBooleanValue(SuspendMatching.Value);

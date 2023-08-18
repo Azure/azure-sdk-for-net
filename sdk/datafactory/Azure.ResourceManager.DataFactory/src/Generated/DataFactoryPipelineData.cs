@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary> Initializes a new instance of DataFactoryPipelineData. </summary>
         public DataFactoryPipelineData()
         {
-            Activities = new ChangeTrackingList<PipelineActivity>();
-            Parameters = new ChangeTrackingDictionary<string, EntityParameterSpecification>();
-            Variables = new ChangeTrackingDictionary<string, PipelineVariableSpecification>();
-            Annotations = new ChangeTrackingList<BinaryData>();
-            RunDimensions = new ChangeTrackingDictionary<string, BinaryData>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            Activities = new Core.ChangeTrackingList<PipelineActivity>();
+            Parameters = new Core.ChangeTrackingDictionary<string, EntityParameterSpecification>();
+            Variables = new Core.ChangeTrackingDictionary<string, PipelineVariableSpecification>();
+            Annotations = new Core.ChangeTrackingList<BinaryData>();
+            RunDimensions = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of DataFactoryPipelineData. </summary>

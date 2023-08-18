@@ -11,37 +11,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class MapperAttributeMapping : IUtf8JsonSerializable
+    public partial class MapperAttributeMapping : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(MappingType))
+            if (Core.Optional.IsDefined(MappingType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(MappingType.Value.ToString());
             }
-            if (Optional.IsDefined(FunctionName))
+            if (Core.Optional.IsDefined(FunctionName))
             {
                 writer.WritePropertyName("functionName"u8);
                 writer.WriteStringValue(FunctionName);
             }
-            if (Optional.IsDefined(Expression))
+            if (Core.Optional.IsDefined(Expression))
             {
                 writer.WritePropertyName("expression"u8);
                 writer.WriteStringValue(Expression);
             }
-            if (Optional.IsDefined(AttributeReference))
+            if (Core.Optional.IsDefined(AttributeReference))
             {
                 writer.WritePropertyName("attributeReference"u8);
                 writer.WriteObjectValue(AttributeReference);
             }
-            if (Optional.IsCollectionDefined(AttributeReferences))
+            if (Core.Optional.IsCollectionDefined(AttributeReferences))
             {
                 writer.WritePropertyName("attributeReferences"u8);
                 writer.WriteStartArray();
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<MappingType> type = default;
-            Optional<string> functionName = default;
-            Optional<string> expression = default;
-            Optional<MapperAttributeReference> attributeReference = default;
-            Optional<IList<MapperAttributeReference>> attributeReferences = default;
+            Core.Optional<string> name = default;
+            Core.Optional<MappingType> type = default;
+            Core.Optional<string> functionName = default;
+            Core.Optional<string> expression = default;
+            Core.Optional<MapperAttributeReference> attributeReference = default;
+            Core.Optional<IList<MapperAttributeReference>> attributeReferences = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new MapperAttributeMapping(name.Value, Optional.ToNullable(type), functionName.Value, expression.Value, attributeReference.Value, Optional.ToList(attributeReferences));
+            return new MapperAttributeMapping(name.Value, Core.Optional.ToNullable(type), functionName.Value, expression.Value, attributeReference.Value, Core.Optional.ToList(attributeReferences));
         }
     }
 }

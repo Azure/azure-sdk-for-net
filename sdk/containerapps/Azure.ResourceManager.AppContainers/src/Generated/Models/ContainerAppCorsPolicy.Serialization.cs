@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppCorsPolicy : IUtf8JsonSerializable
+    public partial class ContainerAppCorsPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("allowedOrigins"u8);
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(AllowedMethods))
+            if (Core.Optional.IsCollectionDefined(AllowedMethods))
             {
                 writer.WritePropertyName("allowedMethods"u8);
                 writer.WriteStartArray();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AllowedHeaders))
+            if (Core.Optional.IsCollectionDefined(AllowedHeaders))
             {
                 writer.WritePropertyName("allowedHeaders"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExposeHeaders))
+            if (Core.Optional.IsCollectionDefined(ExposeHeaders))
             {
                 writer.WritePropertyName("exposeHeaders"u8);
                 writer.WriteStartArray();
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MaxAge))
+            if (Core.Optional.IsDefined(MaxAge))
             {
                 writer.WritePropertyName("maxAge"u8);
                 writer.WriteNumberValue(MaxAge.Value);
             }
-            if (Optional.IsDefined(AllowCredentials))
+            if (Core.Optional.IsDefined(AllowCredentials))
             {
                 writer.WritePropertyName("allowCredentials"u8);
                 writer.WriteBooleanValue(AllowCredentials.Value);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             IList<string> allowedOrigins = default;
-            Optional<IList<string>> allowedMethods = default;
-            Optional<IList<string>> allowedHeaders = default;
-            Optional<IList<string>> exposeHeaders = default;
-            Optional<int> maxAge = default;
-            Optional<bool> allowCredentials = default;
+            Core.Optional<IList<string>> allowedMethods = default;
+            Core.Optional<IList<string>> allowedHeaders = default;
+            Core.Optional<IList<string>> exposeHeaders = default;
+            Core.Optional<int> maxAge = default;
+            Core.Optional<bool> allowCredentials = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedOrigins"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppCorsPolicy(allowedOrigins, Optional.ToList(allowedMethods), Optional.ToList(allowedHeaders), Optional.ToList(exposeHeaders), Optional.ToNullable(maxAge), Optional.ToNullable(allowCredentials));
+            return new ContainerAppCorsPolicy(allowedOrigins, Core.Optional.ToList(allowedMethods), Core.Optional.ToList(allowedHeaders), Core.Optional.ToList(exposeHeaders), Core.Optional.ToNullable(maxAge), Core.Optional.ToNullable(allowCredentials));
         }
     }
 }

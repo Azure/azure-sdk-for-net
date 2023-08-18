@@ -16,7 +16,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Initializes a new instance of AcrErrors. </summary>
         internal AcrErrors()
         {
-            Errors = new ChangeTrackingList<AcrErrorInfo>();
+            Errors = new Core.ChangeTrackingList<AcrErrorInfo>();
         }
 
         /// <summary> Initializes a new instance of AcrErrors. </summary>

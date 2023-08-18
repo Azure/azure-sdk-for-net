@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class SecretVolumeItem : IUtf8JsonSerializable
+    public partial class SecretVolumeItem : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SecretRef))
+            if (Core.Optional.IsDefined(SecretRef))
             {
                 writer.WritePropertyName("secretRef"u8);
                 writer.WriteStringValue(SecretRef);
             }
-            if (Optional.IsDefined(Path))
+            if (Core.Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> secretRef = default;
-            Optional<string> path = default;
+            Core.Optional<string> secretRef = default;
+            Core.Optional<string> path = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secretRef"u8))

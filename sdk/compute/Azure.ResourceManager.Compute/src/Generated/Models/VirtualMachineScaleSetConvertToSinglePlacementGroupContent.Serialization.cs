@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineScaleSetConvertToSinglePlacementGroupContent : IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetConvertToSinglePlacementGroupContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ActivePlacementGroupId))
+            if (Core.Optional.IsDefined(ActivePlacementGroupId))
             {
                 writer.WritePropertyName("activePlacementGroupId"u8);
                 writer.WriteStringValue(ActivePlacementGroupId);

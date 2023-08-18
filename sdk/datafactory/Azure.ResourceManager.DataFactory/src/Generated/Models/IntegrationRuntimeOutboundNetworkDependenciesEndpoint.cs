@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of IntegrationRuntimeOutboundNetworkDependenciesEndpoint. </summary>
         internal IntegrationRuntimeOutboundNetworkDependenciesEndpoint()
         {
-            EndpointDetails = new ChangeTrackingList<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>();
+            EndpointDetails = new Core.ChangeTrackingList<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>();
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeOutboundNetworkDependenciesEndpoint. </summary>

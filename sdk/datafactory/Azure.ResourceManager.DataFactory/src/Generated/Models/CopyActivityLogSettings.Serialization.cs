@@ -11,17 +11,17 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class CopyActivityLogSettings : IUtf8JsonSerializable
+    public partial class CopyActivityLogSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LogLevel))
+            if (Core.Optional.IsDefined(LogLevel))
             {
                 writer.WritePropertyName("logLevel"u8);
                 JsonSerializer.Serialize(writer, LogLevel);
             }
-            if (Optional.IsDefined(EnableReliableLogging))
+            if (Core.Optional.IsDefined(EnableReliableLogging))
             {
                 writer.WritePropertyName("enableReliableLogging"u8);
                 JsonSerializer.Serialize(writer, EnableReliableLogging);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> logLevel = default;
-            Optional<DataFactoryElement<bool>> enableReliableLogging = default;
+            Core.Optional<DataFactoryElement<string>> logLevel = default;
+            Core.Optional<DataFactoryElement<bool>> enableReliableLogging = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logLevel"u8))

@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> appliedScopes = default;
-            Optional<float> onDemandRate = default;
-            Optional<string> product = default;
-            Optional<string> region = default;
-            Optional<float> reservationRate = default;
-            Optional<string> resourceType = default;
+            Core.Optional<IReadOnlyList<string>> appliedScopes = default;
+            Core.Optional<float> onDemandRate = default;
+            Core.Optional<string> product = default;
+            Core.Optional<string> region = default;
+            Core.Optional<float> reservationRate = default;
+            Core.Optional<string> resourceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appliedScopes"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ConsumptionResourceProperties(Optional.ToList(appliedScopes), Optional.ToNullable(onDemandRate), product.Value, region.Value, Optional.ToNullable(reservationRate), resourceType.Value);
+            return new ConsumptionResourceProperties(Core.Optional.ToList(appliedScopes), Core.Optional.ToNullable(onDemandRate), product.Value, region.Value, Core.Optional.ToNullable(reservationRate), resourceType.Value);
         }
     }
 }

@@ -12,77 +12,77 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CassandraDataCenterProperties : IUtf8JsonSerializable
+    public partial class CassandraDataCenterProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (Core.Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(DataCenterLocation))
+            if (Core.Optional.IsDefined(DataCenterLocation))
             {
                 writer.WritePropertyName("dataCenterLocation"u8);
                 writer.WriteStringValue(DataCenterLocation.Value);
             }
-            if (Optional.IsDefined(DelegatedSubnetId))
+            if (Core.Optional.IsDefined(DelegatedSubnetId))
             {
                 writer.WritePropertyName("delegatedSubnetId"u8);
                 writer.WriteStringValue(DelegatedSubnetId);
             }
-            if (Optional.IsDefined(NodeCount))
+            if (Core.Optional.IsDefined(NodeCount))
             {
                 writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
             }
-            if (Optional.IsDefined(Base64EncodedCassandraYamlFragment))
+            if (Core.Optional.IsDefined(Base64EncodedCassandraYamlFragment))
             {
                 writer.WritePropertyName("base64EncodedCassandraYamlFragment"u8);
                 writer.WriteStringValue(Base64EncodedCassandraYamlFragment);
             }
-            if (Optional.IsDefined(ManagedDiskCustomerKeyUri))
+            if (Core.Optional.IsDefined(ManagedDiskCustomerKeyUri))
             {
                 writer.WritePropertyName("managedDiskCustomerKeyUri"u8);
                 writer.WriteStringValue(ManagedDiskCustomerKeyUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(BackupStorageCustomerKeyUri))
+            if (Core.Optional.IsDefined(BackupStorageCustomerKeyUri))
             {
                 writer.WritePropertyName("backupStorageCustomerKeyUri"u8);
                 writer.WriteStringValue(BackupStorageCustomerKeyUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (Optional.IsDefined(DiskSku))
+            if (Core.Optional.IsDefined(DiskSku))
             {
                 writer.WritePropertyName("diskSku"u8);
                 writer.WriteStringValue(DiskSku);
             }
-            if (Optional.IsDefined(DiskCapacity))
+            if (Core.Optional.IsDefined(DiskCapacity))
             {
                 writer.WritePropertyName("diskCapacity"u8);
                 writer.WriteNumberValue(DiskCapacity.Value);
             }
-            if (Optional.IsDefined(DoesSupportAvailabilityZone))
+            if (Core.Optional.IsDefined(DoesSupportAvailabilityZone))
             {
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteBooleanValue(DoesSupportAvailabilityZone.Value);
             }
-            if (Optional.IsDefined(AuthenticationMethodLdapProperties))
+            if (Core.Optional.IsDefined(AuthenticationMethodLdapProperties))
             {
                 writer.WritePropertyName("authenticationMethodLdapProperties"u8);
                 writer.WriteObjectValue(AuthenticationMethodLdapProperties);
             }
-            if (Optional.IsDefined(Deallocated))
+            if (Core.Optional.IsDefined(Deallocated))
             {
                 writer.WritePropertyName("deallocated"u8);
                 writer.WriteBooleanValue(Deallocated.Value);
             }
-            if (Optional.IsDefined(ProvisionError))
+            if (Core.Optional.IsDefined(ProvisionError))
             {
                 writer.WritePropertyName("provisionError"u8);
                 writer.WriteObjectValue(ProvisionError);
@@ -96,21 +96,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<CassandraProvisioningState> provisioningState = default;
-            Optional<AzureLocation> dataCenterLocation = default;
-            Optional<ResourceIdentifier> delegatedSubnetId = default;
-            Optional<int> nodeCount = default;
-            Optional<IReadOnlyList<CassandraDataCenterSeedNode>> seedNodes = default;
-            Optional<string> base64EncodedCassandraYamlFragment = default;
-            Optional<Uri> managedDiskCustomerKeyUri = default;
-            Optional<Uri> backupStorageCustomerKeyUri = default;
-            Optional<string> sku = default;
-            Optional<string> diskSku = default;
-            Optional<int> diskCapacity = default;
-            Optional<bool> availabilityZone = default;
-            Optional<AuthenticationMethodLdapProperties> authenticationMethodLdapProperties = default;
-            Optional<bool> deallocated = default;
-            Optional<CassandraError> provisionError = default;
+            Core.Optional<CassandraProvisioningState> provisioningState = default;
+            Core.Optional<AzureLocation> dataCenterLocation = default;
+            Core.Optional<ResourceIdentifier> delegatedSubnetId = default;
+            Core.Optional<int> nodeCount = default;
+            Core.Optional<IReadOnlyList<CassandraDataCenterSeedNode>> seedNodes = default;
+            Core.Optional<string> base64EncodedCassandraYamlFragment = default;
+            Core.Optional<Uri> managedDiskCustomerKeyUri = default;
+            Core.Optional<Uri> backupStorageCustomerKeyUri = default;
+            Core.Optional<string> sku = default;
+            Core.Optional<string> diskSku = default;
+            Core.Optional<int> diskCapacity = default;
+            Core.Optional<bool> availabilityZone = default;
+            Core.Optional<AuthenticationMethodLdapProperties> authenticationMethodLdapProperties = default;
+            Core.Optional<bool> deallocated = default;
+            Core.Optional<CassandraError> provisionError = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CassandraDataCenterProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(dataCenterLocation), delegatedSubnetId.Value, Optional.ToNullable(nodeCount), Optional.ToList(seedNodes), base64EncodedCassandraYamlFragment.Value, managedDiskCustomerKeyUri.Value, backupStorageCustomerKeyUri.Value, sku.Value, diskSku.Value, Optional.ToNullable(diskCapacity), Optional.ToNullable(availabilityZone), authenticationMethodLdapProperties.Value, Optional.ToNullable(deallocated), provisionError.Value);
+            return new CassandraDataCenterProperties(Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(dataCenterLocation), delegatedSubnetId.Value, Core.Optional.ToNullable(nodeCount), Core.Optional.ToList(seedNodes), base64EncodedCassandraYamlFragment.Value, managedDiskCustomerKeyUri.Value, backupStorageCustomerKeyUri.Value, sku.Value, diskSku.Value, Core.Optional.ToNullable(diskCapacity), Core.Optional.ToNullable(availabilityZone), authenticationMethodLdapProperties.Value, Core.Optional.ToNullable(deallocated), provisionError.Value);
         }
     }
 }

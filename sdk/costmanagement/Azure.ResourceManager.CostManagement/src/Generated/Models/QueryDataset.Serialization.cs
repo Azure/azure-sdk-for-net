@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class QueryDataset : IUtf8JsonSerializable
+    public partial class QueryDataset : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Granularity))
+            if (Core.Optional.IsDefined(Granularity))
             {
                 writer.WritePropertyName("granularity"u8);
                 writer.WriteStringValue(Granularity.Value.ToString());
             }
-            if (Optional.IsDefined(Configuration))
+            if (Core.Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
             }
-            if (Optional.IsCollectionDefined(Aggregation))
+            if (Core.Optional.IsCollectionDefined(Aggregation))
             {
                 writer.WritePropertyName("aggregation"u8);
                 writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Grouping))
+            if (Core.Optional.IsCollectionDefined(Grouping))
             {
                 writer.WritePropertyName("grouping"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Filter))
+            if (Core.Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <summary> Initializes a new instance of DataLakeStoreVirtualNetworkRuleListResult. </summary>
         internal DataLakeStoreVirtualNetworkRuleListResult()
         {
-            Value = new ChangeTrackingList<DataLakeStoreVirtualNetworkRuleData>();
+            Value = new Core.ChangeTrackingList<DataLakeStoreVirtualNetworkRuleData>();
         }
 
         /// <summary> Initializes a new instance of DataLakeStoreVirtualNetworkRuleListResult. </summary>

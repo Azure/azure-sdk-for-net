@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ComputeApiErrorBase>> details = default;
-            Optional<InnerError> innererror = default;
-            Optional<string> code = default;
-            Optional<string> target = default;
-            Optional<string> message = default;
+            Core.Optional<IReadOnlyList<ComputeApiErrorBase>> details = default;
+            Core.Optional<InnerError> innererror = default;
+            Core.Optional<string> code = default;
+            Core.Optional<string> target = default;
+            Core.Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("details"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ComputeApiError(Optional.ToList(details), innererror.Value, code.Value, target.Value, message.Value);
+            return new ComputeApiError(Core.Optional.ToList(details), innererror.Value, code.Value, target.Value, message.Value);
         }
     }
 }

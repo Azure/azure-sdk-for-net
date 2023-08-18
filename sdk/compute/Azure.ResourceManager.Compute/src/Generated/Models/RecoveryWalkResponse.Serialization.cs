@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> walkPerformed = default;
-            Optional<int> nextPlatformUpdateDomain = default;
+            Core.Optional<bool> walkPerformed = default;
+            Core.Optional<int> nextPlatformUpdateDomain = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("walkPerformed"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new RecoveryWalkResponse(Optional.ToNullable(walkPerformed), Optional.ToNullable(nextPlatformUpdateDomain));
+            return new RecoveryWalkResponse(Core.Optional.ToNullable(walkPerformed), Core.Optional.ToNullable(nextPlatformUpdateDomain));
         }
     }
 }

@@ -13,12 +13,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     [JsonConverter(typeof(Office365TableOutputColumnConverter))]
-    public partial class Office365TableOutputColumn : IUtf8JsonSerializable
+    public partial class Office365TableOutputColumn : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            Core.Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

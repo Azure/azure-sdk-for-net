@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppCookieExpiration : IUtf8JsonSerializable
+    public partial class ContainerAppCookieExpiration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Convention))
+            if (Core.Optional.IsDefined(Convention))
             {
                 writer.WritePropertyName("convention"u8);
                 writer.WriteStringValue(Convention.Value.ToSerialString());
             }
-            if (Optional.IsDefined(TimeToExpiration))
+            if (Core.Optional.IsDefined(TimeToExpiration))
             {
                 writer.WritePropertyName("timeToExpiration"u8);
                 writer.WriteStringValue(TimeToExpiration);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ContainerAppCookieExpirationConvention> convention = default;
-            Optional<string> timeToExpiration = default;
+            Core.Optional<ContainerAppCookieExpirationConvention> convention = default;
+            Core.Optional<string> timeToExpiration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("convention"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppCookieExpiration(Optional.ToNullable(convention), timeToExpiration.Value);
+            return new ContainerAppCookieExpiration(Core.Optional.ToNullable(convention), timeToExpiration.Value);
         }
     }
 }

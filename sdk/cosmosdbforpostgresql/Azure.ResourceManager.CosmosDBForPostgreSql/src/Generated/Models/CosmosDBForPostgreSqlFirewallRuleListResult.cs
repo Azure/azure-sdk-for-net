@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <summary> Initializes a new instance of CosmosDBForPostgreSqlFirewallRuleListResult. </summary>
         internal CosmosDBForPostgreSqlFirewallRuleListResult()
         {
-            Value = new ChangeTrackingList<CosmosDBForPostgreSqlFirewallRuleData>();
+            Value = new Core.ChangeTrackingList<CosmosDBForPostgreSqlFirewallRuleData>();
         }
 
         /// <summary> Initializes a new instance of CosmosDBForPostgreSqlFirewallRuleListResult. </summary>

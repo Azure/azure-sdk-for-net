@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of ViewListResult. </summary>
         internal ViewListResult()
         {
-            Value = new ChangeTrackingList<CostManagementViewData>();
+            Value = new Core.ChangeTrackingList<CostManagementViewData>();
         }
 
         /// <summary> Initializes a new instance of ViewListResult. </summary>

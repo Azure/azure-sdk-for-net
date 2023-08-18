@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
-    public partial class CosmosDBForPostgreSqlRoleData : IUtf8JsonSerializable
+    public partial class CosmosDBForPostgreSqlRoleData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             string password = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Core.Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     continue;
                 }
             }
-            return new CosmosDBForPostgreSqlRoleData(id, name, type, systemData.Value, password, Optional.ToNullable(provisioningState));
+            return new CosmosDBForPostgreSqlRoleData(id, name, type, systemData.Value, password, Core.Optional.ToNullable(provisioningState));
         }
     }
 }

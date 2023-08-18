@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineCaptureResult. </summary>
         public VirtualMachineCaptureResult()
         {
-            Resources = new ChangeTrackingList<BinaryData>();
+            Resources = new Core.ChangeTrackingList<BinaryData>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineCaptureResult. </summary>

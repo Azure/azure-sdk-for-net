@@ -26,7 +26,7 @@ namespace Azure.Communication.MediaComposition
         {
             Argument.AssertNotNull(inputGroups, nameof(inputGroups));
 
-            Layers = new ChangeTrackingDictionary<string, LayoutLayer>();
+            Layers = new Core.ChangeTrackingDictionary<string, LayoutLayer>();
             InputGroups = inputGroups;
             Kind = LayoutType.Custom;
         }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContainerInstanceUsage>> value = default;
+            Core.Optional<IReadOnlyList<ContainerInstanceUsage>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new ContainerInstanceUsageListResult(Optional.ToList(value));
+            return new ContainerInstanceUsageListResult(Core.Optional.ToList(value));
         }
     }
 }

@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RunCommandInput : IUtf8JsonSerializable
+    public partial class RunCommandInput : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("commandId"u8);
             writer.WriteStringValue(CommandId);
-            if (Optional.IsCollectionDefined(Script))
+            if (Core.Optional.IsCollectionDefined(Script))
             {
                 writer.WritePropertyName("script"u8);
                 writer.WriteStartArray();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (Core.Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();

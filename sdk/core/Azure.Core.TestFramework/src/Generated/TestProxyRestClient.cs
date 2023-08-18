@@ -48,7 +48,7 @@ namespace Azure.Core.TestFramework
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -58,7 +58,7 @@ namespace Azure.Core.TestFramework
         /// <param name="body"> File location of the recording. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<IReadOnlyDictionary<string, string>, TestProxyStartPlaybackHeaders>> StartPlaybackAsync(StartInformation body, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<IReadOnlyDictionary<string, string>, TestProxyStartPlaybackHeaders>> StartPlaybackAsync(StartInformation body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -80,7 +80,7 @@ namespace Azure.Core.TestFramework
                             dictionary.Add(property.Name, property.Value.GetString());
                         }
                         value = dictionary;
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -91,7 +91,7 @@ namespace Azure.Core.TestFramework
         /// <param name="body"> File location of the recording. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<IReadOnlyDictionary<string, string>, TestProxyStartPlaybackHeaders> StartPlayback(StartInformation body, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<IReadOnlyDictionary<string, string>, TestProxyStartPlaybackHeaders> StartPlayback(StartInformation body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -113,7 +113,7 @@ namespace Azure.Core.TestFramework
                             dictionary.Add(property.Name, property.Value.GetString());
                         }
                         value = dictionary;
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -187,7 +187,7 @@ namespace Azure.Core.TestFramework
             uri.AppendPath("/record/start", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -197,7 +197,7 @@ namespace Azure.Core.TestFramework
         /// <param name="body"> File location of the recording. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<TestProxyStartRecordHeaders>> StartRecordAsync(StartInformation body, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<TestProxyStartRecordHeaders>> StartRecordAsync(StartInformation body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -210,7 +210,7 @@ namespace Azure.Core.TestFramework
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -220,7 +220,7 @@ namespace Azure.Core.TestFramework
         /// <param name="body"> File location of the recording. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<TestProxyStartRecordHeaders> StartRecord(StartInformation body, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<TestProxyStartRecordHeaders> StartRecord(StartInformation body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -233,7 +233,7 @@ namespace Azure.Core.TestFramework
             switch (message.Response.Status)
             {
                 case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -254,7 +254,7 @@ namespace Azure.Core.TestFramework
                 request.Headers.Add("x-recording-skip", xRecordingSkip);
             }
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteStartObject();
             foreach (var item in variables)
             {
@@ -335,7 +335,7 @@ namespace Azure.Core.TestFramework
             request.Uri = uri;
             request.Headers.Add("x-recording-id", xRecordingId);
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(proxyOptions);
             request.Content = content;
             return message;
@@ -410,7 +410,7 @@ namespace Azure.Core.TestFramework
                 request.Headers.Add("x-recording-id", xRecordingId);
             }
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(sanitizer);
             request.Content = content;
             return message;
@@ -479,7 +479,7 @@ namespace Azure.Core.TestFramework
                 request.Headers.Add("x-recording-id", xRecordingId);
             }
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(sanitizer);
             request.Content = content;
             return message;
@@ -548,7 +548,7 @@ namespace Azure.Core.TestFramework
                 request.Headers.Add("x-recording-id", xRecordingId);
             }
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(sanitizer);
             request.Content = content;
             return message;
@@ -615,7 +615,7 @@ namespace Azure.Core.TestFramework
                 request.Headers.Add("x-recording-id", xRecordingId);
             }
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(sanitizer);
             request.Content = content;
             return message;
@@ -731,7 +731,7 @@ namespace Azure.Core.TestFramework
                 request.Headers.Add("x-recording-id", xRecordingId);
             }
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(matcher);
             request.Content = content;
             return message;
@@ -798,7 +798,7 @@ namespace Azure.Core.TestFramework
                 request.Headers.Add("x-recording-id", xRecordingId);
             }
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(transform);
             request.Content = content;
             return message;

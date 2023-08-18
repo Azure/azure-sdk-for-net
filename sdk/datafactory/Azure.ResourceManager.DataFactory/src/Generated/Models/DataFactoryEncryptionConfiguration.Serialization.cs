@@ -11,21 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryEncryptionConfiguration : IUtf8JsonSerializable
+    public partial class DataFactoryEncryptionConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("keyName"u8);
             writer.WriteStringValue(KeyName);
             writer.WritePropertyName("vaultBaseUrl"u8);
             writer.WriteStringValue(VaultBaseUri.AbsoluteUri);
-            if (Optional.IsDefined(KeyVersion))
+            if (Core.Optional.IsDefined(KeyVersion))
             {
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             string keyName = default;
             Uri vaultBaseUrl = default;
-            Optional<string> keyVersion = default;
-            Optional<DataFactoryCmkIdentity> identity = default;
+            Core.Optional<string> keyVersion = default;
+            Core.Optional<DataFactoryCmkIdentity> identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyName"u8))

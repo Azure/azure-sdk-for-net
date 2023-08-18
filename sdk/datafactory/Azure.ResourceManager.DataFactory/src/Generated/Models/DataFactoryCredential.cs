@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of DataFactoryCredential. </summary>
         public DataFactoryCredential()
         {
-            Annotations = new ChangeTrackingList<BinaryData>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            Annotations = new Core.ChangeTrackingList<BinaryData>();
+            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of DataFactoryCredential. </summary>

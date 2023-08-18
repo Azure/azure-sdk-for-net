@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CosmosDBMetricAvailability>> metricAvailabilities = default;
-            Optional<CosmosDBMetricPrimaryAggregationType> primaryAggregationType = default;
-            Optional<CosmosDBMetricUnitType> unit = default;
-            Optional<ResourceIdentifier> resourceUri = default;
-            Optional<CosmosDBMetricName> name = default;
+            Core.Optional<IReadOnlyList<CosmosDBMetricAvailability>> metricAvailabilities = default;
+            Core.Optional<CosmosDBMetricPrimaryAggregationType> primaryAggregationType = default;
+            Core.Optional<CosmosDBMetricUnitType> unit = default;
+            Core.Optional<ResourceIdentifier> resourceUri = default;
+            Core.Optional<CosmosDBMetricName> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metricAvailabilities"u8))
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CosmosDBMetricDefinition(Optional.ToList(metricAvailabilities), Optional.ToNullable(primaryAggregationType), Optional.ToNullable(unit), resourceUri.Value, name.Value);
+            return new CosmosDBMetricDefinition(Core.Optional.ToList(metricAvailabilities), Core.Optional.ToNullable(primaryAggregationType), Core.Optional.ToNullable(unit), resourceUri.Value, name.Value);
         }
     }
 }

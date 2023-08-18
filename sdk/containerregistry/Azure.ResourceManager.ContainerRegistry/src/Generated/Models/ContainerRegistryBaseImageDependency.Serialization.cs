@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ContainerRegistryBaseImageDependencyType> type = default;
-            Optional<string> registry = default;
-            Optional<string> repository = default;
-            Optional<string> tag = default;
-            Optional<string> digest = default;
+            Core.Optional<ContainerRegistryBaseImageDependencyType> type = default;
+            Core.Optional<string> registry = default;
+            Core.Optional<string> repository = default;
+            Core.Optional<string> tag = default;
+            Core.Optional<string> digest = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryBaseImageDependency(Optional.ToNullable(type), registry.Value, repository.Value, tag.Value, digest.Value);
+            return new ContainerRegistryBaseImageDependency(Core.Optional.ToNullable(type), registry.Value, repository.Value, tag.Value, digest.Value);
         }
     }
 }

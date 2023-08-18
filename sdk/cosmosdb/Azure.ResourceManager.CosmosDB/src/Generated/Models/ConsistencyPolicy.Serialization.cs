@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ConsistencyPolicy : IUtf8JsonSerializable
+    public partial class ConsistencyPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("defaultConsistencyLevel"u8);
             writer.WriteStringValue(DefaultConsistencyLevel.ToSerialString());
-            if (Optional.IsDefined(MaxStalenessPrefix))
+            if (Core.Optional.IsDefined(MaxStalenessPrefix))
             {
                 writer.WritePropertyName("maxStalenessPrefix"u8);
                 writer.WriteNumberValue(MaxStalenessPrefix.Value);
             }
-            if (Optional.IsDefined(MaxIntervalInSeconds))
+            if (Core.Optional.IsDefined(MaxIntervalInSeconds))
             {
                 writer.WritePropertyName("maxIntervalInSeconds"u8);
                 writer.WriteNumberValue(MaxIntervalInSeconds.Value);
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             DefaultConsistencyLevel defaultConsistencyLevel = default;
-            Optional<long> maxStalenessPrefix = default;
-            Optional<int> maxIntervalInSeconds = default;
+            Core.Optional<long> maxStalenessPrefix = default;
+            Core.Optional<int> maxIntervalInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultConsistencyLevel"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ConsistencyPolicy(defaultConsistencyLevel, Optional.ToNullable(maxStalenessPrefix), Optional.ToNullable(maxIntervalInSeconds));
+            return new ConsistencyPolicy(defaultConsistencyLevel, Core.Optional.ToNullable(maxStalenessPrefix), Core.Optional.ToNullable(maxIntervalInSeconds));
         }
     }
 }

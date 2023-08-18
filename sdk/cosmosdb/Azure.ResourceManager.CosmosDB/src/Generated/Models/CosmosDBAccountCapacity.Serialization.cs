@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    internal partial class CosmosDBAccountCapacity : IUtf8JsonSerializable
+    internal partial class CosmosDBAccountCapacity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TotalThroughputLimit))
+            if (Core.Optional.IsDefined(TotalThroughputLimit))
             {
                 writer.WritePropertyName("totalThroughputLimit"u8);
                 writer.WriteNumberValue(TotalThroughputLimit.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<int> totalThroughputLimit = default;
+            Core.Optional<int> totalThroughputLimit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalThroughputLimit"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CosmosDBAccountCapacity(Optional.ToNullable(totalThroughputLimit));
+            return new CosmosDBAccountCapacity(Core.Optional.ToNullable(totalThroughputLimit));
         }
     }
 }

@@ -25,10 +25,10 @@ namespace Azure.Containers.ContainerRegistry
             string digest = default;
             DateTimeOffset createdTime = default;
             DateTimeOffset lastUpdateTime = default;
-            Optional<bool> deleteEnabled = default;
-            Optional<bool> writeEnabled = default;
-            Optional<bool> listEnabled = default;
-            Optional<bool> readEnabled = default;
+            Core.Optional<bool> deleteEnabled = default;
+            Core.Optional<bool> writeEnabled = default;
+            Core.Optional<bool> listEnabled = default;
+            Core.Optional<bool> readEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registry"u8))
@@ -122,7 +122,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ArtifactTagProperties(registry, imageName, name, digest, createdTime, lastUpdateTime, Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
+            return new ArtifactTagProperties(registry, imageName, name, digest, createdTime, lastUpdateTime, Core.Optional.ToNullable(deleteEnabled), Core.Optional.ToNullable(writeEnabled), Core.Optional.ToNullable(listEnabled), Core.Optional.ToNullable(readEnabled));
         }
     }
 }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of IntegrationRuntimeSsisProperties. </summary>
         public IntegrationRuntimeSsisProperties()
         {
-            ExpressCustomSetupProperties = new ChangeTrackingList<CustomSetupBase>();
-            PackageStores = new ChangeTrackingList<DataFactoryPackageStore>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ExpressCustomSetupProperties = new Core.ChangeTrackingList<CustomSetupBase>();
+            PackageStores = new Core.ChangeTrackingList<DataFactoryPackageStore>();
+            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeSsisProperties. </summary>

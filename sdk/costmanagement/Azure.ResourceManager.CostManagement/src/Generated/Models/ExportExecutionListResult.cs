@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of ExportExecutionListResult. </summary>
         public ExportExecutionListResult()
         {
-            Value = new ChangeTrackingList<ExportRun>();
+            Value = new Core.ChangeTrackingList<ExportRun>();
         }
 
         /// <summary> Initializes a new instance of ExportExecutionListResult. </summary>

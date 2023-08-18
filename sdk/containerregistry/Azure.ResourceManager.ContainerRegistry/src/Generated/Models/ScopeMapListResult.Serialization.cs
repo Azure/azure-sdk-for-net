@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ScopeMapData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<ScopeMapData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ScopeMapListResult(Optional.ToList(value), nextLink.Value);
+            return new ScopeMapListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

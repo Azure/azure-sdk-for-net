@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Interval = interval;
             StartOn = startOn;
             MaxConcurrency = maxConcurrency;
-            DependsOn = new ChangeTrackingList<DependencyReference>();
+            DependsOn = new Core.ChangeTrackingList<DependencyReference>();
             TriggerType = "TumblingWindowTrigger";
         }
 

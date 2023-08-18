@@ -11,9 +11,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeFileEventTrigger : IUtf8JsonSerializable
+    public partial class EdgeFileEventTrigger : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteObjectValue(SourceInfo);
             writer.WritePropertyName("sinkInfo"u8);
             writer.WriteObjectValue(SinkInfo);
-            if (Optional.IsDefined(CustomContextTag))
+            if (Core.Optional.IsDefined(CustomContextTag))
             {
                 writer.WritePropertyName("customContextTag"u8);
                 writer.WriteStringValue(CustomContextTag);
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             EdgeFileSourceInfo sourceInfo = default;
             DataBoxEdgeRoleSinkInfo sinkInfo = default;
-            Optional<string> customContextTag = default;
+            Core.Optional<string> customContextTag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))

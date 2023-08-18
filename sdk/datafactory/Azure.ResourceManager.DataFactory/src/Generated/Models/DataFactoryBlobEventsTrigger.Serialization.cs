@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryBlobEventsTrigger : IUtf8JsonSerializable
+    public partial class DataFactoryBlobEventsTrigger : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Pipelines))
+            if (Core.Optional.IsCollectionDefined(Pipelines))
             {
                 writer.WritePropertyName("pipelines"u8);
                 writer.WriteStartArray();
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TriggerType);
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (Core.Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -55,17 +55,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(BlobPathBeginsWith))
+            if (Core.Optional.IsDefined(BlobPathBeginsWith))
             {
                 writer.WritePropertyName("blobPathBeginsWith"u8);
                 writer.WriteStringValue(BlobPathBeginsWith);
             }
-            if (Optional.IsDefined(BlobPathEndsWith))
+            if (Core.Optional.IsDefined(BlobPathEndsWith))
             {
                 writer.WritePropertyName("blobPathEndsWith"u8);
                 writer.WriteStringValue(BlobPathEndsWith);
             }
-            if (Optional.IsDefined(IgnoreEmptyBlobs))
+            if (Core.Optional.IsDefined(IgnoreEmptyBlobs))
             {
                 writer.WritePropertyName("ignoreEmptyBlobs"u8);
                 writer.WriteBooleanValue(IgnoreEmptyBlobs.Value);
@@ -98,14 +98,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IList<TriggerPipelineReference>> pipelines = default;
+            Core.Optional<IList<TriggerPipelineReference>> pipelines = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<DataFactoryTriggerRuntimeState> runtimeState = default;
-            Optional<IList<BinaryData>> annotations = default;
-            Optional<string> blobPathBeginsWith = default;
-            Optional<string> blobPathEndsWith = default;
-            Optional<bool> ignoreEmptyBlobs = default;
+            Core.Optional<string> description = default;
+            Core.Optional<DataFactoryTriggerRuntimeState> runtimeState = default;
+            Core.Optional<IList<BinaryData>> annotations = default;
+            Core.Optional<string> blobPathBeginsWith = default;
+            Core.Optional<string> blobPathEndsWith = default;
+            Core.Optional<bool> ignoreEmptyBlobs = default;
             IList<DataFactoryBlobEventType> events = default;
             string scope = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryBlobEventsTrigger(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties, Optional.ToList(pipelines), blobPathBeginsWith.Value, blobPathEndsWith.Value, Optional.ToNullable(ignoreEmptyBlobs), events, scope);
+            return new DataFactoryBlobEventsTrigger(type, description.Value, Core.Optional.ToNullable(runtimeState), Core.Optional.ToList(annotations), additionalProperties, Core.Optional.ToList(pipelines), blobPathBeginsWith.Value, blobPathEndsWith.Value, Core.Optional.ToNullable(ignoreEmptyBlobs), events, scope);
         }
     }
 }

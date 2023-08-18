@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class MapperAttributeReference : IUtf8JsonSerializable
+    public partial class MapperAttributeReference : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Entity))
+            if (Core.Optional.IsDefined(Entity))
             {
                 writer.WritePropertyName("entity"u8);
                 writer.WriteStringValue(Entity);
             }
-            if (Optional.IsDefined(EntityConnectionReference))
+            if (Core.Optional.IsDefined(EntityConnectionReference))
             {
                 writer.WritePropertyName("entityConnectionReference"u8);
                 writer.WriteObjectValue(EntityConnectionReference);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> entity = default;
-            Optional<MapperConnectionReference> entityConnectionReference = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> entity = default;
+            Core.Optional<MapperConnectionReference> entityConnectionReference = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

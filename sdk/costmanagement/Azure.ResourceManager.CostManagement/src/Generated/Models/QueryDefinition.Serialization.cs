@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class QueryDefinition : IUtf8JsonSerializable
+    public partial class QueryDefinition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ExportType.ToString());
             writer.WritePropertyName("timeframe"u8);
             writer.WriteStringValue(Timeframe.ToString());
-            if (Optional.IsDefined(TimePeriod))
+            if (Core.Optional.IsDefined(TimePeriod))
             {
                 writer.WritePropertyName("timePeriod"u8);
                 writer.WriteObjectValue(TimePeriod);

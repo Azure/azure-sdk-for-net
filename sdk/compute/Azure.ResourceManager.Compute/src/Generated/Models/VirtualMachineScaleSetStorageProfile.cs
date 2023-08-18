@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineScaleSetStorageProfile. </summary>
         public VirtualMachineScaleSetStorageProfile()
         {
-            DataDisks = new ChangeTrackingList<VirtualMachineScaleSetDataDisk>();
+            DataDisks = new Core.ChangeTrackingList<VirtualMachineScaleSetDataDisk>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetStorageProfile. </summary>

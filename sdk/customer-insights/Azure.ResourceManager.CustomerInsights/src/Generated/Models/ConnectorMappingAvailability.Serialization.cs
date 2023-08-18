@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class ConnectorMappingAvailability : IUtf8JsonSerializable
+    public partial class ConnectorMappingAvailability : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Frequency))
+            if (Core.Optional.IsDefined(Frequency))
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToSerialString());
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<FrequencyType> frequency = default;
+            Core.Optional<FrequencyType> frequency = default;
             int interval = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new ConnectorMappingAvailability(Optional.ToNullable(frequency), interval);
+            return new ConnectorMappingAvailability(Core.Optional.ToNullable(frequency), interval);
         }
     }
 }

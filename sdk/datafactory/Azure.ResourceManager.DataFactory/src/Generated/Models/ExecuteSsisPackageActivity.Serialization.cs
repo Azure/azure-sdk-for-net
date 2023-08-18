@@ -13,17 +13,17 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ExecuteSsisPackageActivity : IUtf8JsonSerializable
+    public partial class ExecuteSsisPackageActivity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedServiceName))
+            if (Core.Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 JsonSerializer.Serialize(writer, LinkedServiceName);
             }
-            if (Optional.IsDefined(Policy))
+            if (Core.Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -32,22 +32,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(OnInactiveMarkAs))
+            if (Core.Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (Core.Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserProperties))
+            if (Core.Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -71,29 +71,29 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("packageLocation"u8);
             writer.WriteObjectValue(PackageLocation);
-            if (Optional.IsDefined(Runtime))
+            if (Core.Optional.IsDefined(Runtime))
             {
                 writer.WritePropertyName("runtime"u8);
                 JsonSerializer.Serialize(writer, Runtime);
             }
-            if (Optional.IsDefined(LoggingLevel))
+            if (Core.Optional.IsDefined(LoggingLevel))
             {
                 writer.WritePropertyName("loggingLevel"u8);
                 JsonSerializer.Serialize(writer, LoggingLevel);
             }
-            if (Optional.IsDefined(EnvironmentPath))
+            if (Core.Optional.IsDefined(EnvironmentPath))
             {
                 writer.WritePropertyName("environmentPath"u8);
                 JsonSerializer.Serialize(writer, EnvironmentPath);
             }
-            if (Optional.IsDefined(ExecutionCredential))
+            if (Core.Optional.IsDefined(ExecutionCredential))
             {
                 writer.WritePropertyName("executionCredential"u8);
                 writer.WriteObjectValue(ExecutionCredential);
             }
             writer.WritePropertyName("connectVia"u8);
             writer.WriteObjectValue(ConnectVia);
-            if (Optional.IsCollectionDefined(ProjectParameters))
+            if (Core.Optional.IsCollectionDefined(ProjectParameters))
             {
                 writer.WritePropertyName("projectParameters"u8);
                 writer.WriteStartObject();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(PackageParameters))
+            if (Core.Optional.IsCollectionDefined(PackageParameters))
             {
                 writer.WritePropertyName("packageParameters"u8);
                 writer.WriteStartObject();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ProjectConnectionManagers))
+            if (Core.Optional.IsCollectionDefined(ProjectConnectionManagers))
             {
                 writer.WritePropertyName("projectConnectionManagers"u8);
                 writer.WriteStartObject();
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(PackageConnectionManagers))
+            if (Core.Optional.IsCollectionDefined(PackageConnectionManagers))
             {
                 writer.WritePropertyName("packageConnectionManagers"u8);
                 writer.WriteStartObject();
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(PropertyOverrides))
+            if (Core.Optional.IsCollectionDefined(PropertyOverrides))
             {
                 writer.WritePropertyName("propertyOverrides"u8);
                 writer.WriteStartObject();
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(LogLocation))
+            if (Core.Optional.IsDefined(LogLocation))
             {
                 writer.WritePropertyName("logLocation"u8);
                 writer.WriteObjectValue(LogLocation);
@@ -194,27 +194,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<PipelineActivityPolicy> policy = default;
+            Core.Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
+            Core.Optional<PipelineActivityPolicy> policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            Core.Optional<string> description = default;
+            Core.Optional<PipelineActivityState> state = default;
+            Core.Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            Core.Optional<IList<PipelineActivityDependency>> dependsOn = default;
+            Core.Optional<IList<PipelineActivityUserProperty>> userProperties = default;
             SsisPackageLocation packageLocation = default;
-            Optional<DataFactoryElement<string>> runtime = default;
-            Optional<DataFactoryElement<string>> loggingLevel = default;
-            Optional<DataFactoryElement<string>> environmentPath = default;
-            Optional<SsisExecutionCredential> executionCredential = default;
+            Core.Optional<DataFactoryElement<string>> runtime = default;
+            Core.Optional<DataFactoryElement<string>> loggingLevel = default;
+            Core.Optional<DataFactoryElement<string>> environmentPath = default;
+            Core.Optional<SsisExecutionCredential> executionCredential = default;
             IntegrationRuntimeReference connectVia = default;
-            Optional<IDictionary<string, SsisExecutionParameter>> projectParameters = default;
-            Optional<IDictionary<string, SsisExecutionParameter>> packageParameters = default;
-            Optional<IDictionary<string, IDictionary<string, SsisExecutionParameter>>> projectConnectionManagers = default;
-            Optional<IDictionary<string, IDictionary<string, SsisExecutionParameter>>> packageConnectionManagers = default;
-            Optional<IDictionary<string, SsisPropertyOverride>> propertyOverrides = default;
-            Optional<SsisLogLocation> logLocation = default;
+            Core.Optional<IDictionary<string, SsisExecutionParameter>> projectParameters = default;
+            Core.Optional<IDictionary<string, SsisExecutionParameter>> packageParameters = default;
+            Core.Optional<IDictionary<string, IDictionary<string, SsisExecutionParameter>>> projectConnectionManagers = default;
+            Core.Optional<IDictionary<string, IDictionary<string, SsisExecutionParameter>>> packageConnectionManagers = default;
+            Core.Optional<IDictionary<string, SsisPropertyOverride>> propertyOverrides = default;
+            Core.Optional<SsisLogLocation> logLocation = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ExecuteSsisPackageActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, packageLocation, runtime.Value, loggingLevel.Value, environmentPath.Value, executionCredential.Value, connectVia, Optional.ToDictionary(projectParameters), Optional.ToDictionary(packageParameters), Optional.ToDictionary(projectConnectionManagers), Optional.ToDictionary(packageConnectionManagers), Optional.ToDictionary(propertyOverrides), logLocation.Value);
+            return new ExecuteSsisPackageActivity(name, type, description.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(onInactiveMarkAs), Core.Optional.ToList(dependsOn), Core.Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, packageLocation, runtime.Value, loggingLevel.Value, environmentPath.Value, executionCredential.Value, connectVia, Core.Optional.ToDictionary(projectParameters), Core.Optional.ToDictionary(packageParameters), Core.Optional.ToDictionary(projectConnectionManagers), Core.Optional.ToDictionary(packageConnectionManagers), Core.Optional.ToDictionary(propertyOverrides), logLocation.Value);
         }
     }
 }

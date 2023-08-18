@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Schedule = schedule;
             DurationHours = durationHours;
             StartTime = startTime;
-            NotAllowedDates = new ChangeTrackingList<ContainerServiceDateSpan>();
+            NotAllowedDates = new Core.ChangeTrackingList<ContainerServiceDateSpan>();
         }
 
         /// <summary> Initializes a new instance of ContainerServiceMaintenanceWindow. </summary>

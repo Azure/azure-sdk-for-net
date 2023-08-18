@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppJobScaleRule. </summary>
         public ContainerAppJobScaleRule()
         {
-            Auth = new ChangeTrackingList<ContainerAppScaleRuleAuth>();
+            Auth = new Core.ChangeTrackingList<ContainerAppScaleRuleAuth>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppJobScaleRule. </summary>

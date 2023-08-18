@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of FileDestination. </summary>
         public FileDestination()
         {
-            FileFormats = new ChangeTrackingList<ScheduledActionFileFormat>();
+            FileFormats = new Core.ChangeTrackingList<ScheduledActionFileFormat>();
         }
 
         /// <summary> Initializes a new instance of FileDestination. </summary>

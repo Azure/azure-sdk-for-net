@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of DedicatedHostGroupPatch. </summary>
         public DedicatedHostGroupPatch()
         {
-            Zones = new ChangeTrackingList<string>();
-            Hosts = new ChangeTrackingList<SubResource>();
+            Zones = new Core.ChangeTrackingList<string>();
+            Hosts = new Core.ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Availability Zone to use for this host group. Only single zone is supported. The zone can be assigned only during creation. If not provided, the group supports all zones in the region. If provided, enforces each host in the group to be in the same zone. </summary>

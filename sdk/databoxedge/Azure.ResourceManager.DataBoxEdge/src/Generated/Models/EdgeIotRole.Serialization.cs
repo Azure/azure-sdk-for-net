@@ -12,31 +12,31 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeIotRole : IUtf8JsonSerializable
+    public partial class EdgeIotRole : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(HostPlatform))
+            if (Core.Optional.IsDefined(HostPlatform))
             {
                 writer.WritePropertyName("hostPlatform"u8);
                 writer.WriteStringValue(HostPlatform.Value.ToString());
             }
-            if (Optional.IsDefined(IotDeviceDetails))
+            if (Core.Optional.IsDefined(IotDeviceDetails))
             {
                 writer.WritePropertyName("ioTDeviceDetails"u8);
                 writer.WriteObjectValue(IotDeviceDetails);
             }
-            if (Optional.IsDefined(IotEdgeDeviceDetails))
+            if (Core.Optional.IsDefined(IotEdgeDeviceDetails))
             {
                 writer.WritePropertyName("ioTEdgeDeviceDetails"u8);
                 writer.WriteObjectValue(IotEdgeDeviceDetails);
             }
-            if (Optional.IsCollectionDefined(ShareMappings))
+            if (Core.Optional.IsCollectionDefined(ShareMappings))
             {
                 writer.WritePropertyName("shareMappings"u8);
                 writer.WriteStartArray();
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IotEdgeAgentInfo))
+            if (Core.Optional.IsDefined(IotEdgeAgentInfo))
             {
                 writer.WritePropertyName("ioTEdgeAgentInfo"u8);
                 writer.WriteObjectValue(IotEdgeAgentInfo);
             }
-            if (Optional.IsDefined(ComputeResource))
+            if (Core.Optional.IsDefined(ComputeResource))
             {
                 writer.WritePropertyName("computeResource"u8);
                 writer.WriteObjectValue(ComputeResource);
             }
-            if (Optional.IsDefined(RoleStatus))
+            if (Core.Optional.IsDefined(RoleStatus))
             {
                 writer.WritePropertyName("roleStatus"u8);
                 writer.WriteStringValue(RoleStatus.Value.ToString());
@@ -75,15 +75,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DataBoxEdgeOSPlatformType> hostPlatform = default;
-            Optional<EdgeIotDeviceInfo> iotDeviceDetails = default;
-            Optional<EdgeIotDeviceInfo> iotEdgeDeviceDetails = default;
-            Optional<IList<DataBoxEdgeMountPointMap>> shareMappings = default;
-            Optional<IotEdgeAgentInfo> iotEdgeAgentInfo = default;
-            Optional<HostPlatformType> hostPlatformType = default;
-            Optional<EdgeComputeResourceInfo> computeResource = default;
-            Optional<DataBoxEdgeRoleStatus> roleStatus = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DataBoxEdgeOSPlatformType> hostPlatform = default;
+            Core.Optional<EdgeIotDeviceInfo> iotDeviceDetails = default;
+            Core.Optional<EdgeIotDeviceInfo> iotEdgeDeviceDetails = default;
+            Core.Optional<IList<DataBoxEdgeMountPointMap>> shareMappings = default;
+            Core.Optional<IotEdgeAgentInfo> iotEdgeAgentInfo = default;
+            Core.Optional<HostPlatformType> hostPlatformType = default;
+            Core.Optional<EdgeComputeResourceInfo> computeResource = default;
+            Core.Optional<DataBoxEdgeRoleStatus> roleStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new EdgeIotRole(id, name, type, systemData.Value, kind, Optional.ToNullable(hostPlatform), iotDeviceDetails.Value, iotEdgeDeviceDetails.Value, Optional.ToList(shareMappings), iotEdgeAgentInfo.Value, Optional.ToNullable(hostPlatformType), computeResource.Value, Optional.ToNullable(roleStatus));
+            return new EdgeIotRole(id, name, type, systemData.Value, kind, Core.Optional.ToNullable(hostPlatform), iotDeviceDetails.Value, iotEdgeDeviceDetails.Value, Core.Optional.ToList(shareMappings), iotEdgeAgentInfo.Value, Core.Optional.ToNullable(hostPlatformType), computeResource.Value, Core.Optional.ToNullable(roleStatus));
         }
     }
 }

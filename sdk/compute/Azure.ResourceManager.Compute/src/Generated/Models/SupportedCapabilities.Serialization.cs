@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class SupportedCapabilities : IUtf8JsonSerializable
+    public partial class SupportedCapabilities : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiskControllerTypes))
+            if (Core.Optional.IsDefined(DiskControllerTypes))
             {
                 writer.WritePropertyName("diskControllerTypes"u8);
                 writer.WriteStringValue(DiskControllerTypes);
             }
-            if (Optional.IsDefined(AcceleratedNetwork))
+            if (Core.Optional.IsDefined(AcceleratedNetwork))
             {
                 writer.WritePropertyName("acceleratedNetwork"u8);
                 writer.WriteBooleanValue(AcceleratedNetwork.Value);
             }
-            if (Optional.IsDefined(Architecture))
+            if (Core.Optional.IsDefined(Architecture))
             {
                 writer.WritePropertyName("architecture"u8);
                 writer.WriteStringValue(Architecture.Value.ToString());
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> diskControllerTypes = default;
-            Optional<bool> acceleratedNetwork = default;
-            Optional<ArchitectureType> architecture = default;
+            Core.Optional<string> diskControllerTypes = default;
+            Core.Optional<bool> acceleratedNetwork = default;
+            Core.Optional<ArchitectureType> architecture = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskControllerTypes"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new SupportedCapabilities(diskControllerTypes.Value, Optional.ToNullable(acceleratedNetwork), Optional.ToNullable(architecture));
+            return new SupportedCapabilities(diskControllerTypes.Value, Core.Optional.ToNullable(acceleratedNetwork), Core.Optional.ToNullable(architecture));
         }
     }
 }

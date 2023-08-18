@@ -13,59 +13,59 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class ExportRun : IUtf8JsonSerializable
+    public partial class ExportRun : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExecutionType))
+            if (Core.Optional.IsDefined(ExecutionType))
             {
                 writer.WritePropertyName("executionType"u8);
                 writer.WriteStringValue(ExecutionType.Value.ToString());
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(SubmittedBy))
+            if (Core.Optional.IsDefined(SubmittedBy))
             {
                 writer.WritePropertyName("submittedBy"u8);
                 writer.WriteStringValue(SubmittedBy);
             }
-            if (Optional.IsDefined(SubmittedOn))
+            if (Core.Optional.IsDefined(SubmittedOn))
             {
                 writer.WritePropertyName("submittedTime"u8);
                 writer.WriteStringValue(SubmittedOn.Value, "O");
             }
-            if (Optional.IsDefined(ProcessingStartOn))
+            if (Core.Optional.IsDefined(ProcessingStartOn))
             {
                 writer.WritePropertyName("processingStartTime"u8);
                 writer.WriteStringValue(ProcessingStartOn.Value, "O");
             }
-            if (Optional.IsDefined(ProcessingEndOn))
+            if (Core.Optional.IsDefined(ProcessingEndOn))
             {
                 writer.WritePropertyName("processingEndTime"u8);
                 writer.WriteStringValue(ProcessingEndOn.Value, "O");
             }
-            if (Optional.IsDefined(FileName))
+            if (Core.Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Optional.IsDefined(RunSettings))
+            if (Core.Optional.IsDefined(RunSettings))
             {
                 writer.WritePropertyName("runSettings"u8);
                 writer.WriteObjectValue(RunSettings);
             }
-            if (Optional.IsDefined(Error))
+            if (Core.Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
@@ -80,20 +80,20 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            Core.Optional<ETag> eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ExportRunExecutionType> executionType = default;
-            Optional<ExportRunExecutionStatus> status = default;
-            Optional<string> submittedBy = default;
-            Optional<DateTimeOffset> submittedTime = default;
-            Optional<DateTimeOffset> processingStartTime = default;
-            Optional<DateTimeOffset> processingEndTime = default;
-            Optional<string> fileName = default;
-            Optional<CommonExportProperties> runSettings = default;
-            Optional<ExportRunErrorDetails> error = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ExportRunExecutionType> executionType = default;
+            Core.Optional<ExportRunExecutionStatus> status = default;
+            Core.Optional<string> submittedBy = default;
+            Core.Optional<DateTimeOffset> submittedTime = default;
+            Core.Optional<DateTimeOffset> processingStartTime = default;
+            Core.Optional<DateTimeOffset> processingEndTime = default;
+            Core.Optional<string> fileName = default;
+            Core.Optional<CommonExportProperties> runSettings = default;
+            Core.Optional<ExportRunErrorDetails> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new ExportRun(id, name, type, systemData.Value, Optional.ToNullable(executionType), Optional.ToNullable(status), submittedBy.Value, Optional.ToNullable(submittedTime), Optional.ToNullable(processingStartTime), Optional.ToNullable(processingEndTime), fileName.Value, runSettings.Value, error.Value, Optional.ToNullable(eTag));
+            return new ExportRun(id, name, type, systemData.Value, Core.Optional.ToNullable(executionType), Core.Optional.ToNullable(status), submittedBy.Value, Core.Optional.ToNullable(submittedTime), Core.Optional.ToNullable(processingStartTime), Core.Optional.ToNullable(processingEndTime), fileName.Value, runSettings.Value, error.Value, Core.Optional.ToNullable(eTag));
         }
     }
 }

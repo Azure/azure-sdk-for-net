@@ -16,7 +16,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Initializes a new instance of ManifestList. </summary>
         internal ManifestList()
         {
-            Manifests = new ChangeTrackingList<ManifestListAttributes>();
+            Manifests = new Core.ChangeTrackingList<ManifestListAttributes>();
         }
 
         /// <summary> Initializes a new instance of ManifestList. </summary>

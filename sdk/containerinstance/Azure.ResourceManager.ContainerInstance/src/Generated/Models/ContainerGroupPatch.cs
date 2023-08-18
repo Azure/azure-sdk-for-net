@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="location"> The location. </param>
         public ContainerGroupPatch(AzureLocation location) : base(location)
         {
-            Zones = new ChangeTrackingList<string>();
+            Zones = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ContainerGroupPatch. </summary>

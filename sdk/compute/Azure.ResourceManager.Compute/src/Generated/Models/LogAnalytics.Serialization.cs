@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<LogAnalyticsOutput> properties = default;
+            Core.Optional<LogAnalyticsOutput> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))

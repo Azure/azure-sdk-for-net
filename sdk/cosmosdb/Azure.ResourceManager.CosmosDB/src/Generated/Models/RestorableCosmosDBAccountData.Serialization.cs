@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            Core.Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> accountName = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> oldestRestorableTime = default;
-            Optional<DateTimeOffset> deletionTime = default;
-            Optional<CosmosDBApiType> apiType = default;
-            Optional<IReadOnlyList<RestorableLocationResourceInfo>> restorableLocations = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> accountName = default;
+            Core.Optional<DateTimeOffset> creationTime = default;
+            Core.Optional<DateTimeOffset> oldestRestorableTime = default;
+            Core.Optional<DateTimeOffset> deletionTime = default;
+            Core.Optional<CosmosDBApiType> apiType = default;
+            Core.Optional<IReadOnlyList<RestorableLocationResourceInfo>> restorableLocations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB
                     continue;
                 }
             }
-            return new RestorableCosmosDBAccountData(id, name, type, systemData.Value, Optional.ToNullable(location), accountName.Value, Optional.ToNullable(creationTime), Optional.ToNullable(oldestRestorableTime), Optional.ToNullable(deletionTime), Optional.ToNullable(apiType), Optional.ToList(restorableLocations));
+            return new RestorableCosmosDBAccountData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), accountName.Value, Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(oldestRestorableTime), Core.Optional.ToNullable(deletionTime), Core.Optional.ToNullable(apiType), Core.Optional.ToList(restorableLocations));
         }
     }
 }

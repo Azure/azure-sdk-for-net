@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionLotSummary : IUtf8JsonSerializable
+    public partial class ConsumptionLotSummary : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -35,24 +35,24 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            Core.Optional<ETag> eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ConsumptionAmount> originalAmount = default;
-            Optional<ConsumptionAmount> closedBalance = default;
-            Optional<ConsumptionLotSource> source = default;
-            Optional<DateTimeOffset> startDate = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<string> poNumber = default;
-            Optional<DateTimeOffset> purchasedDate = default;
-            Optional<ConsumptionLotStatus> status = default;
-            Optional<string> creditCurrency = default;
-            Optional<string> billingCurrency = default;
-            Optional<ConsumptionAmountWithExchangeRate> originalAmountInBillingCurrency = default;
-            Optional<ConsumptionAmountWithExchangeRate> closedBalanceInBillingCurrency = default;
-            Optional<ConsumptionReseller> reseller = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ConsumptionAmount> originalAmount = default;
+            Core.Optional<ConsumptionAmount> closedBalance = default;
+            Core.Optional<ConsumptionLotSource> source = default;
+            Core.Optional<DateTimeOffset> startDate = default;
+            Core.Optional<DateTimeOffset> expirationDate = default;
+            Core.Optional<string> poNumber = default;
+            Core.Optional<DateTimeOffset> purchasedDate = default;
+            Core.Optional<ConsumptionLotStatus> status = default;
+            Core.Optional<string> creditCurrency = default;
+            Core.Optional<string> billingCurrency = default;
+            Core.Optional<ConsumptionAmountWithExchangeRate> originalAmountInBillingCurrency = default;
+            Core.Optional<ConsumptionAmountWithExchangeRate> closedBalanceInBillingCurrency = default;
+            Core.Optional<ConsumptionReseller> reseller = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ConsumptionLotSummary(id, name, type, systemData.Value, originalAmount.Value, closedBalance.Value, Optional.ToNullable(source), Optional.ToNullable(startDate), Optional.ToNullable(expirationDate), poNumber.Value, Optional.ToNullable(purchasedDate), Optional.ToNullable(status), creditCurrency.Value, billingCurrency.Value, originalAmountInBillingCurrency.Value, closedBalanceInBillingCurrency.Value, reseller.Value, Optional.ToNullable(eTag));
+            return new ConsumptionLotSummary(id, name, type, systemData.Value, originalAmount.Value, closedBalance.Value, Core.Optional.ToNullable(source), Core.Optional.ToNullable(startDate), Core.Optional.ToNullable(expirationDate), poNumber.Value, Core.Optional.ToNullable(purchasedDate), Core.Optional.ToNullable(status), creditCurrency.Value, billingCurrency.Value, originalAmountInBillingCurrency.Value, closedBalanceInBillingCurrency.Value, reseller.Value, Core.Optional.ToNullable(eTag));
         }
     }
 }

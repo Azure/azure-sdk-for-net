@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <summary> Initializes a new instance of AuthorizationPolicyListResult. </summary>
         internal AuthorizationPolicyListResult()
         {
-            Value = new ChangeTrackingList<AuthorizationPolicyResourceFormatData>();
+            Value = new Core.ChangeTrackingList<AuthorizationPolicyResourceFormatData>();
         }
 
         /// <summary> Initializes a new instance of AuthorizationPolicyListResult. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of FirewallRuleListResult. </summary>
         internal FirewallRuleListResult()
         {
-            Value = new ChangeTrackingList<CosmosDBFirewallRuleData>();
+            Value = new Core.ChangeTrackingList<CosmosDBFirewallRuleData>();
         }
 
         /// <summary> Initializes a new instance of FirewallRuleListResult. </summary>

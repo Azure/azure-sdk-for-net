@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class SpatialSpec : IUtf8JsonSerializable
+    public partial class SpatialSpec : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Path))
+            if (Core.Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsCollectionDefined(Types))
+            if (Core.Optional.IsCollectionDefined(Types))
             {
                 writer.WritePropertyName("types"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> path = default;
-            Optional<IList<CosmosDBSpatialType>> types = default;
+            Core.Optional<string> path = default;
+            Core.Optional<IList<CosmosDBSpatialType>> types = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new SpatialSpec(path.Value, Optional.ToList(types));
+            return new SpatialSpec(path.Value, Core.Optional.ToList(types));
         }
     }
 }

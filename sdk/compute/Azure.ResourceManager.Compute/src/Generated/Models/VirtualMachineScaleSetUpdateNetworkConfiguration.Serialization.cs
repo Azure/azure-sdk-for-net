@@ -10,54 +10,54 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineScaleSetUpdateNetworkConfiguration : IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetUpdateNetworkConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Primary))
+            if (Core.Optional.IsDefined(Primary))
             {
                 writer.WritePropertyName("primary"u8);
                 writer.WriteBooleanValue(Primary.Value);
             }
-            if (Optional.IsDefined(EnableAcceleratedNetworking))
+            if (Core.Optional.IsDefined(EnableAcceleratedNetworking))
             {
                 writer.WritePropertyName("enableAcceleratedNetworking"u8);
                 writer.WriteBooleanValue(EnableAcceleratedNetworking.Value);
             }
-            if (Optional.IsDefined(IsTcpStateTrackingDisabled))
+            if (Core.Optional.IsDefined(IsTcpStateTrackingDisabled))
             {
                 writer.WritePropertyName("disableTcpStateTracking"u8);
                 writer.WriteBooleanValue(IsTcpStateTrackingDisabled.Value);
             }
-            if (Optional.IsDefined(EnableFpga))
+            if (Core.Optional.IsDefined(EnableFpga))
             {
                 writer.WritePropertyName("enableFpga"u8);
                 writer.WriteBooleanValue(EnableFpga.Value);
             }
-            if (Optional.IsDefined(NetworkSecurityGroup))
+            if (Core.Optional.IsDefined(NetworkSecurityGroup))
             {
                 writer.WritePropertyName("networkSecurityGroup"u8);
                 JsonSerializer.Serialize(writer, NetworkSecurityGroup);
             }
-            if (Optional.IsDefined(DnsSettings))
+            if (Core.Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
                 writer.WriteObjectValue(DnsSettings);
             }
-            if (Optional.IsCollectionDefined(IPConfigurations))
+            if (Core.Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnableIPForwarding))
+            if (Core.Optional.IsDefined(EnableIPForwarding))
             {
                 writer.WritePropertyName("enableIPForwarding"u8);
                 writer.WriteBooleanValue(EnableIPForwarding.Value);
             }
-            if (Optional.IsDefined(DeleteOption))
+            if (Core.Optional.IsDefined(DeleteOption))
             {
                 writer.WritePropertyName("deleteOption"u8);
                 writer.WriteStringValue(DeleteOption.Value.ToString());

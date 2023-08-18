@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class AgentPoolNetworkPortRange : IUtf8JsonSerializable
+    public partial class AgentPoolNetworkPortRange : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PortStart))
+            if (Core.Optional.IsDefined(PortStart))
             {
                 writer.WritePropertyName("portStart"u8);
                 writer.WriteNumberValue(PortStart.Value);
             }
-            if (Optional.IsDefined(PortEnd))
+            if (Core.Optional.IsDefined(PortEnd))
             {
                 writer.WritePropertyName("portEnd"u8);
                 writer.WriteNumberValue(PortEnd.Value);
             }
-            if (Optional.IsDefined(Protocol))
+            if (Core.Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<int> portStart = default;
-            Optional<int> portEnd = default;
-            Optional<AgentPoolNetworkPortProtocol> protocol = default;
+            Core.Optional<int> portStart = default;
+            Core.Optional<int> portEnd = default;
+            Core.Optional<AgentPoolNetworkPortProtocol> protocol = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("portStart"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new AgentPoolNetworkPortRange(Optional.ToNullable(portStart), Optional.ToNullable(portEnd), Optional.ToNullable(protocol));
+            return new AgentPoolNetworkPortRange(Core.Optional.ToNullable(portStart), Core.Optional.ToNullable(portEnd), Core.Optional.ToNullable(protocol));
         }
     }
 }

@@ -13,24 +13,24 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureFileStorageLinkedService : IUtf8JsonSerializable
+    public partial class AzureFileStorageLinkedService : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (Optional.IsDefined(ConnectVia))
+            if (Core.Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (Core.Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (Core.Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -62,52 +62,52 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Host))
+            if (Core.Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
                 JsonSerializer.Serialize(writer, Host);
             }
-            if (Optional.IsDefined(UserId))
+            if (Core.Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("userId"u8);
                 JsonSerializer.Serialize(writer, UserId);
             }
-            if (Optional.IsDefined(Password))
+            if (Core.Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 JsonSerializer.Serialize(writer, Password);
             }
-            if (Optional.IsDefined(ConnectionString))
+            if (Core.Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 JsonSerializer.Serialize(writer, ConnectionString);
             }
-            if (Optional.IsDefined(AccountKey))
+            if (Core.Optional.IsDefined(AccountKey))
             {
                 writer.WritePropertyName("accountKey"u8);
                 JsonSerializer.Serialize(writer, AccountKey);
             }
-            if (Optional.IsDefined(SasUri))
+            if (Core.Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUri"u8);
                 JsonSerializer.Serialize(writer, SasUri);
             }
-            if (Optional.IsDefined(SasToken))
+            if (Core.Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
                 JsonSerializer.Serialize(writer, SasToken);
             }
-            if (Optional.IsDefined(FileShare))
+            if (Core.Optional.IsDefined(FileShare))
             {
                 writer.WritePropertyName("fileShare"u8);
                 JsonSerializer.Serialize(writer, FileShare);
             }
-            if (Optional.IsDefined(Snapshot))
+            if (Core.Optional.IsDefined(Snapshot))
             {
                 writer.WritePropertyName("snapshot"u8);
                 JsonSerializer.Serialize(writer, Snapshot);
             }
-            if (Optional.IsDefined(EncryptedCredential))
+            if (Core.Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
@@ -132,20 +132,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
-            Optional<DataFactoryElement<string>> host = default;
-            Optional<DataFactoryElement<string>> userId = default;
-            Optional<DataFactorySecretBaseDefinition> password = default;
-            Optional<DataFactoryElement<string>> connectionString = default;
-            Optional<DataFactoryKeyVaultSecretReference> accountKey = default;
-            Optional<DataFactoryElement<string>> sasUri = default;
-            Optional<DataFactoryKeyVaultSecretReference> sasToken = default;
-            Optional<DataFactoryElement<string>> fileShare = default;
-            Optional<DataFactoryElement<string>> snapshot = default;
-            Optional<string> encryptedCredential = default;
+            Core.Optional<IntegrationRuntimeReference> connectVia = default;
+            Core.Optional<string> description = default;
+            Core.Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
+            Core.Optional<IList<BinaryData>> annotations = default;
+            Core.Optional<DataFactoryElement<string>> host = default;
+            Core.Optional<DataFactoryElement<string>> userId = default;
+            Core.Optional<DataFactorySecretBaseDefinition> password = default;
+            Core.Optional<DataFactoryElement<string>> connectionString = default;
+            Core.Optional<DataFactoryKeyVaultSecretReference> accountKey = default;
+            Core.Optional<DataFactoryElement<string>> sasUri = default;
+            Core.Optional<DataFactoryKeyVaultSecretReference> sasToken = default;
+            Core.Optional<DataFactoryElement<string>> fileShare = default;
+            Core.Optional<DataFactoryElement<string>> snapshot = default;
+            Core.Optional<string> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureFileStorageLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, host.Value, userId.Value, password, connectionString.Value, accountKey, sasUri.Value, sasToken, fileShare.Value, snapshot.Value, encryptedCredential.Value);
+            return new AzureFileStorageLinkedService(type, connectVia.Value, description.Value, Core.Optional.ToDictionary(parameters), Core.Optional.ToList(annotations), additionalProperties, host.Value, userId.Value, password, connectionString.Value, accountKey, sasUri.Value, sasToken, fileShare.Value, snapshot.Value, encryptedCredential.Value);
         }
     }
 }

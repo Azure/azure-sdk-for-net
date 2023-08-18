@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryFileTaskStepUpdateContent : IUtf8JsonSerializable
+    public partial class ContainerRegistryFileTaskStepUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TaskFilePath))
+            if (Core.Optional.IsDefined(TaskFilePath))
             {
                 writer.WritePropertyName("taskFilePath"u8);
                 writer.WriteStringValue(TaskFilePath);
             }
-            if (Optional.IsDefined(ValuesFilePath))
+            if (Core.Optional.IsDefined(ValuesFilePath))
             {
                 writer.WritePropertyName("valuesFilePath"u8);
                 writer.WriteStringValue(ValuesFilePath);
             }
-            if (Optional.IsCollectionDefined(Values))
+            if (Core.Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StepType.ToString());
-            if (Optional.IsDefined(ContextPath))
+            if (Core.Optional.IsDefined(ContextPath))
             {
                 writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
-            if (Optional.IsDefined(ContextAccessToken))
+            if (Core.Optional.IsDefined(ContextAccessToken))
             {
                 writer.WritePropertyName("contextAccessToken"u8);
                 writer.WriteStringValue(ContextAccessToken);

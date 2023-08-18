@@ -13,19 +13,19 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
-    public partial class CosmosDBForPostgreSqlSimplePrivateEndpointConnection : IUtf8JsonSerializable
+    public partial class CosmosDBForPostgreSqlSimplePrivateEndpointConnection : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateEndpoint))
+            if (Core.Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (Optional.IsCollectionDefined(GroupIds))
+            if (Core.Optional.IsCollectionDefined(GroupIds))
             {
                 writer.WritePropertyName("groupIds"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (Core.Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(PrivateLinkServiceConnectionState);
@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<WritableSubResource> privateEndpoint = default;
-            Optional<IList<string>> groupIds = default;
-            Optional<CosmosDBForPostgreSqlPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<WritableSubResource> privateEndpoint = default;
+            Core.Optional<IList<string>> groupIds = default;
+            Core.Optional<CosmosDBForPostgreSqlPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     continue;
                 }
             }
-            return new CosmosDBForPostgreSqlSimplePrivateEndpointConnection(id, name, type, systemData.Value, privateEndpoint, Optional.ToList(groupIds), privateLinkServiceConnectionState.Value);
+            return new CosmosDBForPostgreSqlSimplePrivateEndpointConnection(id, name, type, systemData.Value, privateEndpoint, Core.Optional.ToList(groupIds), privateLinkServiceConnectionState.Value);
         }
     }
 }

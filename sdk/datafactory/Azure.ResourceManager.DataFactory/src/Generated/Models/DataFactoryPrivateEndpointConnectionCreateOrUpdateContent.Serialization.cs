@@ -12,12 +12,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryPrivateEndpointConnectionCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class DataFactoryPrivateEndpointConnectionCreateOrUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<PrivateLinkConnectionApprovalRequest> properties = default;
-            Optional<ETag> etag = default;
+            Core.Optional<PrivateLinkConnectionApprovalRequest> properties = default;
+            Core.Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new DataFactoryPrivateEndpointConnectionCreateOrUpdateContent(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(etag));
+            return new DataFactoryPrivateEndpointConnectionCreateOrUpdateContent(id, name, type, systemData.Value, properties.Value, Core.Optional.ToNullable(etag));
         }
     }
 }

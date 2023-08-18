@@ -16,8 +16,8 @@ namespace Azure.Communication.Email
         /// <summary> Initializes a new instance of ErrorDetail. </summary>
         internal ErrorDetail()
         {
-            Details = new ChangeTrackingList<ErrorDetail>();
-            AdditionalInfo = new ChangeTrackingList<ErrorAdditionalInfo>();
+            Details = new Core.ChangeTrackingList<ErrorDetail>();
+            AdditionalInfo = new Core.ChangeTrackingList<ErrorAdditionalInfo>();
         }
 
         /// <summary> Initializes a new instance of ErrorDetail. </summary>

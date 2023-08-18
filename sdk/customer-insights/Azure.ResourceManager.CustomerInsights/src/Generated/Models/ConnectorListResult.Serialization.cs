@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConnectorResourceFormatData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<ConnectorResourceFormatData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new ConnectorListResult(Optional.ToList(value), nextLink.Value);
+            return new ConnectorListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

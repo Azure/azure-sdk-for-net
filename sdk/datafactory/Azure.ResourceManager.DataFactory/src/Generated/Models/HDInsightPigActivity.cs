@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            StorageLinkedServices = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
-            Defines = new ChangeTrackingDictionary<string, BinaryData>();
+            StorageLinkedServices = new Core.ChangeTrackingList<DataFactoryLinkedServiceReference>();
+            Defines = new Core.ChangeTrackingDictionary<string, BinaryData>();
             ActivityType = "HDInsightPig";
         }
 

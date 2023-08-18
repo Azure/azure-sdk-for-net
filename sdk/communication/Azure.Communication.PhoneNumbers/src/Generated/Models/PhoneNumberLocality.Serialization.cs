@@ -19,7 +19,7 @@ namespace Azure.Communication.PhoneNumbers
                 return null;
             }
             string localizedName = default;
-            Optional<PhoneNumberAdministrativeDivision> administrativeDivision = default;
+            Core.Optional<PhoneNumberAdministrativeDivision> administrativeDivision = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("localizedName"u8))

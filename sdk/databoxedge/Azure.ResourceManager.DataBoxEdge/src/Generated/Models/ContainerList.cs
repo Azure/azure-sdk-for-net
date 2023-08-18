@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of ContainerList. </summary>
         internal ContainerList()
         {
-            Value = new ChangeTrackingList<DataBoxEdgeStorageContainerData>();
+            Value = new Core.ChangeTrackingList<DataBoxEdgeStorageContainerData>();
         }
 
         /// <summary> Initializes a new instance of ContainerList. </summary>

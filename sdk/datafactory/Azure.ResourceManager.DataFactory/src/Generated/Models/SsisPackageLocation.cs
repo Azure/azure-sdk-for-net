@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of SsisPackageLocation. </summary>
         public SsisPackageLocation()
         {
-            ChildPackages = new ChangeTrackingList<SsisChildPackage>();
+            ChildPackages = new Core.ChangeTrackingList<SsisChildPackage>();
         }
 
         /// <summary> Initializes a new instance of SsisPackageLocation. </summary>

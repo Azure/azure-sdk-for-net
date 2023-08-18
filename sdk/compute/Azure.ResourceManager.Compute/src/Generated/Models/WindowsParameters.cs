@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of WindowsParameters. </summary>
         public WindowsParameters()
         {
-            ClassificationsToInclude = new ChangeTrackingList<VmGuestPatchClassificationForWindows>();
-            KbNumbersToInclude = new ChangeTrackingList<string>();
-            KbNumbersToExclude = new ChangeTrackingList<string>();
+            ClassificationsToInclude = new Core.ChangeTrackingList<VmGuestPatchClassificationForWindows>();
+            KbNumbersToInclude = new Core.ChangeTrackingList<string>();
+            KbNumbersToExclude = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> The update classifications to select when installing patches for Windows. </summary>

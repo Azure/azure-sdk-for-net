@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class DatabaseRestoreResourceInfo : IUtf8JsonSerializable
+    public partial class DatabaseRestoreResourceInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DatabaseName))
+            if (Core.Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (Optional.IsCollectionDefined(CollectionNames))
+            if (Core.Optional.IsCollectionDefined(CollectionNames))
             {
                 writer.WritePropertyName("collectionNames"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<IList<string>> collectionNames = default;
+            Core.Optional<string> databaseName = default;
+            Core.Optional<IList<string>> collectionNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseName"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new DatabaseRestoreResourceInfo(databaseName.Value, Optional.ToList(collectionNames));
+            return new DatabaseRestoreResourceInfo(databaseName.Value, Core.Optional.ToList(collectionNames));
         }
     }
 }

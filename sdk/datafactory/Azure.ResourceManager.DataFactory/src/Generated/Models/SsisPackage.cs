@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of SsisPackage. </summary>
         internal SsisPackage()
         {
-            Parameters = new ChangeTrackingList<SsisParameterInfo>();
+            Parameters = new Core.ChangeTrackingList<SsisParameterInfo>();
             MetadataType = SsisObjectMetadataType.Package;
         }
 

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CosmosDBForPostgreSqlFirewallRuleData>> value = default;
+            Core.Optional<IReadOnlyList<CosmosDBForPostgreSqlFirewallRuleData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     continue;
                 }
             }
-            return new CosmosDBForPostgreSqlFirewallRuleListResult(Optional.ToList(value));
+            return new CosmosDBForPostgreSqlFirewallRuleListResult(Core.Optional.ToList(value));
         }
     }
 }

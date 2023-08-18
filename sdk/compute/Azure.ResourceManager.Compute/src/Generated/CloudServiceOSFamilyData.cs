@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of CloudServiceOSFamilyData. </summary>
         internal CloudServiceOSFamilyData()
         {
-            Versions = new ChangeTrackingList<OSVersionPropertiesBase>();
+            Versions = new Core.ChangeTrackingList<OSVersionPropertiesBase>();
         }
 
         /// <summary> Initializes a new instance of CloudServiceOSFamilyData. </summary>

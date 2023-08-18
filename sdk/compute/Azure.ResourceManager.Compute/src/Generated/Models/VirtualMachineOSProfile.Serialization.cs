@@ -11,42 +11,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineOSProfile : IUtf8JsonSerializable
+    public partial class VirtualMachineOSProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComputerName))
+            if (Core.Optional.IsDefined(ComputerName))
             {
                 writer.WritePropertyName("computerName"u8);
                 writer.WriteStringValue(ComputerName);
             }
-            if (Optional.IsDefined(AdminUsername))
+            if (Core.Optional.IsDefined(AdminUsername))
             {
                 writer.WritePropertyName("adminUsername"u8);
                 writer.WriteStringValue(AdminUsername);
             }
-            if (Optional.IsDefined(AdminPassword))
+            if (Core.Optional.IsDefined(AdminPassword))
             {
                 writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
-            if (Optional.IsDefined(CustomData))
+            if (Core.Optional.IsDefined(CustomData))
             {
                 writer.WritePropertyName("customData"u8);
                 writer.WriteStringValue(CustomData);
             }
-            if (Optional.IsDefined(WindowsConfiguration))
+            if (Core.Optional.IsDefined(WindowsConfiguration))
             {
                 writer.WritePropertyName("windowsConfiguration"u8);
                 writer.WriteObjectValue(WindowsConfiguration);
             }
-            if (Optional.IsDefined(LinuxConfiguration))
+            if (Core.Optional.IsDefined(LinuxConfiguration))
             {
                 writer.WritePropertyName("linuxConfiguration"u8);
                 writer.WriteObjectValue(LinuxConfiguration);
             }
-            if (Optional.IsCollectionDefined(Secrets))
+            if (Core.Optional.IsCollectionDefined(Secrets))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AllowExtensionOperations))
+            if (Core.Optional.IsDefined(AllowExtensionOperations))
             {
                 writer.WritePropertyName("allowExtensionOperations"u8);
                 writer.WriteBooleanValue(AllowExtensionOperations.Value);
             }
-            if (Optional.IsDefined(RequireGuestProvisionSignal))
+            if (Core.Optional.IsDefined(RequireGuestProvisionSignal))
             {
                 writer.WritePropertyName("requireGuestProvisionSignal"u8);
                 writer.WriteBooleanValue(RequireGuestProvisionSignal.Value);
@@ -75,15 +75,15 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> computerName = default;
-            Optional<string> adminUsername = default;
-            Optional<string> adminPassword = default;
-            Optional<string> customData = default;
-            Optional<WindowsConfiguration> windowsConfiguration = default;
-            Optional<LinuxConfiguration> linuxConfiguration = default;
-            Optional<IList<VaultSecretGroup>> secrets = default;
-            Optional<bool> allowExtensionOperations = default;
-            Optional<bool> requireGuestProvisionSignal = default;
+            Core.Optional<string> computerName = default;
+            Core.Optional<string> adminUsername = default;
+            Core.Optional<string> adminPassword = default;
+            Core.Optional<string> customData = default;
+            Core.Optional<WindowsConfiguration> windowsConfiguration = default;
+            Core.Optional<LinuxConfiguration> linuxConfiguration = default;
+            Core.Optional<IList<VaultSecretGroup>> secrets = default;
+            Core.Optional<bool> allowExtensionOperations = default;
+            Core.Optional<bool> requireGuestProvisionSignal = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computerName"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineOSProfile(computerName.Value, adminUsername.Value, adminPassword.Value, customData.Value, windowsConfiguration.Value, linuxConfiguration.Value, Optional.ToList(secrets), Optional.ToNullable(allowExtensionOperations), Optional.ToNullable(requireGuestProvisionSignal));
+            return new VirtualMachineOSProfile(computerName.Value, adminUsername.Value, adminPassword.Value, customData.Value, windowsConfiguration.Value, linuxConfiguration.Value, Core.Optional.ToList(secrets), Core.Optional.ToNullable(allowExtensionOperations), Core.Optional.ToNullable(requireGuestProvisionSignal));
         }
     }
 }

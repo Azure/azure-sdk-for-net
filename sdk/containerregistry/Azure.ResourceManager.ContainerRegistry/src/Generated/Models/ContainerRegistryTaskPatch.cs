@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of ContainerRegistryTaskPatch. </summary>
         public ContainerRegistryTaskPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Identity for the resource. </summary>

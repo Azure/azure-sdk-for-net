@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(notebook, nameof(notebook));
 
             Notebook = notebook;
-            Parameters = new ChangeTrackingDictionary<string, NotebookParameter>();
-            SparkConfig = new ChangeTrackingDictionary<string, BinaryData>();
+            Parameters = new Core.ChangeTrackingDictionary<string, NotebookParameter>();
+            SparkConfig = new Core.ChangeTrackingDictionary<string, BinaryData>();
             ActivityType = "SynapseNotebook";
         }
 

@@ -22,27 +22,27 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> reservationOrderId = default;
-            Optional<string> reservationId = default;
-            Optional<string> skuName = default;
-            Optional<decimal> reservedHours = default;
-            Optional<DateTimeOffset> usageDate = default;
-            Optional<decimal> usedHours = default;
-            Optional<decimal> minUtilizationPercentage = default;
-            Optional<decimal> avgUtilizationPercentage = default;
-            Optional<decimal> maxUtilizationPercentage = default;
-            Optional<string> kind = default;
-            Optional<decimal> purchasedQuantity = default;
-            Optional<decimal> remainingQuantity = default;
-            Optional<decimal> totalReservedQuantity = default;
-            Optional<decimal> usedQuantity = default;
-            Optional<decimal> utilizedPercentage = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> reservationOrderId = default;
+            Core.Optional<string> reservationId = default;
+            Core.Optional<string> skuName = default;
+            Core.Optional<decimal> reservedHours = default;
+            Core.Optional<DateTimeOffset> usageDate = default;
+            Core.Optional<decimal> usedHours = default;
+            Core.Optional<decimal> minUtilizationPercentage = default;
+            Core.Optional<decimal> avgUtilizationPercentage = default;
+            Core.Optional<decimal> maxUtilizationPercentage = default;
+            Core.Optional<string> kind = default;
+            Core.Optional<decimal> purchasedQuantity = default;
+            Core.Optional<decimal> remainingQuantity = default;
+            Core.Optional<decimal> totalReservedQuantity = default;
+            Core.Optional<decimal> usedQuantity = default;
+            Core.Optional<decimal> utilizedPercentage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ConsumptionReservationSummary(id, name, type, systemData.Value, reservationOrderId.Value, reservationId.Value, skuName.Value, Optional.ToNullable(reservedHours), Optional.ToNullable(usageDate), Optional.ToNullable(usedHours), Optional.ToNullable(minUtilizationPercentage), Optional.ToNullable(avgUtilizationPercentage), Optional.ToNullable(maxUtilizationPercentage), kind.Value, Optional.ToNullable(purchasedQuantity), Optional.ToNullable(remainingQuantity), Optional.ToNullable(totalReservedQuantity), Optional.ToNullable(usedQuantity), Optional.ToNullable(utilizedPercentage), Optional.ToNullable(etag), Optional.ToDictionary(tags));
+            return new ConsumptionReservationSummary(id, name, type, systemData.Value, reservationOrderId.Value, reservationId.Value, skuName.Value, Core.Optional.ToNullable(reservedHours), Core.Optional.ToNullable(usageDate), Core.Optional.ToNullable(usedHours), Core.Optional.ToNullable(minUtilizationPercentage), Core.Optional.ToNullable(avgUtilizationPercentage), Core.Optional.ToNullable(maxUtilizationPercentage), kind.Value, Core.Optional.ToNullable(purchasedQuantity), Core.Optional.ToNullable(remainingQuantity), Core.Optional.ToNullable(totalReservedQuantity), Core.Optional.ToNullable(usedQuantity), Core.Optional.ToNullable(utilizedPercentage), Core.Optional.ToNullable(etag), Core.Optional.ToDictionary(tags));
         }
     }
 }

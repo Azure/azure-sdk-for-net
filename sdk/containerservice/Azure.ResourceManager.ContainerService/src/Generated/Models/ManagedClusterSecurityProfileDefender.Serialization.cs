@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterSecurityProfileDefender : IUtf8JsonSerializable
+    public partial class ManagedClusterSecurityProfileDefender : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LogAnalyticsWorkspaceResourceId))
+            if (Core.Optional.IsDefined(LogAnalyticsWorkspaceResourceId))
             {
                 writer.WritePropertyName("logAnalyticsWorkspaceResourceId"u8);
                 writer.WriteStringValue(LogAnalyticsWorkspaceResourceId);
             }
-            if (Optional.IsDefined(SecurityMonitoring))
+            if (Core.Optional.IsDefined(SecurityMonitoring))
             {
                 writer.WritePropertyName("securityMonitoring"u8);
                 writer.WriteObjectValue(SecurityMonitoring);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> logAnalyticsWorkspaceResourceId = default;
-            Optional<ManagedClusterSecurityProfileDefenderSecurityMonitoring> securityMonitoring = default;
+            Core.Optional<ResourceIdentifier> logAnalyticsWorkspaceResourceId = default;
+            Core.Optional<ManagedClusterSecurityProfileDefenderSecurityMonitoring> securityMonitoring = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logAnalyticsWorkspaceResourceId"u8))

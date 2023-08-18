@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class ScheduleAndSuspendMode : IUtf8JsonSerializable
+    public partial class ScheduleAndSuspendMode : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScheduleAt))
+            if (Core.Optional.IsDefined(ScheduleAt))
             {
                 writer.WritePropertyName("scheduleAt"u8);
                 writer.WriteStringValue(ScheduleAt, "O");
@@ -30,7 +30,7 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Optional<DateTimeOffset> scheduleAt = default;
+            Core.Optional<DateTimeOffset> scheduleAt = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scheduleAt"u8))

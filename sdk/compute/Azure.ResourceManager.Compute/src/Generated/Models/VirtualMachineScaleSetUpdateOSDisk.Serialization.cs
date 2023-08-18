@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineScaleSetUpdateOSDisk : IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetUpdateOSDisk : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Caching))
+            if (Core.Optional.IsDefined(Caching))
             {
                 writer.WritePropertyName("caching"u8);
                 writer.WriteStringValue(Caching.Value.ToSerialString());
             }
-            if (Optional.IsDefined(WriteAcceleratorEnabled))
+            if (Core.Optional.IsDefined(WriteAcceleratorEnabled))
             {
                 writer.WritePropertyName("writeAcceleratorEnabled"u8);
                 writer.WriteBooleanValue(WriteAcceleratorEnabled.Value);
             }
-            if (Optional.IsDefined(DiskSizeGB))
+            if (Core.Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (Optional.IsDefined(Image))
+            if (Core.Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
                 writer.WriteObjectValue(Image);
             }
-            if (Optional.IsCollectionDefined(VhdContainers))
+            if (Core.Optional.IsCollectionDefined(VhdContainers))
             {
                 writer.WritePropertyName("vhdContainers"u8);
                 writer.WriteStartArray();
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ManagedDisk))
+            if (Core.Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
                 writer.WriteObjectValue(ManagedDisk);
             }
-            if (Optional.IsDefined(DeleteOption))
+            if (Core.Optional.IsDefined(DeleteOption))
             {
                 writer.WritePropertyName("deleteOption"u8);
                 writer.WriteStringValue(DeleteOption.Value.ToString());

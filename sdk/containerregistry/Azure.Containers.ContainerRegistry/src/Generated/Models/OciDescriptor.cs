@@ -17,7 +17,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Initializes a new instance of OciDescriptor. </summary>
         public OciDescriptor()
         {
-            Urls = new ChangeTrackingList<Uri>();
+            Urls = new Core.ChangeTrackingList<Uri>();
         }
 
         /// <summary> Initializes a new instance of OciDescriptor. </summary>

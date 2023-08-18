@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of ManagedClusterAgentPoolProfileProperties. </summary>
         public ManagedClusterAgentPoolProfileProperties()
         {
-            AvailabilityZones = new ChangeTrackingList<string>();
-            Tags = new ChangeTrackingDictionary<string, string>();
-            NodeLabels = new ChangeTrackingDictionary<string, string>();
-            NodeTaints = new ChangeTrackingList<string>();
+            AvailabilityZones = new Core.ChangeTrackingList<string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            NodeLabels = new Core.ChangeTrackingDictionary<string, string>();
+            NodeTaints = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ManagedClusterAgentPoolProfileProperties. </summary>

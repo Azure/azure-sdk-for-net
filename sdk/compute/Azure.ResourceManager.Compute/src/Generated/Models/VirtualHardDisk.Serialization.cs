@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class VirtualHardDisk : IUtf8JsonSerializable
+    internal partial class VirtualHardDisk : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Uri))
+            if (Core.Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<Uri> uri = default;
+            Core.Optional<Uri> uri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uri"u8))

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class SshPublicKeyConfiguration : IUtf8JsonSerializable
+    public partial class SshPublicKeyConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Path))
+            if (Core.Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsDefined(KeyData))
+            if (Core.Optional.IsDefined(KeyData))
             {
                 writer.WritePropertyName("keyData"u8);
                 writer.WriteStringValue(KeyData);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> path = default;
-            Optional<string> keyData = default;
+            Core.Optional<string> path = default;
+            Core.Optional<string> keyData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"u8))

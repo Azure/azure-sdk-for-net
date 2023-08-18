@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class MongoDBRole : IUtf8JsonSerializable
+    public partial class MongoDBRole : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DBName))
+            if (Core.Optional.IsDefined(DBName))
             {
                 writer.WritePropertyName("db"u8);
                 writer.WriteStringValue(DBName);
             }
-            if (Optional.IsDefined(Role))
+            if (Core.Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> db = default;
-            Optional<string> role = default;
+            Core.Optional<string> db = default;
+            Core.Optional<string> role = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("db"u8))

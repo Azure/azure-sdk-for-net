@@ -13,37 +13,37 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class RestSource : IUtf8JsonSerializable
+    public partial class RestSource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RequestMethod))
+            if (Core.Optional.IsDefined(RequestMethod))
             {
                 writer.WritePropertyName("requestMethod"u8);
                 JsonSerializer.Serialize(writer, RequestMethod);
             }
-            if (Optional.IsDefined(RequestBody))
+            if (Core.Optional.IsDefined(RequestBody))
             {
                 writer.WritePropertyName("requestBody"u8);
                 JsonSerializer.Serialize(writer, RequestBody);
             }
-            if (Optional.IsDefined(AdditionalHeaders))
+            if (Core.Optional.IsDefined(AdditionalHeaders))
             {
                 writer.WritePropertyName("additionalHeaders"u8);
                 JsonSerializer.Serialize(writer, AdditionalHeaders);
             }
-            if (Optional.IsDefined(PaginationRules))
+            if (Core.Optional.IsDefined(PaginationRules))
             {
                 writer.WritePropertyName("paginationRules"u8);
                 JsonSerializer.Serialize(writer, PaginationRules);
             }
-            if (Optional.IsDefined(HttpRequestTimeout))
+            if (Core.Optional.IsDefined(HttpRequestTimeout))
             {
                 writer.WritePropertyName("httpRequestTimeout"u8);
                 JsonSerializer.Serialize(writer, HttpRequestTimeout);
             }
-            if (Optional.IsDefined(RequestInterval))
+            if (Core.Optional.IsDefined(RequestInterval))
             {
                 writer.WritePropertyName("requestInterval"u8);
 #if NET6_0_OR_GREATER
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(RequestInterval.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(AdditionalColumns))
+            if (Core.Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
 #if NET6_0_OR_GREATER
@@ -63,22 +63,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);
-            if (Optional.IsDefined(SourceRetryCount))
+            if (Core.Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 JsonSerializer.Serialize(writer, SourceRetryCount);
             }
-            if (Optional.IsDefined(SourceRetryWait))
+            if (Core.Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 JsonSerializer.Serialize(writer, SourceRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (Core.Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Optional.IsDefined(DisableMetricsCollection))
+            if (Core.Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -101,18 +101,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> requestMethod = default;
-            Optional<DataFactoryElement<string>> requestBody = default;
-            Optional<DataFactoryElement<string>> additionalHeaders = default;
-            Optional<DataFactoryElement<string>> paginationRules = default;
-            Optional<DataFactoryElement<string>> httpRequestTimeout = default;
-            Optional<BinaryData> requestInterval = default;
-            Optional<BinaryData> additionalColumns = default;
+            Core.Optional<DataFactoryElement<string>> requestMethod = default;
+            Core.Optional<DataFactoryElement<string>> requestBody = default;
+            Core.Optional<DataFactoryElement<string>> additionalHeaders = default;
+            Core.Optional<DataFactoryElement<string>> paginationRules = default;
+            Core.Optional<DataFactoryElement<string>> httpRequestTimeout = default;
+            Core.Optional<BinaryData> requestInterval = default;
+            Core.Optional<BinaryData> additionalColumns = default;
             string type = default;
-            Optional<DataFactoryElement<int>> sourceRetryCount = default;
-            Optional<DataFactoryElement<string>> sourceRetryWait = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            Core.Optional<DataFactoryElement<int>> sourceRetryCount = default;
+            Core.Optional<DataFactoryElement<string>> sourceRetryWait = default;
+            Core.Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
+            Core.Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

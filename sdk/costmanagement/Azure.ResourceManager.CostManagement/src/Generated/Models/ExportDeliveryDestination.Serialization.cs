@@ -10,29 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class ExportDeliveryDestination : IUtf8JsonSerializable
+    public partial class ExportDeliveryDestination : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (Core.Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
             writer.WritePropertyName("container"u8);
             writer.WriteStringValue(Container);
-            if (Optional.IsDefined(RootFolderPath))
+            if (Core.Optional.IsDefined(RootFolderPath))
             {
                 writer.WritePropertyName("rootFolderPath"u8);
                 writer.WriteStringValue(RootFolderPath);
             }
-            if (Optional.IsDefined(SasToken))
+            if (Core.Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
                 writer.WriteStringValue(SasToken);
             }
-            if (Optional.IsDefined(StorageAccount))
+            if (Core.Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteStringValue(StorageAccount);
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
+            Core.Optional<ResourceIdentifier> resourceId = default;
             string container = default;
-            Optional<string> rootFolderPath = default;
-            Optional<string> sasToken = default;
-            Optional<string> storageAccount = default;
+            Core.Optional<string> rootFolderPath = default;
+            Core.Optional<string> sasToken = default;
+            Core.Optional<string> storageAccount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))

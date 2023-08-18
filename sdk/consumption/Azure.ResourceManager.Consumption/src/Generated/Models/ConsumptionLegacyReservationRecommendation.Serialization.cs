@@ -23,28 +23,28 @@ namespace Azure.ResourceManager.Consumption.Models
                 return null;
             }
             ReservationRecommendationKind kind = default;
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<AzureLocation> location = default;
-            Optional<string> sku = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<string> sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> lookBackPeriod = default;
-            Optional<float> instanceFlexibilityRatio = default;
-            Optional<string> instanceFlexibilityGroup = default;
-            Optional<string> normalizedSize = default;
-            Optional<float> recommendedQuantityNormalized = default;
-            Optional<Guid> meterId = default;
-            Optional<string> term = default;
-            Optional<decimal> costWithNoReservedInstances = default;
-            Optional<decimal> recommendedQuantity = default;
-            Optional<decimal> totalCostWithReservedInstances = default;
-            Optional<decimal> netSavings = default;
-            Optional<DateTimeOffset> firstUsageDate = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> lookBackPeriod = default;
+            Core.Optional<float> instanceFlexibilityRatio = default;
+            Core.Optional<string> instanceFlexibilityGroup = default;
+            Core.Optional<string> normalizedSize = default;
+            Core.Optional<float> recommendedQuantityNormalized = default;
+            Core.Optional<Guid> meterId = default;
+            Core.Optional<string> term = default;
+            Core.Optional<decimal> costWithNoReservedInstances = default;
+            Core.Optional<decimal> recommendedQuantity = default;
+            Core.Optional<decimal> totalCostWithReservedInstances = default;
+            Core.Optional<decimal> netSavings = default;
+            Core.Optional<DateTimeOffset> firstUsageDate = default;
             string scope = default;
-            Optional<IReadOnlyList<ConsumptionSkuProperty>> skuProperties = default;
+            Core.Optional<IReadOnlyList<ConsumptionSkuProperty>> skuProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ConsumptionLegacyReservationRecommendation(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToDictionary(tags), Optional.ToNullable(location), sku.Value, lookBackPeriod.Value, Optional.ToNullable(instanceFlexibilityRatio), instanceFlexibilityGroup.Value, normalizedSize.Value, Optional.ToNullable(recommendedQuantityNormalized), Optional.ToNullable(meterId), term.Value, Optional.ToNullable(costWithNoReservedInstances), Optional.ToNullable(recommendedQuantity), Optional.ToNullable(totalCostWithReservedInstances), Optional.ToNullable(netSavings), Optional.ToNullable(firstUsageDate), scope, Optional.ToList(skuProperties));
+            return new ConsumptionLegacyReservationRecommendation(id, name, type, systemData.Value, kind, Core.Optional.ToNullable(etag), Core.Optional.ToDictionary(tags), Core.Optional.ToNullable(location), sku.Value, lookBackPeriod.Value, Core.Optional.ToNullable(instanceFlexibilityRatio), instanceFlexibilityGroup.Value, normalizedSize.Value, Core.Optional.ToNullable(recommendedQuantityNormalized), Core.Optional.ToNullable(meterId), term.Value, Core.Optional.ToNullable(costWithNoReservedInstances), Core.Optional.ToNullable(recommendedQuantity), Core.Optional.ToNullable(totalCostWithReservedInstances), Core.Optional.ToNullable(netSavings), Core.Optional.ToNullable(firstUsageDate), scope, Core.Optional.ToList(skuProperties));
         }
     }
 }

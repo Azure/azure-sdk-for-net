@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <summary> Initializes a new instance of NetworkProfile. </summary>
         public NetworkProfile()
         {
-            NetworkInterfaces = new ChangeTrackingList<NetworkInterface>();
+            NetworkInterfaces = new Core.ChangeTrackingList<NetworkInterface>();
         }
 
         /// <summary> Initializes a new instance of NetworkProfile. </summary>

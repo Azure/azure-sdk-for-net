@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of Lots. </summary>
         internal Lots()
         {
-            Value = new ChangeTrackingList<ConsumptionLotSummary>();
+            Value = new Core.ChangeTrackingList<ConsumptionLotSummary>();
         }
 
         /// <summary> Initializes a new instance of Lots. </summary>

@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class EncryptionSettingsGroup : IUtf8JsonSerializable
+    public partial class EncryptionSettingsGroup : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(Enabled);
-            if (Optional.IsCollectionDefined(EncryptionSettings))
+            if (Core.Optional.IsCollectionDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
                 writer.WriteStartArray();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EncryptionSettingsVersion))
+            if (Core.Optional.IsDefined(EncryptionSettingsVersion))
             {
                 writer.WritePropertyName("encryptionSettingsVersion"u8);
                 writer.WriteStringValue(EncryptionSettingsVersion);
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             bool enabled = default;
-            Optional<IList<EncryptionSettingsElement>> encryptionSettings = default;
-            Optional<string> encryptionSettingsVersion = default;
+            Core.Optional<IList<EncryptionSettingsElement>> encryptionSettings = default;
+            Core.Optional<string> encryptionSettingsVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new EncryptionSettingsGroup(enabled, Optional.ToList(encryptionSettings), encryptionSettingsVersion.Value);
+            return new EncryptionSettingsGroup(enabled, Core.Optional.ToList(encryptionSettings), encryptionSettingsVersion.Value);
         }
     }
 }

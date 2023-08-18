@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppAzureStaticWebAppsConfiguration : IUtf8JsonSerializable
+    public partial class ContainerAppAzureStaticWebAppsConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (Core.Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(Registration))
+            if (Core.Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
                 writer.WriteObjectValue(Registration);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<AzureStaticWebAppsRegistration> registration = default;
+            Core.Optional<bool> enabled = default;
+            Core.Optional<AzureStaticWebAppsRegistration> registration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppAzureStaticWebAppsConfiguration(Optional.ToNullable(enabled), registration.Value);
+            return new ContainerAppAzureStaticWebAppsConfiguration(Core.Optional.ToNullable(enabled), registration.Value);
         }
     }
 }

@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppScale : IUtf8JsonSerializable
+    public partial class ContainerAppScale : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinReplicas))
+            if (Core.Optional.IsDefined(MinReplicas))
             {
                 writer.WritePropertyName("minReplicas"u8);
                 writer.WriteNumberValue(MinReplicas.Value);
             }
-            if (Optional.IsDefined(MaxReplicas))
+            if (Core.Optional.IsDefined(MaxReplicas))
             {
                 writer.WritePropertyName("maxReplicas"u8);
                 writer.WriteNumberValue(MaxReplicas.Value);
             }
-            if (Optional.IsCollectionDefined(Rules))
+            if (Core.Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<int> minReplicas = default;
-            Optional<int> maxReplicas = default;
-            Optional<IList<ContainerAppScaleRule>> rules = default;
+            Core.Optional<int> minReplicas = default;
+            Core.Optional<int> maxReplicas = default;
+            Core.Optional<IList<ContainerAppScaleRule>> rules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minReplicas"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppScale(Optional.ToNullable(minReplicas), Optional.ToNullable(maxReplicas), Optional.ToList(rules));
+            return new ContainerAppScale(Core.Optional.ToNullable(minReplicas), Core.Optional.ToNullable(maxReplicas), Core.Optional.ToList(rules));
         }
     }
 }

@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class ChannelConfiguration : IUtf8JsonSerializable
+    public partial class ChannelConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("capacityCostPerJob"u8);
             writer.WriteNumberValue(CapacityCostPerJob);
-            if (Optional.IsDefined(MaxNumberOfJobs))
+            if (Core.Optional.IsDefined(MaxNumberOfJobs))
             {
                 writer.WritePropertyName("maxNumberOfJobs"u8);
                 writer.WriteNumberValue(MaxNumberOfJobs.Value);
@@ -32,7 +32,7 @@ namespace Azure.Communication.JobRouter
                 return null;
             }
             int capacityCostPerJob = default;
-            Optional<int> maxNumberOfJobs = default;
+            Core.Optional<int> maxNumberOfJobs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("capacityCostPerJob"u8))
@@ -50,7 +50,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new ChannelConfiguration(capacityCostPerJob, Optional.ToNullable(maxNumberOfJobs));
+            return new ChannelConfiguration(capacityCostPerJob, Core.Optional.ToNullable(maxNumberOfJobs));
         }
     }
 }

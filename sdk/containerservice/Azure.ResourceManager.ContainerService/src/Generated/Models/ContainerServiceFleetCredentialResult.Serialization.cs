@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<byte[]> value = default;
+            Core.Optional<string> name = default;
+            Core.Optional<byte[]> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

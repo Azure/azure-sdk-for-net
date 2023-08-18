@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of DataBoxSkuInformation. </summary>
         internal DataBoxSkuInformation()
         {
-            DataLocationToServiceLocationMap = new ChangeTrackingList<DataLocationToServiceLocationMap>();
-            Costs = new ChangeTrackingList<DataBoxSkuCost>();
-            ApiVersions = new ChangeTrackingList<string>();
-            CountriesWithinCommerceBoundary = new ChangeTrackingList<string>();
+            DataLocationToServiceLocationMap = new Core.ChangeTrackingList<DataLocationToServiceLocationMap>();
+            Costs = new Core.ChangeTrackingList<DataBoxSkuCost>();
+            ApiVersions = new Core.ChangeTrackingList<string>();
+            CountriesWithinCommerceBoundary = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DataBoxSkuInformation. </summary>

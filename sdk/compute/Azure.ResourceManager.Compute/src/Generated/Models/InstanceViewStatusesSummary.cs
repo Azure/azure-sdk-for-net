@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of InstanceViewStatusesSummary. </summary>
         internal InstanceViewStatusesSummary()
         {
-            StatusesSummary = new ChangeTrackingList<StatusCodeCount>();
+            StatusesSummary = new Core.ChangeTrackingList<StatusCodeCount>();
         }
 
         /// <summary> Initializes a new instance of InstanceViewStatusesSummary. </summary>

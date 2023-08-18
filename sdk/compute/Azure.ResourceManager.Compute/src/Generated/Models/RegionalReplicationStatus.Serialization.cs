@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> region = default;
-            Optional<RegionalReplicationState> state = default;
-            Optional<string> details = default;
-            Optional<int> progress = default;
+            Core.Optional<string> region = default;
+            Core.Optional<RegionalReplicationState> state = default;
+            Core.Optional<string> details = default;
+            Core.Optional<int> progress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("region"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new RegionalReplicationStatus(region.Value, Optional.ToNullable(state), details.Value, Optional.ToNullable(progress));
+            return new RegionalReplicationStatus(region.Value, Core.Optional.ToNullable(state), details.Value, Core.Optional.ToNullable(progress));
         }
     }
 }

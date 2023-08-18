@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class GalleryImageData : IUtf8JsonSerializable
+    public partial class GalleryImageData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,67 +34,67 @@ namespace Azure.ResourceManager.Compute
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Eula))
+            if (Core.Optional.IsDefined(Eula))
             {
                 writer.WritePropertyName("eula"u8);
                 writer.WriteStringValue(Eula);
             }
-            if (Optional.IsDefined(PrivacyStatementUri))
+            if (Core.Optional.IsDefined(PrivacyStatementUri))
             {
                 writer.WritePropertyName("privacyStatementUri"u8);
                 writer.WriteStringValue(PrivacyStatementUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ReleaseNoteUri))
+            if (Core.Optional.IsDefined(ReleaseNoteUri))
             {
                 writer.WritePropertyName("releaseNoteUri"u8);
                 writer.WriteStringValue(ReleaseNoteUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(OSType))
+            if (Core.Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(OSState))
+            if (Core.Optional.IsDefined(OSState))
             {
                 writer.WritePropertyName("osState"u8);
                 writer.WriteStringValue(OSState.Value.ToSerialString());
             }
-            if (Optional.IsDefined(HyperVGeneration))
+            if (Core.Optional.IsDefined(HyperVGeneration))
             {
                 writer.WritePropertyName("hyperVGeneration"u8);
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
             }
-            if (Optional.IsDefined(EndOfLifeOn))
+            if (Core.Optional.IsDefined(EndOfLifeOn))
             {
                 writer.WritePropertyName("endOfLifeDate"u8);
                 writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
-            if (Optional.IsDefined(Identifier))
+            if (Core.Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
                 writer.WriteObjectValue(Identifier);
             }
-            if (Optional.IsDefined(Recommended))
+            if (Core.Optional.IsDefined(Recommended))
             {
                 writer.WritePropertyName("recommended"u8);
                 writer.WriteObjectValue(Recommended);
             }
-            if (Optional.IsDefined(Disallowed))
+            if (Core.Optional.IsDefined(Disallowed))
             {
                 writer.WritePropertyName("disallowed"u8);
                 writer.WriteObjectValue(Disallowed);
             }
-            if (Optional.IsDefined(PurchasePlan))
+            if (Core.Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
                 writer.WriteObjectValue(PurchasePlan);
             }
-            if (Optional.IsCollectionDefined(Features))
+            if (Core.Optional.IsCollectionDefined(Features))
             {
                 writer.WritePropertyName("features"u8);
                 writer.WriteStartArray();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Architecture))
+            if (Core.Optional.IsDefined(Architecture))
             {
                 writer.WritePropertyName("architecture"u8);
                 writer.WriteStringValue(Architecture.Value.ToString());
@@ -119,27 +119,27 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> eula = default;
-            Optional<Uri> privacyStatementUri = default;
-            Optional<Uri> releaseNoteUri = default;
-            Optional<SupportedOperatingSystemType> osType = default;
-            Optional<OperatingSystemStateType> osState = default;
-            Optional<HyperVGeneration> hyperVGeneration = default;
-            Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<GalleryImageIdentifier> identifier = default;
-            Optional<RecommendedMachineConfiguration> recommended = default;
-            Optional<Disallowed> disallowed = default;
-            Optional<ImagePurchasePlan> purchasePlan = default;
-            Optional<GalleryProvisioningState> provisioningState = default;
-            Optional<IList<GalleryImageFeature>> features = default;
-            Optional<ArchitectureType> architecture = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> eula = default;
+            Core.Optional<Uri> privacyStatementUri = default;
+            Core.Optional<Uri> releaseNoteUri = default;
+            Core.Optional<SupportedOperatingSystemType> osType = default;
+            Core.Optional<OperatingSystemStateType> osState = default;
+            Core.Optional<HyperVGeneration> hyperVGeneration = default;
+            Core.Optional<DateTimeOffset> endOfLifeDate = default;
+            Core.Optional<GalleryImageIdentifier> identifier = default;
+            Core.Optional<RecommendedMachineConfiguration> recommended = default;
+            Core.Optional<Disallowed> disallowed = default;
+            Core.Optional<ImagePurchasePlan> purchasePlan = default;
+            Core.Optional<GalleryProvisioningState> provisioningState = default;
+            Core.Optional<IList<GalleryImageFeature>> features = default;
+            Core.Optional<ArchitectureType> architecture = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new GalleryImageData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(hyperVGeneration), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, purchasePlan.Value, Optional.ToNullable(provisioningState), Optional.ToList(features), Optional.ToNullable(architecture));
+            return new GalleryImageData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Core.Optional.ToNullable(osType), Core.Optional.ToNullable(osState), Core.Optional.ToNullable(hyperVGeneration), Core.Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, purchasePlan.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(features), Core.Optional.ToNullable(architecture));
         }
     }
 }

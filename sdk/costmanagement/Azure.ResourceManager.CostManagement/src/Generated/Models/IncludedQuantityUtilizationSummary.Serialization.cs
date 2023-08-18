@@ -12,16 +12,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class IncludedQuantityUtilizationSummary : IUtf8JsonSerializable
+    public partial class IncludedQuantityUtilizationSummary : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(BenefitType))
+            if (Core.Optional.IsDefined(BenefitType))
             {
                 writer.WritePropertyName("benefitType"u8);
                 writer.WriteStringValue(BenefitType.Value.ToString());
@@ -40,13 +40,13 @@ namespace Azure.ResourceManager.CostManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> armSkuName = default;
-            Optional<string> benefitId = default;
-            Optional<string> benefitOrderId = default;
-            Optional<BillingAccountBenefitKind> benefitType = default;
-            Optional<DateTimeOffset> usageDate = default;
-            Optional<decimal> utilizationPercentage = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> armSkuName = default;
+            Core.Optional<string> benefitId = default;
+            Core.Optional<string> benefitOrderId = default;
+            Core.Optional<BillingAccountBenefitKind> benefitType = default;
+            Core.Optional<DateTimeOffset> usageDate = default;
+            Core.Optional<decimal> utilizationPercentage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new IncludedQuantityUtilizationSummary(id, name, type, systemData.Value, kind, armSkuName.Value, benefitId.Value, benefitOrderId.Value, Optional.ToNullable(benefitType), Optional.ToNullable(usageDate), Optional.ToNullable(utilizationPercentage));
+            return new IncludedQuantityUtilizationSummary(id, name, type, systemData.Value, kind, armSkuName.Value, benefitId.Value, benefitOrderId.Value, Core.Optional.ToNullable(benefitType), Core.Optional.ToNullable(usageDate), Core.Optional.ToNullable(utilizationPercentage));
         }
     }
 }

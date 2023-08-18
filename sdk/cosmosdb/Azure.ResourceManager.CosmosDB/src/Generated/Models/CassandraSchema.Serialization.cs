@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CassandraSchema : IUtf8JsonSerializable
+    public partial class CassandraSchema : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Columns))
+            if (Core.Optional.IsCollectionDefined(Columns))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PartitionKeys))
+            if (Core.Optional.IsCollectionDefined(PartitionKeys))
             {
                 writer.WritePropertyName("partitionKeys"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ClusterKeys))
+            if (Core.Optional.IsCollectionDefined(ClusterKeys))
             {
                 writer.WritePropertyName("clusterKeys"u8);
                 writer.WriteStartArray();
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IList<CassandraColumn>> columns = default;
-            Optional<IList<CassandraPartitionKey>> partitionKeys = default;
-            Optional<IList<CassandraClusterKey>> clusterKeys = default;
+            Core.Optional<IList<CassandraColumn>> columns = default;
+            Core.Optional<IList<CassandraPartitionKey>> partitionKeys = default;
+            Core.Optional<IList<CassandraClusterKey>> clusterKeys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("columns"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CassandraSchema(Optional.ToList(columns), Optional.ToList(partitionKeys), Optional.ToList(clusterKeys));
+            return new CassandraSchema(Core.Optional.ToList(columns), Core.Optional.ToList(partitionKeys), Core.Optional.ToList(clusterKeys));
         }
     }
 }

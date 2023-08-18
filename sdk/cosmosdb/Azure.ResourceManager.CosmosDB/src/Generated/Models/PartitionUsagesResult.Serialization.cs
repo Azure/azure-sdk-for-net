@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PartitionUsage>> value = default;
+            Core.Optional<IReadOnlyList<PartitionUsage>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new PartitionUsagesResult(Optional.ToList(value));
+            return new PartitionUsagesResult(Core.Optional.ToList(value));
         }
     }
 }

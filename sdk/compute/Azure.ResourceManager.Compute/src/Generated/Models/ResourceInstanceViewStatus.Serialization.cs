@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> displayStatus = default;
-            Optional<string> message = default;
-            Optional<DateTimeOffset> time = default;
-            Optional<ComputeStatusLevelType> level = default;
+            Core.Optional<string> code = default;
+            Core.Optional<string> displayStatus = default;
+            Core.Optional<string> message = default;
+            Core.Optional<DateTimeOffset> time = default;
+            Core.Optional<ComputeStatusLevelType> level = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ResourceInstanceViewStatus(code.Value, displayStatus.Value, message.Value, Optional.ToNullable(time), Optional.ToNullable(level));
+            return new ResourceInstanceViewStatus(code.Value, displayStatus.Value, message.Value, Core.Optional.ToNullable(time), Core.Optional.ToNullable(level));
         }
     }
 }

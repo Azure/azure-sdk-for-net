@@ -15,44 +15,44 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
-    public partial class CostManagementViewData : IUtf8JsonSerializable
+    public partial class CostManagementViewData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Scope))
+            if (Core.Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Optional.IsDefined(Chart))
+            if (Core.Optional.IsDefined(Chart))
             {
                 writer.WritePropertyName("chart"u8);
                 writer.WriteStringValue(Chart.Value.ToString());
             }
-            if (Optional.IsDefined(Accumulated))
+            if (Core.Optional.IsDefined(Accumulated))
             {
                 writer.WritePropertyName("accumulated"u8);
                 writer.WriteStringValue(Accumulated.Value.ToString());
             }
-            if (Optional.IsDefined(Metric))
+            if (Core.Optional.IsDefined(Metric))
             {
                 writer.WritePropertyName("metric"u8);
                 writer.WriteStringValue(Metric.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Kpis))
+            if (Core.Optional.IsCollectionDefined(Kpis))
             {
                 writer.WritePropertyName("kpis"u8);
                 writer.WriteStartArray();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CostManagement
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Pivots))
+            if (Core.Optional.IsCollectionDefined(Pivots))
             {
                 writer.WritePropertyName("pivots"u8);
                 writer.WriteStartArray();
@@ -74,27 +74,27 @@ namespace Azure.ResourceManager.CostManagement
             }
             writer.WritePropertyName("query"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TypePropertiesQueryType))
+            if (Core.Optional.IsDefined(TypePropertiesQueryType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TypePropertiesQueryType.Value.ToString());
             }
-            if (Optional.IsDefined(Timeframe))
+            if (Core.Optional.IsDefined(Timeframe))
             {
                 writer.WritePropertyName("timeframe"u8);
                 writer.WriteStringValue(Timeframe.Value.ToString());
             }
-            if (Optional.IsDefined(TimePeriod))
+            if (Core.Optional.IsDefined(TimePeriod))
             {
                 writer.WritePropertyName("timePeriod"u8);
                 writer.WriteObjectValue(TimePeriod);
             }
-            if (Optional.IsDefined(DataSet))
+            if (Core.Optional.IsDefined(DataSet))
             {
                 writer.WritePropertyName("dataSet"u8);
                 writer.WriteObjectValue(DataSet);
             }
-            if (Optional.IsDefined(IncludeMonetaryCommitment))
+            if (Core.Optional.IsDefined(IncludeMonetaryCommitment))
             {
                 writer.WritePropertyName("includeMonetaryCommitment"u8);
                 writer.WriteBooleanValue(IncludeMonetaryCommitment.Value);

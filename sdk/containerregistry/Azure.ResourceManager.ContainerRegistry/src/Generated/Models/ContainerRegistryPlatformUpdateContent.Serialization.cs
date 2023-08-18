@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryPlatformUpdateContent : IUtf8JsonSerializable
+    public partial class ContainerRegistryPlatformUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(OS))
+            if (Core.Optional.IsDefined(OS))
             {
                 writer.WritePropertyName("os"u8);
                 writer.WriteStringValue(OS.Value.ToString());
             }
-            if (Optional.IsDefined(Architecture))
+            if (Core.Optional.IsDefined(Architecture))
             {
                 writer.WritePropertyName("architecture"u8);
                 writer.WriteStringValue(Architecture.Value.ToString());
             }
-            if (Optional.IsDefined(Variant))
+            if (Core.Optional.IsDefined(Variant))
             {
                 writer.WritePropertyName("variant"u8);
                 writer.WriteStringValue(Variant.Value.ToString());

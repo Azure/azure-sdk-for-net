@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             ReferenceType = referenceType;
             ReferenceName = referenceName;
-            Parameters = new ChangeTrackingDictionary<string, BinaryData>();
+            Parameters = new Core.ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeReference. </summary>

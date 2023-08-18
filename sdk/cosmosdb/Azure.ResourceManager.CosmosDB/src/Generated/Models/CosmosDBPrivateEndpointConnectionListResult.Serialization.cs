@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CosmosDBPrivateEndpointConnectionData>> value = default;
+            Core.Optional<IReadOnlyList<CosmosDBPrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CosmosDBPrivateEndpointConnectionListResult(Optional.ToList(value));
+            return new CosmosDBPrivateEndpointConnectionListResult(Core.Optional.ToList(value));
         }
     }
 }

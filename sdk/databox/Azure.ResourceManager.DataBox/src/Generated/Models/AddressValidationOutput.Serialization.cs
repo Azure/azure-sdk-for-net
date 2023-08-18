@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<DataBoxValidationInputDiscriminator> validationType = default;
-            Optional<ResponseError> error = default;
-            Optional<AddressValidationStatus> validationStatus = default;
-            Optional<IReadOnlyList<DataBoxShippingAddress>> alternateAddresses = default;
+            Core.Optional<DataBoxValidationInputDiscriminator> validationType = default;
+            Core.Optional<ResponseError> error = default;
+            Core.Optional<AddressValidationStatus> validationStatus = default;
+            Core.Optional<IReadOnlyList<DataBoxShippingAddress>> alternateAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new AddressValidationOutput(Optional.ToNullable(validationType), error.Value, Optional.ToNullable(validationStatus), Optional.ToList(alternateAddresses));
+            return new AddressValidationOutput(Core.Optional.ToNullable(validationType), error.Value, Core.Optional.ToNullable(validationStatus), Core.Optional.ToList(alternateAddresses));
         }
     }
 }

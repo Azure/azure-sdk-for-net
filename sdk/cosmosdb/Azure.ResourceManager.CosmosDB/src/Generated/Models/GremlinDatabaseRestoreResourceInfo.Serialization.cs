@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class GremlinDatabaseRestoreResourceInfo : IUtf8JsonSerializable
+    public partial class GremlinDatabaseRestoreResourceInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DatabaseName))
+            if (Core.Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (Optional.IsCollectionDefined(GraphNames))
+            if (Core.Optional.IsCollectionDefined(GraphNames))
             {
                 writer.WritePropertyName("graphNames"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<IList<string>> graphNames = default;
+            Core.Optional<string> databaseName = default;
+            Core.Optional<IList<string>> graphNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseName"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new GremlinDatabaseRestoreResourceInfo(databaseName.Value, Optional.ToList(graphNames));
+            return new GremlinDatabaseRestoreResourceInfo(databaseName.Value, Core.Optional.ToList(graphNames));
         }
     }
 }

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterSku : IUtf8JsonSerializable
+    public partial class ManagedClusterSku : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name.Value.ToString());
             }
-            if (Optional.IsDefined(Tier))
+            if (Core.Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ManagedClusterSkuName> name = default;
-            Optional<ManagedClusterSkuTier> tier = default;
+            Core.Optional<ManagedClusterSkuName> name = default;
+            Core.Optional<ManagedClusterSkuTier> tier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterSku(Optional.ToNullable(name), Optional.ToNullable(tier));
+            return new ManagedClusterSku(Core.Optional.ToNullable(name), Core.Optional.ToNullable(tier));
         }
     }
 }

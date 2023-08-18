@@ -13,19 +13,19 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DatasetAvroFormat : IUtf8JsonSerializable
+    public partial class DatasetAvroFormat : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetStorageFormatType);
-            if (Optional.IsDefined(Serializer))
+            if (Core.Optional.IsDefined(Serializer))
             {
                 writer.WritePropertyName("serializer"u8);
                 JsonSerializer.Serialize(writer, Serializer);
             }
-            if (Optional.IsDefined(Deserializer))
+            if (Core.Optional.IsDefined(Deserializer))
             {
                 writer.WritePropertyName("deserializer"u8);
                 JsonSerializer.Serialize(writer, Deserializer);
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<DataFactoryElement<string>> serializer = default;
-            Optional<DataFactoryElement<string>> deserializer = default;
+            Core.Optional<DataFactoryElement<string>> serializer = default;
+            Core.Optional<DataFactoryElement<string>> deserializer = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

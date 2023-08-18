@@ -13,51 +13,51 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DynamicsCrmSink : IUtf8JsonSerializable
+    public partial class DynamicsCrmSink : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("writeBehavior"u8);
             writer.WriteStringValue(WriteBehavior.ToString());
-            if (Optional.IsDefined(IgnoreNullValues))
+            if (Core.Optional.IsDefined(IgnoreNullValues))
             {
                 writer.WritePropertyName("ignoreNullValues"u8);
                 JsonSerializer.Serialize(writer, IgnoreNullValues);
             }
-            if (Optional.IsDefined(AlternateKeyName))
+            if (Core.Optional.IsDefined(AlternateKeyName))
             {
                 writer.WritePropertyName("alternateKeyName"u8);
                 JsonSerializer.Serialize(writer, AlternateKeyName);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);
-            if (Optional.IsDefined(WriteBatchSize))
+            if (Core.Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize"u8);
                 JsonSerializer.Serialize(writer, WriteBatchSize);
             }
-            if (Optional.IsDefined(WriteBatchTimeout))
+            if (Core.Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
                 JsonSerializer.Serialize(writer, WriteBatchTimeout);
             }
-            if (Optional.IsDefined(SinkRetryCount))
+            if (Core.Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
                 JsonSerializer.Serialize(writer, SinkRetryCount);
             }
-            if (Optional.IsDefined(SinkRetryWait))
+            if (Core.Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
                 JsonSerializer.Serialize(writer, SinkRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (Core.Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Optional.IsDefined(DisableMetricsCollection))
+            if (Core.Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -81,15 +81,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DynamicsSinkWriteBehavior writeBehavior = default;
-            Optional<DataFactoryElement<bool>> ignoreNullValues = default;
-            Optional<DataFactoryElement<string>> alternateKeyName = default;
+            Core.Optional<DataFactoryElement<bool>> ignoreNullValues = default;
+            Core.Optional<DataFactoryElement<string>> alternateKeyName = default;
             string type = default;
-            Optional<DataFactoryElement<int>> writeBatchSize = default;
-            Optional<DataFactoryElement<string>> writeBatchTimeout = default;
-            Optional<DataFactoryElement<int>> sinkRetryCount = default;
-            Optional<DataFactoryElement<string>> sinkRetryWait = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            Core.Optional<DataFactoryElement<int>> writeBatchSize = default;
+            Core.Optional<DataFactoryElement<string>> writeBatchTimeout = default;
+            Core.Optional<DataFactoryElement<int>> sinkRetryCount = default;
+            Core.Optional<DataFactoryElement<string>> sinkRetryWait = default;
+            Core.Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
+            Core.Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

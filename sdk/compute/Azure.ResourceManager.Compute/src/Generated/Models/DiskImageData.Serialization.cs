@@ -14,17 +14,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class DiskImageData : IUtf8JsonSerializable
+    public partial class DiskImageData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtendedLocation))
+            if (Core.Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.Compute
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceVirtualMachine))
+            if (Core.Optional.IsDefined(SourceVirtualMachine))
             {
                 writer.WritePropertyName("sourceVirtualMachine"u8);
                 JsonSerializer.Serialize(writer, SourceVirtualMachine);
             }
-            if (Optional.IsDefined(StorageProfile))
+            if (Core.Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (Optional.IsDefined(HyperVGeneration))
+            if (Core.Optional.IsDefined(HyperVGeneration))
             {
                 writer.WritePropertyName("hyperVGeneration"u8);
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ExtendedLocation> extendedLocation = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<WritableSubResource> sourceVirtualMachine = default;
-            Optional<ImageStorageProfile> storageProfile = default;
-            Optional<string> provisioningState = default;
-            Optional<HyperVGeneration> hyperVGeneration = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<WritableSubResource> sourceVirtualMachine = default;
+            Core.Optional<ImageStorageProfile> storageProfile = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<HyperVGeneration> hyperVGeneration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new DiskImageData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, sourceVirtualMachine, storageProfile.Value, provisioningState.Value, Optional.ToNullable(hyperVGeneration));
+            return new DiskImageData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, extendedLocation, sourceVirtualMachine, storageProfile.Value, provisioningState.Value, Core.Optional.ToNullable(hyperVGeneration));
         }
     }
 }

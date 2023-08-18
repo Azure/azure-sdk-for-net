@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<DataBoxEdgeAuthenticationType> authType = default;
-            Optional<string> resourceId = default;
-            Optional<string> aadAuthority = default;
-            Optional<Guid> aadTenantId = default;
-            Optional<Guid> servicePrincipalClientId = default;
-            Optional<Guid> servicePrincipalObjectId = default;
-            Optional<string> azureManagementEndpointAudience = default;
-            Optional<string> aadAudience = default;
+            Core.Optional<DataBoxEdgeAuthenticationType> authType = default;
+            Core.Optional<string> resourceId = default;
+            Core.Optional<string> aadAuthority = default;
+            Core.Optional<Guid> aadTenantId = default;
+            Core.Optional<Guid> servicePrincipalClientId = default;
+            Core.Optional<Guid> servicePrincipalObjectId = default;
+            Core.Optional<string> azureManagementEndpointAudience = default;
+            Core.Optional<string> aadAudience = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authType"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new UploadCertificateResponse(Optional.ToNullable(authType), resourceId.Value, aadAuthority.Value, Optional.ToNullable(aadTenantId), Optional.ToNullable(servicePrincipalClientId), Optional.ToNullable(servicePrincipalObjectId), azureManagementEndpointAudience.Value, aadAudience.Value);
+            return new UploadCertificateResponse(Core.Optional.ToNullable(authType), resourceId.Value, aadAuthority.Value, Core.Optional.ToNullable(aadTenantId), Core.Optional.ToNullable(servicePrincipalClientId), Core.Optional.ToNullable(servicePrincipalObjectId), azureManagementEndpointAudience.Value, aadAudience.Value);
         }
     }
 }

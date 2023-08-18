@@ -14,15 +14,15 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class CosmosDBBackupInformationOperationSource : IOperationSource<CosmosDBBackupInformation>
+    internal class CosmosDBBackupInformationOperationSource : Core.IOperationSource<CosmosDBBackupInformation>
     {
-        CosmosDBBackupInformation IOperationSource<CosmosDBBackupInformation>.CreateResult(Response response, CancellationToken cancellationToken)
+        CosmosDBBackupInformation Core.IOperationSource<CosmosDBBackupInformation>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return CosmosDBBackupInformation.DeserializeCosmosDBBackupInformation(document.RootElement);
         }
 
-        async ValueTask<CosmosDBBackupInformation> IOperationSource<CosmosDBBackupInformation>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CosmosDBBackupInformation> Core.IOperationSource<CosmosDBBackupInformation>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return CosmosDBBackupInformation.DeserializeCosmosDBBackupInformation(document.RootElement);

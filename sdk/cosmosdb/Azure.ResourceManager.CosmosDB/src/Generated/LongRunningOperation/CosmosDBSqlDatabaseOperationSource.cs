@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class CosmosDBSqlDatabaseOperationSource : IOperationSource<CosmosDBSqlDatabaseResource>
+    internal class CosmosDBSqlDatabaseOperationSource : Core.IOperationSource<CosmosDBSqlDatabaseResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.CosmosDB
             _client = client;
         }
 
-        CosmosDBSqlDatabaseResource IOperationSource<CosmosDBSqlDatabaseResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CosmosDBSqlDatabaseResource Core.IOperationSource<CosmosDBSqlDatabaseResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CosmosDBSqlDatabaseData.DeserializeCosmosDBSqlDatabaseData(document.RootElement);
             return new CosmosDBSqlDatabaseResource(_client, data);
         }
 
-        async ValueTask<CosmosDBSqlDatabaseResource> IOperationSource<CosmosDBSqlDatabaseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CosmosDBSqlDatabaseResource> Core.IOperationSource<CosmosDBSqlDatabaseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CosmosDBSqlDatabaseData.DeserializeCosmosDBSqlDatabaseData(document.RootElement);

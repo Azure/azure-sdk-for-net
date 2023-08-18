@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="location"> The location. </param>
         public VMwareClusterData(AzureLocation location) : base(location)
         {
-            Statuses = new ChangeTrackingList<ResourceStatus>();
-            DatastoreIds = new ChangeTrackingList<string>();
-            NetworkIds = new ChangeTrackingList<string>();
+            Statuses = new Core.ChangeTrackingList<ResourceStatus>();
+            DatastoreIds = new Core.ChangeTrackingList<string>();
+            NetworkIds = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VMwareClusterData. </summary>

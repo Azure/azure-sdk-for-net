@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of ContainerRegistryWebhookEventListResult. </summary>
         internal ContainerRegistryWebhookEventListResult()
         {
-            Value = new ChangeTrackingList<ContainerRegistryWebhookEvent>();
+            Value = new Core.ChangeTrackingList<ContainerRegistryWebhookEvent>();
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryWebhookEventListResult. </summary>

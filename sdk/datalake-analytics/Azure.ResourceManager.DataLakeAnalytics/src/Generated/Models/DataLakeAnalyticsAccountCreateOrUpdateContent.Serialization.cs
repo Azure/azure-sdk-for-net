@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    public partial class DataLakeAnalyticsAccountCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class DataLakeAnalyticsAccountCreateOrUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(StorageAccounts))
+            if (Core.Optional.IsCollectionDefined(StorageAccounts))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ComputePolicies))
+            if (Core.Optional.IsCollectionDefined(ComputePolicies))
             {
                 writer.WritePropertyName("computePolicies"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FirewallRules))
+            if (Core.Optional.IsCollectionDefined(FirewallRules))
             {
                 writer.WritePropertyName("firewallRules"u8);
                 writer.WriteStartArray();
@@ -69,42 +69,42 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FirewallState))
+            if (Core.Optional.IsDefined(FirewallState))
             {
                 writer.WritePropertyName("firewallState"u8);
                 writer.WriteStringValue(FirewallState.Value.ToSerialString());
             }
-            if (Optional.IsDefined(FirewallAllowAzureIPs))
+            if (Core.Optional.IsDefined(FirewallAllowAzureIPs))
             {
                 writer.WritePropertyName("firewallAllowAzureIps"u8);
                 writer.WriteStringValue(FirewallAllowAzureIPs.Value.ToSerialString());
             }
-            if (Optional.IsDefined(NewTier))
+            if (Core.Optional.IsDefined(NewTier))
             {
                 writer.WritePropertyName("newTier"u8);
                 writer.WriteStringValue(NewTier.Value.ToSerialString());
             }
-            if (Optional.IsDefined(MaxJobCount))
+            if (Core.Optional.IsDefined(MaxJobCount))
             {
                 writer.WritePropertyName("maxJobCount"u8);
                 writer.WriteNumberValue(MaxJobCount.Value);
             }
-            if (Optional.IsDefined(MaxDegreeOfParallelism))
+            if (Core.Optional.IsDefined(MaxDegreeOfParallelism))
             {
                 writer.WritePropertyName("maxDegreeOfParallelism"u8);
                 writer.WriteNumberValue(MaxDegreeOfParallelism.Value);
             }
-            if (Optional.IsDefined(MaxDegreeOfParallelismPerJob))
+            if (Core.Optional.IsDefined(MaxDegreeOfParallelismPerJob))
             {
                 writer.WritePropertyName("maxDegreeOfParallelismPerJob"u8);
                 writer.WriteNumberValue(MaxDegreeOfParallelismPerJob.Value);
             }
-            if (Optional.IsDefined(MinPriorityPerJob))
+            if (Core.Optional.IsDefined(MinPriorityPerJob))
             {
                 writer.WritePropertyName("minPriorityPerJob"u8);
                 writer.WriteNumberValue(MinPriorityPerJob.Value);
             }
-            if (Optional.IsDefined(QueryStoreRetention))
+            if (Core.Optional.IsDefined(QueryStoreRetention))
             {
                 writer.WritePropertyName("queryStoreRetention"u8);
                 writer.WriteNumberValue(QueryStoreRetention.Value);

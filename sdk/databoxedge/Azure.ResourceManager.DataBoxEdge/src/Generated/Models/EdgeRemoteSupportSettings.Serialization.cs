@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeRemoteSupportSettings : IUtf8JsonSerializable
+    public partial class EdgeRemoteSupportSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RemoteApplicationType))
+            if (Core.Optional.IsDefined(RemoteApplicationType))
             {
                 writer.WritePropertyName("remoteApplicationType"u8);
                 writer.WriteStringValue(RemoteApplicationType.Value.ToString());
             }
-            if (Optional.IsDefined(AccessLevel))
+            if (Core.Optional.IsDefined(AccessLevel))
             {
                 writer.WritePropertyName("accessLevel"u8);
                 writer.WriteStringValue(AccessLevel.Value.ToString());
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (Core.Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTimeStampInUTC"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<EdgeRemoteApplicationType> remoteApplicationType = default;
-            Optional<EdgeRemoteApplicationAccessLevel> accessLevel = default;
-            Optional<DateTimeOffset> expirationTimeStampInUtc = default;
+            Core.Optional<EdgeRemoteApplicationType> remoteApplicationType = default;
+            Core.Optional<EdgeRemoteApplicationAccessLevel> accessLevel = default;
+            Core.Optional<DateTimeOffset> expirationTimeStampInUtc = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("remoteApplicationType"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new EdgeRemoteSupportSettings(Optional.ToNullable(remoteApplicationType), Optional.ToNullable(accessLevel), Optional.ToNullable(expirationTimeStampInUtc));
+            return new EdgeRemoteSupportSettings(Core.Optional.ToNullable(remoteApplicationType), Core.Optional.ToNullable(accessLevel), Core.Optional.ToNullable(expirationTimeStampInUtc));
         }
     }
 }

@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> Updates the capabilities of a phone number. </summary>
-    public partial class UpdatePhoneNumberCapabilitiesOperation : Operation<PurchasedPhoneNumber>, IOperationSource<PurchasedPhoneNumber>
+    public partial class UpdatePhoneNumberCapabilitiesOperation : Operation<PurchasedPhoneNumber>, Core.IOperationSource<PurchasedPhoneNumber>
     {
         private readonly OperationInternal<PurchasedPhoneNumber> _operation;
 
@@ -56,13 +56,13 @@ namespace Azure.Communication.PhoneNumbers
         /// <inheritdoc />
         public override ValueTask<Response<PurchasedPhoneNumber>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        PurchasedPhoneNumber IOperationSource<PurchasedPhoneNumber>.CreateResult(Response response, CancellationToken cancellationToken)
+        PurchasedPhoneNumber Core.IOperationSource<PurchasedPhoneNumber>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return PurchasedPhoneNumber.DeserializePurchasedPhoneNumber(document.RootElement);
         }
 
-        async ValueTask<PurchasedPhoneNumber> IOperationSource<PurchasedPhoneNumber>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PurchasedPhoneNumber> Core.IOperationSource<PurchasedPhoneNumber>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return PurchasedPhoneNumber.DeserializePurchasedPhoneNumber(document.RootElement);

@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="location"> The location. </param>
         public VirtualMachineTemplateData(AzureLocation location) : base(location)
         {
-            NetworkInterfaces = new ChangeTrackingList<NetworkInterface>();
-            Disks = new ChangeTrackingList<VirtualDisk>();
-            Statuses = new ChangeTrackingList<ResourceStatus>();
+            NetworkInterfaces = new Core.ChangeTrackingList<NetworkInterface>();
+            Disks = new Core.ChangeTrackingList<VirtualDisk>();
+            Statuses = new Core.ChangeTrackingList<ResourceStatus>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineTemplateData. </summary>

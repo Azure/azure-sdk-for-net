@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppScaleRule : IUtf8JsonSerializable
+    public partial class ContainerAppScaleRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(AzureQueue))
+            if (Core.Optional.IsDefined(AzureQueue))
             {
                 writer.WritePropertyName("azureQueue"u8);
                 writer.WriteObjectValue(AzureQueue);
             }
-            if (Optional.IsDefined(Custom))
+            if (Core.Optional.IsDefined(Custom))
             {
                 writer.WritePropertyName("custom"u8);
                 writer.WriteObjectValue(Custom);
             }
-            if (Optional.IsDefined(Http))
+            if (Core.Optional.IsDefined(Http))
             {
                 writer.WritePropertyName("http"u8);
                 writer.WriteObjectValue(Http);
             }
-            if (Optional.IsDefined(Tcp))
+            if (Core.Optional.IsDefined(Tcp))
             {
                 writer.WritePropertyName("tcp"u8);
                 writer.WriteObjectValue(Tcp);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ContainerAppQueueScaleRule> azureQueue = default;
-            Optional<ContainerAppCustomScaleRule> custom = default;
-            Optional<ContainerAppHttpScaleRule> http = default;
-            Optional<ContainerAppTcpScaleRule> tcp = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ContainerAppQueueScaleRule> azureQueue = default;
+            Core.Optional<ContainerAppCustomScaleRule> custom = default;
+            Core.Optional<ContainerAppHttpScaleRule> http = default;
+            Core.Optional<ContainerAppTcpScaleRule> tcp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

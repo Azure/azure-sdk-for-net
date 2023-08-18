@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    internal class RoleAssignmentResourceFormatOperationSource : IOperationSource<RoleAssignmentResourceFormatResource>
+    internal class RoleAssignmentResourceFormatOperationSource : Core.IOperationSource<RoleAssignmentResourceFormatResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.CustomerInsights
             _client = client;
         }
 
-        RoleAssignmentResourceFormatResource IOperationSource<RoleAssignmentResourceFormatResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        RoleAssignmentResourceFormatResource Core.IOperationSource<RoleAssignmentResourceFormatResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = RoleAssignmentResourceFormatData.DeserializeRoleAssignmentResourceFormatData(document.RootElement);
             return new RoleAssignmentResourceFormatResource(_client, data);
         }
 
-        async ValueTask<RoleAssignmentResourceFormatResource> IOperationSource<RoleAssignmentResourceFormatResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<RoleAssignmentResourceFormatResource> Core.IOperationSource<RoleAssignmentResourceFormatResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = RoleAssignmentResourceFormatData.DeserializeRoleAssignmentResourceFormatData(document.RootElement);

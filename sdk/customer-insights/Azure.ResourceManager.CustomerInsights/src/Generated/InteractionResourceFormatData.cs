@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <summary> Initializes a new instance of InteractionResourceFormatData. </summary>
         public InteractionResourceFormatData()
         {
-            Attributes = new ChangeTrackingDictionary<string, IList<string>>();
-            Description = new ChangeTrackingDictionary<string, string>();
-            DisplayName = new ChangeTrackingDictionary<string, string>();
-            LocalizedAttributes = new ChangeTrackingDictionary<string, IDictionary<string, string>>();
-            Fields = new ChangeTrackingList<PropertyDefinition>();
-            IdPropertyNames = new ChangeTrackingList<string>();
-            ParticipantProfiles = new ChangeTrackingList<Participant>();
-            DataSourcePrecedenceRules = new ChangeTrackingList<DataSourcePrecedence>();
+            Attributes = new Core.ChangeTrackingDictionary<string, IList<string>>();
+            Description = new Core.ChangeTrackingDictionary<string, string>();
+            DisplayName = new Core.ChangeTrackingDictionary<string, string>();
+            LocalizedAttributes = new Core.ChangeTrackingDictionary<string, IDictionary<string, string>>();
+            Fields = new Core.ChangeTrackingList<PropertyDefinition>();
+            IdPropertyNames = new Core.ChangeTrackingList<string>();
+            ParticipantProfiles = new Core.ChangeTrackingList<Participant>();
+            DataSourcePrecedenceRules = new Core.ChangeTrackingList<DataSourcePrecedence>();
         }
 
         /// <summary> Initializes a new instance of InteractionResourceFormatData. </summary>

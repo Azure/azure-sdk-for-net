@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class PropertyDefinition : IUtf8JsonSerializable
+    public partial class PropertyDefinition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ArrayValueSeparator))
+            if (Core.Optional.IsDefined(ArrayValueSeparator))
             {
                 writer.WritePropertyName("arrayValueSeparator"u8);
                 writer.WriteStringValue(ArrayValueSeparator);
             }
-            if (Optional.IsCollectionDefined(EnumValidValues))
+            if (Core.Optional.IsCollectionDefined(EnumValidValues))
             {
                 writer.WritePropertyName("enumValidValues"u8);
                 writer.WriteStartArray();
@@ -35,57 +35,57 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStringValue(FieldName);
             writer.WritePropertyName("fieldType"u8);
             writer.WriteStringValue(FieldType);
-            if (Optional.IsDefined(IsArray))
+            if (Core.Optional.IsDefined(IsArray))
             {
                 writer.WritePropertyName("isArray"u8);
                 writer.WriteBooleanValue(IsArray.Value);
             }
-            if (Optional.IsDefined(IsEnum))
+            if (Core.Optional.IsDefined(IsEnum))
             {
                 writer.WritePropertyName("isEnum"u8);
                 writer.WriteBooleanValue(IsEnum.Value);
             }
-            if (Optional.IsDefined(IsFlagEnum))
+            if (Core.Optional.IsDefined(IsFlagEnum))
             {
                 writer.WritePropertyName("isFlagEnum"u8);
                 writer.WriteBooleanValue(IsFlagEnum.Value);
             }
-            if (Optional.IsDefined(IsImage))
+            if (Core.Optional.IsDefined(IsImage))
             {
                 writer.WritePropertyName("isImage"u8);
                 writer.WriteBooleanValue(IsImage.Value);
             }
-            if (Optional.IsDefined(IsLocalizedString))
+            if (Core.Optional.IsDefined(IsLocalizedString))
             {
                 writer.WritePropertyName("isLocalizedString"u8);
                 writer.WriteBooleanValue(IsLocalizedString.Value);
             }
-            if (Optional.IsDefined(IsName))
+            if (Core.Optional.IsDefined(IsName))
             {
                 writer.WritePropertyName("isName"u8);
                 writer.WriteBooleanValue(IsName.Value);
             }
-            if (Optional.IsDefined(IsRequired))
+            if (Core.Optional.IsDefined(IsRequired))
             {
                 writer.WritePropertyName("isRequired"u8);
                 writer.WriteBooleanValue(IsRequired.Value);
             }
-            if (Optional.IsDefined(PropertyId))
+            if (Core.Optional.IsDefined(PropertyId))
             {
                 writer.WritePropertyName("propertyId"u8);
                 writer.WriteStringValue(PropertyId);
             }
-            if (Optional.IsDefined(SchemaItemPropLink))
+            if (Core.Optional.IsDefined(SchemaItemPropLink))
             {
                 writer.WritePropertyName("schemaItemPropLink"u8);
                 writer.WriteStringValue(SchemaItemPropLink);
             }
-            if (Optional.IsDefined(MaxLength))
+            if (Core.Optional.IsDefined(MaxLength))
             {
                 writer.WritePropertyName("maxLength"u8);
                 writer.WriteNumberValue(MaxLength.Value);
             }
-            if (Optional.IsDefined(IsAvailableInGraph))
+            if (Core.Optional.IsDefined(IsAvailableInGraph))
             {
                 writer.WritePropertyName("isAvailableInGraph"u8);
                 writer.WriteBooleanValue(IsAvailableInGraph.Value);
@@ -99,22 +99,22 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<string> arrayValueSeparator = default;
-            Optional<IList<ProfileEnumValidValuesFormat>> enumValidValues = default;
+            Core.Optional<string> arrayValueSeparator = default;
+            Core.Optional<IList<ProfileEnumValidValuesFormat>> enumValidValues = default;
             string fieldName = default;
             string fieldType = default;
-            Optional<bool> isArray = default;
-            Optional<bool> isEnum = default;
-            Optional<bool> isFlagEnum = default;
-            Optional<bool> isImage = default;
-            Optional<bool> isLocalizedString = default;
-            Optional<bool> isName = default;
-            Optional<bool> isRequired = default;
-            Optional<string> propertyId = default;
-            Optional<string> schemaItemPropLink = default;
-            Optional<int> maxLength = default;
-            Optional<bool> isAvailableInGraph = default;
-            Optional<IReadOnlyList<DataSourcePrecedence>> dataSourcePrecedenceRules = default;
+            Core.Optional<bool> isArray = default;
+            Core.Optional<bool> isEnum = default;
+            Core.Optional<bool> isFlagEnum = default;
+            Core.Optional<bool> isImage = default;
+            Core.Optional<bool> isLocalizedString = default;
+            Core.Optional<bool> isName = default;
+            Core.Optional<bool> isRequired = default;
+            Core.Optional<string> propertyId = default;
+            Core.Optional<string> schemaItemPropLink = default;
+            Core.Optional<int> maxLength = default;
+            Core.Optional<bool> isAvailableInGraph = default;
+            Core.Optional<IReadOnlyList<DataSourcePrecedence>> dataSourcePrecedenceRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("arrayValueSeparator"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new PropertyDefinition(arrayValueSeparator.Value, Optional.ToList(enumValidValues), fieldName, fieldType, Optional.ToNullable(isArray), Optional.ToNullable(isEnum), Optional.ToNullable(isFlagEnum), Optional.ToNullable(isImage), Optional.ToNullable(isLocalizedString), Optional.ToNullable(isName), Optional.ToNullable(isRequired), propertyId.Value, schemaItemPropLink.Value, Optional.ToNullable(maxLength), Optional.ToNullable(isAvailableInGraph), Optional.ToList(dataSourcePrecedenceRules));
+            return new PropertyDefinition(arrayValueSeparator.Value, Core.Optional.ToList(enumValidValues), fieldName, fieldType, Core.Optional.ToNullable(isArray), Core.Optional.ToNullable(isEnum), Core.Optional.ToNullable(isFlagEnum), Core.Optional.ToNullable(isImage), Core.Optional.ToNullable(isLocalizedString), Core.Optional.ToNullable(isName), Core.Optional.ToNullable(isRequired), propertyId.Value, schemaItemPropLink.Value, Core.Optional.ToNullable(maxLength), Core.Optional.ToNullable(isAvailableInGraph), Core.Optional.ToList(dataSourcePrecedenceRules));
         }
     }
 }

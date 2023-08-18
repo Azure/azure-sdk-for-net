@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterAddonProfileIdentity : IUtf8JsonSerializable
+    public partial class ManagedClusterAddonProfileIdentity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (Core.Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(ClientId))
+            if (Core.Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId.Value);
             }
-            if (Optional.IsDefined(ObjectId))
+            if (Core.Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId.Value);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<Guid> clientId = default;
-            Optional<Guid> objectId = default;
+            Core.Optional<ResourceIdentifier> resourceId = default;
+            Core.Optional<Guid> clientId = default;
+            Core.Optional<Guid> objectId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterAddonProfileIdentity(resourceId.Value, Optional.ToNullable(clientId), Optional.ToNullable(objectId));
+            return new ManagedClusterAddonProfileIdentity(resourceId.Value, Core.Optional.ToNullable(clientId), Core.Optional.ToNullable(objectId));
         }
     }
 }

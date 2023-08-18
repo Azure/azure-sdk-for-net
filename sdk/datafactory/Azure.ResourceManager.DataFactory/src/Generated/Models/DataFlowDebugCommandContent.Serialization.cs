@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFlowDebugCommandContent : IUtf8JsonSerializable
+    public partial class DataFlowDebugCommandContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SessionId))
+            if (Core.Optional.IsDefined(SessionId))
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId.Value);
             }
-            if (Optional.IsDefined(Command))
+            if (Core.Optional.IsDefined(Command))
             {
                 writer.WritePropertyName("command"u8);
                 writer.WriteStringValue(Command.Value.ToString());
             }
-            if (Optional.IsDefined(CommandPayload))
+            if (Core.Optional.IsDefined(CommandPayload))
             {
                 writer.WritePropertyName("commandPayload"u8);
                 writer.WriteObjectValue(CommandPayload);

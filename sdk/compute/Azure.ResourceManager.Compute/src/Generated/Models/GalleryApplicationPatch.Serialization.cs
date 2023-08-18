@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GalleryApplicationPatch : IUtf8JsonSerializable
+    public partial class GalleryApplicationPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -28,37 +28,37 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Eula))
+            if (Core.Optional.IsDefined(Eula))
             {
                 writer.WritePropertyName("eula"u8);
                 writer.WriteStringValue(Eula);
             }
-            if (Optional.IsDefined(PrivacyStatementUri))
+            if (Core.Optional.IsDefined(PrivacyStatementUri))
             {
                 writer.WritePropertyName("privacyStatementUri"u8);
                 writer.WriteStringValue(PrivacyStatementUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ReleaseNoteUri))
+            if (Core.Optional.IsDefined(ReleaseNoteUri))
             {
                 writer.WritePropertyName("releaseNoteUri"u8);
                 writer.WriteStringValue(ReleaseNoteUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(EndOfLifeOn))
+            if (Core.Optional.IsDefined(EndOfLifeOn))
             {
                 writer.WritePropertyName("endOfLifeDate"u8);
                 writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
-            if (Optional.IsDefined(SupportedOSType))
+            if (Core.Optional.IsDefined(SupportedOSType))
             {
                 writer.WritePropertyName("supportedOSType"u8);
                 writer.WriteStringValue(SupportedOSType.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(CustomActions))
+            if (Core.Optional.IsCollectionDefined(CustomActions))
             {
                 writer.WritePropertyName("customActions"u8);
                 writer.WriteStartArray();

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of EdgeIotRole. </summary>
         public EdgeIotRole()
         {
-            ShareMappings = new ChangeTrackingList<DataBoxEdgeMountPointMap>();
+            ShareMappings = new Core.ChangeTrackingList<DataBoxEdgeMountPointMap>();
             Kind = DataBoxEdgeRoleType.IoT;
         }
 

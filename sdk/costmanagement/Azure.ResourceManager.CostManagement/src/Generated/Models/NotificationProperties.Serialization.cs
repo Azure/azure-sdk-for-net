@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class NotificationProperties : IUtf8JsonSerializable
+    public partial class NotificationProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("to"u8);
@@ -23,17 +23,17 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Language))
+            if (Core.Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (Optional.IsDefined(Message))
+            if (Core.Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(RegionalFormat))
+            if (Core.Optional.IsDefined(RegionalFormat))
             {
                 writer.WritePropertyName("regionalFormat"u8);
                 writer.WriteStringValue(RegionalFormat);
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.CostManagement.Models
                 return null;
             }
             IList<string> to = default;
-            Optional<string> language = default;
-            Optional<string> message = default;
-            Optional<string> regionalFormat = default;
+            Core.Optional<string> language = default;
+            Core.Optional<string> message = default;
+            Core.Optional<string> regionalFormat = default;
             string subject = default;
             foreach (var property in element.EnumerateObject())
             {

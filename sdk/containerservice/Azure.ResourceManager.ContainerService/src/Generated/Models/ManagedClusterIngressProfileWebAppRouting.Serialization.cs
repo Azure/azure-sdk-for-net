@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterIngressProfileWebAppRouting : IUtf8JsonSerializable
+    public partial class ManagedClusterIngressProfileWebAppRouting : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (Core.Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(DnsZoneResourceId))
+            if (Core.Optional.IsDefined(DnsZoneResourceId))
             {
                 writer.WritePropertyName("dnsZoneResourceId"u8);
                 writer.WriteStringValue(DnsZoneResourceId);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<ResourceIdentifier> dnsZoneResourceId = default;
+            Core.Optional<bool> enabled = default;
+            Core.Optional<ResourceIdentifier> dnsZoneResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterIngressProfileWebAppRouting(Optional.ToNullable(enabled), dnsZoneResourceId.Value);
+            return new ManagedClusterIngressProfileWebAppRouting(Core.Optional.ToNullable(enabled), dnsZoneResourceId.Value);
         }
     }
 }

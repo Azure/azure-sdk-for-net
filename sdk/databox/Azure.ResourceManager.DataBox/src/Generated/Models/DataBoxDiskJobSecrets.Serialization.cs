@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataBoxDiskSecret>> diskSecrets = default;
-            Optional<string> passKey = default;
-            Optional<bool> isPasskeyUserDefined = default;
+            Core.Optional<IReadOnlyList<DataBoxDiskSecret>> diskSecrets = default;
+            Core.Optional<string> passKey = default;
+            Core.Optional<bool> isPasskeyUserDefined = default;
             DataBoxOrderType jobSecretsType = default;
-            Optional<DataCenterAccessSecurityCode> dcAccessSecurityCode = default;
-            Optional<ResponseError> error = default;
+            Core.Optional<DataCenterAccessSecurityCode> dcAccessSecurityCode = default;
+            Core.Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskSecrets"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataBoxDiskJobSecrets(jobSecretsType, dcAccessSecurityCode.Value, error.Value, Optional.ToList(diskSecrets), passKey.Value, Optional.ToNullable(isPasskeyUserDefined));
+            return new DataBoxDiskJobSecrets(jobSecretsType, dcAccessSecurityCode.Value, error.Value, Core.Optional.ToList(diskSecrets), passKey.Value, Core.Optional.ToNullable(isPasskeyUserDefined));
         }
     }
 }

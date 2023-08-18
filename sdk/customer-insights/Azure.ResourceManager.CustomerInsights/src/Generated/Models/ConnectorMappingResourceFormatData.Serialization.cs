@@ -13,39 +13,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    public partial class ConnectorMappingResourceFormatData : IUtf8JsonSerializable
+    public partial class ConnectorMappingResourceFormatData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectorType))
+            if (Core.Optional.IsDefined(ConnectorType))
             {
                 writer.WritePropertyName("connectorType"u8);
                 writer.WriteStringValue(ConnectorType.Value.ToString());
             }
-            if (Optional.IsDefined(EntityType))
+            if (Core.Optional.IsDefined(EntityType))
             {
                 writer.WritePropertyName("entityType"u8);
                 writer.WriteStringValue(EntityType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(EntityTypeName))
+            if (Core.Optional.IsDefined(EntityTypeName))
             {
                 writer.WritePropertyName("entityTypeName"u8);
                 writer.WriteStringValue(EntityTypeName);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(MappingProperties))
+            if (Core.Optional.IsDefined(MappingProperties))
             {
                 writer.WritePropertyName("mappingProperties"u8);
                 writer.WriteObjectValue(MappingProperties);
@@ -63,22 +63,22 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> connectorName = default;
-            Optional<ConnectorType> connectorType = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<EntityType> entityType = default;
-            Optional<string> entityTypeName = default;
-            Optional<string> connectorMappingName = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> dataFormatId = default;
-            Optional<ConnectorMappingProperties> mappingProperties = default;
-            Optional<DateTimeOffset> nextRunTime = default;
-            Optional<string> runId = default;
-            Optional<ConnectorMappingState> state = default;
-            Optional<Guid> tenantId = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> connectorName = default;
+            Core.Optional<ConnectorType> connectorType = default;
+            Core.Optional<DateTimeOffset> created = default;
+            Core.Optional<DateTimeOffset> lastModified = default;
+            Core.Optional<EntityType> entityType = default;
+            Core.Optional<string> entityTypeName = default;
+            Core.Optional<string> connectorMappingName = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> dataFormatId = default;
+            Core.Optional<ConnectorMappingProperties> mappingProperties = default;
+            Core.Optional<DateTimeOffset> nextRunTime = default;
+            Core.Optional<string> runId = default;
+            Core.Optional<ConnectorMappingState> state = default;
+            Core.Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.CustomerInsights
                     continue;
                 }
             }
-            return new ConnectorMappingResourceFormatData(id, name, type, systemData.Value, connectorName.Value, Optional.ToNullable(connectorType), Optional.ToNullable(created), Optional.ToNullable(lastModified), Optional.ToNullable(entityType), entityTypeName.Value, connectorMappingName.Value, displayName.Value, description.Value, dataFormatId.Value, mappingProperties.Value, Optional.ToNullable(nextRunTime), runId.Value, Optional.ToNullable(state), Optional.ToNullable(tenantId));
+            return new ConnectorMappingResourceFormatData(id, name, type, systemData.Value, connectorName.Value, Core.Optional.ToNullable(connectorType), Core.Optional.ToNullable(created), Core.Optional.ToNullable(lastModified), Core.Optional.ToNullable(entityType), entityTypeName.Value, connectorMappingName.Value, displayName.Value, description.Value, dataFormatId.Value, mappingProperties.Value, Core.Optional.ToNullable(nextRunTime), runId.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(tenantId));
         }
     }
 }

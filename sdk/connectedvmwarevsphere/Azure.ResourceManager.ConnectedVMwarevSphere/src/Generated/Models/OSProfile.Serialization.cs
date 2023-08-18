@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class OSProfile : IUtf8JsonSerializable
+    public partial class OSProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComputerName))
+            if (Core.Optional.IsDefined(ComputerName))
             {
                 writer.WritePropertyName("computerName"u8);
                 writer.WriteStringValue(ComputerName);
             }
-            if (Optional.IsDefined(AdminUsername))
+            if (Core.Optional.IsDefined(AdminUsername))
             {
                 writer.WritePropertyName("adminUsername"u8);
                 writer.WriteStringValue(AdminUsername);
             }
-            if (Optional.IsDefined(AdminPassword))
+            if (Core.Optional.IsDefined(AdminPassword))
             {
                 writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
-            if (Optional.IsDefined(OSType))
+            if (Core.Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<string> computerName = default;
-            Optional<string> adminUsername = default;
-            Optional<string> adminPassword = default;
-            Optional<OSType> osType = default;
-            Optional<string> osName = default;
-            Optional<string> toolsRunningStatus = default;
-            Optional<string> toolsVersionStatus = default;
-            Optional<string> toolsVersion = default;
+            Core.Optional<string> computerName = default;
+            Core.Optional<string> adminUsername = default;
+            Core.Optional<string> adminPassword = default;
+            Core.Optional<OSType> osType = default;
+            Core.Optional<string> osName = default;
+            Core.Optional<string> toolsRunningStatus = default;
+            Core.Optional<string> toolsVersionStatus = default;
+            Core.Optional<string> toolsVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computerName"u8))
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     continue;
                 }
             }
-            return new OSProfile(computerName.Value, adminUsername.Value, adminPassword.Value, Optional.ToNullable(osType), osName.Value, toolsRunningStatus.Value, toolsVersionStatus.Value, toolsVersion.Value);
+            return new OSProfile(computerName.Value, adminUsername.Value, adminPassword.Value, Core.Optional.ToNullable(osType), osName.Value, toolsRunningStatus.Value, toolsVersionStatus.Value, toolsVersion.Value);
         }
     }
 }

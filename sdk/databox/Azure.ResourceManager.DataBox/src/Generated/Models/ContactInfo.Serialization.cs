@@ -10,21 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class ContactInfo : IUtf8JsonSerializable
+    public partial class ContactInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("contactName"u8);
             writer.WriteStringValue(ContactName);
             writer.WritePropertyName("phone"u8);
             writer.WriteStringValue(Phone);
-            if (Optional.IsDefined(PhoneExtension))
+            if (Core.Optional.IsDefined(PhoneExtension))
             {
                 writer.WritePropertyName("phoneExtension"u8);
                 writer.WriteStringValue(PhoneExtension);
             }
-            if (Optional.IsDefined(Mobile))
+            if (Core.Optional.IsDefined(Mobile))
             {
                 writer.WritePropertyName("mobile"u8);
                 writer.WriteStringValue(Mobile);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             string contactName = default;
             string phone = default;
-            Optional<string> phoneExtension = default;
-            Optional<string> mobile = default;
+            Core.Optional<string> phoneExtension = default;
+            Core.Optional<string> mobile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contactName"u8))

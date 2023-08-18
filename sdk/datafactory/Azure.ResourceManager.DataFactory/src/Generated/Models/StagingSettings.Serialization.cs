@@ -13,18 +13,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class StagingSettings : IUtf8JsonSerializable
+    public partial class StagingSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("linkedServiceName"u8);
-            JsonSerializer.Serialize(writer, LinkedServiceName); if (Optional.IsDefined(Path))
+            JsonSerializer.Serialize(writer, LinkedServiceName); if (Core.Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 JsonSerializer.Serialize(writer, Path);
             }
-            if (Optional.IsDefined(EnableCompression))
+            if (Core.Optional.IsDefined(EnableCompression))
             {
                 writer.WritePropertyName("enableCompression"u8);
                 JsonSerializer.Serialize(writer, EnableCompression);
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryLinkedServiceReference linkedServiceName = default;
-            Optional<DataFactoryElement<string>> path = default;
-            Optional<DataFactoryElement<bool>> enableCompression = default;
+            Core.Optional<DataFactoryElement<string>> path = default;
+            Core.Optional<DataFactoryElement<bool>> enableCompression = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

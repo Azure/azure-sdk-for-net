@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Confluent
             try
             {
                 var response = await _confluentOrganizationOrganizationRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ConfluentArmOperation(_confluentOrganizationOrganizationClientDiagnostics, Pipeline, _confluentOrganizationOrganizationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ConfluentArmOperation(_confluentOrganizationOrganizationClientDiagnostics, Pipeline, _confluentOrganizationOrganizationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Confluent
             try
             {
                 var response = _confluentOrganizationOrganizationRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ConfluentArmOperation(_confluentOrganizationOrganizationClientDiagnostics, Pipeline, _confluentOrganizationOrganizationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ConfluentArmOperation(_confluentOrganizationOrganizationClientDiagnostics, Pipeline, _confluentOrganizationOrganizationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

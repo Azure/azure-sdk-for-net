@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of ManagedClusterCredentials. </summary>
         internal ManagedClusterCredentials()
         {
-            Kubeconfigs = new ChangeTrackingList<ManagedClusterCredential>();
+            Kubeconfigs = new Core.ChangeTrackingList<ManagedClusterCredential>();
         }
 
         /// <summary> Initializes a new instance of ManagedClusterCredentials. </summary>

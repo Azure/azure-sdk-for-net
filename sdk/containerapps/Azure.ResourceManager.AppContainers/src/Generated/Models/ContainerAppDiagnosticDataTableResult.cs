@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppDiagnosticDataTableResult. </summary>
         public ContainerAppDiagnosticDataTableResult()
         {
-            Columns = new ChangeTrackingList<ContainerAppDiagnosticDataColumn>();
-            Rows = new ChangeTrackingList<BinaryData>();
+            Columns = new Core.ChangeTrackingList<ContainerAppDiagnosticDataColumn>();
+            Rows = new Core.ChangeTrackingList<BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppDiagnosticDataTableResult. </summary>

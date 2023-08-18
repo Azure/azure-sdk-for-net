@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of GalleryImageVersionStorageProfile. </summary>
         public GalleryImageVersionStorageProfile()
         {
-            DataDiskImages = new ChangeTrackingList<GalleryDataDiskImage>();
+            DataDiskImages = new Core.ChangeTrackingList<GalleryDataDiskImage>();
         }
 
         /// <summary> Initializes a new instance of GalleryImageVersionStorageProfile. </summary>

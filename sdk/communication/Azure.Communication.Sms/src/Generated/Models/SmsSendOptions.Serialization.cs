@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.Communication.Sms
 {
-    public partial class SmsSendOptions : IUtf8JsonSerializable
+    public partial class SmsSendOptions : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("enableDeliveryReport"u8);
             writer.WriteBooleanValue(EnableDeliveryReport);
-            if (Optional.IsDefined(Tag))
+            if (Core.Optional.IsDefined(Tag))
             {
                 writer.WritePropertyName("tag"u8);
                 writer.WriteStringValue(Tag);

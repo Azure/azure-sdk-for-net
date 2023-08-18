@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of SharingStatus. </summary>
         internal SharingStatus()
         {
-            Summary = new ChangeTrackingList<RegionalSharingStatus>();
+            Summary = new Core.ChangeTrackingList<RegionalSharingStatus>();
         }
 
         /// <summary> Initializes a new instance of SharingStatus. </summary>

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location. </param>
         public GalleryImageData(AzureLocation location) : base(location)
         {
-            Features = new ChangeTrackingList<GalleryImageFeature>();
+            Features = new Core.ChangeTrackingList<GalleryImageFeature>();
         }
 
         /// <summary> Initializes a new instance of GalleryImageData. </summary>

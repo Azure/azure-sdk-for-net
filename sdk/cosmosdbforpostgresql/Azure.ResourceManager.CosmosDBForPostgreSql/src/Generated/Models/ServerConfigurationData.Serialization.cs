@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
-    public partial class ServerConfigurationData : IUtf8JsonSerializable
+    public partial class ServerConfigurationData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
+            if (Core.Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -37,15 +37,15 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> value = default;
-            Optional<string> source = default;
-            Optional<string> description = default;
-            Optional<string> defaultValue = default;
-            Optional<CosmosDBForPostgreSqlConfigurationDataType> dataType = default;
-            Optional<string> allowedValues = default;
-            Optional<bool> requiresRestart = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> value = default;
+            Core.Optional<string> source = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> defaultValue = default;
+            Core.Optional<CosmosDBForPostgreSqlConfigurationDataType> dataType = default;
+            Core.Optional<string> allowedValues = default;
+            Core.Optional<bool> requiresRestart = default;
+            Core.Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     continue;
                 }
             }
-            return new ServerConfigurationData(id, name, type, systemData.Value, value.Value, source.Value, description.Value, defaultValue.Value, Optional.ToNullable(dataType), allowedValues.Value, Optional.ToNullable(requiresRestart), Optional.ToNullable(provisioningState));
+            return new ServerConfigurationData(id, name, type, systemData.Value, value.Value, source.Value, description.Value, defaultValue.Value, Core.Optional.ToNullable(dataType), allowedValues.Value, Core.Optional.ToNullable(requiresRestart), Core.Optional.ToNullable(provisioningState));
         }
     }
 }

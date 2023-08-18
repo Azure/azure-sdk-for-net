@@ -11,47 +11,47 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppIdentityProvidersConfiguration : IUtf8JsonSerializable
+    public partial class ContainerAppIdentityProvidersConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureActiveDirectory))
+            if (Core.Optional.IsDefined(AzureActiveDirectory))
             {
                 writer.WritePropertyName("azureActiveDirectory"u8);
                 writer.WriteObjectValue(AzureActiveDirectory);
             }
-            if (Optional.IsDefined(Facebook))
+            if (Core.Optional.IsDefined(Facebook))
             {
                 writer.WritePropertyName("facebook"u8);
                 writer.WriteObjectValue(Facebook);
             }
-            if (Optional.IsDefined(GitHub))
+            if (Core.Optional.IsDefined(GitHub))
             {
                 writer.WritePropertyName("gitHub"u8);
                 writer.WriteObjectValue(GitHub);
             }
-            if (Optional.IsDefined(Google))
+            if (Core.Optional.IsDefined(Google))
             {
                 writer.WritePropertyName("google"u8);
                 writer.WriteObjectValue(Google);
             }
-            if (Optional.IsDefined(Twitter))
+            if (Core.Optional.IsDefined(Twitter))
             {
                 writer.WritePropertyName("twitter"u8);
                 writer.WriteObjectValue(Twitter);
             }
-            if (Optional.IsDefined(Apple))
+            if (Core.Optional.IsDefined(Apple))
             {
                 writer.WritePropertyName("apple"u8);
                 writer.WriteObjectValue(Apple);
             }
-            if (Optional.IsDefined(AzureStaticWebApps))
+            if (Core.Optional.IsDefined(AzureStaticWebApps))
             {
                 writer.WritePropertyName("azureStaticWebApps"u8);
                 writer.WriteObjectValue(AzureStaticWebApps);
             }
-            if (Optional.IsCollectionDefined(CustomOpenIdConnectProviders))
+            if (Core.Optional.IsCollectionDefined(CustomOpenIdConnectProviders))
             {
                 writer.WritePropertyName("customOpenIdConnectProviders"u8);
                 writer.WriteStartObject();
@@ -71,14 +71,14 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ContainerAppAzureActiveDirectoryConfiguration> azureActiveDirectory = default;
-            Optional<ContainerAppFacebookConfiguration> facebook = default;
-            Optional<ContainerAppGitHubConfiguration> gitHub = default;
-            Optional<ContainerAppGoogleConfiguration> google = default;
-            Optional<ContainerAppTwitterConfiguration> twitter = default;
-            Optional<ContainerAppAppleConfiguration> apple = default;
-            Optional<ContainerAppAzureStaticWebAppsConfiguration> azureStaticWebApps = default;
-            Optional<IDictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration>> customOpenIdConnectProviders = default;
+            Core.Optional<ContainerAppAzureActiveDirectoryConfiguration> azureActiveDirectory = default;
+            Core.Optional<ContainerAppFacebookConfiguration> facebook = default;
+            Core.Optional<ContainerAppGitHubConfiguration> gitHub = default;
+            Core.Optional<ContainerAppGoogleConfiguration> google = default;
+            Core.Optional<ContainerAppTwitterConfiguration> twitter = default;
+            Core.Optional<ContainerAppAppleConfiguration> apple = default;
+            Core.Optional<ContainerAppAzureStaticWebAppsConfiguration> azureStaticWebApps = default;
+            Core.Optional<IDictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration>> customOpenIdConnectProviders = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureActiveDirectory"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppIdentityProvidersConfiguration(azureActiveDirectory.Value, facebook.Value, gitHub.Value, google.Value, twitter.Value, apple.Value, azureStaticWebApps.Value, Optional.ToDictionary(customOpenIdConnectProviders));
+            return new ContainerAppIdentityProvidersConfiguration(azureActiveDirectory.Value, facebook.Value, gitHub.Value, google.Value, twitter.Value, apple.Value, azureStaticWebApps.Value, Core.Optional.ToDictionary(customOpenIdConnectProviders));
         }
     }
 }

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class VirtualMachineNetworkInterfaceDnsSettingsConfiguration : IUtf8JsonSerializable
+    internal partial class VirtualMachineNetworkInterfaceDnsSettingsConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DnsServers))
+            if (Core.Optional.IsCollectionDefined(DnsServers))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<string>> dnsServers = default;
+            Core.Optional<IList<string>> dnsServers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dnsServers"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineNetworkInterfaceDnsSettingsConfiguration(Optional.ToList(dnsServers));
+            return new VirtualMachineNetworkInterfaceDnsSettingsConfiguration(Core.Optional.ToList(dnsServers));
         }
     }
 }

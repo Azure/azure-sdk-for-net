@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    public partial class DatadogApiKey : IUtf8JsonSerializable
+    public partial class DatadogApiKey : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreatedBy))
+            if (Core.Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
-            if (Optional.IsDefined(Created))
+            if (Core.Optional.IsDefined(Created))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(Created);
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<string> createdBy = default;
-            Optional<string> name = default;
+            Core.Optional<string> createdBy = default;
+            Core.Optional<string> name = default;
             string key = default;
-            Optional<string> created = default;
+            Core.Optional<string> created = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createdBy"u8))

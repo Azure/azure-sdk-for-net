@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <summary> Initializes a new instance of NetworkInterface. </summary>
         public NetworkInterface()
         {
-            IPAddresses = new ChangeTrackingList<string>();
+            IPAddresses = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of NetworkInterface. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ApplicationProfile. </summary>
         public ApplicationProfile()
         {
-            GalleryApplications = new ChangeTrackingList<VirtualMachineGalleryApplication>();
+            GalleryApplications = new Core.ChangeTrackingList<VirtualMachineGalleryApplication>();
         }
 
         /// <summary> Initializes a new instance of ApplicationProfile. </summary>

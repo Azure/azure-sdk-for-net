@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConsumptionReservationRecommendation>> value = default;
-            Optional<string> nextLink = default;
-            Optional<string> previousLink = default;
+            Core.Optional<IReadOnlyList<ConsumptionReservationRecommendation>> value = default;
+            Core.Optional<string> nextLink = default;
+            Core.Optional<string> previousLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ReservationRecommendationsListResult(Optional.ToList(value), nextLink.Value, previousLink.Value);
+            return new ReservationRecommendationsListResult(Core.Optional.ToList(value), nextLink.Value, previousLink.Value);
         }
     }
 }

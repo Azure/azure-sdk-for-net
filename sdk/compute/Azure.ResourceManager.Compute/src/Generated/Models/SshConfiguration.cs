@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of SshConfiguration. </summary>
         public SshConfiguration()
         {
-            PublicKeys = new ChangeTrackingList<SshPublicKeyConfiguration>();
+            PublicKeys = new Core.ChangeTrackingList<SshPublicKeyConfiguration>();
         }
 
         /// <summary> Initializes a new instance of SshConfiguration. </summary>

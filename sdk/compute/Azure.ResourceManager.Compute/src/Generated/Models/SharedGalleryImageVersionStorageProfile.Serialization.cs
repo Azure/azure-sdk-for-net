@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<SharedGalleryOSDiskImage> osDiskImage = default;
-            Optional<IReadOnlyList<SharedGalleryDataDiskImage>> dataDiskImages = default;
+            Core.Optional<SharedGalleryOSDiskImage> osDiskImage = default;
+            Core.Optional<IReadOnlyList<SharedGalleryDataDiskImage>> dataDiskImages = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osDiskImage"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new SharedGalleryImageVersionStorageProfile(osDiskImage.Value, Optional.ToList(dataDiskImages));
+            return new SharedGalleryImageVersionStorageProfile(osDiskImage.Value, Core.Optional.ToList(dataDiskImages));
         }
     }
 }

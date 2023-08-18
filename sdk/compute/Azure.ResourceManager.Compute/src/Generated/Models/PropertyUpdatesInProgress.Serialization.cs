@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> targetTier = default;
+            Core.Optional<string> targetTier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetTier"u8))

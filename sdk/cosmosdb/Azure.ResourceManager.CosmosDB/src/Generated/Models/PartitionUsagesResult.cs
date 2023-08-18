@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of PartitionUsagesResult. </summary>
         internal PartitionUsagesResult()
         {
-            Value = new ChangeTrackingList<PartitionUsage>();
+            Value = new Core.ChangeTrackingList<PartitionUsage>();
         }
 
         /// <summary> Initializes a new instance of PartitionUsagesResult. </summary>

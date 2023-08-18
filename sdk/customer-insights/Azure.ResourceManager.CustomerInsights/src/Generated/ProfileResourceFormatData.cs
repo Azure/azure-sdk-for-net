@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <summary> Initializes a new instance of ProfileResourceFormatData. </summary>
         public ProfileResourceFormatData()
         {
-            Attributes = new ChangeTrackingDictionary<string, IList<string>>();
-            Description = new ChangeTrackingDictionary<string, string>();
-            DisplayName = new ChangeTrackingDictionary<string, string>();
-            LocalizedAttributes = new ChangeTrackingDictionary<string, IDictionary<string, string>>();
-            Fields = new ChangeTrackingList<PropertyDefinition>();
-            StrongIds = new ChangeTrackingList<StrongId>();
+            Attributes = new Core.ChangeTrackingDictionary<string, IList<string>>();
+            Description = new Core.ChangeTrackingDictionary<string, string>();
+            DisplayName = new Core.ChangeTrackingDictionary<string, string>();
+            LocalizedAttributes = new Core.ChangeTrackingDictionary<string, IDictionary<string, string>>();
+            Fields = new Core.ChangeTrackingList<PropertyDefinition>();
+            StrongIds = new Core.ChangeTrackingList<StrongId>();
         }
 
         /// <summary> Initializes a new instance of ProfileResourceFormatData. </summary>

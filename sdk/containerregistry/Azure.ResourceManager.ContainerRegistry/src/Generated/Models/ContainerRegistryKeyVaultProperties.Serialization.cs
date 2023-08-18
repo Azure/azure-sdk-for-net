@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryKeyVaultProperties : IUtf8JsonSerializable
+    public partial class ContainerRegistryKeyVaultProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyIdentifier))
+            if (Core.Optional.IsDefined(KeyIdentifier))
             {
                 writer.WritePropertyName("keyIdentifier"u8);
                 writer.WriteStringValue(KeyIdentifier);
             }
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteStringValue(Identity);
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<string> keyIdentifier = default;
-            Optional<string> versionedKeyIdentifier = default;
-            Optional<string> identity = default;
-            Optional<bool> keyRotationEnabled = default;
-            Optional<DateTimeOffset> lastKeyRotationTimestamp = default;
+            Core.Optional<string> keyIdentifier = default;
+            Core.Optional<string> versionedKeyIdentifier = default;
+            Core.Optional<string> identity = default;
+            Core.Optional<bool> keyRotationEnabled = default;
+            Core.Optional<DateTimeOffset> lastKeyRotationTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyIdentifier"u8))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryKeyVaultProperties(keyIdentifier.Value, versionedKeyIdentifier.Value, identity.Value, Optional.ToNullable(keyRotationEnabled), Optional.ToNullable(lastKeyRotationTimestamp));
+            return new ContainerRegistryKeyVaultProperties(keyIdentifier.Value, versionedKeyIdentifier.Value, identity.Value, Core.Optional.ToNullable(keyRotationEnabled), Core.Optional.ToNullable(lastKeyRotationTimestamp));
         }
     }
 }

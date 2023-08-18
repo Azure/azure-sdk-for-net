@@ -14,17 +14,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class AvailabilitySetData : IUtf8JsonSerializable
+    public partial class AvailabilitySetData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.Compute
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PlatformUpdateDomainCount))
+            if (Core.Optional.IsDefined(PlatformUpdateDomainCount))
             {
                 writer.WritePropertyName("platformUpdateDomainCount"u8);
                 writer.WriteNumberValue(PlatformUpdateDomainCount.Value);
             }
-            if (Optional.IsDefined(PlatformFaultDomainCount))
+            if (Core.Optional.IsDefined(PlatformFaultDomainCount))
             {
                 writer.WritePropertyName("platformFaultDomainCount"u8);
                 writer.WriteNumberValue(PlatformFaultDomainCount.Value);
             }
-            if (Optional.IsCollectionDefined(VirtualMachines))
+            if (Core.Optional.IsCollectionDefined(VirtualMachines))
             {
                 writer.WritePropertyName("virtualMachines"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ProximityPlacementGroup))
+            if (Core.Optional.IsDefined(ProximityPlacementGroup))
             {
                 writer.WritePropertyName("proximityPlacementGroup"u8);
                 JsonSerializer.Serialize(writer, ProximityPlacementGroup);
@@ -74,18 +74,18 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<ComputeSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ComputeSku> sku = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> platformUpdateDomainCount = default;
-            Optional<int> platformFaultDomainCount = default;
-            Optional<IList<WritableSubResource>> virtualMachines = default;
-            Optional<WritableSubResource> proximityPlacementGroup = default;
-            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<int> platformUpdateDomainCount = default;
+            Core.Optional<int> platformFaultDomainCount = default;
+            Core.Optional<IList<WritableSubResource>> virtualMachines = default;
+            Core.Optional<WritableSubResource> proximityPlacementGroup = default;
+            Core.Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new AvailabilitySetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(platformUpdateDomainCount), Optional.ToNullable(platformFaultDomainCount), Optional.ToList(virtualMachines), proximityPlacementGroup, Optional.ToList(statuses));
+            return new AvailabilitySetData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku.Value, Core.Optional.ToNullable(platformUpdateDomainCount), Core.Optional.ToNullable(platformFaultDomainCount), Core.Optional.ToList(virtualMachines), proximityPlacementGroup, Core.Optional.ToList(statuses));
         }
     }
 }

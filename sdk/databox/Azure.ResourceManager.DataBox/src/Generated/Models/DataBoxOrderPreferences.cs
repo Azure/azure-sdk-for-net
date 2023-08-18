@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of DataBoxOrderPreferences. </summary>
         public DataBoxOrderPreferences()
         {
-            PreferredDataCenterRegion = new ChangeTrackingList<string>();
-            StorageAccountAccessTierPreferences = new ChangeTrackingList<string>();
+            PreferredDataCenterRegion = new Core.ChangeTrackingList<string>();
+            StorageAccountAccessTierPreferences = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DataBoxOrderPreferences. </summary>

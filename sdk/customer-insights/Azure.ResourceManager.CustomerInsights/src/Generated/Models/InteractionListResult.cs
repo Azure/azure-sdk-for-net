@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <summary> Initializes a new instance of InteractionListResult. </summary>
         internal InteractionListResult()
         {
-            Value = new ChangeTrackingList<InteractionResourceFormatData>();
+            Value = new Core.ChangeTrackingList<InteractionResourceFormatData>();
         }
 
         /// <summary> Initializes a new instance of InteractionListResult. </summary>

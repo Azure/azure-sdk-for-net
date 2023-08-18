@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<PatchOperationStatus> status = default;
-            Optional<string> assessmentActivityId = default;
-            Optional<bool> rebootPending = default;
-            Optional<int> criticalAndSecurityPatchCount = default;
-            Optional<int> otherPatchCount = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<IReadOnlyList<VirtualMachineSoftwarePatchProperties>> availablePatches = default;
-            Optional<ComputeApiError> error = default;
+            Core.Optional<PatchOperationStatus> status = default;
+            Core.Optional<string> assessmentActivityId = default;
+            Core.Optional<bool> rebootPending = default;
+            Core.Optional<int> criticalAndSecurityPatchCount = default;
+            Core.Optional<int> otherPatchCount = default;
+            Core.Optional<DateTimeOffset> startDateTime = default;
+            Core.Optional<IReadOnlyList<VirtualMachineSoftwarePatchProperties>> availablePatches = default;
+            Core.Optional<ComputeApiError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineAssessPatchesResult(Optional.ToNullable(status), assessmentActivityId.Value, Optional.ToNullable(rebootPending), Optional.ToNullable(criticalAndSecurityPatchCount), Optional.ToNullable(otherPatchCount), Optional.ToNullable(startDateTime), Optional.ToList(availablePatches), error.Value);
+            return new VirtualMachineAssessPatchesResult(Core.Optional.ToNullable(status), assessmentActivityId.Value, Core.Optional.ToNullable(rebootPending), Core.Optional.ToNullable(criticalAndSecurityPatchCount), Core.Optional.ToNullable(otherPatchCount), Core.Optional.ToNullable(startDateTime), Core.Optional.ToList(availablePatches), error.Value);
         }
     }
 }

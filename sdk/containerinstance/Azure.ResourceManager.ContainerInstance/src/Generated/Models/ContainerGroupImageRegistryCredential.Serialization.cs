@@ -11,29 +11,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerGroupImageRegistryCredential : IUtf8JsonSerializable
+    public partial class ContainerGroupImageRegistryCredential : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("server"u8);
             writer.WriteStringValue(Server);
-            if (Optional.IsDefined(Username))
+            if (Core.Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Optional.IsDefined(Password))
+            if (Core.Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteStringValue(Identity);
             }
-            if (Optional.IsDefined(IdentityUri))
+            if (Core.Optional.IsDefined(IdentityUri))
             {
                 writer.WritePropertyName("identityUrl"u8);
                 writer.WriteStringValue(IdentityUri.AbsoluteUri);
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return null;
             }
             string server = default;
-            Optional<string> username = default;
-            Optional<string> password = default;
-            Optional<string> identity = default;
-            Optional<Uri> identityUrl = default;
+            Core.Optional<string> username = default;
+            Core.Optional<string> password = default;
+            Core.Optional<string> identity = default;
+            Core.Optional<Uri> identityUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("server"u8))

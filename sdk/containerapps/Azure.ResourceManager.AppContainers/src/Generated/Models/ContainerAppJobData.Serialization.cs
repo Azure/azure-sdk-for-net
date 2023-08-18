@@ -13,18 +13,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    public partial class ContainerAppJobData : IUtf8JsonSerializable
+    public partial class ContainerAppJobData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.AppContainers
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnvironmentId))
+            if (Core.Optional.IsDefined(EnvironmentId))
             {
                 writer.WritePropertyName("environmentId"u8);
                 writer.WriteStringValue(EnvironmentId);
             }
-            if (Optional.IsDefined(WorkloadProfileName))
+            if (Core.Optional.IsDefined(WorkloadProfileName))
             {
                 writer.WritePropertyName("workloadProfileName"u8);
                 writer.WriteStringValue(WorkloadProfileName);
             }
-            if (Optional.IsDefined(Configuration))
+            if (Core.Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
             }
-            if (Optional.IsDefined(Template))
+            if (Core.Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
                 writer.WriteObjectValue(Template);
@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.AppContainers
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerAppJobProvisioningState> provisioningState = default;
-            Optional<string> environmentId = default;
-            Optional<string> workloadProfileName = default;
-            Optional<ContainerAppJobConfiguration> configuration = default;
-            Optional<ContainerAppJobTemplate> template = default;
-            Optional<IReadOnlyList<string>> outboundIPAddresses = default;
-            Optional<string> eventStreamEndpoint = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ContainerAppJobProvisioningState> provisioningState = default;
+            Core.Optional<string> environmentId = default;
+            Core.Optional<string> workloadProfileName = default;
+            Core.Optional<ContainerAppJobConfiguration> configuration = default;
+            Core.Optional<ContainerAppJobTemplate> template = default;
+            Core.Optional<IReadOnlyList<string>> outboundIPAddresses = default;
+            Core.Optional<string> eventStreamEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.AppContainers
                     continue;
                 }
             }
-            return new ContainerAppJobData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), environmentId.Value, workloadProfileName.Value, configuration.Value, template.Value, Optional.ToList(outboundIPAddresses), eventStreamEndpoint.Value);
+            return new ContainerAppJobData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity, Core.Optional.ToNullable(provisioningState), environmentId.Value, workloadProfileName.Value, configuration.Value, template.Value, Core.Optional.ToList(outboundIPAddresses), eventStreamEndpoint.Value);
         }
     }
 }

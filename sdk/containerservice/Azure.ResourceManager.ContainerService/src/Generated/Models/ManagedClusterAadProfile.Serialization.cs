@@ -12,22 +12,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterAadProfile : IUtf8JsonSerializable
+    public partial class ManagedClusterAadProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsManagedAadEnabled))
+            if (Core.Optional.IsDefined(IsManagedAadEnabled))
             {
                 writer.WritePropertyName("managed"u8);
                 writer.WriteBooleanValue(IsManagedAadEnabled.Value);
             }
-            if (Optional.IsDefined(IsAzureRbacEnabled))
+            if (Core.Optional.IsDefined(IsAzureRbacEnabled))
             {
                 writer.WritePropertyName("enableAzureRBAC"u8);
                 writer.WriteBooleanValue(IsAzureRbacEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(AdminGroupObjectIds))
+            if (Core.Optional.IsCollectionDefined(AdminGroupObjectIds))
             {
                 writer.WritePropertyName("adminGroupObjectIDs"u8);
                 writer.WriteStartArray();
@@ -37,22 +37,22 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ClientAppId))
+            if (Core.Optional.IsDefined(ClientAppId))
             {
                 writer.WritePropertyName("clientAppID"u8);
                 writer.WriteStringValue(ClientAppId.Value);
             }
-            if (Optional.IsDefined(ServerAppId))
+            if (Core.Optional.IsDefined(ServerAppId))
             {
                 writer.WritePropertyName("serverAppID"u8);
                 writer.WriteStringValue(ServerAppId.Value);
             }
-            if (Optional.IsDefined(ServerAppSecret))
+            if (Core.Optional.IsDefined(ServerAppSecret))
             {
                 writer.WritePropertyName("serverAppSecret"u8);
                 writer.WriteStringValue(ServerAppSecret);
             }
-            if (Optional.IsDefined(TenantId))
+            if (Core.Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantID"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -66,13 +66,13 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<bool> managed = default;
-            Optional<bool> enableAzureRBAC = default;
-            Optional<IList<Guid>> adminGroupObjectIds = default;
-            Optional<Guid> clientAppId = default;
-            Optional<Guid> serverAppId = default;
-            Optional<string> serverAppSecret = default;
-            Optional<Guid> tenantId = default;
+            Core.Optional<bool> managed = default;
+            Core.Optional<bool> enableAzureRBAC = default;
+            Core.Optional<IList<Guid>> adminGroupObjectIds = default;
+            Core.Optional<Guid> clientAppId = default;
+            Core.Optional<Guid> serverAppId = default;
+            Core.Optional<string> serverAppSecret = default;
+            Core.Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managed"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterAadProfile(Optional.ToNullable(managed), Optional.ToNullable(enableAzureRBAC), Optional.ToList(adminGroupObjectIds), Optional.ToNullable(clientAppId), Optional.ToNullable(serverAppId), serverAppSecret.Value, Optional.ToNullable(tenantId));
+            return new ManagedClusterAadProfile(Core.Optional.ToNullable(managed), Core.Optional.ToNullable(enableAzureRBAC), Core.Optional.ToList(adminGroupObjectIds), Core.Optional.ToNullable(clientAppId), Core.Optional.ToNullable(serverAppId), serverAppSecret.Value, Core.Optional.ToNullable(tenantId));
         }
     }
 }

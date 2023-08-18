@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<Guid> meterId = default;
-            Optional<string> meterType = default;
-            Optional<double> multiplier = default;
+            Core.Optional<Guid> meterId = default;
+            Core.Optional<string> meterType = default;
+            Core.Optional<double> multiplier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("meterId"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataBoxSkuCost(Optional.ToNullable(meterId), meterType.Value, Optional.ToNullable(multiplier));
+            return new DataBoxSkuCost(Core.Optional.ToNullable(meterId), meterType.Value, Core.Optional.ToNullable(multiplier));
         }
     }
 }

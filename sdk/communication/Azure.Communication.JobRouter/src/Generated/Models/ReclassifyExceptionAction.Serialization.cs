@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class ReclassifyExceptionAction : IUtf8JsonSerializable
+    public partial class ReclassifyExceptionAction : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClassificationPolicyId))
+            if (Core.Optional.IsDefined(ClassificationPolicyId))
             {
                 writer.WritePropertyName("classificationPolicyId"u8);
                 writer.WriteStringValue(ClassificationPolicyId);
             }
-            if (Optional.IsCollectionDefined(_labelsToUpsert))
+            if (Core.Optional.IsCollectionDefined(_labelsToUpsert))
             {
                 writer.WritePropertyName("labelsToUpsert"u8);
                 writer.WriteStartObject();
@@ -48,8 +48,8 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Optional<string> classificationPolicyId = default;
-            Optional<IDictionary<string, object>> labelsToUpsert = default;
+            Core.Optional<string> classificationPolicyId = default;
+            Core.Optional<IDictionary<string, object>> labelsToUpsert = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -85,7 +85,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new ReclassifyExceptionAction(kind, classificationPolicyId.Value, Optional.ToDictionary(labelsToUpsert));
+            return new ReclassifyExceptionAction(kind, classificationPolicyId.Value, Core.Optional.ToDictionary(labelsToUpsert));
         }
     }
 }

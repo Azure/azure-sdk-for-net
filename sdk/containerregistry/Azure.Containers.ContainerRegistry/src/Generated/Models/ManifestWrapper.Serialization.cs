@@ -19,18 +19,18 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Optional<string> mediaType = default;
-            Optional<IReadOnlyList<ManifestListAttributes>> manifests = default;
-            Optional<OciDescriptor> config = default;
-            Optional<IReadOnlyList<OciDescriptor>> layers = default;
-            Optional<OciAnnotations> annotations = default;
-            Optional<string> architecture = default;
-            Optional<string> name = default;
-            Optional<string> tag = default;
-            Optional<IReadOnlyList<FsLayer>> fsLayers = default;
-            Optional<IReadOnlyList<History>> history = default;
-            Optional<IReadOnlyList<ImageSignature>> signatures = default;
-            Optional<int> schemaVersion = default;
+            Core.Optional<string> mediaType = default;
+            Core.Optional<IReadOnlyList<ManifestListAttributes>> manifests = default;
+            Core.Optional<OciDescriptor> config = default;
+            Core.Optional<IReadOnlyList<OciDescriptor>> layers = default;
+            Core.Optional<OciAnnotations> annotations = default;
+            Core.Optional<string> architecture = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> tag = default;
+            Core.Optional<IReadOnlyList<FsLayer>> fsLayers = default;
+            Core.Optional<IReadOnlyList<History>> history = default;
+            Core.Optional<IReadOnlyList<ImageSignature>> signatures = default;
+            Core.Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mediaType"u8))
@@ -152,7 +152,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ManifestWrapper(Optional.ToNullable(schemaVersion), mediaType.Value, Optional.ToList(manifests), config.Value, Optional.ToList(layers), annotations.Value, architecture.Value, name.Value, tag.Value, Optional.ToList(fsLayers), Optional.ToList(history), Optional.ToList(signatures));
+            return new ManifestWrapper(Core.Optional.ToNullable(schemaVersion), mediaType.Value, Core.Optional.ToList(manifests), config.Value, Core.Optional.ToList(layers), annotations.Value, architecture.Value, name.Value, tag.Value, Core.Optional.ToList(fsLayers), Core.Optional.ToList(history), Core.Optional.ToList(signatures));
         }
     }
 }

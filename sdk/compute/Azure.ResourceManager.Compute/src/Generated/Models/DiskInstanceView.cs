@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of DiskInstanceView. </summary>
         internal DiskInstanceView()
         {
-            EncryptionSettings = new ChangeTrackingList<DiskEncryptionSettings>();
-            Statuses = new ChangeTrackingList<InstanceViewStatus>();
+            EncryptionSettings = new Core.ChangeTrackingList<DiskEncryptionSettings>();
+            Statuses = new Core.ChangeTrackingList<InstanceViewStatus>();
         }
 
         /// <summary> Initializes a new instance of DiskInstanceView. </summary>

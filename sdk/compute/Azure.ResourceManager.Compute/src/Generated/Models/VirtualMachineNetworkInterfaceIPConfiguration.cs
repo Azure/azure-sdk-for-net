@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.Compute.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            ApplicationSecurityGroups = new ChangeTrackingList<WritableSubResource>();
-            ApplicationGatewayBackendAddressPools = new ChangeTrackingList<WritableSubResource>();
-            LoadBalancerBackendAddressPools = new ChangeTrackingList<WritableSubResource>();
+            ApplicationSecurityGroups = new Core.ChangeTrackingList<WritableSubResource>();
+            ApplicationGatewayBackendAddressPools = new Core.ChangeTrackingList<WritableSubResource>();
+            LoadBalancerBackendAddressPools = new Core.ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineNetworkInterfaceIPConfiguration. </summary>

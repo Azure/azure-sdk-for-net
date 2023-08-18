@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <summary> Initializes a new instance of LogRules. </summary>
         public LogRules()
         {
-            FilteringTags = new ChangeTrackingList<FilteringTag>();
+            FilteringTags = new Core.ChangeTrackingList<FilteringTag>();
         }
 
         /// <summary> Initializes a new instance of LogRules. </summary>

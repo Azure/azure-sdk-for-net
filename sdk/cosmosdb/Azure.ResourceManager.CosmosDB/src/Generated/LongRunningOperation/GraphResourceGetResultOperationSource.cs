@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class GraphResourceGetResultOperationSource : IOperationSource<GraphResourceGetResultResource>
+    internal class GraphResourceGetResultOperationSource : Core.IOperationSource<GraphResourceGetResultResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.CosmosDB
             _client = client;
         }
 
-        GraphResourceGetResultResource IOperationSource<GraphResourceGetResultResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        GraphResourceGetResultResource Core.IOperationSource<GraphResourceGetResultResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = GraphResourceGetResultData.DeserializeGraphResourceGetResultData(document.RootElement);
             return new GraphResourceGetResultResource(_client, data);
         }
 
-        async ValueTask<GraphResourceGetResultResource> IOperationSource<GraphResourceGetResultResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<GraphResourceGetResultResource> Core.IOperationSource<GraphResourceGetResultResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = GraphResourceGetResultData.DeserializeGraphResourceGetResultData(document.RootElement);

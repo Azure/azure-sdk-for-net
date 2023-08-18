@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> objectId = default;
-            Optional<AadObjectIdentifierType> objectType = default;
-            Optional<int> maxDegreeOfParallelismPerJob = default;
-            Optional<int> minPriorityPerJob = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<Guid> objectId = default;
+            Core.Optional<AadObjectIdentifierType> objectType = default;
+            Core.Optional<int> maxDegreeOfParallelismPerJob = default;
+            Core.Optional<int> minPriorityPerJob = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                     continue;
                 }
             }
-            return new DataLakeAnalyticsComputePolicyData(id, name, type, systemData.Value, Optional.ToNullable(objectId), Optional.ToNullable(objectType), Optional.ToNullable(maxDegreeOfParallelismPerJob), Optional.ToNullable(minPriorityPerJob));
+            return new DataLakeAnalyticsComputePolicyData(id, name, type, systemData.Value, Core.Optional.ToNullable(objectId), Core.Optional.ToNullable(objectType), Core.Optional.ToNullable(maxDegreeOfParallelismPerJob), Core.Optional.ToNullable(minPriorityPerJob));
         }
     }
 }

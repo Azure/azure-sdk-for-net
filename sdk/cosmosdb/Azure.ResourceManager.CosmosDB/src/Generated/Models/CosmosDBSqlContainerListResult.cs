@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CosmosDBSqlContainerListResult. </summary>
         internal CosmosDBSqlContainerListResult()
         {
-            Value = new ChangeTrackingList<CosmosDBSqlContainerData>();
+            Value = new Core.ChangeTrackingList<CosmosDBSqlContainerData>();
         }
 
         /// <summary> Initializes a new instance of CosmosDBSqlContainerListResult. </summary>

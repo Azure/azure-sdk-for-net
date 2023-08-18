@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class PredictionGradesItem : IUtf8JsonSerializable
+    public partial class PredictionGradesItem : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(GradeName))
+            if (Core.Optional.IsDefined(GradeName))
             {
                 writer.WritePropertyName("gradeName"u8);
                 writer.WriteStringValue(GradeName);
             }
-            if (Optional.IsDefined(MinScoreThreshold))
+            if (Core.Optional.IsDefined(MinScoreThreshold))
             {
                 writer.WritePropertyName("minScoreThreshold"u8);
                 writer.WriteNumberValue(MinScoreThreshold.Value);
             }
-            if (Optional.IsDefined(MaxScoreThreshold))
+            if (Core.Optional.IsDefined(MaxScoreThreshold))
             {
                 writer.WritePropertyName("maxScoreThreshold"u8);
                 writer.WriteNumberValue(MaxScoreThreshold.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<string> gradeName = default;
-            Optional<int> minScoreThreshold = default;
-            Optional<int> maxScoreThreshold = default;
+            Core.Optional<string> gradeName = default;
+            Core.Optional<int> minScoreThreshold = default;
+            Core.Optional<int> maxScoreThreshold = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("gradeName"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new PredictionGradesItem(gradeName.Value, Optional.ToNullable(minScoreThreshold), Optional.ToNullable(maxScoreThreshold));
+            return new PredictionGradesItem(gradeName.Value, Core.Optional.ToNullable(minScoreThreshold), Core.Optional.ToNullable(maxScoreThreshold));
         }
     }
 }

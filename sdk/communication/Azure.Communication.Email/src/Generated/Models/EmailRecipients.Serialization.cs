@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.Email
 {
-    public partial class EmailRecipients : IUtf8JsonSerializable
+    public partial class EmailRecipients : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("to"u8);
@@ -22,7 +22,7 @@ namespace Azure.Communication.Email
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(CC))
+            if (Core.Optional.IsCollectionDefined(CC))
             {
                 writer.WritePropertyName("cc"u8);
                 writer.WriteStartArray();
@@ -32,7 +32,7 @@ namespace Azure.Communication.Email
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(BCC))
+            if (Core.Optional.IsCollectionDefined(BCC))
             {
                 writer.WritePropertyName("bcc"u8);
                 writer.WriteStartArray();

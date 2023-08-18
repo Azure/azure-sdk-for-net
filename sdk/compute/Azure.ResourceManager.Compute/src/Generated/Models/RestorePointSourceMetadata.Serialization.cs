@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RestorePointSourceMetadata : IUtf8JsonSerializable
+    public partial class RestorePointSourceMetadata : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageProfile))
+            if (Core.Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
@@ -29,16 +29,16 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<VirtualMachineHardwareProfile> hardwareProfile = default;
-            Optional<RestorePointSourceVmStorageProfile> storageProfile = default;
-            Optional<VirtualMachineOSProfile> osProfile = default;
-            Optional<DiagnosticsProfile> diagnosticsProfile = default;
-            Optional<string> licenseType = default;
-            Optional<string> vmId = default;
-            Optional<SecurityProfile> securityProfile = default;
-            Optional<AzureLocation> location = default;
-            Optional<string> userData = default;
-            Optional<HyperVGeneration> hyperVGeneration = default;
+            Core.Optional<VirtualMachineHardwareProfile> hardwareProfile = default;
+            Core.Optional<RestorePointSourceVmStorageProfile> storageProfile = default;
+            Core.Optional<VirtualMachineOSProfile> osProfile = default;
+            Core.Optional<DiagnosticsProfile> diagnosticsProfile = default;
+            Core.Optional<string> licenseType = default;
+            Core.Optional<string> vmId = default;
+            Core.Optional<SecurityProfile> securityProfile = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<string> userData = default;
+            Core.Optional<HyperVGeneration> hyperVGeneration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hardwareProfile"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new RestorePointSourceMetadata(hardwareProfile.Value, storageProfile.Value, osProfile.Value, diagnosticsProfile.Value, licenseType.Value, vmId.Value, securityProfile.Value, Optional.ToNullable(location), userData.Value, Optional.ToNullable(hyperVGeneration));
+            return new RestorePointSourceMetadata(hardwareProfile.Value, storageProfile.Value, osProfile.Value, diagnosticsProfile.Value, licenseType.Value, vmId.Value, securityProfile.Value, Core.Optional.ToNullable(location), userData.Value, Core.Optional.ToNullable(hyperVGeneration));
         }
     }
 }

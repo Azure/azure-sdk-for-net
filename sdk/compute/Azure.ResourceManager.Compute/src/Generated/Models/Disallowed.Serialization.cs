@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class Disallowed : IUtf8JsonSerializable
+    internal partial class Disallowed : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DiskTypes))
+            if (Core.Optional.IsCollectionDefined(DiskTypes))
             {
                 writer.WritePropertyName("diskTypes"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<string>> diskTypes = default;
+            Core.Optional<IList<string>> diskTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskTypes"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new Disallowed(Optional.ToList(diskTypes));
+            return new Disallowed(Core.Optional.ToList(diskTypes));
         }
     }
 }

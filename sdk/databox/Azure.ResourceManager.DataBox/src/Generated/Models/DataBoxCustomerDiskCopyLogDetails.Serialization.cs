@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> serialNumber = default;
-            Optional<string> errorLogLink = default;
-            Optional<string> verboseLogLink = default;
+            Core.Optional<string> serialNumber = default;
+            Core.Optional<string> errorLogLink = default;
+            Core.Optional<string> verboseLogLink = default;
             DataBoxOrderType copyLogDetailsType = default;
             foreach (var property in element.EnumerateObject())
             {

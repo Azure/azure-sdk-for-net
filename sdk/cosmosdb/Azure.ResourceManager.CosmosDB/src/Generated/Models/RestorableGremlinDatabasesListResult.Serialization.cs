@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RestorableGremlinDatabase>> value = default;
+            Core.Optional<IReadOnlyList<RestorableGremlinDatabase>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new RestorableGremlinDatabasesListResult(Optional.ToList(value));
+            return new RestorableGremlinDatabasesListResult(Core.Optional.ToList(value));
         }
     }
 }

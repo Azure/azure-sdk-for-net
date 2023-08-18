@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            DimensionFilter = new ChangeTrackingList<DataBoxEdgeMetricDimension>();
-            AdditionalDimensions = new ChangeTrackingList<DataBoxEdgeMetricDimension>();
+            DimensionFilter = new Core.ChangeTrackingList<DataBoxEdgeMetricDimension>();
+            AdditionalDimensions = new Core.ChangeTrackingList<DataBoxEdgeMetricDimension>();
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeMetricCounter. </summary>

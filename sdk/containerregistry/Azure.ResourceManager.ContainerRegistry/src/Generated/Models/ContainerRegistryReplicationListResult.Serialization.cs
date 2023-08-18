@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContainerRegistryReplicationData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<ContainerRegistryReplicationData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryReplicationListResult(Optional.ToList(value), nextLink.Value);
+            return new ContainerRegistryReplicationListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

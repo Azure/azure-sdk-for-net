@@ -14,22 +14,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    public partial class VCenterData : IUtf8JsonSerializable
+    public partial class VCenterData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtendedLocation))
+            if (Core.Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             writer.WriteStartObject();
             writer.WritePropertyName("fqdn"u8);
             writer.WriteStringValue(Fqdn);
-            if (Optional.IsDefined(Port))
+            if (Core.Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Optional.IsDefined(Credentials))
+            if (Core.Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
@@ -66,24 +66,24 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<string> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ExtendedLocation> extendedLocation = default;
+            Core.Optional<string> kind = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> uuid = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> uuid = default;
             string fqdn = default;
-            Optional<int> port = default;
-            Optional<string> version = default;
-            Optional<string> instanceUuid = default;
-            Optional<string> connectionStatus = default;
-            Optional<string> customResourceName = default;
-            Optional<VICredential> credentials = default;
-            Optional<IReadOnlyList<ResourceStatus>> statuses = default;
-            Optional<string> provisioningState = default;
+            Core.Optional<int> port = default;
+            Core.Optional<string> version = default;
+            Core.Optional<string> instanceUuid = default;
+            Core.Optional<string> connectionStatus = default;
+            Core.Optional<string> customResourceName = default;
+            Core.Optional<VICredential> credentials = default;
+            Core.Optional<IReadOnlyList<ResourceStatus>> statuses = default;
+            Core.Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     continue;
                 }
             }
-            return new VCenterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, fqdn, Optional.ToNullable(port), version.Value, instanceUuid.Value, connectionStatus.Value, customResourceName.Value, credentials.Value, Optional.ToList(statuses), provisioningState.Value);
+            return new VCenterData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, fqdn, Core.Optional.ToNullable(port), version.Value, instanceUuid.Value, connectionStatus.Value, customResourceName.Value, credentials.Value, Core.Optional.ToList(statuses), provisioningState.Value);
         }
     }
 }

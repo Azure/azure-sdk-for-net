@@ -10,47 +10,47 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppDaprConfiguration : IUtf8JsonSerializable
+    public partial class ContainerAppDaprConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (Core.Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(AppId))
+            if (Core.Optional.IsDefined(AppId))
             {
                 writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
-            if (Optional.IsDefined(AppProtocol))
+            if (Core.Optional.IsDefined(AppProtocol))
             {
                 writer.WritePropertyName("appProtocol"u8);
                 writer.WriteStringValue(AppProtocol.Value.ToString());
             }
-            if (Optional.IsDefined(AppPort))
+            if (Core.Optional.IsDefined(AppPort))
             {
                 writer.WritePropertyName("appPort"u8);
                 writer.WriteNumberValue(AppPort.Value);
             }
-            if (Optional.IsDefined(HttpReadBufferSize))
+            if (Core.Optional.IsDefined(HttpReadBufferSize))
             {
                 writer.WritePropertyName("httpReadBufferSize"u8);
                 writer.WriteNumberValue(HttpReadBufferSize.Value);
             }
-            if (Optional.IsDefined(HttpMaxRequestSize))
+            if (Core.Optional.IsDefined(HttpMaxRequestSize))
             {
                 writer.WritePropertyName("httpMaxRequestSize"u8);
                 writer.WriteNumberValue(HttpMaxRequestSize.Value);
             }
-            if (Optional.IsDefined(LogLevel))
+            if (Core.Optional.IsDefined(LogLevel))
             {
                 writer.WritePropertyName("logLevel"u8);
                 writer.WriteStringValue(LogLevel.Value.ToString());
             }
-            if (Optional.IsDefined(IsApiLoggingEnabled))
+            if (Core.Optional.IsDefined(IsApiLoggingEnabled))
             {
                 writer.WritePropertyName("enableApiLogging"u8);
                 writer.WriteBooleanValue(IsApiLoggingEnabled.Value);
@@ -64,14 +64,14 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<string> appId = default;
-            Optional<ContainerAppProtocol> appProtocol = default;
-            Optional<int> appPort = default;
-            Optional<int> httpReadBufferSize = default;
-            Optional<int> httpMaxRequestSize = default;
-            Optional<ContainerAppDaprLogLevel> logLevel = default;
-            Optional<bool> enableApiLogging = default;
+            Core.Optional<bool> enabled = default;
+            Core.Optional<string> appId = default;
+            Core.Optional<ContainerAppProtocol> appProtocol = default;
+            Core.Optional<int> appPort = default;
+            Core.Optional<int> httpReadBufferSize = default;
+            Core.Optional<int> httpMaxRequestSize = default;
+            Core.Optional<ContainerAppDaprLogLevel> logLevel = default;
+            Core.Optional<bool> enableApiLogging = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppDaprConfiguration(Optional.ToNullable(enabled), appId.Value, Optional.ToNullable(appProtocol), Optional.ToNullable(appPort), Optional.ToNullable(httpReadBufferSize), Optional.ToNullable(httpMaxRequestSize), Optional.ToNullable(logLevel), Optional.ToNullable(enableApiLogging));
+            return new ContainerAppDaprConfiguration(Core.Optional.ToNullable(enabled), appId.Value, Core.Optional.ToNullable(appProtocol), Core.Optional.ToNullable(appPort), Core.Optional.ToNullable(httpReadBufferSize), Core.Optional.ToNullable(httpMaxRequestSize), Core.Optional.ToNullable(logLevel), Core.Optional.ToNullable(enableApiLogging));
         }
     }
 }

@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineRunCommandScriptSource : IUtf8JsonSerializable
+    public partial class VirtualMachineRunCommandScriptSource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Script))
+            if (Core.Optional.IsDefined(Script))
             {
                 writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script);
             }
-            if (Optional.IsDefined(ScriptUri))
+            if (Core.Optional.IsDefined(ScriptUri))
             {
                 writer.WritePropertyName("scriptUri"u8);
                 writer.WriteStringValue(ScriptUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(CommandId))
+            if (Core.Optional.IsDefined(CommandId))
             {
                 writer.WritePropertyName("commandId"u8);
                 writer.WriteStringValue(CommandId);
             }
-            if (Optional.IsDefined(ScriptUriManagedIdentity))
+            if (Core.Optional.IsDefined(ScriptUriManagedIdentity))
             {
                 writer.WritePropertyName("scriptUriManagedIdentity"u8);
                 writer.WriteObjectValue(ScriptUriManagedIdentity);
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> script = default;
-            Optional<Uri> scriptUri = default;
-            Optional<string> commandId = default;
-            Optional<RunCommandManagedIdentity> scriptUriManagedIdentity = default;
+            Core.Optional<string> script = default;
+            Core.Optional<Uri> scriptUri = default;
+            Core.Optional<string> commandId = default;
+            Core.Optional<RunCommandManagedIdentity> scriptUriManagedIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("script"u8))

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RestorableMongoDBResourceData>> value = default;
+            Core.Optional<IReadOnlyList<RestorableMongoDBResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new RestorableMongoDBResourcesListResult(Optional.ToList(value));
+            return new RestorableMongoDBResourcesListResult(Core.Optional.ToList(value));
         }
     }
 }

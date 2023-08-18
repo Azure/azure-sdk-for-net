@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppLogin. </summary>
         public ContainerAppLogin()
         {
-            AllowedExternalRedirectUrls = new ChangeTrackingList<string>();
+            AllowedExternalRedirectUrls = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppLogin. </summary>

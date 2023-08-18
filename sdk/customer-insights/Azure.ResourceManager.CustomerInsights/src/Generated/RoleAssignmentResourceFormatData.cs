@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <summary> Initializes a new instance of RoleAssignmentResourceFormatData. </summary>
         public RoleAssignmentResourceFormatData()
         {
-            DisplayName = new ChangeTrackingDictionary<string, string>();
-            Description = new ChangeTrackingDictionary<string, string>();
-            Principals = new ChangeTrackingList<AssignmentPrincipal>();
+            DisplayName = new Core.ChangeTrackingDictionary<string, string>();
+            Description = new Core.ChangeTrackingDictionary<string, string>();
+            Principals = new Core.ChangeTrackingList<AssignmentPrincipal>();
         }
 
         /// <summary> Initializes a new instance of RoleAssignmentResourceFormatData. </summary>

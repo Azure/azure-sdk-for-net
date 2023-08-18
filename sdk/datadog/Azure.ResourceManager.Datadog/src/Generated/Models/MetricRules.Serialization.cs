@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    internal partial class MetricRules : IUtf8JsonSerializable
+    internal partial class MetricRules : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(FilteringTags))
+            if (Core.Optional.IsCollectionDefined(FilteringTags))
             {
                 writer.WritePropertyName("filteringTags"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<IList<FilteringTag>> filteringTags = default;
+            Core.Optional<IList<FilteringTag>> filteringTags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filteringTags"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     continue;
                 }
             }
-            return new MetricRules(Optional.ToList(filteringTags));
+            return new MetricRules(Core.Optional.ToList(filteringTags));
         }
     }
 }

@@ -11,24 +11,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ExtendedCosmosDBSqlTriggerResourceInfo : IUtf8JsonSerializable
+    public partial class ExtendedCosmosDBSqlTriggerResourceInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(TriggerName);
-            if (Optional.IsDefined(Body))
+            if (Core.Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
                 writer.WriteStringValue(Body);
             }
-            if (Optional.IsDefined(TriggerType))
+            if (Core.Optional.IsDefined(TriggerType))
             {
                 writer.WritePropertyName("triggerType"u8);
                 writer.WriteStringValue(TriggerType.Value.ToString());
             }
-            if (Optional.IsDefined(TriggerOperation))
+            if (Core.Optional.IsDefined(TriggerOperation))
             {
                 writer.WritePropertyName("triggerOperation"u8);
                 writer.WriteStringValue(TriggerOperation.Value.ToString());
@@ -42,13 +42,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> rid = default;
-            Optional<float> ts = default;
-            Optional<ETag> etag = default;
+            Core.Optional<string> rid = default;
+            Core.Optional<float> ts = default;
+            Core.Optional<ETag> etag = default;
             string id = default;
-            Optional<string> body = default;
-            Optional<CosmosDBSqlTriggerType> triggerType = default;
-            Optional<CosmosDBSqlTriggerOperation> triggerOperation = default;
+            Core.Optional<string> body = default;
+            Core.Optional<CosmosDBSqlTriggerType> triggerType = default;
+            Core.Optional<CosmosDBSqlTriggerOperation> triggerOperation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_rid"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ExtendedCosmosDBSqlTriggerResourceInfo(id, body.Value, Optional.ToNullable(triggerType), Optional.ToNullable(triggerOperation), rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            return new ExtendedCosmosDBSqlTriggerResourceInfo(id, body.Value, Core.Optional.ToNullable(triggerType), Core.Optional.ToNullable(triggerOperation), rid.Value, Core.Optional.ToNullable(ts), Core.Optional.ToNullable(etag));
         }
     }
 }

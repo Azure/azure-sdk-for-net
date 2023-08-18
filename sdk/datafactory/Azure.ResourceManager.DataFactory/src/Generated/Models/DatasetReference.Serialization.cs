@@ -12,16 +12,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DatasetReference : IUtf8JsonSerializable
+    public partial class DatasetReference : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ReferenceType.ToString());
             writer.WritePropertyName("referenceName"u8);
             writer.WriteStringValue(ReferenceName);
-            if (Optional.IsCollectionDefined(Parameters))
+            if (Core.Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DatasetReferenceType type = default;
             string referenceName = default;
-            Optional<IDictionary<string, BinaryData>> parameters = default;
+            Core.Optional<IDictionary<string, BinaryData>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new DatasetReference(type, referenceName, Optional.ToDictionary(parameters));
+            return new DatasetReference(type, referenceName, Core.Optional.ToDictionary(parameters));
         }
     }
 }

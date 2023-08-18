@@ -13,14 +13,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    public partial class ContainerServiceMaintenanceConfigurationData : IUtf8JsonSerializable
+    public partial class ContainerServiceMaintenanceConfigurationData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TimesInWeek))
+            if (Core.Optional.IsCollectionDefined(TimesInWeek))
             {
                 writer.WritePropertyName("timeInWeek"u8);
                 writer.WriteStartArray();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NotAllowedTimes))
+            if (Core.Optional.IsCollectionDefined(NotAllowedTimes))
             {
                 writer.WritePropertyName("notAllowedTime"u8);
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MaintenanceWindow))
+            if (Core.Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
                 writer.WriteObjectValue(MaintenanceWindow);
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.ContainerService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<ContainerServiceTimeInWeek>> timeInWeek = default;
-            Optional<IList<ContainerServiceTimeSpan>> notAllowedTime = default;
-            Optional<ContainerServiceMaintenanceWindow> maintenanceWindow = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IList<ContainerServiceTimeInWeek>> timeInWeek = default;
+            Core.Optional<IList<ContainerServiceTimeSpan>> notAllowedTime = default;
+            Core.Optional<ContainerServiceMaintenanceWindow> maintenanceWindow = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ContainerService
                     continue;
                 }
             }
-            return new ContainerServiceMaintenanceConfigurationData(id, name, type, systemData.Value, Optional.ToList(timeInWeek), Optional.ToList(notAllowedTime), maintenanceWindow.Value);
+            return new ContainerServiceMaintenanceConfigurationData(id, name, type, systemData.Value, Core.Optional.ToList(timeInWeek), Core.Optional.ToList(notAllowedTime), maintenanceWindow.Value);
         }
     }
 }

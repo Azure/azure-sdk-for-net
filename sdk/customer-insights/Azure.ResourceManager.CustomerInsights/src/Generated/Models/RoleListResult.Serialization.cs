@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RoleResourceFormat>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<RoleResourceFormat>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new RoleListResult(Optional.ToList(value), nextLink.Value);
+            return new RoleListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

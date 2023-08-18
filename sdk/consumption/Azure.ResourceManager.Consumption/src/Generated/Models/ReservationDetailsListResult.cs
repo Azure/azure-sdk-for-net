@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of ReservationDetailsListResult. </summary>
         internal ReservationDetailsListResult()
         {
-            Value = new ChangeTrackingList<ConsumptionReservationDetail>();
+            Value = new Core.ChangeTrackingList<ConsumptionReservationDetail>();
         }
 
         /// <summary> Initializes a new instance of ReservationDetailsListResult. </summary>

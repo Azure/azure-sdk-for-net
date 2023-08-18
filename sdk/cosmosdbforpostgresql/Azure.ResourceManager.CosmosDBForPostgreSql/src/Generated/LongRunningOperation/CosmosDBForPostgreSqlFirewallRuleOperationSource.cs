@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
-    internal class CosmosDBForPostgreSqlFirewallRuleOperationSource : IOperationSource<CosmosDBForPostgreSqlFirewallRuleResource>
+    internal class CosmosDBForPostgreSqlFirewallRuleOperationSource : Core.IOperationSource<CosmosDBForPostgreSqlFirewallRuleResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             _client = client;
         }
 
-        CosmosDBForPostgreSqlFirewallRuleResource IOperationSource<CosmosDBForPostgreSqlFirewallRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CosmosDBForPostgreSqlFirewallRuleResource Core.IOperationSource<CosmosDBForPostgreSqlFirewallRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CosmosDBForPostgreSqlFirewallRuleData.DeserializeCosmosDBForPostgreSqlFirewallRuleData(document.RootElement);
             return new CosmosDBForPostgreSqlFirewallRuleResource(_client, data);
         }
 
-        async ValueTask<CosmosDBForPostgreSqlFirewallRuleResource> IOperationSource<CosmosDBForPostgreSqlFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CosmosDBForPostgreSqlFirewallRuleResource> Core.IOperationSource<CosmosDBForPostgreSqlFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CosmosDBForPostgreSqlFirewallRuleData.DeserializeCosmosDBForPostgreSqlFirewallRuleData(document.RootElement);

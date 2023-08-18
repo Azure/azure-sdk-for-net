@@ -11,38 +11,38 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class PresenterLayout : IUtf8JsonSerializable
+    public partial class PresenterLayout : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("presenterId"u8);
             writer.WriteStringValue(PresenterId);
             writer.WritePropertyName("supportId"u8);
             writer.WriteStringValue(SupportId);
-            if (Optional.IsDefined(SupportPosition))
+            if (Core.Optional.IsDefined(SupportPosition))
             {
                 writer.WritePropertyName("supportPosition"u8);
                 writer.WriteStringValue(SupportPosition.Value.ToString());
             }
-            if (Optional.IsDefined(SupportAspectRatio))
+            if (Core.Optional.IsDefined(SupportAspectRatio))
             {
                 writer.WritePropertyName("supportAspectRatio"u8);
                 writer.WriteNumberValue(SupportAspectRatio.Value);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(Resolution))
+            if (Core.Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
                 writer.WriteObjectValue(Resolution);
             }
-            if (Optional.IsDefined(PlaceholderImageUri))
+            if (Core.Optional.IsDefined(PlaceholderImageUri))
             {
                 writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
             }
-            if (Optional.IsDefined(ScalingMode))
+            if (Core.Optional.IsDefined(ScalingMode))
             {
                 writer.WritePropertyName("scalingMode"u8);
                 writer.WriteStringValue(ScalingMode.Value.ToString());
@@ -58,12 +58,12 @@ namespace Azure.Communication.MediaComposition
             }
             string presenterId = default;
             string supportId = default;
-            Optional<SupportPosition> supportPosition = default;
-            Optional<double> supportAspectRatio = default;
+            Core.Optional<SupportPosition> supportPosition = default;
+            Core.Optional<double> supportAspectRatio = default;
             LayoutType kind = default;
-            Optional<LayoutResolution> resolution = default;
-            Optional<string> placeholderImageUri = default;
-            Optional<ScalingMode> scalingMode = default;
+            Core.Optional<LayoutResolution> resolution = default;
+            Core.Optional<string> placeholderImageUri = default;
+            Core.Optional<ScalingMode> scalingMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("presenterId"u8))
@@ -123,7 +123,7 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new PresenterLayout(kind, resolution.Value, placeholderImageUri.Value, Optional.ToNullable(scalingMode), presenterId, supportId, Optional.ToNullable(supportPosition), Optional.ToNullable(supportAspectRatio));
+            return new PresenterLayout(kind, resolution.Value, placeholderImageUri.Value, Core.Optional.ToNullable(scalingMode), presenterId, supportId, Core.Optional.ToNullable(supportPosition), Core.Optional.ToNullable(supportAspectRatio));
         }
     }
 }

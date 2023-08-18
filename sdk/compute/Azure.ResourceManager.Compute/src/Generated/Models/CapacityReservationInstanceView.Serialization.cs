@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<CapacityReservationUtilization> utilizationInfo = default;
-            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            Core.Optional<CapacityReservationUtilization> utilizationInfo = default;
+            Core.Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("utilizationInfo"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new CapacityReservationInstanceView(utilizationInfo.Value, Optional.ToList(statuses));
+            return new CapacityReservationInstanceView(utilizationInfo.Value, Core.Optional.ToList(statuses));
         }
     }
 }

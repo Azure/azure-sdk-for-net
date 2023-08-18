@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<bool> imageExists = default;
-            Optional<Uri> contentUrl = default;
-            Optional<string> relativePath = default;
+            Core.Optional<bool> imageExists = default;
+            Core.Optional<Uri> contentUrl = default;
+            Core.Optional<string> relativePath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("imageExists"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new ImageDefinition(Optional.ToNullable(imageExists), contentUrl.Value, relativePath.Value);
+            return new ImageDefinition(Core.Optional.ToNullable(imageExists), contentUrl.Value, relativePath.Value);
         }
     }
 }

@@ -10,21 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GrantAccessData : IUtf8JsonSerializable
+    public partial class GrantAccessData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("access"u8);
             writer.WriteStringValue(Access.ToString());
             writer.WritePropertyName("durationInSeconds"u8);
             writer.WriteNumberValue(DurationInSeconds);
-            if (Optional.IsDefined(GetSecureVmGuestStateSas))
+            if (Core.Optional.IsDefined(GetSecureVmGuestStateSas))
             {
                 writer.WritePropertyName("getSecureVMGuestStateSAS"u8);
                 writer.WriteBooleanValue(GetSecureVmGuestStateSas.Value);
             }
-            if (Optional.IsDefined(FileFormat))
+            if (Core.Optional.IsDefined(FileFormat))
             {
                 writer.WritePropertyName("fileFormat"u8);
                 writer.WriteStringValue(FileFormat.Value.ToString());

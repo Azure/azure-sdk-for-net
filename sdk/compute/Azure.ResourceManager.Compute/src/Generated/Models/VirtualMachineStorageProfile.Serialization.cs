@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineStorageProfile : IUtf8JsonSerializable
+    public partial class VirtualMachineStorageProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ImageReference))
+            if (Core.Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
                 writer.WriteObjectValue(ImageReference);
             }
-            if (Optional.IsDefined(OSDisk))
+            if (Core.Optional.IsDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
                 writer.WriteObjectValue(OSDisk);
             }
-            if (Optional.IsCollectionDefined(DataDisks))
+            if (Core.Optional.IsCollectionDefined(DataDisks))
             {
                 writer.WritePropertyName("dataDisks"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DiskControllerType))
+            if (Core.Optional.IsDefined(DiskControllerType))
             {
                 writer.WritePropertyName("diskControllerType"u8);
                 writer.WriteStringValue(DiskControllerType.Value.ToString());
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ImageReference> imageReference = default;
-            Optional<VirtualMachineOSDisk> osDisk = default;
-            Optional<IList<VirtualMachineDataDisk>> dataDisks = default;
-            Optional<DiskControllerType> diskControllerType = default;
+            Core.Optional<ImageReference> imageReference = default;
+            Core.Optional<VirtualMachineOSDisk> osDisk = default;
+            Core.Optional<IList<VirtualMachineDataDisk>> dataDisks = default;
+            Core.Optional<DiskControllerType> diskControllerType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("imageReference"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineStorageProfile(imageReference.Value, osDisk.Value, Optional.ToList(dataDisks), Optional.ToNullable(diskControllerType));
+            return new VirtualMachineStorageProfile(imageReference.Value, osDisk.Value, Core.Optional.ToList(dataDisks), Core.Optional.ToNullable(diskControllerType));
         }
     }
 }

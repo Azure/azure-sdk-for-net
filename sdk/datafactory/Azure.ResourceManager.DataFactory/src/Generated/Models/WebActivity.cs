@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             Method = method;
             Uri = uri;
-            Datasets = new ChangeTrackingList<DatasetReference>();
-            LinkedServices = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
+            Datasets = new Core.ChangeTrackingList<DatasetReference>();
+            LinkedServices = new Core.ChangeTrackingList<DataFactoryLinkedServiceReference>();
             ActivityType = "WebActivity";
         }
 

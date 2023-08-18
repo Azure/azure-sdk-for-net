@@ -10,29 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterWindowsProfile : IUtf8JsonSerializable
+    public partial class ManagedClusterWindowsProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("adminUsername"u8);
             writer.WriteStringValue(AdminUsername);
-            if (Optional.IsDefined(AdminPassword))
+            if (Core.Optional.IsDefined(AdminPassword))
             {
                 writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
-            if (Optional.IsDefined(LicenseType))
+            if (Core.Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (Optional.IsDefined(IsCsiProxyEnabled))
+            if (Core.Optional.IsDefined(IsCsiProxyEnabled))
             {
                 writer.WritePropertyName("enableCSIProxy"u8);
                 writer.WriteBooleanValue(IsCsiProxyEnabled.Value);
             }
-            if (Optional.IsDefined(GmsaProfile))
+            if (Core.Optional.IsDefined(GmsaProfile))
             {
                 writer.WritePropertyName("gmsaProfile"u8);
                 writer.WriteObjectValue(GmsaProfile);
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             string adminUsername = default;
-            Optional<string> adminPassword = default;
-            Optional<WindowsVmLicenseType> licenseType = default;
-            Optional<bool> enableCsiProxy = default;
-            Optional<WindowsGmsaProfile> gmsaProfile = default;
+            Core.Optional<string> adminPassword = default;
+            Core.Optional<WindowsVmLicenseType> licenseType = default;
+            Core.Optional<bool> enableCsiProxy = default;
+            Core.Optional<WindowsGmsaProfile> gmsaProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("adminUsername"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterWindowsProfile(adminUsername, adminPassword.Value, Optional.ToNullable(licenseType), Optional.ToNullable(enableCsiProxy), gmsaProfile.Value);
+            return new ManagedClusterWindowsProfile(adminUsername, adminPassword.Value, Core.Optional.ToNullable(licenseType), Core.Optional.ToNullable(enableCsiProxy), gmsaProfile.Value);
         }
     }
 }

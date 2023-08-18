@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CosmosDBAccountRestoreParameters. </summary>
         public CosmosDBAccountRestoreParameters()
         {
-            DatabasesToRestore = new ChangeTrackingList<DatabaseRestoreResourceInfo>();
-            GremlinDatabasesToRestore = new ChangeTrackingList<GremlinDatabaseRestoreResourceInfo>();
-            TablesToRestore = new ChangeTrackingList<string>();
+            DatabasesToRestore = new Core.ChangeTrackingList<DatabaseRestoreResourceInfo>();
+            GremlinDatabasesToRestore = new Core.ChangeTrackingList<GremlinDatabaseRestoreResourceInfo>();
+            TablesToRestore = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of CosmosDBAccountRestoreParameters. </summary>

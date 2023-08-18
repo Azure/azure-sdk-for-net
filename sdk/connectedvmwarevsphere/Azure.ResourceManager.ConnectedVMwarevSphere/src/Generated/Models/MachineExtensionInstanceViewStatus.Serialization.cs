@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class MachineExtensionInstanceViewStatus : IUtf8JsonSerializable
+    public partial class MachineExtensionInstanceViewStatus : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<MachineExtensionStatusLevelType> level = default;
-            Optional<string> displayStatus = default;
-            Optional<string> message = default;
-            Optional<DateTimeOffset> time = default;
+            Core.Optional<string> code = default;
+            Core.Optional<MachineExtensionStatusLevelType> level = default;
+            Core.Optional<string> displayStatus = default;
+            Core.Optional<string> message = default;
+            Core.Optional<DateTimeOffset> time = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     continue;
                 }
             }
-            return new MachineExtensionInstanceViewStatus(code.Value, Optional.ToNullable(level), displayStatus.Value, message.Value, Optional.ToNullable(time));
+            return new MachineExtensionInstanceViewStatus(code.Value, Core.Optional.ToNullable(level), displayStatus.Value, message.Value, Core.Optional.ToNullable(time));
         }
     }
 }

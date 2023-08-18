@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class LongestIdleMode : IUtf8JsonSerializable
+    public partial class LongestIdleMode : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (Optional.IsDefined(MinConcurrentOffers))
+            if (Core.Optional.IsDefined(MinConcurrentOffers))
             {
                 writer.WritePropertyName("minConcurrentOffers"u8);
                 writer.WriteNumberValue(MinConcurrentOffers);
             }
-            if (Optional.IsDefined(MaxConcurrentOffers))
+            if (Core.Optional.IsDefined(MaxConcurrentOffers))
             {
                 writer.WritePropertyName("maxConcurrentOffers"u8);
                 writer.WriteNumberValue(MaxConcurrentOffers);
             }
-            if (Optional.IsDefined(BypassSelectors))
+            if (Core.Optional.IsDefined(BypassSelectors))
             {
                 writer.WritePropertyName("bypassSelectors"u8);
                 writer.WriteBooleanValue(BypassSelectors.Value);
@@ -42,9 +42,9 @@ namespace Azure.Communication.JobRouter
                 return null;
             }
             string kind = default;
-            Optional<int> minConcurrentOffers = default;
-            Optional<int> maxConcurrentOffers = default;
-            Optional<bool> bypassSelectors = default;
+            Core.Optional<int> minConcurrentOffers = default;
+            Core.Optional<int> maxConcurrentOffers = default;
+            Core.Optional<bool> bypassSelectors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -80,7 +80,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new LongestIdleMode(kind, minConcurrentOffers, maxConcurrentOffers, Optional.ToNullable(bypassSelectors));
+            return new LongestIdleMode(kind, minConcurrentOffers, maxConcurrentOffers, Core.Optional.ToNullable(bypassSelectors));
         }
     }
 }

@@ -13,17 +13,17 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class HDInsightSparkActivity : IUtf8JsonSerializable
+    public partial class HDInsightSparkActivity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedServiceName))
+            if (Core.Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 JsonSerializer.Serialize(writer, LinkedServiceName);
             }
-            if (Optional.IsDefined(Policy))
+            if (Core.Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -32,22 +32,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(OnInactiveMarkAs))
+            if (Core.Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (Core.Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserProperties))
+            if (Core.Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             JsonSerializer.Serialize(writer, RootPath);
             writer.WritePropertyName("entryFilePath"u8);
             JsonSerializer.Serialize(writer, EntryFilePath);
-            if (Optional.IsCollectionDefined(Arguments))
+            if (Core.Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStartArray();
@@ -92,27 +92,27 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(GetDebugInfo))
+            if (Core.Optional.IsDefined(GetDebugInfo))
             {
                 writer.WritePropertyName("getDebugInfo"u8);
                 writer.WriteStringValue(GetDebugInfo.Value.ToString());
             }
-            if (Optional.IsDefined(SparkJobLinkedService))
+            if (Core.Optional.IsDefined(SparkJobLinkedService))
             {
                 writer.WritePropertyName("sparkJobLinkedService"u8);
                 JsonSerializer.Serialize(writer, SparkJobLinkedService);
             }
-            if (Optional.IsDefined(ClassName))
+            if (Core.Optional.IsDefined(ClassName))
             {
                 writer.WritePropertyName("className"u8);
                 writer.WriteStringValue(ClassName);
             }
-            if (Optional.IsDefined(ProxyUser))
+            if (Core.Optional.IsDefined(ProxyUser))
             {
                 writer.WritePropertyName("proxyUser"u8);
                 JsonSerializer.Serialize(writer, ProxyUser);
             }
-            if (Optional.IsCollectionDefined(SparkConfig))
+            if (Core.Optional.IsCollectionDefined(SparkConfig))
             {
                 writer.WritePropertyName("sparkConfig"u8);
                 writer.WriteStartObject();
@@ -151,23 +151,23 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<PipelineActivityPolicy> policy = default;
+            Core.Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
+            Core.Optional<PipelineActivityPolicy> policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            Core.Optional<string> description = default;
+            Core.Optional<PipelineActivityState> state = default;
+            Core.Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            Core.Optional<IList<PipelineActivityDependency>> dependsOn = default;
+            Core.Optional<IList<PipelineActivityUserProperty>> userProperties = default;
             DataFactoryElement<string> rootPath = default;
             DataFactoryElement<string> entryFilePath = default;
-            Optional<IList<BinaryData>> arguments = default;
-            Optional<HDInsightActivityDebugInfoOptionSetting> getDebugInfo = default;
-            Optional<DataFactoryLinkedServiceReference> sparkJobLinkedService = default;
-            Optional<string> className = default;
-            Optional<DataFactoryElement<string>> proxyUser = default;
-            Optional<IDictionary<string, BinaryData>> sparkConfig = default;
+            Core.Optional<IList<BinaryData>> arguments = default;
+            Core.Optional<HDInsightActivityDebugInfoOptionSetting> getDebugInfo = default;
+            Core.Optional<DataFactoryLinkedServiceReference> sparkJobLinkedService = default;
+            Core.Optional<string> className = default;
+            Core.Optional<DataFactoryElement<string>> proxyUser = default;
+            Core.Optional<IDictionary<string, BinaryData>> sparkConfig = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightSparkActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, rootPath, entryFilePath, Optional.ToList(arguments), Optional.ToNullable(getDebugInfo), sparkJobLinkedService, className.Value, proxyUser.Value, Optional.ToDictionary(sparkConfig));
+            return new HDInsightSparkActivity(name, type, description.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(onInactiveMarkAs), Core.Optional.ToList(dependsOn), Core.Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, rootPath, entryFilePath, Core.Optional.ToList(arguments), Core.Optional.ToNullable(getDebugInfo), sparkJobLinkedService, className.Value, proxyUser.Value, Core.Optional.ToDictionary(sparkConfig));
         }
     }
 }

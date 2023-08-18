@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CosmosDBForPostgreSqlRoleData>> value = default;
+            Core.Optional<IReadOnlyList<CosmosDBForPostgreSqlRoleData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     continue;
                 }
             }
-            return new CosmosDBForPostgreSqlRoleListResult(Optional.ToList(value));
+            return new CosmosDBForPostgreSqlRoleListResult(Core.Optional.ToList(value));
         }
     }
 }

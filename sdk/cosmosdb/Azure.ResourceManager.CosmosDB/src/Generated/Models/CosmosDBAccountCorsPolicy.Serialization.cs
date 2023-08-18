@@ -10,29 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBAccountCorsPolicy : IUtf8JsonSerializable
+    public partial class CosmosDBAccountCorsPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("allowedOrigins"u8);
             writer.WriteStringValue(AllowedOrigins);
-            if (Optional.IsDefined(AllowedMethods))
+            if (Core.Optional.IsDefined(AllowedMethods))
             {
                 writer.WritePropertyName("allowedMethods"u8);
                 writer.WriteStringValue(AllowedMethods);
             }
-            if (Optional.IsDefined(AllowedHeaders))
+            if (Core.Optional.IsDefined(AllowedHeaders))
             {
                 writer.WritePropertyName("allowedHeaders"u8);
                 writer.WriteStringValue(AllowedHeaders);
             }
-            if (Optional.IsDefined(ExposedHeaders))
+            if (Core.Optional.IsDefined(ExposedHeaders))
             {
                 writer.WritePropertyName("exposedHeaders"u8);
                 writer.WriteStringValue(ExposedHeaders);
             }
-            if (Optional.IsDefined(MaxAgeInSeconds))
+            if (Core.Optional.IsDefined(MaxAgeInSeconds))
             {
                 writer.WritePropertyName("maxAgeInSeconds"u8);
                 writer.WriteNumberValue(MaxAgeInSeconds.Value);
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string allowedOrigins = default;
-            Optional<string> allowedMethods = default;
-            Optional<string> allowedHeaders = default;
-            Optional<string> exposedHeaders = default;
-            Optional<long> maxAgeInSeconds = default;
+            Core.Optional<string> allowedMethods = default;
+            Core.Optional<string> allowedHeaders = default;
+            Core.Optional<string> exposedHeaders = default;
+            Core.Optional<long> maxAgeInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedOrigins"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CosmosDBAccountCorsPolicy(allowedOrigins, allowedMethods.Value, allowedHeaders.Value, exposedHeaders.Value, Optional.ToNullable(maxAgeInSeconds));
+            return new CosmosDBAccountCorsPolicy(allowedOrigins, allowedMethods.Value, allowedHeaders.Value, exposedHeaders.Value, Core.Optional.ToNullable(maxAgeInSeconds));
         }
     }
 }

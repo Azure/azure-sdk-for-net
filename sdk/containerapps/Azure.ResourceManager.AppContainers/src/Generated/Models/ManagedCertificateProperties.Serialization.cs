@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ManagedCertificateProperties : IUtf8JsonSerializable
+    public partial class ManagedCertificateProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SubjectName))
+            if (Core.Optional.IsDefined(SubjectName))
             {
                 writer.WritePropertyName("subjectName"u8);
                 writer.WriteStringValue(SubjectName);
             }
-            if (Optional.IsDefined(DomainControlValidation))
+            if (Core.Optional.IsDefined(DomainControlValidation))
             {
                 writer.WritePropertyName("domainControlValidation"u8);
                 writer.WriteStringValue(DomainControlValidation.Value.ToString());
@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ContainerAppCertificateProvisioningState> provisioningState = default;
-            Optional<string> subjectName = default;
-            Optional<string> error = default;
-            Optional<ManagedCertificateDomainControlValidation> domainControlValidation = default;
-            Optional<string> validationToken = default;
+            Core.Optional<ContainerAppCertificateProvisioningState> provisioningState = default;
+            Core.Optional<string> subjectName = default;
+            Core.Optional<string> error = default;
+            Core.Optional<ManagedCertificateDomainControlValidation> domainControlValidation = default;
+            Core.Optional<string> validationToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ManagedCertificateProperties(Optional.ToNullable(provisioningState), subjectName.Value, error.Value, Optional.ToNullable(domainControlValidation), validationToken.Value);
+            return new ManagedCertificateProperties(Core.Optional.ToNullable(provisioningState), subjectName.Value, error.Value, Core.Optional.ToNullable(domainControlValidation), validationToken.Value);
         }
     }
 }

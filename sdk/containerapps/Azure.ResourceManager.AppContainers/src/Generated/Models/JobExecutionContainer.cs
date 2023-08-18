@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of JobExecutionContainer. </summary>
         public JobExecutionContainer()
         {
-            Command = new ChangeTrackingList<string>();
-            Args = new ChangeTrackingList<string>();
-            Env = new ChangeTrackingList<ContainerAppEnvironmentVariable>();
+            Command = new Core.ChangeTrackingList<string>();
+            Args = new Core.ChangeTrackingList<string>();
+            Env = new Core.ChangeTrackingList<ContainerAppEnvironmentVariable>();
         }
 
         /// <summary> Initializes a new instance of JobExecutionContainer. </summary>

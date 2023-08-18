@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class ApplicationProfile : IUtf8JsonSerializable
+    internal partial class ApplicationProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(GalleryApplications))
+            if (Core.Optional.IsCollectionDefined(GalleryApplications))
             {
                 writer.WritePropertyName("galleryApplications"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<VirtualMachineGalleryApplication>> galleryApplications = default;
+            Core.Optional<IList<VirtualMachineGalleryApplication>> galleryApplications = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("galleryApplications"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ApplicationProfile(Optional.ToList(galleryApplications));
+            return new ApplicationProfile(Core.Optional.ToList(galleryApplications));
         }
     }
 }

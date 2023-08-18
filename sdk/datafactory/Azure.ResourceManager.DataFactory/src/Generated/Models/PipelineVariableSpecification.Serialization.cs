@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class PipelineVariableSpecification : IUtf8JsonSerializable
+    public partial class PipelineVariableSpecification : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(VariableType.ToString());
-            if (Optional.IsDefined(DefaultValue))
+            if (Core.Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
 #if NET6_0_OR_GREATER
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             PipelineVariableType type = default;
-            Optional<BinaryData> defaultValue = default;
+            Core.Optional<BinaryData> defaultValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))

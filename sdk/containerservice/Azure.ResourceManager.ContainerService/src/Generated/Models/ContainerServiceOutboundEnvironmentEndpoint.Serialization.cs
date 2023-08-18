@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> category = default;
-            Optional<IReadOnlyList<ContainerServiceEndpointDependency>> endpoints = default;
+            Core.Optional<string> category = default;
+            Core.Optional<IReadOnlyList<ContainerServiceEndpointDependency>> endpoints = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("category"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ContainerServiceOutboundEnvironmentEndpoint(category.Value, Optional.ToList(endpoints));
+            return new ContainerServiceOutboundEnvironmentEndpoint(category.Value, Core.Optional.ToList(endpoints));
         }
     }
 }

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> expiryTime = default;
-            Optional<DateTimeOffset> validTill = default;
-            Optional<Uri> downloadUrl = default;
+            Core.Optional<DateTimeOffset> expiryTime = default;
+            Core.Optional<DateTimeOffset> validTill = default;
+            Core.Optional<Uri> downloadUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expiryTime"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new DownloadURL(Optional.ToNullable(expiryTime), Optional.ToNullable(validTill), downloadUrl.Value);
+            return new DownloadURL(Core.Optional.ToNullable(expiryTime), Core.Optional.ToNullable(validTill), downloadUrl.Value);
         }
     }
 }

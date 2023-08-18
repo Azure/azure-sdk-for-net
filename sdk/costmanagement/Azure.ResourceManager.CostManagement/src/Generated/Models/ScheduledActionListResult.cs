@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of ScheduledActionListResult. </summary>
         internal ScheduledActionListResult()
         {
-            Value = new ChangeTrackingList<ScheduledActionData>();
+            Value = new Core.ChangeTrackingList<ScheduledActionData>();
         }
 
         /// <summary> Initializes a new instance of ScheduledActionListResult. </summary>

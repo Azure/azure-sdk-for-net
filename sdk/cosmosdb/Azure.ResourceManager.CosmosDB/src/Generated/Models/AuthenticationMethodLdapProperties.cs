@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of AuthenticationMethodLdapProperties. </summary>
         public AuthenticationMethodLdapProperties()
         {
-            ServerCertificates = new ChangeTrackingList<CassandraCertificate>();
+            ServerCertificates = new Core.ChangeTrackingList<CassandraCertificate>();
         }
 
         /// <summary> Initializes a new instance of AuthenticationMethodLdapProperties. </summary>

@@ -14,15 +14,15 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal class SharingUpdateOperationSource : IOperationSource<SharingUpdate>
+    internal class SharingUpdateOperationSource : Core.IOperationSource<SharingUpdate>
     {
-        SharingUpdate IOperationSource<SharingUpdate>.CreateResult(Response response, CancellationToken cancellationToken)
+        SharingUpdate Core.IOperationSource<SharingUpdate>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return SharingUpdate.DeserializeSharingUpdate(document.RootElement);
         }
 
-        async ValueTask<SharingUpdate> IOperationSource<SharingUpdate>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SharingUpdate> Core.IOperationSource<SharingUpdate>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return SharingUpdate.DeserializeSharingUpdate(document.RootElement);

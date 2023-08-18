@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Consumption
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationTransactionsRestClient.CreateListByBillingProfileRequest(Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationTransactionsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionModernReservationTransaction.DeserializeConsumptionModernReservationTransaction, _reservationTransactionsClientDiagnostics, Pipeline, "BillingProfileConsumptionResource.GetReservationTransactions", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionModernReservationTransaction.DeserializeConsumptionModernReservationTransaction, _reservationTransactionsClientDiagnostics, Pipeline, "BillingProfileConsumptionResource.GetReservationTransactions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Consumption
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationTransactionsRestClient.CreateListByBillingProfileRequest(Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationTransactionsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionModernReservationTransaction.DeserializeConsumptionModernReservationTransaction, _reservationTransactionsClientDiagnostics, Pipeline, "BillingProfileConsumptionResource.GetReservationTransactions", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionModernReservationTransaction.DeserializeConsumptionModernReservationTransaction, _reservationTransactionsClientDiagnostics, Pipeline, "BillingProfileConsumptionResource.GetReservationTransactions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Consumption
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventsRestClient.CreateListByBillingProfileRequest(Id.Parent.Name, Id.Name, startDate, endDate);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, Id.Parent.Name, Id.Name, startDate, endDate);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionEventSummary.DeserializeConsumptionEventSummary, _eventsClientDiagnostics, Pipeline, "BillingProfileConsumptionResource.GetEvents", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionEventSummary.DeserializeConsumptionEventSummary, _eventsClientDiagnostics, Pipeline, "BillingProfileConsumptionResource.GetEvents", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Consumption
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventsRestClient.CreateListByBillingProfileRequest(Id.Parent.Name, Id.Name, startDate, endDate);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, Id.Parent.Name, Id.Name, startDate, endDate);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionEventSummary.DeserializeConsumptionEventSummary, _eventsClientDiagnostics, Pipeline, "BillingProfileConsumptionResource.GetEvents", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionEventSummary.DeserializeConsumptionEventSummary, _eventsClientDiagnostics, Pipeline, "BillingProfileConsumptionResource.GetEvents", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Consumption
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _lotsRestClient.CreateListByBillingProfileRequest(Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _lotsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionLotSummary.DeserializeConsumptionLotSummary, _lotsClientDiagnostics, Pipeline, "BillingProfileConsumptionResource.GetLots", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionLotSummary.DeserializeConsumptionLotSummary, _lotsClientDiagnostics, Pipeline, "BillingProfileConsumptionResource.GetLots", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Consumption
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _lotsRestClient.CreateListByBillingProfileRequest(Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _lotsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionLotSummary.DeserializeConsumptionLotSummary, _lotsClientDiagnostics, Pipeline, "BillingProfileConsumptionResource.GetLots", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionLotSummary.DeserializeConsumptionLotSummary, _lotsClientDiagnostics, Pipeline, "BillingProfileConsumptionResource.GetLots", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

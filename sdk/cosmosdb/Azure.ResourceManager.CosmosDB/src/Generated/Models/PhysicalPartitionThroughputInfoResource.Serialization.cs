@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class PhysicalPartitionThroughputInfoResource : IUtf8JsonSerializable
+    public partial class PhysicalPartitionThroughputInfoResource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(Throughput))
+            if (Core.Optional.IsDefined(Throughput))
             {
                 writer.WritePropertyName("throughput"u8);
                 writer.WriteNumberValue(Throughput.Value);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string id = default;
-            Optional<double> throughput = default;
+            Core.Optional<double> throughput = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new PhysicalPartitionThroughputInfoResource(id, Optional.ToNullable(throughput));
+            return new PhysicalPartitionThroughputInfoResource(id, Core.Optional.ToNullable(throughput));
         }
     }
 }

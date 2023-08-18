@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryTimerTrigger : IUtf8JsonSerializable
+    public partial class ContainerRegistryTimerTrigger : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("schedule"u8);
             writer.WriteStringValue(Schedule);
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             string schedule = default;
-            Optional<ContainerRegistryTriggerStatus> status = default;
+            Core.Optional<ContainerRegistryTriggerStatus> status = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryTimerTrigger(schedule, Optional.ToNullable(status), name);
+            return new ContainerRegistryTimerTrigger(schedule, Core.Optional.ToNullable(status), name);
         }
     }
 }

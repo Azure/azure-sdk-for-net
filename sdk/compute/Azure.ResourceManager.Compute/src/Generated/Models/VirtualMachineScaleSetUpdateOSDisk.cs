@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateOSDisk. </summary>
         public VirtualMachineScaleSetUpdateOSDisk()
         {
-            VhdContainers = new ChangeTrackingList<string>();
+            VhdContainers = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> The caching type. </summary>

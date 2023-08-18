@@ -12,27 +12,27 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    public partial class OciDescriptor : IUtf8JsonSerializable
+    public partial class OciDescriptor : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MediaType))
+            if (Core.Optional.IsDefined(MediaType))
             {
                 writer.WritePropertyName("mediaType"u8);
                 writer.WriteStringValue(MediaType);
             }
-            if (Optional.IsDefined(SizeInBytes))
+            if (Core.Optional.IsDefined(SizeInBytes))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteNumberValue(SizeInBytes.Value);
             }
-            if (Optional.IsDefined(Digest))
+            if (Core.Optional.IsDefined(Digest))
             {
                 writer.WritePropertyName("digest"u8);
                 writer.WriteStringValue(Digest);
             }
-            if (Optional.IsCollectionDefined(Urls))
+            if (Core.Optional.IsCollectionDefined(Urls))
             {
                 writer.WritePropertyName("urls"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.Containers.ContainerRegistry
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Annotations))
+            if (Core.Optional.IsDefined(Annotations))
             {
                 if (Annotations != null)
                 {
@@ -68,11 +68,11 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Optional<string> mediaType = default;
-            Optional<long> size = default;
-            Optional<string> digest = default;
-            Optional<IList<Uri>> urls = default;
-            Optional<OciAnnotations> annotations = default;
+            Core.Optional<string> mediaType = default;
+            Core.Optional<long> size = default;
+            Core.Optional<string> digest = default;
+            Core.Optional<IList<Uri>> urls = default;
+            Core.Optional<OciAnnotations> annotations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mediaType"u8))
@@ -126,7 +126,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new OciDescriptor(mediaType.Value, Optional.ToNullable(size), digest.Value, Optional.ToList(urls), annotations.Value);
+            return new OciDescriptor(mediaType.Value, Core.Optional.ToNullable(size), digest.Value, Core.Optional.ToList(urls), annotations.Value);
         }
     }
 }

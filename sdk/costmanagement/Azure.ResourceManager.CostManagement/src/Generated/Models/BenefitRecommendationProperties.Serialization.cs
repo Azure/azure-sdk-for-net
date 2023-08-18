@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class BenefitRecommendationProperties : IUtf8JsonSerializable
+    public partial class BenefitRecommendationProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LookBackPeriod))
+            if (Core.Optional.IsDefined(LookBackPeriod))
             {
                 writer.WritePropertyName("lookBackPeriod"u8);
                 writer.WriteStringValue(LookBackPeriod.Value.ToString());
             }
-            if (Optional.IsDefined(Usage))
+            if (Core.Optional.IsDefined(Usage))
             {
                 writer.WritePropertyName("usage"u8);
                 writer.WriteObjectValue(Usage);
             }
-            if (Optional.IsDefined(Term))
+            if (Core.Optional.IsDefined(Term))
             {
                 writer.WritePropertyName("term"u8);
                 writer.WriteStringValue(Term.Value.ToString());
             }
-            if (Optional.IsDefined(CommitmentGranularity))
+            if (Core.Optional.IsDefined(CommitmentGranularity))
             {
                 writer.WritePropertyName("commitmentGranularity"u8);
                 writer.WriteStringValue(CommitmentGranularity.Value.ToString());
             }
-            if (Optional.IsDefined(RecommendationDetails))
+            if (Core.Optional.IsDefined(RecommendationDetails))
             {
                 writer.WritePropertyName("recommendationDetails"u8);
                 writer.WriteObjectValue(RecommendationDetails);

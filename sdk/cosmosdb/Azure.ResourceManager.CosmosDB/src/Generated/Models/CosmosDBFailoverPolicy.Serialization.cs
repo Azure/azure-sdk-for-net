@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBFailoverPolicy : IUtf8JsonSerializable
+    public partial class CosmosDBFailoverPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LocationName))
+            if (Core.Optional.IsDefined(LocationName))
             {
                 writer.WritePropertyName("locationName"u8);
                 writer.WriteStringValue(LocationName.Value);
             }
-            if (Optional.IsDefined(FailoverPriority))
+            if (Core.Optional.IsDefined(FailoverPriority))
             {
                 writer.WritePropertyName("failoverPriority"u8);
                 writer.WriteNumberValue(FailoverPriority.Value);
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<AzureLocation> locationName = default;
-            Optional<int> failoverPriority = default;
+            Core.Optional<string> id = default;
+            Core.Optional<AzureLocation> locationName = default;
+            Core.Optional<int> failoverPriority = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CosmosDBFailoverPolicy(id.Value, Optional.ToNullable(locationName), Optional.ToNullable(failoverPriority));
+            return new CosmosDBFailoverPolicy(id.Value, Core.Optional.ToNullable(locationName), Core.Optional.ToNullable(failoverPriority));
         }
     }
 }

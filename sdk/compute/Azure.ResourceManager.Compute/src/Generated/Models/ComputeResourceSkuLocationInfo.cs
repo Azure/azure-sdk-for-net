@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ComputeResourceSkuLocationInfo. </summary>
         internal ComputeResourceSkuLocationInfo()
         {
-            Zones = new ChangeTrackingList<string>();
-            ZoneDetails = new ChangeTrackingList<ComputeResourceSkuZoneDetails>();
-            ExtendedLocations = new ChangeTrackingList<string>();
+            Zones = new Core.ChangeTrackingList<string>();
+            ZoneDetails = new Core.ChangeTrackingList<ComputeResourceSkuZoneDetails>();
+            ExtendedLocations = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ComputeResourceSkuLocationInfo. </summary>

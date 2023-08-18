@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<string> osType = default;
-            Optional<AzureLocation> location = default;
-            Optional<string> ipAddressType = default;
-            Optional<string> gpu = default;
-            Optional<ContainerSupportedCapabilities> capabilities = default;
+            Core.Optional<string> resourceType = default;
+            Core.Optional<string> osType = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<string> ipAddressType = default;
+            Core.Optional<string> gpu = default;
+            Core.Optional<ContainerSupportedCapabilities> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new ContainerCapabilities(resourceType.Value, osType.Value, Optional.ToNullable(location), ipAddressType.Value, gpu.Value, capabilities.Value);
+            return new ContainerCapabilities(resourceType.Value, osType.Value, Core.Optional.ToNullable(location), ipAddressType.Value, gpu.Value, capabilities.Value);
         }
     }
 }

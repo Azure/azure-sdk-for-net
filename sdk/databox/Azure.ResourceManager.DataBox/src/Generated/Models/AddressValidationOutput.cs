@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of AddressValidationOutput. </summary>
         internal AddressValidationOutput()
         {
-            AlternateAddresses = new ChangeTrackingList<DataBoxShippingAddress>();
+            AlternateAddresses = new Core.ChangeTrackingList<DataBoxShippingAddress>();
         }
 
         /// <summary> Initializes a new instance of AddressValidationOutput. </summary>

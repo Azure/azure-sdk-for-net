@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBSqlClientEncryptionKeyResourceInfo : IUtf8JsonSerializable
+    public partial class CosmosDBSqlClientEncryptionKeyResourceInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(EncryptionAlgorithm))
+            if (Core.Optional.IsDefined(EncryptionAlgorithm))
             {
                 writer.WritePropertyName("encryptionAlgorithm"u8);
                 writer.WriteStringValue(EncryptionAlgorithm);
             }
-            if (Optional.IsDefined(WrappedDataEncryptionKey))
+            if (Core.Optional.IsDefined(WrappedDataEncryptionKey))
             {
                 writer.WritePropertyName("wrappedDataEncryptionKey"u8);
                 writer.WriteBase64StringValue(WrappedDataEncryptionKey, "D");
             }
-            if (Optional.IsDefined(KeyWrapMetadata))
+            if (Core.Optional.IsDefined(KeyWrapMetadata))
             {
                 writer.WritePropertyName("keyWrapMetadata"u8);
                 writer.WriteObjectValue(KeyWrapMetadata);
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> encryptionAlgorithm = default;
-            Optional<byte[]> wrappedDataEncryptionKey = default;
-            Optional<CosmosDBKeyWrapMetadata> keyWrapMetadata = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> encryptionAlgorithm = default;
+            Core.Optional<byte[]> wrappedDataEncryptionKey = default;
+            Core.Optional<CosmosDBKeyWrapMetadata> keyWrapMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

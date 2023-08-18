@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineInstallPatchesContent : IUtf8JsonSerializable
+    public partial class VirtualMachineInstallPatchesContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaximumDuration))
+            if (Core.Optional.IsDefined(MaximumDuration))
             {
                 writer.WritePropertyName("maximumDuration"u8);
                 writer.WriteStringValue(MaximumDuration.Value, "P");
             }
             writer.WritePropertyName("rebootSetting"u8);
             writer.WriteStringValue(RebootSetting.ToString());
-            if (Optional.IsDefined(WindowsParameters))
+            if (Core.Optional.IsDefined(WindowsParameters))
             {
                 writer.WritePropertyName("windowsParameters"u8);
                 writer.WriteObjectValue(WindowsParameters);
             }
-            if (Optional.IsDefined(LinuxParameters))
+            if (Core.Optional.IsDefined(LinuxParameters))
             {
                 writer.WritePropertyName("linuxParameters"u8);
                 writer.WriteObjectValue(LinuxParameters);

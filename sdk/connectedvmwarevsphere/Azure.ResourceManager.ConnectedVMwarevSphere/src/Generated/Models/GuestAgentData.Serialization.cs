@@ -13,24 +13,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    public partial class GuestAgentData : IUtf8JsonSerializable
+    public partial class GuestAgentData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Credentials))
+            if (Core.Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
-            if (Optional.IsDefined(HttpProxyConfig))
+            if (Core.Optional.IsDefined(HttpProxyConfig))
             {
                 writer.WritePropertyName("httpProxyConfig"u8);
                 writer.WriteObjectValue(HttpProxyConfig);
             }
-            if (Optional.IsDefined(ProvisioningAction))
+            if (Core.Optional.IsDefined(ProvisioningAction))
             {
                 writer.WritePropertyName("provisioningAction"u8);
                 writer.WriteStringValue(ProvisioningAction.Value.ToString());
@@ -48,15 +48,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> uuid = default;
-            Optional<GuestCredential> credentials = default;
-            Optional<HttpProxyConfiguration> httpProxyConfig = default;
-            Optional<ProvisioningAction> provisioningAction = default;
-            Optional<string> status = default;
-            Optional<string> customResourceName = default;
-            Optional<IReadOnlyList<ResourceStatus>> statuses = default;
-            Optional<string> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> uuid = default;
+            Core.Optional<GuestCredential> credentials = default;
+            Core.Optional<HttpProxyConfiguration> httpProxyConfig = default;
+            Core.Optional<ProvisioningAction> provisioningAction = default;
+            Core.Optional<string> status = default;
+            Core.Optional<string> customResourceName = default;
+            Core.Optional<IReadOnlyList<ResourceStatus>> statuses = default;
+            Core.Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     continue;
                 }
             }
-            return new GuestAgentData(id, name, type, systemData.Value, uuid.Value, credentials.Value, httpProxyConfig.Value, Optional.ToNullable(provisioningAction), status.Value, customResourceName.Value, Optional.ToList(statuses), provisioningState.Value);
+            return new GuestAgentData(id, name, type, systemData.Value, uuid.Value, credentials.Value, httpProxyConfig.Value, Core.Optional.ToNullable(provisioningAction), status.Value, customResourceName.Value, Core.Optional.ToList(statuses), provisioningState.Value);
         }
     }
 }

@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerVolumeMount : IUtf8JsonSerializable
+    public partial class ContainerVolumeMount : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("mountPath"u8);
             writer.WriteStringValue(MountPath);
-            if (Optional.IsDefined(IsReadOnly))
+            if (Core.Optional.IsDefined(IsReadOnly))
             {
                 writer.WritePropertyName("readOnly"u8);
                 writer.WriteBooleanValue(IsReadOnly.Value);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             string name = default;
             string mountPath = default;
-            Optional<bool> readOnly = default;
+            Core.Optional<bool> readOnly = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new ContainerVolumeMount(name, mountPath, Optional.ToNullable(readOnly));
+            return new ContainerVolumeMount(name, mountPath, Core.Optional.ToNullable(readOnly));
         }
     }
 }

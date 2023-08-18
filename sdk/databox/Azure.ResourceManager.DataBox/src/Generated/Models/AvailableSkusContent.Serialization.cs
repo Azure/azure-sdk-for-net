@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class AvailableSkusContent : IUtf8JsonSerializable
+    public partial class AvailableSkusContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("transferType"u8);
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStringValue(Country);
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(SkuNames))
+            if (Core.Optional.IsCollectionDefined(SkuNames))
             {
                 writer.WritePropertyName("skuNames"u8);
                 writer.WriteStartArray();

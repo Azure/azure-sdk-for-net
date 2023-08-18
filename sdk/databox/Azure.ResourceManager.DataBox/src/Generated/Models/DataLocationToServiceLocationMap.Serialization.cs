@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<AzureLocation> dataLocation = default;
-            Optional<AzureLocation> serviceLocation = default;
+            Core.Optional<AzureLocation> dataLocation = default;
+            Core.Optional<AzureLocation> serviceLocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataLocation"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataLocationToServiceLocationMap(Optional.ToNullable(dataLocation), Optional.ToNullable(serviceLocation));
+            return new DataLocationToServiceLocationMap(Core.Optional.ToNullable(dataLocation), Core.Optional.ToNullable(serviceLocation));
         }
     }
 }

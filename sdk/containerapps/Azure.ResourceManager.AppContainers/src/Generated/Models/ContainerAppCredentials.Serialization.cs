@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppCredentials : IUtf8JsonSerializable
+    public partial class ContainerAppCredentials : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientId))
+            if (Core.Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (Optional.IsDefined(ClientSecret))
+            if (Core.Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
-            if (Optional.IsDefined(TenantId))
+            if (Core.Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsDefined(SubscriptionId))
+            if (Core.Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> clientId = default;
-            Optional<string> clientSecret = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> kind = default;
-            Optional<string> subscriptionId = default;
+            Core.Optional<string> clientId = default;
+            Core.Optional<string> clientSecret = default;
+            Core.Optional<Guid> tenantId = default;
+            Core.Optional<string> kind = default;
+            Core.Optional<string> subscriptionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientId"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppCredentials(clientId.Value, clientSecret.Value, Optional.ToNullable(tenantId), kind.Value, subscriptionId.Value);
+            return new ContainerAppCredentials(clientId.Value, clientSecret.Value, Core.Optional.ToNullable(tenantId), kind.Value, subscriptionId.Value);
         }
     }
 }

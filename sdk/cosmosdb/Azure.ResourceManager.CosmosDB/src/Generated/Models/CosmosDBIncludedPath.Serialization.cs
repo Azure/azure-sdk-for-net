@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBIncludedPath : IUtf8JsonSerializable
+    public partial class CosmosDBIncludedPath : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Path))
+            if (Core.Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsCollectionDefined(Indexes))
+            if (Core.Optional.IsCollectionDefined(Indexes))
             {
                 writer.WritePropertyName("indexes"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> path = default;
-            Optional<IList<CosmosDBPathIndexes>> indexes = default;
+            Core.Optional<string> path = default;
+            Core.Optional<IList<CosmosDBPathIndexes>> indexes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CosmosDBIncludedPath(path.Value, Optional.ToList(indexes));
+            return new CosmosDBIncludedPath(path.Value, Core.Optional.ToList(indexes));
         }
     }
 }

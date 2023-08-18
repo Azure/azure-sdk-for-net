@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of ContainerServiceEndpointDependency. </summary>
         internal ContainerServiceEndpointDependency()
         {
-            EndpointDetails = new ChangeTrackingList<ContainerServiceEndpointDetail>();
+            EndpointDetails = new Core.ChangeTrackingList<ContainerServiceEndpointDetail>();
         }
 
         /// <summary> Initializes a new instance of ContainerServiceEndpointDependency. </summary>

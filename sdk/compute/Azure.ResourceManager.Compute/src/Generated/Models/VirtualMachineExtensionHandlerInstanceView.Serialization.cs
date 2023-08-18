@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<string> typeHandlerVersion = default;
-            Optional<InstanceViewStatus> status = default;
+            Core.Optional<string> type = default;
+            Core.Optional<string> typeHandlerVersion = default;
+            Core.Optional<InstanceViewStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))

@@ -18,7 +18,7 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Optional<string> refreshToken = default;
+            Core.Optional<string> refreshToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("refresh_token"u8))

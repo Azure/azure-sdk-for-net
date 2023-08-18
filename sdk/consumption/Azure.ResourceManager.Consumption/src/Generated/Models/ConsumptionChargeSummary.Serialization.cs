@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionChargeSummary : IUtf8JsonSerializable
+    public partial class ConsumptionChargeSummary : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             ChargeSummaryKind kind = default;
-            Optional<ETag> eTag = default;
+            Core.Optional<ETag> eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ConsumptionChargeSummary(id, name, type, systemData.Value, kind, Optional.ToNullable(eTag));
+            return new ConsumptionChargeSummary(id, name, type, systemData.Value, kind, Core.Optional.ToNullable(eTag));
         }
     }
 }

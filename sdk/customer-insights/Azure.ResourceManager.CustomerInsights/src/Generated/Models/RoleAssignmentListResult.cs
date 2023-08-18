@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <summary> Initializes a new instance of RoleAssignmentListResult. </summary>
         internal RoleAssignmentListResult()
         {
-            Value = new ChangeTrackingList<RoleAssignmentResourceFormatData>();
+            Value = new Core.ChangeTrackingList<RoleAssignmentResourceFormatData>();
         }
 
         /// <summary> Initializes a new instance of RoleAssignmentListResult. </summary>

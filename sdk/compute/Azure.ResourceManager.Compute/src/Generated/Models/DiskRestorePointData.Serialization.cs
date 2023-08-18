@@ -24,24 +24,24 @@ namespace Azure.ResourceManager.Compute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> timeCreated = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<SupportedOperatingSystemType> osType = default;
-            Optional<HyperVGeneration> hyperVGeneration = default;
-            Optional<DiskPurchasePlan> purchasePlan = default;
-            Optional<SupportedCapabilities> supportedCapabilities = default;
-            Optional<string> familyId = default;
-            Optional<string> sourceUniqueId = default;
-            Optional<DiskEncryption> encryption = default;
-            Optional<bool> supportsHibernation = default;
-            Optional<NetworkAccessPolicy> networkAccessPolicy = default;
-            Optional<DiskPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<ResourceIdentifier> diskAccessId = default;
-            Optional<float> completionPercent = default;
-            Optional<string> replicationState = default;
-            Optional<AzureLocation> sourceResourceLocation = default;
-            Optional<DiskSecurityProfile> securityProfile = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DateTimeOffset> timeCreated = default;
+            Core.Optional<ResourceIdentifier> sourceResourceId = default;
+            Core.Optional<SupportedOperatingSystemType> osType = default;
+            Core.Optional<HyperVGeneration> hyperVGeneration = default;
+            Core.Optional<DiskPurchasePlan> purchasePlan = default;
+            Core.Optional<SupportedCapabilities> supportedCapabilities = default;
+            Core.Optional<string> familyId = default;
+            Core.Optional<string> sourceUniqueId = default;
+            Core.Optional<DiskEncryption> encryption = default;
+            Core.Optional<bool> supportsHibernation = default;
+            Core.Optional<NetworkAccessPolicy> networkAccessPolicy = default;
+            Core.Optional<DiskPublicNetworkAccess> publicNetworkAccess = default;
+            Core.Optional<ResourceIdentifier> diskAccessId = default;
+            Core.Optional<float> completionPercent = default;
+            Core.Optional<string> replicationState = default;
+            Core.Optional<AzureLocation> sourceResourceLocation = default;
+            Core.Optional<DiskSecurityProfile> securityProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new DiskRestorePointData(id, name, type, systemData.Value, Optional.ToNullable(timeCreated), sourceResourceId.Value, Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, familyId.Value, sourceUniqueId.Value, encryption.Value, Optional.ToNullable(supportsHibernation), Optional.ToNullable(networkAccessPolicy), Optional.ToNullable(publicNetworkAccess), diskAccessId.Value, Optional.ToNullable(completionPercent), replicationState.Value, Optional.ToNullable(sourceResourceLocation), securityProfile.Value);
+            return new DiskRestorePointData(id, name, type, systemData.Value, Core.Optional.ToNullable(timeCreated), sourceResourceId.Value, Core.Optional.ToNullable(osType), Core.Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, familyId.Value, sourceUniqueId.Value, encryption.Value, Core.Optional.ToNullable(supportsHibernation), Core.Optional.ToNullable(networkAccessPolicy), Core.Optional.ToNullable(publicNetworkAccess), diskAccessId.Value, Core.Optional.ToNullable(completionPercent), replicationState.Value, Core.Optional.ToNullable(sourceResourceLocation), securityProfile.Value);
         }
     }
 }

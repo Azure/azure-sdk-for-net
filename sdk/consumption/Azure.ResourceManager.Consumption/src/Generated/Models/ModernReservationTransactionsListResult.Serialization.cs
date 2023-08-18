@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConsumptionModernReservationTransaction>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<ConsumptionModernReservationTransaction>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ModernReservationTransactionsListResult(Optional.ToList(value), nextLink.Value);
+            return new ModernReservationTransactionsListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

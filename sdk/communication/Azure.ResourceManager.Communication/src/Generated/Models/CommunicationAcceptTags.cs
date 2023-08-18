@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <summary> Initializes a new instance of CommunicationAcceptTags. </summary>
         public CommunicationAcceptTags()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Tags of the service which is a list of key value pairs that describe the resource. </summary>

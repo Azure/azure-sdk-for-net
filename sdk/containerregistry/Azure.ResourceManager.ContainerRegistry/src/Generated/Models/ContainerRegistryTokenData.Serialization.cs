@@ -13,24 +13,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    public partial class ContainerRegistryTokenData : IUtf8JsonSerializable
+    public partial class ContainerRegistryTokenData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScopeMapId))
+            if (Core.Optional.IsDefined(ScopeMapId))
             {
                 writer.WritePropertyName("scopeMapId"u8);
                 writer.WriteStringValue(ScopeMapId);
             }
-            if (Optional.IsDefined(Credentials))
+            if (Core.Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.ContainerRegistry
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<ContainerRegistryProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> scopeMapId = default;
-            Optional<ContainerRegistryTokenCredentials> credentials = default;
-            Optional<ContainerRegistryTokenStatus> status = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DateTimeOffset> creationDate = default;
+            Core.Optional<ContainerRegistryProvisioningState> provisioningState = default;
+            Core.Optional<ResourceIdentifier> scopeMapId = default;
+            Core.Optional<ContainerRegistryTokenCredentials> credentials = default;
+            Core.Optional<ContainerRegistryTokenStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     continue;
                 }
             }
-            return new ContainerRegistryTokenData(id, name, type, systemData.Value, Optional.ToNullable(creationDate), Optional.ToNullable(provisioningState), scopeMapId.Value, credentials.Value, Optional.ToNullable(status));
+            return new ContainerRegistryTokenData(id, name, type, systemData.Value, Core.Optional.ToNullable(creationDate), Core.Optional.ToNullable(provisioningState), scopeMapId.Value, credentials.Value, Core.Optional.ToNullable(status));
         }
     }
 }

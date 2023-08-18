@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of MapperTargetConnectionsInfo. </summary>
         public MapperTargetConnectionsInfo()
         {
-            TargetEntities = new ChangeTrackingList<MapperTable>();
-            DataMapperMappings = new ChangeTrackingList<DataMapperMapping>();
-            Relationships = new ChangeTrackingList<BinaryData>();
+            TargetEntities = new Core.ChangeTrackingList<MapperTable>();
+            DataMapperMappings = new Core.ChangeTrackingList<DataMapperMapping>();
+            Relationships = new Core.ChangeTrackingList<BinaryData>();
         }
 
         /// <summary> Initializes a new instance of MapperTargetConnectionsInfo. </summary>

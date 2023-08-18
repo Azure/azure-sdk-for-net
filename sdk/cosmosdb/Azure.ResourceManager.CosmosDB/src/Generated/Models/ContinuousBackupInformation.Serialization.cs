@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> latestRestorableTimestamp = default;
+            Core.Optional<DateTimeOffset> latestRestorableTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("latestRestorableTimestamp"u8))
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ContinuousBackupInformation(Optional.ToNullable(latestRestorableTimestamp));
+            return new ContinuousBackupInformation(Core.Optional.ToNullable(latestRestorableTimestamp));
         }
     }
 }

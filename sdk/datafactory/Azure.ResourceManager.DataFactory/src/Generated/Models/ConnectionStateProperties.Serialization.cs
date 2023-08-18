@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ConnectionStateProperties : IUtf8JsonSerializable
+    public partial class ConnectionStateProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> actionsRequired = default;
-            Optional<string> description = default;
-            Optional<string> status = default;
+            Core.Optional<string> actionsRequired = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionsRequired"u8))

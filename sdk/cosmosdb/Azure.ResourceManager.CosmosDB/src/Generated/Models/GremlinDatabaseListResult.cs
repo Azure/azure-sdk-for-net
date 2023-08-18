@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of GremlinDatabaseListResult. </summary>
         internal GremlinDatabaseListResult()
         {
-            Value = new ChangeTrackingList<GremlinDatabaseData>();
+            Value = new Core.ChangeTrackingList<GremlinDatabaseData>();
         }
 
         /// <summary> Initializes a new instance of GremlinDatabaseListResult. </summary>

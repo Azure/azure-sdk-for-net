@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class DiskEncryptionSettings : IUtf8JsonSerializable
+    public partial class DiskEncryptionSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiskEncryptionKey))
+            if (Core.Optional.IsDefined(DiskEncryptionKey))
             {
                 writer.WritePropertyName("diskEncryptionKey"u8);
                 writer.WriteObjectValue(DiskEncryptionKey);
             }
-            if (Optional.IsDefined(KeyEncryptionKey))
+            if (Core.Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
                 writer.WriteObjectValue(KeyEncryptionKey);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Core.Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<KeyVaultSecretReference> diskEncryptionKey = default;
-            Optional<KeyVaultKeyReference> keyEncryptionKey = default;
-            Optional<bool> enabled = default;
+            Core.Optional<KeyVaultSecretReference> diskEncryptionKey = default;
+            Core.Optional<KeyVaultKeyReference> keyEncryptionKey = default;
+            Core.Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskEncryptionKey"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new DiskEncryptionSettings(diskEncryptionKey.Value, keyEncryptionKey.Value, Optional.ToNullable(enabled));
+            return new DiskEncryptionSettings(diskEncryptionKey.Value, keyEncryptionKey.Value, Core.Optional.ToNullable(enabled));
         }
     }
 }

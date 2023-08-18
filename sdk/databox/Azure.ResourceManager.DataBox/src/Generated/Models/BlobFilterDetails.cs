@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of BlobFilterDetails. </summary>
         public BlobFilterDetails()
         {
-            BlobPrefixList = new ChangeTrackingList<string>();
-            BlobPathList = new ChangeTrackingList<string>();
-            ContainerList = new ChangeTrackingList<string>();
+            BlobPrefixList = new Core.ChangeTrackingList<string>();
+            BlobPathList = new Core.ChangeTrackingList<string>();
+            ContainerList = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of BlobFilterDetails. </summary>

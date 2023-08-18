@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBIPAddressOrRange : IUtf8JsonSerializable
+    public partial class CosmosDBIPAddressOrRange : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPAddressOrRange))
+            if (Core.Optional.IsDefined(IPAddressOrRange))
             {
                 writer.WritePropertyName("ipAddressOrRange"u8);
                 writer.WriteStringValue(IPAddressOrRange);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> ipAddressOrRange = default;
+            Core.Optional<string> ipAddressOrRange = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipAddressOrRange"u8))

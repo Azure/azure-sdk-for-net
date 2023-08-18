@@ -11,22 +11,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineScaleSetManagedDisk : IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetManagedDisk : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageAccountType))
+            if (Core.Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
             }
-            if (Optional.IsDefined(DiskEncryptionSet))
+            if (Core.Optional.IsDefined(DiskEncryptionSet))
             {
                 writer.WritePropertyName("diskEncryptionSet"u8);
                 JsonSerializer.Serialize(writer, DiskEncryptionSet);
             }
-            if (Optional.IsDefined(SecurityProfile))
+            if (Core.Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<StorageAccountType> storageAccountType = default;
-            Optional<WritableSubResource> diskEncryptionSet = default;
-            Optional<VirtualMachineDiskSecurityProfile> securityProfile = default;
+            Core.Optional<StorageAccountType> storageAccountType = default;
+            Core.Optional<WritableSubResource> diskEncryptionSet = default;
+            Core.Optional<VirtualMachineDiskSecurityProfile> securityProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountType"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetManagedDisk(Optional.ToNullable(storageAccountType), diskEncryptionSet, securityProfile.Value);
+            return new VirtualMachineScaleSetManagedDisk(Core.Optional.ToNullable(storageAccountType), diskEncryptionSet, securityProfile.Value);
         }
     }
 }

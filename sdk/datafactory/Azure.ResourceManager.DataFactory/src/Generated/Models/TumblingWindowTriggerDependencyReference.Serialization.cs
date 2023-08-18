@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class TumblingWindowTriggerDependencyReference : IUtf8JsonSerializable
+    public partial class TumblingWindowTriggerDependencyReference : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Offset))
+            if (Core.Optional.IsDefined(Offset))
             {
                 writer.WritePropertyName("offset"u8);
                 writer.WriteStringValue(Offset);
             }
-            if (Optional.IsDefined(Size))
+            if (Core.Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> offset = default;
-            Optional<string> size = default;
+            Core.Optional<string> offset = default;
+            Core.Optional<string> size = default;
             DataFactoryTriggerReference referenceTrigger = default;
             string type = default;
             foreach (var property in element.EnumerateObject())

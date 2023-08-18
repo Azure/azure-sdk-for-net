@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of RestorePointGroupListResult. </summary>
         internal RestorePointGroupListResult()
         {
-            Value = new ChangeTrackingList<RestorePointGroupData>();
+            Value = new Core.ChangeTrackingList<RestorePointGroupData>();
         }
 
         /// <summary> Initializes a new instance of RestorePointGroupListResult. </summary>

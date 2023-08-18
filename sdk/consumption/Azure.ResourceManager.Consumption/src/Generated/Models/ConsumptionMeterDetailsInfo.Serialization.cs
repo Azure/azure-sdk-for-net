@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<string> meterName = default;
-            Optional<string> meterCategory = default;
-            Optional<string> meterSubCategory = default;
-            Optional<string> unitOfMeasure = default;
-            Optional<string> serviceFamily = default;
+            Core.Optional<string> meterName = default;
+            Core.Optional<string> meterCategory = default;
+            Core.Optional<string> meterSubCategory = default;
+            Core.Optional<string> unitOfMeasure = default;
+            Core.Optional<string> serviceFamily = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("meterName"u8))

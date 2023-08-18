@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<long> id = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> dataType = default;
-            Optional<bool> sensitive = default;
-            Optional<string> value = default;
-            Optional<string> sensitiveValue = default;
+            Core.Optional<long> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> dataType = default;
+            Core.Optional<bool> sensitive = default;
+            Core.Optional<string> value = default;
+            Core.Optional<string> sensitiveValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new SsisVariable(Optional.ToNullable(id), name.Value, description.Value, dataType.Value, Optional.ToNullable(sensitive), value.Value, sensitiveValue.Value);
+            return new SsisVariable(Core.Optional.ToNullable(id), name.Value, description.Value, dataType.Value, Core.Optional.ToNullable(sensitive), value.Value, sensitiveValue.Value);
         }
     }
 }

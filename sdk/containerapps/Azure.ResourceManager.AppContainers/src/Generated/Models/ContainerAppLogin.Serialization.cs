@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppLogin : IUtf8JsonSerializable
+    public partial class ContainerAppLogin : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Routes))
+            if (Core.Optional.IsDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteObjectValue(Routes);
             }
-            if (Optional.IsDefined(PreserveUrlFragmentsForLogins))
+            if (Core.Optional.IsDefined(PreserveUrlFragmentsForLogins))
             {
                 writer.WritePropertyName("preserveUrlFragmentsForLogins"u8);
                 writer.WriteBooleanValue(PreserveUrlFragmentsForLogins.Value);
             }
-            if (Optional.IsCollectionDefined(AllowedExternalRedirectUrls))
+            if (Core.Optional.IsCollectionDefined(AllowedExternalRedirectUrls))
             {
                 writer.WritePropertyName("allowedExternalRedirectUrls"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CookieExpiration))
+            if (Core.Optional.IsDefined(CookieExpiration))
             {
                 writer.WritePropertyName("cookieExpiration"u8);
                 writer.WriteObjectValue(CookieExpiration);
             }
-            if (Optional.IsDefined(Nonce))
+            if (Core.Optional.IsDefined(Nonce))
             {
                 writer.WritePropertyName("nonce"u8);
                 writer.WriteObjectValue(Nonce);
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<LoginRoutes> routes = default;
-            Optional<bool> preserveUrlFragmentsForLogins = default;
-            Optional<IList<string>> allowedExternalRedirectUrls = default;
-            Optional<ContainerAppCookieExpiration> cookieExpiration = default;
-            Optional<ContainerAppLoginNonce> nonce = default;
+            Core.Optional<LoginRoutes> routes = default;
+            Core.Optional<bool> preserveUrlFragmentsForLogins = default;
+            Core.Optional<IList<string>> allowedExternalRedirectUrls = default;
+            Core.Optional<ContainerAppCookieExpiration> cookieExpiration = default;
+            Core.Optional<ContainerAppLoginNonce> nonce = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("routes"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppLogin(routes.Value, Optional.ToNullable(preserveUrlFragmentsForLogins), Optional.ToList(allowedExternalRedirectUrls), cookieExpiration.Value, nonce.Value);
+            return new ContainerAppLogin(routes.Value, Core.Optional.ToNullable(preserveUrlFragmentsForLogins), Core.Optional.ToList(allowedExternalRedirectUrls), cookieExpiration.Value, nonce.Value);
         }
     }
 }

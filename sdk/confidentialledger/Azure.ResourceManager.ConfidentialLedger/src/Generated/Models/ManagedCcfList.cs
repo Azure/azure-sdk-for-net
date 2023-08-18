@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <summary> Initializes a new instance of ManagedCcfList. </summary>
         internal ManagedCcfList()
         {
-            Value = new ChangeTrackingList<ManagedCcfData>();
+            Value = new Core.ChangeTrackingList<ManagedCcfData>();
         }
 
         /// <summary> Initializes a new instance of ManagedCcfList. </summary>

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<long> totalPositives = default;
-            Optional<long> totalNegatives = default;
-            Optional<IReadOnlyList<PredictionDistributionDefinitionDistributionsItem>> distributions = default;
+            Core.Optional<long> totalPositives = default;
+            Core.Optional<long> totalNegatives = default;
+            Core.Optional<IReadOnlyList<PredictionDistributionDefinitionDistributionsItem>> distributions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalPositives"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new PredictionDistributionDefinition(Optional.ToNullable(totalPositives), Optional.ToNullable(totalNegatives), Optional.ToList(distributions));
+            return new PredictionDistributionDefinition(Core.Optional.ToNullable(totalPositives), Core.Optional.ToNullable(totalNegatives), Core.Optional.ToList(distributions));
         }
     }
 }

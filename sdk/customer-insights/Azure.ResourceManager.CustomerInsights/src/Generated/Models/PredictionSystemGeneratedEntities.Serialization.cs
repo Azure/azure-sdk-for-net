@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> generatedInteractionTypes = default;
-            Optional<IReadOnlyList<string>> generatedLinks = default;
-            Optional<IReadOnlyDictionary<string, string>> generatedKpis = default;
+            Core.Optional<IReadOnlyList<string>> generatedInteractionTypes = default;
+            Core.Optional<IReadOnlyList<string>> generatedLinks = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> generatedKpis = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("generatedInteractionTypes"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new PredictionSystemGeneratedEntities(Optional.ToList(generatedInteractionTypes), Optional.ToList(generatedLinks), Optional.ToDictionary(generatedKpis));
+            return new PredictionSystemGeneratedEntities(Core.Optional.ToList(generatedInteractionTypes), Core.Optional.ToList(generatedLinks), Core.Optional.ToDictionary(generatedKpis));
         }
     }
 }

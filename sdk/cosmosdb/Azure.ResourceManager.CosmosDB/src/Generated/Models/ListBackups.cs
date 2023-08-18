@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of ListBackups. </summary>
         internal ListBackups()
         {
-            Value = new ChangeTrackingList<CassandraClusterBackupResourceData>();
+            Value = new Core.ChangeTrackingList<CassandraClusterBackupResourceData>();
         }
 
         /// <summary> Initializes a new instance of ListBackups. </summary>

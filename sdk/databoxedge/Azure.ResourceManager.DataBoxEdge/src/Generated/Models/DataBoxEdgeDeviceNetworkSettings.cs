@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of DataBoxEdgeDeviceNetworkSettings. </summary>
         public DataBoxEdgeDeviceNetworkSettings()
         {
-            NetworkAdapters = new ChangeTrackingList<DataBoxEdgeNetworkAdapter>();
+            NetworkAdapters = new Core.ChangeTrackingList<DataBoxEdgeNetworkAdapter>();
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeDeviceNetworkSettings. </summary>

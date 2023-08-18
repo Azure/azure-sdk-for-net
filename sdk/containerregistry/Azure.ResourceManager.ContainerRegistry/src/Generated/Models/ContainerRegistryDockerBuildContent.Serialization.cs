@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryDockerBuildContent : IUtf8JsonSerializable
+    public partial class ContainerRegistryDockerBuildContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ImageNames))
+            if (Core.Optional.IsCollectionDefined(ImageNames))
             {
                 writer.WritePropertyName("imageNames"u8);
                 writer.WriteStartArray();
@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsPushEnabled))
+            if (Core.Optional.IsDefined(IsPushEnabled))
             {
                 writer.WritePropertyName("isPushEnabled"u8);
                 writer.WriteBooleanValue(IsPushEnabled.Value);
             }
-            if (Optional.IsDefined(NoCache))
+            if (Core.Optional.IsDefined(NoCache))
             {
                 writer.WritePropertyName("noCache"u8);
                 writer.WriteBooleanValue(NoCache.Value);
             }
             writer.WritePropertyName("dockerFilePath"u8);
             writer.WriteStringValue(DockerFilePath);
-            if (Optional.IsDefined(Target))
+            if (Core.Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (Optional.IsCollectionDefined(Arguments))
+            if (Core.Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStartArray();
@@ -53,41 +53,41 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TimeoutInSeconds))
+            if (Core.Optional.IsDefined(TimeoutInSeconds))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
             writer.WritePropertyName("platform"u8);
             writer.WriteObjectValue(Platform);
-            if (Optional.IsDefined(AgentConfiguration))
+            if (Core.Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
                 writer.WriteObjectValue(AgentConfiguration);
             }
-            if (Optional.IsDefined(SourceLocation))
+            if (Core.Optional.IsDefined(SourceLocation))
             {
                 writer.WritePropertyName("sourceLocation"u8);
                 writer.WriteStringValue(SourceLocation);
             }
-            if (Optional.IsDefined(Credentials))
+            if (Core.Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RunRequestType);
-            if (Optional.IsDefined(IsArchiveEnabled))
+            if (Core.Optional.IsDefined(IsArchiveEnabled))
             {
                 writer.WritePropertyName("isArchiveEnabled"u8);
                 writer.WriteBooleanValue(IsArchiveEnabled.Value);
             }
-            if (Optional.IsDefined(AgentPoolName))
+            if (Core.Optional.IsDefined(AgentPoolName))
             {
                 writer.WritePropertyName("agentPoolName"u8);
                 writer.WriteStringValue(AgentPoolName);
             }
-            if (Optional.IsDefined(LogTemplate))
+            if (Core.Optional.IsDefined(LogTemplate))
             {
                 writer.WritePropertyName("logTemplate"u8);
                 writer.WriteStringValue(LogTemplate);
@@ -101,21 +101,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<IList<string>> imageNames = default;
-            Optional<bool> isPushEnabled = default;
-            Optional<bool> noCache = default;
+            Core.Optional<IList<string>> imageNames = default;
+            Core.Optional<bool> isPushEnabled = default;
+            Core.Optional<bool> noCache = default;
             string dockerFilePath = default;
-            Optional<string> target = default;
-            Optional<IList<ContainerRegistryRunArgument>> arguments = default;
-            Optional<int> timeout = default;
+            Core.Optional<string> target = default;
+            Core.Optional<IList<ContainerRegistryRunArgument>> arguments = default;
+            Core.Optional<int> timeout = default;
             ContainerRegistryPlatformProperties platform = default;
-            Optional<ContainerRegistryAgentProperties> agentConfiguration = default;
-            Optional<string> sourceLocation = default;
-            Optional<ContainerRegistryCredentials> credentials = default;
+            Core.Optional<ContainerRegistryAgentProperties> agentConfiguration = default;
+            Core.Optional<string> sourceLocation = default;
+            Core.Optional<ContainerRegistryCredentials> credentials = default;
             string type = default;
-            Optional<bool> isArchiveEnabled = default;
-            Optional<string> agentPoolName = default;
-            Optional<string> logTemplate = default;
+            Core.Optional<bool> isArchiveEnabled = default;
+            Core.Optional<string> agentPoolName = default;
+            Core.Optional<string> logTemplate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("imageNames"u8))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryDockerBuildContent(type, Optional.ToNullable(isArchiveEnabled), agentPoolName.Value, logTemplate.Value, Optional.ToList(imageNames), Optional.ToNullable(isPushEnabled), Optional.ToNullable(noCache), dockerFilePath, target.Value, Optional.ToList(arguments), Optional.ToNullable(timeout), platform, agentConfiguration.Value, sourceLocation.Value, credentials.Value);
+            return new ContainerRegistryDockerBuildContent(type, Core.Optional.ToNullable(isArchiveEnabled), agentPoolName.Value, logTemplate.Value, Core.Optional.ToList(imageNames), Core.Optional.ToNullable(isPushEnabled), Core.Optional.ToNullable(noCache), dockerFilePath, target.Value, Core.Optional.ToList(arguments), Core.Optional.ToNullable(timeout), platform, agentConfiguration.Value, sourceLocation.Value, credentials.Value);
         }
     }
 }

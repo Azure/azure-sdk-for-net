@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CosmosDBIndexingPolicy. </summary>
         public CosmosDBIndexingPolicy()
         {
-            IncludedPaths = new ChangeTrackingList<CosmosDBIncludedPath>();
-            ExcludedPaths = new ChangeTrackingList<CosmosDBExcludedPath>();
-            CompositeIndexes = new ChangeTrackingList<IList<CosmosDBCompositePath>>();
-            SpatialIndexes = new ChangeTrackingList<SpatialSpec>();
+            IncludedPaths = new Core.ChangeTrackingList<CosmosDBIncludedPath>();
+            ExcludedPaths = new Core.ChangeTrackingList<CosmosDBExcludedPath>();
+            CompositeIndexes = new Core.ChangeTrackingList<IList<CosmosDBCompositePath>>();
+            SpatialIndexes = new Core.ChangeTrackingList<SpatialSpec>();
         }
 
         /// <summary> Initializes a new instance of CosmosDBIndexingPolicy. </summary>

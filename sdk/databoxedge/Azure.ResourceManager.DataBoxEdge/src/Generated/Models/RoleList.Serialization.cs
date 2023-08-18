@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataBoxEdgeRoleData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<DataBoxEdgeRoleData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new RoleList(Optional.ToList(value), nextLink.Value);
+            return new RoleList(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

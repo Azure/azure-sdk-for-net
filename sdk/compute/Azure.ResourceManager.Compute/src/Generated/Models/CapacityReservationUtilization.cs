@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of CapacityReservationUtilization. </summary>
         internal CapacityReservationUtilization()
         {
-            VirtualMachinesAllocated = new ChangeTrackingList<SubResource>();
+            VirtualMachinesAllocated = new Core.ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of CapacityReservationUtilization. </summary>

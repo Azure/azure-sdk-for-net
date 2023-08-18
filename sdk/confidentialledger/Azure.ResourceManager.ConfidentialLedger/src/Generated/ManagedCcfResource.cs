@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             try
             {
                 var response = await _managedCcfManagedCcfRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ConfidentialLedgerArmOperation(_managedCcfManagedCcfClientDiagnostics, Pipeline, _managedCcfManagedCcfRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ConfidentialLedgerArmOperation(_managedCcfManagedCcfClientDiagnostics, Pipeline, _managedCcfManagedCcfRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             try
             {
                 var response = _managedCcfManagedCcfRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ConfidentialLedgerArmOperation(_managedCcfManagedCcfClientDiagnostics, Pipeline, _managedCcfManagedCcfRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ConfidentialLedgerArmOperation(_managedCcfManagedCcfClientDiagnostics, Pipeline, _managedCcfManagedCcfRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             try
             {
                 var response = await _managedCcfManagedCcfRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ConfidentialLedgerArmOperation(_managedCcfManagedCcfClientDiagnostics, Pipeline, _managedCcfManagedCcfRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ConfidentialLedgerArmOperation(_managedCcfManagedCcfClientDiagnostics, Pipeline, _managedCcfManagedCcfRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             try
             {
                 var response = _managedCcfManagedCcfRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                var operation = new ConfidentialLedgerArmOperation(_managedCcfManagedCcfClientDiagnostics, Pipeline, _managedCcfManagedCcfRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ConfidentialLedgerArmOperation(_managedCcfManagedCcfClientDiagnostics, Pipeline, _managedCcfManagedCcfRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

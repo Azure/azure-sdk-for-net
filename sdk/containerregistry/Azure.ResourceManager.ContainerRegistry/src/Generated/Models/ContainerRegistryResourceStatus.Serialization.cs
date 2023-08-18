@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<string> displayStatus = default;
-            Optional<string> message = default;
-            Optional<DateTimeOffset> timestamp = default;
+            Core.Optional<string> displayStatus = default;
+            Core.Optional<string> message = default;
+            Core.Optional<DateTimeOffset> timestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayStatus"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryResourceStatus(displayStatus.Value, message.Value, Optional.ToNullable(timestamp));
+            return new ContainerRegistryResourceStatus(displayStatus.Value, message.Value, Core.Optional.ToNullable(timestamp));
         }
     }
 }

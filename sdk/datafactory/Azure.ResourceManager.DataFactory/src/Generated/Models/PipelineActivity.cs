@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            DependsOn = new ChangeTrackingList<PipelineActivityDependency>();
-            UserProperties = new ChangeTrackingList<PipelineActivityUserProperty>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            DependsOn = new Core.ChangeTrackingList<PipelineActivityDependency>();
+            UserProperties = new Core.ChangeTrackingList<PipelineActivityUserProperty>();
+            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of PipelineActivity. </summary>

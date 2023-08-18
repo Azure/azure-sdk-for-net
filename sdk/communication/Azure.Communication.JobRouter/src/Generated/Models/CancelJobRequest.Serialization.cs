@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    internal partial class CancelJobRequest : IUtf8JsonSerializable
+    internal partial class CancelJobRequest : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Note))
+            if (Core.Optional.IsDefined(Note))
             {
                 writer.WritePropertyName("note"u8);
                 writer.WriteStringValue(Note);
             }
-            if (Optional.IsDefined(DispositionCode))
+            if (Core.Optional.IsDefined(DispositionCode))
             {
                 writer.WritePropertyName("dispositionCode"u8);
                 writer.WriteStringValue(DispositionCode);

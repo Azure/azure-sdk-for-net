@@ -13,34 +13,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    public partial class MongoDBUserDefinitionData : IUtf8JsonSerializable
+    public partial class MongoDBUserDefinitionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserName))
+            if (Core.Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Optional.IsDefined(Password))
+            if (Core.Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(DatabaseName))
+            if (Core.Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (Optional.IsDefined(CustomData))
+            if (Core.Optional.IsDefined(CustomData))
             {
                 writer.WritePropertyName("customData"u8);
                 writer.WriteStringValue(CustomData);
             }
-            if (Optional.IsCollectionDefined(Roles))
+            if (Core.Optional.IsCollectionDefined(Roles))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStartArray();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Mechanisms))
+            if (Core.Optional.IsDefined(Mechanisms))
             {
                 writer.WritePropertyName("mechanisms"u8);
                 writer.WriteStringValue(Mechanisms);
@@ -68,13 +68,13 @@ namespace Azure.ResourceManager.CosmosDB
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
-            Optional<string> databaseName = default;
-            Optional<string> customData = default;
-            Optional<IList<MongoDBRole>> roles = default;
-            Optional<string> mechanisms = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> userName = default;
+            Core.Optional<string> password = default;
+            Core.Optional<string> databaseName = default;
+            Core.Optional<string> customData = default;
+            Core.Optional<IList<MongoDBRole>> roles = default;
+            Core.Optional<string> mechanisms = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.CosmosDB
                     continue;
                 }
             }
-            return new MongoDBUserDefinitionData(id, name, type, systemData.Value, userName.Value, password.Value, databaseName.Value, customData.Value, Optional.ToList(roles), mechanisms.Value);
+            return new MongoDBUserDefinitionData(id, name, type, systemData.Value, userName.Value, password.Value, databaseName.Value, customData.Value, Core.Optional.ToList(roles), mechanisms.Value);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            SourceTriggerEvents = new ChangeTrackingList<ContainerRegistrySourceTriggerEvent>();
+            SourceTriggerEvents = new Core.ChangeTrackingList<ContainerRegistrySourceTriggerEvent>();
             Name = name;
         }
 

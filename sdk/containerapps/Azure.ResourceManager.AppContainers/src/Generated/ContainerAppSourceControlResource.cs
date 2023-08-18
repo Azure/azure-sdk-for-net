@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = await _containerAppSourceControlContainerAppsSourceControlsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation(_containerAppSourceControlContainerAppsSourceControlsClientDiagnostics, Pipeline, _containerAppSourceControlContainerAppsSourceControlsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppContainersArmOperation(_containerAppSourceControlContainerAppsSourceControlsClientDiagnostics, Pipeline, _containerAppSourceControlContainerAppsSourceControlsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = _containerAppSourceControlContainerAppsSourceControlsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AppContainersArmOperation(_containerAppSourceControlContainerAppsSourceControlsClientDiagnostics, Pipeline, _containerAppSourceControlContainerAppsSourceControlsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppContainersArmOperation(_containerAppSourceControlContainerAppsSourceControlsClientDiagnostics, Pipeline, _containerAppSourceControlContainerAppsSourceControlsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = await _containerAppSourceControlContainerAppsSourceControlsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation<ContainerAppSourceControlResource>(new ContainerAppSourceControlOperationSource(Client), _containerAppSourceControlContainerAppsSourceControlsClientDiagnostics, Pipeline, _containerAppSourceControlContainerAppsSourceControlsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppContainersArmOperation<ContainerAppSourceControlResource>(new ContainerAppSourceControlOperationSource(Client), _containerAppSourceControlContainerAppsSourceControlsClientDiagnostics, Pipeline, _containerAppSourceControlContainerAppsSourceControlsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = _containerAppSourceControlContainerAppsSourceControlsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AppContainersArmOperation<ContainerAppSourceControlResource>(new ContainerAppSourceControlOperationSource(Client), _containerAppSourceControlContainerAppsSourceControlsClientDiagnostics, Pipeline, _containerAppSourceControlContainerAppsSourceControlsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppContainersArmOperation<ContainerAppSourceControlResource>(new ContainerAppSourceControlOperationSource(Client), _containerAppSourceControlContainerAppsSourceControlsClientDiagnostics, Pipeline, _containerAppSourceControlContainerAppsSourceControlsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

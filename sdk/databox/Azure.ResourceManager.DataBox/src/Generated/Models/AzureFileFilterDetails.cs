@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of AzureFileFilterDetails. </summary>
         public AzureFileFilterDetails()
         {
-            FilePrefixList = new ChangeTrackingList<string>();
-            FilePathList = new ChangeTrackingList<string>();
-            FileShareList = new ChangeTrackingList<string>();
+            FilePrefixList = new Core.ChangeTrackingList<string>();
+            FilePathList = new Core.ChangeTrackingList<string>();
+            FileShareList = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AzureFileFilterDetails. </summary>

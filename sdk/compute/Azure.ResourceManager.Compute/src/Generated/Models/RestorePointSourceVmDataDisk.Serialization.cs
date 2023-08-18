@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RestorePointSourceVmDataDisk : IUtf8JsonSerializable
+    public partial class RestorePointSourceVmDataDisk : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ManagedDisk))
+            if (Core.Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
                 writer.WriteObjectValue(ManagedDisk);
             }
-            if (Optional.IsDefined(DiskRestorePoint))
+            if (Core.Optional.IsDefined(DiskRestorePoint))
             {
                 writer.WritePropertyName("diskRestorePoint"u8);
                 writer.WriteObjectValue(DiskRestorePoint);
@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<int> lun = default;
-            Optional<string> name = default;
-            Optional<CachingType> caching = default;
-            Optional<int> diskSizeGB = default;
-            Optional<VirtualMachineManagedDisk> managedDisk = default;
-            Optional<DiskRestorePointAttributes> diskRestorePoint = default;
-            Optional<bool> writeAcceleratorEnabled = default;
+            Core.Optional<int> lun = default;
+            Core.Optional<string> name = default;
+            Core.Optional<CachingType> caching = default;
+            Core.Optional<int> diskSizeGB = default;
+            Core.Optional<VirtualMachineManagedDisk> managedDisk = default;
+            Core.Optional<DiskRestorePointAttributes> diskRestorePoint = default;
+            Core.Optional<bool> writeAcceleratorEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lun"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new RestorePointSourceVmDataDisk(Optional.ToNullable(lun), name.Value, Optional.ToNullable(caching), Optional.ToNullable(diskSizeGB), managedDisk.Value, diskRestorePoint.Value, Optional.ToNullable(writeAcceleratorEnabled));
+            return new RestorePointSourceVmDataDisk(Core.Optional.ToNullable(lun), name.Value, Core.Optional.ToNullable(caching), Core.Optional.ToNullable(diskSizeGB), managedDisk.Value, diskRestorePoint.Value, Core.Optional.ToNullable(writeAcceleratorEnabled));
         }
     }
 }

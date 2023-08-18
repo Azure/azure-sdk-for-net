@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryManagedVirtualNetworkProperties : IUtf8JsonSerializable
+    public partial class DataFactoryManagedVirtualNetworkProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             foreach (var item in AdditionalProperties)
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<Guid> vnetId = default;
-            Optional<string> @alias = default;
+            Core.Optional<Guid> vnetId = default;
+            Core.Optional<string> @alias = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryManagedVirtualNetworkProperties(Optional.ToNullable(vnetId), @alias.Value, additionalProperties);
+            return new DataFactoryManagedVirtualNetworkProperties(Core.Optional.ToNullable(vnetId), @alias.Value, additionalProperties);
         }
     }
 }

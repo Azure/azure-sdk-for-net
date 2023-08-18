@@ -11,9 +11,9 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ComponentSetup : IUtf8JsonSerializable
+    public partial class ComponentSetup : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("componentName"u8);
             writer.WriteStringValue(ComponentName);
-            if (Optional.IsDefined(LicenseKey))
+            if (Core.Optional.IsDefined(LicenseKey))
             {
                 writer.WritePropertyName("licenseKey"u8);
                 JsonSerializer.Serialize(writer, LicenseKey);
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             string type = default;
             string componentName = default;
-            Optional<DataFactorySecretBaseDefinition> licenseKey = default;
+            Core.Optional<DataFactorySecretBaseDefinition> licenseKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of ContainerRegistryTaskStepProperties. </summary>
         protected ContainerRegistryTaskStepProperties()
         {
-            BaseImageDependencies = new ChangeTrackingList<ContainerRegistryBaseImageDependency>();
+            BaseImageDependencies = new Core.ChangeTrackingList<ContainerRegistryBaseImageDependency>();
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryTaskStepProperties. </summary>

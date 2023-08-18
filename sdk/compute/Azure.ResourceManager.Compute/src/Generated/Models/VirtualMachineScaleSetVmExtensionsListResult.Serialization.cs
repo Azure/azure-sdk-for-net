@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VirtualMachineScaleSetVmExtensionData>> value = default;
+            Core.Optional<IReadOnlyList<VirtualMachineScaleSetVmExtensionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetVmExtensionsListResult(Optional.ToList(value));
+            return new VirtualMachineScaleSetVmExtensionsListResult(Core.Optional.ToList(value));
         }
     }
 }

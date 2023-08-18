@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of CapacityReservationGroupPatch. </summary>
         public CapacityReservationGroupPatch()
         {
-            CapacityReservations = new ChangeTrackingList<SubResource>();
-            VirtualMachinesAssociated = new ChangeTrackingList<SubResource>();
+            CapacityReservations = new Core.ChangeTrackingList<SubResource>();
+            VirtualMachinesAssociated = new Core.ChangeTrackingList<SubResource>();
         }
 
         /// <summary> A list of all capacity reservation resource ids that belong to capacity reservation group. </summary>

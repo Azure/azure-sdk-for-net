@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<GalleryImageVersionPolicyViolationCategory> category = default;
-            Optional<string> details = default;
+            Core.Optional<GalleryImageVersionPolicyViolationCategory> category = default;
+            Core.Optional<string> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("category"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new GalleryImageVersionPolicyViolation(Optional.ToNullable(category), details.Value);
+            return new GalleryImageVersionPolicyViolation(Core.Optional.ToNullable(category), details.Value);
         }
     }
 }

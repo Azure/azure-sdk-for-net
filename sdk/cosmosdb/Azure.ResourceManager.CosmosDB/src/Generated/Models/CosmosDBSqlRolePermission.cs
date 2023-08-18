@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CosmosDBSqlRolePermission. </summary>
         public CosmosDBSqlRolePermission()
         {
-            DataActions = new ChangeTrackingList<string>();
-            NotDataActions = new ChangeTrackingList<string>();
+            DataActions = new Core.ChangeTrackingList<string>();
+            NotDataActions = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of CosmosDBSqlRolePermission. </summary>

@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class VirtualMachineExtensionData : IUtf8JsonSerializable
+    public partial class VirtualMachineExtensionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,37 +34,37 @@ namespace Azure.ResourceManager.Compute
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ForceUpdateTag))
+            if (Core.Optional.IsDefined(ForceUpdateTag))
             {
                 writer.WritePropertyName("forceUpdateTag"u8);
                 writer.WriteStringValue(ForceUpdateTag);
             }
-            if (Optional.IsDefined(Publisher))
+            if (Core.Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Optional.IsDefined(ExtensionType))
+            if (Core.Optional.IsDefined(ExtensionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ExtensionType);
             }
-            if (Optional.IsDefined(TypeHandlerVersion))
+            if (Core.Optional.IsDefined(TypeHandlerVersion))
             {
                 writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (Optional.IsDefined(AutoUpgradeMinorVersion))
+            if (Core.Optional.IsDefined(AutoUpgradeMinorVersion))
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
-            if (Optional.IsDefined(EnableAutomaticUpgrade))
+            if (Core.Optional.IsDefined(EnableAutomaticUpgrade))
             {
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
             }
-            if (Optional.IsDefined(Settings))
+            if (Core.Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
 #if NET6_0_OR_GREATER
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Settings.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(ProtectedSettings))
+            if (Core.Optional.IsDefined(ProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettings"u8);
 #if NET6_0_OR_GREATER
@@ -82,22 +82,22 @@ namespace Azure.ResourceManager.Compute
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(ProtectedSettings.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(InstanceView))
+            if (Core.Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
                 writer.WriteObjectValue(InstanceView);
             }
-            if (Optional.IsDefined(SuppressFailures))
+            if (Core.Optional.IsDefined(SuppressFailures))
             {
                 writer.WritePropertyName("suppressFailures"u8);
                 writer.WriteBooleanValue(SuppressFailures.Value);
             }
-            if (Optional.IsDefined(KeyVaultProtectedSettings))
+            if (Core.Optional.IsDefined(KeyVaultProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettingsFromKeyVault"u8);
                 writer.WriteObjectValue(KeyVaultProtectedSettings);
             }
-            if (Optional.IsCollectionDefined(ProvisionAfterExtensions))
+            if (Core.Optional.IsCollectionDefined(ProvisionAfterExtensions))
             {
                 writer.WritePropertyName("provisionAfterExtensions"u8);
                 writer.WriteStartArray();
@@ -117,25 +117,25 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> forceUpdateTag = default;
-            Optional<string> publisher = default;
-            Optional<string> type0 = default;
-            Optional<string> typeHandlerVersion = default;
-            Optional<bool> autoUpgradeMinorVersion = default;
-            Optional<bool> enableAutomaticUpgrade = default;
-            Optional<BinaryData> settings = default;
-            Optional<BinaryData> protectedSettings = default;
-            Optional<string> provisioningState = default;
-            Optional<VirtualMachineExtensionInstanceView> instanceView = default;
-            Optional<bool> suppressFailures = default;
-            Optional<KeyVaultSecretReference> protectedSettingsFromKeyVault = default;
-            Optional<IList<string>> provisionAfterExtensions = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> forceUpdateTag = default;
+            Core.Optional<string> publisher = default;
+            Core.Optional<string> type0 = default;
+            Core.Optional<string> typeHandlerVersion = default;
+            Core.Optional<bool> autoUpgradeMinorVersion = default;
+            Core.Optional<bool> enableAutomaticUpgrade = default;
+            Core.Optional<BinaryData> settings = default;
+            Core.Optional<BinaryData> protectedSettings = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<VirtualMachineExtensionInstanceView> instanceView = default;
+            Core.Optional<bool> suppressFailures = default;
+            Core.Optional<KeyVaultSecretReference> protectedSettingsFromKeyVault = default;
+            Core.Optional<IList<string>> provisionAfterExtensions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new VirtualMachineExtensionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, provisioningState.Value, instanceView.Value, Optional.ToNullable(suppressFailures), protectedSettingsFromKeyVault.Value, Optional.ToList(provisionAfterExtensions));
+            return new VirtualMachineExtensionData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Core.Optional.ToNullable(autoUpgradeMinorVersion), Core.Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, provisioningState.Value, instanceView.Value, Core.Optional.ToNullable(suppressFailures), protectedSettingsFromKeyVault.Value, Core.Optional.ToList(provisionAfterExtensions));
         }
     }
 }

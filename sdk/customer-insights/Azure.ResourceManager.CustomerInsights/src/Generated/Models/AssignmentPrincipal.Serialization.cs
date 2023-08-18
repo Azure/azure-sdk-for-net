@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class AssignmentPrincipal : IUtf8JsonSerializable
+    public partial class AssignmentPrincipal : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
             writer.WritePropertyName("principalType"u8);
             writer.WriteStringValue(PrincipalType);
-            if (Optional.IsCollectionDefined(PrincipalMetadata))
+            if (Core.Optional.IsCollectionDefined(PrincipalMetadata))
             {
                 writer.WritePropertyName("principalMetadata"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             string principalId = default;
             string principalType = default;
-            Optional<IDictionary<string, string>> principalMetadata = default;
+            Core.Optional<IDictionary<string, string>> principalMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new AssignmentPrincipal(principalId, principalType, Optional.ToDictionary(principalMetadata));
+            return new AssignmentPrincipal(principalId, principalType, Core.Optional.ToDictionary(principalMetadata));
         }
     }
 }

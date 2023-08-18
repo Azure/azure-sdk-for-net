@@ -14,44 +14,44 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
-    public partial class CostManagementExportData : IUtf8JsonSerializable
+    public partial class CostManagementExportData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Format))
+            if (Core.Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format.Value.ToString());
             }
-            if (Optional.IsDefined(DeliveryInfo))
+            if (Core.Optional.IsDefined(DeliveryInfo))
             {
                 writer.WritePropertyName("deliveryInfo"u8);
                 writer.WriteObjectValue(DeliveryInfo);
             }
-            if (Optional.IsDefined(Definition))
+            if (Core.Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
                 writer.WriteObjectValue(Definition);
             }
-            if (Optional.IsDefined(RunHistory))
+            if (Core.Optional.IsDefined(RunHistory))
             {
                 writer.WritePropertyName("runHistory"u8);
                 writer.WriteObjectValue(RunHistory);
             }
-            if (Optional.IsDefined(PartitionData))
+            if (Core.Optional.IsDefined(PartitionData))
             {
                 writer.WritePropertyName("partitionData"u8);
                 writer.WriteBooleanValue(PartitionData.Value);
             }
-            if (Optional.IsDefined(Schedule))
+            if (Core.Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteObjectValue(Schedule);

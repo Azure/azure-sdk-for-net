@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<DataBoxValidationStatus> status = default;
+            Core.Optional<DataBoxValidationStatus> status = default;
             DataBoxValidationInputDiscriminator validationType = default;
-            Optional<ResponseError> error = default;
+            Core.Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new SubscriptionIsAllowedToCreateJobValidationResult(validationType, error.Value, Optional.ToNullable(status));
+            return new SubscriptionIsAllowedToCreateJobValidationResult(validationType, error.Value, Core.Optional.ToNullable(status));
         }
     }
 }

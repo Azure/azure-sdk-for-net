@@ -13,17 +13,17 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class CustomActivity : IUtf8JsonSerializable
+    public partial class CustomActivity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedServiceName))
+            if (Core.Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 JsonSerializer.Serialize(writer, LinkedServiceName);
             }
-            if (Optional.IsDefined(Policy))
+            if (Core.Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -32,22 +32,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(OnInactiveMarkAs))
+            if (Core.Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (Core.Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserProperties))
+            if (Core.Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -71,22 +71,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("command"u8);
             JsonSerializer.Serialize(writer, Command);
-            if (Optional.IsDefined(ResourceLinkedService))
+            if (Core.Optional.IsDefined(ResourceLinkedService))
             {
                 writer.WritePropertyName("resourceLinkedService"u8);
                 JsonSerializer.Serialize(writer, ResourceLinkedService);
             }
-            if (Optional.IsDefined(FolderPath))
+            if (Core.Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
                 JsonSerializer.Serialize(writer, FolderPath);
             }
-            if (Optional.IsDefined(ReferenceObjects))
+            if (Core.Optional.IsDefined(ReferenceObjects))
             {
                 writer.WritePropertyName("referenceObjects"u8);
                 writer.WriteObjectValue(ReferenceObjects);
             }
-            if (Optional.IsCollectionDefined(ExtendedProperties))
+            if (Core.Optional.IsCollectionDefined(ExtendedProperties))
             {
                 writer.WritePropertyName("extendedProperties"u8);
                 writer.WriteStartObject();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(RetentionTimeInDays))
+            if (Core.Optional.IsDefined(RetentionTimeInDays))
             {
                 writer.WritePropertyName("retentionTimeInDays"u8);
 #if NET6_0_OR_GREATER
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(RetentionTimeInDays.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(AutoUserSpecification))
+            if (Core.Optional.IsDefined(AutoUserSpecification))
             {
                 writer.WritePropertyName("autoUserSpecification"u8);
                 JsonSerializer.Serialize(writer, AutoUserSpecification);
@@ -139,22 +139,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<PipelineActivityPolicy> policy = default;
+            Core.Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
+            Core.Optional<PipelineActivityPolicy> policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            Core.Optional<string> description = default;
+            Core.Optional<PipelineActivityState> state = default;
+            Core.Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            Core.Optional<IList<PipelineActivityDependency>> dependsOn = default;
+            Core.Optional<IList<PipelineActivityUserProperty>> userProperties = default;
             DataFactoryElement<string> command = default;
-            Optional<DataFactoryLinkedServiceReference> resourceLinkedService = default;
-            Optional<DataFactoryElement<string>> folderPath = default;
-            Optional<CustomActivityReferenceObject> referenceObjects = default;
-            Optional<IDictionary<string, BinaryData>> extendedProperties = default;
-            Optional<BinaryData> retentionTimeInDays = default;
-            Optional<DataFactoryElement<string>> autoUserSpecification = default;
+            Core.Optional<DataFactoryLinkedServiceReference> resourceLinkedService = default;
+            Core.Optional<DataFactoryElement<string>> folderPath = default;
+            Core.Optional<CustomActivityReferenceObject> referenceObjects = default;
+            Core.Optional<IDictionary<string, BinaryData>> extendedProperties = default;
+            Core.Optional<BinaryData> retentionTimeInDays = default;
+            Core.Optional<DataFactoryElement<string>> autoUserSpecification = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CustomActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, command, resourceLinkedService, folderPath.Value, referenceObjects.Value, Optional.ToDictionary(extendedProperties), retentionTimeInDays.Value, autoUserSpecification.Value);
+            return new CustomActivity(name, type, description.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(onInactiveMarkAs), Core.Optional.ToList(dependsOn), Core.Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, command, resourceLinkedService, folderPath.Value, referenceObjects.Value, Core.Optional.ToDictionary(extendedProperties), retentionTimeInDays.Value, autoUserSpecification.Value);
         }
     }
 }

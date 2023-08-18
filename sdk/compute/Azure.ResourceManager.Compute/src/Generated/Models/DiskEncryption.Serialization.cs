@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class DiskEncryption : IUtf8JsonSerializable
+    public partial class DiskEncryption : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiskEncryptionSetId))
+            if (Core.Optional.IsDefined(DiskEncryptionSetId))
             {
                 writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
             }
-            if (Optional.IsDefined(EncryptionType))
+            if (Core.Optional.IsDefined(EncryptionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(EncryptionType.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> diskEncryptionSetId = default;
-            Optional<ComputeEncryptionType> type = default;
+            Core.Optional<ResourceIdentifier> diskEncryptionSetId = default;
+            Core.Optional<ComputeEncryptionType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskEncryptionSetId"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new DiskEncryption(diskEncryptionSetId.Value, Optional.ToNullable(type));
+            return new DiskEncryption(diskEncryptionSetId.Value, Core.Optional.ToNullable(type));
         }
     }
 }

@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<string> state = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<int> exitCode = default;
-            Optional<DateTimeOffset> finishTime = default;
-            Optional<string> detailStatus = default;
+            Core.Optional<string> state = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<int> exitCode = default;
+            Core.Optional<DateTimeOffset> finishTime = default;
+            Core.Optional<string> detailStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new ContainerState(state.Value, Optional.ToNullable(startTime), Optional.ToNullable(exitCode), Optional.ToNullable(finishTime), detailStatus.Value);
+            return new ContainerState(state.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(exitCode), Core.Optional.ToNullable(finishTime), detailStatus.Value);
         }
     }
 }

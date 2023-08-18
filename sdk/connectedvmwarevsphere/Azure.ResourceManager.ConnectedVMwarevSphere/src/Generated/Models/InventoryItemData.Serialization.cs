@@ -12,12 +12,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    public partial class InventoryItemData : IUtf8JsonSerializable
+    public partial class InventoryItemData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             writer.WriteStartObject();
             writer.WritePropertyName("inventoryType"u8);
             writer.WriteStringValue(InventoryType.ToString());
-            if (Optional.IsDefined(ManagedResourceId))
+            if (Core.Optional.IsDefined(ManagedResourceId))
             {
                 writer.WritePropertyName("managedResourceId"u8);
                 writer.WriteStringValue(ManagedResourceId);
             }
-            if (Optional.IsDefined(MoRefId))
+            if (Core.Optional.IsDefined(MoRefId))
             {
                 writer.WritePropertyName("moRefId"u8);
                 writer.WriteStringValue(MoRefId);
             }
-            if (Optional.IsDefined(MoName))
+            if (Core.Optional.IsDefined(MoName))
             {
                 writer.WritePropertyName("moName"u8);
                 writer.WriteStringValue(MoName);
@@ -51,16 +51,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             InventoryType inventoryType = default;
-            Optional<string> managedResourceId = default;
-            Optional<string> moRefId = default;
-            Optional<string> moName = default;
-            Optional<string> provisioningState = default;
+            Core.Optional<string> managedResourceId = default;
+            Core.Optional<string> moRefId = default;
+            Core.Optional<string> moName = default;
+            Core.Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))

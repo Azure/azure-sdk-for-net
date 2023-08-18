@@ -13,24 +13,24 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SapOpenHubLinkedService : IUtf8JsonSerializable
+    public partial class SapOpenHubLinkedService : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (Optional.IsDefined(ConnectVia))
+            if (Core.Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (Core.Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (Core.Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -62,57 +62,57 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Server))
+            if (Core.Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
                 JsonSerializer.Serialize(writer, Server);
             }
-            if (Optional.IsDefined(SystemNumber))
+            if (Core.Optional.IsDefined(SystemNumber))
             {
                 writer.WritePropertyName("systemNumber"u8);
                 JsonSerializer.Serialize(writer, SystemNumber);
             }
-            if (Optional.IsDefined(ClientId))
+            if (Core.Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 JsonSerializer.Serialize(writer, ClientId);
             }
-            if (Optional.IsDefined(Language))
+            if (Core.Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 JsonSerializer.Serialize(writer, Language);
             }
-            if (Optional.IsDefined(SystemId))
+            if (Core.Optional.IsDefined(SystemId))
             {
                 writer.WritePropertyName("systemId"u8);
                 JsonSerializer.Serialize(writer, SystemId);
             }
-            if (Optional.IsDefined(UserName))
+            if (Core.Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 JsonSerializer.Serialize(writer, UserName);
             }
-            if (Optional.IsDefined(Password))
+            if (Core.Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 JsonSerializer.Serialize(writer, Password);
             }
-            if (Optional.IsDefined(MessageServer))
+            if (Core.Optional.IsDefined(MessageServer))
             {
                 writer.WritePropertyName("messageServer"u8);
                 JsonSerializer.Serialize(writer, MessageServer);
             }
-            if (Optional.IsDefined(MessageServerService))
+            if (Core.Optional.IsDefined(MessageServerService))
             {
                 writer.WritePropertyName("messageServerService"u8);
                 JsonSerializer.Serialize(writer, MessageServerService);
             }
-            if (Optional.IsDefined(LogonGroup))
+            if (Core.Optional.IsDefined(LogonGroup))
             {
                 writer.WritePropertyName("logonGroup"u8);
                 JsonSerializer.Serialize(writer, LogonGroup);
             }
-            if (Optional.IsDefined(EncryptedCredential))
+            if (Core.Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
@@ -137,21 +137,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
-            Optional<DataFactoryElement<string>> server = default;
-            Optional<DataFactoryElement<string>> systemNumber = default;
-            Optional<DataFactoryElement<string>> clientId = default;
-            Optional<DataFactoryElement<string>> language = default;
-            Optional<DataFactoryElement<string>> systemId = default;
-            Optional<DataFactoryElement<string>> userName = default;
-            Optional<DataFactorySecretBaseDefinition> password = default;
-            Optional<DataFactoryElement<string>> messageServer = default;
-            Optional<DataFactoryElement<string>> messageServerService = default;
-            Optional<DataFactoryElement<string>> logonGroup = default;
-            Optional<string> encryptedCredential = default;
+            Core.Optional<IntegrationRuntimeReference> connectVia = default;
+            Core.Optional<string> description = default;
+            Core.Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
+            Core.Optional<IList<BinaryData>> annotations = default;
+            Core.Optional<DataFactoryElement<string>> server = default;
+            Core.Optional<DataFactoryElement<string>> systemNumber = default;
+            Core.Optional<DataFactoryElement<string>> clientId = default;
+            Core.Optional<DataFactoryElement<string>> language = default;
+            Core.Optional<DataFactoryElement<string>> systemId = default;
+            Core.Optional<DataFactoryElement<string>> userName = default;
+            Core.Optional<DataFactorySecretBaseDefinition> password = default;
+            Core.Optional<DataFactoryElement<string>> messageServer = default;
+            Core.Optional<DataFactoryElement<string>> messageServerService = default;
+            Core.Optional<DataFactoryElement<string>> logonGroup = default;
+            Core.Optional<string> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapOpenHubLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, server.Value, systemNumber.Value, clientId.Value, language.Value, systemId.Value, userName.Value, password, messageServer.Value, messageServerService.Value, logonGroup.Value, encryptedCredential.Value);
+            return new SapOpenHubLinkedService(type, connectVia.Value, description.Value, Core.Optional.ToDictionary(parameters), Core.Optional.ToList(annotations), additionalProperties, server.Value, systemNumber.Value, clientId.Value, language.Value, systemId.Value, userName.Value, password, messageServer.Value, messageServerService.Value, logonGroup.Value, encryptedCredential.Value);
         }
     }
 }

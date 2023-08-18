@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.Rooms
 {
-    internal partial class ParticipantProperties : IUtf8JsonSerializable
+    internal partial class ParticipantProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Role != null)

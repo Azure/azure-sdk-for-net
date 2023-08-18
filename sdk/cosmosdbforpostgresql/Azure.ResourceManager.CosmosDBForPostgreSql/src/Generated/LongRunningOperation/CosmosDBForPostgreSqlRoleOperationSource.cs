@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
-    internal class CosmosDBForPostgreSqlRoleOperationSource : IOperationSource<CosmosDBForPostgreSqlRoleResource>
+    internal class CosmosDBForPostgreSqlRoleOperationSource : Core.IOperationSource<CosmosDBForPostgreSqlRoleResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             _client = client;
         }
 
-        CosmosDBForPostgreSqlRoleResource IOperationSource<CosmosDBForPostgreSqlRoleResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CosmosDBForPostgreSqlRoleResource Core.IOperationSource<CosmosDBForPostgreSqlRoleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CosmosDBForPostgreSqlRoleData.DeserializeCosmosDBForPostgreSqlRoleData(document.RootElement);
             return new CosmosDBForPostgreSqlRoleResource(_client, data);
         }
 
-        async ValueTask<CosmosDBForPostgreSqlRoleResource> IOperationSource<CosmosDBForPostgreSqlRoleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CosmosDBForPostgreSqlRoleResource> Core.IOperationSource<CosmosDBForPostgreSqlRoleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CosmosDBForPostgreSqlRoleData.DeserializeCosmosDBForPostgreSqlRoleData(document.RootElement);

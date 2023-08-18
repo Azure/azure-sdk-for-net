@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DeviceCapacityRequestContent : IUtf8JsonSerializable
+    public partial class DeviceCapacityRequestContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(VmPlacementResults))
+            if (Core.Optional.IsCollectionDefined(VmPlacementResults))
             {
                 writer.WritePropertyName("vmPlacementResults"u8);
                 writer.WriteStartArray();

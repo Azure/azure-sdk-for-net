@@ -14,9 +14,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    public partial class DataBoxEdgeAlertData : IUtf8JsonSerializable
+    public partial class DataBoxEdgeAlertData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.DataBoxEdge
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> title = default;
-            Optional<string> alertType = default;
-            Optional<DateTimeOffset> appearedAtDateTime = default;
-            Optional<string> recommendation = default;
-            Optional<DataBoxEdgeAlertSeverity> severity = default;
-            Optional<DataBoxEdgeAlertErrorDetails> errorDetails = default;
-            Optional<IReadOnlyDictionary<string, string>> detailedInformation = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> title = default;
+            Core.Optional<string> alertType = default;
+            Core.Optional<DateTimeOffset> appearedAtDateTime = default;
+            Core.Optional<string> recommendation = default;
+            Core.Optional<DataBoxEdgeAlertSeverity> severity = default;
+            Core.Optional<DataBoxEdgeAlertErrorDetails> errorDetails = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> detailedInformation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     continue;
                 }
             }
-            return new DataBoxEdgeAlertData(id, name, type, systemData.Value, title.Value, alertType.Value, Optional.ToNullable(appearedAtDateTime), recommendation.Value, Optional.ToNullable(severity), errorDetails.Value, Optional.ToDictionary(detailedInformation));
+            return new DataBoxEdgeAlertData(id, name, type, systemData.Value, title.Value, alertType.Value, Core.Optional.ToNullable(appearedAtDateTime), recommendation.Value, Core.Optional.ToNullable(severity), errorDetails.Value, Core.Optional.ToDictionary(detailedInformation));
         }
     }
 }

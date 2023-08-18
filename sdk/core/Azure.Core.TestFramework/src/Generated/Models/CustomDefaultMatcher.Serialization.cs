@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.Core.TestFramework.Models
 {
-    public partial class CustomDefaultMatcher : IUtf8JsonSerializable
+    public partial class CustomDefaultMatcher : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExcludedHeaders))
+            if (Core.Optional.IsDefined(ExcludedHeaders))
             {
                 writer.WritePropertyName("excludedHeaders"u8);
                 writer.WriteStringValue(ExcludedHeaders);
             }
-            if (Optional.IsDefined(CompareBodies))
+            if (Core.Optional.IsDefined(CompareBodies))
             {
                 writer.WritePropertyName("compareBodies"u8);
                 writer.WriteBooleanValue(CompareBodies.Value);
             }
-            if (Optional.IsDefined(IgnoredHeaders))
+            if (Core.Optional.IsDefined(IgnoredHeaders))
             {
                 writer.WritePropertyName("ignoredHeaders"u8);
                 writer.WriteStringValue(IgnoredHeaders);
             }
-            if (Optional.IsDefined(IgnoredQueryParameters))
+            if (Core.Optional.IsDefined(IgnoredQueryParameters))
             {
                 writer.WritePropertyName("ignoredQueryParameters"u8);
                 writer.WriteStringValue(IgnoredQueryParameters);

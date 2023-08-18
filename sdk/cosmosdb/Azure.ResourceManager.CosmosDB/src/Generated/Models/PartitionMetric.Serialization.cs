@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<Guid> partitionId = default;
-            Optional<string> partitionKeyRangeId = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> timeGrain = default;
-            Optional<CosmosDBMetricUnitType> unit = default;
-            Optional<CosmosDBMetricName> name = default;
-            Optional<IReadOnlyList<CosmosDBMetricValue>> metricValues = default;
+            Core.Optional<Guid> partitionId = default;
+            Core.Optional<string> partitionKeyRangeId = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<string> timeGrain = default;
+            Core.Optional<CosmosDBMetricUnitType> unit = default;
+            Core.Optional<CosmosDBMetricName> name = default;
+            Core.Optional<IReadOnlyList<CosmosDBMetricValue>> metricValues = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionId"u8))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new PartitionMetric(Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeGrain.Value, Optional.ToNullable(unit), name.Value, Optional.ToList(metricValues), Optional.ToNullable(partitionId), partitionKeyRangeId.Value);
+            return new PartitionMetric(Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), timeGrain.Value, Core.Optional.ToNullable(unit), name.Value, Core.Optional.ToList(metricValues), Core.Optional.ToNullable(partitionId), partitionKeyRangeId.Value);
         }
     }
 }

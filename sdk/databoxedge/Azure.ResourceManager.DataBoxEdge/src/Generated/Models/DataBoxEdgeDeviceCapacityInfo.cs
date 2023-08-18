@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of DataBoxEdgeDeviceCapacityInfo. </summary>
         public DataBoxEdgeDeviceCapacityInfo()
         {
-            NodeCapacityInfos = new ChangeTrackingDictionary<string, HostCapacity>();
+            NodeCapacityInfos = new Core.ChangeTrackingDictionary<string, HostCapacity>();
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeDeviceCapacityInfo. </summary>

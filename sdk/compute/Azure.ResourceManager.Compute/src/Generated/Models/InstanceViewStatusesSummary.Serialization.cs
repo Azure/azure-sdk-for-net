@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StatusCodeCount>> statusesSummary = default;
+            Core.Optional<IReadOnlyList<StatusCodeCount>> statusesSummary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("statusesSummary"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new InstanceViewStatusesSummary(Optional.ToList(statusesSummary));
+            return new InstanceViewStatusesSummary(Core.Optional.ToList(statusesSummary));
         }
     }
 }

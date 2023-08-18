@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> rid = default;
-            Optional<CosmosDBOperationType> operationType = default;
-            Optional<string> eventTimestamp = default;
-            Optional<string> ownerId = default;
-            Optional<string> ownerResourceId = default;
+            Core.Optional<string> rid = default;
+            Core.Optional<CosmosDBOperationType> operationType = default;
+            Core.Optional<string> eventTimestamp = default;
+            Core.Optional<string> ownerId = default;
+            Core.Optional<string> ownerResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_rid"u8))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ExtendedRestorableMongoDBDatabaseResourceInfo(rid.Value, Optional.ToNullable(operationType), eventTimestamp.Value, ownerId.Value, ownerResourceId.Value);
+            return new ExtendedRestorableMongoDBDatabaseResourceInfo(rid.Value, Core.Optional.ToNullable(operationType), eventTimestamp.Value, ownerId.Value, ownerResourceId.Value);
         }
     }
 }

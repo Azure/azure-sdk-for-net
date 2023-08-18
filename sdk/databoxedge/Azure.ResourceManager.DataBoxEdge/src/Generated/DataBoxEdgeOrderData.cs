@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <summary> Initializes a new instance of DataBoxEdgeOrderData. </summary>
         public DataBoxEdgeOrderData()
         {
-            OrderHistory = new ChangeTrackingList<DataBoxEdgeOrderStatus>();
-            DeliveryTrackingInfo = new ChangeTrackingList<DataBoxEdgeTrackingInfo>();
-            ReturnTrackingInfo = new ChangeTrackingList<DataBoxEdgeTrackingInfo>();
+            OrderHistory = new Core.ChangeTrackingList<DataBoxEdgeOrderStatus>();
+            DeliveryTrackingInfo = new Core.ChangeTrackingList<DataBoxEdgeTrackingInfo>();
+            ReturnTrackingInfo = new Core.ChangeTrackingList<DataBoxEdgeTrackingInfo>();
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeOrderData. </summary>

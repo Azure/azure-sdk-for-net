@@ -24,7 +24,7 @@ namespace Azure.Communication.JobRouter.Models
 
             QueueId = queueId;
             Length = length;
-            EstimatedWaitTimeMinutes = new ChangeTrackingDictionary<string, double>();
+            EstimatedWaitTimeMinutes = new Core.ChangeTrackingDictionary<string, double>();
         }
 
         /// <summary> Initializes a new instance of RouterQueueStatistics. </summary>

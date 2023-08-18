@@ -13,12 +13,12 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ExecuteWranglingDataflowActivity : IUtf8JsonSerializable
+    public partial class ExecuteWranglingDataflowActivity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Policy))
+            if (Core.Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(OnInactiveMarkAs))
+            if (Core.Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (Core.Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserProperties))
+            if (Core.Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -66,42 +66,42 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("dataFlow"u8);
             writer.WriteObjectValue(DataFlow);
-            if (Optional.IsDefined(Staging))
+            if (Core.Optional.IsDefined(Staging))
             {
                 writer.WritePropertyName("staging"u8);
                 writer.WriteObjectValue(Staging);
             }
-            if (Optional.IsDefined(IntegrationRuntime))
+            if (Core.Optional.IsDefined(IntegrationRuntime))
             {
                 writer.WritePropertyName("integrationRuntime"u8);
                 writer.WriteObjectValue(IntegrationRuntime);
             }
-            if (Optional.IsDefined(Compute))
+            if (Core.Optional.IsDefined(Compute))
             {
                 writer.WritePropertyName("compute"u8);
                 writer.WriteObjectValue(Compute);
             }
-            if (Optional.IsDefined(TraceLevel))
+            if (Core.Optional.IsDefined(TraceLevel))
             {
                 writer.WritePropertyName("traceLevel"u8);
                 JsonSerializer.Serialize(writer, TraceLevel);
             }
-            if (Optional.IsDefined(ContinueOnError))
+            if (Core.Optional.IsDefined(ContinueOnError))
             {
                 writer.WritePropertyName("continueOnError"u8);
                 JsonSerializer.Serialize(writer, ContinueOnError);
             }
-            if (Optional.IsDefined(RunConcurrently))
+            if (Core.Optional.IsDefined(RunConcurrently))
             {
                 writer.WritePropertyName("runConcurrently"u8);
                 JsonSerializer.Serialize(writer, RunConcurrently);
             }
-            if (Optional.IsDefined(SourceStagingConcurrency))
+            if (Core.Optional.IsDefined(SourceStagingConcurrency))
             {
                 writer.WritePropertyName("sourceStagingConcurrency"u8);
                 JsonSerializer.Serialize(writer, SourceStagingConcurrency);
             }
-            if (Optional.IsCollectionDefined(Sinks))
+            if (Core.Optional.IsCollectionDefined(Sinks))
             {
                 writer.WritePropertyName("sinks"u8);
                 writer.WriteStartObject();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Queries))
+            if (Core.Optional.IsCollectionDefined(Queries))
             {
                 writer.WritePropertyName("queries"u8);
                 writer.WriteStartArray();
@@ -141,24 +141,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<PipelineActivityPolicy> policy = default;
+            Core.Optional<PipelineActivityPolicy> policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            Core.Optional<string> description = default;
+            Core.Optional<PipelineActivityState> state = default;
+            Core.Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            Core.Optional<IList<PipelineActivityDependency>> dependsOn = default;
+            Core.Optional<IList<PipelineActivityUserProperty>> userProperties = default;
             DataFlowReference dataFlow = default;
-            Optional<DataFlowStagingInfo> staging = default;
-            Optional<IntegrationRuntimeReference> integrationRuntime = default;
-            Optional<ExecuteDataFlowActivityComputeType> compute = default;
-            Optional<DataFactoryElement<string>> traceLevel = default;
-            Optional<DataFactoryElement<bool>> continueOnError = default;
-            Optional<DataFactoryElement<bool>> runConcurrently = default;
-            Optional<DataFactoryElement<int>> sourceStagingConcurrency = default;
-            Optional<IDictionary<string, PowerQuerySink>> sinks = default;
-            Optional<IList<PowerQuerySinkMapping>> queries = default;
+            Core.Optional<DataFlowStagingInfo> staging = default;
+            Core.Optional<IntegrationRuntimeReference> integrationRuntime = default;
+            Core.Optional<ExecuteDataFlowActivityComputeType> compute = default;
+            Core.Optional<DataFactoryElement<string>> traceLevel = default;
+            Core.Optional<DataFactoryElement<bool>> continueOnError = default;
+            Core.Optional<DataFactoryElement<bool>> runConcurrently = default;
+            Core.Optional<DataFactoryElement<int>> sourceStagingConcurrency = default;
+            Core.Optional<IDictionary<string, PowerQuerySink>> sinks = default;
+            Core.Optional<IList<PowerQuerySinkMapping>> queries = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ExecuteWranglingDataflowActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, policy.Value, dataFlow, staging.Value, integrationRuntime.Value, compute.Value, traceLevel.Value, continueOnError.Value, runConcurrently.Value, sourceStagingConcurrency.Value, Optional.ToDictionary(sinks), Optional.ToList(queries));
+            return new ExecuteWranglingDataflowActivity(name, type, description.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(onInactiveMarkAs), Core.Optional.ToList(dependsOn), Core.Optional.ToList(userProperties), additionalProperties, policy.Value, dataFlow, staging.Value, integrationRuntime.Value, compute.Value, traceLevel.Value, continueOnError.Value, runConcurrently.Value, sourceStagingConcurrency.Value, Core.Optional.ToDictionary(sinks), Core.Optional.ToList(queries));
         }
     }
 }

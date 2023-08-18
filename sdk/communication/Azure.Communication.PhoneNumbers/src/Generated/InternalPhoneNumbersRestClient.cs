@@ -187,7 +187,7 @@ namespace Azure.Communication.PhoneNumbers
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -198,7 +198,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="body"> The phone number search request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> or <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PhoneNumbersSearchAvailablePhoneNumbersHeaders>> SearchAvailablePhoneNumbersAsync(string twoLetterIsoCountryName, PhoneNumberSearchRequest body, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<PhoneNumbersSearchAvailablePhoneNumbersHeaders>> SearchAvailablePhoneNumbersAsync(string twoLetterIsoCountryName, PhoneNumberSearchRequest body, CancellationToken cancellationToken = default)
         {
             if (twoLetterIsoCountryName == null)
             {
@@ -215,7 +215,7 @@ namespace Azure.Communication.PhoneNumbers
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -226,7 +226,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="body"> The phone number search request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> or <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<PhoneNumbersSearchAvailablePhoneNumbersHeaders> SearchAvailablePhoneNumbers(string twoLetterIsoCountryName, PhoneNumberSearchRequest body, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<PhoneNumbersSearchAvailablePhoneNumbersHeaders> SearchAvailablePhoneNumbers(string twoLetterIsoCountryName, PhoneNumberSearchRequest body, CancellationToken cancellationToken = default)
         {
             if (twoLetterIsoCountryName == null)
             {
@@ -243,7 +243,7 @@ namespace Azure.Communication.PhoneNumbers
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -334,7 +334,7 @@ namespace Azure.Communication.PhoneNumbers
             {
                 SearchId = searchId
             };
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
@@ -343,7 +343,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Purchases phone numbers. </summary>
         /// <param name="searchId"> The search id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PhoneNumbersPurchasePhoneNumbersHeaders>> PurchasePhoneNumbersAsync(string searchId = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<PhoneNumbersPurchasePhoneNumbersHeaders>> PurchasePhoneNumbersAsync(string searchId = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePurchasePhoneNumbersRequest(searchId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -351,7 +351,7 @@ namespace Azure.Communication.PhoneNumbers
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -360,7 +360,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Purchases phone numbers. </summary>
         /// <param name="searchId"> The search id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PhoneNumbersPurchasePhoneNumbersHeaders> PurchasePhoneNumbers(string searchId = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<PhoneNumbersPurchasePhoneNumbersHeaders> PurchasePhoneNumbers(string searchId = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePurchasePhoneNumbersRequest(searchId);
             _pipeline.Send(message, cancellationToken);
@@ -368,7 +368,7 @@ namespace Azure.Communication.PhoneNumbers
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -393,7 +393,7 @@ namespace Azure.Communication.PhoneNumbers
                 Calling = calling,
                 Sms = sms
             };
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
@@ -405,7 +405,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="sms"> Capability value for SMS. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PhoneNumbersUpdateCapabilitiesHeaders>> UpdateCapabilitiesAsync(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<PhoneNumbersUpdateCapabilitiesHeaders>> UpdateCapabilitiesAsync(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
             {
@@ -418,7 +418,7 @@ namespace Azure.Communication.PhoneNumbers
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -430,7 +430,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="sms"> Capability value for SMS. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public ResponseWithHeaders<PhoneNumbersUpdateCapabilitiesHeaders> UpdateCapabilities(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<PhoneNumbersUpdateCapabilitiesHeaders> UpdateCapabilities(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
             {
@@ -443,7 +443,7 @@ namespace Azure.Communication.PhoneNumbers
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -537,7 +537,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumber"> Phone number to be released, e.g. +11234567890. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PhoneNumbersReleasePhoneNumberHeaders>> ReleasePhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<PhoneNumbersReleasePhoneNumberHeaders>> ReleasePhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
             {
@@ -550,7 +550,7 @@ namespace Azure.Communication.PhoneNumbers
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -560,7 +560,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumber"> Phone number to be released, e.g. +11234567890. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public ResponseWithHeaders<PhoneNumbersReleasePhoneNumberHeaders> ReleasePhoneNumber(string phoneNumber, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<PhoneNumbersReleasePhoneNumberHeaders> ReleasePhoneNumber(string phoneNumber, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
             {
@@ -573,7 +573,7 @@ namespace Azure.Communication.PhoneNumbers
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

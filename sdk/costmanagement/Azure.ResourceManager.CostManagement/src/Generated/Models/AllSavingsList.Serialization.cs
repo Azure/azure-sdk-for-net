@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AllSavingsBenefitDetails>> value = default;
-            Optional<Uri> nextLink = default;
+            Core.Optional<IReadOnlyList<AllSavingsBenefitDetails>> value = default;
+            Core.Optional<Uri> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new AllSavingsList(Optional.ToList(value), nextLink.Value);
+            return new AllSavingsList(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

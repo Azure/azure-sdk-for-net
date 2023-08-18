@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of BenefitUtilizationSummariesListResult. </summary>
         internal BenefitUtilizationSummariesListResult()
         {
-            Value = new ChangeTrackingList<BenefitUtilizationSummary>();
+            Value = new Core.ChangeTrackingList<BenefitUtilizationSummary>();
         }
 
         /// <summary> Initializes a new instance of BenefitUtilizationSummariesListResult. </summary>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
         public VirtualMachineScaleSetOSDisk(DiskCreateOptionType createOption)
         {
             CreateOption = createOption;
-            VhdContainers = new ChangeTrackingList<string>();
+            VhdContainers = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetOSDisk. </summary>

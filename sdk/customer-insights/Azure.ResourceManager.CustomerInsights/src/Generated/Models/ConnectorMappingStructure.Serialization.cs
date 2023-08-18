@@ -10,21 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class ConnectorMappingStructure : IUtf8JsonSerializable
+    public partial class ConnectorMappingStructure : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("propertyName"u8);
             writer.WriteStringValue(PropertyName);
             writer.WritePropertyName("columnName"u8);
             writer.WriteStringValue(ColumnName);
-            if (Optional.IsDefined(CustomFormatSpecifier))
+            if (Core.Optional.IsDefined(CustomFormatSpecifier))
             {
                 writer.WritePropertyName("customFormatSpecifier"u8);
                 writer.WriteStringValue(CustomFormatSpecifier);
             }
-            if (Optional.IsDefined(IsEncrypted))
+            if (Core.Optional.IsDefined(IsEncrypted))
             {
                 writer.WritePropertyName("isEncrypted"u8);
                 writer.WriteBooleanValue(IsEncrypted.Value);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             string propertyName = default;
             string columnName = default;
-            Optional<string> customFormatSpecifier = default;
-            Optional<bool> isEncrypted = default;
+            Core.Optional<string> customFormatSpecifier = default;
+            Core.Optional<bool> isEncrypted = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("propertyName"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new ConnectorMappingStructure(propertyName, columnName, customFormatSpecifier.Value, Optional.ToNullable(isEncrypted));
+            return new ConnectorMappingStructure(propertyName, columnName, customFormatSpecifier.Value, Core.Optional.ToNullable(isEncrypted));
         }
     }
 }

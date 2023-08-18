@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class SharingProfile : IUtf8JsonSerializable
+    public partial class SharingProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Permission))
+            if (Core.Optional.IsDefined(Permission))
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStringValue(Permission.Value.ToString());
             }
-            if (Optional.IsDefined(CommunityGalleryInfo))
+            if (Core.Optional.IsDefined(CommunityGalleryInfo))
             {
                 writer.WritePropertyName("communityGalleryInfo"u8);
                 writer.WriteObjectValue(CommunityGalleryInfo);
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<GallerySharingPermissionType> permissions = default;
-            Optional<IReadOnlyList<SharingProfileGroup>> groups = default;
-            Optional<CommunityGalleryInfo> communityGalleryInfo = default;
+            Core.Optional<GallerySharingPermissionType> permissions = default;
+            Core.Optional<IReadOnlyList<SharingProfileGroup>> groups = default;
+            Core.Optional<CommunityGalleryInfo> communityGalleryInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("permissions"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new SharingProfile(Optional.ToNullable(permissions), Optional.ToList(groups), communityGalleryInfo.Value);
+            return new SharingProfile(Core.Optional.ToNullable(permissions), Core.Optional.ToList(groups), communityGalleryInfo.Value);
         }
     }
 }

@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineExtensionInstanceView : IUtf8JsonSerializable
+    public partial class VirtualMachineExtensionInstanceView : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(VirtualMachineExtensionInstanceViewType))
+            if (Core.Optional.IsDefined(VirtualMachineExtensionInstanceViewType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(VirtualMachineExtensionInstanceViewType);
             }
-            if (Optional.IsDefined(TypeHandlerVersion))
+            if (Core.Optional.IsDefined(TypeHandlerVersion))
             {
                 writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (Optional.IsCollectionDefined(Substatuses))
+            if (Core.Optional.IsCollectionDefined(Substatuses))
             {
                 writer.WritePropertyName("substatuses"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Statuses))
+            if (Core.Optional.IsCollectionDefined(Statuses))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> typeHandlerVersion = default;
-            Optional<IList<InstanceViewStatus>> substatuses = default;
-            Optional<IList<InstanceViewStatus>> statuses = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> type = default;
+            Core.Optional<string> typeHandlerVersion = default;
+            Core.Optional<IList<InstanceViewStatus>> substatuses = default;
+            Core.Optional<IList<InstanceViewStatus>> statuses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineExtensionInstanceView(name.Value, type.Value, typeHandlerVersion.Value, Optional.ToList(substatuses), Optional.ToList(statuses));
+            return new VirtualMachineExtensionInstanceView(name.Value, type.Value, typeHandlerVersion.Value, Core.Optional.ToList(substatuses), Core.Optional.ToList(statuses));
         }
     }
 }

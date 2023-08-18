@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <summary> Initializes a new instance of PredictionTrainingResults. </summary>
         internal PredictionTrainingResults()
         {
-            CanonicalProfiles = new ChangeTrackingList<CanonicalProfileDefinition>();
+            CanonicalProfiles = new Core.ChangeTrackingList<CanonicalProfileDefinition>();
         }
 
         /// <summary> Initializes a new instance of PredictionTrainingResults. </summary>

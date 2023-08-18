@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class CloudServiceVaultCertificate : IUtf8JsonSerializable
+    public partial class CloudServiceVaultCertificate : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CertificateUri))
+            if (Core.Optional.IsDefined(CertificateUri))
             {
                 writer.WritePropertyName("certificateUrl"u8);
                 writer.WriteStringValue(CertificateUri.AbsoluteUri);
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<Uri> certificateUrl = default;
+            Core.Optional<Uri> certificateUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateUrl"u8))

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GalleryExtendedLocation : IUtf8JsonSerializable
+    public partial class GalleryExtendedLocation : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ExtendedLocationType))
+            if (Core.Optional.IsDefined(ExtendedLocationType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ExtendedLocationType.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<GalleryExtendedLocationType> type = default;
+            Core.Optional<string> name = default;
+            Core.Optional<GalleryExtendedLocationType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new GalleryExtendedLocation(name.Value, Optional.ToNullable(type));
+            return new GalleryExtendedLocation(name.Value, Core.Optional.ToNullable(type));
         }
     }
 }

@@ -12,12 +12,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionCreditSummary : IUtf8JsonSerializable
+    public partial class ConsumptionCreditSummary : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -34,18 +34,18 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            Core.Optional<ETag> eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<CreditBalanceSummary> balanceSummary = default;
-            Optional<ConsumptionAmount> pendingCreditAdjustments = default;
-            Optional<ConsumptionAmount> expiredCredit = default;
-            Optional<ConsumptionAmount> pendingEligibleCharges = default;
-            Optional<string> creditCurrency = default;
-            Optional<string> billingCurrency = default;
-            Optional<ConsumptionReseller> reseller = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<CreditBalanceSummary> balanceSummary = default;
+            Core.Optional<ConsumptionAmount> pendingCreditAdjustments = default;
+            Core.Optional<ConsumptionAmount> expiredCredit = default;
+            Core.Optional<ConsumptionAmount> pendingEligibleCharges = default;
+            Core.Optional<string> creditCurrency = default;
+            Core.Optional<string> billingCurrency = default;
+            Core.Optional<ConsumptionReseller> reseller = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ConsumptionCreditSummary(id, name, type, systemData.Value, balanceSummary.Value, pendingCreditAdjustments.Value, expiredCredit.Value, pendingEligibleCharges.Value, creditCurrency.Value, billingCurrency.Value, reseller.Value, Optional.ToNullable(eTag));
+            return new ConsumptionCreditSummary(id, name, type, systemData.Value, balanceSummary.Value, pendingCreditAdjustments.Value, expiredCredit.Value, pendingEligibleCharges.Value, creditCurrency.Value, billingCurrency.Value, reseller.Value, Core.Optional.ToNullable(eTag));
         }
     }
 }

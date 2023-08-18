@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Initializes a new instance of ContainerSecurityContextCapabilitiesDefinition. </summary>
         public ContainerSecurityContextCapabilitiesDefinition()
         {
-            Add = new ChangeTrackingList<string>();
-            Drop = new ChangeTrackingList<string>();
+            Add = new Core.ChangeTrackingList<string>();
+            Drop = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ContainerSecurityContextCapabilitiesDefinition. </summary>

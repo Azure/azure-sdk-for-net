@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="location"> The location. </param>
         public DataBoxEdgeDeviceData(AzureLocation location) : base(location)
         {
-            ConfiguredRoleTypes = new ChangeTrackingList<DataBoxEdgeRoleType>();
+            ConfiguredRoleTypes = new Core.ChangeTrackingList<DataBoxEdgeRoleType>();
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeDeviceData. </summary>

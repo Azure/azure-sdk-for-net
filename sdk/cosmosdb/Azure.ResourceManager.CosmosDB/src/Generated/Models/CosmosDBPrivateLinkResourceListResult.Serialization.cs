@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CosmosDBPrivateLinkResourceData>> value = default;
+            Core.Optional<IReadOnlyList<CosmosDBPrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CosmosDBPrivateLinkResourceListResult(Optional.ToList(value));
+            return new CosmosDBPrivateLinkResourceListResult(Core.Optional.ToList(value));
         }
     }
 }

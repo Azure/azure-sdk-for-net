@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of DataBoxHeavyAccountCopyLogDetails. </summary>
         internal DataBoxHeavyAccountCopyLogDetails()
         {
-            CopyLogLink = new ChangeTrackingList<string>();
-            CopyVerboseLogLink = new ChangeTrackingList<string>();
+            CopyLogLink = new Core.ChangeTrackingList<string>();
+            CopyVerboseLogLink = new Core.ChangeTrackingList<string>();
             CopyLogDetailsType = DataBoxOrderType.DataBoxHeavy;
         }
 

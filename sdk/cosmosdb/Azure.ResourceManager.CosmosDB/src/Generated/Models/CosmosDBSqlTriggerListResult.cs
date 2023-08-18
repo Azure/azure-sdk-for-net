@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CosmosDBSqlTriggerListResult. </summary>
         internal CosmosDBSqlTriggerListResult()
         {
-            Value = new ChangeTrackingList<CosmosDBSqlTriggerData>();
+            Value = new Core.ChangeTrackingList<CosmosDBSqlTriggerData>();
         }
 
         /// <summary> Initializes a new instance of CosmosDBSqlTriggerListResult. </summary>

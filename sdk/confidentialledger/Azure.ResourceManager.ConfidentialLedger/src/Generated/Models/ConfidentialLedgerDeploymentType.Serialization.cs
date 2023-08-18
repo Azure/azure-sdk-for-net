@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    public partial class ConfidentialLedgerDeploymentType : IUtf8JsonSerializable
+    public partial class ConfidentialLedgerDeploymentType : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LanguageRuntime))
+            if (Core.Optional.IsDefined(LanguageRuntime))
             {
                 writer.WritePropertyName("languageRuntime"u8);
                 writer.WriteStringValue(LanguageRuntime.Value.ToString());
             }
-            if (Optional.IsDefined(AppSourceUri))
+            if (Core.Optional.IsDefined(AppSourceUri))
             {
                 writer.WritePropertyName("appSourceUri"u8);
                 writer.WriteStringValue(AppSourceUri.AbsoluteUri);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             {
                 return null;
             }
-            Optional<ConfidentialLedgerLanguageRuntime> languageRuntime = default;
-            Optional<Uri> appSourceUri = default;
+            Core.Optional<ConfidentialLedgerLanguageRuntime> languageRuntime = default;
+            Core.Optional<Uri> appSourceUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("languageRuntime"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     continue;
                 }
             }
-            return new ConfidentialLedgerDeploymentType(Optional.ToNullable(languageRuntime), appSourceUri.Value);
+            return new ConfidentialLedgerDeploymentType(Core.Optional.ToNullable(languageRuntime), appSourceUri.Value);
         }
     }
 }

@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(@on, nameof(@on));
 
             On = @on;
-            Cases = new ChangeTrackingList<SwitchCaseActivity>();
-            DefaultActivities = new ChangeTrackingList<PipelineActivity>();
+            Cases = new Core.ChangeTrackingList<SwitchCaseActivity>();
+            DefaultActivities = new Core.ChangeTrackingList<PipelineActivity>();
             ActivityType = "Switch";
         }
 

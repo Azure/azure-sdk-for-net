@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
-            Optional<string> scoreName = default;
-            Optional<PredictionDistributionDefinition> predictionDistribution = default;
-            Optional<IReadOnlyList<CanonicalProfileDefinition>> canonicalProfiles = default;
-            Optional<long> primaryProfileInstanceCount = default;
+            Core.Optional<Guid> tenantId = default;
+            Core.Optional<string> scoreName = default;
+            Core.Optional<PredictionDistributionDefinition> predictionDistribution = default;
+            Core.Optional<IReadOnlyList<CanonicalProfileDefinition>> canonicalProfiles = default;
+            Core.Optional<long> primaryProfileInstanceCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new PredictionTrainingResults(Optional.ToNullable(tenantId), scoreName.Value, predictionDistribution.Value, Optional.ToList(canonicalProfiles), Optional.ToNullable(primaryProfileInstanceCount));
+            return new PredictionTrainingResults(Core.Optional.ToNullable(tenantId), scoreName.Value, predictionDistribution.Value, Core.Optional.ToList(canonicalProfiles), Core.Optional.ToNullable(primaryProfileInstanceCount));
         }
     }
 }

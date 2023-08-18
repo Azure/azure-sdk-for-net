@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class BackupPolicyMigrationState : IUtf8JsonSerializable
+    public partial class BackupPolicyMigrationState : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(TargetType))
+            if (Core.Optional.IsDefined(TargetType))
             {
                 writer.WritePropertyName("targetType"u8);
                 writer.WriteStringValue(TargetType.Value.ToString());
             }
-            if (Optional.IsDefined(StartOn))
+            if (Core.Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<BackupPolicyMigrationStatus> status = default;
-            Optional<BackupPolicyType> targetType = default;
-            Optional<DateTimeOffset> startTime = default;
+            Core.Optional<BackupPolicyMigrationStatus> status = default;
+            Core.Optional<BackupPolicyType> targetType = default;
+            Core.Optional<DateTimeOffset> startTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new BackupPolicyMigrationState(Optional.ToNullable(status), Optional.ToNullable(targetType), Optional.ToNullable(startTime));
+            return new BackupPolicyMigrationState(Core.Optional.ToNullable(status), Core.Optional.ToNullable(targetType), Core.Optional.ToNullable(startTime));
         }
     }
 }

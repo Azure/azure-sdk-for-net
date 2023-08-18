@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class DiffDiskSettings : IUtf8JsonSerializable
+    public partial class DiffDiskSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Option))
+            if (Core.Optional.IsDefined(Option))
             {
                 writer.WritePropertyName("option"u8);
                 writer.WriteStringValue(Option.Value.ToString());
             }
-            if (Optional.IsDefined(Placement))
+            if (Core.Optional.IsDefined(Placement))
             {
                 writer.WritePropertyName("placement"u8);
                 writer.WriteStringValue(Placement.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<DiffDiskOption> option = default;
-            Optional<DiffDiskPlacement> placement = default;
+            Core.Optional<DiffDiskOption> option = default;
+            Core.Optional<DiffDiskPlacement> placement = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("option"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new DiffDiskSettings(Optional.ToNullable(option), Optional.ToNullable(placement));
+            return new DiffDiskSettings(Core.Optional.ToNullable(option), Core.Optional.ToNullable(placement));
         }
     }
 }

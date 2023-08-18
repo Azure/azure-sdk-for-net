@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal class VirtualMachineScaleSetVmExtensionOperationSource : IOperationSource<VirtualMachineScaleSetVmExtensionResource>
+    internal class VirtualMachineScaleSetVmExtensionOperationSource : Core.IOperationSource<VirtualMachineScaleSetVmExtensionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Compute
             _client = client;
         }
 
-        VirtualMachineScaleSetVmExtensionResource IOperationSource<VirtualMachineScaleSetVmExtensionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualMachineScaleSetVmExtensionResource Core.IOperationSource<VirtualMachineScaleSetVmExtensionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualMachineScaleSetVmExtensionData.DeserializeVirtualMachineScaleSetVmExtensionData(document.RootElement);
             return new VirtualMachineScaleSetVmExtensionResource(_client, data);
         }
 
-        async ValueTask<VirtualMachineScaleSetVmExtensionResource> IOperationSource<VirtualMachineScaleSetVmExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualMachineScaleSetVmExtensionResource> Core.IOperationSource<VirtualMachineScaleSetVmExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualMachineScaleSetVmExtensionData.DeserializeVirtualMachineScaleSetVmExtensionData(document.RootElement);

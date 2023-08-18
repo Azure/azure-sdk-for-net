@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ContainerServiceIPTag : IUtf8JsonSerializable
+    public partial class ContainerServiceIPTag : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPTagType))
+            if (Core.Optional.IsDefined(IPTagType))
             {
                 writer.WritePropertyName("ipTagType"u8);
                 writer.WriteStringValue(IPTagType);
             }
-            if (Optional.IsDefined(Tag))
+            if (Core.Optional.IsDefined(Tag))
             {
                 writer.WritePropertyName("tag"u8);
                 writer.WriteStringValue(Tag);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> ipTagType = default;
-            Optional<string> tag = default;
+            Core.Optional<string> ipTagType = default;
+            Core.Optional<string> tag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipTagType"u8))

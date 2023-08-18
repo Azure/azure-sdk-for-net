@@ -13,19 +13,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    public partial class ViewResourceFormatData : IUtf8JsonSerializable
+    public partial class ViewResourceFormatData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserId))
+            if (Core.Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
             }
-            if (Optional.IsCollectionDefined(DisplayName))
+            if (Core.Optional.IsCollectionDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Definition))
+            if (Core.Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
                 writer.WriteStringValue(Definition);
@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> viewName = default;
-            Optional<string> userId = default;
-            Optional<Guid> tenantId = default;
-            Optional<IDictionary<string, string>> displayName = default;
-            Optional<string> definition = default;
-            Optional<DateTimeOffset> changed = default;
-            Optional<DateTimeOffset> created = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> viewName = default;
+            Core.Optional<string> userId = default;
+            Core.Optional<Guid> tenantId = default;
+            Core.Optional<IDictionary<string, string>> displayName = default;
+            Core.Optional<string> definition = default;
+            Core.Optional<DateTimeOffset> changed = default;
+            Core.Optional<DateTimeOffset> created = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.CustomerInsights
                     continue;
                 }
             }
-            return new ViewResourceFormatData(id, name, type, systemData.Value, viewName.Value, userId.Value, Optional.ToNullable(tenantId), Optional.ToDictionary(displayName), definition.Value, Optional.ToNullable(changed), Optional.ToNullable(created));
+            return new ViewResourceFormatData(id, name, type, systemData.Value, viewName.Value, userId.Value, Core.Optional.ToNullable(tenantId), Core.Optional.ToDictionary(displayName), definition.Value, Core.Optional.ToNullable(changed), Core.Optional.ToNullable(created));
         }
     }
 }

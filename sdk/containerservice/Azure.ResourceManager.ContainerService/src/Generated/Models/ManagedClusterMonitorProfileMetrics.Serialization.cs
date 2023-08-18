@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterMonitorProfileMetrics : IUtf8JsonSerializable
+    public partial class ManagedClusterMonitorProfileMetrics : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (Optional.IsDefined(KubeStateMetrics))
+            if (Core.Optional.IsDefined(KubeStateMetrics))
             {
                 writer.WritePropertyName("kubeStateMetrics"u8);
                 writer.WriteObjectValue(KubeStateMetrics);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             bool enabled = default;
-            Optional<ManagedClusterMonitorProfileKubeStateMetrics> kubeStateMetrics = default;
+            Core.Optional<ManagedClusterMonitorProfileKubeStateMetrics> kubeStateMetrics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))

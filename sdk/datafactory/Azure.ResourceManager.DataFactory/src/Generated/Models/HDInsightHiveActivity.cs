@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            StorageLinkedServices = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
-            Arguments = new ChangeTrackingList<BinaryData>();
-            Defines = new ChangeTrackingDictionary<string, BinaryData>();
-            Variables = new ChangeTrackingDictionary<string, BinaryData>();
+            StorageLinkedServices = new Core.ChangeTrackingList<DataFactoryLinkedServiceReference>();
+            Arguments = new Core.ChangeTrackingList<BinaryData>();
+            Defines = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            Variables = new Core.ChangeTrackingDictionary<string, BinaryData>();
             ActivityType = "HDInsightHive";
         }
 

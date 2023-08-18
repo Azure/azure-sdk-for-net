@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of ContainerRegistryWebhookEventRequestMessage. </summary>
         internal ContainerRegistryWebhookEventRequestMessage()
         {
-            Headers = new ChangeTrackingDictionary<string, string>();
+            Headers = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryWebhookEventRequestMessage. </summary>

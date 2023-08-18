@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<string> firstConsumptionDate = default;
-            Optional<string> lastConsumptionDate = default;
-            Optional<string> lookBackUnitType = default;
-            Optional<IReadOnlyList<float>> usageData = default;
-            Optional<string> usageGrain = default;
+            Core.Optional<string> firstConsumptionDate = default;
+            Core.Optional<string> lastConsumptionDate = default;
+            Core.Optional<string> lookBackUnitType = default;
+            Core.Optional<IReadOnlyList<float>> usageData = default;
+            Core.Optional<string> usageGrain = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("firstConsumptionDate"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ConsumptionUsageProperties(firstConsumptionDate.Value, lastConsumptionDate.Value, lookBackUnitType.Value, Optional.ToList(usageData), usageGrain.Value);
+            return new ConsumptionUsageProperties(firstConsumptionDate.Value, lastConsumptionDate.Value, lookBackUnitType.Value, Core.Optional.ToList(usageData), usageGrain.Value);
         }
     }
 }

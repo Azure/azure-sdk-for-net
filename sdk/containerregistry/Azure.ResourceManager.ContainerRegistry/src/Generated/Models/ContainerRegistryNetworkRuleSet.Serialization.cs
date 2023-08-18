@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryNetworkRuleSet : IUtf8JsonSerializable
+    public partial class ContainerRegistryNetworkRuleSet : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("defaultAction"u8);
             writer.WriteStringValue(DefaultAction.ToString());
-            if (Optional.IsCollectionDefined(IPRules))
+            if (Core.Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             ContainerRegistryNetworkRuleDefaultAction defaultAction = default;
-            Optional<IList<ContainerRegistryIPRule>> ipRules = default;
+            Core.Optional<IList<ContainerRegistryIPRule>> ipRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultAction"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryNetworkRuleSet(defaultAction, Optional.ToList(ipRules));
+            return new ContainerRegistryNetworkRuleSet(defaultAction, Core.Optional.ToList(ipRules));
         }
     }
 }

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GalleryArtifactVersionFullSource : IUtf8JsonSerializable
+    public partial class GalleryArtifactVersionFullSource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CommunityGalleryImageId))
+            if (Core.Optional.IsDefined(CommunityGalleryImageId))
             {
                 writer.WritePropertyName("communityGalleryImageId"u8);
                 writer.WriteStringValue(CommunityGalleryImageId);
             }
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> communityGalleryImageId = default;
-            Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> communityGalleryImageId = default;
+            Core.Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("communityGalleryImageId"u8))

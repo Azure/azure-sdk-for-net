@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = await _containerAppJobJobsRestClient.StopExecutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation(_containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateStopExecutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppContainersArmOperation(_containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateStopExecutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = _containerAppJobJobsRestClient.StopExecution(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AppContainersArmOperation(_containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateStopExecutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppContainersArmOperation(_containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateStopExecutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

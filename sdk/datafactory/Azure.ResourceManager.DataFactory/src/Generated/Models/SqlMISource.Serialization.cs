@@ -13,22 +13,22 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SqlMISource : IUtf8JsonSerializable
+    public partial class SqlMISource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SqlReaderQuery))
+            if (Core.Optional.IsDefined(SqlReaderQuery))
             {
                 writer.WritePropertyName("sqlReaderQuery"u8);
                 JsonSerializer.Serialize(writer, SqlReaderQuery);
             }
-            if (Optional.IsDefined(SqlReaderStoredProcedureName))
+            if (Core.Optional.IsDefined(SqlReaderStoredProcedureName))
             {
                 writer.WritePropertyName("sqlReaderStoredProcedureName"u8);
                 JsonSerializer.Serialize(writer, SqlReaderStoredProcedureName);
             }
-            if (Optional.IsDefined(StoredProcedureParameters))
+            if (Core.Optional.IsDefined(StoredProcedureParameters))
             {
                 writer.WritePropertyName("storedProcedureParameters"u8);
 #if NET6_0_OR_GREATER
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(StoredProcedureParameters.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(IsolationLevel))
+            if (Core.Optional.IsDefined(IsolationLevel))
             {
                 writer.WritePropertyName("isolationLevel"u8);
                 JsonSerializer.Serialize(writer, IsolationLevel);
             }
-            if (Optional.IsDefined(ProduceAdditionalTypes))
+            if (Core.Optional.IsDefined(ProduceAdditionalTypes))
             {
                 writer.WritePropertyName("produceAdditionalTypes"u8);
 #if NET6_0_OR_GREATER
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(ProduceAdditionalTypes.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(PartitionOption))
+            if (Core.Optional.IsDefined(PartitionOption))
             {
                 writer.WritePropertyName("partitionOption"u8);
 #if NET6_0_OR_GREATER
@@ -60,17 +60,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(PartitionOption.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(PartitionSettings))
+            if (Core.Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
                 writer.WriteObjectValue(PartitionSettings);
             }
-            if (Optional.IsDefined(QueryTimeout))
+            if (Core.Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
                 JsonSerializer.Serialize(writer, QueryTimeout);
             }
-            if (Optional.IsDefined(AdditionalColumns))
+            if (Core.Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
 #if NET6_0_OR_GREATER
@@ -81,22 +81,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);
-            if (Optional.IsDefined(SourceRetryCount))
+            if (Core.Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 JsonSerializer.Serialize(writer, SourceRetryCount);
             }
-            if (Optional.IsDefined(SourceRetryWait))
+            if (Core.Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 JsonSerializer.Serialize(writer, SourceRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (Core.Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Optional.IsDefined(DisableMetricsCollection))
+            if (Core.Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -119,20 +119,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> sqlReaderQuery = default;
-            Optional<DataFactoryElement<string>> sqlReaderStoredProcedureName = default;
-            Optional<BinaryData> storedProcedureParameters = default;
-            Optional<DataFactoryElement<string>> isolationLevel = default;
-            Optional<BinaryData> produceAdditionalTypes = default;
-            Optional<BinaryData> partitionOption = default;
-            Optional<SqlPartitionSettings> partitionSettings = default;
-            Optional<DataFactoryElement<string>> queryTimeout = default;
-            Optional<BinaryData> additionalColumns = default;
+            Core.Optional<DataFactoryElement<string>> sqlReaderQuery = default;
+            Core.Optional<DataFactoryElement<string>> sqlReaderStoredProcedureName = default;
+            Core.Optional<BinaryData> storedProcedureParameters = default;
+            Core.Optional<DataFactoryElement<string>> isolationLevel = default;
+            Core.Optional<BinaryData> produceAdditionalTypes = default;
+            Core.Optional<BinaryData> partitionOption = default;
+            Core.Optional<SqlPartitionSettings> partitionSettings = default;
+            Core.Optional<DataFactoryElement<string>> queryTimeout = default;
+            Core.Optional<BinaryData> additionalColumns = default;
             string type = default;
-            Optional<DataFactoryElement<int>> sourceRetryCount = default;
-            Optional<DataFactoryElement<string>> sourceRetryWait = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            Core.Optional<DataFactoryElement<int>> sourceRetryCount = default;
+            Core.Optional<DataFactoryElement<string>> sourceRetryWait = default;
+            Core.Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
+            Core.Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

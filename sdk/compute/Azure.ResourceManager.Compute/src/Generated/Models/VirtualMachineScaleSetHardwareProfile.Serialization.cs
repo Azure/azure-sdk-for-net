@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class VirtualMachineScaleSetHardwareProfile : IUtf8JsonSerializable
+    internal partial class VirtualMachineScaleSetHardwareProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(VmSizeProperties))
+            if (Core.Optional.IsDefined(VmSizeProperties))
             {
                 writer.WritePropertyName("vmSizeProperties"u8);
                 writer.WriteObjectValue(VmSizeProperties);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<VirtualMachineSizeProperties> vmSizeProperties = default;
+            Core.Optional<VirtualMachineSizeProperties> vmSizeProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmSizeProperties"u8))

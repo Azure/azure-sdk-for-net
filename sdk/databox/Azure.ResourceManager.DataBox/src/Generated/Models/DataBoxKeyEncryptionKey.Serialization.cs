@@ -11,24 +11,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxKeyEncryptionKey : IUtf8JsonSerializable
+    public partial class DataBoxKeyEncryptionKey : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kekType"u8);
             writer.WriteStringValue(KekType.ToSerialString());
-            if (Optional.IsDefined(ManagedIdentity))
+            if (Core.Optional.IsDefined(ManagedIdentity))
             {
                 writer.WritePropertyName("identityProperties"u8);
                 writer.WriteObjectValue(ManagedIdentity);
             }
-            if (Optional.IsDefined(KekUri))
+            if (Core.Optional.IsDefined(KekUri))
             {
                 writer.WritePropertyName("kekUrl"u8);
                 writer.WriteStringValue(KekUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(KekVaultResourceId))
+            if (Core.Optional.IsDefined(KekVaultResourceId))
             {
                 writer.WritePropertyName("kekVaultResourceID"u8);
                 writer.WriteStringValue(KekVaultResourceId);
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             DataBoxKeyEncryptionKeyType kekType = default;
-            Optional<DataBoxManagedIdentity> identityProperties = default;
-            Optional<Uri> kekUrl = default;
-            Optional<ResourceIdentifier> kekVaultResourceId = default;
+            Core.Optional<DataBoxManagedIdentity> identityProperties = default;
+            Core.Optional<Uri> kekUrl = default;
+            Core.Optional<ResourceIdentifier> kekVaultResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kekType"u8))

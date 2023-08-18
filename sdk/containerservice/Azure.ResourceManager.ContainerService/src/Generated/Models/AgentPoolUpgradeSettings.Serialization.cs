@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    internal partial class AgentPoolUpgradeSettings : IUtf8JsonSerializable
+    internal partial class AgentPoolUpgradeSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxSurge))
+            if (Core.Optional.IsDefined(MaxSurge))
             {
                 writer.WritePropertyName("maxSurge"u8);
                 writer.WriteStringValue(MaxSurge);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> maxSurge = default;
+            Core.Optional<string> maxSurge = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxSurge"u8))

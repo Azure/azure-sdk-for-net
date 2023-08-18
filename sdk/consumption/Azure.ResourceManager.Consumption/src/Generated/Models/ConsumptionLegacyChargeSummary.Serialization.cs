@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionLegacyChargeSummary : IUtf8JsonSerializable
+    public partial class ConsumptionLegacyChargeSummary : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -37,18 +37,18 @@ namespace Azure.ResourceManager.Consumption.Models
                 return null;
             }
             ChargeSummaryKind kind = default;
-            Optional<ETag> eTag = default;
+            Core.Optional<ETag> eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> billingPeriodId = default;
-            Optional<string> usageStart = default;
-            Optional<string> usageEnd = default;
-            Optional<decimal> azureCharges = default;
-            Optional<decimal> chargesBilledSeparately = default;
-            Optional<decimal> marketplaceCharges = default;
-            Optional<string> currency = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> billingPeriodId = default;
+            Core.Optional<string> usageStart = default;
+            Core.Optional<string> usageEnd = default;
+            Core.Optional<decimal> azureCharges = default;
+            Core.Optional<decimal> chargesBilledSeparately = default;
+            Core.Optional<decimal> marketplaceCharges = default;
+            Core.Optional<string> currency = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ConsumptionLegacyChargeSummary(id, name, type, systemData.Value, kind, Optional.ToNullable(eTag), billingPeriodId.Value, usageStart.Value, usageEnd.Value, Optional.ToNullable(azureCharges), Optional.ToNullable(chargesBilledSeparately), Optional.ToNullable(marketplaceCharges), currency.Value);
+            return new ConsumptionLegacyChargeSummary(id, name, type, systemData.Value, kind, Core.Optional.ToNullable(eTag), billingPeriodId.Value, usageStart.Value, usageEnd.Value, Core.Optional.ToNullable(azureCharges), Core.Optional.ToNullable(chargesBilledSeparately), Core.Optional.ToNullable(marketplaceCharges), currency.Value);
         }
     }
 }

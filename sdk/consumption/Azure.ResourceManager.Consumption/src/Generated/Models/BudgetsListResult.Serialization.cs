@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConsumptionBudgetData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<ConsumptionBudgetData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new BudgetsListResult(Optional.ToList(value), nextLink.Value);
+            return new BudgetsListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

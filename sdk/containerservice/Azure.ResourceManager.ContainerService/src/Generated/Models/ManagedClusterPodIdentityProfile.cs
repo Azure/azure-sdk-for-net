@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of ManagedClusterPodIdentityProfile. </summary>
         public ManagedClusterPodIdentityProfile()
         {
-            UserAssignedIdentities = new ChangeTrackingList<ManagedClusterPodIdentity>();
-            UserAssignedIdentityExceptions = new ChangeTrackingList<ManagedClusterPodIdentityException>();
+            UserAssignedIdentities = new Core.ChangeTrackingList<ManagedClusterPodIdentity>();
+            UserAssignedIdentityExceptions = new Core.ChangeTrackingList<ManagedClusterPodIdentityException>();
         }
 
         /// <summary> Initializes a new instance of ManagedClusterPodIdentityProfile. </summary>

@@ -22,38 +22,38 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> billingPeriodId = default;
-            Optional<DateTimeOffset> usageStart = default;
-            Optional<DateTimeOffset> usageEnd = default;
-            Optional<decimal> resourceRate = default;
-            Optional<string> offerName = default;
-            Optional<string> resourceGroup = default;
-            Optional<string> additionalInfo = default;
-            Optional<string> orderNumber = default;
-            Optional<string> instanceName = default;
-            Optional<string> instanceId = default;
-            Optional<string> currency = default;
-            Optional<decimal> consumedQuantity = default;
-            Optional<string> unitOfMeasure = default;
-            Optional<decimal> pretaxCost = default;
-            Optional<bool> isEstimated = default;
-            Optional<Guid> meterId = default;
-            Optional<Guid> subscriptionGuid = default;
-            Optional<string> subscriptionName = default;
-            Optional<string> accountName = default;
-            Optional<string> departmentName = default;
-            Optional<string> consumedService = default;
-            Optional<string> costCenter = default;
-            Optional<string> additionalProperties = default;
-            Optional<string> publisherName = default;
-            Optional<string> planName = default;
-            Optional<bool> isRecurringCharge = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> billingPeriodId = default;
+            Core.Optional<DateTimeOffset> usageStart = default;
+            Core.Optional<DateTimeOffset> usageEnd = default;
+            Core.Optional<decimal> resourceRate = default;
+            Core.Optional<string> offerName = default;
+            Core.Optional<string> resourceGroup = default;
+            Core.Optional<string> additionalInfo = default;
+            Core.Optional<string> orderNumber = default;
+            Core.Optional<string> instanceName = default;
+            Core.Optional<string> instanceId = default;
+            Core.Optional<string> currency = default;
+            Core.Optional<decimal> consumedQuantity = default;
+            Core.Optional<string> unitOfMeasure = default;
+            Core.Optional<decimal> pretaxCost = default;
+            Core.Optional<bool> isEstimated = default;
+            Core.Optional<Guid> meterId = default;
+            Core.Optional<Guid> subscriptionGuid = default;
+            Core.Optional<string> subscriptionName = default;
+            Core.Optional<string> accountName = default;
+            Core.Optional<string> departmentName = default;
+            Core.Optional<string> consumedService = default;
+            Core.Optional<string> costCenter = default;
+            Core.Optional<string> additionalProperties = default;
+            Core.Optional<string> publisherName = default;
+            Core.Optional<string> planName = default;
+            Core.Optional<bool> isRecurringCharge = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ConsumptionMarketplace(id, name, type, systemData.Value, billingPeriodId.Value, Optional.ToNullable(usageStart), Optional.ToNullable(usageEnd), Optional.ToNullable(resourceRate), offerName.Value, resourceGroup.Value, additionalInfo.Value, orderNumber.Value, instanceName.Value, instanceId.Value, currency.Value, Optional.ToNullable(consumedQuantity), unitOfMeasure.Value, Optional.ToNullable(pretaxCost), Optional.ToNullable(isEstimated), Optional.ToNullable(meterId), Optional.ToNullable(subscriptionGuid), subscriptionName.Value, accountName.Value, departmentName.Value, consumedService.Value, costCenter.Value, additionalProperties.Value, publisherName.Value, planName.Value, Optional.ToNullable(isRecurringCharge), Optional.ToNullable(etag), Optional.ToDictionary(tags));
+            return new ConsumptionMarketplace(id, name, type, systemData.Value, billingPeriodId.Value, Core.Optional.ToNullable(usageStart), Core.Optional.ToNullable(usageEnd), Core.Optional.ToNullable(resourceRate), offerName.Value, resourceGroup.Value, additionalInfo.Value, orderNumber.Value, instanceName.Value, instanceId.Value, currency.Value, Core.Optional.ToNullable(consumedQuantity), unitOfMeasure.Value, Core.Optional.ToNullable(pretaxCost), Core.Optional.ToNullable(isEstimated), Core.Optional.ToNullable(meterId), Core.Optional.ToNullable(subscriptionGuid), subscriptionName.Value, accountName.Value, departmentName.Value, consumedService.Value, costCenter.Value, additionalProperties.Value, publisherName.Value, planName.Value, Core.Optional.ToNullable(isRecurringCharge), Core.Optional.ToNullable(etag), Core.Optional.ToDictionary(tags));
         }
     }
 }

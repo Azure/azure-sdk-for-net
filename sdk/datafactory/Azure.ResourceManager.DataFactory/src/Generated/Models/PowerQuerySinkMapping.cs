@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of PowerQuerySinkMapping. </summary>
         public PowerQuerySinkMapping()
         {
-            DataflowSinks = new ChangeTrackingList<PowerQuerySink>();
+            DataflowSinks = new Core.ChangeTrackingList<PowerQuerySink>();
         }
 
         /// <summary> Initializes a new instance of PowerQuerySinkMapping. </summary>

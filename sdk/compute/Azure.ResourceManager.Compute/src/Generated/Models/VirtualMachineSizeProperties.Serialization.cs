@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineSizeProperties : IUtf8JsonSerializable
+    public partial class VirtualMachineSizeProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(VCpusAvailable))
+            if (Core.Optional.IsDefined(VCpusAvailable))
             {
                 writer.WritePropertyName("vCPUsAvailable"u8);
                 writer.WriteNumberValue(VCpusAvailable.Value);
             }
-            if (Optional.IsDefined(VCpusPerCore))
+            if (Core.Optional.IsDefined(VCpusPerCore))
             {
                 writer.WritePropertyName("vCPUsPerCore"u8);
                 writer.WriteNumberValue(VCpusPerCore.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<int> vCpusAvailable = default;
-            Optional<int> vCpusPerCore = default;
+            Core.Optional<int> vCpusAvailable = default;
+            Core.Optional<int> vCpusPerCore = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vCPUsAvailable"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineSizeProperties(Optional.ToNullable(vCpusAvailable), Optional.ToNullable(vCpusPerCore));
+            return new VirtualMachineSizeProperties(Core.Optional.ToNullable(vCpusAvailable), Core.Optional.ToNullable(vCpusPerCore));
         }
     }
 }

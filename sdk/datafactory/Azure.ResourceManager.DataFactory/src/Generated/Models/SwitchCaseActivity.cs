@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of SwitchCaseActivity. </summary>
         public SwitchCaseActivity()
         {
-            Activities = new ChangeTrackingList<PipelineActivity>();
+            Activities = new Core.ChangeTrackingList<PipelineActivity>();
         }
 
         /// <summary> Initializes a new instance of SwitchCaseActivity. </summary>

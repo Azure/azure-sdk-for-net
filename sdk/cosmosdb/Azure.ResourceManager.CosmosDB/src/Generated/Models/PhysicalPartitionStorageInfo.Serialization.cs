@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<double> storageInKB = default;
+            Core.Optional<string> id = default;
+            Core.Optional<double> storageInKB = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new PhysicalPartitionStorageInfo(id.Value, Optional.ToNullable(storageInKB));
+            return new PhysicalPartitionStorageInfo(id.Value, Core.Optional.ToNullable(storageInKB));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <summary> Initializes a new instance of DataLakeStoreFirewallRuleListResult. </summary>
         internal DataLakeStoreFirewallRuleListResult()
         {
-            Value = new ChangeTrackingList<DataLakeStoreFirewallRuleData>();
+            Value = new Core.ChangeTrackingList<DataLakeStoreFirewallRuleData>();
         }
 
         /// <summary> Initializes a new instance of DataLakeStoreFirewallRuleListResult. </summary>

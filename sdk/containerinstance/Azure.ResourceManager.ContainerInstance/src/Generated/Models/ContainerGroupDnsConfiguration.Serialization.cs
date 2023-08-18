@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerGroupDnsConfiguration : IUtf8JsonSerializable
+    public partial class ContainerGroupDnsConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("nameServers"u8);
@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(SearchDomains))
+            if (Core.Optional.IsDefined(SearchDomains))
             {
                 writer.WritePropertyName("searchDomains"u8);
                 writer.WriteStringValue(SearchDomains);
             }
-            if (Optional.IsDefined(Options))
+            if (Core.Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteStringValue(Options);
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return null;
             }
             IList<string> nameServers = default;
-            Optional<string> searchDomains = default;
-            Optional<string> options = default;
+            Core.Optional<string> searchDomains = default;
+            Core.Optional<string> options = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameServers"u8))

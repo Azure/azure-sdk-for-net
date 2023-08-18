@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <summary> Initializes a new instance of DatadogHost. </summary>
         internal DatadogHost()
         {
-            Aliases = new ChangeTrackingList<string>();
-            Apps = new ChangeTrackingList<string>();
+            Aliases = new Core.ChangeTrackingList<string>();
+            Apps = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DatadogHost. </summary>

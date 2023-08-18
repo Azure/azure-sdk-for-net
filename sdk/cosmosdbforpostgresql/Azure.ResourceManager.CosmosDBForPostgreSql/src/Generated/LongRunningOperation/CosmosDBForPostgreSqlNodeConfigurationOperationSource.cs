@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
-    internal class CosmosDBForPostgreSqlNodeConfigurationOperationSource : IOperationSource<CosmosDBForPostgreSqlNodeConfigurationResource>
+    internal class CosmosDBForPostgreSqlNodeConfigurationOperationSource : Core.IOperationSource<CosmosDBForPostgreSqlNodeConfigurationResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             _client = client;
         }
 
-        CosmosDBForPostgreSqlNodeConfigurationResource IOperationSource<CosmosDBForPostgreSqlNodeConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CosmosDBForPostgreSqlNodeConfigurationResource Core.IOperationSource<CosmosDBForPostgreSqlNodeConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ServerConfigurationData.DeserializeServerConfigurationData(document.RootElement);
             return new CosmosDBForPostgreSqlNodeConfigurationResource(_client, data);
         }
 
-        async ValueTask<CosmosDBForPostgreSqlNodeConfigurationResource> IOperationSource<CosmosDBForPostgreSqlNodeConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CosmosDBForPostgreSqlNodeConfigurationResource> Core.IOperationSource<CosmosDBForPostgreSqlNodeConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ServerConfigurationData.DeserializeServerConfigurationData(document.RootElement);

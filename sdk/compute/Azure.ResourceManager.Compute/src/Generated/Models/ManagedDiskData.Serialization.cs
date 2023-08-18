@@ -15,17 +15,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class ManagedDiskData : IUtf8JsonSerializable
+    public partial class ManagedDiskData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Zones))
+            if (Core.Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ExtendedLocation))
+            if (Core.Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -55,117 +55,117 @@ namespace Azure.ResourceManager.Compute
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(OSType))
+            if (Core.Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(HyperVGeneration))
+            if (Core.Optional.IsDefined(HyperVGeneration))
             {
                 writer.WritePropertyName("hyperVGeneration"u8);
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
             }
-            if (Optional.IsDefined(PurchasePlan))
+            if (Core.Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
                 writer.WriteObjectValue(PurchasePlan);
             }
-            if (Optional.IsDefined(SupportedCapabilities))
+            if (Core.Optional.IsDefined(SupportedCapabilities))
             {
                 writer.WritePropertyName("supportedCapabilities"u8);
                 writer.WriteObjectValue(SupportedCapabilities);
             }
-            if (Optional.IsDefined(CreationData))
+            if (Core.Optional.IsDefined(CreationData))
             {
                 writer.WritePropertyName("creationData"u8);
                 writer.WriteObjectValue(CreationData);
             }
-            if (Optional.IsDefined(DiskSizeGB))
+            if (Core.Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (Optional.IsDefined(EncryptionSettingsGroup))
+            if (Core.Optional.IsDefined(EncryptionSettingsGroup))
             {
                 writer.WritePropertyName("encryptionSettingsCollection"u8);
                 writer.WriteObjectValue(EncryptionSettingsGroup);
             }
-            if (Optional.IsDefined(DiskIopsReadWrite))
+            if (Core.Optional.IsDefined(DiskIopsReadWrite))
             {
                 writer.WritePropertyName("diskIOPSReadWrite"u8);
                 writer.WriteNumberValue(DiskIopsReadWrite.Value);
             }
-            if (Optional.IsDefined(DiskMBpsReadWrite))
+            if (Core.Optional.IsDefined(DiskMBpsReadWrite))
             {
                 writer.WritePropertyName("diskMBpsReadWrite"u8);
                 writer.WriteNumberValue(DiskMBpsReadWrite.Value);
             }
-            if (Optional.IsDefined(DiskIopsReadOnly))
+            if (Core.Optional.IsDefined(DiskIopsReadOnly))
             {
                 writer.WritePropertyName("diskIOPSReadOnly"u8);
                 writer.WriteNumberValue(DiskIopsReadOnly.Value);
             }
-            if (Optional.IsDefined(DiskMBpsReadOnly))
+            if (Core.Optional.IsDefined(DiskMBpsReadOnly))
             {
                 writer.WritePropertyName("diskMBpsReadOnly"u8);
                 writer.WriteNumberValue(DiskMBpsReadOnly.Value);
             }
-            if (Optional.IsDefined(Encryption))
+            if (Core.Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsDefined(MaxShares))
+            if (Core.Optional.IsDefined(MaxShares))
             {
                 writer.WritePropertyName("maxShares"u8);
                 writer.WriteNumberValue(MaxShares.Value);
             }
-            if (Optional.IsDefined(NetworkAccessPolicy))
+            if (Core.Optional.IsDefined(NetworkAccessPolicy))
             {
                 writer.WritePropertyName("networkAccessPolicy"u8);
                 writer.WriteStringValue(NetworkAccessPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(DiskAccessId))
+            if (Core.Optional.IsDefined(DiskAccessId))
             {
                 writer.WritePropertyName("diskAccessId"u8);
                 writer.WriteStringValue(DiskAccessId);
             }
-            if (Optional.IsDefined(Tier))
+            if (Core.Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (Optional.IsDefined(BurstingEnabled))
+            if (Core.Optional.IsDefined(BurstingEnabled))
             {
                 writer.WritePropertyName("burstingEnabled"u8);
                 writer.WriteBooleanValue(BurstingEnabled.Value);
             }
-            if (Optional.IsDefined(SupportsHibernation))
+            if (Core.Optional.IsDefined(SupportsHibernation))
             {
                 writer.WritePropertyName("supportsHibernation"u8);
                 writer.WriteBooleanValue(SupportsHibernation.Value);
             }
-            if (Optional.IsDefined(SecurityProfile))
+            if (Core.Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile);
             }
-            if (Optional.IsDefined(CompletionPercent))
+            if (Core.Optional.IsDefined(CompletionPercent))
             {
                 writer.WritePropertyName("completionPercent"u8);
                 writer.WriteNumberValue(CompletionPercent.Value);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (Core.Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(DataAccessAuthMode))
+            if (Core.Optional.IsDefined(DataAccessAuthMode))
             {
                 writer.WritePropertyName("dataAccessAuthMode"u8);
                 writer.WriteStringValue(DataAccessAuthMode.Value.ToString());
             }
-            if (Optional.IsDefined(IsOptimizedForFrequentAttach))
+            if (Core.Optional.IsDefined(IsOptimizedForFrequentAttach))
             {
                 writer.WritePropertyName("optimizedForFrequentAttach"u8);
                 writer.WriteBooleanValue(IsOptimizedForFrequentAttach.Value);
@@ -180,48 +180,48 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<ResourceIdentifier> managedBy = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> managedByExtended = default;
-            Optional<DiskSku> sku = default;
-            Optional<IList<string>> zones = default;
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ResourceIdentifier> managedBy = default;
+            Core.Optional<IReadOnlyList<ResourceIdentifier>> managedByExtended = default;
+            Core.Optional<DiskSku> sku = default;
+            Core.Optional<IList<string>> zones = default;
+            Core.Optional<ExtendedLocation> extendedLocation = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> timeCreated = default;
-            Optional<SupportedOperatingSystemType> osType = default;
-            Optional<HyperVGeneration> hyperVGeneration = default;
-            Optional<DiskPurchasePlan> purchasePlan = default;
-            Optional<SupportedCapabilities> supportedCapabilities = default;
-            Optional<DiskCreationData> creationData = default;
-            Optional<int> diskSizeGB = default;
-            Optional<long> diskSizeBytes = default;
-            Optional<string> uniqueId = default;
-            Optional<EncryptionSettingsGroup> encryptionSettingsGroup = default;
-            Optional<string> provisioningState = default;
-            Optional<long> diskIOPSReadWrite = default;
-            Optional<long> diskMBpsReadWrite = default;
-            Optional<long> diskIOPSReadOnly = default;
-            Optional<long> diskMBpsReadOnly = default;
-            Optional<DiskState> diskState = default;
-            Optional<DiskEncryption> encryption = default;
-            Optional<int> maxShares = default;
-            Optional<IReadOnlyList<ShareInfoElement>> shareInfo = default;
-            Optional<NetworkAccessPolicy> networkAccessPolicy = default;
-            Optional<ResourceIdentifier> diskAccessId = default;
-            Optional<DateTimeOffset> burstingEnabledTime = default;
-            Optional<string> tier = default;
-            Optional<bool> burstingEnabled = default;
-            Optional<PropertyUpdatesInProgress> propertyUpdatesInProgress = default;
-            Optional<bool> supportsHibernation = default;
-            Optional<DiskSecurityProfile> securityProfile = default;
-            Optional<float> completionPercent = default;
-            Optional<DiskPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<DataAccessAuthMode> dataAccessAuthMode = default;
-            Optional<bool> optimizedForFrequentAttach = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DateTimeOffset> timeCreated = default;
+            Core.Optional<SupportedOperatingSystemType> osType = default;
+            Core.Optional<HyperVGeneration> hyperVGeneration = default;
+            Core.Optional<DiskPurchasePlan> purchasePlan = default;
+            Core.Optional<SupportedCapabilities> supportedCapabilities = default;
+            Core.Optional<DiskCreationData> creationData = default;
+            Core.Optional<int> diskSizeGB = default;
+            Core.Optional<long> diskSizeBytes = default;
+            Core.Optional<string> uniqueId = default;
+            Core.Optional<EncryptionSettingsGroup> encryptionSettingsGroup = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<long> diskIOPSReadWrite = default;
+            Core.Optional<long> diskMBpsReadWrite = default;
+            Core.Optional<long> diskIOPSReadOnly = default;
+            Core.Optional<long> diskMBpsReadOnly = default;
+            Core.Optional<DiskState> diskState = default;
+            Core.Optional<DiskEncryption> encryption = default;
+            Core.Optional<int> maxShares = default;
+            Core.Optional<IReadOnlyList<ShareInfoElement>> shareInfo = default;
+            Core.Optional<NetworkAccessPolicy> networkAccessPolicy = default;
+            Core.Optional<ResourceIdentifier> diskAccessId = default;
+            Core.Optional<DateTimeOffset> burstingEnabledTime = default;
+            Core.Optional<string> tier = default;
+            Core.Optional<bool> burstingEnabled = default;
+            Core.Optional<PropertyUpdatesInProgress> propertyUpdatesInProgress = default;
+            Core.Optional<bool> supportsHibernation = default;
+            Core.Optional<DiskSecurityProfile> securityProfile = default;
+            Core.Optional<float> completionPercent = default;
+            Core.Optional<DiskPublicNetworkAccess> publicNetworkAccess = default;
+            Core.Optional<DataAccessAuthMode> dataAccessAuthMode = default;
+            Core.Optional<bool> optimizedForFrequentAttach = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"u8))
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new ManagedDiskData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, Optional.ToList(managedByExtended), sku.Value, Optional.ToList(zones), extendedLocation, Optional.ToNullable(timeCreated), Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, creationData.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(diskSizeBytes), uniqueId.Value, encryptionSettingsGroup.Value, provisioningState.Value, Optional.ToNullable(diskIOPSReadWrite), Optional.ToNullable(diskMBpsReadWrite), Optional.ToNullable(diskIOPSReadOnly), Optional.ToNullable(diskMBpsReadOnly), Optional.ToNullable(diskState), encryption.Value, Optional.ToNullable(maxShares), Optional.ToList(shareInfo), Optional.ToNullable(networkAccessPolicy), diskAccessId.Value, Optional.ToNullable(burstingEnabledTime), tier.Value, Optional.ToNullable(burstingEnabled), propertyUpdatesInProgress.Value, Optional.ToNullable(supportsHibernation), securityProfile.Value, Optional.ToNullable(completionPercent), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(dataAccessAuthMode), Optional.ToNullable(optimizedForFrequentAttach));
+            return new ManagedDiskData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, managedBy.Value, Core.Optional.ToList(managedByExtended), sku.Value, Core.Optional.ToList(zones), extendedLocation, Core.Optional.ToNullable(timeCreated), Core.Optional.ToNullable(osType), Core.Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, creationData.Value, Core.Optional.ToNullable(diskSizeGB), Core.Optional.ToNullable(diskSizeBytes), uniqueId.Value, encryptionSettingsGroup.Value, provisioningState.Value, Core.Optional.ToNullable(diskIOPSReadWrite), Core.Optional.ToNullable(diskMBpsReadWrite), Core.Optional.ToNullable(diskIOPSReadOnly), Core.Optional.ToNullable(diskMBpsReadOnly), Core.Optional.ToNullable(diskState), encryption.Value, Core.Optional.ToNullable(maxShares), Core.Optional.ToList(shareInfo), Core.Optional.ToNullable(networkAccessPolicy), diskAccessId.Value, Core.Optional.ToNullable(burstingEnabledTime), tier.Value, Core.Optional.ToNullable(burstingEnabled), propertyUpdatesInProgress.Value, Core.Optional.ToNullable(supportsHibernation), securityProfile.Value, Core.Optional.ToNullable(completionPercent), Core.Optional.ToNullable(publicNetworkAccess), Core.Optional.ToNullable(dataAccessAuthMode), Core.Optional.ToNullable(optimizedForFrequentAttach));
         }
     }
 }

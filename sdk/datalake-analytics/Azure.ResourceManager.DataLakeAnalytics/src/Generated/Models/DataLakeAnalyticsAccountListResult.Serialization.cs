@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataLakeAnalyticsAccountBasic>> value = default;
-            Optional<int> count = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<DataLakeAnalyticsAccountBasic>> value = default;
+            Core.Optional<int> count = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                     continue;
                 }
             }
-            return new DataLakeAnalyticsAccountListResult(Optional.ToList(value), Optional.ToNullable(count), nextLink.Value);
+            return new DataLakeAnalyticsAccountListResult(Core.Optional.ToList(value), Core.Optional.ToNullable(count), nextLink.Value);
         }
     }
 }

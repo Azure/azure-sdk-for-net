@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<CloudServiceRoleSku> sku = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<CloudServiceRoleSku> sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> uniqueId = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> uniqueId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new CloudServiceRoleData(id, name, type, systemData.Value, Optional.ToNullable(location), sku.Value, uniqueId.Value);
+            return new CloudServiceRoleData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), sku.Value, uniqueId.Value);
         }
     }
 }

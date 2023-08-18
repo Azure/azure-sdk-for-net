@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppJobPatchProperties. </summary>
         public ContainerAppJobPatchProperties()
         {
-            OutboundIPAddresses = new ChangeTrackingList<string>();
+            OutboundIPAddresses = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Resource ID of environment. </summary>

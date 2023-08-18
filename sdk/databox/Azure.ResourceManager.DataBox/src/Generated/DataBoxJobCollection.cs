@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataBox
             try
             {
                 var response = await _dataBoxJobJobsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, jobName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxArmOperation<DataBoxJobResource>(new DataBoxJobOperationSource(Client), _dataBoxJobJobsClientDiagnostics, Pipeline, _dataBoxJobJobsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataBoxArmOperation<DataBoxJobResource>(new DataBoxJobOperationSource(Client), _dataBoxJobJobsClientDiagnostics, Pipeline, _dataBoxJobJobsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataBox
             try
             {
                 var response = _dataBoxJobJobsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, jobName, data, cancellationToken);
-                var operation = new DataBoxArmOperation<DataBoxJobResource>(new DataBoxJobOperationSource(Client), _dataBoxJobJobsClientDiagnostics, Pipeline, _dataBoxJobJobsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataBoxArmOperation<DataBoxJobResource>(new DataBoxJobOperationSource(Client), _dataBoxJobJobsClientDiagnostics, Pipeline, _dataBoxJobJobsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DataBox
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxJobJobsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxJobJobsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxJobResource(Client, DataBoxJobData.DeserializeDataBoxJobData(e)), _dataBoxJobJobsClientDiagnostics, Pipeline, "DataBoxJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxJobResource(Client, DataBoxJobData.DeserializeDataBoxJobData(e)), _dataBoxJobJobsClientDiagnostics, Pipeline, "DataBoxJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DataBox
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxJobJobsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxJobJobsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxJobResource(Client, DataBoxJobData.DeserializeDataBoxJobData(e)), _dataBoxJobJobsClientDiagnostics, Pipeline, "DataBoxJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxJobResource(Client, DataBoxJobData.DeserializeDataBoxJobData(e)), _dataBoxJobJobsClientDiagnostics, Pipeline, "DataBoxJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

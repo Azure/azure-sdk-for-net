@@ -15,7 +15,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class CosmosDBSqlContainerThroughputSettingOperationSource : IOperationSource<CosmosDBSqlContainerThroughputSettingResource>
+    internal class CosmosDBSqlContainerThroughputSettingOperationSource : Core.IOperationSource<CosmosDBSqlContainerThroughputSettingResource>
     {
         private readonly ArmClient _client;
         private readonly Dictionary<string, string> _idMappings = new Dictionary<string, string>()
@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.CosmosDB
             _client = client;
         }
 
-        CosmosDBSqlContainerThroughputSettingResource IOperationSource<CosmosDBSqlContainerThroughputSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CosmosDBSqlContainerThroughputSettingResource Core.IOperationSource<CosmosDBSqlContainerThroughputSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ScrubId(ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement));
             return new CosmosDBSqlContainerThroughputSettingResource(_client, data);
         }
 
-        async ValueTask<CosmosDBSqlContainerThroughputSettingResource> IOperationSource<CosmosDBSqlContainerThroughputSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CosmosDBSqlContainerThroughputSettingResource> Core.IOperationSource<CosmosDBSqlContainerThroughputSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ScrubId(ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement));

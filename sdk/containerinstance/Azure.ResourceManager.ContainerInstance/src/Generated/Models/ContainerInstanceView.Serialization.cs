@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<int> restartCount = default;
-            Optional<ContainerState> currentState = default;
-            Optional<ContainerState> previousState = default;
-            Optional<IReadOnlyList<ContainerEvent>> events = default;
+            Core.Optional<int> restartCount = default;
+            Core.Optional<ContainerState> currentState = default;
+            Core.Optional<ContainerState> previousState = default;
+            Core.Optional<IReadOnlyList<ContainerEvent>> events = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("restartCount"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new ContainerInstanceView(Optional.ToNullable(restartCount), currentState.Value, previousState.Value, Optional.ToList(events));
+            return new ContainerInstanceView(Core.Optional.ToNullable(restartCount), currentState.Value, previousState.Value, Core.Optional.ToList(events));
         }
     }
 }

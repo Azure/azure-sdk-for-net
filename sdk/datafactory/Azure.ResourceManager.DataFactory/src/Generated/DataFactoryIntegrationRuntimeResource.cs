@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.DataFactory
         public virtual AsyncPageable<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependenciesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint.DeserializeIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint, _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, "DataFactoryIntegrationRuntimeResource.GetOutboundNetworkDependencies", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint.DeserializeIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint, _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, "DataFactoryIntegrationRuntimeResource.GetOutboundNetworkDependencies", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.DataFactory
         public virtual Pageable<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependencies(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint.DeserializeIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint, _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, "DataFactoryIntegrationRuntimeResource.GetOutboundNetworkDependencies", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint.DeserializeIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint, _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, "DataFactoryIntegrationRuntimeResource.GetOutboundNetworkDependencies", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = await _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeStatusResult>(new DataFactoryIntegrationRuntimeStatusResultOperationSource(), _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeStatusResult>(new DataFactoryIntegrationRuntimeStatusResultOperationSource(), _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeStatusResult>(new DataFactoryIntegrationRuntimeStatusResultOperationSource(), _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeStatusResult>(new DataFactoryIntegrationRuntimeStatusResultOperationSource(), _dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = await _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation(_dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation(_dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataFactoryArmOperation(_dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation(_dataFactoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1061,7 +1061,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = await _integrationRuntimeObjectMetadataRestClient.RefreshAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<SsisObjectMetadataStatusResult>(new SsisObjectMetadataStatusResultOperationSource(), _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, _integrationRuntimeObjectMetadataRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation<SsisObjectMetadataStatusResult>(new SsisObjectMetadataStatusResultOperationSource(), _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, _integrationRuntimeObjectMetadataRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1095,7 +1095,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = _integrationRuntimeObjectMetadataRestClient.Refresh(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataFactoryArmOperation<SsisObjectMetadataStatusResult>(new SsisObjectMetadataStatusResultOperationSource(), _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, _integrationRuntimeObjectMetadataRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation<SsisObjectMetadataStatusResult>(new SsisObjectMetadataStatusResultOperationSource(), _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, _integrationRuntimeObjectMetadataRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1126,7 +1126,7 @@ namespace Azure.ResourceManager.DataFactory
         public virtual AsyncPageable<SsisObjectMetadata> GetAllIntegrationRuntimeObjectMetadataAsync(GetSsisObjectMetadataContent content = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationRuntimeObjectMetadataRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SsisObjectMetadata.DeserializeSsisObjectMetadata, _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, "DataFactoryIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadata", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SsisObjectMetadata.DeserializeSsisObjectMetadata, _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, "DataFactoryIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadata", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1148,7 +1148,7 @@ namespace Azure.ResourceManager.DataFactory
         public virtual Pageable<SsisObjectMetadata> GetAllIntegrationRuntimeObjectMetadata(GetSsisObjectMetadataContent content = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationRuntimeObjectMetadataRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, SsisObjectMetadata.DeserializeSsisObjectMetadata, _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, "DataFactoryIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadata", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, SsisObjectMetadata.DeserializeSsisObjectMetadata, _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, "DataFactoryIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadata", "value", null, cancellationToken);
         }
 
         /// <summary>

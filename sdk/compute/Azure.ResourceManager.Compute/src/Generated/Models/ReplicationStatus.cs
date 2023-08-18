@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ReplicationStatus. </summary>
         internal ReplicationStatus()
         {
-            Summary = new ChangeTrackingList<RegionalReplicationStatus>();
+            Summary = new Core.ChangeTrackingList<RegionalReplicationStatus>();
         }
 
         /// <summary> Initializes a new instance of ReplicationStatus. </summary>

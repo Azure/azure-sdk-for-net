@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> actionDateTimeInUtc = default;
-            Optional<bool> isPerformedByCustomer = default;
-            Optional<CustomerResolutionCode> customerResolution = default;
+            Core.Optional<DateTimeOffset> actionDateTimeInUtc = default;
+            Core.Optional<bool> isPerformedByCustomer = default;
+            Core.Optional<CustomerResolutionCode> customerResolution = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionDateTimeInUtc"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new LastMitigationActionOnJob(Optional.ToNullable(actionDateTimeInUtc), Optional.ToNullable(isPerformedByCustomer), Optional.ToNullable(customerResolution));
+            return new LastMitigationActionOnJob(Core.Optional.ToNullable(actionDateTimeInUtc), Core.Optional.ToNullable(isPerformedByCustomer), Core.Optional.ToNullable(customerResolution));
         }
     }
 }

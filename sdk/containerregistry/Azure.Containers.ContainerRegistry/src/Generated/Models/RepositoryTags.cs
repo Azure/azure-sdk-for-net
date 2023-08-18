@@ -16,7 +16,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Initializes a new instance of RepositoryTags. </summary>
         internal RepositoryTags()
         {
-            Tags = new ChangeTrackingList<string>();
+            Tags = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Name of the image. </summary>

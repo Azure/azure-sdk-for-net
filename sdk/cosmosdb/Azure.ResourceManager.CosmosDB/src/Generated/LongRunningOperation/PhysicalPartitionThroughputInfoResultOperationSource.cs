@@ -14,15 +14,15 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class PhysicalPartitionThroughputInfoResultOperationSource : IOperationSource<PhysicalPartitionThroughputInfoResult>
+    internal class PhysicalPartitionThroughputInfoResultOperationSource : Core.IOperationSource<PhysicalPartitionThroughputInfoResult>
     {
-        PhysicalPartitionThroughputInfoResult IOperationSource<PhysicalPartitionThroughputInfoResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        PhysicalPartitionThroughputInfoResult Core.IOperationSource<PhysicalPartitionThroughputInfoResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return PhysicalPartitionThroughputInfoResult.DeserializePhysicalPartitionThroughputInfoResult(document.RootElement);
         }
 
-        async ValueTask<PhysicalPartitionThroughputInfoResult> IOperationSource<PhysicalPartitionThroughputInfoResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PhysicalPartitionThroughputInfoResult> Core.IOperationSource<PhysicalPartitionThroughputInfoResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return PhysicalPartitionThroughputInfoResult.DeserializePhysicalPartitionThroughputInfoResult(document.RootElement);

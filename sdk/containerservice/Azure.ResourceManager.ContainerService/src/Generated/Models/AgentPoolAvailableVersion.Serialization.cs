@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<bool> @default = default;
-            Optional<string> kubernetesVersion = default;
-            Optional<bool> isPreview = default;
+            Core.Optional<bool> @default = default;
+            Core.Optional<string> kubernetesVersion = default;
+            Core.Optional<bool> isPreview = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("default"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new AgentPoolAvailableVersion(Optional.ToNullable(@default), kubernetesVersion.Value, Optional.ToNullable(isPreview));
+            return new AgentPoolAvailableVersion(Core.Optional.ToNullable(@default), kubernetesVersion.Value, Core.Optional.ToNullable(isPreview));
         }
     }
 }

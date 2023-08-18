@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DateTimeOffset>> availableDates = default;
+            Core.Optional<IReadOnlyList<DateTimeOffset>> availableDates = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("availableDates"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new ScheduleAvailabilityResponse(Optional.ToList(availableDates));
+            return new ScheduleAvailabilityResponse(Core.Optional.ToList(availableDates));
         }
     }
 }

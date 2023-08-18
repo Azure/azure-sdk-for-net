@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="location"> The location of the webhook. This cannot be changed after the resource is created. </param>
         public ContainerRegistryWebhookCreateOrUpdateContent(AzureLocation location)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
             Location = location;
-            CustomHeaders = new ChangeTrackingDictionary<string, string>();
-            Actions = new ChangeTrackingList<ContainerRegistryWebhookAction>();
+            CustomHeaders = new Core.ChangeTrackingDictionary<string, string>();
+            Actions = new Core.ChangeTrackingList<ContainerRegistryWebhookAction>();
         }
 
         /// <summary> The tags for the webhook. </summary>

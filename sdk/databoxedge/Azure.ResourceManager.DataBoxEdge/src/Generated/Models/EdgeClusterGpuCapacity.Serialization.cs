@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeClusterGpuCapacity : IUtf8JsonSerializable
+    public partial class EdgeClusterGpuCapacity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(GpuType))
+            if (Core.Optional.IsDefined(GpuType))
             {
                 writer.WritePropertyName("gpuType"u8);
                 writer.WriteStringValue(GpuType);
             }
-            if (Optional.IsDefined(GpuUsedUnitsCount))
+            if (Core.Optional.IsDefined(GpuUsedUnitsCount))
             {
                 writer.WritePropertyName("gpuUsedUnitsCount"u8);
                 writer.WriteNumberValue(GpuUsedUnitsCount.Value);
             }
-            if (Optional.IsDefined(GpuFreeUnitsCount))
+            if (Core.Optional.IsDefined(GpuFreeUnitsCount))
             {
                 writer.WritePropertyName("gpuFreeUnitsCount"u8);
                 writer.WriteNumberValue(GpuFreeUnitsCount.Value);
             }
-            if (Optional.IsDefined(GpuReservedForFailoverUnitsCount))
+            if (Core.Optional.IsDefined(GpuReservedForFailoverUnitsCount))
             {
                 writer.WritePropertyName("gpuReservedForFailoverUnitsCount"u8);
                 writer.WriteNumberValue(GpuReservedForFailoverUnitsCount.Value);
             }
-            if (Optional.IsDefined(GpuTotalUnitsCount))
+            if (Core.Optional.IsDefined(GpuTotalUnitsCount))
             {
                 writer.WritePropertyName("gpuTotalUnitsCount"u8);
                 writer.WriteNumberValue(GpuTotalUnitsCount.Value);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> gpuType = default;
-            Optional<int> gpuUsedUnitsCount = default;
-            Optional<int> gpuFreeUnitsCount = default;
-            Optional<int> gpuReservedForFailoverUnitsCount = default;
-            Optional<int> gpuTotalUnitsCount = default;
+            Core.Optional<string> gpuType = default;
+            Core.Optional<int> gpuUsedUnitsCount = default;
+            Core.Optional<int> gpuFreeUnitsCount = default;
+            Core.Optional<int> gpuReservedForFailoverUnitsCount = default;
+            Core.Optional<int> gpuTotalUnitsCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("gpuType"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new EdgeClusterGpuCapacity(gpuType.Value, Optional.ToNullable(gpuUsedUnitsCount), Optional.ToNullable(gpuFreeUnitsCount), Optional.ToNullable(gpuReservedForFailoverUnitsCount), Optional.ToNullable(gpuTotalUnitsCount));
+            return new EdgeClusterGpuCapacity(gpuType.Value, Core.Optional.ToNullable(gpuUsedUnitsCount), Core.Optional.ToNullable(gpuFreeUnitsCount), Core.Optional.ToNullable(gpuReservedForFailoverUnitsCount), Core.Optional.ToNullable(gpuTotalUnitsCount));
         }
     }
 }

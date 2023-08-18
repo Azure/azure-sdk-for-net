@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> communicationInstruction = default;
+            Core.Optional<string> communicationInstruction = default;
             DataCenterAddressType dataCenterAddressType = default;
-            Optional<IReadOnlyList<string>> supportedCarriersForReturnShipment = default;
-            Optional<AzureLocation> dataCenterAzureLocation = default;
+            Core.Optional<IReadOnlyList<string>> supportedCarriersForReturnShipment = default;
+            Core.Optional<AzureLocation> dataCenterAzureLocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("communicationInstruction"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataCenterAddressInstructionResult(dataCenterAddressType, Optional.ToList(supportedCarriersForReturnShipment), Optional.ToNullable(dataCenterAzureLocation), communicationInstruction.Value);
+            return new DataCenterAddressInstructionResult(dataCenterAddressType, Core.Optional.ToList(supportedCarriersForReturnShipment), Core.Optional.ToNullable(dataCenterAzureLocation), communicationInstruction.Value);
         }
     }
 }

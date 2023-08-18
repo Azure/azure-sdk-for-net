@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class SingleScopeBenefitRecommendationProperties : IUtf8JsonSerializable
+    public partial class SingleScopeBenefitRecommendationProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LookBackPeriod))
+            if (Core.Optional.IsDefined(LookBackPeriod))
             {
                 writer.WritePropertyName("lookBackPeriod"u8);
                 writer.WriteStringValue(LookBackPeriod.Value.ToString());
             }
-            if (Optional.IsDefined(Usage))
+            if (Core.Optional.IsDefined(Usage))
             {
                 writer.WritePropertyName("usage"u8);
                 writer.WriteObjectValue(Usage);
             }
-            if (Optional.IsDefined(Term))
+            if (Core.Optional.IsDefined(Term))
             {
                 writer.WritePropertyName("term"u8);
                 writer.WriteStringValue(Term.Value.ToString());
             }
-            if (Optional.IsDefined(CommitmentGranularity))
+            if (Core.Optional.IsDefined(CommitmentGranularity))
             {
                 writer.WritePropertyName("commitmentGranularity"u8);
                 writer.WriteStringValue(CommitmentGranularity.Value.ToString());
             }
-            if (Optional.IsDefined(RecommendationDetails))
+            if (Core.Optional.IsDefined(RecommendationDetails))
             {
                 writer.WritePropertyName("recommendationDetails"u8);
                 writer.WriteObjectValue(RecommendationDetails);
@@ -52,20 +52,20 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<string> subscriptionId = default;
-            Optional<string> resourceGroup = default;
-            Optional<DateTimeOffset> firstConsumptionDate = default;
-            Optional<DateTimeOffset> lastConsumptionDate = default;
-            Optional<LookBackPeriod> lookBackPeriod = default;
-            Optional<int> totalHours = default;
-            Optional<RecommendationUsageDetails> usage = default;
-            Optional<string> armSkuName = default;
-            Optional<BenefitRecommendationPeriodTerm> term = default;
-            Optional<BenefitRecommendationUsageGrain> commitmentGranularity = default;
-            Optional<string> currencyCode = default;
-            Optional<decimal> costWithoutBenefit = default;
-            Optional<AllSavingsBenefitDetails> recommendationDetails = default;
-            Optional<AllSavingsList> allRecommendationDetails = default;
+            Core.Optional<string> subscriptionId = default;
+            Core.Optional<string> resourceGroup = default;
+            Core.Optional<DateTimeOffset> firstConsumptionDate = default;
+            Core.Optional<DateTimeOffset> lastConsumptionDate = default;
+            Core.Optional<LookBackPeriod> lookBackPeriod = default;
+            Core.Optional<int> totalHours = default;
+            Core.Optional<RecommendationUsageDetails> usage = default;
+            Core.Optional<string> armSkuName = default;
+            Core.Optional<BenefitRecommendationPeriodTerm> term = default;
+            Core.Optional<BenefitRecommendationUsageGrain> commitmentGranularity = default;
+            Core.Optional<string> currencyCode = default;
+            Core.Optional<decimal> costWithoutBenefit = default;
+            Core.Optional<AllSavingsBenefitDetails> recommendationDetails = default;
+            Core.Optional<AllSavingsList> allRecommendationDetails = default;
             BenefitRecommendationScope scope = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new SingleScopeBenefitRecommendationProperties(Optional.ToNullable(firstConsumptionDate), Optional.ToNullable(lastConsumptionDate), Optional.ToNullable(lookBackPeriod), Optional.ToNullable(totalHours), usage.Value, armSkuName.Value, Optional.ToNullable(term), Optional.ToNullable(commitmentGranularity), currencyCode.Value, Optional.ToNullable(costWithoutBenefit), recommendationDetails.Value, allRecommendationDetails.Value, scope, subscriptionId.Value, resourceGroup.Value);
+            return new SingleScopeBenefitRecommendationProperties(Core.Optional.ToNullable(firstConsumptionDate), Core.Optional.ToNullable(lastConsumptionDate), Core.Optional.ToNullable(lookBackPeriod), Core.Optional.ToNullable(totalHours), usage.Value, armSkuName.Value, Core.Optional.ToNullable(term), Core.Optional.ToNullable(commitmentGranularity), currencyCode.Value, Core.Optional.ToNullable(costWithoutBenefit), recommendationDetails.Value, allRecommendationDetails.Value, scope, subscriptionId.Value, resourceGroup.Value);
         }
     }
 }

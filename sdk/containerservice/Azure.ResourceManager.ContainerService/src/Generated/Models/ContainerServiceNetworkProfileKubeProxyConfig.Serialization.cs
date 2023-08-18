@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ContainerServiceNetworkProfileKubeProxyConfig : IUtf8JsonSerializable
+    public partial class ContainerServiceNetworkProfileKubeProxyConfig : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (Core.Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(Mode))
+            if (Core.Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsDefined(IPVSConfig))
+            if (Core.Optional.IsDefined(IPVSConfig))
             {
                 writer.WritePropertyName("ipvsConfig"u8);
                 writer.WriteObjectValue(IPVSConfig);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<ContainerServiceNetworkProfileKubeProxyMode> mode = default;
-            Optional<ContainerServiceNetworkProfileKubeProxyIPVSConfig> ipvsConfig = default;
+            Core.Optional<bool> enabled = default;
+            Core.Optional<ContainerServiceNetworkProfileKubeProxyMode> mode = default;
+            Core.Optional<ContainerServiceNetworkProfileKubeProxyIPVSConfig> ipvsConfig = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ContainerServiceNetworkProfileKubeProxyConfig(Optional.ToNullable(enabled), Optional.ToNullable(mode), ipvsConfig.Value);
+            return new ContainerServiceNetworkProfileKubeProxyConfig(Core.Optional.ToNullable(enabled), Core.Optional.ToNullable(mode), ipvsConfig.Value);
         }
     }
 }

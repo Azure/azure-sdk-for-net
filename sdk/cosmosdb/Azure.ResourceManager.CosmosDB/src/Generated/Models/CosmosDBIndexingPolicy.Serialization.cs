@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBIndexingPolicy : IUtf8JsonSerializable
+    public partial class CosmosDBIndexingPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsAutomatic))
+            if (Core.Optional.IsDefined(IsAutomatic))
             {
                 writer.WritePropertyName("automatic"u8);
                 writer.WriteBooleanValue(IsAutomatic.Value);
             }
-            if (Optional.IsDefined(IndexingMode))
+            if (Core.Optional.IsDefined(IndexingMode))
             {
                 writer.WritePropertyName("indexingMode"u8);
                 writer.WriteStringValue(IndexingMode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IncludedPaths))
+            if (Core.Optional.IsCollectionDefined(IncludedPaths))
             {
                 writer.WritePropertyName("includedPaths"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExcludedPaths))
+            if (Core.Optional.IsCollectionDefined(ExcludedPaths))
             {
                 writer.WritePropertyName("excludedPaths"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CompositeIndexes))
+            if (Core.Optional.IsCollectionDefined(CompositeIndexes))
             {
                 writer.WritePropertyName("compositeIndexes"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SpatialIndexes))
+            if (Core.Optional.IsCollectionDefined(SpatialIndexes))
             {
                 writer.WritePropertyName("spatialIndexes"u8);
                 writer.WriteStartArray();
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<bool> automatic = default;
-            Optional<CosmosDBIndexingMode> indexingMode = default;
-            Optional<IList<CosmosDBIncludedPath>> includedPaths = default;
-            Optional<IList<CosmosDBExcludedPath>> excludedPaths = default;
-            Optional<IList<IList<CosmosDBCompositePath>>> compositeIndexes = default;
-            Optional<IList<SpatialSpec>> spatialIndexes = default;
+            Core.Optional<bool> automatic = default;
+            Core.Optional<CosmosDBIndexingMode> indexingMode = default;
+            Core.Optional<IList<CosmosDBIncludedPath>> includedPaths = default;
+            Core.Optional<IList<CosmosDBExcludedPath>> excludedPaths = default;
+            Core.Optional<IList<IList<CosmosDBCompositePath>>> compositeIndexes = default;
+            Core.Optional<IList<SpatialSpec>> spatialIndexes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("automatic"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CosmosDBIndexingPolicy(Optional.ToNullable(automatic), Optional.ToNullable(indexingMode), Optional.ToList(includedPaths), Optional.ToList(excludedPaths), Optional.ToList(compositeIndexes), Optional.ToList(spatialIndexes));
+            return new CosmosDBIndexingPolicy(Core.Optional.ToNullable(automatic), Core.Optional.ToNullable(indexingMode), Core.Optional.ToList(includedPaths), Core.Optional.ToList(excludedPaths), Core.Optional.ToList(compositeIndexes), Core.Optional.ToList(spatialIndexes));
         }
     }
 }

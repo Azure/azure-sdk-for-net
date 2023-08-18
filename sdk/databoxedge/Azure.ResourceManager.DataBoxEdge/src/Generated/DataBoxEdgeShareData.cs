@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.DataBoxEdge
             ShareStatus = shareStatus;
             MonitoringStatus = monitoringStatus;
             AccessProtocol = accessProtocol;
-            UserAccessRights = new ChangeTrackingList<UserAccessRight>();
-            ClientAccessRights = new ChangeTrackingList<ClientAccessRight>();
-            ShareMappings = new ChangeTrackingList<DataBoxEdgeMountPointMap>();
+            UserAccessRights = new Core.ChangeTrackingList<UserAccessRight>();
+            ClientAccessRights = new Core.ChangeTrackingList<ClientAccessRight>();
+            ShareMappings = new Core.ChangeTrackingList<DataBoxEdgeMountPointMap>();
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeShareData. </summary>

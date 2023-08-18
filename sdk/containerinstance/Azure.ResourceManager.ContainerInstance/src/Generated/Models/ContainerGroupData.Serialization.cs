@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerInstance
 {
-    public partial class ContainerGroupData : IUtf8JsonSerializable
+    public partial class ContainerGroupData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Zones))
+            if (Core.Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(ImageRegistryCredentials))
+            if (Core.Optional.IsCollectionDefined(ImageRegistryCredentials))
             {
                 writer.WritePropertyName("imageRegistryCredentials"u8);
                 writer.WriteStartArray();
@@ -65,19 +65,19 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RestartPolicy))
+            if (Core.Optional.IsDefined(RestartPolicy))
             {
                 writer.WritePropertyName("restartPolicy"u8);
                 writer.WriteStringValue(RestartPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(IPAddress))
+            if (Core.Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteObjectValue(IPAddress);
             }
             writer.WritePropertyName("osType"u8);
             writer.WriteStringValue(OSType.ToString());
-            if (Optional.IsCollectionDefined(Volumes))
+            if (Core.Optional.IsCollectionDefined(Volumes))
             {
                 writer.WritePropertyName("volumes"u8);
                 writer.WriteStartArray();
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Diagnostics))
+            if (Core.Optional.IsDefined(Diagnostics))
             {
                 writer.WritePropertyName("diagnostics"u8);
                 writer.WriteObjectValue(Diagnostics);
             }
-            if (Optional.IsCollectionDefined(SubnetIds))
+            if (Core.Optional.IsCollectionDefined(SubnetIds))
             {
                 writer.WritePropertyName("subnetIds"u8);
                 writer.WriteStartArray();
@@ -102,22 +102,22 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DnsConfig))
+            if (Core.Optional.IsDefined(DnsConfig))
             {
                 writer.WritePropertyName("dnsConfig"u8);
                 writer.WriteObjectValue(DnsConfig);
             }
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku.Value.ToString());
             }
-            if (Optional.IsDefined(EncryptionProperties))
+            if (Core.Optional.IsDefined(EncryptionProperties))
             {
                 writer.WritePropertyName("encryptionProperties"u8);
                 writer.WriteObjectValue(EncryptionProperties);
             }
-            if (Optional.IsCollectionDefined(InitContainers))
+            if (Core.Optional.IsCollectionDefined(InitContainers))
             {
                 writer.WritePropertyName("initContainers"u8);
                 writer.WriteStartArray();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Extensions))
+            if (Core.Optional.IsCollectionDefined(Extensions))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
@@ -137,12 +137,12 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ConfidentialComputeProperties))
+            if (Core.Optional.IsDefined(ConfidentialComputeProperties))
             {
                 writer.WritePropertyName("confidentialComputeProperties"u8);
                 writer.WriteObjectValue(ConfidentialComputeProperties);
             }
-            if (Optional.IsDefined(Priority))
+            if (Core.Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteStringValue(Priority.Value.ToString());
@@ -157,31 +157,31 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 return null;
             }
-            Optional<IList<string>> zones = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IList<string>> zones = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> provisioningState = default;
             IList<ContainerInstanceContainer> containers = default;
-            Optional<IList<ContainerGroupImageRegistryCredential>> imageRegistryCredentials = default;
-            Optional<ContainerGroupRestartPolicy> restartPolicy = default;
-            Optional<ContainerGroupIPAddress> ipAddress = default;
+            Core.Optional<IList<ContainerGroupImageRegistryCredential>> imageRegistryCredentials = default;
+            Core.Optional<ContainerGroupRestartPolicy> restartPolicy = default;
+            Core.Optional<ContainerGroupIPAddress> ipAddress = default;
             ContainerInstanceOperatingSystemType osType = default;
-            Optional<IList<ContainerVolume>> volumes = default;
-            Optional<ContainerGroupInstanceView> instanceView = default;
-            Optional<ContainerGroupDiagnostics> diagnostics = default;
-            Optional<IList<ContainerGroupSubnetId>> subnetIds = default;
-            Optional<ContainerGroupDnsConfiguration> dnsConfig = default;
-            Optional<ContainerGroupSku> sku = default;
-            Optional<ContainerGroupEncryptionProperties> encryptionProperties = default;
-            Optional<IList<InitContainerDefinitionContent>> initContainers = default;
-            Optional<IList<DeploymentExtensionSpec>> extensions = default;
-            Optional<ConfidentialComputeProperties> confidentialComputeProperties = default;
-            Optional<ContainerGroupPriority> priority = default;
+            Core.Optional<IList<ContainerVolume>> volumes = default;
+            Core.Optional<ContainerGroupInstanceView> instanceView = default;
+            Core.Optional<ContainerGroupDiagnostics> diagnostics = default;
+            Core.Optional<IList<ContainerGroupSubnetId>> subnetIds = default;
+            Core.Optional<ContainerGroupDnsConfiguration> dnsConfig = default;
+            Core.Optional<ContainerGroupSku> sku = default;
+            Core.Optional<ContainerGroupEncryptionProperties> encryptionProperties = default;
+            Core.Optional<IList<InitContainerDefinitionContent>> initContainers = default;
+            Core.Optional<IList<DeploymentExtensionSpec>> extensions = default;
+            Core.Optional<ConfidentialComputeProperties> confidentialComputeProperties = default;
+            Core.Optional<ContainerGroupPriority> priority = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zones"u8))
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.ContainerInstance
                     continue;
                 }
             }
-            return new ContainerGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), identity, provisioningState.Value, containers, Optional.ToList(imageRegistryCredentials), Optional.ToNullable(restartPolicy), ipAddress.Value, osType, Optional.ToList(volumes), instanceView.Value, diagnostics.Value, Optional.ToList(subnetIds), dnsConfig.Value, Optional.ToNullable(sku), encryptionProperties.Value, Optional.ToList(initContainers), Optional.ToList(extensions), confidentialComputeProperties.Value, Optional.ToNullable(priority));
+            return new ContainerGroupData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToList(zones), identity, provisioningState.Value, containers, Core.Optional.ToList(imageRegistryCredentials), Core.Optional.ToNullable(restartPolicy), ipAddress.Value, osType, Core.Optional.ToList(volumes), instanceView.Value, diagnostics.Value, Core.Optional.ToList(subnetIds), dnsConfig.Value, Core.Optional.ToNullable(sku), encryptionProperties.Value, Core.Optional.ToList(initContainers), Core.Optional.ToList(extensions), confidentialComputeProperties.Value, Core.Optional.ToNullable(priority));
         }
     }
 }

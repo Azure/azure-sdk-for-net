@@ -11,21 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxContactDetails : IUtf8JsonSerializable
+    public partial class DataBoxContactDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("contactName"u8);
             writer.WriteStringValue(ContactName);
             writer.WritePropertyName("phone"u8);
             writer.WriteStringValue(Phone);
-            if (Optional.IsDefined(PhoneExtension))
+            if (Core.Optional.IsDefined(PhoneExtension))
             {
                 writer.WritePropertyName("phoneExtension"u8);
                 writer.WriteStringValue(PhoneExtension);
             }
-            if (Optional.IsDefined(Mobile))
+            if (Core.Optional.IsDefined(Mobile))
             {
                 writer.WritePropertyName("mobile"u8);
                 writer.WriteStringValue(Mobile);
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(NotificationPreference))
+            if (Core.Optional.IsCollectionDefined(NotificationPreference))
             {
                 writer.WritePropertyName("notificationPreference"u8);
                 writer.WriteStartArray();
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             string contactName = default;
             string phone = default;
-            Optional<string> phoneExtension = default;
-            Optional<string> mobile = default;
+            Core.Optional<string> phoneExtension = default;
+            Core.Optional<string> mobile = default;
             IList<string> emailList = default;
-            Optional<IList<NotificationPreference>> notificationPreference = default;
+            Core.Optional<IList<NotificationPreference>> notificationPreference = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contactName"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataBoxContactDetails(contactName, phone, phoneExtension.Value, mobile.Value, emailList, Optional.ToList(notificationPreference));
+            return new DataBoxContactDetails(contactName, phone, phoneExtension.Value, mobile.Value, emailList, Core.Optional.ToList(notificationPreference));
         }
     }
 }

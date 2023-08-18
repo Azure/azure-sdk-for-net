@@ -12,27 +12,27 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterLoadBalancerProfile : IUtf8JsonSerializable
+    public partial class ManagedClusterLoadBalancerProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ManagedOutboundIPs))
+            if (Core.Optional.IsDefined(ManagedOutboundIPs))
             {
                 writer.WritePropertyName("managedOutboundIPs"u8);
                 writer.WriteObjectValue(ManagedOutboundIPs);
             }
-            if (Optional.IsDefined(OutboundIPPrefixes))
+            if (Core.Optional.IsDefined(OutboundIPPrefixes))
             {
                 writer.WritePropertyName("outboundIPPrefixes"u8);
                 writer.WriteObjectValue(OutboundIPPrefixes);
             }
-            if (Optional.IsDefined(OutboundIPs))
+            if (Core.Optional.IsDefined(OutboundIPs))
             {
                 writer.WritePropertyName("outboundIPs"u8);
                 writer.WriteObjectValue(OutboundIPs);
             }
-            if (Optional.IsCollectionDefined(EffectiveOutboundIPs))
+            if (Core.Optional.IsCollectionDefined(EffectiveOutboundIPs))
             {
                 writer.WritePropertyName("effectiveOutboundIPs"u8);
                 writer.WriteStartArray();
@@ -42,22 +42,22 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AllocatedOutboundPorts))
+            if (Core.Optional.IsDefined(AllocatedOutboundPorts))
             {
                 writer.WritePropertyName("allocatedOutboundPorts"u8);
                 writer.WriteNumberValue(AllocatedOutboundPorts.Value);
             }
-            if (Optional.IsDefined(IdleTimeoutInMinutes))
+            if (Core.Optional.IsDefined(IdleTimeoutInMinutes))
             {
                 writer.WritePropertyName("idleTimeoutInMinutes"u8);
                 writer.WriteNumberValue(IdleTimeoutInMinutes.Value);
             }
-            if (Optional.IsDefined(EnableMultipleStandardLoadBalancers))
+            if (Core.Optional.IsDefined(EnableMultipleStandardLoadBalancers))
             {
                 writer.WritePropertyName("enableMultipleStandardLoadBalancers"u8);
                 writer.WriteBooleanValue(EnableMultipleStandardLoadBalancers.Value);
             }
-            if (Optional.IsDefined(BackendPoolType))
+            if (Core.Optional.IsDefined(BackendPoolType))
             {
                 writer.WritePropertyName("backendPoolType"u8);
                 writer.WriteStringValue(BackendPoolType.Value.ToString());
@@ -71,14 +71,14 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ManagedClusterLoadBalancerProfileManagedOutboundIPs> managedOutboundIPs = default;
-            Optional<ManagedClusterLoadBalancerProfileOutboundIPPrefixes> outboundIPPrefixes = default;
-            Optional<ManagedClusterLoadBalancerProfileOutboundIPs> outboundIPs = default;
-            Optional<IList<WritableSubResource>> effectiveOutboundIPs = default;
-            Optional<int> allocatedOutboundPorts = default;
-            Optional<int> idleTimeoutInMinutes = default;
-            Optional<bool> enableMultipleStandardLoadBalancers = default;
-            Optional<ManagedClusterLoadBalancerBackendPoolType> backendPoolType = default;
+            Core.Optional<ManagedClusterLoadBalancerProfileManagedOutboundIPs> managedOutboundIPs = default;
+            Core.Optional<ManagedClusterLoadBalancerProfileOutboundIPPrefixes> outboundIPPrefixes = default;
+            Core.Optional<ManagedClusterLoadBalancerProfileOutboundIPs> outboundIPs = default;
+            Core.Optional<IList<WritableSubResource>> effectiveOutboundIPs = default;
+            Core.Optional<int> allocatedOutboundPorts = default;
+            Core.Optional<int> idleTimeoutInMinutes = default;
+            Core.Optional<bool> enableMultipleStandardLoadBalancers = default;
+            Core.Optional<ManagedClusterLoadBalancerBackendPoolType> backendPoolType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedOutboundIPs"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterLoadBalancerProfile(managedOutboundIPs.Value, outboundIPPrefixes.Value, outboundIPs.Value, Optional.ToList(effectiveOutboundIPs), Optional.ToNullable(allocatedOutboundPorts), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableMultipleStandardLoadBalancers), Optional.ToNullable(backendPoolType));
+            return new ManagedClusterLoadBalancerProfile(managedOutboundIPs.Value, outboundIPPrefixes.Value, outboundIPs.Value, Core.Optional.ToList(effectiveOutboundIPs), Core.Optional.ToNullable(allocatedOutboundPorts), Core.Optional.ToNullable(idleTimeoutInMinutes), Core.Optional.ToNullable(enableMultipleStandardLoadBalancers), Core.Optional.ToNullable(backendPoolType));
         }
     }
 }

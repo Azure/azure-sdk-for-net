@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of FleetListResult. </summary>
         internal FleetListResult()
         {
-            Value = new ChangeTrackingList<ContainerServiceFleetData>();
+            Value = new Core.ChangeTrackingList<ContainerServiceFleetData>();
         }
 
         /// <summary> Initializes a new instance of FleetListResult. </summary>

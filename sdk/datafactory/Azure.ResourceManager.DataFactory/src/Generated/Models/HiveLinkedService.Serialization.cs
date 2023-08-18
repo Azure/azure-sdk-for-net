@@ -13,24 +13,24 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class HiveLinkedService : IUtf8JsonSerializable
+    public partial class HiveLinkedService : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (Optional.IsDefined(ConnectVia))
+            if (Core.Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (Core.Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (Core.Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -64,79 +64,79 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("host"u8);
             JsonSerializer.Serialize(writer, Host);
-            if (Optional.IsDefined(Port))
+            if (Core.Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 JsonSerializer.Serialize(writer, Port);
             }
-            if (Optional.IsDefined(ServerType))
+            if (Core.Optional.IsDefined(ServerType))
             {
                 writer.WritePropertyName("serverType"u8);
                 writer.WriteStringValue(ServerType.Value.ToString());
             }
-            if (Optional.IsDefined(ThriftTransportProtocol))
+            if (Core.Optional.IsDefined(ThriftTransportProtocol))
             {
                 writer.WritePropertyName("thriftTransportProtocol"u8);
                 writer.WriteStringValue(ThriftTransportProtocol.Value.ToString());
             }
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
-            if (Optional.IsDefined(ServiceDiscoveryMode))
+            if (Core.Optional.IsDefined(ServiceDiscoveryMode))
             {
                 writer.WritePropertyName("serviceDiscoveryMode"u8);
                 JsonSerializer.Serialize(writer, ServiceDiscoveryMode);
             }
-            if (Optional.IsDefined(ZooKeeperNameSpace))
+            if (Core.Optional.IsDefined(ZooKeeperNameSpace))
             {
                 writer.WritePropertyName("zooKeeperNameSpace"u8);
                 JsonSerializer.Serialize(writer, ZooKeeperNameSpace);
             }
-            if (Optional.IsDefined(UseNativeQuery))
+            if (Core.Optional.IsDefined(UseNativeQuery))
             {
                 writer.WritePropertyName("useNativeQuery"u8);
                 JsonSerializer.Serialize(writer, UseNativeQuery);
             }
-            if (Optional.IsDefined(Username))
+            if (Core.Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 JsonSerializer.Serialize(writer, Username);
             }
-            if (Optional.IsDefined(Password))
+            if (Core.Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 JsonSerializer.Serialize(writer, Password);
             }
-            if (Optional.IsDefined(HttpPath))
+            if (Core.Optional.IsDefined(HttpPath))
             {
                 writer.WritePropertyName("httpPath"u8);
                 JsonSerializer.Serialize(writer, HttpPath);
             }
-            if (Optional.IsDefined(EnableSsl))
+            if (Core.Optional.IsDefined(EnableSsl))
             {
                 writer.WritePropertyName("enableSsl"u8);
                 JsonSerializer.Serialize(writer, EnableSsl);
             }
-            if (Optional.IsDefined(TrustedCertPath))
+            if (Core.Optional.IsDefined(TrustedCertPath))
             {
                 writer.WritePropertyName("trustedCertPath"u8);
                 JsonSerializer.Serialize(writer, TrustedCertPath);
             }
-            if (Optional.IsDefined(UseSystemTrustStore))
+            if (Core.Optional.IsDefined(UseSystemTrustStore))
             {
                 writer.WritePropertyName("useSystemTrustStore"u8);
                 JsonSerializer.Serialize(writer, UseSystemTrustStore);
             }
-            if (Optional.IsDefined(AllowHostNameCNMismatch))
+            if (Core.Optional.IsDefined(AllowHostNameCNMismatch))
             {
                 writer.WritePropertyName("allowHostNameCNMismatch"u8);
                 JsonSerializer.Serialize(writer, AllowHostNameCNMismatch);
             }
-            if (Optional.IsDefined(AllowSelfSignedServerCert))
+            if (Core.Optional.IsDefined(AllowSelfSignedServerCert))
             {
                 writer.WritePropertyName("allowSelfSignedServerCert"u8);
                 JsonSerializer.Serialize(writer, AllowSelfSignedServerCert);
             }
-            if (Optional.IsDefined(EncryptedCredential))
+            if (Core.Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
@@ -161,27 +161,27 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
+            Core.Optional<IntegrationRuntimeReference> connectVia = default;
+            Core.Optional<string> description = default;
+            Core.Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
+            Core.Optional<IList<BinaryData>> annotations = default;
             DataFactoryElement<string> host = default;
-            Optional<DataFactoryElement<int>> port = default;
-            Optional<HiveServerType> serverType = default;
-            Optional<HiveThriftTransportProtocol> thriftTransportProtocol = default;
+            Core.Optional<DataFactoryElement<int>> port = default;
+            Core.Optional<HiveServerType> serverType = default;
+            Core.Optional<HiveThriftTransportProtocol> thriftTransportProtocol = default;
             HiveAuthenticationType authenticationType = default;
-            Optional<DataFactoryElement<bool>> serviceDiscoveryMode = default;
-            Optional<DataFactoryElement<string>> zooKeeperNameSpace = default;
-            Optional<DataFactoryElement<bool>> useNativeQuery = default;
-            Optional<DataFactoryElement<string>> username = default;
-            Optional<DataFactorySecretBaseDefinition> password = default;
-            Optional<DataFactoryElement<string>> httpPath = default;
-            Optional<DataFactoryElement<bool>> enableSsl = default;
-            Optional<DataFactoryElement<string>> trustedCertPath = default;
-            Optional<DataFactoryElement<bool>> useSystemTrustStore = default;
-            Optional<DataFactoryElement<bool>> allowHostNameCNMismatch = default;
-            Optional<DataFactoryElement<bool>> allowSelfSignedServerCert = default;
-            Optional<string> encryptedCredential = default;
+            Core.Optional<DataFactoryElement<bool>> serviceDiscoveryMode = default;
+            Core.Optional<DataFactoryElement<string>> zooKeeperNameSpace = default;
+            Core.Optional<DataFactoryElement<bool>> useNativeQuery = default;
+            Core.Optional<DataFactoryElement<string>> username = default;
+            Core.Optional<DataFactorySecretBaseDefinition> password = default;
+            Core.Optional<DataFactoryElement<string>> httpPath = default;
+            Core.Optional<DataFactoryElement<bool>> enableSsl = default;
+            Core.Optional<DataFactoryElement<string>> trustedCertPath = default;
+            Core.Optional<DataFactoryElement<bool>> useSystemTrustStore = default;
+            Core.Optional<DataFactoryElement<bool>> allowHostNameCNMismatch = default;
+            Core.Optional<DataFactoryElement<bool>> allowSelfSignedServerCert = default;
+            Core.Optional<string> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HiveLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, host, port.Value, Optional.ToNullable(serverType), Optional.ToNullable(thriftTransportProtocol), authenticationType, serviceDiscoveryMode.Value, zooKeeperNameSpace.Value, useNativeQuery.Value, username.Value, password, httpPath.Value, enableSsl.Value, trustedCertPath.Value, useSystemTrustStore.Value, allowHostNameCNMismatch.Value, allowSelfSignedServerCert.Value, encryptedCredential.Value);
+            return new HiveLinkedService(type, connectVia.Value, description.Value, Core.Optional.ToDictionary(parameters), Core.Optional.ToList(annotations), additionalProperties, host, port.Value, Core.Optional.ToNullable(serverType), Core.Optional.ToNullable(thriftTransportProtocol), authenticationType, serviceDiscoveryMode.Value, zooKeeperNameSpace.Value, useNativeQuery.Value, username.Value, password, httpPath.Value, enableSsl.Value, trustedCertPath.Value, useSystemTrustStore.Value, allowHostNameCNMismatch.Value, allowSelfSignedServerCert.Value, encryptedCredential.Value);
         }
     }
 }

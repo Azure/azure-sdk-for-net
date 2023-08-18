@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of ContainerServiceTrustedAccessRole. </summary>
         internal ContainerServiceTrustedAccessRole()
         {
-            Rules = new ChangeTrackingList<ContainerServiceTrustedAccessRoleRule>();
+            Rules = new Core.ChangeTrackingList<ContainerServiceTrustedAccessRoleRule>();
         }
 
         /// <summary> Initializes a new instance of ContainerServiceTrustedAccessRole. </summary>

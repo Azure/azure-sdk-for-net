@@ -12,16 +12,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFlowReference : IUtf8JsonSerializable
+    public partial class DataFlowReference : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ReferenceType.ToString());
             writer.WritePropertyName("referenceName"u8);
             writer.WriteStringValue(ReferenceName);
-            if (Optional.IsDefined(DatasetParameters))
+            if (Core.Optional.IsDefined(DatasetParameters))
             {
                 writer.WritePropertyName("datasetParameters"u8);
 #if NET6_0_OR_GREATER
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(DatasetParameters.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (Core.Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFlowReferenceType type = default;
             string referenceName = default;
-            Optional<BinaryData> datasetParameters = default;
-            Optional<IDictionary<string, BinaryData>> parameters = default;
+            Core.Optional<BinaryData> datasetParameters = default;
+            Core.Optional<IDictionary<string, BinaryData>> parameters = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFlowReference(type, referenceName, datasetParameters.Value, Optional.ToDictionary(parameters), additionalProperties);
+            return new DataFlowReference(type, referenceName, datasetParameters.Value, Core.Optional.ToDictionary(parameters), additionalProperties);
         }
     }
 }

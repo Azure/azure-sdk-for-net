@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class DisallowedConfiguration : IUtf8JsonSerializable
+    internal partial class DisallowedConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(VmDiskType))
+            if (Core.Optional.IsDefined(VmDiskType))
             {
                 writer.WritePropertyName("vmDiskType"u8);
                 writer.WriteStringValue(VmDiskType.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<VirtualMachineDiskType> vmDiskType = default;
+            Core.Optional<VirtualMachineDiskType> vmDiskType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmDiskType"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new DisallowedConfiguration(Optional.ToNullable(vmDiskType));
+            return new DisallowedConfiguration(Core.Optional.ToNullable(vmDiskType));
         }
     }
 }

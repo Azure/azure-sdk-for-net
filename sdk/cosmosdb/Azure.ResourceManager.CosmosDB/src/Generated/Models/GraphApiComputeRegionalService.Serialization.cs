@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> graphApiComputeEndpoint = default;
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
-            Optional<CosmosDBServiceStatus> status = default;
+            Core.Optional<string> graphApiComputeEndpoint = default;
+            Core.Optional<string> name = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<CosmosDBServiceStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("graphApiComputeEndpoint"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new GraphApiComputeRegionalService(name.Value, Optional.ToNullable(location), Optional.ToNullable(status), graphApiComputeEndpoint.Value);
+            return new GraphApiComputeRegionalService(name.Value, Core.Optional.ToNullable(location), Core.Optional.ToNullable(status), graphApiComputeEndpoint.Value);
         }
     }
 }

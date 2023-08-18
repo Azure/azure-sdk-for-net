@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of QueryFilter. </summary>
         public QueryFilter()
         {
-            And = new ChangeTrackingList<QueryFilter>();
-            Or = new ChangeTrackingList<QueryFilter>();
+            And = new Core.ChangeTrackingList<QueryFilter>();
+            Or = new Core.ChangeTrackingList<QueryFilter>();
         }
 
         /// <summary> The logical "AND" expression. Must have at least 2 items. </summary>

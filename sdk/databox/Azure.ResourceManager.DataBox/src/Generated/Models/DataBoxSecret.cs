@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of DataBoxSecret. </summary>
         internal DataBoxSecret()
         {
-            NetworkConfigurations = new ChangeTrackingList<ApplianceNetworkConfiguration>();
-            AccountCredentialDetails = new ChangeTrackingList<DataBoxAccountCredentialDetails>();
+            NetworkConfigurations = new Core.ChangeTrackingList<ApplianceNetworkConfiguration>();
+            AccountCredentialDetails = new Core.ChangeTrackingList<DataBoxAccountCredentialDetails>();
         }
 
         /// <summary> Initializes a new instance of DataBoxSecret. </summary>

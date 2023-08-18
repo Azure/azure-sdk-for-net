@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachinePatchStatus. </summary>
         internal VirtualMachinePatchStatus()
         {
-            ConfigurationStatuses = new ChangeTrackingList<InstanceViewStatus>();
+            ConfigurationStatuses = new Core.ChangeTrackingList<InstanceViewStatus>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachinePatchStatus. </summary>

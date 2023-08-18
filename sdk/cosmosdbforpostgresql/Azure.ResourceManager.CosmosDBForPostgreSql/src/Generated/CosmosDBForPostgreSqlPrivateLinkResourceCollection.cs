@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         public virtual AsyncPageable<CosmosDBForPostgreSqlPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBForPostgreSqlPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBForPostgreSqlPrivateLinkResource(Client, CosmosDBForPostgreSqlPrivateLinkResourceData.DeserializeCosmosDBForPostgreSqlPrivateLinkResourceData(e)), _cosmosDBForPostgreSqlPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBForPostgreSqlPrivateLinkResource(Client, CosmosDBForPostgreSqlPrivateLinkResourceData.DeserializeCosmosDBForPostgreSqlPrivateLinkResourceData(e)), _cosmosDBForPostgreSqlPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         public virtual Pageable<CosmosDBForPostgreSqlPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBForPostgreSqlPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBForPostgreSqlPrivateLinkResource(Client, CosmosDBForPostgreSqlPrivateLinkResourceData.DeserializeCosmosDBForPostgreSqlPrivateLinkResourceData(e)), _cosmosDBForPostgreSqlPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBForPostgreSqlPrivateLinkResource(Client, CosmosDBForPostgreSqlPrivateLinkResourceData.DeserializeCosmosDBForPostgreSqlPrivateLinkResourceData(e)), _cosmosDBForPostgreSqlPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

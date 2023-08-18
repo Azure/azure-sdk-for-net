@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CosmosDBContainerPartitionKey. </summary>
         public CosmosDBContainerPartitionKey()
         {
-            Paths = new ChangeTrackingList<string>();
+            Paths = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of CosmosDBContainerPartitionKey. </summary>

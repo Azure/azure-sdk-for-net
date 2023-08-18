@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<bool> sendingMetrics = default;
-            Optional<string> reasonForMetricsStatus = default;
-            Optional<bool> sendingLogs = default;
-            Optional<string> reasonForLogsStatus = default;
+            Core.Optional<string> id = default;
+            Core.Optional<bool> sendingMetrics = default;
+            Core.Optional<string> reasonForMetricsStatus = default;
+            Core.Optional<bool> sendingLogs = default;
+            Core.Optional<string> reasonForLogsStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     continue;
                 }
             }
-            return new MonitoredResource(id.Value, Optional.ToNullable(sendingMetrics), reasonForMetricsStatus.Value, Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value);
+            return new MonitoredResource(id.Value, Core.Optional.ToNullable(sendingMetrics), reasonForMetricsStatus.Value, Core.Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value);
         }
     }
 }

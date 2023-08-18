@@ -14,34 +14,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    public partial class ConnectorResourceFormatData : IUtf8JsonSerializable
+    public partial class ConnectorResourceFormatData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectorName))
+            if (Core.Optional.IsDefined(ConnectorName))
             {
                 writer.WritePropertyName("connectorName"u8);
                 writer.WriteStringValue(ConnectorName);
             }
-            if (Optional.IsDefined(ConnectorType))
+            if (Core.Optional.IsDefined(ConnectorType))
             {
                 writer.WritePropertyName("connectorType"u8);
                 writer.WriteStringValue(ConnectorType.Value.ToString());
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(ConnectorProperties))
+            if (Core.Optional.IsCollectionDefined(ConnectorProperties))
             {
                 writer.WritePropertyName("connectorProperties"u8);
                 writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(IsInternal))
+            if (Core.Optional.IsDefined(IsInternal))
             {
                 writer.WritePropertyName("isInternal"u8);
                 writer.WriteBooleanValue(IsInternal.Value);
@@ -79,18 +79,18 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> connectorId = default;
-            Optional<string> connectorName = default;
-            Optional<ConnectorType> connectorType = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, BinaryData>> connectorProperties = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<ConnectorState> state = default;
-            Optional<Guid> tenantId = default;
-            Optional<bool> isInternal = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<int> connectorId = default;
+            Core.Optional<string> connectorName = default;
+            Core.Optional<ConnectorType> connectorType = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> description = default;
+            Core.Optional<IDictionary<string, BinaryData>> connectorProperties = default;
+            Core.Optional<DateTimeOffset> created = default;
+            Core.Optional<DateTimeOffset> lastModified = default;
+            Core.Optional<ConnectorState> state = default;
+            Core.Optional<Guid> tenantId = default;
+            Core.Optional<bool> isInternal = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.CustomerInsights
                     continue;
                 }
             }
-            return new ConnectorResourceFormatData(id, name, type, systemData.Value, Optional.ToNullable(connectorId), connectorName.Value, Optional.ToNullable(connectorType), displayName.Value, description.Value, Optional.ToDictionary(connectorProperties), Optional.ToNullable(created), Optional.ToNullable(lastModified), Optional.ToNullable(state), Optional.ToNullable(tenantId), Optional.ToNullable(isInternal));
+            return new ConnectorResourceFormatData(id, name, type, systemData.Value, Core.Optional.ToNullable(connectorId), connectorName.Value, Core.Optional.ToNullable(connectorType), displayName.Value, description.Value, Core.Optional.ToDictionary(connectorProperties), Core.Optional.ToNullable(created), Core.Optional.ToNullable(lastModified), Core.Optional.ToNullable(state), Core.Optional.ToNullable(tenantId), Core.Optional.ToNullable(isInternal));
         }
     }
 }

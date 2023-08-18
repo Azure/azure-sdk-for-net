@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxEncryptionPreferences : IUtf8JsonSerializable
+    public partial class DataBoxEncryptionPreferences : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DoubleEncryption))
+            if (Core.Optional.IsDefined(DoubleEncryption))
             {
                 writer.WritePropertyName("doubleEncryption"u8);
                 writer.WriteStringValue(DoubleEncryption.Value.ToSerialString());
             }
-            if (Optional.IsDefined(HardwareEncryption))
+            if (Core.Optional.IsDefined(HardwareEncryption))
             {
                 writer.WritePropertyName("hardwareEncryption"u8);
                 writer.WriteStringValue(HardwareEncryption.Value.ToSerialString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<DataBoxDoubleEncryption> doubleEncryption = default;
-            Optional<HardwareEncryption> hardwareEncryption = default;
+            Core.Optional<DataBoxDoubleEncryption> doubleEncryption = default;
+            Core.Optional<HardwareEncryption> hardwareEncryption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("doubleEncryption"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataBoxEncryptionPreferences(Optional.ToNullable(doubleEncryption), Optional.ToNullable(hardwareEncryption));
+            return new DataBoxEncryptionPreferences(Core.Optional.ToNullable(doubleEncryption), Core.Optional.ToNullable(hardwareEncryption));
         }
     }
 }

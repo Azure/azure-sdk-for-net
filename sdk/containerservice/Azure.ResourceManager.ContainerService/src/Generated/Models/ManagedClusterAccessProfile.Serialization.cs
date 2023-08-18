@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterAccessProfile : IUtf8JsonSerializable
+    public partial class ManagedClusterAccessProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(KubeConfig))
+            if (Core.Optional.IsDefined(KubeConfig))
             {
                 writer.WritePropertyName("kubeConfig"u8);
                 writer.WriteBase64StringValue(KubeConfig, "D");
@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<byte[]> kubeConfig = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<byte[]> kubeConfig = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterAccessProfile(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, kubeConfig.Value);
+            return new ManagedClusterAccessProfile(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, kubeConfig.Value);
         }
     }
 }

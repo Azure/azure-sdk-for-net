@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <summary> Initializes a new instance of DiagnosticRemoteSupportSettingData. </summary>
         public DiagnosticRemoteSupportSettingData()
         {
-            RemoteSupportSettingsList = new ChangeTrackingList<EdgeRemoteSupportSettings>();
+            RemoteSupportSettingsList = new Core.ChangeTrackingList<EdgeRemoteSupportSettings>();
         }
 
         /// <summary> Initializes a new instance of DiagnosticRemoteSupportSettingData. </summary>

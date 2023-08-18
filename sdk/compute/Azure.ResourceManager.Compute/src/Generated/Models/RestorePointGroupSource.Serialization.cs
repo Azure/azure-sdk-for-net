@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RestorePointGroupSource : IUtf8JsonSerializable
+    public partial class RestorePointGroupSource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<ResourceIdentifier> id = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new RestorePointGroupSource(Optional.ToNullable(location), id.Value);
+            return new RestorePointGroupSource(Core.Optional.ToNullable(location), id.Value);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of DataBoxCopyProgress. </summary>
         internal DataBoxCopyProgress()
         {
-            Actions = new ChangeTrackingList<CustomerResolutionCode>();
+            Actions = new Core.ChangeTrackingList<CustomerResolutionCode>();
         }
 
         /// <summary> Initializes a new instance of DataBoxCopyProgress. </summary>

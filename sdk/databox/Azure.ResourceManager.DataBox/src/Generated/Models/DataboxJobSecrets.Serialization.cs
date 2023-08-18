@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataBoxSecret>> podSecrets = default;
+            Core.Optional<IReadOnlyList<DataBoxSecret>> podSecrets = default;
             DataBoxOrderType jobSecretsType = default;
-            Optional<DataCenterAccessSecurityCode> dcAccessSecurityCode = default;
-            Optional<ResponseError> error = default;
+            Core.Optional<DataCenterAccessSecurityCode> dcAccessSecurityCode = default;
+            Core.Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("podSecrets"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataboxJobSecrets(jobSecretsType, dcAccessSecurityCode.Value, error.Value, Optional.ToList(podSecrets));
+            return new DataboxJobSecrets(jobSecretsType, dcAccessSecurityCode.Value, error.Value, Core.Optional.ToList(podSecrets));
         }
     }
 }

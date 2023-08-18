@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of ManagedClusterApiServerAccessProfile. </summary>
         public ManagedClusterApiServerAccessProfile()
         {
-            AuthorizedIPRanges = new ChangeTrackingList<string>();
+            AuthorizedIPRanges = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ManagedClusterApiServerAccessProfile. </summary>

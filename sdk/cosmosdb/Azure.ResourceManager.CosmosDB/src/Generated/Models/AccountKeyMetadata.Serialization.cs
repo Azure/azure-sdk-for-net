@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> generationTime = default;
+            Core.Optional<DateTimeOffset> generationTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("generationTime"u8))
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new AccountKeyMetadata(Optional.ToNullable(generationTime));
+            return new AccountKeyMetadata(Core.Optional.ToNullable(generationTime));
         }
     }
 }

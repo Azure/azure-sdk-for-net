@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Communication.Email
 {
-    public partial class EmailMessage : IUtf8JsonSerializable
+    public partial class EmailMessage : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Headers))
+            if (Core.Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.Communication.Email
             writer.WriteObjectValue(Content);
             writer.WritePropertyName("recipients"u8);
             writer.WriteObjectValue(Recipients);
-            if (Optional.IsCollectionDefined(Attachments))
+            if (Core.Optional.IsCollectionDefined(Attachments))
             {
                 writer.WritePropertyName("attachments"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.Communication.Email
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ReplyTo))
+            if (Core.Optional.IsCollectionDefined(ReplyTo))
             {
                 writer.WritePropertyName("replyTo"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.Communication.Email
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(UserEngagementTrackingDisabled))
+            if (Core.Optional.IsDefined(UserEngagementTrackingDisabled))
             {
                 writer.WritePropertyName("userEngagementTrackingDisabled"u8);
                 writer.WriteBooleanValue(UserEngagementTrackingDisabled.Value);

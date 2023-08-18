@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of PhysicalPartitionStorageInfoCollection. </summary>
         internal PhysicalPartitionStorageInfoCollection()
         {
-            PhysicalPartitionStorageInfoCollectionValue = new ChangeTrackingList<PhysicalPartitionStorageInfo>();
+            PhysicalPartitionStorageInfoCollectionValue = new Core.ChangeTrackingList<PhysicalPartitionStorageInfo>();
         }
 
         /// <summary> Initializes a new instance of PhysicalPartitionStorageInfoCollection. </summary>

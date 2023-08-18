@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of DataFactoryMappingDataFlowProperties. </summary>
         public DataFactoryMappingDataFlowProperties()
         {
-            Sources = new ChangeTrackingList<DataFlowSource>();
-            Sinks = new ChangeTrackingList<DataFlowSink>();
-            Transformations = new ChangeTrackingList<DataFlowTransformation>();
-            ScriptLines = new ChangeTrackingList<string>();
+            Sources = new Core.ChangeTrackingList<DataFlowSource>();
+            Sinks = new Core.ChangeTrackingList<DataFlowSink>();
+            Transformations = new Core.ChangeTrackingList<DataFlowTransformation>();
+            ScriptLines = new Core.ChangeTrackingList<string>();
             DataFlowType = "MappingDataFlow";
         }
 

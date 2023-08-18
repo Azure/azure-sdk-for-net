@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>> value = default;
+            Core.Optional<IReadOnlyList<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new IntegrationRuntimeOutboundNetworkDependenciesResult(Optional.ToList(value));
+            return new IntegrationRuntimeOutboundNetworkDependenciesResult(Core.Optional.ToList(value));
         }
     }
 }

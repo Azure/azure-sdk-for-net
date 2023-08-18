@@ -13,39 +13,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeDeviceUpdateSummary : IUtf8JsonSerializable
+    public partial class DataBoxEdgeDeviceUpdateSummary : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DeviceVersionNumber))
+            if (Core.Optional.IsDefined(DeviceVersionNumber))
             {
                 writer.WritePropertyName("deviceVersionNumber"u8);
                 writer.WriteStringValue(DeviceVersionNumber);
             }
-            if (Optional.IsDefined(FriendlyDeviceVersionName))
+            if (Core.Optional.IsDefined(FriendlyDeviceVersionName))
             {
                 writer.WritePropertyName("friendlyDeviceVersionName"u8);
                 writer.WriteStringValue(FriendlyDeviceVersionName);
             }
-            if (Optional.IsDefined(DeviceLastScannedOn))
+            if (Core.Optional.IsDefined(DeviceLastScannedOn))
             {
                 writer.WritePropertyName("deviceLastScannedDateTime"u8);
                 writer.WriteStringValue(DeviceLastScannedOn.Value, "O");
             }
-            if (Optional.IsDefined(LastCompletedScanJobOn))
+            if (Core.Optional.IsDefined(LastCompletedScanJobOn))
             {
                 writer.WritePropertyName("lastCompletedScanJobDateTime"u8);
                 writer.WriteStringValue(LastCompletedScanJobOn.Value, "O");
             }
-            if (Optional.IsDefined(LastSuccessfulScanJobOn))
+            if (Core.Optional.IsDefined(LastSuccessfulScanJobOn))
             {
                 writer.WritePropertyName("lastSuccessfulScanJobTime"u8);
                 writer.WriteStringValue(LastSuccessfulScanJobOn.Value, "O");
             }
-            if (Optional.IsDefined(LastSuccessfulInstallJobOn))
+            if (Core.Optional.IsDefined(LastSuccessfulInstallJobOn))
             {
                 writer.WritePropertyName("lastSuccessfulInstallJobDateTime"u8);
                 writer.WriteStringValue(LastSuccessfulInstallJobOn.Value, "O");
@@ -63,32 +63,32 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> deviceVersionNumber = default;
-            Optional<string> friendlyDeviceVersionName = default;
-            Optional<DateTimeOffset> deviceLastScannedDateTime = default;
-            Optional<DateTimeOffset> lastCompletedScanJobDateTime = default;
-            Optional<DateTimeOffset> lastSuccessfulScanJobTime = default;
-            Optional<DateTimeOffset> lastCompletedDownloadJobDateTime = default;
-            Optional<ResourceIdentifier> lastCompletedDownloadJobId = default;
-            Optional<DataBoxEdgeJobStatus> lastDownloadJobStatus = default;
-            Optional<DateTimeOffset> lastSuccessfulInstallJobDateTime = default;
-            Optional<DateTimeOffset> lastCompletedInstallJobDateTime = default;
-            Optional<ResourceIdentifier> lastCompletedInstallJobId = default;
-            Optional<DataBoxEdgeJobStatus> lastInstallJobStatus = default;
-            Optional<int> totalNumberOfUpdatesAvailable = default;
-            Optional<int> totalNumberOfUpdatesPendingDownload = default;
-            Optional<int> totalNumberOfUpdatesPendingInstall = default;
-            Optional<InstallRebootBehavior> rebootBehavior = default;
-            Optional<DataBoxEdgeUpdateOperation> ongoingUpdateOperation = default;
-            Optional<ResourceIdentifier> inProgressDownloadJobId = default;
-            Optional<ResourceIdentifier> inProgressInstallJobId = default;
-            Optional<DateTimeOffset> inProgressDownloadJobStartedDateTime = default;
-            Optional<DateTimeOffset> inProgressInstallJobStartedDateTime = default;
-            Optional<IReadOnlyList<string>> updateTitles = default;
-            Optional<IReadOnlyList<DataBoxEdgeUpdateDetails>> updates = default;
-            Optional<double> totalUpdateSizeInBytes = default;
-            Optional<int> totalTimeInMinutes = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> deviceVersionNumber = default;
+            Core.Optional<string> friendlyDeviceVersionName = default;
+            Core.Optional<DateTimeOffset> deviceLastScannedDateTime = default;
+            Core.Optional<DateTimeOffset> lastCompletedScanJobDateTime = default;
+            Core.Optional<DateTimeOffset> lastSuccessfulScanJobTime = default;
+            Core.Optional<DateTimeOffset> lastCompletedDownloadJobDateTime = default;
+            Core.Optional<ResourceIdentifier> lastCompletedDownloadJobId = default;
+            Core.Optional<DataBoxEdgeJobStatus> lastDownloadJobStatus = default;
+            Core.Optional<DateTimeOffset> lastSuccessfulInstallJobDateTime = default;
+            Core.Optional<DateTimeOffset> lastCompletedInstallJobDateTime = default;
+            Core.Optional<ResourceIdentifier> lastCompletedInstallJobId = default;
+            Core.Optional<DataBoxEdgeJobStatus> lastInstallJobStatus = default;
+            Core.Optional<int> totalNumberOfUpdatesAvailable = default;
+            Core.Optional<int> totalNumberOfUpdatesPendingDownload = default;
+            Core.Optional<int> totalNumberOfUpdatesPendingInstall = default;
+            Core.Optional<InstallRebootBehavior> rebootBehavior = default;
+            Core.Optional<DataBoxEdgeUpdateOperation> ongoingUpdateOperation = default;
+            Core.Optional<ResourceIdentifier> inProgressDownloadJobId = default;
+            Core.Optional<ResourceIdentifier> inProgressInstallJobId = default;
+            Core.Optional<DateTimeOffset> inProgressDownloadJobStartedDateTime = default;
+            Core.Optional<DateTimeOffset> inProgressInstallJobStartedDateTime = default;
+            Core.Optional<IReadOnlyList<string>> updateTitles = default;
+            Core.Optional<IReadOnlyList<DataBoxEdgeUpdateDetails>> updates = default;
+            Core.Optional<double> totalUpdateSizeInBytes = default;
+            Core.Optional<int> totalTimeInMinutes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new DataBoxEdgeDeviceUpdateSummary(id, name, type, systemData.Value, deviceVersionNumber.Value, friendlyDeviceVersionName.Value, Optional.ToNullable(deviceLastScannedDateTime), Optional.ToNullable(lastCompletedScanJobDateTime), Optional.ToNullable(lastSuccessfulScanJobTime), Optional.ToNullable(lastCompletedDownloadJobDateTime), lastCompletedDownloadJobId.Value, Optional.ToNullable(lastDownloadJobStatus), Optional.ToNullable(lastSuccessfulInstallJobDateTime), Optional.ToNullable(lastCompletedInstallJobDateTime), lastCompletedInstallJobId.Value, Optional.ToNullable(lastInstallJobStatus), Optional.ToNullable(totalNumberOfUpdatesAvailable), Optional.ToNullable(totalNumberOfUpdatesPendingDownload), Optional.ToNullable(totalNumberOfUpdatesPendingInstall), Optional.ToNullable(rebootBehavior), Optional.ToNullable(ongoingUpdateOperation), inProgressDownloadJobId.Value, inProgressInstallJobId.Value, Optional.ToNullable(inProgressDownloadJobStartedDateTime), Optional.ToNullable(inProgressInstallJobStartedDateTime), Optional.ToList(updateTitles), Optional.ToList(updates), Optional.ToNullable(totalUpdateSizeInBytes), Optional.ToNullable(totalTimeInMinutes));
+            return new DataBoxEdgeDeviceUpdateSummary(id, name, type, systemData.Value, deviceVersionNumber.Value, friendlyDeviceVersionName.Value, Core.Optional.ToNullable(deviceLastScannedDateTime), Core.Optional.ToNullable(lastCompletedScanJobDateTime), Core.Optional.ToNullable(lastSuccessfulScanJobTime), Core.Optional.ToNullable(lastCompletedDownloadJobDateTime), lastCompletedDownloadJobId.Value, Core.Optional.ToNullable(lastDownloadJobStatus), Core.Optional.ToNullable(lastSuccessfulInstallJobDateTime), Core.Optional.ToNullable(lastCompletedInstallJobDateTime), lastCompletedInstallJobId.Value, Core.Optional.ToNullable(lastInstallJobStatus), Core.Optional.ToNullable(totalNumberOfUpdatesAvailable), Core.Optional.ToNullable(totalNumberOfUpdatesPendingDownload), Core.Optional.ToNullable(totalNumberOfUpdatesPendingInstall), Core.Optional.ToNullable(rebootBehavior), Core.Optional.ToNullable(ongoingUpdateOperation), inProgressDownloadJobId.Value, inProgressInstallJobId.Value, Core.Optional.ToNullable(inProgressDownloadJobStartedDateTime), Core.Optional.ToNullable(inProgressInstallJobStartedDateTime), Core.Optional.ToList(updateTitles), Core.Optional.ToList(updates), Core.Optional.ToNullable(totalUpdateSizeInBytes), Core.Optional.ToNullable(totalTimeInMinutes));
         }
     }
 }

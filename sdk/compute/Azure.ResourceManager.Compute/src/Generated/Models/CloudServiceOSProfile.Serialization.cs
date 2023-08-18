@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class CloudServiceOSProfile : IUtf8JsonSerializable
+    internal partial class CloudServiceOSProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Secrets))
+            if (Core.Optional.IsCollectionDefined(Secrets))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<CloudServiceVaultSecretGroup>> secrets = default;
+            Core.Optional<IList<CloudServiceVaultSecretGroup>> secrets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secrets"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new CloudServiceOSProfile(Optional.ToList(secrets));
+            return new CloudServiceOSProfile(Core.Optional.ToList(secrets));
         }
     }
 }

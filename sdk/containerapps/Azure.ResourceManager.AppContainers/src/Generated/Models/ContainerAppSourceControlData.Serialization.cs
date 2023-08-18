@@ -13,24 +13,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    public partial class ContainerAppSourceControlData : IUtf8JsonSerializable
+    public partial class ContainerAppSourceControlData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RepoUri))
+            if (Core.Optional.IsDefined(RepoUri))
             {
                 writer.WritePropertyName("repoUrl"u8);
                 writer.WriteStringValue(RepoUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Branch))
+            if (Core.Optional.IsDefined(Branch))
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (Optional.IsDefined(GitHubActionConfiguration))
+            if (Core.Optional.IsDefined(GitHubActionConfiguration))
             {
                 writer.WritePropertyName("githubActionConfiguration"u8);
                 writer.WriteObjectValue(GitHubActionConfiguration);
@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.AppContainers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerAppSourceControlOperationState> operationState = default;
-            Optional<Uri> repoUrl = default;
-            Optional<string> branch = default;
-            Optional<ContainerAppGitHubActionConfiguration> gitHubActionConfiguration = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ContainerAppSourceControlOperationState> operationState = default;
+            Core.Optional<Uri> repoUrl = default;
+            Core.Optional<string> branch = default;
+            Core.Optional<ContainerAppGitHubActionConfiguration> gitHubActionConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppContainers
                     continue;
                 }
             }
-            return new ContainerAppSourceControlData(id, name, type, systemData.Value, Optional.ToNullable(operationState), repoUrl.Value, branch.Value, gitHubActionConfiguration.Value);
+            return new ContainerAppSourceControlData(id, name, type, systemData.Value, Core.Optional.ToNullable(operationState), repoUrl.Value, branch.Value, gitHubActionConfiguration.Value);
         }
     }
 }

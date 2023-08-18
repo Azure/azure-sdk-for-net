@@ -19,15 +19,15 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> billingPeriodId = default;
-            Optional<Guid> meterId = default;
-            Optional<ConsumptionMeterDetails> meterDetails = default;
-            Optional<string> unitOfMeasure = default;
-            Optional<decimal> includedQuantity = default;
-            Optional<string> partNumber = default;
-            Optional<decimal> unitPrice = default;
-            Optional<string> currencyCode = default;
-            Optional<string> offerId = default;
+            Core.Optional<ResourceIdentifier> billingPeriodId = default;
+            Core.Optional<Guid> meterId = default;
+            Core.Optional<ConsumptionMeterDetails> meterDetails = default;
+            Core.Optional<string> unitOfMeasure = default;
+            Core.Optional<decimal> includedQuantity = default;
+            Core.Optional<string> partNumber = default;
+            Core.Optional<decimal> unitPrice = default;
+            Core.Optional<string> currencyCode = default;
+            Core.Optional<string> offerId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("billingPeriodId"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new PriceSheetProperties(billingPeriodId.Value, Optional.ToNullable(meterId), meterDetails.Value, unitOfMeasure.Value, Optional.ToNullable(includedQuantity), partNumber.Value, Optional.ToNullable(unitPrice), currencyCode.Value, offerId.Value);
+            return new PriceSheetProperties(billingPeriodId.Value, Core.Optional.ToNullable(meterId), meterDetails.Value, unitOfMeasure.Value, Core.Optional.ToNullable(includedQuantity), partNumber.Value, Core.Optional.ToNullable(unitPrice), currencyCode.Value, offerId.Value);
         }
     }
 }

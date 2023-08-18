@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryTimerTriggerDescriptor : IUtf8JsonSerializable
+    public partial class ContainerRegistryTimerTriggerDescriptor : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TimerTriggerName))
+            if (Core.Optional.IsDefined(TimerTriggerName))
             {
                 writer.WritePropertyName("timerTriggerName"u8);
                 writer.WriteStringValue(TimerTriggerName);
             }
-            if (Optional.IsDefined(ScheduleOccurrence))
+            if (Core.Optional.IsDefined(ScheduleOccurrence))
             {
                 writer.WritePropertyName("scheduleOccurrence"u8);
                 writer.WriteStringValue(ScheduleOccurrence);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<string> timerTriggerName = default;
-            Optional<string> scheduleOccurrence = default;
+            Core.Optional<string> timerTriggerName = default;
+            Core.Optional<string> scheduleOccurrence = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timerTriggerName"u8))

@@ -10,47 +10,47 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class VirtualDiskUpdate : IUtf8JsonSerializable
+    public partial class VirtualDiskUpdate : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DiskSizeGB))
+            if (Core.Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (Optional.IsDefined(DeviceKey))
+            if (Core.Optional.IsDefined(DeviceKey))
             {
                 writer.WritePropertyName("deviceKey"u8);
                 writer.WriteNumberValue(DeviceKey.Value);
             }
-            if (Optional.IsDefined(DiskMode))
+            if (Core.Optional.IsDefined(DiskMode))
             {
                 writer.WritePropertyName("diskMode"u8);
                 writer.WriteStringValue(DiskMode.Value.ToString());
             }
-            if (Optional.IsDefined(ControllerKey))
+            if (Core.Optional.IsDefined(ControllerKey))
             {
                 writer.WritePropertyName("controllerKey"u8);
                 writer.WriteNumberValue(ControllerKey.Value);
             }
-            if (Optional.IsDefined(UnitNumber))
+            if (Core.Optional.IsDefined(UnitNumber))
             {
                 writer.WritePropertyName("unitNumber"u8);
                 writer.WriteNumberValue(UnitNumber.Value);
             }
-            if (Optional.IsDefined(DeviceName))
+            if (Core.Optional.IsDefined(DeviceName))
             {
                 writer.WritePropertyName("deviceName"u8);
                 writer.WriteStringValue(DeviceName);
             }
-            if (Optional.IsDefined(DiskType))
+            if (Core.Optional.IsDefined(DiskType))
             {
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());

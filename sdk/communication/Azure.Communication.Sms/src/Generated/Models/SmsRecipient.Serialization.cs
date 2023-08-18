@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.Communication.Sms.Models
 {
-    internal partial class SmsRecipient : IUtf8JsonSerializable
+    internal partial class SmsRecipient : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("to"u8);
             writer.WriteStringValue(To);
-            if (Optional.IsDefined(RepeatabilityRequestId))
+            if (Core.Optional.IsDefined(RepeatabilityRequestId))
             {
                 writer.WritePropertyName("repeatabilityRequestId"u8);
                 writer.WriteStringValue(RepeatabilityRequestId);
             }
-            if (Optional.IsDefined(RepeatabilityFirstSent))
+            if (Core.Optional.IsDefined(RepeatabilityFirstSent))
             {
                 writer.WritePropertyName("repeatabilityFirstSent"u8);
                 writer.WriteStringValue(RepeatabilityFirstSent);

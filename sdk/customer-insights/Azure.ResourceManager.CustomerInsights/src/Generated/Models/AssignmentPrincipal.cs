@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
             PrincipalId = principalId;
             PrincipalType = principalType;
-            PrincipalMetadata = new ChangeTrackingDictionary<string, string>();
+            PrincipalMetadata = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of AssignmentPrincipal. </summary>

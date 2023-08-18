@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of CloudServiceNetworkProfile. </summary>
         public CloudServiceNetworkProfile()
         {
-            LoadBalancerConfigurations = new ChangeTrackingList<CloudServiceLoadBalancerConfiguration>();
+            LoadBalancerConfigurations = new Core.ChangeTrackingList<CloudServiceLoadBalancerConfiguration>();
         }
 
         /// <summary> Initializes a new instance of CloudServiceNetworkProfile. </summary>

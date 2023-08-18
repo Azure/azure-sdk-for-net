@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class ExportRecurrencePeriod : IUtf8JsonSerializable
+    public partial class ExportRecurrencePeriod : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("from"u8);
             writer.WriteStringValue(From, "O");
-            if (Optional.IsDefined(To))
+            if (Core.Optional.IsDefined(To))
             {
                 writer.WritePropertyName("to"u8);
                 writer.WriteStringValue(To.Value, "O");
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 return null;
             }
             DateTimeOffset @from = default;
-            Optional<DateTimeOffset> to = default;
+            Core.Optional<DateTimeOffset> to = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("from"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new ExportRecurrencePeriod(@from, Optional.ToNullable(to));
+            return new ExportRecurrencePeriod(@from, Core.Optional.ToNullable(to));
         }
     }
 }

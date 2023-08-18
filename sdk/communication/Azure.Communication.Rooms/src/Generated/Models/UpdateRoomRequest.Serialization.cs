@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Communication.Rooms
 {
-    internal partial class UpdateRoomRequest : IUtf8JsonSerializable
+    internal partial class UpdateRoomRequest : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ValidFrom))
+            if (Core.Optional.IsDefined(ValidFrom))
             {
                 writer.WritePropertyName("validFrom"u8);
                 writer.WriteStringValue(ValidFrom.Value, "O");
             }
-            if (Optional.IsDefined(ValidUntil))
+            if (Core.Optional.IsDefined(ValidUntil))
             {
                 writer.WritePropertyName("validUntil"u8);
                 writer.WriteStringValue(ValidUntil.Value, "O");

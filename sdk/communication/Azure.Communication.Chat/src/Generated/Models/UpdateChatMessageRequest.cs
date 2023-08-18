@@ -16,7 +16,7 @@ namespace Azure.Communication.Chat
         /// <summary> Initializes a new instance of UpdateChatMessageRequest. </summary>
         public UpdateChatMessageRequest()
         {
-            Metadata = new ChangeTrackingDictionary<string, string>();
+            Metadata = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Chat message content. </summary>

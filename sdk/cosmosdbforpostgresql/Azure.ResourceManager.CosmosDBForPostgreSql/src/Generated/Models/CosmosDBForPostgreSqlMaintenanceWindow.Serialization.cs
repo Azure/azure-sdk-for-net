@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
-    public partial class CosmosDBForPostgreSqlMaintenanceWindow : IUtf8JsonSerializable
+    public partial class CosmosDBForPostgreSqlMaintenanceWindow : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomWindow))
+            if (Core.Optional.IsDefined(CustomWindow))
             {
                 writer.WritePropertyName("customWindow"u8);
                 writer.WriteStringValue(CustomWindow);
             }
-            if (Optional.IsDefined(StartHour))
+            if (Core.Optional.IsDefined(StartHour))
             {
                 writer.WritePropertyName("startHour"u8);
                 writer.WriteNumberValue(StartHour.Value);
             }
-            if (Optional.IsDefined(StartMinute))
+            if (Core.Optional.IsDefined(StartMinute))
             {
                 writer.WritePropertyName("startMinute"u8);
                 writer.WriteNumberValue(StartMinute.Value);
             }
-            if (Optional.IsDefined(DayOfWeek))
+            if (Core.Optional.IsDefined(DayOfWeek))
             {
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteNumberValue(DayOfWeek.Value);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             {
                 return null;
             }
-            Optional<string> customWindow = default;
-            Optional<int> startHour = default;
-            Optional<int> startMinute = default;
-            Optional<int> dayOfWeek = default;
+            Core.Optional<string> customWindow = default;
+            Core.Optional<int> startHour = default;
+            Core.Optional<int> startMinute = default;
+            Core.Optional<int> dayOfWeek = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customWindow"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     continue;
                 }
             }
-            return new CosmosDBForPostgreSqlMaintenanceWindow(customWindow.Value, Optional.ToNullable(startHour), Optional.ToNullable(startMinute), Optional.ToNullable(dayOfWeek));
+            return new CosmosDBForPostgreSqlMaintenanceWindow(customWindow.Value, Core.Optional.ToNullable(startHour), Core.Optional.ToNullable(startMinute), Core.Optional.ToNullable(dayOfWeek));
         }
     }
 }

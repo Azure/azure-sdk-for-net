@@ -12,40 +12,40 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    public partial class DataBoxEdgeStorageAccountCredentialData : IUtf8JsonSerializable
+    public partial class DataBoxEdgeStorageAccountCredentialData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("alias"u8);
             writer.WriteStringValue(Alias);
-            if (Optional.IsDefined(UserName))
+            if (Core.Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Optional.IsDefined(AccountKey))
+            if (Core.Optional.IsDefined(AccountKey))
             {
                 writer.WritePropertyName("accountKey"u8);
                 writer.WriteObjectValue(AccountKey);
             }
-            if (Optional.IsDefined(ConnectionString))
+            if (Core.Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
             writer.WritePropertyName("sslStatus"u8);
             writer.WriteStringValue(SslStatus.ToString());
-            if (Optional.IsDefined(BlobDomainName))
+            if (Core.Optional.IsDefined(BlobDomainName))
             {
                 writer.WritePropertyName("blobDomainName"u8);
                 writer.WriteStringValue(BlobDomainName);
             }
             writer.WritePropertyName("accountType"u8);
             writer.WriteStringValue(AccountType.ToString());
-            if (Optional.IsDefined(StorageAccountId))
+            if (Core.Optional.IsDefined(StorageAccountId))
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
@@ -63,15 +63,15 @@ namespace Azure.ResourceManager.DataBoxEdge
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             string @alias = default;
-            Optional<string> userName = default;
-            Optional<AsymmetricEncryptedSecret> accountKey = default;
-            Optional<string> connectionString = default;
+            Core.Optional<string> userName = default;
+            Core.Optional<AsymmetricEncryptedSecret> accountKey = default;
+            Core.Optional<string> connectionString = default;
             DataBoxEdgeStorageAccountSslStatus sslStatus = default;
-            Optional<string> blobDomainName = default;
+            Core.Optional<string> blobDomainName = default;
             DataBoxEdgeStorageAccountType accountType = default;
-            Optional<ResourceIdentifier> storageAccountId = default;
+            Core.Optional<ResourceIdentifier> storageAccountId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

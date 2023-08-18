@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GalleryArtifactSafetyProfileBase : IUtf8JsonSerializable
+    public partial class GalleryArtifactSafetyProfileBase : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AllowDeletionOfReplicatedLocations))
+            if (Core.Optional.IsDefined(AllowDeletionOfReplicatedLocations))
             {
                 writer.WritePropertyName("allowDeletionOfReplicatedLocations"u8);
                 writer.WriteBooleanValue(AllowDeletionOfReplicatedLocations.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> allowDeletionOfReplicatedLocations = default;
+            Core.Optional<bool> allowDeletionOfReplicatedLocations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowDeletionOfReplicatedLocations"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new GalleryArtifactSafetyProfileBase(Optional.ToNullable(allowDeletionOfReplicatedLocations));
+            return new GalleryArtifactSafetyProfileBase(Core.Optional.ToNullable(allowDeletionOfReplicatedLocations));
         }
     }
 }

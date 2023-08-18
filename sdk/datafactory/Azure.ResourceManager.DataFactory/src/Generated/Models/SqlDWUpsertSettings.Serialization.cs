@@ -12,17 +12,17 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SqlDWUpsertSettings : IUtf8JsonSerializable
+    public partial class SqlDWUpsertSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(InterimSchemaName))
+            if (Core.Optional.IsDefined(InterimSchemaName))
             {
                 writer.WritePropertyName("interimSchemaName"u8);
                 JsonSerializer.Serialize(writer, InterimSchemaName);
             }
-            if (Optional.IsDefined(Keys))
+            if (Core.Optional.IsDefined(Keys))
             {
                 writer.WritePropertyName("keys"u8);
                 JsonSerializer.Serialize(writer, Keys);
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> interimSchemaName = default;
-            Optional<DataFactoryElement<IList<string>>> keys = default;
+            Core.Optional<DataFactoryElement<string>> interimSchemaName = default;
+            Core.Optional<DataFactoryElement<IList<string>>> keys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("interimSchemaName"u8))

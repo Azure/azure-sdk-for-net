@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cosmosDBSqlDatabaseSqlResourcesRestClient.CreateUpdateSqlDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CosmosDBSqlDatabaseResource>(new CosmosDBSqlDatabaseOperationSource(Client), _cosmosDBSqlDatabaseSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlDatabaseSqlResourcesRestClient.CreateCreateUpdateSqlDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CosmosDBSqlDatabaseResource>(new CosmosDBSqlDatabaseOperationSource(Client), _cosmosDBSqlDatabaseSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlDatabaseSqlResourcesRestClient.CreateCreateUpdateSqlDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cosmosDBSqlDatabaseSqlResourcesRestClient.CreateUpdateSqlDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<CosmosDBSqlDatabaseResource>(new CosmosDBSqlDatabaseOperationSource(Client), _cosmosDBSqlDatabaseSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlDatabaseSqlResourcesRestClient.CreateCreateUpdateSqlDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CosmosDBSqlDatabaseResource>(new CosmosDBSqlDatabaseOperationSource(Client), _cosmosDBSqlDatabaseSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlDatabaseSqlResourcesRestClient.CreateCreateUpdateSqlDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CosmosDBSqlDatabaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlDatabaseSqlResourcesRestClient.CreateListSqlDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBSqlDatabaseResource(Client, CosmosDBSqlDatabaseData.DeserializeCosmosDBSqlDatabaseData(e)), _cosmosDBSqlDatabaseSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlDatabaseCollection.GetAll", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBSqlDatabaseResource(Client, CosmosDBSqlDatabaseData.DeserializeCosmosDBSqlDatabaseData(e)), _cosmosDBSqlDatabaseSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlDatabaseCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CosmosDBSqlDatabaseResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlDatabaseSqlResourcesRestClient.CreateListSqlDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBSqlDatabaseResource(Client, CosmosDBSqlDatabaseData.DeserializeCosmosDBSqlDatabaseData(e)), _cosmosDBSqlDatabaseSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlDatabaseCollection.GetAll", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBSqlDatabaseResource(Client, CosmosDBSqlDatabaseData.DeserializeCosmosDBSqlDatabaseData(e)), _cosmosDBSqlDatabaseSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlDatabaseCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

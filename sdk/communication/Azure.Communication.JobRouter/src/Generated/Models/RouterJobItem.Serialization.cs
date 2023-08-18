@@ -18,8 +18,8 @@ namespace Azure.Communication.JobRouter.Models
             {
                 return null;
             }
-            Optional<RouterJob> job = default;
-            Optional<string> etag = default;
+            Core.Optional<RouterJob> job = default;
+            Core.Optional<string> etag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("job"u8))

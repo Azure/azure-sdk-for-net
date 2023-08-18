@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of AvailabilitySetPatch. </summary>
         public AvailabilitySetPatch()
         {
-            VirtualMachines = new ChangeTrackingList<WritableSubResource>();
-            Statuses = new ChangeTrackingList<InstanceViewStatus>();
+            VirtualMachines = new Core.ChangeTrackingList<WritableSubResource>();
+            Statuses = new Core.ChangeTrackingList<InstanceViewStatus>();
         }
 
         /// <summary> Sku of the availability set. </summary>

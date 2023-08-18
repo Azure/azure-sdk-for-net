@@ -20,11 +20,11 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<string> number = default;
-            Optional<NumberType> numberType = default;
-            Optional<string> countryCode = default;
-            Optional<IReadOnlyList<string>> programBriefIds = default;
-            Optional<DateTimeOffset> purchaseDate = default;
+            Core.Optional<string> number = default;
+            Core.Optional<NumberType> numberType = default;
+            Core.Optional<string> countryCode = default;
+            Core.Optional<IReadOnlyList<string>> programBriefIds = default;
+            Core.Optional<DateTimeOffset> purchaseDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("number"u8))
@@ -70,7 +70,7 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new ShortCode(number.Value, Optional.ToNullable(numberType), countryCode.Value, Optional.ToList(programBriefIds), Optional.ToNullable(purchaseDate));
+            return new ShortCode(number.Value, Core.Optional.ToNullable(numberType), countryCode.Value, Core.Optional.ToList(programBriefIds), Core.Optional.ToNullable(purchaseDate));
         }
     }
 }

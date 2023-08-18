@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ScriptActivityTypeLogSettings : IUtf8JsonSerializable
+    public partial class ScriptActivityTypeLogSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("logDestination"u8);
             writer.WriteStringValue(LogDestination.ToString());
-            if (Optional.IsDefined(LogLocationSettings))
+            if (Core.Optional.IsDefined(LogLocationSettings))
             {
                 writer.WritePropertyName("logLocationSettings"u8);
                 writer.WriteObjectValue(LogLocationSettings);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             ScriptActivityLogDestination logDestination = default;
-            Optional<LogLocationSettings> logLocationSettings = default;
+            Core.Optional<LogLocationSettings> logLocationSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logDestination"u8))

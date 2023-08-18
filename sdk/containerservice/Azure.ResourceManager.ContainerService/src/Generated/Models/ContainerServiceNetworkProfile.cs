@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of ContainerServiceNetworkProfile. </summary>
         public ContainerServiceNetworkProfile()
         {
-            PodCidrs = new ChangeTrackingList<string>();
-            ServiceCidrs = new ChangeTrackingList<string>();
-            IPFamilies = new ChangeTrackingList<IPFamily>();
+            PodCidrs = new Core.ChangeTrackingList<string>();
+            ServiceCidrs = new Core.ChangeTrackingList<string>();
+            IPFamilies = new Core.ChangeTrackingList<IPFamily>();
         }
 
         /// <summary> Initializes a new instance of ContainerServiceNetworkProfile. </summary>

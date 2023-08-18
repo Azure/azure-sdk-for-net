@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class MongoDBCollectionResourceInfo : IUtf8JsonSerializable
+    public partial class MongoDBCollectionResourceInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(CollectionName);
-            if (Optional.IsCollectionDefined(ShardKey))
+            if (Core.Optional.IsCollectionDefined(ShardKey))
             {
                 writer.WritePropertyName("shardKey"u8);
                 writer.WriteStartObject();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Indexes))
+            if (Core.Optional.IsCollectionDefined(Indexes))
             {
                 writer.WritePropertyName("indexes"u8);
                 writer.WriteStartArray();
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AnalyticalStorageTtl))
+            if (Core.Optional.IsDefined(AnalyticalStorageTtl))
             {
                 writer.WritePropertyName("analyticalStorageTtl"u8);
                 writer.WriteNumberValue(AnalyticalStorageTtl.Value);
             }
-            if (Optional.IsDefined(RestoreParameters))
+            if (Core.Optional.IsDefined(RestoreParameters))
             {
                 writer.WritePropertyName("restoreParameters"u8);
                 writer.WriteObjectValue(RestoreParameters);
             }
-            if (Optional.IsDefined(CreateMode))
+            if (Core.Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string id = default;
-            Optional<IDictionary<string, string>> shardKey = default;
-            Optional<IList<MongoDBIndex>> indexes = default;
-            Optional<int> analyticalStorageTtl = default;
-            Optional<ResourceRestoreParameters> restoreParameters = default;
-            Optional<CosmosDBAccountCreateMode> createMode = default;
+            Core.Optional<IDictionary<string, string>> shardKey = default;
+            Core.Optional<IList<MongoDBIndex>> indexes = default;
+            Core.Optional<int> analyticalStorageTtl = default;
+            Core.Optional<ResourceRestoreParameters> restoreParameters = default;
+            Core.Optional<CosmosDBAccountCreateMode> createMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new MongoDBCollectionResourceInfo(id, Optional.ToDictionary(shardKey), Optional.ToList(indexes), Optional.ToNullable(analyticalStorageTtl), restoreParameters.Value, Optional.ToNullable(createMode));
+            return new MongoDBCollectionResourceInfo(id, Core.Optional.ToDictionary(shardKey), Core.Optional.ToList(indexes), Core.Optional.ToNullable(analyticalStorageTtl), restoreParameters.Value, Core.Optional.ToNullable(createMode));
         }
     }
 }

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class BlobFilterDetails : IUtf8JsonSerializable
+    public partial class BlobFilterDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(BlobPrefixList))
+            if (Core.Optional.IsCollectionDefined(BlobPrefixList))
             {
                 writer.WritePropertyName("blobPrefixList"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(BlobPathList))
+            if (Core.Optional.IsCollectionDefined(BlobPathList))
             {
                 writer.WritePropertyName("blobPathList"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ContainerList))
+            if (Core.Optional.IsCollectionDefined(ContainerList))
             {
                 writer.WritePropertyName("containerList"u8);
                 writer.WriteStartArray();
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<IList<string>> blobPrefixList = default;
-            Optional<IList<string>> blobPathList = default;
-            Optional<IList<string>> containerList = default;
+            Core.Optional<IList<string>> blobPrefixList = default;
+            Core.Optional<IList<string>> blobPathList = default;
+            Core.Optional<IList<string>> containerList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blobPrefixList"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new BlobFilterDetails(Optional.ToList(blobPrefixList), Optional.ToList(blobPathList), Optional.ToList(containerList));
+            return new BlobFilterDetails(Core.Optional.ToList(blobPrefixList), Core.Optional.ToList(blobPathList), Core.Optional.ToList(containerList));
         }
     }
 }

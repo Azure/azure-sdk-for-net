@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
 {
-    public partial class ShortCodeCost : IUtf8JsonSerializable
+    public partial class ShortCodeCost : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("amount"u8);

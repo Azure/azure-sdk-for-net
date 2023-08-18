@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cassandraViewGetResultCassandraResourcesRestClient.CreateUpdateCassandraViewAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, viewName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CassandraViewGetResultResource>(new CassandraViewGetResultOperationSource(Client), _cassandraViewGetResultCassandraResourcesClientDiagnostics, Pipeline, _cassandraViewGetResultCassandraResourcesRestClient.CreateCreateUpdateCassandraViewRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, viewName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CassandraViewGetResultResource>(new CassandraViewGetResultOperationSource(Client), _cassandraViewGetResultCassandraResourcesClientDiagnostics, Pipeline, _cassandraViewGetResultCassandraResourcesRestClient.CreateCreateUpdateCassandraViewRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, viewName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cassandraViewGetResultCassandraResourcesRestClient.CreateUpdateCassandraView(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, viewName, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<CassandraViewGetResultResource>(new CassandraViewGetResultOperationSource(Client), _cassandraViewGetResultCassandraResourcesClientDiagnostics, Pipeline, _cassandraViewGetResultCassandraResourcesRestClient.CreateCreateUpdateCassandraViewRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, viewName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CassandraViewGetResultResource>(new CassandraViewGetResultOperationSource(Client), _cassandraViewGetResultCassandraResourcesClientDiagnostics, Pipeline, _cassandraViewGetResultCassandraResourcesRestClient.CreateCreateUpdateCassandraViewRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, viewName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CassandraViewGetResultResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraViewGetResultCassandraResourcesRestClient.CreateListCassandraViewsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CassandraViewGetResultResource(Client, CassandraViewGetResultData.DeserializeCassandraViewGetResultData(e)), _cassandraViewGetResultCassandraResourcesClientDiagnostics, Pipeline, "CassandraViewGetResultCollection.GetAll", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CassandraViewGetResultResource(Client, CassandraViewGetResultData.DeserializeCassandraViewGetResultData(e)), _cassandraViewGetResultCassandraResourcesClientDiagnostics, Pipeline, "CassandraViewGetResultCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CassandraViewGetResultResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraViewGetResultCassandraResourcesRestClient.CreateListCassandraViewsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CassandraViewGetResultResource(Client, CassandraViewGetResultData.DeserializeCassandraViewGetResultData(e)), _cassandraViewGetResultCassandraResourcesClientDiagnostics, Pipeline, "CassandraViewGetResultCollection.GetAll", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CassandraViewGetResultResource(Client, CassandraViewGetResultData.DeserializeCassandraViewGetResultData(e)), _cassandraViewGetResultCassandraResourcesClientDiagnostics, Pipeline, "CassandraViewGetResultCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

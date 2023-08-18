@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of DataBoxAccountCredentialDetails. </summary>
         internal DataBoxAccountCredentialDetails()
         {
-            ShareCredentialDetails = new ChangeTrackingList<ShareCredentialDetails>();
+            ShareCredentialDetails = new Core.ChangeTrackingList<ShareCredentialDetails>();
         }
 
         /// <summary> Initializes a new instance of DataBoxAccountCredentialDetails. </summary>

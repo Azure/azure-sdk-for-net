@@ -13,17 +13,17 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SynapseSparkJobDefinitionActivity : IUtf8JsonSerializable
+    public partial class SynapseSparkJobDefinitionActivity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedServiceName))
+            if (Core.Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 JsonSerializer.Serialize(writer, LinkedServiceName);
             }
-            if (Optional.IsDefined(Policy))
+            if (Core.Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -32,22 +32,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(OnInactiveMarkAs))
+            if (Core.Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (Core.Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserProperties))
+            if (Core.Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("sparkJob"u8);
             writer.WriteObjectValue(SparkJob);
-            if (Optional.IsCollectionDefined(Arguments))
+            if (Core.Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("args"u8);
                 writer.WriteStartArray();
@@ -90,22 +90,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(File))
+            if (Core.Optional.IsDefined(File))
             {
                 writer.WritePropertyName("file"u8);
                 JsonSerializer.Serialize(writer, File);
             }
-            if (Optional.IsDefined(ScanFolder))
+            if (Core.Optional.IsDefined(ScanFolder))
             {
                 writer.WritePropertyName("scanFolder"u8);
                 JsonSerializer.Serialize(writer, ScanFolder);
             }
-            if (Optional.IsDefined(ClassName))
+            if (Core.Optional.IsDefined(ClassName))
             {
                 writer.WritePropertyName("className"u8);
                 JsonSerializer.Serialize(writer, ClassName);
             }
-            if (Optional.IsCollectionDefined(Files))
+            if (Core.Optional.IsCollectionDefined(Files))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PythonCodeReference))
+            if (Core.Optional.IsCollectionDefined(PythonCodeReference))
             {
                 writer.WritePropertyName("pythonCodeReference"u8);
                 writer.WriteStartArray();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FilesV2))
+            if (Core.Optional.IsCollectionDefined(FilesV2))
             {
                 writer.WritePropertyName("filesV2"u8);
                 writer.WriteStartArray();
@@ -162,17 +162,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TargetBigDataPool))
+            if (Core.Optional.IsDefined(TargetBigDataPool))
             {
                 writer.WritePropertyName("targetBigDataPool"u8);
                 writer.WriteObjectValue(TargetBigDataPool);
             }
-            if (Optional.IsDefined(ExecutorSize))
+            if (Core.Optional.IsDefined(ExecutorSize))
             {
                 writer.WritePropertyName("executorSize"u8);
                 JsonSerializer.Serialize(writer, ExecutorSize);
             }
-            if (Optional.IsDefined(Conf))
+            if (Core.Optional.IsDefined(Conf))
             {
                 writer.WritePropertyName("conf"u8);
 #if NET6_0_OR_GREATER
@@ -181,27 +181,27 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Conf.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(DriverSize))
+            if (Core.Optional.IsDefined(DriverSize))
             {
                 writer.WritePropertyName("driverSize"u8);
                 JsonSerializer.Serialize(writer, DriverSize);
             }
-            if (Optional.IsDefined(NumExecutors))
+            if (Core.Optional.IsDefined(NumExecutors))
             {
                 writer.WritePropertyName("numExecutors"u8);
                 JsonSerializer.Serialize(writer, NumExecutors);
             }
-            if (Optional.IsDefined(ConfigurationType))
+            if (Core.Optional.IsDefined(ConfigurationType))
             {
                 writer.WritePropertyName("configurationType"u8);
                 writer.WriteStringValue(ConfigurationType.Value.ToString());
             }
-            if (Optional.IsDefined(TargetSparkConfiguration))
+            if (Core.Optional.IsDefined(TargetSparkConfiguration))
             {
                 writer.WritePropertyName("targetSparkConfiguration"u8);
                 writer.WriteObjectValue(TargetSparkConfiguration);
             }
-            if (Optional.IsCollectionDefined(SparkConfig))
+            if (Core.Optional.IsCollectionDefined(SparkConfig))
             {
                 writer.WritePropertyName("sparkConfig"u8);
                 writer.WriteStartObject();
@@ -240,31 +240,31 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<PipelineActivityPolicy> policy = default;
+            Core.Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
+            Core.Optional<PipelineActivityPolicy> policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            Core.Optional<string> description = default;
+            Core.Optional<PipelineActivityState> state = default;
+            Core.Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            Core.Optional<IList<PipelineActivityDependency>> dependsOn = default;
+            Core.Optional<IList<PipelineActivityUserProperty>> userProperties = default;
             SynapseSparkJobReference sparkJob = default;
-            Optional<IList<BinaryData>> args = default;
-            Optional<DataFactoryElement<string>> file = default;
-            Optional<DataFactoryElement<bool>> scanFolder = default;
-            Optional<DataFactoryElement<string>> className = default;
-            Optional<IList<BinaryData>> files = default;
-            Optional<IList<BinaryData>> pythonCodeReference = default;
-            Optional<IList<BinaryData>> filesV2 = default;
-            Optional<BigDataPoolParametrizationReference> targetBigDataPool = default;
-            Optional<DataFactoryElement<string>> executorSize = default;
-            Optional<BinaryData> conf = default;
-            Optional<DataFactoryElement<string>> driverSize = default;
-            Optional<DataFactoryElement<int>> numExecutors = default;
-            Optional<DataFactorySparkConfigurationType> configurationType = default;
-            Optional<SparkConfigurationParametrizationReference> targetSparkConfiguration = default;
-            Optional<IDictionary<string, BinaryData>> sparkConfig = default;
+            Core.Optional<IList<BinaryData>> args = default;
+            Core.Optional<DataFactoryElement<string>> file = default;
+            Core.Optional<DataFactoryElement<bool>> scanFolder = default;
+            Core.Optional<DataFactoryElement<string>> className = default;
+            Core.Optional<IList<BinaryData>> files = default;
+            Core.Optional<IList<BinaryData>> pythonCodeReference = default;
+            Core.Optional<IList<BinaryData>> filesV2 = default;
+            Core.Optional<BigDataPoolParametrizationReference> targetBigDataPool = default;
+            Core.Optional<DataFactoryElement<string>> executorSize = default;
+            Core.Optional<BinaryData> conf = default;
+            Core.Optional<DataFactoryElement<string>> driverSize = default;
+            Core.Optional<DataFactoryElement<int>> numExecutors = default;
+            Core.Optional<DataFactorySparkConfigurationType> configurationType = default;
+            Core.Optional<SparkConfigurationParametrizationReference> targetSparkConfiguration = default;
+            Core.Optional<IDictionary<string, BinaryData>> sparkConfig = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseSparkJobDefinitionActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, sparkJob, Optional.ToList(args), file.Value, scanFolder.Value, className.Value, Optional.ToList(files), Optional.ToList(pythonCodeReference), Optional.ToList(filesV2), targetBigDataPool.Value, executorSize.Value, conf.Value, driverSize.Value, numExecutors.Value, Optional.ToNullable(configurationType), targetSparkConfiguration.Value, Optional.ToDictionary(sparkConfig));
+            return new SynapseSparkJobDefinitionActivity(name, type, description.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(onInactiveMarkAs), Core.Optional.ToList(dependsOn), Core.Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, sparkJob, Core.Optional.ToList(args), file.Value, scanFolder.Value, className.Value, Core.Optional.ToList(files), Core.Optional.ToList(pythonCodeReference), Core.Optional.ToList(filesV2), targetBigDataPool.Value, executorSize.Value, conf.Value, driverSize.Value, numExecutors.Value, Core.Optional.ToNullable(configurationType), targetSparkConfiguration.Value, Core.Optional.ToDictionary(sparkConfig));
         }
     }
 }

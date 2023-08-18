@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class PeriodicModeBackupPolicy : IUtf8JsonSerializable
+    public partial class PeriodicModeBackupPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PeriodicModeProperties))
+            if (Core.Optional.IsDefined(PeriodicModeProperties))
             {
                 writer.WritePropertyName("periodicModeProperties"u8);
                 writer.WriteObjectValue(PeriodicModeProperties);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(BackupPolicyType.ToString());
-            if (Optional.IsDefined(MigrationState))
+            if (Core.Optional.IsDefined(MigrationState))
             {
                 writer.WritePropertyName("migrationState"u8);
                 writer.WriteObjectValue(MigrationState);
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<PeriodicModeProperties> periodicModeProperties = default;
+            Core.Optional<PeriodicModeProperties> periodicModeProperties = default;
             BackupPolicyType type = default;
-            Optional<BackupPolicyMigrationState> migrationState = default;
+            Core.Optional<BackupPolicyMigrationState> migrationState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("periodicModeProperties"u8))

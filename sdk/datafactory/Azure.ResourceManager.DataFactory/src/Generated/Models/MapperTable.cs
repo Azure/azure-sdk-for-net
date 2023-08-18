@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of MapperTable. </summary>
         public MapperTable()
         {
-            Schema = new ChangeTrackingList<MapperTableSchema>();
-            DslConnectorProperties = new ChangeTrackingList<MapperDslConnectorProperties>();
+            Schema = new Core.ChangeTrackingList<MapperTableSchema>();
+            DslConnectorProperties = new Core.ChangeTrackingList<MapperDslConnectorProperties>();
         }
 
         /// <summary> Initializes a new instance of MapperTable. </summary>

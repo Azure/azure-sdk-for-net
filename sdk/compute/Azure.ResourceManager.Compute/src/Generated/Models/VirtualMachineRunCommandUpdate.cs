@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineRunCommandUpdate. </summary>
         public VirtualMachineRunCommandUpdate()
         {
-            Parameters = new ChangeTrackingList<RunCommandInputParameter>();
-            ProtectedParameters = new ChangeTrackingList<RunCommandInputParameter>();
+            Parameters = new Core.ChangeTrackingList<RunCommandInputParameter>();
+            ProtectedParameters = new Core.ChangeTrackingList<RunCommandInputParameter>();
         }
 
         /// <summary> The source of the run command script. </summary>

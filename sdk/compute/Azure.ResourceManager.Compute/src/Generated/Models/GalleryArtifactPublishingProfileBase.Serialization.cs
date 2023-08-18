@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GalleryArtifactPublishingProfileBase : IUtf8JsonSerializable
+    public partial class GalleryArtifactPublishingProfileBase : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TargetRegions))
+            if (Core.Optional.IsCollectionDefined(TargetRegions))
             {
                 writer.WritePropertyName("targetRegions"u8);
                 writer.WriteStartArray();
@@ -27,32 +27,32 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ReplicaCount))
+            if (Core.Optional.IsDefined(ReplicaCount))
             {
                 writer.WritePropertyName("replicaCount"u8);
                 writer.WriteNumberValue(ReplicaCount.Value);
             }
-            if (Optional.IsDefined(IsExcludedFromLatest))
+            if (Core.Optional.IsDefined(IsExcludedFromLatest))
             {
                 writer.WritePropertyName("excludeFromLatest"u8);
                 writer.WriteBooleanValue(IsExcludedFromLatest.Value);
             }
-            if (Optional.IsDefined(EndOfLifeOn))
+            if (Core.Optional.IsDefined(EndOfLifeOn))
             {
                 writer.WritePropertyName("endOfLifeDate"u8);
                 writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
-            if (Optional.IsDefined(StorageAccountType))
+            if (Core.Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
             }
-            if (Optional.IsDefined(ReplicationMode))
+            if (Core.Optional.IsDefined(ReplicationMode))
             {
                 writer.WritePropertyName("replicationMode"u8);
                 writer.WriteStringValue(ReplicationMode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(TargetExtendedLocations))
+            if (Core.Optional.IsCollectionDefined(TargetExtendedLocations))
             {
                 writer.WritePropertyName("targetExtendedLocations"u8);
                 writer.WriteStartArray();
@@ -71,14 +71,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<TargetRegion>> targetRegions = default;
-            Optional<int> replicaCount = default;
-            Optional<bool> excludeFromLatest = default;
-            Optional<DateTimeOffset> publishedDate = default;
-            Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<ImageStorageAccountType> storageAccountType = default;
-            Optional<GalleryReplicationMode> replicationMode = default;
-            Optional<IList<GalleryTargetExtendedLocation>> targetExtendedLocations = default;
+            Core.Optional<IList<TargetRegion>> targetRegions = default;
+            Core.Optional<int> replicaCount = default;
+            Core.Optional<bool> excludeFromLatest = default;
+            Core.Optional<DateTimeOffset> publishedDate = default;
+            Core.Optional<DateTimeOffset> endOfLifeDate = default;
+            Core.Optional<ImageStorageAccountType> storageAccountType = default;
+            Core.Optional<GalleryReplicationMode> replicationMode = default;
+            Core.Optional<IList<GalleryTargetExtendedLocation>> targetExtendedLocations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetRegions"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new GalleryArtifactPublishingProfileBase(Optional.ToList(targetRegions), Optional.ToNullable(replicaCount), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(storageAccountType), Optional.ToNullable(replicationMode), Optional.ToList(targetExtendedLocations));
+            return new GalleryArtifactPublishingProfileBase(Core.Optional.ToList(targetRegions), Core.Optional.ToNullable(replicaCount), Core.Optional.ToNullable(excludeFromLatest), Core.Optional.ToNullable(publishedDate), Core.Optional.ToNullable(endOfLifeDate), Core.Optional.ToNullable(storageAccountType), Core.Optional.ToNullable(replicationMode), Core.Optional.ToList(targetExtendedLocations));
         }
     }
 }

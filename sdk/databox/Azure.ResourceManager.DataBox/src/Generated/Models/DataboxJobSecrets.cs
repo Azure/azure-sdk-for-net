@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of DataboxJobSecrets. </summary>
         internal DataboxJobSecrets()
         {
-            PodSecrets = new ChangeTrackingList<DataBoxSecret>();
+            PodSecrets = new Core.ChangeTrackingList<DataBoxSecret>();
             JobSecretsType = DataBoxOrderType.DataBox;
         }
 

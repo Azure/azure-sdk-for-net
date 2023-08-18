@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
-            Optional<ResourceType> type = default;
-            Optional<string> uniqueId = default;
+            Core.Optional<string> name = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<ResourceType> type = default;
+            Core.Optional<string> uniqueId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new PirCommunityGalleryResourceData(name.Value, Optional.ToNullable(location), Optional.ToNullable(type), uniqueId.Value);
+            return new PirCommunityGalleryResourceData(name.Value, Core.Optional.ToNullable(location), Core.Optional.ToNullable(type), uniqueId.Value);
         }
     }
 }

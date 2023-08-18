@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBServiceCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class CosmosDBServiceCreateOrUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(InstanceSize))
+            if (Core.Optional.IsDefined(InstanceSize))
             {
                 writer.WritePropertyName("instanceSize"u8);
                 writer.WriteStringValue(InstanceSize.Value.ToString());
             }
-            if (Optional.IsDefined(InstanceCount))
+            if (Core.Optional.IsDefined(InstanceCount))
             {
                 writer.WritePropertyName("instanceCount"u8);
                 writer.WriteNumberValue(InstanceCount.Value);
             }
-            if (Optional.IsDefined(ServiceType))
+            if (Core.Optional.IsDefined(ServiceType))
             {
                 writer.WritePropertyName("serviceType"u8);
                 writer.WriteStringValue(ServiceType.Value.ToString());

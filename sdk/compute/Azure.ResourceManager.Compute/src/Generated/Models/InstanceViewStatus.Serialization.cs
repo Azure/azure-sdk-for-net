@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class InstanceViewStatus : IUtf8JsonSerializable
+    public partial class InstanceViewStatus : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Code))
+            if (Core.Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Optional.IsDefined(Level))
+            if (Core.Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToSerialString());
             }
-            if (Optional.IsDefined(DisplayStatus))
+            if (Core.Optional.IsDefined(DisplayStatus))
             {
                 writer.WritePropertyName("displayStatus"u8);
                 writer.WriteStringValue(DisplayStatus);
             }
-            if (Optional.IsDefined(Message))
+            if (Core.Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(Time))
+            if (Core.Optional.IsDefined(Time))
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time.Value, "O");
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<ComputeStatusLevelType> level = default;
-            Optional<string> displayStatus = default;
-            Optional<string> message = default;
-            Optional<DateTimeOffset> time = default;
+            Core.Optional<string> code = default;
+            Core.Optional<ComputeStatusLevelType> level = default;
+            Core.Optional<string> displayStatus = default;
+            Core.Optional<string> message = default;
+            Core.Optional<DateTimeOffset> time = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new InstanceViewStatus(code.Value, Optional.ToNullable(level), displayStatus.Value, message.Value, Optional.ToNullable(time));
+            return new InstanceViewStatus(code.Value, Core.Optional.ToNullable(level), displayStatus.Value, message.Value, Core.Optional.ToNullable(time));
         }
     }
 }

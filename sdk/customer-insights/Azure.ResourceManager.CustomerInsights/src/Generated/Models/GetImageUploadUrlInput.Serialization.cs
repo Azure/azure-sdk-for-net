@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class GetImageUploadUrlInput : IUtf8JsonSerializable
+    public partial class GetImageUploadUrlInput : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EntityType))
+            if (Core.Optional.IsDefined(EntityType))
             {
                 writer.WritePropertyName("entityType"u8);
                 writer.WriteStringValue(EntityType);
             }
-            if (Optional.IsDefined(EntityTypeName))
+            if (Core.Optional.IsDefined(EntityTypeName))
             {
                 writer.WritePropertyName("entityTypeName"u8);
                 writer.WriteStringValue(EntityTypeName);
             }
-            if (Optional.IsDefined(RelativePath))
+            if (Core.Optional.IsDefined(RelativePath))
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);

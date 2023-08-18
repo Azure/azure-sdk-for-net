@@ -14,15 +14,15 @@ using Azure.ResourceManager.CostManagement.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
-    internal class BenefitUtilizationSummariesOperationStatusOperationSource : IOperationSource<BenefitUtilizationSummariesOperationStatus>
+    internal class BenefitUtilizationSummariesOperationStatusOperationSource : Core.IOperationSource<BenefitUtilizationSummariesOperationStatus>
     {
-        BenefitUtilizationSummariesOperationStatus IOperationSource<BenefitUtilizationSummariesOperationStatus>.CreateResult(Response response, CancellationToken cancellationToken)
+        BenefitUtilizationSummariesOperationStatus Core.IOperationSource<BenefitUtilizationSummariesOperationStatus>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return BenefitUtilizationSummariesOperationStatus.DeserializeBenefitUtilizationSummariesOperationStatus(document.RootElement);
         }
 
-        async ValueTask<BenefitUtilizationSummariesOperationStatus> IOperationSource<BenefitUtilizationSummariesOperationStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<BenefitUtilizationSummariesOperationStatus> Core.IOperationSource<BenefitUtilizationSummariesOperationStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return BenefitUtilizationSummariesOperationStatus.DeserializeBenefitUtilizationSummariesOperationStatus(document.RootElement);

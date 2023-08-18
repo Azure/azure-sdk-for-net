@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppIPSecurityRestrictionRule : IUtf8JsonSerializable
+    public partial class ContainerAppIPSecurityRestrictionRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             string name = default;
-            Optional<string> description = default;
+            Core.Optional<string> description = default;
             string ipAddressRange = default;
             ContainerAppIPRuleAction action = default;
             foreach (var property in element.EnumerateObject())

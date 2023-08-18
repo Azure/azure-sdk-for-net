@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <summary> Initializes a new instance of MachineExtensionsListResult. </summary>
         internal MachineExtensionsListResult()
         {
-            Value = new ChangeTrackingList<MachineExtensionData>();
+            Value = new Core.ChangeTrackingList<MachineExtensionData>();
         }
 
         /// <summary> Initializes a new instance of MachineExtensionsListResult. </summary>

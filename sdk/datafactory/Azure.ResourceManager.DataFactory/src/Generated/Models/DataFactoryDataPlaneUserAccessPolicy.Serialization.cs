@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryDataPlaneUserAccessPolicy : IUtf8JsonSerializable
+    public partial class DataFactoryDataPlaneUserAccessPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Permissions))
+            if (Core.Optional.IsDefined(Permissions))
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStringValue(Permissions);
             }
-            if (Optional.IsDefined(AccessResourcePath))
+            if (Core.Optional.IsDefined(AccessResourcePath))
             {
                 writer.WritePropertyName("accessResourcePath"u8);
                 writer.WriteStringValue(AccessResourcePath);
             }
-            if (Optional.IsDefined(ProfileName))
+            if (Core.Optional.IsDefined(ProfileName))
             {
                 writer.WritePropertyName("profileName"u8);
                 writer.WriteStringValue(ProfileName);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Core.Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (Core.Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expireTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> permissions = default;
-            Optional<string> accessResourcePath = default;
-            Optional<string> profileName = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> expireTime = default;
+            Core.Optional<string> permissions = default;
+            Core.Optional<string> accessResourcePath = default;
+            Core.Optional<string> profileName = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> expireTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("permissions"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new DataFactoryDataPlaneUserAccessPolicy(permissions.Value, accessResourcePath.Value, profileName.Value, Optional.ToNullable(startTime), Optional.ToNullable(expireTime));
+            return new DataFactoryDataPlaneUserAccessPolicy(permissions.Value, accessResourcePath.Value, profileName.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(expireTime));
         }
     }
 }

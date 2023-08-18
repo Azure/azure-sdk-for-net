@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<string> interactionName = default;
-            Optional<IReadOnlyList<RelationshipsLookup>> suggestedRelationships = default;
+            Core.Optional<string> interactionName = default;
+            Core.Optional<IReadOnlyList<RelationshipsLookup>> suggestedRelationships = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("interactionName"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new SuggestRelationshipLinksResponse(interactionName.Value, Optional.ToList(suggestedRelationships));
+            return new SuggestRelationshipLinksResponse(interactionName.Value, Core.Optional.ToList(suggestedRelationships));
         }
     }
 }

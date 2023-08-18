@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppTemplate. </summary>
         public ContainerAppTemplate()
         {
-            InitContainers = new ChangeTrackingList<ContainerAppInitContainer>();
-            Containers = new ChangeTrackingList<ContainerAppContainer>();
-            Volumes = new ChangeTrackingList<ContainerAppVolume>();
-            ServiceBinds = new ChangeTrackingList<ContainerAppServiceBind>();
+            InitContainers = new Core.ChangeTrackingList<ContainerAppInitContainer>();
+            Containers = new Core.ChangeTrackingList<ContainerAppContainer>();
+            Volumes = new Core.ChangeTrackingList<ContainerAppVolume>();
+            ServiceBinds = new Core.ChangeTrackingList<ContainerAppServiceBind>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppTemplate. </summary>

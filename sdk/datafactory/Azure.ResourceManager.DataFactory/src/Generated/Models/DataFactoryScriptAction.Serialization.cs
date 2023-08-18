@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryScriptAction : IUtf8JsonSerializable
+    public partial class DataFactoryScriptAction : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #else
             JsonSerializer.Serialize(writer, JsonDocument.Parse(Roles.ToString()).RootElement);
 #endif
-            if (Optional.IsDefined(Parameters))
+            if (Core.Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStringValue(Parameters);
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string name = default;
             Uri uri = default;
             BinaryData roles = default;
-            Optional<string> parameters = default;
+            Core.Optional<string> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

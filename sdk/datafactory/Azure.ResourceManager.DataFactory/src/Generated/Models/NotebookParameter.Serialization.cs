@@ -11,12 +11,12 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class NotebookParameter : IUtf8JsonSerializable
+    public partial class NotebookParameter : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
+            if (Core.Optional.IsDefined(Value))
             {
                 if (Value != null)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     writer.WriteNull("value");
                 }
             }
-            if (Optional.IsDefined(ParameterType))
+            if (Core.Optional.IsDefined(ParameterType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ParameterType.Value.ToString());
@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> value = default;
-            Optional<NotebookParameterType> type = default;
+            Core.Optional<DataFactoryElement<string>> value = default;
+            Core.Optional<NotebookParameterType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new NotebookParameter(value.Value, Optional.ToNullable(type));
+            return new NotebookParameter(value.Value, Core.Optional.ToNullable(type));
         }
     }
 }

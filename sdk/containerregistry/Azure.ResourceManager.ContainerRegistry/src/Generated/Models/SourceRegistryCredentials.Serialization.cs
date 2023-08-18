@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    internal partial class SourceRegistryCredentials : IUtf8JsonSerializable
+    internal partial class SourceRegistryCredentials : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LoginMode))
+            if (Core.Optional.IsDefined(LoginMode))
             {
                 writer.WritePropertyName("loginMode"u8);
                 writer.WriteStringValue(LoginMode.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<SourceRegistryLoginMode> loginMode = default;
+            Core.Optional<SourceRegistryLoginMode> loginMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("loginMode"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new SourceRegistryCredentials(Optional.ToNullable(loginMode));
+            return new SourceRegistryCredentials(Core.Optional.ToNullable(loginMode));
         }
     }
 }

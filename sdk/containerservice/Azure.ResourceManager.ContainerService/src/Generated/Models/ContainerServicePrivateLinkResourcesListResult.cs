@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of ContainerServicePrivateLinkResourcesListResult. </summary>
         internal ContainerServicePrivateLinkResourcesListResult()
         {
-            Value = new ChangeTrackingList<ContainerServicePrivateLinkResourceData>();
+            Value = new Core.ChangeTrackingList<ContainerServicePrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of ContainerServicePrivateLinkResourcesListResult. </summary>

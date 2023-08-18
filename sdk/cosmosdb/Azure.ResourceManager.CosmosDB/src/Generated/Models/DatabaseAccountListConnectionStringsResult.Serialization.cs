@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CosmosDBAccountConnectionString>> connectionStrings = default;
+            Core.Optional<IReadOnlyList<CosmosDBAccountConnectionString>> connectionStrings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionStrings"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new DatabaseAccountListConnectionStringsResult(Optional.ToList(connectionStrings));
+            return new DatabaseAccountListConnectionStringsResult(Core.Optional.ToList(connectionStrings));
         }
     }
 }

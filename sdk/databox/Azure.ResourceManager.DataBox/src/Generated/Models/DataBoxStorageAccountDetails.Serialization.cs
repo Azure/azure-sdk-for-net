@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxStorageAccountDetails : IUtf8JsonSerializable
+    public partial class DataBoxStorageAccountDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("storageAccountId"u8);
             writer.WriteStringValue(StorageAccountId);
             writer.WritePropertyName("dataAccountType"u8);
             writer.WriteStringValue(DataAccountType.ToSerialString());
-            if (Optional.IsDefined(SharePassword))
+            if (Core.Optional.IsDefined(SharePassword))
             {
                 writer.WritePropertyName("sharePassword"u8);
                 writer.WriteStringValue(SharePassword);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             ResourceIdentifier storageAccountId = default;
             DataAccountType dataAccountType = default;
-            Optional<string> sharePassword = default;
+            Core.Optional<string> sharePassword = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountId"u8))

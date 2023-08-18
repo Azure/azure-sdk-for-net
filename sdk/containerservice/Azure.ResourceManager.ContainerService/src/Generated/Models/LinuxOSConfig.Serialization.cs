@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class LinuxOSConfig : IUtf8JsonSerializable
+    public partial class LinuxOSConfig : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sysctls))
+            if (Core.Optional.IsDefined(Sysctls))
             {
                 writer.WritePropertyName("sysctls"u8);
                 writer.WriteObjectValue(Sysctls);
             }
-            if (Optional.IsDefined(TransparentHugePageEnabled))
+            if (Core.Optional.IsDefined(TransparentHugePageEnabled))
             {
                 writer.WritePropertyName("transparentHugePageEnabled"u8);
                 writer.WriteStringValue(TransparentHugePageEnabled);
             }
-            if (Optional.IsDefined(TransparentHugePageDefrag))
+            if (Core.Optional.IsDefined(TransparentHugePageDefrag))
             {
                 writer.WritePropertyName("transparentHugePageDefrag"u8);
                 writer.WriteStringValue(TransparentHugePageDefrag);
             }
-            if (Optional.IsDefined(SwapFileSizeInMB))
+            if (Core.Optional.IsDefined(SwapFileSizeInMB))
             {
                 writer.WritePropertyName("swapFileSizeMB"u8);
                 writer.WriteNumberValue(SwapFileSizeInMB.Value);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<SysctlConfig> sysctls = default;
-            Optional<string> transparentHugePageEnabled = default;
-            Optional<string> transparentHugePageDefrag = default;
-            Optional<int> swapFileSizeMB = default;
+            Core.Optional<SysctlConfig> sysctls = default;
+            Core.Optional<string> transparentHugePageEnabled = default;
+            Core.Optional<string> transparentHugePageDefrag = default;
+            Core.Optional<int> swapFileSizeMB = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sysctls"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new LinuxOSConfig(sysctls.Value, transparentHugePageEnabled.Value, transparentHugePageDefrag.Value, Optional.ToNullable(swapFileSizeMB));
+            return new LinuxOSConfig(sysctls.Value, transparentHugePageEnabled.Value, transparentHugePageDefrag.Value, Core.Optional.ToNullable(swapFileSizeMB));
         }
     }
 }

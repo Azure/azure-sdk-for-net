@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineScaleSetVmProtectionPolicy : IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetVmProtectionPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProtectFromScaleIn))
+            if (Core.Optional.IsDefined(ProtectFromScaleIn))
             {
                 writer.WritePropertyName("protectFromScaleIn"u8);
                 writer.WriteBooleanValue(ProtectFromScaleIn.Value);
             }
-            if (Optional.IsDefined(ProtectFromScaleSetActions))
+            if (Core.Optional.IsDefined(ProtectFromScaleSetActions))
             {
                 writer.WritePropertyName("protectFromScaleSetActions"u8);
                 writer.WriteBooleanValue(ProtectFromScaleSetActions.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> protectFromScaleIn = default;
-            Optional<bool> protectFromScaleSetActions = default;
+            Core.Optional<bool> protectFromScaleIn = default;
+            Core.Optional<bool> protectFromScaleSetActions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protectFromScaleIn"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetVmProtectionPolicy(Optional.ToNullable(protectFromScaleIn), Optional.ToNullable(protectFromScaleSetActions));
+            return new VirtualMachineScaleSetVmProtectionPolicy(Core.Optional.ToNullable(protectFromScaleIn), Core.Optional.ToNullable(protectFromScaleSetActions));
         }
     }
 }

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class UefiSettings : IUtf8JsonSerializable
+    public partial class UefiSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsSecureBootEnabled))
+            if (Core.Optional.IsDefined(IsSecureBootEnabled))
             {
                 writer.WritePropertyName("secureBootEnabled"u8);
                 writer.WriteBooleanValue(IsSecureBootEnabled.Value);
             }
-            if (Optional.IsDefined(IsVirtualTpmEnabled))
+            if (Core.Optional.IsDefined(IsVirtualTpmEnabled))
             {
                 writer.WritePropertyName("vTpmEnabled"u8);
                 writer.WriteBooleanValue(IsVirtualTpmEnabled.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> secureBootEnabled = default;
-            Optional<bool> vTpmEnabled = default;
+            Core.Optional<bool> secureBootEnabled = default;
+            Core.Optional<bool> vTpmEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secureBootEnabled"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new UefiSettings(Optional.ToNullable(secureBootEnabled), Optional.ToNullable(vTpmEnabled));
+            return new UefiSettings(Core.Optional.ToNullable(secureBootEnabled), Core.Optional.ToNullable(vTpmEnabled));
         }
     }
 }

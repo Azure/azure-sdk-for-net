@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<Guid> id = default;
-            Optional<string> addr = default;
-            Optional<string> host = default;
-            Optional<string> method = default;
-            Optional<string> userAgent = default;
+            Core.Optional<Guid> id = default;
+            Core.Optional<string> addr = default;
+            Core.Optional<string> host = default;
+            Core.Optional<string> method = default;
+            Core.Optional<string> userAgent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryWebhookEventRequestContent(Optional.ToNullable(id), addr.Value, host.Value, method.Value, userAgent.Value);
+            return new ContainerRegistryWebhookEventRequestContent(Core.Optional.ToNullable(id), addr.Value, host.Value, method.Value, userAgent.Value);
         }
     }
 }

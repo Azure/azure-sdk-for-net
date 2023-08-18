@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConfluentOrganizationData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<ConfluentOrganizationData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     continue;
                 }
             }
-            return new ConfluentOrganizationListResult(Optional.ToList(value), nextLink.Value);
+            return new ConfluentOrganizationListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

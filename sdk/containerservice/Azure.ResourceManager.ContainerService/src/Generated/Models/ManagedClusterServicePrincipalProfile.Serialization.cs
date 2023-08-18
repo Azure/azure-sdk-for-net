@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterServicePrincipalProfile : IUtf8JsonSerializable
+    public partial class ManagedClusterServicePrincipalProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("clientId"u8);
             writer.WriteStringValue(ClientId);
-            if (Optional.IsDefined(Secret))
+            if (Core.Optional.IsDefined(Secret))
             {
                 writer.WritePropertyName("secret"u8);
                 writer.WriteStringValue(Secret);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             string clientId = default;
-            Optional<string> secret = default;
+            Core.Optional<string> secret = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientId"u8))

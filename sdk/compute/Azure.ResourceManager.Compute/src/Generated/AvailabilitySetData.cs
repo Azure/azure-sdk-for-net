@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location. </param>
         public AvailabilitySetData(AzureLocation location) : base(location)
         {
-            VirtualMachines = new ChangeTrackingList<WritableSubResource>();
-            Statuses = new ChangeTrackingList<InstanceViewStatus>();
+            VirtualMachines = new Core.ChangeTrackingList<WritableSubResource>();
+            Statuses = new Core.ChangeTrackingList<InstanceViewStatus>();
         }
 
         /// <summary> Initializes a new instance of AvailabilitySetData. </summary>

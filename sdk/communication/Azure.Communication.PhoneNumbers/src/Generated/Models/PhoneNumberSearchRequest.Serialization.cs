@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    internal partial class PhoneNumberSearchRequest : IUtf8JsonSerializable
+    internal partial class PhoneNumberSearchRequest : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("phoneNumberType"u8);
@@ -21,12 +21,12 @@ namespace Azure.Communication.PhoneNumbers
             writer.WriteStringValue(AssignmentType.ToString());
             writer.WritePropertyName("capabilities"u8);
             writer.WriteObjectValue(Capabilities);
-            if (Optional.IsDefined(AreaCode))
+            if (Core.Optional.IsDefined(AreaCode))
             {
                 writer.WritePropertyName("areaCode"u8);
                 writer.WriteStringValue(AreaCode);
             }
-            if (Optional.IsDefined(Quantity))
+            if (Core.Optional.IsDefined(Quantity))
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);

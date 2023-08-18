@@ -16,7 +16,7 @@ namespace Azure.Communication.Rooms
         /// <summary> Initializes a new instance of UpdateParticipantsRequest. </summary>
         public UpdateParticipantsRequest()
         {
-            Participants = new ChangeTrackingDictionary<string, ParticipantProperties>();
+            Participants = new Core.ChangeTrackingDictionary<string, ParticipantProperties>();
         }
 
         /// <summary> Participants to be updated. </summary>

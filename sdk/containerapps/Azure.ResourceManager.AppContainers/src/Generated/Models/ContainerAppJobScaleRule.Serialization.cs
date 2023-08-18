@@ -12,22 +12,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppJobScaleRule : IUtf8JsonSerializable
+    public partial class ContainerAppJobScaleRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(JobScaleRuleType))
+            if (Core.Optional.IsDefined(JobScaleRuleType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(JobScaleRuleType);
             }
-            if (Optional.IsDefined(Metadata))
+            if (Core.Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Metadata.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsCollectionDefined(Auth))
+            if (Core.Optional.IsCollectionDefined(Auth))
             {
                 writer.WritePropertyName("auth"u8);
                 writer.WriteStartArray();
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<BinaryData> metadata = default;
-            Optional<IList<ContainerAppScaleRuleAuth>> auth = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> type = default;
+            Core.Optional<BinaryData> metadata = default;
+            Core.Optional<IList<ContainerAppScaleRuleAuth>> auth = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppJobScaleRule(name.Value, type.Value, metadata.Value, Optional.ToList(auth));
+            return new ContainerAppJobScaleRule(name.Value, type.Value, metadata.Value, Core.Optional.ToList(auth));
         }
     }
 }

@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBSqlUserDefinedFunctionResourceInfo : IUtf8JsonSerializable
+    public partial class CosmosDBSqlUserDefinedFunctionResourceInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(FunctionName);
-            if (Optional.IsDefined(Body))
+            if (Core.Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
                 writer.WriteStringValue(Body);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string id = default;
-            Optional<string> body = default;
+            Core.Optional<string> body = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of UnencryptedCredentialsList. </summary>
         internal UnencryptedCredentialsList()
         {
-            Value = new ChangeTrackingList<UnencryptedCredentials>();
+            Value = new Core.ChangeTrackingList<UnencryptedCredentials>();
         }
 
         /// <summary> Initializes a new instance of UnencryptedCredentialsList. </summary>

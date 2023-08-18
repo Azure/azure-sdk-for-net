@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class SshConfiguration : IUtf8JsonSerializable
+    internal partial class SshConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PublicKeys))
+            if (Core.Optional.IsCollectionDefined(PublicKeys))
             {
                 writer.WritePropertyName("publicKeys"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<SshPublicKeyConfiguration>> publicKeys = default;
+            Core.Optional<IList<SshPublicKeyConfiguration>> publicKeys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicKeys"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new SshConfiguration(Optional.ToList(publicKeys));
+            return new SshConfiguration(Core.Optional.ToList(publicKeys));
         }
     }
 }

@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryImportImageContent : IUtf8JsonSerializable
+    public partial class ContainerRegistryImportImageContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
             writer.WriteObjectValue(Source);
-            if (Optional.IsCollectionDefined(TargetTags))
+            if (Core.Optional.IsCollectionDefined(TargetTags))
             {
                 writer.WritePropertyName("targetTags"u8);
                 writer.WriteStartArray();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UntaggedTargetRepositories))
+            if (Core.Optional.IsCollectionDefined(UntaggedTargetRepositories))
             {
                 writer.WritePropertyName("untaggedTargetRepositories"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Mode))
+            if (Core.Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());

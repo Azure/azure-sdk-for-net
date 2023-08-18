@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class MitigateJobContent : IUtf8JsonSerializable
+    public partial class MitigateJobContent : Core.IUtf8JsonSerializable
     {
     }
 }

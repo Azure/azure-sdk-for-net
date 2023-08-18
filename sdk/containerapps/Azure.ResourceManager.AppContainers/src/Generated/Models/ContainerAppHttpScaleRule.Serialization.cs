@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppHttpScaleRule : IUtf8JsonSerializable
+    public partial class ContainerAppHttpScaleRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Metadata))
+            if (Core.Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Auth))
+            if (Core.Optional.IsCollectionDefined(Auth))
             {
                 writer.WritePropertyName("auth"u8);
                 writer.WriteStartArray();
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> metadata = default;
-            Optional<IList<ContainerAppScaleRuleAuth>> auth = default;
+            Core.Optional<IDictionary<string, string>> metadata = default;
+            Core.Optional<IList<ContainerAppScaleRuleAuth>> auth = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metadata"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppHttpScaleRule(Optional.ToDictionary(metadata), Optional.ToList(auth));
+            return new ContainerAppHttpScaleRule(Core.Optional.ToDictionary(metadata), Core.Optional.ToList(auth));
         }
     }
 }

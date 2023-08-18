@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> output = default;
+            Core.Optional<string> output = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("output"u8))

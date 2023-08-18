@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> The location. </param>
         public CosmosDBAccountData(AzureLocation location) : base(location)
         {
-            IPRules = new ChangeTrackingList<CosmosDBIPAddressOrRange>();
-            Capabilities = new ChangeTrackingList<CosmosDBAccountCapability>();
-            WriteLocations = new ChangeTrackingList<CosmosDBAccountLocation>();
-            ReadLocations = new ChangeTrackingList<CosmosDBAccountLocation>();
-            Locations = new ChangeTrackingList<CosmosDBAccountLocation>();
-            FailoverPolicies = new ChangeTrackingList<CosmosDBFailoverPolicy>();
-            VirtualNetworkRules = new ChangeTrackingList<CosmosDBVirtualNetworkRule>();
-            PrivateEndpointConnections = new ChangeTrackingList<CosmosDBPrivateEndpointConnectionData>();
-            Cors = new ChangeTrackingList<CosmosDBAccountCorsPolicy>();
-            NetworkAclBypassResourceIds = new ChangeTrackingList<ResourceIdentifier>();
+            IPRules = new Core.ChangeTrackingList<CosmosDBIPAddressOrRange>();
+            Capabilities = new Core.ChangeTrackingList<CosmosDBAccountCapability>();
+            WriteLocations = new Core.ChangeTrackingList<CosmosDBAccountLocation>();
+            ReadLocations = new Core.ChangeTrackingList<CosmosDBAccountLocation>();
+            Locations = new Core.ChangeTrackingList<CosmosDBAccountLocation>();
+            FailoverPolicies = new Core.ChangeTrackingList<CosmosDBFailoverPolicy>();
+            VirtualNetworkRules = new Core.ChangeTrackingList<CosmosDBVirtualNetworkRule>();
+            PrivateEndpointConnections = new Core.ChangeTrackingList<CosmosDBPrivateEndpointConnectionData>();
+            Cors = new Core.ChangeTrackingList<CosmosDBAccountCorsPolicy>();
+            NetworkAclBypassResourceIds = new Core.ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of CosmosDBAccountData. </summary>

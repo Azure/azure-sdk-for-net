@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <summary> Initializes a new instance of ConfluentOrganizationPatch. </summary>
         public ConfluentOrganizationPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> ARM resource tags. </summary>

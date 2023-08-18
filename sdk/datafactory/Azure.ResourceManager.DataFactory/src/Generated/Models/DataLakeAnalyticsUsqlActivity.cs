@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             ScriptPath = scriptPath;
             ScriptLinkedService = scriptLinkedService;
-            Parameters = new ChangeTrackingDictionary<string, BinaryData>();
+            Parameters = new Core.ChangeTrackingDictionary<string, BinaryData>();
             ActivityType = "DataLakeAnalyticsU-SQL";
         }
 

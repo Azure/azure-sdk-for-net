@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <summary> Initializes a new instance of ViewListResult. </summary>
         internal ViewListResult()
         {
-            Value = new ChangeTrackingList<ViewResourceFormatData>();
+            Value = new Core.ChangeTrackingList<ViewResourceFormatData>();
         }
 
         /// <summary> Initializes a new instance of ViewListResult. </summary>

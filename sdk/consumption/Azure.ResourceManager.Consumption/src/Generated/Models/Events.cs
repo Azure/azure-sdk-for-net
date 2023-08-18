@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of Events. </summary>
         internal Events()
         {
-            Value = new ChangeTrackingList<ConsumptionEventSummary>();
+            Value = new Core.ChangeTrackingList<ConsumptionEventSummary>();
         }
 
         /// <summary> Initializes a new instance of Events. </summary>

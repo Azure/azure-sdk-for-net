@@ -13,24 +13,24 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DelimitedTextWriteSettings : IUtf8JsonSerializable
+    public partial class DelimitedTextWriteSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(QuoteAllText))
+            if (Core.Optional.IsDefined(QuoteAllText))
             {
                 writer.WritePropertyName("quoteAllText"u8);
                 JsonSerializer.Serialize(writer, QuoteAllText);
             }
             writer.WritePropertyName("fileExtension"u8);
             JsonSerializer.Serialize(writer, FileExtension);
-            if (Optional.IsDefined(MaxRowsPerFile))
+            if (Core.Optional.IsDefined(MaxRowsPerFile))
             {
                 writer.WritePropertyName("maxRowsPerFile"u8);
                 JsonSerializer.Serialize(writer, MaxRowsPerFile);
             }
-            if (Optional.IsDefined(FileNamePrefix))
+            if (Core.Optional.IsDefined(FileNamePrefix))
             {
                 writer.WritePropertyName("fileNamePrefix"u8);
                 JsonSerializer.Serialize(writer, FileNamePrefix);
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<bool>> quoteAllText = default;
+            Core.Optional<DataFactoryElement<bool>> quoteAllText = default;
             DataFactoryElement<string> fileExtension = default;
-            Optional<DataFactoryElement<int>> maxRowsPerFile = default;
-            Optional<DataFactoryElement<string>> fileNamePrefix = default;
+            Core.Optional<DataFactoryElement<int>> maxRowsPerFile = default;
+            Core.Optional<DataFactoryElement<string>> fileNamePrefix = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();

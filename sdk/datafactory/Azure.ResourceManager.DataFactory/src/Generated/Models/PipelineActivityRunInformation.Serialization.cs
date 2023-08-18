@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> pipelineName = default;
-            Optional<Guid> pipelineRunId = default;
-            Optional<string> activityName = default;
-            Optional<string> activityType = default;
-            Optional<Guid> activityRunId = default;
-            Optional<string> linkedServiceName = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> activityRunStart = default;
-            Optional<DateTimeOffset> activityRunEnd = default;
-            Optional<int> durationInMs = default;
-            Optional<BinaryData> input = default;
-            Optional<BinaryData> output = default;
-            Optional<BinaryData> error = default;
+            Core.Optional<string> pipelineName = default;
+            Core.Optional<Guid> pipelineRunId = default;
+            Core.Optional<string> activityName = default;
+            Core.Optional<string> activityType = default;
+            Core.Optional<Guid> activityRunId = default;
+            Core.Optional<string> linkedServiceName = default;
+            Core.Optional<string> status = default;
+            Core.Optional<DateTimeOffset> activityRunStart = default;
+            Core.Optional<DateTimeOffset> activityRunEnd = default;
+            Core.Optional<int> durationInMs = default;
+            Core.Optional<BinaryData> input = default;
+            Core.Optional<BinaryData> output = default;
+            Core.Optional<BinaryData> error = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PipelineActivityRunInformation(pipelineName.Value, Optional.ToNullable(pipelineRunId), activityName.Value, activityType.Value, Optional.ToNullable(activityRunId), linkedServiceName.Value, status.Value, Optional.ToNullable(activityRunStart), Optional.ToNullable(activityRunEnd), Optional.ToNullable(durationInMs), input.Value, output.Value, error.Value, additionalProperties);
+            return new PipelineActivityRunInformation(pipelineName.Value, Core.Optional.ToNullable(pipelineRunId), activityName.Value, activityType.Value, Core.Optional.ToNullable(activityRunId), linkedServiceName.Value, status.Value, Core.Optional.ToNullable(activityRunStart), Core.Optional.ToNullable(activityRunEnd), Core.Optional.ToNullable(durationInMs), input.Value, output.Value, error.Value, additionalProperties);
         }
     }
 }

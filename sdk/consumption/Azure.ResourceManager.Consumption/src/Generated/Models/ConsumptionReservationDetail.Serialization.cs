@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> reservationOrderId = default;
-            Optional<string> instanceFlexibilityRatio = default;
-            Optional<string> instanceFlexibilityGroup = default;
-            Optional<string> reservationId = default;
-            Optional<string> skuName = default;
-            Optional<decimal> reservedHours = default;
-            Optional<DateTimeOffset> usageDate = default;
-            Optional<decimal> usedHours = default;
-            Optional<ResourceIdentifier> instanceId = default;
-            Optional<decimal> totalReservedQuantity = default;
-            Optional<string> kind = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> reservationOrderId = default;
+            Core.Optional<string> instanceFlexibilityRatio = default;
+            Core.Optional<string> instanceFlexibilityGroup = default;
+            Core.Optional<string> reservationId = default;
+            Core.Optional<string> skuName = default;
+            Core.Optional<decimal> reservedHours = default;
+            Core.Optional<DateTimeOffset> usageDate = default;
+            Core.Optional<decimal> usedHours = default;
+            Core.Optional<ResourceIdentifier> instanceId = default;
+            Core.Optional<decimal> totalReservedQuantity = default;
+            Core.Optional<string> kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ConsumptionReservationDetail(id, name, type, systemData.Value, reservationOrderId.Value, instanceFlexibilityRatio.Value, instanceFlexibilityGroup.Value, reservationId.Value, skuName.Value, Optional.ToNullable(reservedHours), Optional.ToNullable(usageDate), Optional.ToNullable(usedHours), instanceId.Value, Optional.ToNullable(totalReservedQuantity), kind.Value, Optional.ToNullable(etag), Optional.ToDictionary(tags));
+            return new ConsumptionReservationDetail(id, name, type, systemData.Value, reservationOrderId.Value, instanceFlexibilityRatio.Value, instanceFlexibilityGroup.Value, reservationId.Value, skuName.Value, Core.Optional.ToNullable(reservedHours), Core.Optional.ToNullable(usageDate), Core.Optional.ToNullable(usedHours), instanceId.Value, Core.Optional.ToNullable(totalReservedQuantity), kind.Value, Core.Optional.ToNullable(etag), Core.Optional.ToDictionary(tags));
         }
     }
 }

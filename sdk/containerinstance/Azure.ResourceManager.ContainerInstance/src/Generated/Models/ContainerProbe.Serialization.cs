@@ -10,42 +10,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerProbe : IUtf8JsonSerializable
+    public partial class ContainerProbe : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Exec))
+            if (Core.Optional.IsDefined(Exec))
             {
                 writer.WritePropertyName("exec"u8);
                 writer.WriteObjectValue(Exec);
             }
-            if (Optional.IsDefined(HttpGet))
+            if (Core.Optional.IsDefined(HttpGet))
             {
                 writer.WritePropertyName("httpGet"u8);
                 writer.WriteObjectValue(HttpGet);
             }
-            if (Optional.IsDefined(InitialDelayInSeconds))
+            if (Core.Optional.IsDefined(InitialDelayInSeconds))
             {
                 writer.WritePropertyName("initialDelaySeconds"u8);
                 writer.WriteNumberValue(InitialDelayInSeconds.Value);
             }
-            if (Optional.IsDefined(PeriodInSeconds))
+            if (Core.Optional.IsDefined(PeriodInSeconds))
             {
                 writer.WritePropertyName("periodSeconds"u8);
                 writer.WriteNumberValue(PeriodInSeconds.Value);
             }
-            if (Optional.IsDefined(FailureThreshold))
+            if (Core.Optional.IsDefined(FailureThreshold))
             {
                 writer.WritePropertyName("failureThreshold"u8);
                 writer.WriteNumberValue(FailureThreshold.Value);
             }
-            if (Optional.IsDefined(SuccessThreshold))
+            if (Core.Optional.IsDefined(SuccessThreshold))
             {
                 writer.WritePropertyName("successThreshold"u8);
                 writer.WriteNumberValue(SuccessThreshold.Value);
             }
-            if (Optional.IsDefined(TimeoutInSeconds))
+            if (Core.Optional.IsDefined(TimeoutInSeconds))
             {
                 writer.WritePropertyName("timeoutSeconds"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<ContainerExec> exec = default;
-            Optional<ContainerHttpGet> httpGet = default;
-            Optional<int> initialDelaySeconds = default;
-            Optional<int> periodSeconds = default;
-            Optional<int> failureThreshold = default;
-            Optional<int> successThreshold = default;
-            Optional<int> timeoutSeconds = default;
+            Core.Optional<ContainerExec> exec = default;
+            Core.Optional<ContainerHttpGet> httpGet = default;
+            Core.Optional<int> initialDelaySeconds = default;
+            Core.Optional<int> periodSeconds = default;
+            Core.Optional<int> failureThreshold = default;
+            Core.Optional<int> successThreshold = default;
+            Core.Optional<int> timeoutSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("exec"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new ContainerProbe(exec.Value, httpGet.Value, Optional.ToNullable(initialDelaySeconds), Optional.ToNullable(periodSeconds), Optional.ToNullable(failureThreshold), Optional.ToNullable(successThreshold), Optional.ToNullable(timeoutSeconds));
+            return new ContainerProbe(exec.Value, httpGet.Value, Core.Optional.ToNullable(initialDelaySeconds), Core.Optional.ToNullable(periodSeconds), Core.Optional.ToNullable(failureThreshold), Core.Optional.ToNullable(successThreshold), Core.Optional.ToNullable(timeoutSeconds));
         }
     }
 }

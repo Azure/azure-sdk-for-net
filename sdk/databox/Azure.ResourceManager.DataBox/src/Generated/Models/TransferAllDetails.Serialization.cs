@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class TransferAllDetails : IUtf8JsonSerializable
+    public partial class TransferAllDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dataAccountType"u8);
             writer.WriteStringValue(DataAccountType.ToSerialString());
-            if (Optional.IsDefined(TransferAllBlobs))
+            if (Core.Optional.IsDefined(TransferAllBlobs))
             {
                 writer.WritePropertyName("transferAllBlobs"u8);
                 writer.WriteBooleanValue(TransferAllBlobs.Value);
             }
-            if (Optional.IsDefined(TransferAllFiles))
+            if (Core.Optional.IsDefined(TransferAllFiles))
             {
                 writer.WritePropertyName("transferAllFiles"u8);
                 writer.WriteBooleanValue(TransferAllFiles.Value);
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             DataAccountType dataAccountType = default;
-            Optional<bool> transferAllBlobs = default;
-            Optional<bool> transferAllFiles = default;
+            Core.Optional<bool> transferAllBlobs = default;
+            Core.Optional<bool> transferAllFiles = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataAccountType"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new TransferAllDetails(dataAccountType, Optional.ToNullable(transferAllBlobs), Optional.ToNullable(transferAllFiles));
+            return new TransferAllDetails(dataAccountType, Core.Optional.ToNullable(transferAllBlobs), Core.Optional.ToNullable(transferAllFiles));
         }
     }
 }

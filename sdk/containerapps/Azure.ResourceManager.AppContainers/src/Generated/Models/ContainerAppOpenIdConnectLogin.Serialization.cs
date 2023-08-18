@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppOpenIdConnectLogin : IUtf8JsonSerializable
+    public partial class ContainerAppOpenIdConnectLogin : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(NameClaimType))
+            if (Core.Optional.IsDefined(NameClaimType))
             {
                 writer.WritePropertyName("nameClaimType"u8);
                 writer.WriteStringValue(NameClaimType);
             }
-            if (Optional.IsCollectionDefined(Scopes))
+            if (Core.Optional.IsCollectionDefined(Scopes))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> nameClaimType = default;
-            Optional<IList<string>> scopes = default;
+            Core.Optional<string> nameClaimType = default;
+            Core.Optional<IList<string>> scopes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameClaimType"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppOpenIdConnectLogin(nameClaimType.Value, Optional.ToList(scopes));
+            return new ContainerAppOpenIdConnectLogin(nameClaimType.Value, Core.Optional.ToList(scopes));
         }
     }
 }

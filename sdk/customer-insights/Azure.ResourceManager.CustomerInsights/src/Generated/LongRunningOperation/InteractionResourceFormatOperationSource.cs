@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    internal class InteractionResourceFormatOperationSource : IOperationSource<InteractionResourceFormatResource>
+    internal class InteractionResourceFormatOperationSource : Core.IOperationSource<InteractionResourceFormatResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.CustomerInsights
             _client = client;
         }
 
-        InteractionResourceFormatResource IOperationSource<InteractionResourceFormatResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        InteractionResourceFormatResource Core.IOperationSource<InteractionResourceFormatResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = InteractionResourceFormatData.DeserializeInteractionResourceFormatData(document.RootElement);
             return new InteractionResourceFormatResource(_client, data);
         }
 
-        async ValueTask<InteractionResourceFormatResource> IOperationSource<InteractionResourceFormatResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<InteractionResourceFormatResource> Core.IOperationSource<InteractionResourceFormatResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = InteractionResourceFormatData.DeserializeInteractionResourceFormatData(document.RootElement);

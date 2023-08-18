@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public ManagedClusterAddonProfile(bool isEnabled)
         {
             IsEnabled = isEnabled;
-            Config = new ChangeTrackingDictionary<string, string>();
+            Config = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ManagedClusterAddonProfile. </summary>

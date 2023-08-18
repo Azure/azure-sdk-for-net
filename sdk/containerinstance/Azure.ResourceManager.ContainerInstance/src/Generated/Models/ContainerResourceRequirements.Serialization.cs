@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerResourceRequirements : IUtf8JsonSerializable
+    public partial class ContainerResourceRequirements : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("requests"u8);
             writer.WriteObjectValue(Requests);
-            if (Optional.IsDefined(Limits))
+            if (Core.Optional.IsDefined(Limits))
             {
                 writer.WritePropertyName("limits"u8);
                 writer.WriteObjectValue(Limits);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return null;
             }
             ContainerResourceRequestsContent requests = default;
-            Optional<ContainerResourceLimits> limits = default;
+            Core.Optional<ContainerResourceLimits> limits = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requests"u8))

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContainerServiceMaintenanceConfigurationData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<ContainerServiceMaintenanceConfigurationData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ContainerServiceMaintenanceConfigurationListResult(Optional.ToList(value), nextLink.Value);
+            return new ContainerServiceMaintenanceConfigurationListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

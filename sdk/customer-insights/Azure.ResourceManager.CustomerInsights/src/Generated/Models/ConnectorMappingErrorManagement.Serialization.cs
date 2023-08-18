@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class ConnectorMappingErrorManagement : IUtf8JsonSerializable
+    public partial class ConnectorMappingErrorManagement : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("errorManagementType"u8);
             writer.WriteStringValue(ErrorManagementType.ToSerialString());
-            if (Optional.IsDefined(ErrorLimit))
+            if (Core.Optional.IsDefined(ErrorLimit))
             {
                 writer.WritePropertyName("errorLimit"u8);
                 writer.WriteNumberValue(ErrorLimit.Value);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 return null;
             }
             ErrorManagementType errorManagementType = default;
-            Optional<int> errorLimit = default;
+            Core.Optional<int> errorLimit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorManagementType"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new ConnectorMappingErrorManagement(errorManagementType, Optional.ToNullable(errorLimit));
+            return new ConnectorMappingErrorManagement(errorManagementType, Core.Optional.ToNullable(errorLimit));
         }
     }
 }

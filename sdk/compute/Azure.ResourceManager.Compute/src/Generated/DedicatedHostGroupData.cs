@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location. </param>
         public DedicatedHostGroupData(AzureLocation location) : base(location)
         {
-            Zones = new ChangeTrackingList<string>();
-            DedicatedHosts = new ChangeTrackingList<SubResource>();
+            Zones = new Core.ChangeTrackingList<string>();
+            DedicatedHosts = new Core.ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of DedicatedHostGroupData. </summary>

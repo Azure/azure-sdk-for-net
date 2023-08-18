@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    internal partial class ManagedEnvironmentStorageProperties : IUtf8JsonSerializable
+    internal partial class ManagedEnvironmentStorageProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureFile))
+            if (Core.Optional.IsDefined(AzureFile))
             {
                 writer.WritePropertyName("azureFile"u8);
                 writer.WriteObjectValue(AzureFile);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ContainerAppAzureFileProperties> azureFile = default;
+            Core.Optional<ContainerAppAzureFileProperties> azureFile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureFile"u8))

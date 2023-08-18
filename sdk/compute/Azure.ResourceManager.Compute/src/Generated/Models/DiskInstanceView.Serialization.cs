@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<DiskEncryptionSettings>> encryptionSettings = default;
-            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            Core.Optional<string> name = default;
+            Core.Optional<IReadOnlyList<DiskEncryptionSettings>> encryptionSettings = default;
+            Core.Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new DiskInstanceView(name.Value, Optional.ToList(encryptionSettings), Optional.ToList(statuses));
+            return new DiskInstanceView(name.Value, Core.Optional.ToList(encryptionSettings), Core.Optional.ToList(statuses));
         }
     }
 }

@@ -12,17 +12,17 @@ using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ComputeSecurityPostureReference : IUtf8JsonSerializable
+    public partial class ComputeSecurityPostureReference : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsCollectionDefined(ExcludeExtensions))
+            if (Core.Optional.IsCollectionDefined(ExcludeExtensions))
             {
                 writer.WritePropertyName("excludeExtensions"u8);
                 writer.WriteStartArray();
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<IList<VirtualMachineExtensionData>> excludeExtensions = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<IList<VirtualMachineExtensionData>> excludeExtensions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ComputeSecurityPostureReference(id.Value, Optional.ToList(excludeExtensions));
+            return new ComputeSecurityPostureReference(id.Value, Core.Optional.ToList(excludeExtensions));
         }
     }
 }

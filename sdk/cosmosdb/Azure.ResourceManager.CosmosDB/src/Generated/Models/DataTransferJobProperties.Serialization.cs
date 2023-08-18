@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class DataTransferJobProperties : IUtf8JsonSerializable
+    public partial class DataTransferJobProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
             writer.WriteObjectValue(Source);
             writer.WritePropertyName("destination"u8);
             writer.WriteObjectValue(Destination);
-            if (Optional.IsDefined(WorkerCount))
+            if (Core.Optional.IsDefined(WorkerCount))
             {
                 writer.WritePropertyName("workerCount"u8);
                 writer.WriteNumberValue(WorkerCount.Value);
@@ -34,15 +34,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> jobName = default;
+            Core.Optional<string> jobName = default;
             DataTransferDataSourceSink source = default;
             DataTransferDataSourceSink destination = default;
-            Optional<string> status = default;
-            Optional<long> processedCount = default;
-            Optional<long> totalCount = default;
-            Optional<DateTimeOffset> lastUpdatedUtcTime = default;
-            Optional<int> workerCount = default;
-            Optional<ErrorResponse> error = default;
+            Core.Optional<string> status = default;
+            Core.Optional<long> processedCount = default;
+            Core.Optional<long> totalCount = default;
+            Core.Optional<DateTimeOffset> lastUpdatedUtcTime = default;
+            Core.Optional<int> workerCount = default;
+            Core.Optional<ErrorResponse> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobName"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new DataTransferJobProperties(jobName.Value, source, destination, status.Value, Optional.ToNullable(processedCount), Optional.ToNullable(totalCount), Optional.ToNullable(lastUpdatedUtcTime), Optional.ToNullable(workerCount), error.Value);
+            return new DataTransferJobProperties(jobName.Value, source, destination, status.Value, Core.Optional.ToNullable(processedCount), Core.Optional.ToNullable(totalCount), Core.Optional.ToNullable(lastUpdatedUtcTime), Core.Optional.ToNullable(workerCount), error.Value);
         }
     }
 }

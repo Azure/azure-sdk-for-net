@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VirtualMachineSize>> value = default;
+            Core.Optional<IReadOnlyList<VirtualMachineSize>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineSizeListResult(Optional.ToList(value));
+            return new VirtualMachineSizeListResult(Core.Optional.ToList(value));
         }
     }
 }

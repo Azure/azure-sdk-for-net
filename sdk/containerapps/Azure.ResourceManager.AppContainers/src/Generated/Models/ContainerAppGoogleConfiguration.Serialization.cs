@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppGoogleConfiguration : IUtf8JsonSerializable
+    public partial class ContainerAppGoogleConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (Core.Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(Registration))
+            if (Core.Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
                 writer.WriteObjectValue(Registration);
             }
-            if (Optional.IsDefined(Login))
+            if (Core.Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
                 writer.WriteObjectValue(Login);
             }
-            if (Optional.IsDefined(Validation))
+            if (Core.Optional.IsDefined(Validation))
             {
                 writer.WritePropertyName("validation"u8);
                 writer.WriteObjectValue(Validation);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<ContainerAppClientRegistration> registration = default;
-            Optional<LoginScopes> login = default;
-            Optional<AllowedAudiencesValidation> validation = default;
+            Core.Optional<bool> enabled = default;
+            Core.Optional<ContainerAppClientRegistration> registration = default;
+            Core.Optional<LoginScopes> login = default;
+            Core.Optional<AllowedAudiencesValidation> validation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppGoogleConfiguration(Optional.ToNullable(enabled), registration.Value, login.Value, validation.Value);
+            return new ContainerAppGoogleConfiguration(Core.Optional.ToNullable(enabled), registration.Value, login.Value, validation.Value);
         }
     }
 }

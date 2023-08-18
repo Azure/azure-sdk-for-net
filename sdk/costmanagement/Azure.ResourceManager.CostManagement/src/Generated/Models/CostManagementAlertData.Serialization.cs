@@ -14,69 +14,69 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
-    public partial class CostManagementAlertData : IUtf8JsonSerializable
+    public partial class CostManagementAlertData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Definition))
+            if (Core.Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
                 writer.WriteObjectValue(Definition);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Source))
+            if (Core.Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source.Value.ToString());
             }
-            if (Optional.IsDefined(Details))
+            if (Core.Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteObjectValue(Details);
             }
-            if (Optional.IsDefined(CostEntityId))
+            if (Core.Optional.IsDefined(CostEntityId))
             {
                 writer.WritePropertyName("costEntityId"u8);
                 writer.WriteStringValue(CostEntityId);
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (Core.Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value);
             }
-            if (Optional.IsDefined(CloseOn))
+            if (Core.Optional.IsDefined(CloseOn))
             {
                 writer.WritePropertyName("closeTime"u8);
                 writer.WriteStringValue(CloseOn.Value);
             }
-            if (Optional.IsDefined(ModifiedOn))
+            if (Core.Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("modificationTime"u8);
                 writer.WriteStringValue(ModifiedOn.Value);
             }
-            if (Optional.IsDefined(StatusModificationUserName))
+            if (Core.Optional.IsDefined(StatusModificationUserName))
             {
                 writer.WritePropertyName("statusModificationUserName"u8);
                 writer.WriteStringValue(StatusModificationUserName);
             }
-            if (Optional.IsDefined(StatusModifiedOn))
+            if (Core.Optional.IsDefined(StatusModifiedOn))
             {
                 writer.WritePropertyName("statusModificationTime"u8);
                 writer.WriteStringValue(StatusModifiedOn.Value);

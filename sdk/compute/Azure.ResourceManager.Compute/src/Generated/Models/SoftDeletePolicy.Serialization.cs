@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class SoftDeletePolicy : IUtf8JsonSerializable
+    internal partial class SoftDeletePolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsSoftDeleteEnabled))
+            if (Core.Optional.IsDefined(IsSoftDeleteEnabled))
             {
                 writer.WritePropertyName("isSoftDeleteEnabled"u8);
                 writer.WriteBooleanValue(IsSoftDeleteEnabled.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> isSoftDeleteEnabled = default;
+            Core.Optional<bool> isSoftDeleteEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isSoftDeleteEnabled"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new SoftDeletePolicy(Optional.ToNullable(isSoftDeleteEnabled));
+            return new SoftDeletePolicy(Core.Optional.ToNullable(isSoftDeleteEnabled));
         }
     }
 }

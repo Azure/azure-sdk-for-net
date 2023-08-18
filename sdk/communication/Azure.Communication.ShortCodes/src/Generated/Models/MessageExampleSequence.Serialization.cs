@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
 {
-    public partial class MessageExampleSequence : IUtf8JsonSerializable
+    public partial class MessageExampleSequence : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Messages))
+            if (Core.Optional.IsCollectionDefined(Messages))
             {
                 writer.WritePropertyName("messages"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<IList<MessageExample>> messages = default;
+            Core.Optional<IList<MessageExample>> messages = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("messages"u8))
@@ -53,7 +53,7 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new MessageExampleSequence(Optional.ToList(messages));
+            return new MessageExampleSequence(Core.Optional.ToList(messages));
         }
     }
 }

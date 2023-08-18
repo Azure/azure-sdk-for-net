@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <summary> Initializes a new instance of LinkListResult. </summary>
         internal LinkListResult()
         {
-            Value = new ChangeTrackingList<LinkResourceFormatData>();
+            Value = new Core.ChangeTrackingList<LinkResourceFormatData>();
         }
 
         /// <summary> Initializes a new instance of LinkListResult. </summary>

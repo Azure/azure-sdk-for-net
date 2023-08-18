@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class MapperSourceConnectionsInfo : IUtf8JsonSerializable
+    public partial class MapperSourceConnectionsInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SourceEntities))
+            if (Core.Optional.IsCollectionDefined(SourceEntities))
             {
                 writer.WritePropertyName("sourceEntities"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Connection))
+            if (Core.Optional.IsDefined(Connection))
             {
                 writer.WritePropertyName("connection"u8);
                 writer.WriteObjectValue(Connection);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IList<MapperTable>> sourceEntities = default;
-            Optional<MapperConnection> connection = default;
+            Core.Optional<IList<MapperTable>> sourceEntities = default;
+            Core.Optional<MapperConnection> connection = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceEntities"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new MapperSourceConnectionsInfo(Optional.ToList(sourceEntities), connection.Value);
+            return new MapperSourceConnectionsInfo(Core.Optional.ToList(sourceEntities), connection.Value);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineScaleSetNetworkProfile. </summary>
         public VirtualMachineScaleSetNetworkProfile()
         {
-            NetworkInterfaceConfigurations = new ChangeTrackingList<VirtualMachineScaleSetNetworkConfiguration>();
+            NetworkInterfaceConfigurations = new Core.ChangeTrackingList<VirtualMachineScaleSetNetworkConfiguration>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetNetworkProfile. </summary>

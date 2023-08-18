@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> publisher = default;
-            Optional<string> offer = default;
-            Optional<string> sku = default;
+            Core.Optional<string> publisher = default;
+            Core.Optional<string> offer = default;
+            Core.Optional<string> sku = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publisher"u8))
