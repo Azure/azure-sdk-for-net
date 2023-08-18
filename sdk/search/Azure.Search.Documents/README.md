@@ -352,7 +352,7 @@ foreach (SearchResult<SearchDocument> result in response.GetResults())
     SearchDocument doc = result.Document;
     string id = (string)doc["HotelId"];
     string name = (string)doc["HotelName"];
-    Console.WriteLine("{id}: {name}");
+    Console.WriteLine($"{id}: {name}");
 }
 ```
 

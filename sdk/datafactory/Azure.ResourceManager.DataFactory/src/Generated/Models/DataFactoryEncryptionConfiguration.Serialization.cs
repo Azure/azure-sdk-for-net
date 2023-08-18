@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string keyName = default;
             Uri vaultBaseUrl = default;
             Optional<string> keyVersion = default;
-            Optional<CmkIdentityDefinition> identity = default;
+            Optional<DataFactoryCmkIdentity> identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyName"u8))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    identity = CmkIdentityDefinition.DeserializeCmkIdentityDefinition(property.Value);
+                    identity = DataFactoryCmkIdentity.DeserializeDataFactoryCmkIdentity(property.Value);
                     continue;
                 }
             }

@@ -149,9 +149,10 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             {
                 Evacuate = BareMetalMachineEvacuate.True,
             };
-            await networkCloudBareMetalMachine.CordonAsync(WaitUntil.Completed, content: content);
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudBareMetalMachine.CordonAsync(WaitUntil.Completed, content: content);
+            NetworkCloudOperationStatusResult result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // Power off bare metal machine
@@ -180,9 +181,10 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             {
                 SkipShutdown = BareMetalMachineSkipShutdown.True,
             };
-            await networkCloudBareMetalMachine.PowerOffAsync(WaitUntil.Completed, content: content);
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudBareMetalMachine.PowerOffAsync(WaitUntil.Completed, content: content);
+            NetworkCloudOperationStatusResult result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // Reimage bare metal machine
@@ -207,9 +209,10 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudBareMetalMachineResource networkCloudBareMetalMachine = client.GetNetworkCloudBareMetalMachineResource(networkCloudBareMetalMachineResourceId);
 
             // invoke the operation
-            await networkCloudBareMetalMachine.ReimageAsync(WaitUntil.Completed);
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudBareMetalMachine.ReimageAsync(WaitUntil.Completed);
+            NetworkCloudOperationStatusResult result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // Replace bare metal machine
@@ -245,9 +248,10 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
                 MachineName = "name",
                 SerialNumber = "BM1219XXX",
             };
-            await networkCloudBareMetalMachine.ReplaceAsync(WaitUntil.Completed, content: content);
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudBareMetalMachine.ReplaceAsync(WaitUntil.Completed, content: content);
+            NetworkCloudOperationStatusResult result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // Restart bare metal machine
@@ -272,9 +276,10 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudBareMetalMachineResource networkCloudBareMetalMachine = client.GetNetworkCloudBareMetalMachineResource(networkCloudBareMetalMachineResourceId);
 
             // invoke the operation
-            await networkCloudBareMetalMachine.RestartAsync(WaitUntil.Completed);
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudBareMetalMachine.RestartAsync(WaitUntil.Completed);
+            NetworkCloudOperationStatusResult result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // Run command on bare metal machine
@@ -306,9 +311,10 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 "--argument1","argument2"
 },
             };
-            await networkCloudBareMetalMachine.RunCommandAsync(WaitUntil.Completed, content);
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudBareMetalMachine.RunCommandAsync(WaitUntil.Completed, content);
+            NetworkCloudOperationStatusResult result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // Run data extraction on bare metal machine
@@ -343,9 +349,10 @@ Arguments =
 },
 }
             }, 60);
-            await networkCloudBareMetalMachine.RunDataExtractsAsync(WaitUntil.Completed, content);
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudBareMetalMachine.RunDataExtractsAsync(WaitUntil.Completed, content);
+            NetworkCloudOperationStatusResult result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // Run and retrieve output from read only commands on bare metal machine.
@@ -386,9 +393,10 @@ Arguments =
 },
 }
             }, 60);
-            await networkCloudBareMetalMachine.RunReadCommandsAsync(WaitUntil.Completed, content);
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudBareMetalMachine.RunReadCommandsAsync(WaitUntil.Completed, content);
+            NetworkCloudOperationStatusResult result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // Start bare metal machine
@@ -413,9 +421,10 @@ Arguments =
             NetworkCloudBareMetalMachineResource networkCloudBareMetalMachine = client.GetNetworkCloudBareMetalMachineResource(networkCloudBareMetalMachineResourceId);
 
             // invoke the operation
-            await networkCloudBareMetalMachine.StartAsync(WaitUntil.Completed);
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudBareMetalMachine.StartAsync(WaitUntil.Completed);
+            NetworkCloudOperationStatusResult result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // Uncordon bare metal machine
@@ -440,9 +449,10 @@ Arguments =
             NetworkCloudBareMetalMachineResource networkCloudBareMetalMachine = client.GetNetworkCloudBareMetalMachineResource(networkCloudBareMetalMachineResourceId);
 
             // invoke the operation
-            await networkCloudBareMetalMachine.UncordonAsync(WaitUntil.Completed);
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudBareMetalMachine.UncordonAsync(WaitUntil.Completed);
+            NetworkCloudOperationStatusResult result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

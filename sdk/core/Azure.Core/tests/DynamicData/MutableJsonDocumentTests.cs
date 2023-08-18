@@ -1106,6 +1106,28 @@ namespace Azure.Core.Tests
             Assert.AreEqual(2, mdoc.RootElement.GetInt32());
         }
 
+        [Test]
+        public void CanParseFromUtf8JsonReader()
+        {
+            ReadOnlySpan<byte> utf8Json = """
+                {
+                    "foo": 1
+                }
+                """u8;
+            Utf8JsonReader reader = new(utf8Json);
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(ref reader);
+
+            Assert.AreEqual(1, mdoc.RootElement.GetProperty("foo").GetInt32());
+
+            using MemoryStream stream = new();
+            mdoc.WriteTo(stream, "J");
+            stream.Flush();
+            stream.Position = 0;
+
+            Assert.AreEqual("""{"foo":1}""", BinaryData.FromStream(stream).ToString());
+        }
+
         #region Helpers
 
         internal static void ValidateWriteTo(BinaryData json, MutableJsonDocument mdoc)

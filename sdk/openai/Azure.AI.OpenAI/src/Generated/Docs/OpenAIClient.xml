@@ -126,6 +126,11 @@ var chatCompletionsOptions = new ChatCompletionsOptions(new ChatMessage[]
             Parameters = BinaryData.FromString("<your binary data content>"),
         }
     },
+    FunctionCall = new FunctionDefinition("<name>")
+{
+        Description = "<Description>",
+        Parameters = BinaryData.FromString("<your binary data content>"),
+    },
     MaxTokens = 1234,
     Temperature = 3.14f,
     NucleusSamplingFactor = 3.14f,
@@ -164,6 +169,11 @@ var chatCompletionsOptions = new ChatCompletionsOptions(new ChatMessage[]
             Description = "<Description>",
             Parameters = BinaryData.FromString("<your binary data content>"),
         }
+    },
+    FunctionCall = new FunctionDefinition("<name>")
+{
+        Description = "<Description>",
+        Parameters = BinaryData.FromString("<your binary data content>"),
     },
     MaxTokens = 1234,
     Temperature = 3.14f,

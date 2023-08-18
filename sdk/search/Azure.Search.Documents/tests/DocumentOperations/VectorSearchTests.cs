@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Tests
                    null,
                    new SearchOptions
                    {
-                       Vector = new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = "descriptionVector" },
+                       Vectors = { new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
                        Select = { "hotelId", "hotelName" }
                    });
 
@@ -63,7 +63,7 @@ namespace Azure.Search.Documents.Tests
                     null,
                     new SearchOptions
                     {
-                        Vector = new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = "descriptionVector" },
+                        Vectors = { new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
                         Filter = "category eq 'Budget'",
                         Select = { "hotelId", "hotelName", "category" }
                     });
@@ -85,7 +85,7 @@ namespace Azure.Search.Documents.Tests
                     "Top hotels in town",
                     new SearchOptions
                     {
-                        Vector = new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = "descriptionVector" },
+                        Vectors = { new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
                         Select = { "hotelId", "hotelName" },
                     });
 
@@ -107,7 +107,7 @@ namespace Azure.Search.Documents.Tests
                     "Is there any hotel located on the main commercial artery of the city in the heart of New York?",
                     new SearchOptions
                     {
-                        Vector = new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = "descriptionVector" },
+                        Vectors = { new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
                         Select = { "hotelId", "hotelName", "description", "category" },
                         QueryType = SearchQueryType.Semantic,
                         QueryLanguage = QueryLanguage.EnUs,
@@ -157,8 +157,8 @@ namespace Azure.Search.Documents.Tests
                 },
             };
 
-           SearchIndexClient indexClient = resources.GetIndexClient();
-           await indexClient.CreateIndexAsync(index);
+            SearchIndexClient indexClient = resources.GetIndexClient();
+            await indexClient.CreateIndexAsync(index);
 
             // Upload data
             SearchDocument document = new SearchDocument
@@ -221,6 +221,50 @@ namespace Azure.Search.Documents.Tests
             Assert.IsNotNull(response.Value["descriptionVector"]);
 
             Assert.AreEqual(updatedIndex.Name, createdIndex.Name);
+        }
+
+        [Test]
+        public async Task CreateIndexUsingFieldBuilder()
+        {
+            await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
+
+            string indexName = Recording.Random.GetName();
+            resources.IndexName = indexName;
+
+            // Create Index
+            SearchIndex index = new SearchIndex(indexName)
+            {
+                Fields = new FieldBuilder().Build(typeof(Model)),
+                VectorSearch = new()
+                {
+                    AlgorithmConfigurations =
+                    {
+                        new HnswVectorSearchAlgorithmConfiguration( "my-vector-config")
+                    }
+                }
+            };
+
+            SearchIndexClient indexClient = resources.GetIndexClient();
+            await indexClient.CreateIndexAsync(index);
+
+            SearchIndex createdIndex = await indexClient.GetIndexAsync(indexName);
+            Assert.AreEqual(indexName, createdIndex.Name);
+            Assert.AreEqual(index.Fields.Count, createdIndex.Fields.Count);
+        }
+
+        private class Model
+        {
+            [SimpleField(IsKey = true, IsFilterable = true, IsSortable = true)]
+            public string Id { get; set; }
+
+            [SearchableField(IsFilterable = true, IsSortable = true)]
+            public string Name { get; set; }
+
+            [SearchableField(AnalyzerName = "en.microsoft")]
+            public string Description { get; set; }
+
+            [SearchableField(VectorSearchDimensions = "1536", VectorSearchConfiguration = "my-vector-config")]
+            public IReadOnlyList<float> DescriptionVector { get; set; }
         }
     }
 }

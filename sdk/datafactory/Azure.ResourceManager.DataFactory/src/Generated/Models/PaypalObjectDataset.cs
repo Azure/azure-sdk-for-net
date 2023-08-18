@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Paypal Service dataset. </summary>
-    public partial class PaypalObjectDataset : DataFactoryDatasetDefinition
+    public partial class PaypalObjectDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of PaypalObjectDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

@@ -179,9 +179,10 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             {
                 SkipShutdown = SkipShutdown.True,
             };
-            await networkCloudVirtualMachine.PowerOffAsync(WaitUntil.Completed, content: content);
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudVirtualMachine.PowerOffAsync(WaitUntil.Completed, content: content);
+            NetworkCloudOperationStatusResult result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // Reimage virtual machine
@@ -206,9 +207,10 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudVirtualMachineResource networkCloudVirtualMachine = client.GetNetworkCloudVirtualMachineResource(networkCloudVirtualMachineResourceId);
 
             // invoke the operation
-            await networkCloudVirtualMachine.ReimageAsync(WaitUntil.Completed);
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudVirtualMachine.ReimageAsync(WaitUntil.Completed);
+            NetworkCloudOperationStatusResult result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // Restart virtual machine
@@ -233,9 +235,10 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudVirtualMachineResource networkCloudVirtualMachine = client.GetNetworkCloudVirtualMachineResource(networkCloudVirtualMachineResourceId);
 
             // invoke the operation
-            await networkCloudVirtualMachine.RestartAsync(WaitUntil.Completed);
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudVirtualMachine.RestartAsync(WaitUntil.Completed);
+            NetworkCloudOperationStatusResult result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // Start virtual machine
@@ -260,9 +263,10 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudVirtualMachineResource networkCloudVirtualMachine = client.GetNetworkCloudVirtualMachineResource(networkCloudVirtualMachineResourceId);
 
             // invoke the operation
-            await networkCloudVirtualMachine.StartAsync(WaitUntil.Completed);
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudVirtualMachine.StartAsync(WaitUntil.Completed);
+            NetworkCloudOperationStatusResult result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }
