@@ -107,7 +107,7 @@ namespace Azure.Storage
             StorageResponseClassifier classifier = new();
             var pipelineOptions = new HttpPipelineOptions(options)
             {
-                PerCallPolicies = { StorageServerTimeoutPolicy.Shared },
+                PerCallPolicies = { StorageServerTimeoutPolicy.Shared, StorageTelemetryPolicy.Shared },
                 ResponseClassifier = classifier,
                 RequestFailedDetailsParser = new StorageRequestFailedDetailsParser()
             };
