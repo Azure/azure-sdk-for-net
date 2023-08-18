@@ -69,21 +69,27 @@ namespace Azure.Core.Tests.PatchModels
             writer.WritePropertyName("id");
             writer.WriteStringValue(Id);
 
-            writer.WritePropertyName("values");
+            writer.WritePropertyName("variables");
+
+            writer.WriteStartObject();
+            foreach (KeyValuePair<string, string> item in Variables)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteStringValue(item.Value);
+            }
+            writer.WriteEndObject();
 
             // TODO
-            //Child.SerializeFull(writer);
+            // Child.SerializeFull(writer);
+            // The dictionary could know how to serialize itself and its patch
+            // as an IChangeWriteable.
 
             writer.WriteEndObject();
         }
 
         private void SerializePatch(Utf8JsonWriter writer)
         {
-            writer.WriteStartObject();
-
-            //TODO
-
-            writer.WriteEndObject();
+            _rootChanges.WriteMergePatch(writer);
         }
 
         void IModelJsonSerializable<CollectionPatchModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)

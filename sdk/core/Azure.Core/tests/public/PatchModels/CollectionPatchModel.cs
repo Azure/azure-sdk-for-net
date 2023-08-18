@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.PatchModels
 {
@@ -10,11 +11,15 @@ namespace Azure.Core.Tests.PatchModels
     /// </summary>
     public partial class CollectionPatchModel
     {
+        private readonly ChangeList _rootChanges = new();
+        private readonly ChangeListElement _changes;
+
         /// <summary>
         /// Public constructor.
         /// </summary>
         public CollectionPatchModel()
         {
+            _changes = _rootChanges.RootElement;
         }
 
         /// <summary>
@@ -34,14 +39,22 @@ namespace Azure.Core.Tests.PatchModels
         public string Id
         {
             get => _id;
-            set => _id = value;
+            set
+            {
+                _id = value;
+                _changes.Set("id", value);
+            }
         }
 
         private IDictionary<string, string> _variables;
         /// <summary> Environment variables which are defined as a set of &lt;name,value&gt; pairs. </summary>
         public IDictionary<string, string> Variables
         {
-            get => _variables;
+            get
+            {
+                _variables ??= new ChangeListDictionary<string>("variables", _changes);
+                return _variables;
+            }
         }
     }
 }

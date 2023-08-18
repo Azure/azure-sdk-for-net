@@ -26,6 +26,11 @@ namespace Azure.Core.Serialization
             return new ChangeListElement(_root, _path +  path);
         }
 
+        public readonly void SetNull(string path)
+        {
+            _root.AddChange(_path + path, null);
+        }
+
         public readonly void Set(string path, string value)
         {
             // TODO: handle delimiters
@@ -44,6 +49,12 @@ namespace Azure.Core.Serialization
 
         public readonly void Set(string path, IChangeWriteable value)
         {
+            _root.AddChange(_path + path, value);
+        }
+
+        public readonly void Set<T>(string path, T value)
+        {
+            // TODO: add validation around T
             _root.AddChange(_path + path, value);
         }
     }
