@@ -58,13 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Tests.Scenario
             var vaultName = RSVault.Data.Name;
             var id = new ResourceIdentifier(resourceGroup.Id);
             BackupProtectedItemCollection collection = new BackupProtectedItemCollection(Client,id);
-            //先创建一个container才能继续进行，因为BackupProtectedItemCollection是在BackupProtectionContainerResource里面
-
-            //var backupProtectedItemResource = await resourceGroup.GetBackupProtectedItemsAsync(vaultName).ToEnumerableAsync();
-            //foreach (var item in backupProtectedItemResource)
-            //{
-            //    item
-            //}
+            //Create a container first before proceeding,as BackupProtectedItemCollection is located within the BackupProtectionContainerResource
             var protectedItemName = Recording.GenerateAssetName("protectedItemName");
             var data = new BackupProtectedItemData(AzureLocation.EastUS)
             {

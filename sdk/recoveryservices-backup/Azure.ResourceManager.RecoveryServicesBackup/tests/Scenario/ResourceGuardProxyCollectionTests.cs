@@ -59,10 +59,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Tests.Scenario
             var collection = resourceGroup.GetResourceGuardProxies(vaultName);
             var data = new ResourceGuardProxyData(AzureLocation.EastUS)
             {
-                //need resource guard
                 Properties = new ResourceGuardProxyProperties()
                 {
-                    ResourceGuardResourceId = {},
+                    ResourceGuardResourceId = {}, //need resource guard
                     Description = "nothing",
                     ResourceGuardOperationDetails = {},
                     LastUpdatedOn = DateTime.UtcNow,

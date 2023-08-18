@@ -92,7 +92,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Tests.Scenario
 
             await keyClient.CreateRsaKeyAsync(keyData);
             var rsaKey = (await keyClient.GetKeyAsync(rsaKeyName)).Value;
-
             var collection = resourceGroup.GetBackupResourceEncryptionConfigExtendeds();
             var content = new BackupResourceEncryptionConfigExtendedCreateOrUpdateContent(AzureLocation.EastUS)
             {
@@ -106,6 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Tests.Scenario
                     //UseSystemAssignedIdentity = false,
                 }
             };
+
             var backupResourceEncryptionConfigExtended = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vaultName, content);
             Assert.IsNotNull(backupResourceEncryptionConfigExtended);
         }

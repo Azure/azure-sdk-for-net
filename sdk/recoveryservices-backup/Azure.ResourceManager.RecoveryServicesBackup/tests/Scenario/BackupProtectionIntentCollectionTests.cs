@@ -59,15 +59,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Tests.Scenario
             var intentObjectName = Recording.GenerateAssetName("");
             var data = new BackupProtectionIntentData(AzureLocation.EastUS)
             {
-                //Properties = new RecoveryServiceVaultProtectionIntent()
-                //{
-                //    ProtectionIntentItemType = ProtectionIntentItemType.RecoveryServiceVaultItem,
-                //    BackupManagementType = BackupManagementType.DefaultBackup,
-                //    SourceResourceId = id,
-                //    ItemId = ,        //没办法进行了，需要使用item，item需要container，container暂时出问题做不了
-                //    PolicyId = ,
-                //    ProtectionState = ,
-                //}
+                Properties = new RecoveryServiceVaultProtectionIntent()
+                {
+                    ProtectionIntentItemType = ProtectionIntentItemType.RecoveryServiceVaultItem,
+                    BackupManagementType = BackupManagementType.DefaultBackup,
+                    SourceResourceId = id,
+                    ItemId = {},//Need to use item, item requires container, and the container is temporarily unable to handle issues
+                    PolicyId = {},
+                }
             };
             var backupProtectionIntent = (await collection.CreateOrUpdateAsync(WaitUntil.Completed,vaultName,fabricName,intentObjectName,data)).Value;
             Assert.AreEqual(backupProtectionIntent.Data.Name, intentObjectName);

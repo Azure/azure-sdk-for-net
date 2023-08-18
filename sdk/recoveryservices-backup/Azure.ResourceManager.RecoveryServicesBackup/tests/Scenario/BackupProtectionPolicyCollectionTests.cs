@@ -67,7 +67,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Tests.Scenario
                         HourlySchedule = new BackupHourlySchedule()
                         {
                             Interval = 4,
-                            //"scheduleWindowStartTime": "2021-09-29T08:00:00.000Z",
                             ScheduleWindowStartOn = new DateTimeOffset(new DateTime(2023, 08, 11, 08, 00, 00, 000)),
                             ScheduleWindowDuration = 12
                         }
