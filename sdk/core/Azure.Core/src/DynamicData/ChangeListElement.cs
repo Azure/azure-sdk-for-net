@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Azure.Core.Serialization
 {
@@ -26,7 +24,7 @@ namespace Azure.Core.Serialization
             return new ChangeListElement(_root, _path +  path);
         }
 
-        public readonly void SetNull(string path)
+        public readonly void Remove(string path)
         {
             _root.AddChange(_path + path, null);
         }

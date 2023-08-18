@@ -48,7 +48,7 @@ namespace Azure.Core.Tests.PatchModels
             }
         }
 
-        private ChangeListDictionary<string> _variables;
+        private ChangeListDictionary<string>? _variables;
         /// <summary> Environment variables which are defined as a set of &lt;name,value&gt; pairs. </summary>
         public IDictionary<string, string> Variables
         {

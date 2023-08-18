@@ -6,7 +6,6 @@ using System.IO;
 using System.Text.Json;
 using Azure.Core.Serialization;
 using Azure.Core.Tests.PatchModels;
-using Azure.Core.Tests.Public.ModelSerializationTests.Models;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public

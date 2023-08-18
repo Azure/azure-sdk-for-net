@@ -9,7 +9,7 @@ namespace Azure.Core.Serialization
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
-    public class ChangeListDictionary<T> : IDictionary<string, T>
+    public struct ChangeListDictionary<T> : IDictionary<string, T>
     {
         private readonly ChangeListElement _changes;
         private readonly Dictionary<string, T> _dictionary;
@@ -66,7 +66,7 @@ namespace Azure.Core.Serialization
             ICollection<KeyValuePair<string, T>> collection = _dictionary;
             foreach (KeyValuePair<string, T> item in collection)
             {
-                _changes.SetNull(item.Key);
+                _changes.Remove(item.Key);
             }
 
             collection.Clear();
@@ -88,13 +88,13 @@ namespace Azure.Core.Serialization
 
         bool IDictionary<string, T>.Remove(string key)
         {
-            _changes.SetNull(key);
+            _changes.Remove(key);
             return _dictionary.Remove(key);
         }
 
         bool ICollection<KeyValuePair<string, T>>.Remove(KeyValuePair<string, T> item)
         {
-            _changes.SetNull(item.Key);
+            _changes.Remove(item.Key);
             return (_dictionary as ICollection<KeyValuePair<string, T>>).Remove(item);
         }
 
