@@ -14,6 +14,8 @@ namespace Azure.Core.Serialization
         private readonly List<ChangeListChange> _changes;
         private readonly ChangeListElement _rootElement;
 
+        private static readonly ModelSerializerOptions AsJson = new ModelSerializerOptions("J");
+
         public ChangeList()
         {
             // TODO: allocate lazily
@@ -60,8 +62,8 @@ namespace Azure.Core.Serialization
                 case null:
                     writer.WriteNullValue();
                     break;
-                case IChangeWriteable c:
-                    c.Write(writer);
+                case IModelJsonSerializable<object> m:
+                    m.Serialize(writer, AsJson);
                     break;
                 default:
                     throw new NotImplementedException($"Unknown value type: '{value.GetType()}'.");

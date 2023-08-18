@@ -7,7 +7,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.PatchModels
 {
-    public partial class ChildPatchModel : IModelJsonSerializable<ChildPatchModel>, IUtf8JsonSerializable, IChangeWriteable
+    public partial class ChildPatchModel : IModelJsonSerializable<ChildPatchModel>, IUtf8JsonSerializable
     {
         internal static ChildPatchModel Deserialize(JsonElement element)
         {
@@ -56,11 +56,6 @@ namespace Azure.Core.Tests.PatchModels
         {
             JsonElement element = JsonDocument.Parse(data).RootElement;
             return Deserialize(element);
-        }
-
-        void IChangeWriteable.Write(Utf8JsonWriter writer)
-        {
-            SerializeFull(writer);
         }
 
         internal void SerializeFull(Utf8JsonWriter writer)

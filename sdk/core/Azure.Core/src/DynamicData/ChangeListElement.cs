@@ -47,7 +47,7 @@ namespace Azure.Core.Serialization
             _root.AddChange(_path + path, value);
         }
 
-        public readonly void Set(string path, IChangeWriteable value)
+        public readonly void Set(string path, IModelJsonSerializable<object> value)
         {
             _root.AddChange(_path + path, value);
         }
