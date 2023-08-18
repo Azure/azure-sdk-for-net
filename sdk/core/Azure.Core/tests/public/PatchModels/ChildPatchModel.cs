@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core.Serialization;
+
 namespace Azure.Core.Tests.PatchModels
 {
     /// <summary>
@@ -8,19 +10,38 @@ namespace Azure.Core.Tests.PatchModels
     /// </summary>
     public partial class ChildPatchModel
     {
-        internal bool HasChanges => _aPatchFlag || _bPatchFlag;
+        private ChangeListElement _changes;
 
-        internal ChildPatchModel() { }
+        internal ChildPatchModel(string path, ChangeListElement changes)
+        {
+            _changes = changes.GetElement(path);
+        }
+
+        /// <summary>
+        /// Serialization constructor.
+        /// </summary>
+        internal ChildPatchModel()
+        {
+            // TODO: Make it so it throws if this is called and changes is later accessed.
+        }
 
         /// <summary> Serialization constructor. </summary>
         internal ChildPatchModel(string a, string b)
         {
             _a = a;
             _b = b;
+
+            // TODO: Make it so it throws if this is called and _changes is later accessed.
+        }
+
+        internal void RegisterWithParent(string path, ChangeListElement changes)
+        {
+            _changes = changes.GetElement(path);
+
+            // TODO: add freezing mechanism to make sure this isn't called multiple times?
         }
 
         private string _a;
-        private bool _aPatchFlag;
         /// <summary>
         /// Optional string property corresponding to JSON """{"a": "aaa"}""".
         /// </summary>
@@ -30,12 +51,11 @@ namespace Azure.Core.Tests.PatchModels
             set
             {
                 _a = value;
-                _aPatchFlag = true;
+                _changes.Set("a", value);
             }
         }
 
         private string _b;
-        private bool _bPatchFlag;
         /// <summary>
         /// Optional string property corresponding to JSON """{"b": "bbb"}""".
         /// </summary>
@@ -45,7 +65,7 @@ namespace Azure.Core.Tests.PatchModels
             set
             {
                 _b = value;
-                _bPatchFlag = true;
+                _changes.Set("b", value);
             }
         }
     }

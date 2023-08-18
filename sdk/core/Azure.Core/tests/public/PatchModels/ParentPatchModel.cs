@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.PatchModels
 {
@@ -10,11 +10,15 @@ namespace Azure.Core.Tests.PatchModels
     /// </summary>
     public partial class ParentPatchModel
     {
+        private readonly ChangeList _rootChanges = new();
+        private readonly ChangeListElement _changes;
+
         /// <summary>
         /// Public constructor.
         /// </summary>
         public ParentPatchModel()
         {
+            _changes = _rootChanges.RootElement;
         }
 
         /// <summary>
@@ -25,10 +29,11 @@ namespace Azure.Core.Tests.PatchModels
         {
             _id = id;
             _child = child;
+
+            _changes = _rootChanges.RootElement;
         }
 
         private string _id;
-        private bool _idPatchFlag;
         /// <summary>
         /// Optional string property corresponding to JSON """{"id": "abc"}""".
         /// </summary>
@@ -38,12 +43,11 @@ namespace Azure.Core.Tests.PatchModels
             set
             {
                 _id = value;
-                _idPatchFlag = true;
+                _changes.Set("id", value);
             }
         }
 
         private ChildPatchModel _child;
-        private bool _childPatchFlag;
         /// <summary>
         /// Optional ChildPatchModel property corresponding to JSON """{"child": {"a":"aa", "b": "bb"}}""".
         /// </summary>
@@ -51,13 +55,14 @@ namespace Azure.Core.Tests.PatchModels
         {
             get
             {
-                _child ??= new ChildPatchModel();
+                _child ??= new ChildPatchModel("child", _changes);
                 return _child;
             }
             set
             {
                 _child = value;
-                _childPatchFlag = true;
+                _child.RegisterWithParent("child", _changes);
+                _changes.Set("child", value);
             }
         }
     }

@@ -58,6 +58,9 @@ namespace Azure.Core.Serialization
                 case null:
                     writer.WriteNullValue();
                     break;
+                case IChangeWriteable c:
+                    c.Write(writer);
+                    break;
                 default:
                     throw new NotImplementedException($"Unknown value type: '{value.GetType()}'.");
             }

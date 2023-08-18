@@ -85,22 +85,7 @@ namespace Azure.Core.Tests.PatchModels
 
         private void SerializePatch(Utf8JsonWriter writer)
         {
-            writer.WriteStartObject();
-
-            if (_idPatchFlag)
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-
-            if (_childPatchFlag ||
-                (Child != null && Child.HasChanges))
-            {
-                writer.WritePropertyName("child");
-                Child.SerializePatch(writer);
-            }
-
-            writer.WriteEndObject();
+            _rootChanges.WriteMergePatch(writer);
         }
 
         void IModelJsonSerializable<ParentPatchModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)

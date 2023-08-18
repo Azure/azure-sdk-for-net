@@ -7,7 +7,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.PatchModels
 {
-    public partial class ChildPatchModel : IModelJsonSerializable<ChildPatchModel>, IUtf8JsonSerializable
+    public partial class ChildPatchModel : IModelJsonSerializable<ChildPatchModel>, IUtf8JsonSerializable, IChangeWriteable
     {
         internal static ChildPatchModel Deserialize(JsonElement element)
         {
@@ -58,6 +58,11 @@ namespace Azure.Core.Tests.PatchModels
             return Deserialize(element);
         }
 
+        void IChangeWriteable.Write(Utf8JsonWriter writer)
+        {
+            SerializeFull(writer);
+        }
+
         internal void SerializeFull(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
@@ -88,21 +93,7 @@ namespace Azure.Core.Tests.PatchModels
 
         internal void SerializePatch(Utf8JsonWriter writer)
         {
-            writer.WriteStartObject();
-
-            if (_aPatchFlag)
-            {
-                writer.WritePropertyName("a");
-                writer.WriteStringValue(A);
-            }
-
-            if (_bPatchFlag)
-            {
-                writer.WritePropertyName("b");
-                writer.WriteStringValue(B);
-            }
-
-            writer.WriteEndObject();
+            throw new NotImplementedException();
         }
 
         void IModelJsonSerializable<ChildPatchModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)

@@ -28,17 +28,23 @@ namespace Azure.Core.Serialization
 
         public readonly void Set(string path, string value)
         {
-            _root.AddChange(path, value);
+            // TODO: handle delimiters
+            _root.AddChange(_path + path, value);
         }
 
         public readonly void Set(string path, int? value)
         {
-            _root.AddChange(path, value);
+            _root.AddChange(_path + path, value);
         }
 
         public readonly void Set(string path, DateTimeOffset? value)
         {
-            _root.AddChange(path, value);
+            _root.AddChange(_path + path, value);
+        }
+
+        public readonly void Set(string path, IChangeWriteable value)
+        {
+            _root.AddChange(_path + path, value);
         }
     }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
