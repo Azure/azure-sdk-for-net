@@ -155,11 +155,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventHubProducerAppliesDiagnosticIdToEventsOnSend()
         {
-            Activity activity = new Activity("SomeActivity");
-#if NET462
-            activity.SetIdFormat(ActivityIdFormat.W3C);
-#endif
-            activity.Start();
+            Activity activity = new Activity("SomeActivity").Start();
 
             var eventHubName = "SomeName";
             var endpoint = "some.endpoint.com";
@@ -267,7 +263,11 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task EventHubBufferedProducerAppliesDiagnosticIdToSingleEventOnEnqueue()
         {
             using var testListener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
-            Activity activity = new Activity("SomeActivity").Start();
+            Activity activity = new Activity("SomeActivity");
+#if NET462
+            activity.SetIdFormat(ActivityIdFormat.W3C);
+#endif
+            activity.Start();
 
             var eventHubName = "SomeName";
             var endpoint = "some.endpoint.com";
