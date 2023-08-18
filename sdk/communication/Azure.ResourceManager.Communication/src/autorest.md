@@ -77,8 +77,4 @@ directive:
    where: $.parameters.SubscriptionIdParameter
    transform: >
      delete $["format"];
- - from: v5/types.json
-   where: $.definitions
-   transform: >
-      delete $.Resource.properties.id.format;
 ```
