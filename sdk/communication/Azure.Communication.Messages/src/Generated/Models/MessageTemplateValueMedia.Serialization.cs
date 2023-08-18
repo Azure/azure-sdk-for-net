@@ -15,20 +15,20 @@ namespace Azure.Communication.Messages
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Uri))
+            if (Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Uri.AbsoluteUri);
+                writer.WriteStringValue(Url.AbsoluteUri);
             }
             if (Optional.IsDefined(Caption))
             {
                 writer.WritePropertyName("caption"u8);
                 writer.WriteStringValue(Caption);
             }
-            if (Optional.IsDefined(Filename))
+            if (Optional.IsDefined(FileName))
             {
-                writer.WritePropertyName("filename"u8);
-                writer.WriteStringValue(Filename);
+                writer.WritePropertyName("fileName"u8);
+                writer.WriteStringValue(FileName);
             }
             writer.WriteEndObject();
         }

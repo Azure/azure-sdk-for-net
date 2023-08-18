@@ -21,10 +21,10 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> The (public) URL of the media. </summary>
-        public Uri Uri { get; set; }
+        public Uri Url { get; set; }
         /// <summary> The [optional] caption of the media object. </summary>
         public string Caption { get; set; }
         /// <summary> The [optional] filename of the media file. </summary>
-        public string Filename { get; set; }
+        public string FileName { get; set; }
     }
 }
