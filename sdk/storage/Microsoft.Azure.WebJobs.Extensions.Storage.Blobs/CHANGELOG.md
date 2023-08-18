@@ -1,6 +1,7 @@
 # Release History
 
 ## 5.2.0 (2023-08-10)
+- Update ParameterBindingData content to provide connection name instead of connection section
 
 ### Features Added
 - Added support for `BlobsOptions.MaxDequeueCount`
