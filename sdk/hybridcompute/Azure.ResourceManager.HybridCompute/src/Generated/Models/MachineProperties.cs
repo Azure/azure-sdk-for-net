@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of MachineProperties. </summary>
         public MachineProperties()
         {
-            ErrorDetails = new ChangeTrackingList<ResponseError>();
-            DetectedProperties = new ChangeTrackingDictionary<string, string>();
+            ErrorDetails = new Core.ChangeTrackingList<ResponseError>();
+            DetectedProperties = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of MachineProperties. </summary>

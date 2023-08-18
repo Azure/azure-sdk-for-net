@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesGitRepositoryRef : IUtf8JsonSerializable
+    public partial class KubernetesGitRepositoryRef : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Branch))
+            if (Core.Optional.IsDefined(Branch))
             {
                 if (Branch != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("branch");
                 }
             }
-            if (Optional.IsDefined(Tag))
+            if (Core.Optional.IsDefined(Tag))
             {
                 if (Tag != null)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("tag");
                 }
             }
-            if (Optional.IsDefined(Semver))
+            if (Core.Optional.IsDefined(Semver))
             {
                 if (Semver != null)
                 {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("semver");
                 }
             }
-            if (Optional.IsDefined(Commit))
+            if (Core.Optional.IsDefined(Commit))
             {
                 if (Commit != null)
                 {
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<string> branch = default;
-            Optional<string> tag = default;
-            Optional<string> semver = default;
-            Optional<string> commit = default;
+            Core.Optional<string> branch = default;
+            Core.Optional<string> tag = default;
+            Core.Optional<string> semver = default;
+            Core.Optional<string> commit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("branch"u8))

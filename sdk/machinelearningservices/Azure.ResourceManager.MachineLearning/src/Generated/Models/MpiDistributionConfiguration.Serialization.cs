@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MpiDistributionConfiguration : IUtf8JsonSerializable
+    public partial class MpiDistributionConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProcessCountPerInstance))
+            if (Core.Optional.IsDefined(ProcessCountPerInstance))
             {
                 if (ProcessCountPerInstance != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int?> processCountPerInstance = default;
+            Core.Optional<int?> processCountPerInstance = default;
             DistributionType distributionType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MpiDistributionConfiguration(distributionType, Optional.ToNullable(processCountPerInstance));
+            return new MpiDistributionConfiguration(distributionType, Core.Optional.ToNullable(processCountPerInstance));
         }
     }
 }

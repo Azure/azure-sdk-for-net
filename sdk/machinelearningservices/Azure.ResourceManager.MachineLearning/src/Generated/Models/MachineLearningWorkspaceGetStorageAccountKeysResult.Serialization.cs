@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> userStorageKey = default;
+            Core.Optional<string> userStorageKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userStorageKey"u8))

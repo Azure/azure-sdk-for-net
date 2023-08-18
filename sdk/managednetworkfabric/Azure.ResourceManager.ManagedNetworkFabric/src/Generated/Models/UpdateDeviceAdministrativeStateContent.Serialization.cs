@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class UpdateDeviceAdministrativeStateContent : IUtf8JsonSerializable
+    public partial class UpdateDeviceAdministrativeStateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ResourceIds))
+            if (Core.Optional.IsCollectionDefined(ResourceIds))
             {
                 writer.WritePropertyName("resourceIds"u8);
                 writer.WriteStartArray();

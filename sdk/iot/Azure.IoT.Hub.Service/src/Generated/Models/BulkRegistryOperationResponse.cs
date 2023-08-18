@@ -16,8 +16,8 @@ namespace Azure.IoT.Hub.Service.Models
         /// <summary> Initializes a new instance of BulkRegistryOperationResponse. </summary>
         internal BulkRegistryOperationResponse()
         {
-            Errors = new ChangeTrackingList<DeviceRegistryOperationError>();
-            Warnings = new ChangeTrackingList<DeviceRegistryOperationWarning>();
+            Errors = new Core.ChangeTrackingList<DeviceRegistryOperationError>();
+            Warnings = new Core.ChangeTrackingList<DeviceRegistryOperationWarning>();
         }
 
         /// <summary> Initializes a new instance of BulkRegistryOperationResponse. </summary>

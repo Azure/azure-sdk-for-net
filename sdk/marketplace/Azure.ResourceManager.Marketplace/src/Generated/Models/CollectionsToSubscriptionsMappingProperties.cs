@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of CollectionsToSubscriptionsMappingProperties. </summary>
         public CollectionsToSubscriptionsMappingProperties()
         {
-            SubscriptionIds = new ChangeTrackingList<string>();
+            SubscriptionIds = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Subscriptions ids list. </summary>

@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.ManagedServices.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<IReadOnlyList<ManagedServicesAuthorization>> authorizations = default;
-            Optional<IReadOnlyList<ManagedServicesEligibleAuthorization>> eligibleAuthorizations = default;
-            Optional<string> registrationDefinitionName = default;
-            Optional<ManagedServicesProvisioningState> provisioningState = default;
-            Optional<Guid> manageeTenantId = default;
-            Optional<string> manageeTenantName = default;
-            Optional<Guid> managedByTenantId = default;
-            Optional<string> managedByTenantName = default;
+            Core.Optional<string> description = default;
+            Core.Optional<IReadOnlyList<ManagedServicesAuthorization>> authorizations = default;
+            Core.Optional<IReadOnlyList<ManagedServicesEligibleAuthorization>> eligibleAuthorizations = default;
+            Core.Optional<string> registrationDefinitionName = default;
+            Core.Optional<ManagedServicesProvisioningState> provisioningState = default;
+            Core.Optional<Guid> manageeTenantId = default;
+            Core.Optional<string> manageeTenantName = default;
+            Core.Optional<Guid> managedByTenantId = default;
+            Core.Optional<string> managedByTenantName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     continue;
                 }
             }
-            return new ManagedServicesRegistrationAssignmentRegistrationProperties(description.Value, Optional.ToList(authorizations), Optional.ToList(eligibleAuthorizations), registrationDefinitionName.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(manageeTenantId), manageeTenantName.Value, Optional.ToNullable(managedByTenantId), managedByTenantName.Value);
+            return new ManagedServicesRegistrationAssignmentRegistrationProperties(description.Value, Core.Optional.ToList(authorizations), Core.Optional.ToList(eligibleAuthorizations), registrationDefinitionName.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(manageeTenantId), manageeTenantName.Value, Core.Optional.ToNullable(managedByTenantId), managedByTenantName.Value);
         }
     }
 }

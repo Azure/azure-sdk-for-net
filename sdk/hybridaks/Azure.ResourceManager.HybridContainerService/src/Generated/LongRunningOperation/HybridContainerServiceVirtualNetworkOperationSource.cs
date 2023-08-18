@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
-    internal class HybridContainerServiceVirtualNetworkOperationSource : IOperationSource<HybridContainerServiceVirtualNetworkResource>
+    internal class HybridContainerServiceVirtualNetworkOperationSource : Core.IOperationSource<HybridContainerServiceVirtualNetworkResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.HybridContainerService
             _client = client;
         }
 
-        HybridContainerServiceVirtualNetworkResource IOperationSource<HybridContainerServiceVirtualNetworkResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        HybridContainerServiceVirtualNetworkResource Core.IOperationSource<HybridContainerServiceVirtualNetworkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = HybridContainerServiceVirtualNetworkData.DeserializeHybridContainerServiceVirtualNetworkData(document.RootElement);
             return new HybridContainerServiceVirtualNetworkResource(_client, data);
         }
 
-        async ValueTask<HybridContainerServiceVirtualNetworkResource> IOperationSource<HybridContainerServiceVirtualNetworkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HybridContainerServiceVirtualNetworkResource> Core.IOperationSource<HybridContainerServiceVirtualNetworkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = HybridContainerServiceVirtualNetworkData.DeserializeHybridContainerServiceVirtualNetworkData(document.RootElement);

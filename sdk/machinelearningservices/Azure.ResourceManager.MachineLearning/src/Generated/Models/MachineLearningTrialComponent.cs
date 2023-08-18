@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             Command = command;
             EnvironmentId = environmentId;
-            EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
+            EnvironmentVariables = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningTrialComponent. </summary>

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<IotHubTestResultStatus> result = default;
-            Optional<IotHubTestRouteResultDetails> details = default;
+            Core.Optional<IotHubTestResultStatus> result = default;
+            Core.Optional<IotHubTestRouteResultDetails> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("result"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new IotHubTestRouteResult(Optional.ToNullable(result), details.Value);
+            return new IotHubTestRouteResult(Core.Optional.ToNullable(result), details.Value);
         }
     }
 }

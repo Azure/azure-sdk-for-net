@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PrivateStoreCollectionDetails>> succeeded = default;
-            Optional<IReadOnlyList<PrivateStoreCollectionDetails>> failed = default;
+            Core.Optional<IReadOnlyList<PrivateStoreCollectionDetails>> succeeded = default;
+            Core.Optional<IReadOnlyList<PrivateStoreCollectionDetails>> failed = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("succeeded"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new TransferOffersResult(Optional.ToList(succeeded), Optional.ToList(failed));
+            return new TransferOffersResult(Core.Optional.ToList(succeeded), Core.Optional.ToList(failed));
         }
     }
 }

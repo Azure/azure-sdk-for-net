@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MachineLearningPrivateEndpointConnectionData>> value = default;
+            Core.Optional<IReadOnlyList<MachineLearningPrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningPrivateEndpointConnectionListResult(Optional.ToList(value));
+            return new MachineLearningPrivateEndpointConnectionListResult(Core.Optional.ToList(value));
         }
     }
 }

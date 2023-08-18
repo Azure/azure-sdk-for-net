@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class CommonDynamicMatchConfiguration : IUtf8JsonSerializable
+    public partial class CommonDynamicMatchConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IPGroups))
+            if (Core.Optional.IsCollectionDefined(IPGroups))
             {
                 writer.WritePropertyName("ipGroups"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VlanGroups))
+            if (Core.Optional.IsCollectionDefined(VlanGroups))
             {
                 writer.WritePropertyName("vlanGroups"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PortGroups))
+            if (Core.Optional.IsCollectionDefined(PortGroups))
             {
                 writer.WritePropertyName("portGroups"u8);
                 writer.WriteStartArray();
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IList<MatchConfigurationIPGroupProperties>> ipGroups = default;
-            Optional<IList<VlanGroupProperties>> vlanGroups = default;
-            Optional<IList<PortGroupProperties>> portGroups = default;
+            Core.Optional<IList<MatchConfigurationIPGroupProperties>> ipGroups = default;
+            Core.Optional<IList<VlanGroupProperties>> vlanGroups = default;
+            Core.Optional<IList<PortGroupProperties>> portGroups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipGroups"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new CommonDynamicMatchConfiguration(Optional.ToList(ipGroups), Optional.ToList(vlanGroups), Optional.ToList(portGroups));
+            return new CommonDynamicMatchConfiguration(Core.Optional.ToList(ipGroups), Core.Optional.ToList(vlanGroups), Core.Optional.ToList(portGroups));
         }
     }
 }

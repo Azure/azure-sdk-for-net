@@ -16,8 +16,8 @@ namespace Azure.Maps.Routing.Models
         /// <summary> Initializes a new instance of RouteGuidance. </summary>
         internal RouteGuidance()
         {
-            Instructions = new ChangeTrackingList<RouteInstruction>();
-            InstructionGroups = new ChangeTrackingList<RouteInstructionGroup>();
+            Instructions = new Core.ChangeTrackingList<RouteInstruction>();
+            InstructionGroups = new Core.ChangeTrackingList<RouteInstructionGroup>();
         }
 
         /// <summary> Initializes a new instance of RouteGuidance. </summary>

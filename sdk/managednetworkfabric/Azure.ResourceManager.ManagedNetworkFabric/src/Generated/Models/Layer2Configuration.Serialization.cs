@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class Layer2Configuration : IUtf8JsonSerializable
+    public partial class Layer2Configuration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Mtu))
+            if (Core.Optional.IsDefined(Mtu))
             {
                 writer.WritePropertyName("mtu"u8);
                 writer.WriteNumberValue(Mtu.Value);
             }
-            if (Optional.IsCollectionDefined(Interfaces))
+            if (Core.Optional.IsCollectionDefined(Interfaces))
             {
                 writer.WritePropertyName("interfaces"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<int> mtu = default;
-            Optional<IList<ResourceIdentifier>> interfaces = default;
+            Core.Optional<int> mtu = default;
+            Core.Optional<IList<ResourceIdentifier>> interfaces = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mtu"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new Layer2Configuration(Optional.ToNullable(mtu), Optional.ToList(interfaces));
+            return new Layer2Configuration(Core.Optional.ToNullable(mtu), Core.Optional.ToList(interfaces));
         }
     }
 }

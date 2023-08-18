@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class CencDrmConfiguration : IUtf8JsonSerializable
+    public partial class CencDrmConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PlayReady))
+            if (Core.Optional.IsDefined(PlayReady))
             {
                 writer.WritePropertyName("playReady"u8);
                 writer.WriteObjectValue(PlayReady);
             }
-            if (Optional.IsDefined(Widevine))
+            if (Core.Optional.IsDefined(Widevine))
             {
                 writer.WritePropertyName("widevine"u8);
                 writer.WriteObjectValue(Widevine);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<StreamingPolicyPlayReadyConfiguration> playReady = default;
-            Optional<StreamingPolicyWidevineConfiguration> widevine = default;
+            Core.Optional<StreamingPolicyPlayReadyConfiguration> playReady = default;
+            Core.Optional<StreamingPolicyWidevineConfiguration> widevine = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("playReady"u8))

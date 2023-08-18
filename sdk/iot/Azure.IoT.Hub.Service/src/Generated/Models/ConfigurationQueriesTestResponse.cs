@@ -16,7 +16,7 @@ namespace Azure.IoT.Hub.Service.Models
         /// <summary> Initializes a new instance of ConfigurationQueriesTestResponse. </summary>
         internal ConfigurationQueriesTestResponse()
         {
-            CustomMetricQueryErrors = new ChangeTrackingDictionary<string, string>();
+            CustomMetricQueryErrors = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ConfigurationQueriesTestResponse. </summary>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KeyVaultPrivateLinkResourceData>> value = default;
+            Core.Optional<IReadOnlyList<KeyVaultPrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new KeyVaultPrivateLinkResourceListResult(Optional.ToList(value));
+            return new KeyVaultPrivateLinkResourceListResult(Core.Optional.ToList(value));
         }
     }
 }

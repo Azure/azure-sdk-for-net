@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class VideoAnalyzerPreset : IUtf8JsonSerializable
+    public partial class VideoAnalyzerPreset : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(InsightsToExtract))
+            if (Core.Optional.IsDefined(InsightsToExtract))
             {
                 writer.WritePropertyName("insightsToExtract"u8);
                 writer.WriteStringValue(InsightsToExtract.Value.ToString());
             }
-            if (Optional.IsDefined(AudioLanguage))
+            if (Core.Optional.IsDefined(AudioLanguage))
             {
                 writer.WritePropertyName("audioLanguage"u8);
                 writer.WriteStringValue(AudioLanguage);
             }
-            if (Optional.IsDefined(Mode))
+            if (Core.Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ExperimentalOptions))
+            if (Core.Optional.IsCollectionDefined(ExperimentalOptions))
             {
                 writer.WritePropertyName("experimentalOptions"u8);
                 writer.WriteStartObject();
@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<InsightsType> insightsToExtract = default;
-            Optional<string> audioLanguage = default;
-            Optional<AudioAnalysisMode> mode = default;
-            Optional<IDictionary<string, string>> experimentalOptions = default;
+            Core.Optional<InsightsType> insightsToExtract = default;
+            Core.Optional<string> audioLanguage = default;
+            Core.Optional<AudioAnalysisMode> mode = default;
+            Core.Optional<IDictionary<string, string>> experimentalOptions = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new VideoAnalyzerPreset(odataType, audioLanguage.Value, Optional.ToNullable(mode), Optional.ToDictionary(experimentalOptions), Optional.ToNullable(insightsToExtract));
+            return new VideoAnalyzerPreset(odataType, audioLanguage.Value, Core.Optional.ToNullable(mode), Core.Optional.ToDictionary(experimentalOptions), Core.Optional.ToNullable(insightsToExtract));
         }
     }
 }

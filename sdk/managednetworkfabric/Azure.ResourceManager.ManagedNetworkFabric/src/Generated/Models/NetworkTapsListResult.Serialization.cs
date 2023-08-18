@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetworkTapData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<NetworkTapData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new NetworkTapsListResult(Optional.ToList(value), nextLink.Value);
+            return new NetworkTapsListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

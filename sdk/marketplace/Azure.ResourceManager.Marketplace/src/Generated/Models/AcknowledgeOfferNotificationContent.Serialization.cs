@@ -10,29 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class AcknowledgeOfferNotificationContent : IUtf8JsonSerializable
+    public partial class AcknowledgeOfferNotificationContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsAcknowledgeActionFlagEnabled))
+            if (Core.Optional.IsDefined(IsAcknowledgeActionFlagEnabled))
             {
                 writer.WritePropertyName("acknowledge"u8);
                 writer.WriteBooleanValue(IsAcknowledgeActionFlagEnabled.Value);
             }
-            if (Optional.IsDefined(IsDismissActionFlagEnabled))
+            if (Core.Optional.IsDefined(IsDismissActionFlagEnabled))
             {
                 writer.WritePropertyName("dismiss"u8);
                 writer.WriteBooleanValue(IsDismissActionFlagEnabled.Value);
             }
-            if (Optional.IsDefined(IsRemoveOfferActionFlagEnabled))
+            if (Core.Optional.IsDefined(IsRemoveOfferActionFlagEnabled))
             {
                 writer.WritePropertyName("removeOffer"u8);
                 writer.WriteBooleanValue(IsRemoveOfferActionFlagEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(AddPlans))
+            if (Core.Optional.IsCollectionDefined(AddPlans))
             {
                 writer.WritePropertyName("addPlans"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RemovePlans))
+            if (Core.Optional.IsCollectionDefined(RemovePlans))
             {
                 writer.WritePropertyName("removePlans"u8);
                 writer.WriteStartArray();

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotHub
         /// <summary> Initializes a new instance of EventHubConsumerGroupInfoData. </summary>
         internal EventHubConsumerGroupInfoData()
         {
-            Properties = new ChangeTrackingDictionary<string, BinaryData>();
+            Properties = new Core.ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of EventHubConsumerGroupInfoData. </summary>

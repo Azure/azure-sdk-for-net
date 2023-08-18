@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    internal partial class CollectionsToSubscriptionsMappingProperties : IUtf8JsonSerializable
+    internal partial class CollectionsToSubscriptionsMappingProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SubscriptionIds))
+            if (Core.Optional.IsCollectionDefined(SubscriptionIds))
             {
                 writer.WritePropertyName("subscriptionIds"u8);
                 writer.WriteStartArray();

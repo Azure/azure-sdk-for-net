@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Logic
         /// <param name="location"> The location. </param>
         public LogicWorkflowRunActionRepetitionDefinitionData(AzureLocation location) : base(location)
         {
-            RetryHistory = new ChangeTrackingList<LogicWorkRetryHistory>();
-            RepetitionIndexes = new ChangeTrackingList<LogicWorkflowRepetitionIndex>();
+            RetryHistory = new Core.ChangeTrackingList<LogicWorkRetryHistory>();
+            RepetitionIndexes = new Core.ChangeTrackingList<LogicWorkflowRepetitionIndex>();
         }
 
         /// <summary> Initializes a new instance of LogicWorkflowRunActionRepetitionDefinitionData. </summary>

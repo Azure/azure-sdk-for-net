@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class AmlComputeScaleSettings : IUtf8JsonSerializable
+    public partial class AmlComputeScaleSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("maxNodeCount"u8);
             writer.WriteNumberValue(MaxNodeCount);
-            if (Optional.IsDefined(MinNodeCount))
+            if (Core.Optional.IsDefined(MinNodeCount))
             {
                 writer.WritePropertyName("minNodeCount"u8);
                 writer.WriteNumberValue(MinNodeCount.Value);
             }
-            if (Optional.IsDefined(NodeIdleTimeBeforeScaleDown))
+            if (Core.Optional.IsDefined(NodeIdleTimeBeforeScaleDown))
             {
                 if (NodeIdleTimeBeforeScaleDown != null)
                 {
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             int maxNodeCount = default;
-            Optional<int> minNodeCount = default;
-            Optional<TimeSpan?> nodeIdleTimeBeforeScaleDown = default;
+            Core.Optional<int> minNodeCount = default;
+            Core.Optional<TimeSpan?> nodeIdleTimeBeforeScaleDown = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxNodeCount"u8))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new AmlComputeScaleSettings(maxNodeCount, Optional.ToNullable(minNodeCount), Optional.ToNullable(nodeIdleTimeBeforeScaleDown));
+            return new AmlComputeScaleSettings(maxNodeCount, Core.Optional.ToNullable(minNodeCount), Core.Optional.ToNullable(nodeIdleTimeBeforeScaleDown));
         }
     }
 }

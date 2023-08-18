@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of CommonDynamicMatchConfiguration. </summary>
         public CommonDynamicMatchConfiguration()
         {
-            IPGroups = new ChangeTrackingList<MatchConfigurationIPGroupProperties>();
-            VlanGroups = new ChangeTrackingList<VlanGroupProperties>();
-            PortGroups = new ChangeTrackingList<PortGroupProperties>();
+            IPGroups = new Core.ChangeTrackingList<MatchConfigurationIPGroupProperties>();
+            VlanGroups = new Core.ChangeTrackingList<VlanGroupProperties>();
+            PortGroups = new Core.ChangeTrackingList<PortGroupProperties>();
         }
 
         /// <summary> Initializes a new instance of CommonDynamicMatchConfiguration. </summary>

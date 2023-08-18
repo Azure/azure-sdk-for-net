@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of UpdateWorkspaceQuotasResult. </summary>
         internal UpdateWorkspaceQuotasResult()
         {
-            Value = new ChangeTrackingList<MachineLearningWorkspaceQuotaUpdate>();
+            Value = new Core.ChangeTrackingList<MachineLearningWorkspaceQuotaUpdate>();
         }
 
         /// <summary> Initializes a new instance of UpdateWorkspaceQuotasResult. </summary>

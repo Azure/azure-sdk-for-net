@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ContentKeyPolicyPlayReadyConfiguration : IUtf8JsonSerializable
+    public partial class ContentKeyPolicyPlayReadyConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("licenses"u8);
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(ResponseCustomData))
+            if (Core.Optional.IsDefined(ResponseCustomData))
             {
                 writer.WritePropertyName("responseCustomData"u8);
 #if NET6_0_OR_GREATER
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             IList<ContentKeyPolicyPlayReadyLicense> licenses = default;
-            Optional<BinaryData> responseCustomData = default;
+            Core.Optional<BinaryData> responseCustomData = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {

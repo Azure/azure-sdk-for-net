@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningOutputPathAssetReference : IUtf8JsonSerializable
+    public partial class MachineLearningOutputPathAssetReference : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(JobId))
+            if (Core.Optional.IsDefined(JobId))
             {
                 if (JobId != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("jobId");
                 }
             }
-            if (Optional.IsDefined(Path))
+            if (Core.Optional.IsDefined(Path))
             {
                 if (Path != null)
                 {
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> jobId = default;
-            Optional<string> path = default;
+            Core.Optional<ResourceIdentifier> jobId = default;
+            Core.Optional<string> path = default;
             ReferenceType referenceType = default;
             foreach (var property in element.EnumerateObject())
             {

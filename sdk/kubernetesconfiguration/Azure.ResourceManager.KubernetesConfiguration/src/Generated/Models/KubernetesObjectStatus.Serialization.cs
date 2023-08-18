@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> @namespace = default;
-            Optional<string> kind = default;
-            Optional<KubernetesFluxComplianceState> complianceState = default;
-            Optional<KubernetesObjectReference> appliedBy = default;
-            Optional<IReadOnlyList<KubernetesObjectStatusCondition>> statusConditions = default;
-            Optional<HelmReleaseProperties> helmReleaseProperties = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> @namespace = default;
+            Core.Optional<string> kind = default;
+            Core.Optional<KubernetesFluxComplianceState> complianceState = default;
+            Core.Optional<KubernetesObjectReference> appliedBy = default;
+            Core.Optional<IReadOnlyList<KubernetesObjectStatusCondition>> statusConditions = default;
+            Core.Optional<HelmReleaseProperties> helmReleaseProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     continue;
                 }
             }
-            return new KubernetesObjectStatus(name.Value, @namespace.Value, kind.Value, Optional.ToNullable(complianceState), appliedBy.Value, Optional.ToList(statusConditions), helmReleaseProperties.Value);
+            return new KubernetesObjectStatus(name.Value, @namespace.Value, kind.Value, Core.Optional.ToNullable(complianceState), appliedBy.Value, Core.Optional.ToList(statusConditions), helmReleaseProperties.Value);
         }
     }
 }

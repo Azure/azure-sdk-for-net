@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Media
 {
-    internal class MediaLiveEventOperationSource : IOperationSource<MediaLiveEventResource>
+    internal class MediaLiveEventOperationSource : Core.IOperationSource<MediaLiveEventResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Media
             _client = client;
         }
 
-        MediaLiveEventResource IOperationSource<MediaLiveEventResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        MediaLiveEventResource Core.IOperationSource<MediaLiveEventResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MediaLiveEventData.DeserializeMediaLiveEventData(document.RootElement);
             return new MediaLiveEventResource(_client, data);
         }
 
-        async ValueTask<MediaLiveEventResource> IOperationSource<MediaLiveEventResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MediaLiveEventResource> Core.IOperationSource<MediaLiveEventResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MediaLiveEventData.DeserializeMediaLiveEventData(document.RootElement);

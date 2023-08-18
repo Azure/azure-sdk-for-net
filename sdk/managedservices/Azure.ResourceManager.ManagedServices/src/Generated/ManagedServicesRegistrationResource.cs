@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.ManagedServices
             try
             {
                 var response = await _managedServicesRegistrationRegistrationDefinitionsRestClient.CreateOrUpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedServicesArmOperation<ManagedServicesRegistrationResource>(new ManagedServicesRegistrationOperationSource(Client), _managedServicesRegistrationRegistrationDefinitionsClientDiagnostics, Pipeline, _managedServicesRegistrationRegistrationDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedServicesArmOperation<ManagedServicesRegistrationResource>(new ManagedServicesRegistrationOperationSource(Client), _managedServicesRegistrationRegistrationDefinitionsClientDiagnostics, Pipeline, _managedServicesRegistrationRegistrationDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.ManagedServices
             try
             {
                 var response = _managedServicesRegistrationRegistrationDefinitionsRestClient.CreateOrUpdate(Id.Parent, Id.Name, data, cancellationToken);
-                var operation = new ManagedServicesArmOperation<ManagedServicesRegistrationResource>(new ManagedServicesRegistrationOperationSource(Client), _managedServicesRegistrationRegistrationDefinitionsClientDiagnostics, Pipeline, _managedServicesRegistrationRegistrationDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedServicesArmOperation<ManagedServicesRegistrationResource>(new ManagedServicesRegistrationOperationSource(Client), _managedServicesRegistrationRegistrationDefinitionsClientDiagnostics, Pipeline, _managedServicesRegistrationRegistrationDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

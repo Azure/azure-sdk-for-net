@@ -20,21 +20,21 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<SearchAddressResultType> type = default;
-            Optional<string> id = default;
-            Optional<double> score = default;
-            Optional<double> dist = default;
-            Optional<string> info = default;
-            Optional<GeographicEntity> entityType = default;
-            Optional<PointOfInterest> poi = default;
-            Optional<MapsAddress> address = default;
-            Optional<LatLongPairAbbreviated> position = default;
-            Optional<BoundingBox> viewport = default;
-            Optional<IReadOnlyList<FacilityEntryPoint>> entryPoints = default;
-            Optional<AddressRanges> addressRanges = default;
-            Optional<MapsDataSource> dataSources = default;
-            Optional<MapsSearchMatchType> matchType = default;
-            Optional<int> detourTime = default;
+            Core.Optional<SearchAddressResultType> type = default;
+            Core.Optional<string> id = default;
+            Core.Optional<double> score = default;
+            Core.Optional<double> dist = default;
+            Core.Optional<string> info = default;
+            Core.Optional<GeographicEntity> entityType = default;
+            Core.Optional<PointOfInterest> poi = default;
+            Core.Optional<MapsAddress> address = default;
+            Core.Optional<LatLongPairAbbreviated> position = default;
+            Core.Optional<BoundingBox> viewport = default;
+            Core.Optional<IReadOnlyList<FacilityEntryPoint>> entryPoints = default;
+            Core.Optional<AddressRanges> addressRanges = default;
+            Core.Optional<MapsDataSource> dataSources = default;
+            Core.Optional<MapsSearchMatchType> matchType = default;
+            Core.Optional<int> detourTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -170,7 +170,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new SearchAddressResultItem(Optional.ToNullable(type), id.Value, Optional.ToNullable(score), Optional.ToNullable(dist), info.Value, Optional.ToNullable(entityType), poi.Value, address.Value, position.Value, viewport.Value, Optional.ToList(entryPoints), addressRanges.Value, dataSources.Value, Optional.ToNullable(matchType), Optional.ToNullable(detourTime));
+            return new SearchAddressResultItem(Core.Optional.ToNullable(type), id.Value, Core.Optional.ToNullable(score), Core.Optional.ToNullable(dist), info.Value, Core.Optional.ToNullable(entityType), poi.Value, address.Value, position.Value, viewport.Value, Core.Optional.ToList(entryPoints), addressRanges.Value, dataSources.Value, Core.Optional.ToNullable(matchType), Core.Optional.ToNullable(detourTime));
         }
     }
 }

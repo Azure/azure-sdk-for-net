@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    internal partial class UnknownInputDefinition : IUtf8JsonSerializable
+    internal partial class UnknownInputDefinition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Optional.IsCollectionDefined(IncludedTracks))
+            if (Core.Optional.IsCollectionDefined(IncludedTracks))
             {
                 writer.WritePropertyName("includedTracks"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             string odataType = "Unknown";
-            Optional<IList<TrackDescriptor>> includedTracks = default;
+            Core.Optional<IList<TrackDescriptor>> includedTracks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new UnknownInputDefinition(odataType, Optional.ToList(includedTracks));
+            return new UnknownInputDefinition(odataType, Core.Optional.ToList(includedTracks));
         }
     }
 }

@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
             }
             Guid managedByTenantId = default;
             IReadOnlyList<ManagedServicesAuthorization> authorizations = default;
-            Optional<IReadOnlyList<ManagedServicesEligibleAuthorization>> eligibleAuthorizations = default;
-            Optional<string> offerDisplayName = default;
-            Optional<string> publisherDisplayName = default;
-            Optional<string> planDisplayName = default;
+            Core.Optional<IReadOnlyList<ManagedServicesEligibleAuthorization>> eligibleAuthorizations = default;
+            Core.Optional<string> offerDisplayName = default;
+            Core.Optional<string> publisherDisplayName = default;
+            Core.Optional<string> planDisplayName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedByTenantId"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     continue;
                 }
             }
-            return new ManagedServicesMarketplaceRegistrationProperties(managedByTenantId, authorizations, Optional.ToList(eligibleAuthorizations), offerDisplayName.Value, publisherDisplayName.Value, planDisplayName.Value);
+            return new ManagedServicesMarketplaceRegistrationProperties(managedByTenantId, authorizations, Core.Optional.ToList(eligibleAuthorizations), offerDisplayName.Value, publisherDisplayName.Value, planDisplayName.Value);
         }
     }
 }

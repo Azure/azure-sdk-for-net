@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.LoadTesting.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<LoadTestingOutboundEnvironmentEndpoint>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<LoadTestingOutboundEnvironmentEndpoint>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     continue;
                 }
             }
-            return new OutboundEnvironmentEndpointListResult(Optional.ToList(value), nextLink.Value);
+            return new OutboundEnvironmentEndpointListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

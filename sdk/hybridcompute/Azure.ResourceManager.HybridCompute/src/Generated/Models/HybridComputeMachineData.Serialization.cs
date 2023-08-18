@@ -13,22 +13,22 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute
 {
-    public partial class HybridComputeMachineData : IUtf8JsonSerializable
+    public partial class HybridComputeMachineData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -50,15 +50,15 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 return null;
             }
-            Optional<MachineProperties> properties = default;
-            Optional<IReadOnlyList<HybridComputeMachineExtensionData>> resources = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<MachineProperties> properties = default;
+            Core.Optional<IReadOnlyList<HybridComputeMachineExtensionData>> resources = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.HybridCompute
                     continue;
                 }
             }
-            return new HybridComputeMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, Optional.ToList(resources), identity);
+            return new HybridComputeMachineData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, properties.Value, Core.Optional.ToList(resources), identity);
         }
     }
 }

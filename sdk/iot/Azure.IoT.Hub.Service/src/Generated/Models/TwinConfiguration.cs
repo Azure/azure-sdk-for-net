@@ -17,7 +17,7 @@ namespace Azure.IoT.Hub.Service.Models
         /// <summary> Initializes a new instance of TwinConfiguration. </summary>
         public TwinConfiguration()
         {
-            Labels = new ChangeTrackingDictionary<string, string>();
+            Labels = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of TwinConfiguration. </summary>

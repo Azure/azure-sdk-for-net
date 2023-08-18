@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<VirtualNetworksPropertiesStatusProvisioningStatus> provisioningStatus = default;
+            Core.Optional<VirtualNetworksPropertiesStatusProvisioningStatus> provisioningStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningStatus"u8))

@@ -53,7 +53,7 @@ namespace Azure.Maps.Search
             uri.AppendPath("/search/polygon/", false);
             uri.AppendPath(format.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (geometryIds != null && Optional.IsCollectionDefined(geometryIds))
+            if (geometryIds != null && Core.Optional.IsCollectionDefined(geometryIds))
             {
                 uri.AppendQueryDelimited("geometries", geometryIds, ",", true);
             }
@@ -163,11 +163,11 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("ofs", skip.Value, true);
             }
-            if (categoryFilter != null && Optional.IsCollectionDefined(categoryFilter))
+            if (categoryFilter != null && Core.Optional.IsCollectionDefined(categoryFilter))
             {
                 uri.AppendQueryDelimited("categorySet", categoryFilter, ",", true);
             }
-            if (countryFilter != null && Optional.IsCollectionDefined(countryFilter))
+            if (countryFilter != null && Core.Optional.IsCollectionDefined(countryFilter))
             {
                 uri.AppendQueryDelimited("countrySet", countryFilter, ",", true);
             }
@@ -195,7 +195,7 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("language", language, true);
             }
-            if (extendedPostalCodesFor != null && Optional.IsCollectionDefined(extendedPostalCodesFor))
+            if (extendedPostalCodesFor != null && Core.Optional.IsCollectionDefined(extendedPostalCodesFor))
             {
                 uri.AppendQueryDelimited("extendedPostalCodesFor", extendedPostalCodesFor, ",", true);
             }
@@ -207,15 +207,15 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("maxFuzzyLevel", maxFuzzyLevel.Value, true);
             }
-            if (indexFilter != null && Optional.IsCollectionDefined(indexFilter))
+            if (indexFilter != null && Core.Optional.IsCollectionDefined(indexFilter))
             {
                 uri.AppendQueryDelimited("idxSet", indexFilter, ",", true);
             }
-            if (brandFilter != null && Optional.IsCollectionDefined(brandFilter))
+            if (brandFilter != null && Core.Optional.IsCollectionDefined(brandFilter))
             {
                 uri.AppendQueryDelimited("brandSet", brandFilter, ",", true);
             }
-            if (electricVehicleConnectorFilter != null && Optional.IsCollectionDefined(electricVehicleConnectorFilter))
+            if (electricVehicleConnectorFilter != null && Core.Optional.IsCollectionDefined(electricVehicleConnectorFilter))
             {
                 uri.AppendQueryDelimited("connectorSet", electricVehicleConnectorFilter, ",", true);
             }
@@ -599,11 +599,11 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("ofs", skip.Value, true);
             }
-            if (categoryFilter != null && Optional.IsCollectionDefined(categoryFilter))
+            if (categoryFilter != null && Core.Optional.IsCollectionDefined(categoryFilter))
             {
                 uri.AppendQueryDelimited("categorySet", categoryFilter, ",", true);
             }
-            if (countryFilter != null && Optional.IsCollectionDefined(countryFilter))
+            if (countryFilter != null && Core.Optional.IsCollectionDefined(countryFilter))
             {
                 uri.AppendQueryDelimited("countrySet", countryFilter, ",", true);
             }
@@ -631,15 +631,15 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("language", language, true);
             }
-            if (extendedPostalCodesFor != null && Optional.IsCollectionDefined(extendedPostalCodesFor))
+            if (extendedPostalCodesFor != null && Core.Optional.IsCollectionDefined(extendedPostalCodesFor))
             {
                 uri.AppendQueryDelimited("extendedPostalCodesFor", extendedPostalCodesFor, ",", true);
             }
-            if (brandFilter != null && Optional.IsCollectionDefined(brandFilter))
+            if (brandFilter != null && Core.Optional.IsCollectionDefined(brandFilter))
             {
                 uri.AppendQueryDelimited("brandSet", brandFilter, ",", true);
             }
-            if (electricVehicleConnectorFilter != null && Optional.IsCollectionDefined(electricVehicleConnectorFilter))
+            if (electricVehicleConnectorFilter != null && Core.Optional.IsCollectionDefined(electricVehicleConnectorFilter))
             {
                 uri.AppendQueryDelimited("connectorSet", electricVehicleConnectorFilter, ",", true);
             }
@@ -910,11 +910,11 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("ofs", skip.Value, true);
             }
-            if (categoryFilter != null && Optional.IsCollectionDefined(categoryFilter))
+            if (categoryFilter != null && Core.Optional.IsCollectionDefined(categoryFilter))
             {
                 uri.AppendQueryDelimited("categorySet", categoryFilter, ",", true);
             }
-            if (countryFilter != null && Optional.IsCollectionDefined(countryFilter))
+            if (countryFilter != null && Core.Optional.IsCollectionDefined(countryFilter))
             {
                 uri.AppendQueryDelimited("countrySet", countryFilter, ",", true);
             }
@@ -926,15 +926,15 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("language", language, true);
             }
-            if (extendedPostalCodesFor != null && Optional.IsCollectionDefined(extendedPostalCodesFor))
+            if (extendedPostalCodesFor != null && Core.Optional.IsCollectionDefined(extendedPostalCodesFor))
             {
                 uri.AppendQueryDelimited("extendedPostalCodesFor", extendedPostalCodesFor, ",", true);
             }
-            if (brandFilter != null && Optional.IsCollectionDefined(brandFilter))
+            if (brandFilter != null && Core.Optional.IsCollectionDefined(brandFilter))
             {
                 uri.AppendQueryDelimited("brandSet", brandFilter, ",", true);
             }
-            if (electricVehicleConnectorFilter != null && Optional.IsCollectionDefined(electricVehicleConnectorFilter))
+            if (electricVehicleConnectorFilter != null && Core.Optional.IsCollectionDefined(electricVehicleConnectorFilter))
             {
                 uri.AppendQueryDelimited("connectorSet", electricVehicleConnectorFilter, ",", true);
             }
@@ -1200,11 +1200,11 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("ofs", skip.Value, true);
             }
-            if (categoryFilter != null && Optional.IsCollectionDefined(categoryFilter))
+            if (categoryFilter != null && Core.Optional.IsCollectionDefined(categoryFilter))
             {
                 uri.AppendQueryDelimited("categorySet", categoryFilter, ",", true);
             }
-            if (countryFilter != null && Optional.IsCollectionDefined(countryFilter))
+            if (countryFilter != null && Core.Optional.IsCollectionDefined(countryFilter))
             {
                 uri.AppendQueryDelimited("countrySet", countryFilter, ",", true);
             }
@@ -1232,15 +1232,15 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("language", language, true);
             }
-            if (extendedPostalCodesFor != null && Optional.IsCollectionDefined(extendedPostalCodesFor))
+            if (extendedPostalCodesFor != null && Core.Optional.IsCollectionDefined(extendedPostalCodesFor))
             {
                 uri.AppendQueryDelimited("extendedPostalCodesFor", extendedPostalCodesFor, ",", true);
             }
-            if (brandFilter != null && Optional.IsCollectionDefined(brandFilter))
+            if (brandFilter != null && Core.Optional.IsCollectionDefined(brandFilter))
             {
                 uri.AppendQueryDelimited("brandSet", brandFilter, ",", true);
             }
-            if (electricVehicleConnectorFilter != null && Optional.IsCollectionDefined(electricVehicleConnectorFilter))
+            if (electricVehicleConnectorFilter != null && Core.Optional.IsCollectionDefined(electricVehicleConnectorFilter))
             {
                 uri.AppendQueryDelimited("connectorSet", electricVehicleConnectorFilter, ",", true);
             }
@@ -1625,7 +1625,7 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("ofs", skip.Value, true);
             }
-            if (countryFilter != null && Optional.IsCollectionDefined(countryFilter))
+            if (countryFilter != null && Core.Optional.IsCollectionDefined(countryFilter))
             {
                 uri.AppendQueryDelimited("countrySet", countryFilter, ",", true);
             }
@@ -1653,7 +1653,7 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("language", language, true);
             }
-            if (extendedPostalCodesFor != null && Optional.IsCollectionDefined(extendedPostalCodesFor))
+            if (extendedPostalCodesFor != null && Core.Optional.IsCollectionDefined(extendedPostalCodesFor))
             {
                 uri.AppendQueryDelimited("extendedPostalCodesFor", extendedPostalCodesFor, ",", true);
             }
@@ -1872,7 +1872,7 @@ namespace Azure.Maps.Search
             uri.AppendPath("/search/address/reverse/", false);
             uri.AppendPath(format.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (query != null && Optional.IsCollectionDefined(query))
+            if (query != null && Core.Optional.IsCollectionDefined(query))
             {
                 uri.AppendQueryDelimited("query", query, ",", true);
             }
@@ -1900,7 +1900,7 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("returnRoadUse", includeRoadUse.Value, true);
             }
-            if (roadUse != null && Optional.IsCollectionDefined(roadUse))
+            if (roadUse != null && Core.Optional.IsCollectionDefined(roadUse))
             {
                 uri.AppendQueryDelimited("roadUse", roadUse, ",", true);
             }
@@ -2073,7 +2073,7 @@ namespace Azure.Maps.Search
             uri.AppendPath("/search/address/reverse/crossStreet/", false);
             uri.AppendPath(format.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (query != null && Optional.IsCollectionDefined(query))
+            if (query != null && Core.Optional.IsCollectionDefined(query))
             {
                 uri.AppendQueryDelimited("query", query, ",", true);
             }
@@ -2261,7 +2261,7 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("postalCode", postalCode, true);
             }
-            if (extendedPostalCodesFor != null && Optional.IsCollectionDefined(extendedPostalCodesFor))
+            if (extendedPostalCodesFor != null && Core.Optional.IsCollectionDefined(extendedPostalCodesFor))
             {
                 uri.AppendQueryDelimited("extendedPostalCodesFor", extendedPostalCodesFor, ",", true);
             }
@@ -2493,15 +2493,15 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("language", language, true);
             }
-            if (categoryFilter != null && Optional.IsCollectionDefined(categoryFilter))
+            if (categoryFilter != null && Core.Optional.IsCollectionDefined(categoryFilter))
             {
                 uri.AppendQueryDelimited("categorySet", categoryFilter, ",", true);
             }
-            if (extendedPostalCodesFor != null && Optional.IsCollectionDefined(extendedPostalCodesFor))
+            if (extendedPostalCodesFor != null && Core.Optional.IsCollectionDefined(extendedPostalCodesFor))
             {
                 uri.AppendQueryDelimited("extendedPostalCodesFor", extendedPostalCodesFor, ",", true);
             }
-            if (indexFilter != null && Optional.IsCollectionDefined(indexFilter))
+            if (indexFilter != null && Core.Optional.IsCollectionDefined(indexFilter))
             {
                 uri.AppendQueryDelimited("idxSet", indexFilter, ",", true);
             }
@@ -2520,7 +2520,7 @@ namespace Azure.Maps.Search
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(geometry);
             request.Content = content;
             return message;
@@ -2724,15 +2724,15 @@ namespace Azure.Maps.Search
             {
                 uri.AppendQuery("limit", top.Value, true);
             }
-            if (brandFilter != null && Optional.IsCollectionDefined(brandFilter))
+            if (brandFilter != null && Core.Optional.IsCollectionDefined(brandFilter))
             {
                 uri.AppendQueryDelimited("brandSet", brandFilter, ",", true);
             }
-            if (categoryFilter != null && Optional.IsCollectionDefined(categoryFilter))
+            if (categoryFilter != null && Core.Optional.IsCollectionDefined(categoryFilter))
             {
                 uri.AppendQueryDelimited("categorySet", categoryFilter, ",", true);
             }
-            if (electricVehicleConnectorFilter != null && Optional.IsCollectionDefined(electricVehicleConnectorFilter))
+            if (electricVehicleConnectorFilter != null && Core.Optional.IsCollectionDefined(electricVehicleConnectorFilter))
             {
                 uri.AppendQueryDelimited("connectorSet", electricVehicleConnectorFilter, ",", true);
             }
@@ -2751,7 +2751,7 @@ namespace Azure.Maps.Search
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(route);
             request.Content = content;
             return message;
@@ -2948,7 +2948,7 @@ namespace Azure.Maps.Search
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(batchRequest);
             request.Content = content;
             return message;
@@ -3325,7 +3325,7 @@ namespace Azure.Maps.Search
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(batchRequest);
             request.Content = content;
             return message;
@@ -3485,7 +3485,7 @@ namespace Azure.Maps.Search
         /// <param name="batchRequest"> The list of search fuzzy queries/requests to process. The list can contain a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<SearchFuzzySearchBatchHeaders>> FuzzySearchBatchAsync(JsonFormat format, BatchRequestInternal batchRequest, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<SearchFuzzySearchBatchHeaders>> FuzzySearchBatchAsync(JsonFormat format, BatchRequestInternal batchRequest, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -3499,7 +3499,7 @@ namespace Azure.Maps.Search
             {
                 case 200:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -3659,7 +3659,7 @@ namespace Azure.Maps.Search
         /// <param name="batchRequest"> The list of search fuzzy queries/requests to process. The list can contain a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public ResponseWithHeaders<SearchFuzzySearchBatchHeaders> FuzzySearchBatch(JsonFormat format, BatchRequestInternal batchRequest, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<SearchFuzzySearchBatchHeaders> FuzzySearchBatch(JsonFormat format, BatchRequestInternal batchRequest, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -3673,7 +3673,7 @@ namespace Azure.Maps.Search
             {
                 case 200:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -3851,7 +3851,7 @@ namespace Azure.Maps.Search
         /// <param name="batchId"> Batch id for querying the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<SearchGetFuzzySearchBatchHeaders>> GetFuzzySearchBatchAsync(string batchId, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<SearchGetFuzzySearchBatchHeaders>> GetFuzzySearchBatchAsync(string batchId, CancellationToken cancellationToken = default)
         {
             if (batchId == null)
             {
@@ -3865,7 +3865,7 @@ namespace Azure.Maps.Search
             {
                 case 200:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -4024,7 +4024,7 @@ namespace Azure.Maps.Search
         /// <param name="batchId"> Batch id for querying the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchId"/> is null. </exception>
-        public ResponseWithHeaders<SearchGetFuzzySearchBatchHeaders> GetFuzzySearchBatch(string batchId, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<SearchGetFuzzySearchBatchHeaders> GetFuzzySearchBatch(string batchId, CancellationToken cancellationToken = default)
         {
             if (batchId == null)
             {
@@ -4038,7 +4038,7 @@ namespace Azure.Maps.Search
             {
                 case 200:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -4061,7 +4061,7 @@ namespace Azure.Maps.Search
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(batchRequest);
             request.Content = content;
             return message;
@@ -4422,7 +4422,7 @@ namespace Azure.Maps.Search
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(batchRequest);
             request.Content = content;
             return message;
@@ -4574,7 +4574,7 @@ namespace Azure.Maps.Search
         /// <param name="batchRequest"> The list of address geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<SearchSearchAddressBatchHeaders>> SearchAddressBatchAsync(JsonFormat format, BatchRequestInternal batchRequest, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<SearchSearchAddressBatchHeaders>> SearchAddressBatchAsync(JsonFormat format, BatchRequestInternal batchRequest, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -4588,7 +4588,7 @@ namespace Azure.Maps.Search
             {
                 case 200:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -4740,7 +4740,7 @@ namespace Azure.Maps.Search
         /// <param name="batchRequest"> The list of address geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public ResponseWithHeaders<SearchSearchAddressBatchHeaders> SearchAddressBatch(JsonFormat format, BatchRequestInternal batchRequest, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<SearchSearchAddressBatchHeaders> SearchAddressBatch(JsonFormat format, BatchRequestInternal batchRequest, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -4754,7 +4754,7 @@ namespace Azure.Maps.Search
             {
                 case 200:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -4924,7 +4924,7 @@ namespace Azure.Maps.Search
         /// <param name="batchId"> Batch id for querying the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<SearchGetSearchAddressBatchHeaders>> GetSearchAddressBatchAsync(string batchId, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<SearchGetSearchAddressBatchHeaders>> GetSearchAddressBatchAsync(string batchId, CancellationToken cancellationToken = default)
         {
             if (batchId == null)
             {
@@ -4938,7 +4938,7 @@ namespace Azure.Maps.Search
             {
                 case 200:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -5089,7 +5089,7 @@ namespace Azure.Maps.Search
         /// <param name="batchId"> Batch id for querying the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchId"/> is null. </exception>
-        public ResponseWithHeaders<SearchGetSearchAddressBatchHeaders> GetSearchAddressBatch(string batchId, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<SearchGetSearchAddressBatchHeaders> GetSearchAddressBatch(string batchId, CancellationToken cancellationToken = default)
         {
             if (batchId == null)
             {
@@ -5103,7 +5103,7 @@ namespace Azure.Maps.Search
             {
                 case 200:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -5126,7 +5126,7 @@ namespace Azure.Maps.Search
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(batchRequest);
             request.Content = content;
             return message;
@@ -5491,7 +5491,7 @@ namespace Azure.Maps.Search
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(batchRequest);
             request.Content = content;
             return message;
@@ -5645,7 +5645,7 @@ namespace Azure.Maps.Search
         /// <param name="batchRequest"> The list of reverse geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<SearchReverseSearchAddressBatchHeaders>> ReverseSearchAddressBatchAsync(JsonFormat format, BatchRequestInternal batchRequest, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<SearchReverseSearchAddressBatchHeaders>> ReverseSearchAddressBatchAsync(JsonFormat format, BatchRequestInternal batchRequest, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -5659,7 +5659,7 @@ namespace Azure.Maps.Search
             {
                 case 200:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -5813,7 +5813,7 @@ namespace Azure.Maps.Search
         /// <param name="batchRequest"> The list of reverse geocoding queries/requests to process. The list can contain  a max of 10,000 queries and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchRequest"/> is null. </exception>
-        public ResponseWithHeaders<SearchReverseSearchAddressBatchHeaders> ReverseSearchAddressBatch(JsonFormat format, BatchRequestInternal batchRequest, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<SearchReverseSearchAddressBatchHeaders> ReverseSearchAddressBatch(JsonFormat format, BatchRequestInternal batchRequest, CancellationToken cancellationToken = default)
         {
             if (batchRequest == null)
             {
@@ -5827,7 +5827,7 @@ namespace Azure.Maps.Search
             {
                 case 200:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -5999,7 +5999,7 @@ namespace Azure.Maps.Search
         /// <param name="batchId"> Batch id for querying the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<SearchGetReverseSearchAddressBatchHeaders>> GetReverseSearchAddressBatchAsync(string batchId, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<SearchGetReverseSearchAddressBatchHeaders>> GetReverseSearchAddressBatchAsync(string batchId, CancellationToken cancellationToken = default)
         {
             if (batchId == null)
             {
@@ -6013,7 +6013,7 @@ namespace Azure.Maps.Search
             {
                 case 200:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -6166,7 +6166,7 @@ namespace Azure.Maps.Search
         /// <param name="batchId"> Batch id for querying the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchId"/> is null. </exception>
-        public ResponseWithHeaders<SearchGetReverseSearchAddressBatchHeaders> GetReverseSearchAddressBatch(string batchId, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<SearchGetReverseSearchAddressBatchHeaders> GetReverseSearchAddressBatch(string batchId, CancellationToken cancellationToken = default)
         {
             if (batchId == null)
             {
@@ -6180,7 +6180,7 @@ namespace Azure.Maps.Search
             {
                 case 200:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

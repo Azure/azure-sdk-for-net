@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class BatchEndpointDefaults : IUtf8JsonSerializable
+    internal partial class BatchEndpointDefaults : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DeploymentName))
+            if (Core.Optional.IsDefined(DeploymentName))
             {
                 if (DeploymentName != null)
                 {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> deploymentName = default;
+            Core.Optional<string> deploymentName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deploymentName"u8))

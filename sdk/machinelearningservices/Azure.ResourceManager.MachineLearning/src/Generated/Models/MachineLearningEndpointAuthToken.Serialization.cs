@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> accessToken = default;
-            Optional<DateTimeOffset> expiryTimeUtc = default;
-            Optional<DateTimeOffset> refreshAfterTimeUtc = default;
-            Optional<string> tokenType = default;
+            Core.Optional<string> accessToken = default;
+            Core.Optional<DateTimeOffset> expiryTimeUtc = default;
+            Core.Optional<DateTimeOffset> refreshAfterTimeUtc = default;
+            Core.Optional<string> tokenType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accessToken"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningEndpointAuthToken(accessToken.Value, Optional.ToNullable(expiryTimeUtc), Optional.ToNullable(refreshAfterTimeUtc), tokenType.Value);
+            return new MachineLearningEndpointAuthToken(accessToken.Value, Core.Optional.ToNullable(expiryTimeUtc), Core.Optional.ToNullable(refreshAfterTimeUtc), tokenType.Value);
         }
     }
 }

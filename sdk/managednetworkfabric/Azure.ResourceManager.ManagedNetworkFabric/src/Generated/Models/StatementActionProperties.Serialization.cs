@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class StatementActionProperties : IUtf8JsonSerializable
+    public partial class StatementActionProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LocalPreference))
+            if (Core.Optional.IsDefined(LocalPreference))
             {
                 writer.WritePropertyName("localPreference"u8);
                 writer.WriteNumberValue(LocalPreference.Value);
             }
             writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
-            if (Optional.IsDefined(IPCommunityProperties))
+            if (Core.Optional.IsDefined(IPCommunityProperties))
             {
                 writer.WritePropertyName("ipCommunityProperties"u8);
                 writer.WriteObjectValue(IPCommunityProperties);
             }
-            if (Optional.IsDefined(IPExtendedCommunityProperties))
+            if (Core.Optional.IsDefined(IPExtendedCommunityProperties))
             {
                 writer.WritePropertyName("ipExtendedCommunityProperties"u8);
                 writer.WriteObjectValue(IPExtendedCommunityProperties);
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<long> localPreference = default;
+            Core.Optional<long> localPreference = default;
             RoutePolicyActionType actionType = default;
-            Optional<ActionIPCommunityProperties> ipCommunityProperties = default;
-            Optional<ActionIPExtendedCommunityProperties> ipExtendedCommunityProperties = default;
+            Core.Optional<ActionIPCommunityProperties> ipCommunityProperties = default;
+            Core.Optional<ActionIPExtendedCommunityProperties> ipExtendedCommunityProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("localPreference"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new StatementActionProperties(Optional.ToNullable(localPreference), actionType, ipCommunityProperties.Value, ipExtendedCommunityProperties.Value);
+            return new StatementActionProperties(Core.Optional.ToNullable(localPreference), actionType, ipCommunityProperties.Value, ipExtendedCommunityProperties.Value);
         }
     }
 }

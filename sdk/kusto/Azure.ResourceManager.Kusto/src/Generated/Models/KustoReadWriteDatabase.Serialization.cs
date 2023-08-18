@@ -12,12 +12,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoReadWriteDatabase : IUtf8JsonSerializable
+    public partial class KustoReadWriteDatabase : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SoftDeletePeriod))
+            if (Core.Optional.IsDefined(SoftDeletePeriod))
             {
                 writer.WritePropertyName("softDeletePeriod"u8);
                 writer.WriteStringValue(SoftDeletePeriod.Value, "P");
             }
-            if (Optional.IsDefined(HotCachePeriod))
+            if (Core.Optional.IsDefined(HotCachePeriod))
             {
                 writer.WritePropertyName("hotCachePeriod"u8);
                 writer.WriteStringValue(HotCachePeriod.Value, "P");
             }
-            if (Optional.IsDefined(KeyVaultProperties))
+            if (Core.Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            Core.Optional<AzureLocation> location = default;
             KustoKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<KustoProvisioningState> provisioningState = default;
-            Optional<TimeSpan> softDeletePeriod = default;
-            Optional<TimeSpan> hotCachePeriod = default;
-            Optional<DatabaseStatistics> statistics = default;
-            Optional<bool> isFollowed = default;
-            Optional<KustoKeyVaultProperties> keyVaultProperties = default;
-            Optional<SuspensionDetails> suspensionDetails = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<KustoProvisioningState> provisioningState = default;
+            Core.Optional<TimeSpan> softDeletePeriod = default;
+            Core.Optional<TimeSpan> hotCachePeriod = default;
+            Core.Optional<DatabaseStatistics> statistics = default;
+            Core.Optional<bool> isFollowed = default;
+            Core.Optional<KustoKeyVaultProperties> keyVaultProperties = default;
+            Core.Optional<SuspensionDetails> suspensionDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new KustoReadWriteDatabase(id, name, type, systemData.Value, Optional.ToNullable(location), kind, Optional.ToNullable(provisioningState), Optional.ToNullable(softDeletePeriod), Optional.ToNullable(hotCachePeriod), statistics.Value, Optional.ToNullable(isFollowed), keyVaultProperties.Value, suspensionDetails.Value);
+            return new KustoReadWriteDatabase(id, name, type, systemData.Value, Core.Optional.ToNullable(location), kind, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(softDeletePeriod), Core.Optional.ToNullable(hotCachePeriod), statistics.Value, Core.Optional.ToNullable(isFollowed), keyVaultProperties.Value, suspensionDetails.Value);
         }
     }
 }

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class StreamingEndpointAccessControl : IUtf8JsonSerializable
+    public partial class StreamingEndpointAccessControl : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Akamai))
+            if (Core.Optional.IsDefined(Akamai))
             {
                 writer.WritePropertyName("akamai"u8);
                 writer.WriteObjectValue(Akamai);
             }
-            if (Optional.IsDefined(IPs))
+            if (Core.Optional.IsDefined(IPs))
             {
                 writer.WritePropertyName("ip"u8);
                 writer.WriteObjectValue(IPs);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<AkamaiAccessControl> akamai = default;
-            Optional<IPAccessControl> ip = default;
+            Core.Optional<AkamaiAccessControl> akamai = default;
+            Core.Optional<IPAccessControl> ip = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("akamai"u8))

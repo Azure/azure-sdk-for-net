@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of StaticRouteConfiguration. </summary>
         public StaticRouteConfiguration()
         {
-            IPv4Routes = new ChangeTrackingList<StaticRouteProperties>();
-            IPv6Routes = new ChangeTrackingList<StaticRouteProperties>();
+            IPv4Routes = new Core.ChangeTrackingList<StaticRouteProperties>();
+            IPv6Routes = new Core.ChangeTrackingList<StaticRouteProperties>();
         }
 
         /// <summary> Initializes a new instance of StaticRouteConfiguration. </summary>

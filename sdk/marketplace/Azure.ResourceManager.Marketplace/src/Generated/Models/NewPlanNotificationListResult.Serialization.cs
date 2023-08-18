@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NewPlanNotification>> newPlansNotifications = default;
+            Core.Optional<IReadOnlyList<NewPlanNotification>> newPlansNotifications = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("newPlansNotifications"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new NewPlanNotificationListResult(Optional.ToList(newPlansNotifications));
+            return new NewPlanNotificationListResult(Core.Optional.ToList(newPlansNotifications));
         }
     }
 }

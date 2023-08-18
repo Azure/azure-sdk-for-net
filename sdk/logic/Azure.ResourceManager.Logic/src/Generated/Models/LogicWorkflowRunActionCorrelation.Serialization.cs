@@ -12,22 +12,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicWorkflowRunActionCorrelation : IUtf8JsonSerializable
+    public partial class LogicWorkflowRunActionCorrelation : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ActionTrackingId))
+            if (Core.Optional.IsDefined(ActionTrackingId))
             {
                 writer.WritePropertyName("actionTrackingId"u8);
                 writer.WriteStringValue(ActionTrackingId.Value);
             }
-            if (Optional.IsDefined(ClientTrackingId))
+            if (Core.Optional.IsDefined(ClientTrackingId))
             {
                 writer.WritePropertyName("clientTrackingId"u8);
                 writer.WriteStringValue(ClientTrackingId);
             }
-            if (Optional.IsCollectionDefined(ClientKeywords))
+            if (Core.Optional.IsCollectionDefined(ClientKeywords))
             {
                 writer.WritePropertyName("clientKeywords"u8);
                 writer.WriteStartArray();
@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<Guid> actionTrackingId = default;
-            Optional<string> clientTrackingId = default;
-            Optional<IList<string>> clientKeywords = default;
+            Core.Optional<Guid> actionTrackingId = default;
+            Core.Optional<string> clientTrackingId = default;
+            Core.Optional<IList<string>> clientKeywords = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionTrackingId"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new LogicWorkflowRunActionCorrelation(clientTrackingId.Value, Optional.ToList(clientKeywords), Optional.ToNullable(actionTrackingId));
+            return new LogicWorkflowRunActionCorrelation(clientTrackingId.Value, Core.Optional.ToList(clientKeywords), Core.Optional.ToNullable(actionTrackingId));
         }
     }
 }

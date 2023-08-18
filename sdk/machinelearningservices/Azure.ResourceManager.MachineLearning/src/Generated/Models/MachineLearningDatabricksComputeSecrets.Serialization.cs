@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> databricksAccessToken = default;
+            Core.Optional<string> databricksAccessToken = default;
             ComputeType computeType = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    internal partial class SearchInsideGeometryRequest : IUtf8JsonSerializable
+    internal partial class SearchInsideGeometryRequest : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Geometry))
+            if (Core.Optional.IsDefined(Geometry))
             {
                 writer.WritePropertyName("geometry"u8);
                 writer.WriteObjectValue(Geometry);

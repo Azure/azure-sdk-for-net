@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <summary> Initializes a new instance of KustomizationUpdateContent. </summary>
         public KustomizationUpdateContent()
         {
-            DependsOn = new ChangeTrackingList<string>();
+            DependsOn = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> The path in the source reference to reconcile on the cluster. </summary>

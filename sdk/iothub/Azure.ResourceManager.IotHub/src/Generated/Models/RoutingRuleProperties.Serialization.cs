@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class RoutingRuleProperties : IUtf8JsonSerializable
+    public partial class RoutingRuleProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("source"u8);
             writer.WriteStringValue(Source.ToString());
-            if (Optional.IsDefined(Condition))
+            if (Core.Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);
                 writer.WriteStringValue(Condition);
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
             string name = default;
             IotHubRoutingSource source = default;
-            Optional<string> condition = default;
+            Core.Optional<string> condition = default;
             IList<string> endpointNames = default;
             bool isEnabled = default;
             foreach (var property in element.EnumerateObject())

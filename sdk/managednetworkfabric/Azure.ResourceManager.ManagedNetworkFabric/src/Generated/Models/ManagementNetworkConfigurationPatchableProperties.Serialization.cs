@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ManagementNetworkConfigurationPatchableProperties : IUtf8JsonSerializable
+    public partial class ManagementNetworkConfigurationPatchableProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(InfrastructureVpnConfiguration))
+            if (Core.Optional.IsDefined(InfrastructureVpnConfiguration))
             {
                 writer.WritePropertyName("infrastructureVpnConfiguration"u8);
                 writer.WriteObjectValue(InfrastructureVpnConfiguration);
             }
-            if (Optional.IsDefined(WorkloadVpnConfiguration))
+            if (Core.Optional.IsDefined(WorkloadVpnConfiguration))
             {
                 writer.WritePropertyName("workloadVpnConfiguration"u8);
                 writer.WriteObjectValue(WorkloadVpnConfiguration);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<VpnConfigurationPatchableProperties> infrastructureVpnConfiguration = default;
-            Optional<VpnConfigurationPatchableProperties> workloadVpnConfiguration = default;
+            Core.Optional<VpnConfigurationPatchableProperties> infrastructureVpnConfiguration = default;
+            Core.Optional<VpnConfigurationPatchableProperties> workloadVpnConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("infrastructureVpnConfiguration"u8))

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of SwaggerCustomDynamicTreeCommand. </summary>
         public SwaggerCustomDynamicTreeCommand()
         {
-            Parameters = new ChangeTrackingDictionary<string, SwaggerCustomDynamicTreeParameterInfo>();
+            Parameters = new Core.ChangeTrackingDictionary<string, SwaggerCustomDynamicTreeParameterInfo>();
         }
 
         /// <summary> Initializes a new instance of SwaggerCustomDynamicTreeCommand. </summary>

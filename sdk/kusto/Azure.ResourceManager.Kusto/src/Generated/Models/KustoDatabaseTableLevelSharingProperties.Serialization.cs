@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoDatabaseTableLevelSharingProperties : IUtf8JsonSerializable
+    public partial class KustoDatabaseTableLevelSharingProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TablesToInclude))
+            if (Core.Optional.IsCollectionDefined(TablesToInclude))
             {
                 writer.WritePropertyName("tablesToInclude"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TablesToExclude))
+            if (Core.Optional.IsCollectionDefined(TablesToExclude))
             {
                 writer.WritePropertyName("tablesToExclude"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExternalTablesToInclude))
+            if (Core.Optional.IsCollectionDefined(ExternalTablesToInclude))
             {
                 writer.WritePropertyName("externalTablesToInclude"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExternalTablesToExclude))
+            if (Core.Optional.IsCollectionDefined(ExternalTablesToExclude))
             {
                 writer.WritePropertyName("externalTablesToExclude"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MaterializedViewsToInclude))
+            if (Core.Optional.IsCollectionDefined(MaterializedViewsToInclude))
             {
                 writer.WritePropertyName("materializedViewsToInclude"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MaterializedViewsToExclude))
+            if (Core.Optional.IsCollectionDefined(MaterializedViewsToExclude))
             {
                 writer.WritePropertyName("materializedViewsToExclude"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FunctionsToInclude))
+            if (Core.Optional.IsCollectionDefined(FunctionsToInclude))
             {
                 writer.WritePropertyName("functionsToInclude"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FunctionsToExclude))
+            if (Core.Optional.IsCollectionDefined(FunctionsToExclude))
             {
                 writer.WritePropertyName("functionsToExclude"u8);
                 writer.WriteStartArray();
@@ -105,14 +105,14 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<IList<string>> tablesToInclude = default;
-            Optional<IList<string>> tablesToExclude = default;
-            Optional<IList<string>> externalTablesToInclude = default;
-            Optional<IList<string>> externalTablesToExclude = default;
-            Optional<IList<string>> materializedViewsToInclude = default;
-            Optional<IList<string>> materializedViewsToExclude = default;
-            Optional<IList<string>> functionsToInclude = default;
-            Optional<IList<string>> functionsToExclude = default;
+            Core.Optional<IList<string>> tablesToInclude = default;
+            Core.Optional<IList<string>> tablesToExclude = default;
+            Core.Optional<IList<string>> externalTablesToInclude = default;
+            Core.Optional<IList<string>> externalTablesToExclude = default;
+            Core.Optional<IList<string>> materializedViewsToInclude = default;
+            Core.Optional<IList<string>> materializedViewsToExclude = default;
+            Core.Optional<IList<string>> functionsToInclude = default;
+            Core.Optional<IList<string>> functionsToExclude = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tablesToInclude"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new KustoDatabaseTableLevelSharingProperties(Optional.ToList(tablesToInclude), Optional.ToList(tablesToExclude), Optional.ToList(externalTablesToInclude), Optional.ToList(externalTablesToExclude), Optional.ToList(materializedViewsToInclude), Optional.ToList(materializedViewsToExclude), Optional.ToList(functionsToInclude), Optional.ToList(functionsToExclude));
+            return new KustoDatabaseTableLevelSharingProperties(Core.Optional.ToList(tablesToInclude), Core.Optional.ToList(tablesToExclude), Core.Optional.ToList(externalTablesToInclude), Core.Optional.ToList(externalTablesToExclude), Core.Optional.ToList(materializedViewsToInclude), Core.Optional.ToList(materializedViewsToExclude), Core.Optional.ToList(functionsToInclude), Core.Optional.ToList(functionsToExclude));
         }
     }
 }

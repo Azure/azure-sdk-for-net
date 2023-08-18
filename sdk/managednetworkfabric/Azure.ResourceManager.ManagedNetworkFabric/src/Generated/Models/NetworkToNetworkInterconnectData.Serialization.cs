@@ -12,56 +12,56 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    public partial class NetworkToNetworkInterconnectData : IUtf8JsonSerializable
+    public partial class NetworkToNetworkInterconnectData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(NniType))
+            if (Core.Optional.IsDefined(NniType))
             {
                 writer.WritePropertyName("nniType"u8);
                 writer.WriteStringValue(NniType.Value.ToString());
             }
-            if (Optional.IsDefined(IsManagementType))
+            if (Core.Optional.IsDefined(IsManagementType))
             {
                 writer.WritePropertyName("isManagementType"u8);
                 writer.WriteStringValue(IsManagementType.Value.ToString());
             }
             writer.WritePropertyName("useOptionB"u8);
             writer.WriteStringValue(UseOptionB.ToString());
-            if (Optional.IsDefined(Layer2Configuration))
+            if (Core.Optional.IsDefined(Layer2Configuration))
             {
                 writer.WritePropertyName("layer2Configuration"u8);
                 writer.WriteObjectValue(Layer2Configuration);
             }
-            if (Optional.IsDefined(OptionBLayer3Configuration))
+            if (Core.Optional.IsDefined(OptionBLayer3Configuration))
             {
                 writer.WritePropertyName("optionBLayer3Configuration"u8);
                 writer.WriteObjectValue(OptionBLayer3Configuration);
             }
-            if (Optional.IsDefined(NpbStaticRouteConfiguration))
+            if (Core.Optional.IsDefined(NpbStaticRouteConfiguration))
             {
                 writer.WritePropertyName("npbStaticRouteConfiguration"u8);
                 writer.WriteObjectValue(NpbStaticRouteConfiguration);
             }
-            if (Optional.IsDefined(ImportRoutePolicy))
+            if (Core.Optional.IsDefined(ImportRoutePolicy))
             {
                 writer.WritePropertyName("importRoutePolicy"u8);
                 writer.WriteObjectValue(ImportRoutePolicy);
             }
-            if (Optional.IsDefined(ExportRoutePolicy))
+            if (Core.Optional.IsDefined(ExportRoutePolicy))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
                 writer.WriteObjectValue(ExportRoutePolicy);
             }
-            if (Optional.IsDefined(EgressAclId))
+            if (Core.Optional.IsDefined(EgressAclId))
             {
                 writer.WritePropertyName("egressAclId"u8);
                 writer.WriteStringValue(EgressAclId);
             }
-            if (Optional.IsDefined(IngressAclId))
+            if (Core.Optional.IsDefined(IngressAclId))
             {
                 writer.WritePropertyName("ingressAclId"u8);
                 writer.WriteStringValue(IngressAclId);
@@ -79,20 +79,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NniType> nniType = default;
-            Optional<IsManagementType> isManagementType = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<NniType> nniType = default;
+            Core.Optional<IsManagementType> isManagementType = default;
             NetworkFabricBooleanValue useOptionB = default;
-            Optional<Layer2Configuration> layer2Configuration = default;
-            Optional<NetworkToNetworkInterconnectOptionBLayer3Configuration> optionBLayer3Configuration = default;
-            Optional<NpbStaticRouteConfiguration> npbStaticRouteConfiguration = default;
-            Optional<ImportRoutePolicyInformation> importRoutePolicy = default;
-            Optional<ExportRoutePolicyInformation> exportRoutePolicy = default;
-            Optional<ResourceIdentifier> egressAclId = default;
-            Optional<ResourceIdentifier> ingressAclId = default;
-            Optional<NetworkFabricConfigurationState> configurationState = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
-            Optional<NetworkFabricAdministrativeState> administrativeState = default;
+            Core.Optional<Layer2Configuration> layer2Configuration = default;
+            Core.Optional<NetworkToNetworkInterconnectOptionBLayer3Configuration> optionBLayer3Configuration = default;
+            Core.Optional<NpbStaticRouteConfiguration> npbStaticRouteConfiguration = default;
+            Core.Optional<ImportRoutePolicyInformation> importRoutePolicy = default;
+            Core.Optional<ExportRoutePolicyInformation> exportRoutePolicy = default;
+            Core.Optional<ResourceIdentifier> egressAclId = default;
+            Core.Optional<ResourceIdentifier> ingressAclId = default;
+            Core.Optional<NetworkFabricConfigurationState> configurationState = default;
+            Core.Optional<NetworkFabricProvisioningState> provisioningState = default;
+            Core.Optional<NetworkFabricAdministrativeState> administrativeState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     continue;
                 }
             }
-            return new NetworkToNetworkInterconnectData(id, name, type, systemData.Value, Optional.ToNullable(nniType), Optional.ToNullable(isManagementType), useOptionB, layer2Configuration.Value, optionBLayer3Configuration.Value, npbStaticRouteConfiguration.Value, importRoutePolicy.Value, exportRoutePolicy.Value, egressAclId.Value, ingressAclId.Value, Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState));
+            return new NetworkToNetworkInterconnectData(id, name, type, systemData.Value, Core.Optional.ToNullable(nniType), Core.Optional.ToNullable(isManagementType), useOptionB, layer2Configuration.Value, optionBLayer3Configuration.Value, npbStaticRouteConfiguration.Value, importRoutePolicy.Value, exportRoutePolicy.Value, egressAclId.Value, ingressAclId.Value, Core.Optional.ToNullable(configurationState), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(administrativeState));
         }
     }
 }

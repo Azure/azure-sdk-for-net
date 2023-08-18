@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <summary> Initializes a new instance of MaintenanceUpdateListResult. </summary>
         internal MaintenanceUpdateListResult()
         {
-            Value = new ChangeTrackingList<MaintenanceUpdate>();
+            Value = new Core.ChangeTrackingList<MaintenanceUpdate>();
         }
 
         /// <summary> Initializes a new instance of MaintenanceUpdateListResult. </summary>

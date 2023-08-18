@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
         /// <summary> Initializes a new instance of ScopeAssignmentListResult. </summary>
         internal ScopeAssignmentListResult()
         {
-            Value = new ChangeTrackingList<ScopeAssignmentData>();
+            Value = new Core.ChangeTrackingList<ScopeAssignmentData>();
         }
 
         /// <summary> Initializes a new instance of ScopeAssignmentListResult. </summary>

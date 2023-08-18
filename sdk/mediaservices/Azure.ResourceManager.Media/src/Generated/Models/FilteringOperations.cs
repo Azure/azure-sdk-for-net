@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of FilteringOperations. </summary>
         public FilteringOperations()
         {
-            Overlays = new ChangeTrackingList<MediaOverlayBase>();
+            Overlays = new Core.ChangeTrackingList<MediaOverlayBase>();
         }
 
         /// <summary> Initializes a new instance of FilteringOperations. </summary>

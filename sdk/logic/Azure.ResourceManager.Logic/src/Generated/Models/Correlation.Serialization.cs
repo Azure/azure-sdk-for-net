@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> clientTrackingId = default;
+            Core.Optional<string> clientTrackingId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientTrackingId"u8))

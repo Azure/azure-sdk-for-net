@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class SharedAccessSignatureAuthorizationRule : IUtf8JsonSerializable
+    public partial class SharedAccessSignatureAuthorizationRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("keyName"u8);
             writer.WriteStringValue(KeyName);
-            if (Optional.IsDefined(PrimaryKey))
+            if (Core.Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (Optional.IsDefined(SecondaryKey))
+            if (Core.Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.IotHub.Models
                 return null;
             }
             string keyName = default;
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
+            Core.Optional<string> primaryKey = default;
+            Core.Optional<string> secondaryKey = default;
             IotHubSharedAccessRight rights = default;
             foreach (var property in element.EnumerateObject())
             {

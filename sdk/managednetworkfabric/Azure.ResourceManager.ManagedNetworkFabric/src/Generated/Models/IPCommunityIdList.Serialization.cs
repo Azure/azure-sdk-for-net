@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class IPCommunityIdList : IUtf8JsonSerializable
+    public partial class IPCommunityIdList : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IPCommunityIds))
+            if (Core.Optional.IsCollectionDefined(IPCommunityIds))
             {
                 writer.WritePropertyName("ipCommunityIds"u8);
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IList<ResourceIdentifier>> ipCommunityIds = default;
+            Core.Optional<IList<ResourceIdentifier>> ipCommunityIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipCommunityIds"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new IPCommunityIdList(Optional.ToList(ipCommunityIds));
+            return new IPCommunityIdList(Core.Optional.ToList(ipCommunityIds));
         }
     }
 }

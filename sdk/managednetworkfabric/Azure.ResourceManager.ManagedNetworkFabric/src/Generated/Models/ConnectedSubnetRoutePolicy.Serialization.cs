@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ConnectedSubnetRoutePolicy : IUtf8JsonSerializable
+    public partial class ConnectedSubnetRoutePolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExportRoutePolicyId))
+            if (Core.Optional.IsDefined(ExportRoutePolicyId))
             {
                 writer.WritePropertyName("exportRoutePolicyId"u8);
                 writer.WriteStringValue(ExportRoutePolicyId);
             }
-            if (Optional.IsDefined(ExportRoutePolicy))
+            if (Core.Optional.IsDefined(ExportRoutePolicy))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
                 writer.WriteObjectValue(ExportRoutePolicy);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> exportRoutePolicyId = default;
-            Optional<L3ExportRoutePolicy> exportRoutePolicy = default;
+            Core.Optional<ResourceIdentifier> exportRoutePolicyId = default;
+            Core.Optional<L3ExportRoutePolicy> exportRoutePolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("exportRoutePolicyId"u8))

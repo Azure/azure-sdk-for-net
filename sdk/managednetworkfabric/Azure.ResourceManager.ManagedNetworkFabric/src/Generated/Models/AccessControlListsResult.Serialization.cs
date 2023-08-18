@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetworkFabricAccessControlListData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<NetworkFabricAccessControlListData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new AccessControlListsResult(Optional.ToList(value), nextLink.Value);
+            return new AccessControlListsResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

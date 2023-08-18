@@ -18,9 +18,9 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Optional<string> formatVersion = default;
-            Optional<RouteRange> reachableRange = default;
-            Optional<RouteReport> report = default;
+            Core.Optional<string> formatVersion = default;
+            Core.Optional<RouteRange> reachableRange = default;
+            Core.Optional<RouteReport> report = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("formatVersion"u8))

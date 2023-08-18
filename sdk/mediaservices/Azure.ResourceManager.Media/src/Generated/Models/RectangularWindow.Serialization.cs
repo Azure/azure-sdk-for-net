@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class RectangularWindow : IUtf8JsonSerializable
+    public partial class RectangularWindow : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Left))
+            if (Core.Optional.IsDefined(Left))
             {
                 writer.WritePropertyName("left"u8);
                 writer.WriteStringValue(Left);
             }
-            if (Optional.IsDefined(Top))
+            if (Core.Optional.IsDefined(Top))
             {
                 writer.WritePropertyName("top"u8);
                 writer.WriteStringValue(Top);
             }
-            if (Optional.IsDefined(Width))
+            if (Core.Optional.IsDefined(Width))
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteStringValue(Width);
             }
-            if (Optional.IsDefined(Height))
+            if (Core.Optional.IsDefined(Height))
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteStringValue(Height);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> left = default;
-            Optional<string> top = default;
-            Optional<string> width = default;
-            Optional<string> height = default;
+            Core.Optional<string> left = default;
+            Core.Optional<string> top = default;
+            Core.Optional<string> width = default;
+            Core.Optional<string> height = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("left"u8))

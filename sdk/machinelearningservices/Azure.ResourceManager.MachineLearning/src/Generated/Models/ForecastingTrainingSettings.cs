@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of ForecastingTrainingSettings. </summary>
         public ForecastingTrainingSettings()
         {
-            AllowedTrainingAlgorithms = new ChangeTrackingList<ForecastingModel>();
-            BlockedTrainingAlgorithms = new ChangeTrackingList<ForecastingModel>();
+            AllowedTrainingAlgorithms = new Core.ChangeTrackingList<ForecastingModel>();
+            BlockedTrainingAlgorithms = new Core.ChangeTrackingList<ForecastingModel>();
         }
 
         /// <summary> Initializes a new instance of ForecastingTrainingSettings. </summary>

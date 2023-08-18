@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of NetworkFabricRoutePolicyPatch. </summary>
         public NetworkFabricRoutePolicyPatch()
         {
-            Statements = new ChangeTrackingList<RoutePolicyStatementProperties>();
+            Statements = new Core.ChangeTrackingList<RoutePolicyStatementProperties>();
         }
 
         /// <summary> Route Policy statements. </summary>

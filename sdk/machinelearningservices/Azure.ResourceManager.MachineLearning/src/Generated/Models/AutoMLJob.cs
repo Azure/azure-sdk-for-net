@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Argument.AssertNotNull(taskDetails, nameof(taskDetails));
 
-            EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
-            Outputs = new ChangeTrackingDictionary<string, MachineLearningJobOutput>();
+            EnvironmentVariables = new Core.ChangeTrackingDictionary<string, string>();
+            Outputs = new Core.ChangeTrackingDictionary<string, MachineLearningJobOutput>();
             TaskDetails = taskDetails;
             JobType = JobType.AutoML;
         }

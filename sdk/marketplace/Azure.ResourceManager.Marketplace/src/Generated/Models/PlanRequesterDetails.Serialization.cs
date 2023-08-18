@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> planId = default;
-            Optional<string> planDisplayName = default;
-            Optional<IReadOnlyList<PlanRequesterInfo>> requesters = default;
+            Core.Optional<string> planId = default;
+            Core.Optional<string> planDisplayName = default;
+            Core.Optional<IReadOnlyList<PlanRequesterInfo>> requesters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("planId"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new PlanRequesterDetails(planId.Value, planDisplayName.Value, Optional.ToList(requesters));
+            return new PlanRequesterDetails(planId.Value, planDisplayName.Value, Core.Optional.ToList(requesters));
         }
     }
 }

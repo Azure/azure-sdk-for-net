@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="location"> The location. </param>
         public NetworkFabricNeighborGroupData(AzureLocation location) : base(location)
         {
-            NetworkTapIds = new ChangeTrackingList<ResourceIdentifier>();
-            NetworkTapRuleIds = new ChangeTrackingList<ResourceIdentifier>();
+            NetworkTapIds = new Core.ChangeTrackingList<ResourceIdentifier>();
+            NetworkTapRuleIds = new Core.ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of NetworkFabricNeighborGroupData. </summary>

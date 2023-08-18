@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of LogicWorkflowVersionListResult. </summary>
         internal LogicWorkflowVersionListResult()
         {
-            Value = new ChangeTrackingList<LogicWorkflowVersionData>();
+            Value = new Core.ChangeTrackingList<LogicWorkflowVersionData>();
         }
 
         /// <summary> Initializes a new instance of LogicWorkflowVersionListResult. </summary>

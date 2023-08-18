@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class ProvisionedClustersResponseProperties : IUtf8JsonSerializable
+    public partial class ProvisionedClustersResponseProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableRbac))
+            if (Core.Optional.IsDefined(EnableRbac))
             {
                 writer.WritePropertyName("enableRbac"u8);
                 writer.WriteBooleanValue(EnableRbac.Value);
             }
-            if (Optional.IsDefined(LinuxProfile))
+            if (Core.Optional.IsDefined(LinuxProfile))
             {
                 writer.WritePropertyName("linuxProfile"u8);
                 writer.WriteObjectValue(LinuxProfile);
             }
-            if (Optional.IsDefined(Features))
+            if (Core.Optional.IsDefined(Features))
             {
                 writer.WritePropertyName("features"u8);
                 writer.WriteObjectValue(Features);
             }
-            if (Optional.IsCollectionDefined(AddonProfiles))
+            if (Core.Optional.IsCollectionDefined(AddonProfiles))
             {
                 writer.WritePropertyName("addonProfiles"u8);
                 writer.WriteStartObject();
@@ -42,27 +42,27 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ControlPlane))
+            if (Core.Optional.IsDefined(ControlPlane))
             {
                 writer.WritePropertyName("controlPlane"u8);
                 writer.WriteObjectValue(ControlPlane);
             }
-            if (Optional.IsDefined(KubernetesVersion))
+            if (Core.Optional.IsDefined(KubernetesVersion))
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
             }
-            if (Optional.IsDefined(NetworkProfile))
+            if (Core.Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (Optional.IsDefined(NodeResourceGroup))
+            if (Core.Optional.IsDefined(NodeResourceGroup))
             {
                 writer.WritePropertyName("nodeResourceGroup"u8);
                 writer.WriteStringValue(NodeResourceGroup);
             }
-            if (Optional.IsCollectionDefined(AgentPoolProfiles))
+            if (Core.Optional.IsCollectionDefined(AgentPoolProfiles))
             {
                 writer.WritePropertyName("agentPoolProfiles"u8);
                 writer.WriteStartArray();
@@ -72,22 +72,22 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CloudProviderProfile))
+            if (Core.Optional.IsDefined(CloudProviderProfile))
             {
                 writer.WritePropertyName("cloudProviderProfile"u8);
                 writer.WriteObjectValue(CloudProviderProfile);
             }
-            if (Optional.IsDefined(AadProfile))
+            if (Core.Optional.IsDefined(AadProfile))
             {
                 writer.WritePropertyName("aadProfile"u8);
                 writer.WriteObjectValue(AadProfile);
             }
-            if (Optional.IsDefined(WindowsProfile))
+            if (Core.Optional.IsDefined(WindowsProfile))
             {
                 writer.WritePropertyName("windowsProfile"u8);
                 writer.WriteObjectValue(WindowsProfile);
             }
-            if (Optional.IsDefined(HttpProxyConfig))
+            if (Core.Optional.IsDefined(HttpProxyConfig))
             {
                 writer.WritePropertyName("httpProxyConfig"u8);
                 writer.WriteObjectValue(HttpProxyConfig);
@@ -101,21 +101,21 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<bool> enableRbac = default;
-            Optional<LinuxProfileProperties> linuxProfile = default;
-            Optional<ProvisionedClustersCommonPropertiesFeatures> features = default;
-            Optional<IDictionary<string, AddonProfiles>> addonProfiles = default;
-            Optional<ControlPlaneProfile> controlPlane = default;
-            Optional<string> kubernetesVersion = default;
-            Optional<NetworkProfile> networkProfile = default;
-            Optional<string> nodeResourceGroup = default;
-            Optional<IList<NamedAgentPoolProfile>> agentPoolProfiles = default;
-            Optional<CloudProviderProfile> cloudProviderProfile = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<ProvisionedClustersCommonPropertiesStatus> status = default;
-            Optional<AADProfileResponse> aadProfile = default;
-            Optional<WindowsProfileResponse> windowsProfile = default;
-            Optional<HttpProxyConfigResponse> httpProxyConfig = default;
+            Core.Optional<bool> enableRbac = default;
+            Core.Optional<LinuxProfileProperties> linuxProfile = default;
+            Core.Optional<ProvisionedClustersCommonPropertiesFeatures> features = default;
+            Core.Optional<IDictionary<string, AddonProfiles>> addonProfiles = default;
+            Core.Optional<ControlPlaneProfile> controlPlane = default;
+            Core.Optional<string> kubernetesVersion = default;
+            Core.Optional<NetworkProfile> networkProfile = default;
+            Core.Optional<string> nodeResourceGroup = default;
+            Core.Optional<IList<NamedAgentPoolProfile>> agentPoolProfiles = default;
+            Core.Optional<CloudProviderProfile> cloudProviderProfile = default;
+            Core.Optional<ProvisioningState> provisioningState = default;
+            Core.Optional<ProvisionedClustersCommonPropertiesStatus> status = default;
+            Core.Optional<AADProfileResponse> aadProfile = default;
+            Core.Optional<WindowsProfileResponse> windowsProfile = default;
+            Core.Optional<HttpProxyConfigResponse> httpProxyConfig = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableRbac"u8))
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new ProvisionedClustersResponseProperties(aadProfile.Value, windowsProfile.Value, httpProxyConfig.Value, Optional.ToNullable(enableRbac), linuxProfile.Value, features.Value, Optional.ToDictionary(addonProfiles), controlPlane.Value, kubernetesVersion.Value, networkProfile.Value, nodeResourceGroup.Value, Optional.ToList(agentPoolProfiles), cloudProviderProfile.Value, Optional.ToNullable(provisioningState), status.Value);
+            return new ProvisionedClustersResponseProperties(aadProfile.Value, windowsProfile.Value, httpProxyConfig.Value, Core.Optional.ToNullable(enableRbac), linuxProfile.Value, features.Value, Core.Optional.ToDictionary(addonProfiles), controlPlane.Value, kubernetesVersion.Value, networkProfile.Value, nodeResourceGroup.Value, Core.Optional.ToList(agentPoolProfiles), cloudProviderProfile.Value, Core.Optional.ToNullable(provisioningState), status.Value);
         }
     }
 }

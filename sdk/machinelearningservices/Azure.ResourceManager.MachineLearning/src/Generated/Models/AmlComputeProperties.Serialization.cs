@@ -12,27 +12,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class AmlComputeProperties : IUtf8JsonSerializable
+    public partial class AmlComputeProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(OSType))
+            if (Core.Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (Optional.IsDefined(VmSize))
+            if (Core.Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (Optional.IsDefined(VmPriority))
+            if (Core.Optional.IsDefined(VmPriority))
             {
                 writer.WritePropertyName("vmPriority"u8);
                 writer.WriteStringValue(VmPriority.Value.ToString());
             }
-            if (Optional.IsDefined(VirtualMachineImage))
+            if (Core.Optional.IsDefined(VirtualMachineImage))
             {
                 if (VirtualMachineImage != null)
                 {
@@ -44,17 +44,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("virtualMachineImage");
                 }
             }
-            if (Optional.IsDefined(IsolatedNetwork))
+            if (Core.Optional.IsDefined(IsolatedNetwork))
             {
                 writer.WritePropertyName("isolatedNetwork"u8);
                 writer.WriteBooleanValue(IsolatedNetwork.Value);
             }
-            if (Optional.IsDefined(ScaleSettings))
+            if (Core.Optional.IsDefined(ScaleSettings))
             {
                 writer.WritePropertyName("scaleSettings"u8);
                 writer.WriteObjectValue(ScaleSettings);
             }
-            if (Optional.IsDefined(UserAccountCredentials))
+            if (Core.Optional.IsDefined(UserAccountCredentials))
             {
                 if (UserAccountCredentials != null)
                 {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("userAccountCredentials");
                 }
             }
-            if (Optional.IsDefined(Subnet))
+            if (Core.Optional.IsDefined(Subnet))
             {
                 if (Subnet != null)
                 {
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("subnet");
                 }
             }
-            if (Optional.IsDefined(RemoteLoginPortPublicAccess))
+            if (Core.Optional.IsDefined(RemoteLoginPortPublicAccess))
             {
                 writer.WritePropertyName("remoteLoginPortPublicAccess"u8);
                 writer.WriteStringValue(RemoteLoginPortPublicAccess.Value.ToString());
             }
-            if (Optional.IsDefined(EnableNodePublicIP))
+            if (Core.Optional.IsDefined(EnableNodePublicIP))
             {
                 if (EnableNodePublicIP != null)
                 {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("enableNodePublicIp");
                 }
             }
-            if (Optional.IsDefined(PropertyBag))
+            if (Core.Optional.IsDefined(PropertyBag))
             {
                 if (PropertyBag != null)
                 {
@@ -120,23 +120,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningOSType> osType = default;
-            Optional<string> vmSize = default;
-            Optional<MachineLearningVmPriority> vmPriority = default;
-            Optional<VirtualMachineImage> virtualMachineImage = default;
-            Optional<bool> isolatedNetwork = default;
-            Optional<AmlComputeScaleSettings> scaleSettings = default;
-            Optional<MachineLearningUserAccountCredentials> userAccountCredentials = default;
-            Optional<ResourceId> subnet = default;
-            Optional<MachineLearningRemoteLoginPortPublicAccess> remoteLoginPortPublicAccess = default;
-            Optional<MachineLearningAllocationState> allocationState = default;
-            Optional<DateTimeOffset> allocationStateTransitionTime = default;
-            Optional<IReadOnlyList<MachineLearningError>> errors = default;
-            Optional<int?> currentNodeCount = default;
-            Optional<int?> targetNodeCount = default;
-            Optional<MachineLearningNodeStateCounts> nodeStateCounts = default;
-            Optional<bool?> enableNodePublicIP = default;
-            Optional<BinaryData> propertyBag = default;
+            Core.Optional<MachineLearningOSType> osType = default;
+            Core.Optional<string> vmSize = default;
+            Core.Optional<MachineLearningVmPriority> vmPriority = default;
+            Core.Optional<VirtualMachineImage> virtualMachineImage = default;
+            Core.Optional<bool> isolatedNetwork = default;
+            Core.Optional<AmlComputeScaleSettings> scaleSettings = default;
+            Core.Optional<MachineLearningUserAccountCredentials> userAccountCredentials = default;
+            Core.Optional<ResourceId> subnet = default;
+            Core.Optional<MachineLearningRemoteLoginPortPublicAccess> remoteLoginPortPublicAccess = default;
+            Core.Optional<MachineLearningAllocationState> allocationState = default;
+            Core.Optional<DateTimeOffset> allocationStateTransitionTime = default;
+            Core.Optional<IReadOnlyList<MachineLearningError>> errors = default;
+            Core.Optional<int?> currentNodeCount = default;
+            Core.Optional<int?> targetNodeCount = default;
+            Core.Optional<MachineLearningNodeStateCounts> nodeStateCounts = default;
+            Core.Optional<bool?> enableNodePublicIP = default;
+            Core.Optional<BinaryData> propertyBag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osType"u8))
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new AmlComputeProperties(Optional.ToNullable(osType), vmSize.Value, Optional.ToNullable(vmPriority), virtualMachineImage.Value, Optional.ToNullable(isolatedNetwork), scaleSettings.Value, userAccountCredentials.Value, subnet.Value, Optional.ToNullable(remoteLoginPortPublicAccess), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), Optional.ToList(errors), Optional.ToNullable(currentNodeCount), Optional.ToNullable(targetNodeCount), nodeStateCounts.Value, Optional.ToNullable(enableNodePublicIP), propertyBag.Value);
+            return new AmlComputeProperties(Core.Optional.ToNullable(osType), vmSize.Value, Core.Optional.ToNullable(vmPriority), virtualMachineImage.Value, Core.Optional.ToNullable(isolatedNetwork), scaleSettings.Value, userAccountCredentials.Value, subnet.Value, Core.Optional.ToNullable(remoteLoginPortPublicAccess), Core.Optional.ToNullable(allocationState), Core.Optional.ToNullable(allocationStateTransitionTime), Core.Optional.ToList(errors), Core.Optional.ToNullable(currentNodeCount), Core.Optional.ToNullable(targetNodeCount), nodeStateCounts.Value, Core.Optional.ToNullable(enableNodePublicIP), propertyBag.Value);
         }
     }
 }

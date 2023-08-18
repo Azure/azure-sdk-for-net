@@ -19,8 +19,8 @@ namespace Azure.Maps.Geolocation
             {
                 return null;
             }
-            Optional<CountryRegion> countryRegion = default;
-            Optional<IPAddress> ipAddress = default;
+            Core.Optional<CountryRegion> countryRegion = default;
+            Core.Optional<IPAddress> ipAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("countryRegion"u8))

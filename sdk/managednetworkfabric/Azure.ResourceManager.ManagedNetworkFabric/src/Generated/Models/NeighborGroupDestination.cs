@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of NeighborGroupDestination. </summary>
         public NeighborGroupDestination()
         {
-            IPv4Addresses = new ChangeTrackingList<IPAddress>();
-            IPv6Addresses = new ChangeTrackingList<string>();
+            IPv4Addresses = new Core.ChangeTrackingList<IPAddress>();
+            IPv6Addresses = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of NeighborGroupDestination. </summary>

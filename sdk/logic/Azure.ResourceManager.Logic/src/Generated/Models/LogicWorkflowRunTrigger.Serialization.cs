@@ -19,20 +19,20 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<BinaryData> inputs = default;
-            Optional<LogicContentLink> inputsLink = default;
-            Optional<BinaryData> outputs = default;
-            Optional<LogicContentLink> outputsLink = default;
-            Optional<DateTimeOffset> scheduledTime = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<Guid> trackingId = default;
-            Optional<Correlation> correlation = default;
-            Optional<string> code = default;
-            Optional<LogicWorkflowStatus> status = default;
-            Optional<BinaryData> error = default;
-            Optional<BinaryData> trackedProperties = default;
+            Core.Optional<string> name = default;
+            Core.Optional<BinaryData> inputs = default;
+            Core.Optional<LogicContentLink> inputsLink = default;
+            Core.Optional<BinaryData> outputs = default;
+            Core.Optional<LogicContentLink> outputsLink = default;
+            Core.Optional<DateTimeOffset> scheduledTime = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<Guid> trackingId = default;
+            Core.Optional<Correlation> correlation = default;
+            Core.Optional<string> code = default;
+            Core.Optional<LogicWorkflowStatus> status = default;
+            Core.Optional<BinaryData> error = default;
+            Core.Optional<BinaryData> trackedProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new LogicWorkflowRunTrigger(name.Value, inputs.Value, inputsLink.Value, outputs.Value, outputsLink.Value, Optional.ToNullable(scheduledTime), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(trackingId), correlation.Value, code.Value, Optional.ToNullable(status), error.Value, trackedProperties.Value);
+            return new LogicWorkflowRunTrigger(name.Value, inputs.Value, inputsLink.Value, outputs.Value, outputsLink.Value, Core.Optional.ToNullable(scheduledTime), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToNullable(trackingId), correlation.Value, code.Value, Core.Optional.ToNullable(status), error.Value, trackedProperties.Value);
         }
     }
 }

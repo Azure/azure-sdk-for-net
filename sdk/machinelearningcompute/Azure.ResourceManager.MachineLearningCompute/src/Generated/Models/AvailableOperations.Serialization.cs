@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ResourceOperation>> value = default;
+            Core.Optional<IReadOnlyList<ResourceOperation>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     continue;
                 }
             }
-            return new AvailableOperations(Optional.ToList(value));
+            return new AvailableOperations(Core.Optional.ToList(value));
         }
     }
 }

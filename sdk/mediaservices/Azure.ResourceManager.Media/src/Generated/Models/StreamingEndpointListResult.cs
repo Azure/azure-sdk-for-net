@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of StreamingEndpointListResult. </summary>
         internal StreamingEndpointListResult()
         {
-            Value = new ChangeTrackingList<StreamingEndpointData>();
+            Value = new Core.ChangeTrackingList<StreamingEndpointData>();
         }
 
         /// <summary> Initializes a new instance of StreamingEndpointListResult. </summary>

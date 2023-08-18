@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of MatchConfigurationIPGroupProperties. </summary>
         public MatchConfigurationIPGroupProperties()
         {
-            IPPrefixes = new ChangeTrackingList<string>();
+            IPPrefixes = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of MatchConfigurationIPGroupProperties. </summary>

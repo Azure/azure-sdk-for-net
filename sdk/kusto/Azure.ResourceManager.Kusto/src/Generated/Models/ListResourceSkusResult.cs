@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of ListResourceSkusResult. </summary>
         internal ListResourceSkusResult()
         {
-            Value = new ChangeTrackingList<KustoAvailableSkuDetails>();
+            Value = new Core.ChangeTrackingList<KustoAvailableSkuDetails>();
         }
 
         /// <summary> Initializes a new instance of ListResourceSkusResult. </summary>

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Kusto
         /// <summary> Initializes a new instance of KustoAttachedDatabaseConfigurationData. </summary>
         public KustoAttachedDatabaseConfigurationData()
         {
-            AttachedDatabaseNames = new ChangeTrackingList<string>();
+            AttachedDatabaseNames = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of KustoAttachedDatabaseConfigurationData. </summary>

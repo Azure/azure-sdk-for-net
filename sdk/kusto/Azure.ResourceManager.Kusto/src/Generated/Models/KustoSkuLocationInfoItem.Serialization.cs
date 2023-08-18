@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Kusto.Models
                 return null;
             }
             AzureLocation location = default;
-            Optional<IReadOnlyList<string>> zones = default;
-            Optional<IReadOnlyList<KustoResourceSkuZoneDetails>> zoneDetails = default;
+            Core.Optional<IReadOnlyList<string>> zones = default;
+            Core.Optional<IReadOnlyList<KustoResourceSkuZoneDetails>> zoneDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new KustoSkuLocationInfoItem(location, Optional.ToList(zones), Optional.ToList(zoneDetails));
+            return new KustoSkuLocationInfoItem(location, Core.Optional.ToList(zones), Core.Optional.ToList(zoneDetails));
         }
     }
 }

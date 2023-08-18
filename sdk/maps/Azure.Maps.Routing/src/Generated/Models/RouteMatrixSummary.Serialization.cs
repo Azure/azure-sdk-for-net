@@ -18,8 +18,8 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Optional<int> successfulRoutes = default;
-            Optional<int> totalRoutes = default;
+            Core.Optional<int> successfulRoutes = default;
+            Core.Optional<int> totalRoutes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("successfulRoutes"u8))
@@ -41,7 +41,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteMatrixSummary(Optional.ToNullable(successfulRoutes), Optional.ToNullable(totalRoutes));
+            return new RouteMatrixSummary(Core.Optional.ToNullable(successfulRoutes), Core.Optional.ToNullable(totalRoutes));
         }
     }
 }

@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningCommandJob : IUtf8JsonSerializable
+    public partial class MachineLearningCommandJob : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CodeId))
+            if (Core.Optional.IsDefined(CodeId))
             {
                 if (CodeId != null)
                 {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("command"u8);
             writer.WriteStringValue(Command);
-            if (Optional.IsDefined(Distribution))
+            if (Core.Optional.IsDefined(Distribution))
             {
                 if (Distribution != null)
                 {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("environmentId"u8);
             writer.WriteStringValue(EnvironmentId);
-            if (Optional.IsCollectionDefined(EnvironmentVariables))
+            if (Core.Optional.IsCollectionDefined(EnvironmentVariables))
             {
                 if (EnvironmentVariables != null)
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("environmentVariables");
                 }
             }
-            if (Optional.IsCollectionDefined(Inputs))
+            if (Core.Optional.IsCollectionDefined(Inputs))
             {
                 if (Inputs != null)
                 {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("inputs");
                 }
             }
-            if (Optional.IsDefined(Limits))
+            if (Core.Optional.IsDefined(Limits))
             {
                 if (Limits != null)
                 {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("limits");
                 }
             }
-            if (Optional.IsCollectionDefined(Outputs))
+            if (Core.Optional.IsCollectionDefined(Outputs))
             {
                 if (Outputs != null)
                 {
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("outputs");
                 }
             }
-            if (Optional.IsDefined(Resources))
+            if (Core.Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteObjectValue(Resources);
             }
-            if (Optional.IsDefined(ComponentId))
+            if (Core.Optional.IsDefined(ComponentId))
             {
                 if (ComponentId != null)
                 {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("componentId");
                 }
             }
-            if (Optional.IsDefined(ComputeId))
+            if (Core.Optional.IsDefined(ComputeId))
             {
                 if (ComputeId != null)
                 {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("computeId");
                 }
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 if (DisplayName != null)
                 {
@@ -152,12 +152,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("displayName");
                 }
             }
-            if (Optional.IsDefined(ExperimentName))
+            if (Core.Optional.IsDefined(ExperimentName))
             {
                 writer.WritePropertyName("experimentName"u8);
                 writer.WriteStringValue(ExperimentName);
             }
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {
@@ -169,14 +169,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("identity");
                 }
             }
-            if (Optional.IsDefined(IsArchived))
+            if (Core.Optional.IsDefined(IsArchived))
             {
                 writer.WritePropertyName("isArchived"u8);
                 writer.WriteBooleanValue(IsArchived.Value);
             }
             writer.WritePropertyName("jobType"u8);
             writer.WriteStringValue(JobType.ToString());
-            if (Optional.IsCollectionDefined(Services))
+            if (Core.Optional.IsCollectionDefined(Services))
             {
                 if (Services != null)
                 {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("services");
                 }
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (Core.Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {
@@ -251,28 +251,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> codeId = default;
+            Core.Optional<ResourceIdentifier> codeId = default;
             string command = default;
-            Optional<MachineLearningDistributionConfiguration> distribution = default;
+            Core.Optional<MachineLearningDistributionConfiguration> distribution = default;
             ResourceIdentifier environmentId = default;
-            Optional<IDictionary<string, string>> environmentVariables = default;
-            Optional<IDictionary<string, MachineLearningJobInput>> inputs = default;
-            Optional<MachineLearningCommandJobLimits> limits = default;
-            Optional<IDictionary<string, MachineLearningJobOutput>> outputs = default;
-            Optional<BinaryData> parameters = default;
-            Optional<MachineLearningJobResourceConfiguration> resources = default;
-            Optional<ResourceIdentifier> componentId = default;
-            Optional<ResourceIdentifier> computeId = default;
-            Optional<string> displayName = default;
-            Optional<string> experimentName = default;
-            Optional<MachineLearningIdentityConfiguration> identity = default;
-            Optional<bool> isArchived = default;
+            Core.Optional<IDictionary<string, string>> environmentVariables = default;
+            Core.Optional<IDictionary<string, MachineLearningJobInput>> inputs = default;
+            Core.Optional<MachineLearningCommandJobLimits> limits = default;
+            Core.Optional<IDictionary<string, MachineLearningJobOutput>> outputs = default;
+            Core.Optional<BinaryData> parameters = default;
+            Core.Optional<MachineLearningJobResourceConfiguration> resources = default;
+            Core.Optional<ResourceIdentifier> componentId = default;
+            Core.Optional<ResourceIdentifier> computeId = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> experimentName = default;
+            Core.Optional<MachineLearningIdentityConfiguration> identity = default;
+            Core.Optional<bool> isArchived = default;
             JobType jobType = default;
-            Optional<IDictionary<string, MachineLearningJobService>> services = default;
-            Optional<MachineLearningJobStatus> status = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, MachineLearningJobService>> services = default;
+            Core.Optional<MachineLearningJobStatus> status = default;
+            Core.Optional<string> description = default;
+            Core.Optional<IDictionary<string, string>> properties = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("codeId"u8))
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningCommandJob(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), componentId.Value, computeId.Value, displayName.Value, experimentName.Value, identity.Value, Optional.ToNullable(isArchived), jobType, Optional.ToDictionary(services), Optional.ToNullable(status), codeId.Value, command, distribution.Value, environmentId, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(inputs), limits.Value, Optional.ToDictionary(outputs), parameters.Value, resources.Value);
+            return new MachineLearningCommandJob(description.Value, Core.Optional.ToDictionary(properties), Core.Optional.ToDictionary(tags), componentId.Value, computeId.Value, displayName.Value, experimentName.Value, identity.Value, Core.Optional.ToNullable(isArchived), jobType, Core.Optional.ToDictionary(services), Core.Optional.ToNullable(status), codeId.Value, command, distribution.Value, environmentId, Core.Optional.ToDictionary(environmentVariables), Core.Optional.ToDictionary(inputs), limits.Value, Core.Optional.ToDictionary(outputs), parameters.Value, resources.Value);
         }
     }
 }

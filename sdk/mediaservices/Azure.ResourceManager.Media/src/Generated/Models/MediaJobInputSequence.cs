@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of MediaJobInputSequence. </summary>
         public MediaJobInputSequence()
         {
-            Inputs = new ChangeTrackingList<MediaJobInputClip>();
+            Inputs = new Core.ChangeTrackingList<MediaJobInputClip>();
             OdataType = "#Microsoft.Media.JobInputSequence";
         }
 

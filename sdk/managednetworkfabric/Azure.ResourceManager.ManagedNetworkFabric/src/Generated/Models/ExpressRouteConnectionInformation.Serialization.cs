@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ExpressRouteConnectionInformation : IUtf8JsonSerializable
+    public partial class ExpressRouteConnectionInformation : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("expressRouteCircuitId"u8);
             writer.WriteStringValue(ExpressRouteCircuitId);
-            if (Optional.IsDefined(ExpressRouteAuthorizationKey))
+            if (Core.Optional.IsDefined(ExpressRouteAuthorizationKey))
             {
                 writer.WritePropertyName("expressRouteAuthorizationKey"u8);
                 writer.WriteStringValue(ExpressRouteAuthorizationKey);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             ResourceIdentifier expressRouteCircuitId = default;
-            Optional<string> expressRouteAuthorizationKey = default;
+            Core.Optional<string> expressRouteAuthorizationKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expressRouteCircuitId"u8))

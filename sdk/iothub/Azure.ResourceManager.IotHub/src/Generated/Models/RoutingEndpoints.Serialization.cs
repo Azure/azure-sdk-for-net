@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class RoutingEndpoints : IUtf8JsonSerializable
+    public partial class RoutingEndpoints : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ServiceBusQueues))
+            if (Core.Optional.IsCollectionDefined(ServiceBusQueues))
             {
                 writer.WritePropertyName("serviceBusQueues"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ServiceBusTopics))
+            if (Core.Optional.IsCollectionDefined(ServiceBusTopics))
             {
                 writer.WritePropertyName("serviceBusTopics"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EventHubs))
+            if (Core.Optional.IsCollectionDefined(EventHubs))
             {
                 writer.WritePropertyName("eventHubs"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(StorageContainers))
+            if (Core.Optional.IsCollectionDefined(StorageContainers))
             {
                 writer.WritePropertyName("storageContainers"u8);
                 writer.WriteStartArray();
@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<IList<RoutingServiceBusQueueEndpointProperties>> serviceBusQueues = default;
-            Optional<IList<RoutingServiceBusTopicEndpointProperties>> serviceBusTopics = default;
-            Optional<IList<RoutingEventHubProperties>> eventHubs = default;
-            Optional<IList<RoutingStorageContainerProperties>> storageContainers = default;
+            Core.Optional<IList<RoutingServiceBusQueueEndpointProperties>> serviceBusQueues = default;
+            Core.Optional<IList<RoutingServiceBusTopicEndpointProperties>> serviceBusTopics = default;
+            Core.Optional<IList<RoutingEventHubProperties>> eventHubs = default;
+            Core.Optional<IList<RoutingStorageContainerProperties>> storageContainers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceBusQueues"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new RoutingEndpoints(Optional.ToList(serviceBusQueues), Optional.ToList(serviceBusTopics), Optional.ToList(eventHubs), Optional.ToList(storageContainers));
+            return new RoutingEndpoints(Core.Optional.ToList(serviceBusQueues), Core.Optional.ToList(serviceBusTopics), Core.Optional.ToList(eventHubs), Core.Optional.ToList(storageContainers));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of ComponentList. </summary>
         internal ComponentList()
         {
-            Value = new ChangeTrackingList<SbomComponent>();
+            Value = new Core.ChangeTrackingList<SbomComponent>();
         }
 
         /// <summary> Initializes a new instance of ComponentList. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of NewPlanNotificationListResult. </summary>
         internal NewPlanNotificationListResult()
         {
-            NewPlansNotifications = new ChangeTrackingList<NewPlanNotification>();
+            NewPlansNotifications = new Core.ChangeTrackingList<NewPlanNotification>();
         }
 
         /// <summary> Initializes a new instance of NewPlanNotificationListResult. </summary>

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<bool> isPreview = default;
-            Optional<string> orchestratorType = default;
-            Optional<string> orchestratorVersion = default;
+            Core.Optional<bool> isPreview = default;
+            Core.Optional<string> orchestratorType = default;
+            Core.Optional<string> orchestratorVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isPreview"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new OrchestratorProfile(Optional.ToNullable(isPreview), orchestratorType.Value, orchestratorVersion.Value);
+            return new OrchestratorProfile(Core.Optional.ToNullable(isPreview), orchestratorType.Value, orchestratorVersion.Value);
         }
     }
 }

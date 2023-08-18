@@ -14,39 +14,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KubernetesConfiguration
 {
-    public partial class KubernetesSourceControlConfigurationData : IUtf8JsonSerializable
+    public partial class KubernetesSourceControlConfigurationData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RepositoryUri))
+            if (Core.Optional.IsDefined(RepositoryUri))
             {
                 writer.WritePropertyName("repositoryUrl"u8);
                 writer.WriteStringValue(RepositoryUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(OperatorNamespace))
+            if (Core.Optional.IsDefined(OperatorNamespace))
             {
                 writer.WritePropertyName("operatorNamespace"u8);
                 writer.WriteStringValue(OperatorNamespace);
             }
-            if (Optional.IsDefined(OperatorInstanceName))
+            if (Core.Optional.IsDefined(OperatorInstanceName))
             {
                 writer.WritePropertyName("operatorInstanceName"u8);
                 writer.WriteStringValue(OperatorInstanceName);
             }
-            if (Optional.IsDefined(OperatorType))
+            if (Core.Optional.IsDefined(OperatorType))
             {
                 writer.WritePropertyName("operatorType"u8);
                 writer.WriteStringValue(OperatorType.Value.ToString());
             }
-            if (Optional.IsDefined(OperatorParams))
+            if (Core.Optional.IsDefined(OperatorParams))
             {
                 writer.WritePropertyName("operatorParams"u8);
                 writer.WriteStringValue(OperatorParams);
             }
-            if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
+            if (Core.Optional.IsCollectionDefined(ConfigurationProtectedSettings))
             {
                 writer.WritePropertyName("configurationProtectedSettings"u8);
                 writer.WriteStartObject();
@@ -57,22 +57,22 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(OperatorScope))
+            if (Core.Optional.IsDefined(OperatorScope))
             {
                 writer.WritePropertyName("operatorScope"u8);
                 writer.WriteStringValue(OperatorScope.Value.ToString());
             }
-            if (Optional.IsDefined(SshKnownHostsContents))
+            if (Core.Optional.IsDefined(SshKnownHostsContents))
             {
                 writer.WritePropertyName("sshKnownHostsContents"u8);
                 writer.WriteStringValue(SshKnownHostsContents);
             }
-            if (Optional.IsDefined(IsHelmOperatorEnabled))
+            if (Core.Optional.IsDefined(IsHelmOperatorEnabled))
             {
                 writer.WritePropertyName("enableHelmOperator"u8);
                 writer.WriteBooleanValue(IsHelmOperatorEnabled.Value);
             }
-            if (Optional.IsDefined(HelmOperatorProperties))
+            if (Core.Optional.IsDefined(HelmOperatorProperties))
             {
                 writer.WritePropertyName("helmOperatorProperties"u8);
                 writer.WriteObjectValue(HelmOperatorProperties);
@@ -90,20 +90,20 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> repositoryUrl = default;
-            Optional<string> operatorNamespace = default;
-            Optional<string> operatorInstanceName = default;
-            Optional<KubernetesOperator> operatorType = default;
-            Optional<string> operatorParams = default;
-            Optional<IDictionary<string, string>> configurationProtectedSettings = default;
-            Optional<KubernetesOperatorScope> operatorScope = default;
-            Optional<string> repositoryPublicKey = default;
-            Optional<string> sshKnownHostsContents = default;
-            Optional<bool> enableHelmOperator = default;
-            Optional<HelmOperatorProperties> helmOperatorProperties = default;
-            Optional<KubernetesConfigurationProvisioningStateType> provisioningState = default;
-            Optional<KubernetesConfigurationComplianceStatus> complianceStatus = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<Uri> repositoryUrl = default;
+            Core.Optional<string> operatorNamespace = default;
+            Core.Optional<string> operatorInstanceName = default;
+            Core.Optional<KubernetesOperator> operatorType = default;
+            Core.Optional<string> operatorParams = default;
+            Core.Optional<IDictionary<string, string>> configurationProtectedSettings = default;
+            Core.Optional<KubernetesOperatorScope> operatorScope = default;
+            Core.Optional<string> repositoryPublicKey = default;
+            Core.Optional<string> sshKnownHostsContents = default;
+            Core.Optional<bool> enableHelmOperator = default;
+            Core.Optional<HelmOperatorProperties> helmOperatorProperties = default;
+            Core.Optional<KubernetesConfigurationProvisioningStateType> provisioningState = default;
+            Core.Optional<KubernetesConfigurationComplianceStatus> complianceStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     continue;
                 }
             }
-            return new KubernetesSourceControlConfigurationData(id, name, type, systemData.Value, repositoryUrl.Value, operatorNamespace.Value, operatorInstanceName.Value, Optional.ToNullable(operatorType), operatorParams.Value, Optional.ToDictionary(configurationProtectedSettings), Optional.ToNullable(operatorScope), repositoryPublicKey.Value, sshKnownHostsContents.Value, Optional.ToNullable(enableHelmOperator), helmOperatorProperties.Value, Optional.ToNullable(provisioningState), complianceStatus.Value);
+            return new KubernetesSourceControlConfigurationData(id, name, type, systemData.Value, repositoryUrl.Value, operatorNamespace.Value, operatorInstanceName.Value, Core.Optional.ToNullable(operatorType), operatorParams.Value, Core.Optional.ToDictionary(configurationProtectedSettings), Core.Optional.ToNullable(operatorScope), repositoryPublicKey.Value, sshKnownHostsContents.Value, Core.Optional.ToNullable(enableHelmOperator), helmOperatorProperties.Value, Core.Optional.ToNullable(provisioningState), complianceStatus.Value);
         }
     }
 }

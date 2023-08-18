@@ -16,7 +16,7 @@ namespace Azure.Maps.Routing.Models
         /// <summary> Initializes a new instance of RouteReport. </summary>
         internal RouteReport()
         {
-            EffectiveSettings = new ChangeTrackingList<EffectiveSetting>();
+            EffectiveSettings = new Core.ChangeTrackingList<EffectiveSetting>();
         }
 
         /// <summary> Initializes a new instance of RouteReport. </summary>

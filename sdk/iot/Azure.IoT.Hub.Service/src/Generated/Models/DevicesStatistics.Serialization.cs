@@ -18,9 +18,9 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<long> totalDeviceCount = default;
-            Optional<long> enabledDeviceCount = default;
-            Optional<long> disabledDeviceCount = default;
+            Core.Optional<long> totalDeviceCount = default;
+            Core.Optional<long> enabledDeviceCount = default;
+            Core.Optional<long> disabledDeviceCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalDeviceCount"u8))
@@ -51,7 +51,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new DevicesStatistics(Optional.ToNullable(totalDeviceCount), Optional.ToNullable(enabledDeviceCount), Optional.ToNullable(disabledDeviceCount));
+            return new DevicesStatistics(Core.Optional.ToNullable(totalDeviceCount), Core.Optional.ToNullable(enabledDeviceCount), Core.Optional.ToNullable(disabledDeviceCount));
         }
     }
 }

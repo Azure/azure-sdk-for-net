@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.LoadTesting.Models
             {
                 return null;
             }
-            Optional<string> domainName = default;
-            Optional<string> description = default;
-            Optional<IReadOnlyList<LoadTestingEndpointDetail>> endpointDetails = default;
+            Core.Optional<string> domainName = default;
+            Core.Optional<string> description = default;
+            Core.Optional<IReadOnlyList<LoadTestingEndpointDetail>> endpointDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainName"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     continue;
                 }
             }
-            return new LoadTestingEndpointDependency(domainName.Value, description.Value, Optional.ToList(endpointDetails));
+            return new LoadTestingEndpointDependency(domainName.Value, description.Value, Core.Optional.ToList(endpointDetails));
         }
     }
 }

@@ -15,19 +15,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    public partial class PrivateStoreOfferData : IUtf8JsonSerializable
+    public partial class PrivateStoreOfferData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(SpecificPlanIdsLimitation))
+            if (Core.Optional.IsCollectionDefined(SpecificPlanIdsLimitation))
             {
                 writer.WritePropertyName("specificPlanIdsLimitation"u8);
                 writer.WriteStartArray();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsUpdateSuppressedDueToIdempotence))
+            if (Core.Optional.IsDefined(IsUpdateSuppressedDueToIdempotence))
             {
                 writer.WritePropertyName("updateSuppressedDueIdempotence"u8);
                 writer.WriteBooleanValue(IsUpdateSuppressedDueToIdempotence.Value);
             }
-            if (Optional.IsCollectionDefined(IconFileUris))
+            if (Core.Optional.IsCollectionDefined(IconFileUris))
             {
                 writer.WritePropertyName("iconFileUris"u8);
                 writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Plans))
+            if (Core.Optional.IsCollectionDefined(Plans))
             {
                 writer.WritePropertyName("plans"u8);
                 writer.WriteStartArray();
@@ -81,18 +81,18 @@ namespace Azure.ResourceManager.Marketplace
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> uniqueOfferId = default;
-            Optional<string> offerDisplayName = default;
-            Optional<string> publisherDisplayName = default;
-            Optional<ETag> eTag = default;
-            Optional<Guid> privateStoreId = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> modifiedAt = default;
-            Optional<IList<string>> specificPlanIdsLimitation = default;
-            Optional<bool> updateSuppressedDueIdempotence = default;
-            Optional<IDictionary<string, Uri>> iconFileUris = default;
-            Optional<IList<PrivateStorePlan>> plans = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> uniqueOfferId = default;
+            Core.Optional<string> offerDisplayName = default;
+            Core.Optional<string> publisherDisplayName = default;
+            Core.Optional<ETag> eTag = default;
+            Core.Optional<Guid> privateStoreId = default;
+            Core.Optional<DateTimeOffset> createdAt = default;
+            Core.Optional<DateTimeOffset> modifiedAt = default;
+            Core.Optional<IList<string>> specificPlanIdsLimitation = default;
+            Core.Optional<bool> updateSuppressedDueIdempotence = default;
+            Core.Optional<IDictionary<string, Uri>> iconFileUris = default;
+            Core.Optional<IList<PrivateStorePlan>> plans = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Marketplace
                     continue;
                 }
             }
-            return new PrivateStoreOfferData(id, name, type, systemData.Value, uniqueOfferId.Value, offerDisplayName.Value, publisherDisplayName.Value, Optional.ToNullable(eTag), Optional.ToNullable(privateStoreId), Optional.ToNullable(createdAt), Optional.ToNullable(modifiedAt), Optional.ToList(specificPlanIdsLimitation), Optional.ToNullable(updateSuppressedDueIdempotence), Optional.ToDictionary(iconFileUris), Optional.ToList(plans));
+            return new PrivateStoreOfferData(id, name, type, systemData.Value, uniqueOfferId.Value, offerDisplayName.Value, publisherDisplayName.Value, Core.Optional.ToNullable(eTag), Core.Optional.ToNullable(privateStoreId), Core.Optional.ToNullable(createdAt), Core.Optional.ToNullable(modifiedAt), Core.Optional.ToList(specificPlanIdsLimitation), Core.Optional.ToNullable(updateSuppressedDueIdempotence), Core.Optional.ToDictionary(iconFileUris), Core.Optional.ToList(plans));
         }
     }
 }

@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<ProvisionedClustersCommonPropertiesStatusFeaturesStatus> featuresStatus = default;
-            Optional<IReadOnlyDictionary<string, AddonStatus>> addonStatus = default;
-            Optional<string> errorMessage = default;
-            Optional<ProvisionedClustersCommonPropertiesStatusProvisioningStatus> provisioningStatus = default;
+            Core.Optional<ProvisionedClustersCommonPropertiesStatusFeaturesStatus> featuresStatus = default;
+            Core.Optional<IReadOnlyDictionary<string, AddonStatus>> addonStatus = default;
+            Core.Optional<string> errorMessage = default;
+            Core.Optional<ProvisionedClustersCommonPropertiesStatusProvisioningStatus> provisioningStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("featuresStatus"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new ProvisionedClustersCommonPropertiesStatus(featuresStatus.Value, Optional.ToDictionary(addonStatus), errorMessage.Value, provisioningStatus.Value);
+            return new ProvisionedClustersCommonPropertiesStatus(featuresStatus.Value, Core.Optional.ToDictionary(addonStatus), errorMessage.Value, provisioningStatus.Value);
         }
     }
 }

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> username = default;
-            Optional<IReadOnlyList<MachineLearningPasswordDetail>> passwords = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<string> username = default;
+            Core.Optional<IReadOnlyList<MachineLearningPasswordDetail>> passwords = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningContainerRegistryCredentials(Optional.ToNullable(location), username.Value, Optional.ToList(passwords));
+            return new MachineLearningContainerRegistryCredentials(Core.Optional.ToNullable(location), username.Value, Core.Optional.ToList(passwords));
         }
     }
 }

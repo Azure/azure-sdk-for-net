@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Maps.Models
 
             SigningKey = signingKey;
             PrincipalId = principalId;
-            Regions = new ChangeTrackingList<string>();
+            Regions = new Core.ChangeTrackingList<string>();
             MaxRatePerSecond = maxRatePerSecond;
             Start = start;
             Expiry = expiry;

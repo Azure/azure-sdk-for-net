@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoFollowerDatabaseDefinition : IUtf8JsonSerializable
+    public partial class KustoFollowerDatabaseDefinition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("clusterResourceId"u8);
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.Kusto.Models
             }
             ResourceIdentifier clusterResourceId = default;
             string attachedDatabaseConfigurationName = default;
-            Optional<string> databaseName = default;
-            Optional<KustoDatabaseTableLevelSharingProperties> tableLevelSharingProperties = default;
-            Optional<KustoDatabaseShareOrigin> databaseShareOrigin = default;
+            Core.Optional<string> databaseName = default;
+            Core.Optional<KustoDatabaseTableLevelSharingProperties> tableLevelSharingProperties = default;
+            Core.Optional<KustoDatabaseShareOrigin> databaseShareOrigin = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterResourceId"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new KustoFollowerDatabaseDefinition(clusterResourceId, attachedDatabaseConfigurationName, databaseName.Value, tableLevelSharingProperties.Value, Optional.ToNullable(databaseShareOrigin));
+            return new KustoFollowerDatabaseDefinition(clusterResourceId, attachedDatabaseConfigurationName, databaseName.Value, tableLevelSharingProperties.Value, Core.Optional.ToNullable(databaseShareOrigin));
         }
     }
 }

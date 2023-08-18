@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> userKubeConfig = default;
-            Optional<string> adminKubeConfig = default;
-            Optional<string> imagePullSecretName = default;
+            Core.Optional<string> userKubeConfig = default;
+            Core.Optional<string> adminKubeConfig = default;
+            Core.Optional<string> imagePullSecretName = default;
             ComputeType computeType = default;
             foreach (var property in element.EnumerateObject())
             {

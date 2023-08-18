@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> name = default;
-            Optional<IReadOnlyList<KustoResourceSkuCapabilities>> capabilities = default;
+            Core.Optional<IReadOnlyList<string>> name = default;
+            Core.Optional<IReadOnlyList<KustoResourceSkuCapabilities>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new KustoResourceSkuZoneDetails(Optional.ToList(name), Optional.ToList(capabilities));
+            return new KustoResourceSkuZoneDetails(Core.Optional.ToList(name), Core.Optional.ToList(capabilities));
         }
     }
 }

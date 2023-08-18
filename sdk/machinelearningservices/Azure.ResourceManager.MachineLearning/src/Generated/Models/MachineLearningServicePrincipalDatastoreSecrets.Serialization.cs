@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningServicePrincipalDatastoreSecrets : IUtf8JsonSerializable
+    public partial class MachineLearningServicePrincipalDatastoreSecrets : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientSecret))
+            if (Core.Optional.IsDefined(ClientSecret))
             {
                 if (ClientSecret != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> clientSecret = default;
+            Core.Optional<string> clientSecret = default;
             SecretsType secretsType = default;
             foreach (var property in element.EnumerateObject())
             {

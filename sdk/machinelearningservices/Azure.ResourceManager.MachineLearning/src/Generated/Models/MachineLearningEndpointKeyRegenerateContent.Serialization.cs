@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningEndpointKeyRegenerateContent : IUtf8JsonSerializable
+    public partial class MachineLearningEndpointKeyRegenerateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("keyType"u8);
             writer.WriteStringValue(KeyType.ToString());
-            if (Optional.IsDefined(KeyValue))
+            if (Core.Optional.IsDefined(KeyValue))
             {
                 if (KeyValue != null)
                 {

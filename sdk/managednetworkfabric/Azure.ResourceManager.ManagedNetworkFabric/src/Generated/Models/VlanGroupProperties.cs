@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of VlanGroupProperties. </summary>
         public VlanGroupProperties()
         {
-            Vlans = new ChangeTrackingList<string>();
+            Vlans = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VlanGroupProperties. </summary>

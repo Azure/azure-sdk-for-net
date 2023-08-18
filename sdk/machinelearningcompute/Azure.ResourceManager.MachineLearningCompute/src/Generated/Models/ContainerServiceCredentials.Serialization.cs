@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<string> acsKubeConfig = default;
-            Optional<ServicePrincipalProperties> servicePrincipalConfiguration = default;
-            Optional<string> imagePullSecretName = default;
+            Core.Optional<string> acsKubeConfig = default;
+            Core.Optional<ServicePrincipalProperties> servicePrincipalConfiguration = default;
+            Core.Optional<string> imagePullSecretName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("acsKubeConfig"u8))

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="location"> The location. </param>
         public MaintenanceConfigurationData(AzureLocation location) : base(location)
         {
-            ExtensionProperties = new ChangeTrackingDictionary<string, string>();
+            ExtensionProperties = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of MaintenanceConfigurationData. </summary>

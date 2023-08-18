@@ -12,19 +12,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class UnknownCompute : IUtf8JsonSerializable
+    internal partial class UnknownCompute : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("computeType"u8);
             writer.WriteStringValue(ComputeType.ToString());
-            if (Optional.IsDefined(ComputeLocation))
+            if (Core.Optional.IsDefined(ComputeLocation))
             {
                 writer.WritePropertyName("computeLocation"u8);
                 writer.WriteStringValue(ComputeLocation);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Optional.IsDefined(ResourceId))
+            if (Core.Optional.IsDefined(ResourceId))
             {
                 if (ResourceId != null)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resourceId");
                 }
             }
-            if (Optional.IsDefined(DisableLocalAuth))
+            if (Core.Optional.IsDefined(DisableLocalAuth))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
@@ -63,15 +63,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             ComputeType computeType = "Unknown";
-            Optional<string> computeLocation = default;
-            Optional<MachineLearningProvisioningState> provisioningState = default;
-            Optional<string> description = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<DateTimeOffset> modifiedOn = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<IReadOnlyList<MachineLearningError>> provisioningErrors = default;
-            Optional<bool> isAttachedCompute = default;
-            Optional<bool> disableLocalAuth = default;
+            Core.Optional<string> computeLocation = default;
+            Core.Optional<MachineLearningProvisioningState> provisioningState = default;
+            Core.Optional<string> description = default;
+            Core.Optional<DateTimeOffset> createdOn = default;
+            Core.Optional<DateTimeOffset> modifiedOn = default;
+            Core.Optional<ResourceIdentifier> resourceId = default;
+            Core.Optional<IReadOnlyList<MachineLearningError>> provisioningErrors = default;
+            Core.Optional<bool> isAttachedCompute = default;
+            Core.Optional<bool> disableLocalAuth = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeType"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new UnknownCompute(computeType, computeLocation.Value, Optional.ToNullable(provisioningState), description.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), resourceId.Value, Optional.ToList(provisioningErrors), Optional.ToNullable(isAttachedCompute), Optional.ToNullable(disableLocalAuth));
+            return new UnknownCompute(computeType, computeLocation.Value, Core.Optional.ToNullable(provisioningState), description.Value, Core.Optional.ToNullable(createdOn), Core.Optional.ToNullable(modifiedOn), resourceId.Value, Core.Optional.ToList(provisioningErrors), Core.Optional.ToNullable(isAttachedCompute), Core.Optional.ToNullable(disableLocalAuth));
         }
     }
 }

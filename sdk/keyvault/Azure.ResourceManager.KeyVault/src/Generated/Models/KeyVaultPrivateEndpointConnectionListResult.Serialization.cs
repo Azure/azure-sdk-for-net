@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KeyVaultPrivateEndpointConnectionData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<KeyVaultPrivateEndpointConnectionData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new KeyVaultPrivateEndpointConnectionListResult(Optional.ToList(value), nextLink.Value);
+            return new KeyVaultPrivateEndpointConnectionListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

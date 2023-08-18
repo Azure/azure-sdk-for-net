@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<UpdatesAvailable> updatesAvailable = default;
+            Core.Optional<UpdatesAvailable> updatesAvailable = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("updatesAvailable"u8))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     continue;
                 }
             }
-            return new CheckSystemServicesUpdatesAvailableResponse(Optional.ToNullable(updatesAvailable));
+            return new CheckSystemServicesUpdatesAvailableResponse(Core.Optional.ToNullable(updatesAvailable));
         }
     }
 }

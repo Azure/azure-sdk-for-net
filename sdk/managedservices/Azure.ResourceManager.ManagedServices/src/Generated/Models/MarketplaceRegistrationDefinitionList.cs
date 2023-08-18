@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <summary> Initializes a new instance of MarketplaceRegistrationDefinitionList. </summary>
         internal MarketplaceRegistrationDefinitionList()
         {
-            Value = new ChangeTrackingList<ManagedServicesMarketplaceRegistrationData>();
+            Value = new Core.ChangeTrackingList<ManagedServicesMarketplaceRegistrationData>();
         }
 
         /// <summary> Initializes a new instance of MarketplaceRegistrationDefinitionList. </summary>

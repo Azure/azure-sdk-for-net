@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media
         /// <summary> Initializes a new instance of MediaTransformData. </summary>
         public MediaTransformData()
         {
-            Outputs = new ChangeTrackingList<MediaTransformOutput>();
+            Outputs = new Core.ChangeTrackingList<MediaTransformOutput>();
         }
 
         /// <summary> Initializes a new instance of MediaTransformData. </summary>

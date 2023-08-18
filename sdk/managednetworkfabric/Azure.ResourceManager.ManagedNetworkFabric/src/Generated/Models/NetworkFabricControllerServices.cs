@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of NetworkFabricControllerServices. </summary>
         internal NetworkFabricControllerServices()
         {
-            IPv4AddressSpaces = new ChangeTrackingList<string>();
-            IPv6AddressSpaces = new ChangeTrackingList<string>();
+            IPv4AddressSpaces = new Core.ChangeTrackingList<string>();
+            IPv6AddressSpaces = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of NetworkFabricControllerServices. </summary>

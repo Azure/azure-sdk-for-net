@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class X12ProtocolSettings : IUtf8JsonSerializable
+    public partial class X12ProtocolSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("validationSettings"u8);
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteObjectValue(SecuritySettings);
             writer.WritePropertyName("processingSettings"u8);
             writer.WriteObjectValue(ProcessingSettings);
-            if (Optional.IsCollectionDefined(EnvelopeOverrides))
+            if (Core.Optional.IsCollectionDefined(EnvelopeOverrides))
             {
                 writer.WritePropertyName("envelopeOverrides"u8);
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ValidationOverrides))
+            if (Core.Optional.IsCollectionDefined(ValidationOverrides))
             {
                 writer.WritePropertyName("validationOverrides"u8);
                 writer.WriteStartArray();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MessageFilterList))
+            if (Core.Optional.IsCollectionDefined(MessageFilterList))
             {
                 writer.WritePropertyName("messageFilterList"u8);
                 writer.WriteStartArray();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(X12DelimiterOverrides))
+            if (Core.Optional.IsCollectionDefined(X12DelimiterOverrides))
             {
                 writer.WritePropertyName("x12DelimiterOverrides"u8);
                 writer.WriteStartArray();
@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.Logic.Models
             X12MessageFilter messageFilter = default;
             X12SecuritySettings securitySettings = default;
             X12ProcessingSettings processingSettings = default;
-            Optional<IList<X12EnvelopeOverride>> envelopeOverrides = default;
-            Optional<IList<X12ValidationOverride>> validationOverrides = default;
-            Optional<IList<X12MessageIdentifier>> messageFilterList = default;
+            Core.Optional<IList<X12EnvelopeOverride>> envelopeOverrides = default;
+            Core.Optional<IList<X12ValidationOverride>> validationOverrides = default;
+            Core.Optional<IList<X12MessageIdentifier>> messageFilterList = default;
             IList<X12SchemaReference> schemaReferences = default;
-            Optional<IList<X12DelimiterOverrides>> x12DelimiterOverrides = default;
+            Core.Optional<IList<X12DelimiterOverrides>> x12DelimiterOverrides = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validationSettings"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new X12ProtocolSettings(validationSettings, framingSettings, envelopeSettings, acknowledgementSettings, messageFilter, securitySettings, processingSettings, Optional.ToList(envelopeOverrides), Optional.ToList(validationOverrides), Optional.ToList(messageFilterList), schemaReferences, Optional.ToList(x12DelimiterOverrides));
+            return new X12ProtocolSettings(validationSettings, framingSettings, envelopeSettings, acknowledgementSettings, messageFilter, securitySettings, processingSettings, Core.Optional.ToList(envelopeOverrides), Core.Optional.ToList(validationOverrides), Core.Optional.ToList(messageFilterList), schemaReferences, Core.Optional.ToList(x12DelimiterOverrides));
         }
     }
 }

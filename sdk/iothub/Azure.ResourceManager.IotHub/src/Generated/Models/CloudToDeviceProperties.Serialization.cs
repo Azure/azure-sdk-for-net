@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class CloudToDeviceProperties : IUtf8JsonSerializable
+    public partial class CloudToDeviceProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxDeliveryCount))
+            if (Core.Optional.IsDefined(MaxDeliveryCount))
             {
                 writer.WritePropertyName("maxDeliveryCount"u8);
                 writer.WriteNumberValue(MaxDeliveryCount.Value);
             }
-            if (Optional.IsDefined(DefaultTtlAsIso8601))
+            if (Core.Optional.IsDefined(DefaultTtlAsIso8601))
             {
                 writer.WritePropertyName("defaultTtlAsIso8601"u8);
                 writer.WriteStringValue(DefaultTtlAsIso8601.Value, "P");
             }
-            if (Optional.IsDefined(Feedback))
+            if (Core.Optional.IsDefined(Feedback))
             {
                 writer.WritePropertyName("feedback"u8);
                 writer.WriteObjectValue(Feedback);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<int> maxDeliveryCount = default;
-            Optional<TimeSpan> defaultTtlAsIso8601 = default;
-            Optional<CloudToDeviceFeedbackQueueProperties> feedback = default;
+            Core.Optional<int> maxDeliveryCount = default;
+            Core.Optional<TimeSpan> defaultTtlAsIso8601 = default;
+            Core.Optional<CloudToDeviceFeedbackQueueProperties> feedback = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxDeliveryCount"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new CloudToDeviceProperties(Optional.ToNullable(maxDeliveryCount), Optional.ToNullable(defaultTtlAsIso8601), feedback.Value);
+            return new CloudToDeviceProperties(Core.Optional.ToNullable(maxDeliveryCount), Core.Optional.ToNullable(defaultTtlAsIso8601), feedback.Value);
         }
     }
 }

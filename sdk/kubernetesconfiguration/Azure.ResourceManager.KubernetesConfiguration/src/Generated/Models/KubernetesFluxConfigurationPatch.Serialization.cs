@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesFluxConfigurationPatch : IUtf8JsonSerializable
+    public partial class KubernetesFluxConfigurationPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceKind))
+            if (Core.Optional.IsDefined(SourceKind))
             {
                 if (SourceKind != null)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("sourceKind");
                 }
             }
-            if (Optional.IsDefined(Suspend))
+            if (Core.Optional.IsDefined(Suspend))
             {
                 if (Suspend != null)
                 {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("suspend");
                 }
             }
-            if (Optional.IsDefined(GitRepository))
+            if (Core.Optional.IsDefined(GitRepository))
             {
                 if (GitRepository != null)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("gitRepository");
                 }
             }
-            if (Optional.IsDefined(Bucket))
+            if (Core.Optional.IsDefined(Bucket))
             {
                 if (Bucket != null)
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("bucket");
                 }
             }
-            if (Optional.IsDefined(AzureBlob))
+            if (Core.Optional.IsDefined(AzureBlob))
             {
                 if (AzureBlob != null)
                 {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("azureBlob");
                 }
             }
-            if (Optional.IsCollectionDefined(Kustomizations))
+            if (Core.Optional.IsCollectionDefined(Kustomizations))
             {
                 if (Kustomizations != null)
                 {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("kustomizations");
                 }
             }
-            if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
+            if (Core.Optional.IsCollectionDefined(ConfigurationProtectedSettings))
             {
                 if (ConfigurationProtectedSettings != null)
                 {

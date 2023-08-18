@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of IntegrationAccountKeyVaultKeyList. </summary>
         internal IntegrationAccountKeyVaultKeyList()
         {
-            Value = new ChangeTrackingList<IntegrationAccountKeyVaultKey>();
+            Value = new Core.ChangeTrackingList<IntegrationAccountKeyVaultKey>();
         }
 
         /// <summary> Initializes a new instance of IntegrationAccountKeyVaultKeyList. </summary>

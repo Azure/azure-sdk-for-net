@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Logic
 {
-    internal class IntegrationServiceEnvironmentManagedApiOperationSource : IOperationSource<IntegrationServiceEnvironmentManagedApiResource>
+    internal class IntegrationServiceEnvironmentManagedApiOperationSource : Core.IOperationSource<IntegrationServiceEnvironmentManagedApiResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Logic
             _client = client;
         }
 
-        IntegrationServiceEnvironmentManagedApiResource IOperationSource<IntegrationServiceEnvironmentManagedApiResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        IntegrationServiceEnvironmentManagedApiResource Core.IOperationSource<IntegrationServiceEnvironmentManagedApiResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = IntegrationServiceEnvironmentManagedApiData.DeserializeIntegrationServiceEnvironmentManagedApiData(document.RootElement);
             return new IntegrationServiceEnvironmentManagedApiResource(_client, data);
         }
 
-        async ValueTask<IntegrationServiceEnvironmentManagedApiResource> IOperationSource<IntegrationServiceEnvironmentManagedApiResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<IntegrationServiceEnvironmentManagedApiResource> Core.IOperationSource<IntegrationServiceEnvironmentManagedApiResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = IntegrationServiceEnvironmentManagedApiData.DeserializeIntegrationServiceEnvironmentManagedApiData(document.RootElement);

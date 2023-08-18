@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class IntegrationAccountPartnerContent : IUtf8JsonSerializable
+    public partial class IntegrationAccountPartnerContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(B2B))
+            if (Core.Optional.IsDefined(B2B))
             {
                 writer.WritePropertyName("b2b"u8);
                 writer.WriteObjectValue(B2B);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<B2BPartnerContent> b2b = default;
+            Core.Optional<B2BPartnerContent> b2b = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("b2b"u8))

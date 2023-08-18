@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <summary> Initializes a new instance of MaintenanceLinuxPatchSettings. </summary>
         public MaintenanceLinuxPatchSettings()
         {
-            PackageNameMasksToExclude = new ChangeTrackingList<string>();
-            PackageNameMasksToInclude = new ChangeTrackingList<string>();
-            ClassificationsToInclude = new ChangeTrackingList<string>();
+            PackageNameMasksToExclude = new Core.ChangeTrackingList<string>();
+            PackageNameMasksToInclude = new Core.ChangeTrackingList<string>();
+            ClassificationsToInclude = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of MaintenanceLinuxPatchSettings. </summary>

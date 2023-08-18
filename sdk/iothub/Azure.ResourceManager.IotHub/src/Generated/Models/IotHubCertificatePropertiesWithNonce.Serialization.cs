@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<string> subject = default;
-            Optional<DateTimeOffset> expiry = default;
-            Optional<string> thumbprint = default;
-            Optional<bool> isVerified = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> updated = default;
-            Optional<string> verificationCode = default;
-            Optional<BinaryData> certificate = default;
+            Core.Optional<string> subject = default;
+            Core.Optional<DateTimeOffset> expiry = default;
+            Core.Optional<string> thumbprint = default;
+            Core.Optional<bool> isVerified = default;
+            Core.Optional<DateTimeOffset> created = default;
+            Core.Optional<DateTimeOffset> updated = default;
+            Core.Optional<string> verificationCode = default;
+            Core.Optional<BinaryData> certificate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subject"u8))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new IotHubCertificatePropertiesWithNonce(subject.Value, Optional.ToNullable(expiry), thumbprint.Value, Optional.ToNullable(isVerified), Optional.ToNullable(created), Optional.ToNullable(updated), verificationCode.Value, certificate.Value);
+            return new IotHubCertificatePropertiesWithNonce(subject.Value, Core.Optional.ToNullable(expiry), thumbprint.Value, Core.Optional.ToNullable(isVerified), Core.Optional.ToNullable(created), Core.Optional.ToNullable(updated), verificationCode.Value, certificate.Value);
         }
     }
 }

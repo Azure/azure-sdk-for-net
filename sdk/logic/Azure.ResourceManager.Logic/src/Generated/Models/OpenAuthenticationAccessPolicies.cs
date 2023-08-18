@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of OpenAuthenticationAccessPolicies. </summary>
         public OpenAuthenticationAccessPolicies()
         {
-            AccessPolicies = new ChangeTrackingDictionary<string, OpenAuthenticationAccessPolicy>();
+            AccessPolicies = new Core.ChangeTrackingDictionary<string, OpenAuthenticationAccessPolicy>();
         }
 
         /// <summary> Initializes a new instance of OpenAuthenticationAccessPolicies. </summary>

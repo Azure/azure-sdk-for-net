@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> nodeId = default;
-            Optional<IPAddress> privateIPAddress = default;
-            Optional<IPAddress> publicIPAddress = default;
-            Optional<int> port = default;
-            Optional<MachineLearningNodeState> nodeState = default;
-            Optional<string> runId = default;
+            Core.Optional<string> nodeId = default;
+            Core.Optional<IPAddress> privateIPAddress = default;
+            Core.Optional<IPAddress> publicIPAddress = default;
+            Core.Optional<int> port = default;
+            Core.Optional<MachineLearningNodeState> nodeState = default;
+            Core.Optional<string> runId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nodeId"u8))
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new AmlComputeNodeInformation(nodeId.Value, privateIPAddress.Value, publicIPAddress.Value, Optional.ToNullable(port), Optional.ToNullable(nodeState), runId.Value);
+            return new AmlComputeNodeInformation(nodeId.Value, privateIPAddress.Value, publicIPAddress.Value, Core.Optional.ToNullable(port), Core.Optional.ToNullable(nodeState), runId.Value);
         }
     }
 }

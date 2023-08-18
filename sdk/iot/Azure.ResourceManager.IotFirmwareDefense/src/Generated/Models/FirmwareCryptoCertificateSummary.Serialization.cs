@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<long> totalCertificates = default;
-            Optional<long> pairedKeys = default;
-            Optional<long> expired = default;
-            Optional<long> expiringSoon = default;
-            Optional<long> weakSignature = default;
-            Optional<long> selfSigned = default;
-            Optional<long> shortKeySize = default;
+            Core.Optional<long> totalCertificates = default;
+            Core.Optional<long> pairedKeys = default;
+            Core.Optional<long> expired = default;
+            Core.Optional<long> expiringSoon = default;
+            Core.Optional<long> weakSignature = default;
+            Core.Optional<long> selfSigned = default;
+            Core.Optional<long> shortKeySize = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalCertificates"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     continue;
                 }
             }
-            return new FirmwareCryptoCertificateSummary(Optional.ToNullable(totalCertificates), Optional.ToNullable(pairedKeys), Optional.ToNullable(expired), Optional.ToNullable(expiringSoon), Optional.ToNullable(weakSignature), Optional.ToNullable(selfSigned), Optional.ToNullable(shortKeySize));
+            return new FirmwareCryptoCertificateSummary(Core.Optional.ToNullable(totalCertificates), Core.Optional.ToNullable(pairedKeys), Core.Optional.ToNullable(expired), Core.Optional.ToNullable(expiringSoon), Core.Optional.ToNullable(weakSignature), Core.Optional.ToNullable(selfSigned), Core.Optional.ToNullable(shortKeySize));
         }
     }
 }

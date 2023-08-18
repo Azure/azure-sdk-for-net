@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class FadeOptions : IUtf8JsonSerializable
+    public partial class FadeOptions : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("duration"u8);
             writer.WriteStringValue(Duration, "P");
             writer.WritePropertyName("fadeColor"u8);
             writer.WriteStringValue(FadeColor);
-            if (Optional.IsDefined(Start))
+            if (Core.Optional.IsDefined(Start))
             {
                 writer.WritePropertyName("start"u8);
                 writer.WriteStringValue(Start);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Media.Models
             }
             TimeSpan duration = default;
             string fadeColor = default;
-            Optional<string> start = default;
+            Core.Optional<string> start = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("duration"u8))

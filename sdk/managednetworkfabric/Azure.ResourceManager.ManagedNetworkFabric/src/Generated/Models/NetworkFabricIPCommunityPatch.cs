@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of NetworkFabricIPCommunityPatch. </summary>
         public NetworkFabricIPCommunityPatch()
         {
-            IPCommunityRules = new ChangeTrackingList<IPCommunityRule>();
+            IPCommunityRules = new Core.ChangeTrackingList<IPCommunityRule>();
         }
 
         /// <summary> List of IP Community Rules. </summary>

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class SetupScripts : IUtf8JsonSerializable
+    internal partial class SetupScripts : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Scripts))
+            if (Core.Optional.IsDefined(Scripts))
             {
                 writer.WritePropertyName("scripts"u8);
                 writer.WriteObjectValue(Scripts);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningScriptsToExecute> scripts = default;
+            Core.Optional<MachineLearningScriptsToExecute> scripts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scripts"u8))

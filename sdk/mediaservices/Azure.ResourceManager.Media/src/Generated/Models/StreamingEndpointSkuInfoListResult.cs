@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of StreamingEndpointSkuInfoListResult. </summary>
         internal StreamingEndpointSkuInfoListResult()
         {
-            Value = new ChangeTrackingList<StreamingEndpointSkuInfo>();
+            Value = new Core.ChangeTrackingList<StreamingEndpointSkuInfo>();
         }
 
         /// <summary> Initializes a new instance of StreamingEndpointSkuInfoListResult. </summary>

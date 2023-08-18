@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IntegrationServiceErrorInfo> error = default;
-            Optional<IntegrationServiceEnvironmentNetworkDependencyHealthState> state = default;
+            Core.Optional<IntegrationServiceErrorInfo> error = default;
+            Core.Optional<IntegrationServiceEnvironmentNetworkDependencyHealthState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new IntegrationServiceEnvironmentNetworkDependencyHealth(error.Value, Optional.ToNullable(state));
+            return new IntegrationServiceEnvironmentNetworkDependencyHealth(error.Value, Core.Optional.ToNullable(state));
         }
     }
 }

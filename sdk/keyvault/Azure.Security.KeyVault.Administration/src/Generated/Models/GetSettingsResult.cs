@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary> Initializes a new instance of GetSettingsResult. </summary>
         internal GetSettingsResult()
         {
-            Settings = new ChangeTrackingList<KeyVaultSetting>();
+            Settings = new Core.ChangeTrackingList<KeyVaultSetting>();
         }
 
         /// <summary> Initializes a new instance of GetSettingsResult. </summary>

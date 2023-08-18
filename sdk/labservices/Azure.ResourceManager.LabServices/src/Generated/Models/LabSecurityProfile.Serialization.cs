@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class LabSecurityProfile : IUtf8JsonSerializable
+    public partial class LabSecurityProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(OpenAccess))
+            if (Core.Optional.IsDefined(OpenAccess))
             {
                 writer.WritePropertyName("openAccess"u8);
                 writer.WriteStringValue(OpenAccess.Value.ToSerialString());
@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<string> registrationCode = default;
-            Optional<LabServicesEnableState> openAccess = default;
+            Core.Optional<string> registrationCode = default;
+            Core.Optional<LabServicesEnableState> openAccess = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registrationCode"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     continue;
                 }
             }
-            return new LabSecurityProfile(registrationCode.Value, Optional.ToNullable(openAccess));
+            return new LabSecurityProfile(registrationCode.Value, Core.Optional.ToNullable(openAccess));
         }
     }
 }

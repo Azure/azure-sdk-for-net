@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningFlavorData. </summary>
         public MachineLearningFlavorData()
         {
-            Data = new ChangeTrackingDictionary<string, string>();
+            Data = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningFlavorData. </summary>

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Maintenance
 {
-    public partial class MaintenanceConfigurationData : IUtf8JsonSerializable
+    public partial class MaintenanceConfigurationData : Core.IUtf8JsonSerializable
     {
         internal static MaintenanceConfigurationData DeserializeMaintenanceConfigurationData(JsonElement element)
         {
@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.Maintenance
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> @namespace = default;
-            Optional<IDictionary<string, string>> extensionProperties = default;
-            Optional<MaintenanceScope> maintenanceScope = default;
-            Optional<MaintenanceConfigurationVisibility> visibility = default;
-            Optional<MaintenancePatchConfiguration> installPatches = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<DateTimeOffset> expirationDateTime = default;
-            Optional<TimeSpan> duration = default;
-            Optional<string> timeZone = default;
-            Optional<string> recurEvery = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> @namespace = default;
+            Core.Optional<IDictionary<string, string>> extensionProperties = default;
+            Core.Optional<MaintenanceScope> maintenanceScope = default;
+            Core.Optional<MaintenanceConfigurationVisibility> visibility = default;
+            Core.Optional<MaintenancePatchConfiguration> installPatches = default;
+            Core.Optional<DateTimeOffset> startDateTime = default;
+            Core.Optional<DateTimeOffset> expirationDateTime = default;
+            Core.Optional<TimeSpan> duration = default;
+            Core.Optional<string> timeZone = default;
+            Core.Optional<string> recurEvery = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Maintenance
                     continue;
                 }
             }
-            return new MaintenanceConfigurationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, @namespace.Value, Optional.ToDictionary(extensionProperties), Optional.ToNullable(maintenanceScope), Optional.ToNullable(visibility), installPatches.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(expirationDateTime), Optional.ToNullable(duration), timeZone.Value, recurEvery.Value);
+            return new MaintenanceConfigurationData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, @namespace.Value, Core.Optional.ToDictionary(extensionProperties), Core.Optional.ToNullable(maintenanceScope), Core.Optional.ToNullable(visibility), installPatches.Value, Core.Optional.ToNullable(startDateTime), Core.Optional.ToNullable(expirationDateTime), Core.Optional.ToNullable(duration), timeZone.Value, recurEvery.Value);
         }
     }
 }

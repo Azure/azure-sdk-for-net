@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningKubernetesProperties : IUtf8JsonSerializable
+    public partial class MachineLearningKubernetesProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RelayConnectionString))
+            if (Core.Optional.IsDefined(RelayConnectionString))
             {
                 if (RelayConnectionString != null)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("relayConnectionString");
                 }
             }
-            if (Optional.IsDefined(ServiceBusConnectionString))
+            if (Core.Optional.IsDefined(ServiceBusConnectionString))
             {
                 if (ServiceBusConnectionString != null)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("serviceBusConnectionString");
                 }
             }
-            if (Optional.IsDefined(ExtensionPrincipalId))
+            if (Core.Optional.IsDefined(ExtensionPrincipalId))
             {
                 if (ExtensionPrincipalId != null)
                 {
@@ -52,27 +52,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("extensionPrincipalId");
                 }
             }
-            if (Optional.IsDefined(ExtensionInstanceReleaseTrain))
+            if (Core.Optional.IsDefined(ExtensionInstanceReleaseTrain))
             {
                 writer.WritePropertyName("extensionInstanceReleaseTrain"u8);
                 writer.WriteStringValue(ExtensionInstanceReleaseTrain);
             }
-            if (Optional.IsDefined(VcName))
+            if (Core.Optional.IsDefined(VcName))
             {
                 writer.WritePropertyName("vcName"u8);
                 writer.WriteStringValue(VcName);
             }
-            if (Optional.IsDefined(Namespace))
+            if (Core.Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Optional.IsDefined(DefaultInstanceType))
+            if (Core.Optional.IsDefined(DefaultInstanceType))
             {
                 writer.WritePropertyName("defaultInstanceType"u8);
                 writer.WriteStringValue(DefaultInstanceType);
             }
-            if (Optional.IsCollectionDefined(InstanceTypes))
+            if (Core.Optional.IsCollectionDefined(InstanceTypes))
             {
                 writer.WritePropertyName("instanceTypes"u8);
                 writer.WriteStartObject();
@@ -92,14 +92,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> relayConnectionString = default;
-            Optional<string> serviceBusConnectionString = default;
-            Optional<string> extensionPrincipalId = default;
-            Optional<string> extensionInstanceReleaseTrain = default;
-            Optional<string> vcName = default;
-            Optional<string> @namespace = default;
-            Optional<string> defaultInstanceType = default;
-            Optional<IDictionary<string, MachineLearningInstanceTypeSchema>> instanceTypes = default;
+            Core.Optional<string> relayConnectionString = default;
+            Core.Optional<string> serviceBusConnectionString = default;
+            Core.Optional<string> extensionPrincipalId = default;
+            Core.Optional<string> extensionInstanceReleaseTrain = default;
+            Core.Optional<string> vcName = default;
+            Core.Optional<string> @namespace = default;
+            Core.Optional<string> defaultInstanceType = default;
+            Core.Optional<IDictionary<string, MachineLearningInstanceTypeSchema>> instanceTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("relayConnectionString"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningKubernetesProperties(relayConnectionString.Value, serviceBusConnectionString.Value, extensionPrincipalId.Value, extensionInstanceReleaseTrain.Value, vcName.Value, @namespace.Value, defaultInstanceType.Value, Optional.ToDictionary(instanceTypes));
+            return new MachineLearningKubernetesProperties(relayConnectionString.Value, serviceBusConnectionString.Value, extensionPrincipalId.Value, extensionInstanceReleaseTrain.Value, vcName.Value, @namespace.Value, defaultInstanceType.Value, Core.Optional.ToDictionary(instanceTypes));
         }
     }
 }

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class EdifactProtocolSettings : IUtf8JsonSerializable
+    public partial class EdifactProtocolSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("validationSettings"u8);
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteObjectValue(MessageFilter);
             writer.WritePropertyName("processingSettings"u8);
             writer.WriteObjectValue(ProcessingSettings);
-            if (Optional.IsCollectionDefined(EnvelopeOverrides))
+            if (Core.Optional.IsCollectionDefined(EnvelopeOverrides))
             {
                 writer.WritePropertyName("envelopeOverrides"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MessageFilterList))
+            if (Core.Optional.IsCollectionDefined(MessageFilterList))
             {
                 writer.WritePropertyName("messageFilterList"u8);
                 writer.WriteStartArray();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(ValidationOverrides))
+            if (Core.Optional.IsCollectionDefined(ValidationOverrides))
             {
                 writer.WritePropertyName("validationOverrides"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EdifactDelimiterOverrides))
+            if (Core.Optional.IsCollectionDefined(EdifactDelimiterOverrides))
             {
                 writer.WritePropertyName("edifactDelimiterOverrides"u8);
                 writer.WriteStartArray();
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.Logic.Models
             EdifactAcknowledgementSettings acknowledgementSettings = default;
             EdifactMessageFilter messageFilter = default;
             EdifactProcessingSettings processingSettings = default;
-            Optional<IList<EdifactEnvelopeOverride>> envelopeOverrides = default;
-            Optional<IList<EdifactMessageIdentifier>> messageFilterList = default;
+            Core.Optional<IList<EdifactEnvelopeOverride>> envelopeOverrides = default;
+            Core.Optional<IList<EdifactMessageIdentifier>> messageFilterList = default;
             IList<EdifactSchemaReference> schemaReferences = default;
-            Optional<IList<EdifactValidationOverride>> validationOverrides = default;
-            Optional<IList<EdifactDelimiterOverride>> edifactDelimiterOverrides = default;
+            Core.Optional<IList<EdifactValidationOverride>> validationOverrides = default;
+            Core.Optional<IList<EdifactDelimiterOverride>> edifactDelimiterOverrides = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validationSettings"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new EdifactProtocolSettings(validationSettings, framingSettings, envelopeSettings, acknowledgementSettings, messageFilter, processingSettings, Optional.ToList(envelopeOverrides), Optional.ToList(messageFilterList), schemaReferences, Optional.ToList(validationOverrides), Optional.ToList(edifactDelimiterOverrides));
+            return new EdifactProtocolSettings(validationSettings, framingSettings, envelopeSettings, acknowledgementSettings, messageFilter, processingSettings, Core.Optional.ToList(envelopeOverrides), Core.Optional.ToList(messageFilterList), schemaReferences, Core.Optional.ToList(validationOverrides), Core.Optional.ToList(edifactDelimiterOverrides));
         }
     }
 }

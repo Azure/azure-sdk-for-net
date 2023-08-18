@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of UpdateAdministrativeStateOnResources. </summary>
         public UpdateAdministrativeStateOnResources()
         {
-            ResourceIds = new ChangeTrackingList<ResourceIdentifier>();
+            ResourceIds = new Core.ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Network Fabrics or Network Rack resource Id. </summary>

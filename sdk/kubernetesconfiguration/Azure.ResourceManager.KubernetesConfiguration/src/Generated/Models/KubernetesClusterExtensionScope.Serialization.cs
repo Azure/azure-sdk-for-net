@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesClusterExtensionScope : IUtf8JsonSerializable
+    public partial class KubernetesClusterExtensionScope : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Cluster))
+            if (Core.Optional.IsDefined(Cluster))
             {
                 if (Cluster != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("cluster");
                 }
             }
-            if (Optional.IsDefined(Namespace))
+            if (Core.Optional.IsDefined(Namespace))
             {
                 if (Namespace != null)
                 {
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<ScopeCluster> cluster = default;
-            Optional<ScopeNamespace> @namespace = default;
+            Core.Optional<ScopeCluster> cluster = default;
+            Core.Optional<ScopeNamespace> @namespace = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cluster"u8))

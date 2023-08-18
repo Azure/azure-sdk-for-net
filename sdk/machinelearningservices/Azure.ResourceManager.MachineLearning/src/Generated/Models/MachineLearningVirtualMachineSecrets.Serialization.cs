@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningVmSshCredentials> administratorAccount = default;
+            Core.Optional<MachineLearningVmSshCredentials> administratorAccount = default;
             ComputeType computeType = default;
             foreach (var property in element.EnumerateObject())
             {

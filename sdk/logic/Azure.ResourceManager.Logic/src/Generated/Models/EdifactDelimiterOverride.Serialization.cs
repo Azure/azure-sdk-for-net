@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class EdifactDelimiterOverride : IUtf8JsonSerializable
+    public partial class EdifactDelimiterOverride : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MessageId))
+            if (Core.Optional.IsDefined(MessageId))
             {
                 writer.WritePropertyName("messageId"u8);
                 writer.WriteStringValue(MessageId);
             }
-            if (Optional.IsDefined(MessageVersion))
+            if (Core.Optional.IsDefined(MessageVersion))
             {
                 writer.WritePropertyName("messageVersion"u8);
                 writer.WriteStringValue(MessageVersion);
             }
-            if (Optional.IsDefined(MessageRelease))
+            if (Core.Optional.IsDefined(MessageRelease))
             {
                 writer.WritePropertyName("messageRelease"u8);
                 writer.WriteStringValue(MessageRelease);
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(DecimalPointIndicator.ToSerialString());
             writer.WritePropertyName("releaseIndicator"u8);
             writer.WriteNumberValue(ReleaseIndicator);
-            if (Optional.IsDefined(MessageAssociationAssignedCode))
+            if (Core.Optional.IsDefined(MessageAssociationAssignedCode))
             {
                 writer.WritePropertyName("messageAssociationAssignedCode"u8);
                 writer.WriteStringValue(MessageAssociationAssignedCode);
             }
-            if (Optional.IsDefined(TargetNamespace))
+            if (Core.Optional.IsDefined(TargetNamespace))
             {
                 writer.WritePropertyName("targetNamespace"u8);
                 writer.WriteStringValue(TargetNamespace);
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> messageId = default;
-            Optional<string> messageVersion = default;
-            Optional<string> messageRelease = default;
+            Core.Optional<string> messageId = default;
+            Core.Optional<string> messageVersion = default;
+            Core.Optional<string> messageRelease = default;
             int dataElementSeparator = default;
             int componentSeparator = default;
             int segmentTerminator = default;
@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.Logic.Models
             SegmentTerminatorSuffix segmentTerminatorSuffix = default;
             EdifactDecimalIndicator decimalPointIndicator = default;
             int releaseIndicator = default;
-            Optional<string> messageAssociationAssignedCode = default;
-            Optional<string> targetNamespace = default;
+            Core.Optional<string> messageAssociationAssignedCode = default;
+            Core.Optional<string> targetNamespace = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("messageId"u8))

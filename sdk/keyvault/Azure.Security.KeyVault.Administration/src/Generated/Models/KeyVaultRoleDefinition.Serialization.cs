@@ -11,29 +11,29 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    public partial class KeyVaultRoleDefinition : IUtf8JsonSerializable
+    public partial class KeyVaultRoleDefinition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RoleName))
+            if (Core.Optional.IsDefined(RoleName))
             {
                 writer.WritePropertyName("roleName"u8);
                 writer.WriteStringValue(RoleName);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(RoleType))
+            if (Core.Optional.IsDefined(RoleType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RoleType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Permissions))
+            if (Core.Optional.IsCollectionDefined(Permissions))
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Administration
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AssignableScopes))
+            if (Core.Optional.IsCollectionDefined(AssignableScopes))
             {
                 writer.WritePropertyName("assignableScopes"u8);
                 writer.WriteStartArray();
@@ -63,14 +63,14 @@ namespace Azure.Security.KeyVault.Administration
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<KeyVaultRoleDefinitionType> type = default;
-            Optional<string> roleName = default;
-            Optional<string> description = default;
-            Optional<KeyVaultRoleType> type0 = default;
-            Optional<IList<KeyVaultPermission>> permissions = default;
-            Optional<IList<KeyVaultRoleScope>> assignableScopes = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<KeyVaultRoleDefinitionType> type = default;
+            Core.Optional<string> roleName = default;
+            Core.Optional<string> description = default;
+            Core.Optional<KeyVaultRoleType> type0 = default;
+            Core.Optional<IList<KeyVaultPermission>> permissions = default;
+            Core.Optional<IList<KeyVaultRoleScope>> assignableScopes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -152,7 +152,7 @@ namespace Azure.Security.KeyVault.Administration
                     continue;
                 }
             }
-            return new KeyVaultRoleDefinition(id.Value, name.Value, Optional.ToNullable(type), roleName.Value, description.Value, Optional.ToNullable(type0), Optional.ToList(permissions), Optional.ToList(assignableScopes));
+            return new KeyVaultRoleDefinition(id.Value, name.Value, Core.Optional.ToNullable(type), roleName.Value, description.Value, Core.Optional.ToNullable(type0), Core.Optional.ToList(permissions), Core.Optional.ToList(assignableScopes));
         }
     }
 }

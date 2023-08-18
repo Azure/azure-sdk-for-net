@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> @namespace = default;
-            Optional<string> token = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> @namespace = default;
+            Core.Optional<string> token = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

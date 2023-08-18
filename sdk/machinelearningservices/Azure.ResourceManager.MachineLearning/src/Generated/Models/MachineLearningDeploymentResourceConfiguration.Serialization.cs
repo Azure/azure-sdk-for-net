@@ -12,17 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningDeploymentResourceConfiguration : IUtf8JsonSerializable
+    public partial class MachineLearningDeploymentResourceConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(InstanceCount))
+            if (Core.Optional.IsDefined(InstanceCount))
             {
                 writer.WritePropertyName("instanceCount"u8);
                 writer.WriteNumberValue(InstanceCount.Value);
             }
-            if (Optional.IsDefined(InstanceType))
+            if (Core.Optional.IsDefined(InstanceType))
             {
                 if (InstanceType != null)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("instanceType");
                 }
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (Core.Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> instanceCount = default;
-            Optional<string> instanceType = default;
-            Optional<IDictionary<string, BinaryData>> properties = default;
+            Core.Optional<int> instanceCount = default;
+            Core.Optional<string> instanceType = default;
+            Core.Optional<IDictionary<string, BinaryData>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instanceCount"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningDeploymentResourceConfiguration(Optional.ToNullable(instanceCount), instanceType.Value, Optional.ToDictionary(properties));
+            return new MachineLearningDeploymentResourceConfiguration(Core.Optional.ToNullable(instanceCount), instanceType.Value, Core.Optional.ToDictionary(properties));
         }
     }
 }

@@ -10,42 +10,42 @@ using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class JobRequest : IUtf8JsonSerializable
+    public partial class JobRequest : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(JobId))
+            if (Core.Optional.IsDefined(JobId))
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (Optional.IsDefined(Type))
+            if (Core.Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
             }
-            if (Optional.IsDefined(CloudToDeviceMethod))
+            if (Core.Optional.IsDefined(CloudToDeviceMethod))
             {
                 writer.WritePropertyName("cloudToDeviceMethod"u8);
                 writer.WriteObjectValue(CloudToDeviceMethod);
             }
-            if (Optional.IsDefined(UpdateTwin))
+            if (Core.Optional.IsDefined(UpdateTwin))
             {
                 writer.WritePropertyName("updateTwin"u8);
                 writer.WriteObjectValue(UpdateTwin);
             }
-            if (Optional.IsDefined(QueryCondition))
+            if (Core.Optional.IsDefined(QueryCondition))
             {
                 writer.WritePropertyName("queryCondition"u8);
                 writer.WriteStringValue(QueryCondition);
             }
-            if (Optional.IsDefined(StartTime))
+            if (Core.Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime.Value, "O");
             }
-            if (Optional.IsDefined(MaxExecutionTimeInSeconds))
+            if (Core.Optional.IsDefined(MaxExecutionTimeInSeconds))
             {
                 writer.WritePropertyName("maxExecutionTimeInSeconds"u8);
                 writer.WriteNumberValue(MaxExecutionTimeInSeconds.Value);

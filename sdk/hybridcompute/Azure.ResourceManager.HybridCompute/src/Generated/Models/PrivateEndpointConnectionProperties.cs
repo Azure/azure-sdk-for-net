@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of PrivateEndpointConnectionProperties. </summary>
         public PrivateEndpointConnectionProperties()
         {
-            GroupIds = new ChangeTrackingList<string>();
+            GroupIds = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionProperties. </summary>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningJobProperties. </summary>
         public MachineLearningJobProperties()
         {
-            Services = new ChangeTrackingDictionary<string, MachineLearningJobService>();
+            Services = new Core.ChangeTrackingDictionary<string, MachineLearningJobService>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningJobProperties. </summary>

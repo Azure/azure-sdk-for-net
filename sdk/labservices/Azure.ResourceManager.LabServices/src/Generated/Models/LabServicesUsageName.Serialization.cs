@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<string> localizedValue = default;
-            Optional<IReadOnlyList<string>> skuInstances = default;
-            Optional<string> value = default;
+            Core.Optional<string> localizedValue = default;
+            Core.Optional<IReadOnlyList<string>> skuInstances = default;
+            Core.Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("localizedValue"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     continue;
                 }
             }
-            return new LabServicesUsageName(localizedValue.Value, Optional.ToList(skuInstances), value.Value);
+            return new LabServicesUsageName(localizedValue.Value, Core.Optional.ToList(skuInstances), value.Value);
         }
     }
 }

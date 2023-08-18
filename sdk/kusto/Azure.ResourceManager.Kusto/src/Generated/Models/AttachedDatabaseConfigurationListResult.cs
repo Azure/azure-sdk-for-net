@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of AttachedDatabaseConfigurationListResult. </summary>
         internal AttachedDatabaseConfigurationListResult()
         {
-            Value = new ChangeTrackingList<KustoAttachedDatabaseConfigurationData>();
+            Value = new Core.ChangeTrackingList<KustoAttachedDatabaseConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of AttachedDatabaseConfigurationListResult. </summary>

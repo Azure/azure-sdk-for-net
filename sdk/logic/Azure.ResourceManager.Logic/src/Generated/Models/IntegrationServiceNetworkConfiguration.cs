@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of IntegrationServiceNetworkConfiguration. </summary>
         public IntegrationServiceNetworkConfiguration()
         {
-            Subnets = new ChangeTrackingList<LogicResourceReference>();
+            Subnets = new Core.ChangeTrackingList<LogicResourceReference>();
         }
 
         /// <summary> Initializes a new instance of IntegrationServiceNetworkConfiguration. </summary>

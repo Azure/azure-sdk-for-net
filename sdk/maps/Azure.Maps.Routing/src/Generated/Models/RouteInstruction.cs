@@ -16,7 +16,7 @@ namespace Azure.Maps.Routing.Models
         /// <summary> Initializes a new instance of RouteInstruction. </summary>
         internal RouteInstruction()
         {
-            RoadNumbers = new ChangeTrackingList<string>();
+            RoadNumbers = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Distance from the start of the route to the point of the instruction. </summary>

@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of FlowEndpoints. </summary>
         public FlowEndpoints()
         {
-            OutgoingIPAddresses = new ChangeTrackingList<FlowEndpointIPAddress>();
-            AccessEndpointIPAddresses = new ChangeTrackingList<FlowEndpointIPAddress>();
+            OutgoingIPAddresses = new Core.ChangeTrackingList<FlowEndpointIPAddress>();
+            AccessEndpointIPAddresses = new Core.ChangeTrackingList<FlowEndpointIPAddress>();
         }
 
         /// <summary> Initializes a new instance of FlowEndpoints. </summary>

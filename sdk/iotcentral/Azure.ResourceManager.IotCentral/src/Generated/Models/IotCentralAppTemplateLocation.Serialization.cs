@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.IotCentral.Models
             {
                 return null;
             }
-            Optional<AzureLocation> id = default;
-            Optional<string> displayName = default;
+            Core.Optional<AzureLocation> id = default;
+            Core.Optional<string> displayName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                     continue;
                 }
             }
-            return new IotCentralAppTemplateLocation(Optional.ToNullable(id), displayName.Value);
+            return new IotCentralAppTemplateLocation(Core.Optional.ToNullable(id), displayName.Value);
         }
     }
 }

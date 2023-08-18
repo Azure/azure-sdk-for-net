@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KustoFollowerDatabaseDefinition>> value = default;
+            Core.Optional<IReadOnlyList<KustoFollowerDatabaseDefinition>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new FollowerDatabaseListResult(Optional.ToList(value));
+            return new FollowerDatabaseListResult(Core.Optional.ToList(value));
         }
     }
 }

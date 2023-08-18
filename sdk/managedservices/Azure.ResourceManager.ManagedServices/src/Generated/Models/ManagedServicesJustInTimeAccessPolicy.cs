@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
         public ManagedServicesJustInTimeAccessPolicy(MultiFactorAuthProvider multiFactorAuthProvider)
         {
             MultiFactorAuthProvider = multiFactorAuthProvider;
-            ManagedByTenantApprovers = new ChangeTrackingList<ManagedServicesEligibleApprover>();
+            ManagedByTenantApprovers = new Core.ChangeTrackingList<ManagedServicesEligibleApprover>();
         }
 
         /// <summary> Initializes a new instance of ManagedServicesJustInTimeAccessPolicy. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <summary> Initializes a new instance of LoadTestingOutboundEnvironmentEndpoint. </summary>
         internal LoadTestingOutboundEnvironmentEndpoint()
         {
-            Endpoints = new ChangeTrackingList<LoadTestingEndpointDependency>();
+            Endpoints = new Core.ChangeTrackingList<LoadTestingEndpointDependency>();
         }
 
         /// <summary> Initializes a new instance of LoadTestingOutboundEnvironmentEndpoint. </summary>

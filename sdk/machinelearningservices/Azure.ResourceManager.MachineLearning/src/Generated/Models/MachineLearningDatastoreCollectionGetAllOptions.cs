@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningDatastoreCollectionGetAllOptions. </summary>
         public MachineLearningDatastoreCollectionGetAllOptions()
         {
-            Names = new ChangeTrackingList<string>();
+            Names = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Continuation token for pagination. </summary>

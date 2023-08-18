@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of ManagedHsmProperties. </summary>
         public ManagedHsmProperties()
         {
-            InitialAdminObjectIds = new ChangeTrackingList<string>();
-            Regions = new ChangeTrackingList<ManagedHsmGeoReplicatedRegion>();
-            PrivateEndpointConnections = new ChangeTrackingList<ManagedHsmPrivateEndpointConnectionItemData>();
+            InitialAdminObjectIds = new Core.ChangeTrackingList<string>();
+            Regions = new Core.ChangeTrackingList<ManagedHsmGeoReplicatedRegion>();
+            PrivateEndpointConnections = new Core.ChangeTrackingList<ManagedHsmPrivateEndpointConnectionItemData>();
         }
 
         /// <summary> Initializes a new instance of ManagedHsmProperties. </summary>

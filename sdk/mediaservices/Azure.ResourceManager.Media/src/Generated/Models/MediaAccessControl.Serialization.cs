@@ -12,17 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaAccessControl : IUtf8JsonSerializable
+    public partial class MediaAccessControl : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultAction))
+            if (Core.Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IPAllowList))
+            if (Core.Optional.IsCollectionDefined(IPAllowList))
             {
                 writer.WritePropertyName("ipAllowList"u8);
                 writer.WriteStartArray();
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IPAccessControlDefaultAction> defaultAction = default;
-            Optional<IList<IPAddress>> ipAllowList = default;
+            Core.Optional<IPAccessControlDefaultAction> defaultAction = default;
+            Core.Optional<IList<IPAddress>> ipAllowList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultAction"u8))
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new MediaAccessControl(Optional.ToNullable(defaultAction), Optional.ToList(ipAllowList));
+            return new MediaAccessControl(Core.Optional.ToNullable(defaultAction), Core.Optional.ToList(ipAllowList));
         }
     }
 }

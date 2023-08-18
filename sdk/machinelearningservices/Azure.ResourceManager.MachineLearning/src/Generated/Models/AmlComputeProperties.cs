@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of AmlComputeProperties. </summary>
         public AmlComputeProperties()
         {
-            Errors = new ChangeTrackingList<MachineLearningError>();
+            Errors = new Core.ChangeTrackingList<MachineLearningError>();
         }
 
         /// <summary> Initializes a new instance of AmlComputeProperties. </summary>

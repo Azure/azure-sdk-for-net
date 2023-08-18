@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> privateIPAddress = default;
-            Optional<string> linkIdentifier = default;
-            Optional<string> groupId = default;
-            Optional<string> memberName = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> privateIPAddress = default;
+            Core.Optional<string> linkIdentifier = default;
+            Core.Optional<string> groupId = default;
+            Core.Optional<string> memberName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> dataCollectionFrequency = default;
-            Optional<string> dataReportingFrequency = default;
-            Optional<TimeSpan> maxAllowedUnreportedUsageDuration = default;
-            Optional<EdgeUsageDataEventHub> eventHubDetails = default;
+            Core.Optional<string> dataCollectionFrequency = default;
+            Core.Optional<string> dataReportingFrequency = default;
+            Core.Optional<TimeSpan> maxAllowedUnreportedUsageDuration = default;
+            Core.Optional<EdgeUsageDataEventHub> eventHubDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataCollectionFrequency"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new EdgeUsageDataCollectionPolicy(dataCollectionFrequency.Value, dataReportingFrequency.Value, Optional.ToNullable(maxAllowedUnreportedUsageDuration), eventHubDetails.Value);
+            return new EdgeUsageDataCollectionPolicy(dataCollectionFrequency.Value, dataReportingFrequency.Value, Core.Optional.ToNullable(maxAllowedUnreportedUsageDuration), eventHubDetails.Value);
         }
     }
 }

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<MachineLearningDiagnoseResultLevel> level = default;
-            Optional<string> message = default;
+            Core.Optional<string> code = default;
+            Core.Optional<MachineLearningDiagnoseResultLevel> level = default;
+            Core.Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningDiagnoseResult(code.Value, Optional.ToNullable(level), message.Value);
+            return new MachineLearningDiagnoseResult(code.Value, Core.Optional.ToNullable(level), message.Value);
         }
     }
 }

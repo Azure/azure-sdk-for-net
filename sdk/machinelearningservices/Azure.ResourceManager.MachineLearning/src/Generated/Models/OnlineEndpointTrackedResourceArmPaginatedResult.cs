@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of OnlineEndpointTrackedResourceArmPaginatedResult. </summary>
         internal OnlineEndpointTrackedResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<MachineLearningOnlineEndpointData>();
+            Value = new Core.ChangeTrackingList<MachineLearningOnlineEndpointData>();
         }
 
         /// <summary> Initializes a new instance of OnlineEndpointTrackedResourceArmPaginatedResult. </summary>

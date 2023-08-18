@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <summary> Initializes a new instance of SourceControlConfigurationList. </summary>
         internal SourceControlConfigurationList()
         {
-            Value = new ChangeTrackingList<KubernetesSourceControlConfigurationData>();
+            Value = new Core.ChangeTrackingList<KubernetesSourceControlConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of SourceControlConfigurationList. </summary>

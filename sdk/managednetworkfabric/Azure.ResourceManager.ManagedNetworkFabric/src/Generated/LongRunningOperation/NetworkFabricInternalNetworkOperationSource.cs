@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class NetworkFabricInternalNetworkOperationSource : IOperationSource<NetworkFabricInternalNetworkResource>
+    internal class NetworkFabricInternalNetworkOperationSource : Core.IOperationSource<NetworkFabricInternalNetworkResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             _client = client;
         }
 
-        NetworkFabricInternalNetworkResource IOperationSource<NetworkFabricInternalNetworkResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkFabricInternalNetworkResource Core.IOperationSource<NetworkFabricInternalNetworkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NetworkFabricInternalNetworkData.DeserializeNetworkFabricInternalNetworkData(document.RootElement);
             return new NetworkFabricInternalNetworkResource(_client, data);
         }
 
-        async ValueTask<NetworkFabricInternalNetworkResource> IOperationSource<NetworkFabricInternalNetworkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkFabricInternalNetworkResource> Core.IOperationSource<NetworkFabricInternalNetworkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NetworkFabricInternalNetworkData.DeserializeNetworkFabricInternalNetworkData(document.RootElement);

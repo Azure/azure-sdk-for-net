@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> collectionName = default;
-            Optional<IReadOnlyList<string>> subscriptions = default;
+            Core.Optional<string> collectionName = default;
+            Core.Optional<IReadOnlyList<string>> subscriptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("collectionName"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new CollectionsSubscriptionsMappingDetails(collectionName.Value, Optional.ToList(subscriptions));
+            return new CollectionsSubscriptionsMappingDetails(collectionName.Value, Core.Optional.ToList(subscriptions));
         }
     }
 }

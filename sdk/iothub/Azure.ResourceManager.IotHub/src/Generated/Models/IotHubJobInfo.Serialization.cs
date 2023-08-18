@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<string> jobId = default;
-            Optional<DateTimeOffset> startTimeUtc = default;
-            Optional<DateTimeOffset> endTimeUtc = default;
-            Optional<IotHubJobType> type = default;
-            Optional<IotHubJobStatus> status = default;
-            Optional<string> failureReason = default;
-            Optional<string> statusMessage = default;
-            Optional<string> parentJobId = default;
+            Core.Optional<string> jobId = default;
+            Core.Optional<DateTimeOffset> startTimeUtc = default;
+            Core.Optional<DateTimeOffset> endTimeUtc = default;
+            Core.Optional<IotHubJobType> type = default;
+            Core.Optional<IotHubJobStatus> status = default;
+            Core.Optional<string> failureReason = default;
+            Core.Optional<string> statusMessage = default;
+            Core.Optional<string> parentJobId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobId"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new IotHubJobInfo(jobId.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(type), Optional.ToNullable(status), failureReason.Value, statusMessage.Value, parentJobId.Value);
+            return new IotHubJobInfo(jobId.Value, Core.Optional.ToNullable(startTimeUtc), Core.Optional.ToNullable(endTimeUtc), Core.Optional.ToNullable(type), Core.Optional.ToNullable(status), failureReason.Value, statusMessage.Value, parentJobId.Value);
         }
     }
 }

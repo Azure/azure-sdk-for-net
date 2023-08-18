@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public MachineLearningEndpointProperties(MachineLearningEndpointAuthMode authMode)
         {
             AuthMode = authMode;
-            Properties = new ChangeTrackingDictionary<string, string>();
+            Properties = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningEndpointProperties. </summary>

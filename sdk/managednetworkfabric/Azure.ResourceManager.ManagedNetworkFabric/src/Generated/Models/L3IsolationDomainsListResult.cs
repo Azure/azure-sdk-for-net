@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of L3IsolationDomainsListResult. </summary>
         internal L3IsolationDomainsListResult()
         {
-            Value = new ChangeTrackingList<NetworkFabricL3IsolationDomainData>();
+            Value = new Core.ChangeTrackingList<NetworkFabricL3IsolationDomainData>();
         }
 
         /// <summary> Initializes a new instance of L3IsolationDomainsListResult. </summary>

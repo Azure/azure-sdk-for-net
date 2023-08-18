@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KustoAttachedDatabaseConfigurationData>> value = default;
+            Core.Optional<IReadOnlyList<KustoAttachedDatabaseConfigurationData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new AttachedDatabaseConfigurationListResult(Optional.ToList(value));
+            return new AttachedDatabaseConfigurationListResult(Core.Optional.ToList(value));
         }
     }
 }

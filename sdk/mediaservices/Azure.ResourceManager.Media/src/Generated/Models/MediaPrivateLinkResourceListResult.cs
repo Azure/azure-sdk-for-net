@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of MediaPrivateLinkResourceListResult. </summary>
         internal MediaPrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<MediaServicesPrivateLinkResourceData>();
+            Value = new Core.ChangeTrackingList<MediaServicesPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of MediaPrivateLinkResourceListResult. </summary>

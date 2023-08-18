@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class VirtualNetworksPropertiesVipPoolItem : IUtf8JsonSerializable
+    public partial class VirtualNetworksPropertiesVipPoolItem : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EndIP))
+            if (Core.Optional.IsDefined(EndIP))
             {
                 writer.WritePropertyName("endIP"u8);
                 writer.WriteStringValue(EndIP);
             }
-            if (Optional.IsDefined(StartIP))
+            if (Core.Optional.IsDefined(StartIP))
             {
                 writer.WritePropertyName("startIP"u8);
                 writer.WriteStringValue(StartIP);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<string> endIP = default;
-            Optional<string> startIP = default;
+            Core.Optional<string> endIP = default;
+            Core.Optional<string> startIP = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endIP"u8))

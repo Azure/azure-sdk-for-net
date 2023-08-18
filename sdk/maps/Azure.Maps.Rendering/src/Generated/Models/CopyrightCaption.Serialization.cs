@@ -18,8 +18,8 @@ namespace Azure.Maps.Rendering
             {
                 return null;
             }
-            Optional<string> formatVersion = default;
-            Optional<string> copyrightsCaption = default;
+            Core.Optional<string> formatVersion = default;
+            Core.Optional<string> copyrightsCaption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("formatVersion"u8))

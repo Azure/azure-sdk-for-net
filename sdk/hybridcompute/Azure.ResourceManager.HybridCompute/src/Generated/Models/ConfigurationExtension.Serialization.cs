@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<string> publisher = default;
-            Optional<string> type = default;
+            Core.Optional<string> publisher = default;
+            Core.Optional<string> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publisher"u8))

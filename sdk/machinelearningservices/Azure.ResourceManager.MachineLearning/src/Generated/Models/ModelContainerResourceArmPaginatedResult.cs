@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of ModelContainerResourceArmPaginatedResult. </summary>
         internal ModelContainerResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<MachineLearningModelContainerData>();
+            Value = new Core.ChangeTrackingList<MachineLearningModelContainerData>();
         }
 
         /// <summary> Initializes a new instance of ModelContainerResourceArmPaginatedResult. </summary>

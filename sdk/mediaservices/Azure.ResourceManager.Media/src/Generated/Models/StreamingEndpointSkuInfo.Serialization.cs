@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<ResourceType> resourceType = default;
-            Optional<StreamingEndpointCapacity> capacity = default;
-            Optional<StreamingEndpointSku> sku = default;
+            Core.Optional<ResourceType> resourceType = default;
+            Core.Optional<StreamingEndpointCapacity> capacity = default;
+            Core.Optional<StreamingEndpointSku> sku = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new StreamingEndpointSkuInfo(Optional.ToNullable(resourceType), capacity.Value, sku.Value);
+            return new StreamingEndpointSkuInfo(Core.Optional.ToNullable(resourceType), capacity.Value, sku.Value);
         }
     }
 }

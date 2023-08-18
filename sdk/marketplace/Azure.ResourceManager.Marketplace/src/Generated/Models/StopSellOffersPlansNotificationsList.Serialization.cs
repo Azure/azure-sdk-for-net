@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StopSellOffersPlansNotificationsResult>> stopSellNotifications = default;
+            Core.Optional<IReadOnlyList<StopSellOffersPlansNotificationsResult>> stopSellNotifications = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("stopSellNotifications"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new StopSellOffersPlansNotificationsList(Optional.ToList(stopSellNotifications));
+            return new StopSellOffersPlansNotificationsList(Core.Optional.ToList(stopSellNotifications));
         }
     }
 }

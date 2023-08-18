@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Argument.AssertNotNull(trainingData, nameof(trainingData));
 
-            CvSplitColumnNames = new ChangeTrackingList<string>();
+            CvSplitColumnNames = new Core.ChangeTrackingList<string>();
             TaskType = TaskType.Classification;
         }
 

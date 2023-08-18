@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class StatementConditionProperties : IUtf8JsonSerializable
+    public partial class StatementConditionProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RoutePolicyConditionType))
+            if (Core.Optional.IsDefined(RoutePolicyConditionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RoutePolicyConditionType.Value.ToString());
             }
-            if (Optional.IsDefined(IPPrefixId))
+            if (Core.Optional.IsDefined(IPPrefixId))
             {
                 writer.WritePropertyName("ipPrefixId"u8);
                 writer.WriteStringValue(IPPrefixId);
             }
-            if (Optional.IsCollectionDefined(IPExtendedCommunityIds))
+            if (Core.Optional.IsCollectionDefined(IPExtendedCommunityIds))
             {
                 writer.WritePropertyName("ipExtendedCommunityIds"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPCommunityIds))
+            if (Core.Optional.IsCollectionDefined(IPCommunityIds))
             {
                 writer.WritePropertyName("ipCommunityIds"u8);
                 writer.WriteStartArray();
@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<RoutePolicyConditionType> type = default;
-            Optional<ResourceIdentifier> ipPrefixId = default;
-            Optional<IList<ResourceIdentifier>> ipExtendedCommunityIds = default;
-            Optional<IList<ResourceIdentifier>> ipCommunityIds = default;
+            Core.Optional<RoutePolicyConditionType> type = default;
+            Core.Optional<ResourceIdentifier> ipPrefixId = default;
+            Core.Optional<IList<ResourceIdentifier>> ipExtendedCommunityIds = default;
+            Core.Optional<IList<ResourceIdentifier>> ipCommunityIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new StatementConditionProperties(Optional.ToList(ipCommunityIds), Optional.ToNullable(type), ipPrefixId.Value, Optional.ToList(ipExtendedCommunityIds));
+            return new StatementConditionProperties(Core.Optional.ToList(ipCommunityIds), Core.Optional.ToNullable(type), ipPrefixId.Value, Core.Optional.ToList(ipExtendedCommunityIds));
         }
     }
 }

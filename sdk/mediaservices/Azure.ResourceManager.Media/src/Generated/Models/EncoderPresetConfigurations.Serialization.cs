@@ -10,47 +10,47 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class EncoderPresetConfigurations : IUtf8JsonSerializable
+    public partial class EncoderPresetConfigurations : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Complexity))
+            if (Core.Optional.IsDefined(Complexity))
             {
                 writer.WritePropertyName("complexity"u8);
                 writer.WriteStringValue(Complexity.Value.ToString());
             }
-            if (Optional.IsDefined(InterleaveOutput))
+            if (Core.Optional.IsDefined(InterleaveOutput))
             {
                 writer.WritePropertyName("interleaveOutput"u8);
                 writer.WriteStringValue(InterleaveOutput.Value.ToString());
             }
-            if (Optional.IsDefined(KeyFrameIntervalInSeconds))
+            if (Core.Optional.IsDefined(KeyFrameIntervalInSeconds))
             {
                 writer.WritePropertyName("keyFrameIntervalInSeconds"u8);
                 writer.WriteNumberValue(KeyFrameIntervalInSeconds.Value);
             }
-            if (Optional.IsDefined(MaxBitrateBps))
+            if (Core.Optional.IsDefined(MaxBitrateBps))
             {
                 writer.WritePropertyName("maxBitrateBps"u8);
                 writer.WriteNumberValue(MaxBitrateBps.Value);
             }
-            if (Optional.IsDefined(MaxHeight))
+            if (Core.Optional.IsDefined(MaxHeight))
             {
                 writer.WritePropertyName("maxHeight"u8);
                 writer.WriteNumberValue(MaxHeight.Value);
             }
-            if (Optional.IsDefined(MaxLayers))
+            if (Core.Optional.IsDefined(MaxLayers))
             {
                 writer.WritePropertyName("maxLayers"u8);
                 writer.WriteNumberValue(MaxLayers.Value);
             }
-            if (Optional.IsDefined(MinBitrateBps))
+            if (Core.Optional.IsDefined(MinBitrateBps))
             {
                 writer.WritePropertyName("minBitrateBps"u8);
                 writer.WriteNumberValue(MinBitrateBps.Value);
             }
-            if (Optional.IsDefined(MinHeight))
+            if (Core.Optional.IsDefined(MinHeight))
             {
                 writer.WritePropertyName("minHeight"u8);
                 writer.WriteNumberValue(MinHeight.Value);
@@ -64,14 +64,14 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<EncodingComplexity> complexity = default;
-            Optional<InterleaveOutput> interleaveOutput = default;
-            Optional<float> keyFrameIntervalInSeconds = default;
-            Optional<int> maxBitrateBps = default;
-            Optional<int> maxHeight = default;
-            Optional<int> maxLayers = default;
-            Optional<int> minBitrateBps = default;
-            Optional<int> minHeight = default;
+            Core.Optional<EncodingComplexity> complexity = default;
+            Core.Optional<InterleaveOutput> interleaveOutput = default;
+            Core.Optional<float> keyFrameIntervalInSeconds = default;
+            Core.Optional<int> maxBitrateBps = default;
+            Core.Optional<int> maxHeight = default;
+            Core.Optional<int> maxLayers = default;
+            Core.Optional<int> minBitrateBps = default;
+            Core.Optional<int> minHeight = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("complexity"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new EncoderPresetConfigurations(Optional.ToNullable(complexity), Optional.ToNullable(interleaveOutput), Optional.ToNullable(keyFrameIntervalInSeconds), Optional.ToNullable(maxBitrateBps), Optional.ToNullable(maxHeight), Optional.ToNullable(maxLayers), Optional.ToNullable(minBitrateBps), Optional.ToNullable(minHeight));
+            return new EncoderPresetConfigurations(Core.Optional.ToNullable(complexity), Core.Optional.ToNullable(interleaveOutput), Core.Optional.ToNullable(keyFrameIntervalInSeconds), Core.Optional.ToNullable(maxBitrateBps), Core.Optional.ToNullable(maxHeight), Core.Optional.ToNullable(maxLayers), Core.Optional.ToNullable(minBitrateBps), Core.Optional.ToNullable(minHeight));
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicWorkflowRepetitionIndex : IUtf8JsonSerializable
+    public partial class LogicWorkflowRepetitionIndex : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScopeName))
+            if (Core.Optional.IsDefined(ScopeName))
             {
                 writer.WritePropertyName("scopeName"u8);
                 writer.WriteStringValue(ScopeName);
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> scopeName = default;
+            Core.Optional<string> scopeName = default;
             int itemIndex = default;
             foreach (var property in element.EnumerateObject())
             {

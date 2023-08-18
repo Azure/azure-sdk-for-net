@@ -11,37 +11,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class FilteringOperations : IUtf8JsonSerializable
+    public partial class FilteringOperations : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Deinterlace))
+            if (Core.Optional.IsDefined(Deinterlace))
             {
                 writer.WritePropertyName("deinterlace"u8);
                 writer.WriteObjectValue(Deinterlace);
             }
-            if (Optional.IsDefined(Rotation))
+            if (Core.Optional.IsDefined(Rotation))
             {
                 writer.WritePropertyName("rotation"u8);
                 writer.WriteStringValue(Rotation.Value.ToString());
             }
-            if (Optional.IsDefined(Crop))
+            if (Core.Optional.IsDefined(Crop))
             {
                 writer.WritePropertyName("crop"u8);
                 writer.WriteObjectValue(Crop);
             }
-            if (Optional.IsDefined(FadeIn))
+            if (Core.Optional.IsDefined(FadeIn))
             {
                 writer.WritePropertyName("fadeIn"u8);
                 writer.WriteObjectValue(FadeIn);
             }
-            if (Optional.IsDefined(FadeOut))
+            if (Core.Optional.IsDefined(FadeOut))
             {
                 writer.WritePropertyName("fadeOut"u8);
                 writer.WriteObjectValue(FadeOut);
             }
-            if (Optional.IsCollectionDefined(Overlays))
+            if (Core.Optional.IsCollectionDefined(Overlays))
             {
                 writer.WritePropertyName("overlays"u8);
                 writer.WriteStartArray();
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<DeinterlaceSettings> deinterlace = default;
-            Optional<RotationSetting> rotation = default;
-            Optional<RectangularWindow> crop = default;
-            Optional<FadeOptions> fadeIn = default;
-            Optional<FadeOptions> fadeOut = default;
-            Optional<IList<MediaOverlayBase>> overlays = default;
+            Core.Optional<DeinterlaceSettings> deinterlace = default;
+            Core.Optional<RotationSetting> rotation = default;
+            Core.Optional<RectangularWindow> crop = default;
+            Core.Optional<FadeOptions> fadeIn = default;
+            Core.Optional<FadeOptions> fadeOut = default;
+            Core.Optional<IList<MediaOverlayBase>> overlays = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deinterlace"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new FilteringOperations(deinterlace.Value, Optional.ToNullable(rotation), crop.Value, fadeIn.Value, fadeOut.Value, Optional.ToList(overlays));
+            return new FilteringOperations(deinterlace.Value, Core.Optional.ToNullable(rotation), crop.Value, fadeIn.Value, fadeOut.Value, Core.Optional.ToList(overlays));
         }
     }
 }

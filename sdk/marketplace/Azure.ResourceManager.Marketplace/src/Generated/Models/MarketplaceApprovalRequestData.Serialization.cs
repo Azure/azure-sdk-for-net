@@ -13,24 +13,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    public partial class MarketplaceApprovalRequestData : IUtf8JsonSerializable
+    public partial class MarketplaceApprovalRequestData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(OfferId))
+            if (Core.Optional.IsDefined(OfferId))
             {
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
             }
-            if (Optional.IsDefined(PublisherId))
+            if (Core.Optional.IsDefined(PublisherId))
             {
                 writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
-            if (Optional.IsCollectionDefined(PlansDetails))
+            if (Core.Optional.IsCollectionDefined(PlansDetails))
             {
                 writer.WritePropertyName("plansDetails"u8);
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MessageCode))
+            if (Core.Optional.IsDefined(MessageCode))
             {
                 writer.WritePropertyName("messageCode"u8);
                 writer.WriteNumberValue(MessageCode.Value);
@@ -58,13 +58,13 @@ namespace Azure.ResourceManager.Marketplace
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> offerId = default;
-            Optional<string> offerDisplayName = default;
-            Optional<string> publisherId = default;
-            Optional<IList<PrivateStorePlanDetails>> plansDetails = default;
-            Optional<bool> isClosed = default;
-            Optional<long> messageCode = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> offerId = default;
+            Core.Optional<string> offerDisplayName = default;
+            Core.Optional<string> publisherId = default;
+            Core.Optional<IList<PrivateStorePlanDetails>> plansDetails = default;
+            Core.Optional<bool> isClosed = default;
+            Core.Optional<long> messageCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Marketplace
                     continue;
                 }
             }
-            return new MarketplaceApprovalRequestData(id, name, type, systemData.Value, offerId.Value, offerDisplayName.Value, publisherId.Value, Optional.ToList(plansDetails), Optional.ToNullable(isClosed), Optional.ToNullable(messageCode));
+            return new MarketplaceApprovalRequestData(id, name, type, systemData.Value, offerId.Value, offerDisplayName.Value, publisherId.Value, Core.Optional.ToList(plansDetails), Core.Optional.ToNullable(isClosed), Core.Optional.ToNullable(messageCode));
         }
     }
 }

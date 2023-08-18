@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class AutoMLVerticalRegression : IUtf8JsonSerializable
+    public partial class AutoMLVerticalRegression : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrimaryMetric))
+            if (Core.Optional.IsDefined(PrimaryMetric))
             {
                 writer.WritePropertyName("primaryMetric"u8);
                 writer.WriteStringValue(PrimaryMetric.Value.ToString());
             }
-            if (Optional.IsDefined(TrainingSettings))
+            if (Core.Optional.IsDefined(TrainingSettings))
             {
                 if (TrainingSettings != null)
                 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("trainingSettings");
                 }
             }
-            if (Optional.IsCollectionDefined(CvSplitColumnNames))
+            if (Core.Optional.IsCollectionDefined(CvSplitColumnNames))
             {
                 if (CvSplitColumnNames != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("cvSplitColumnNames");
                 }
             }
-            if (Optional.IsDefined(FeaturizationSettings))
+            if (Core.Optional.IsDefined(FeaturizationSettings))
             {
                 if (FeaturizationSettings != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("featurizationSettings");
                 }
             }
-            if (Optional.IsDefined(LimitSettings))
+            if (Core.Optional.IsDefined(LimitSettings))
             {
                 if (LimitSettings != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("limitSettings");
                 }
             }
-            if (Optional.IsDefined(NCrossValidations))
+            if (Core.Optional.IsDefined(NCrossValidations))
             {
                 if (NCrossValidations != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("nCrossValidations");
                 }
             }
-            if (Optional.IsDefined(TestData))
+            if (Core.Optional.IsDefined(TestData))
             {
                 if (TestData != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("testData");
                 }
             }
-            if (Optional.IsDefined(TestDataSize))
+            if (Core.Optional.IsDefined(TestDataSize))
             {
                 if (TestDataSize != null)
                 {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("testDataSize");
                 }
             }
-            if (Optional.IsDefined(ValidationData))
+            if (Core.Optional.IsDefined(ValidationData))
             {
                 if (ValidationData != null)
                 {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationData");
                 }
             }
-            if (Optional.IsDefined(ValidationDataSize))
+            if (Core.Optional.IsDefined(ValidationDataSize))
             {
                 if (ValidationDataSize != null)
                 {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationDataSize");
                 }
             }
-            if (Optional.IsDefined(WeightColumnName))
+            if (Core.Optional.IsDefined(WeightColumnName))
             {
                 if (WeightColumnName != null)
                 {
@@ -146,12 +146,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("weightColumnName");
                 }
             }
-            if (Optional.IsDefined(LogVerbosity))
+            if (Core.Optional.IsDefined(LogVerbosity))
             {
                 writer.WritePropertyName("logVerbosity"u8);
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
-            if (Optional.IsDefined(TargetColumnName))
+            if (Core.Optional.IsDefined(TargetColumnName))
             {
                 if (TargetColumnName != null)
                 {
@@ -176,19 +176,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<AutoMLVerticalRegressionPrimaryMetric> primaryMetric = default;
-            Optional<RegressionTrainingSettings> trainingSettings = default;
-            Optional<IList<string>> cvSplitColumnNames = default;
-            Optional<TableVerticalFeaturizationSettings> featurizationSettings = default;
-            Optional<TableVerticalLimitSettings> limitSettings = default;
-            Optional<NCrossValidations> nCrossValidations = default;
-            Optional<MachineLearningTableJobInput> testData = default;
-            Optional<double?> testDataSize = default;
-            Optional<MachineLearningTableJobInput> validationData = default;
-            Optional<double?> validationDataSize = default;
-            Optional<string> weightColumnName = default;
-            Optional<MachineLearningLogVerbosity> logVerbosity = default;
-            Optional<string> targetColumnName = default;
+            Core.Optional<AutoMLVerticalRegressionPrimaryMetric> primaryMetric = default;
+            Core.Optional<RegressionTrainingSettings> trainingSettings = default;
+            Core.Optional<IList<string>> cvSplitColumnNames = default;
+            Core.Optional<TableVerticalFeaturizationSettings> featurizationSettings = default;
+            Core.Optional<TableVerticalLimitSettings> limitSettings = default;
+            Core.Optional<NCrossValidations> nCrossValidations = default;
+            Core.Optional<MachineLearningTableJobInput> testData = default;
+            Core.Optional<double?> testDataSize = default;
+            Core.Optional<MachineLearningTableJobInput> validationData = default;
+            Core.Optional<double?> validationDataSize = default;
+            Core.Optional<string> weightColumnName = default;
+            Core.Optional<MachineLearningLogVerbosity> logVerbosity = default;
+            Core.Optional<string> targetColumnName = default;
             TaskType taskType = default;
             MachineLearningTableJobInput trainingData = default;
             foreach (var property in element.EnumerateObject())
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new AutoMLVerticalRegression(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, Optional.ToNullable(primaryMetric), trainingSettings.Value, Optional.ToList(cvSplitColumnNames), featurizationSettings.Value, limitSettings.Value, nCrossValidations.Value, testData.Value, Optional.ToNullable(testDataSize), validationData.Value, Optional.ToNullable(validationDataSize), weightColumnName.Value);
+            return new AutoMLVerticalRegression(Core.Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, Core.Optional.ToNullable(primaryMetric), trainingSettings.Value, Core.Optional.ToList(cvSplitColumnNames), featurizationSettings.Value, limitSettings.Value, nCrossValidations.Value, testData.Value, Core.Optional.ToNullable(testDataSize), validationData.Value, Core.Optional.ToNullable(validationDataSize), weightColumnName.Value);
         }
     }
 }

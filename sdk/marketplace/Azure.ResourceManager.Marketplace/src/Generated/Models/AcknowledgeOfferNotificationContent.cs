@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of AcknowledgeOfferNotificationContent. </summary>
         public AcknowledgeOfferNotificationContent()
         {
-            AddPlans = new ChangeTrackingList<string>();
-            RemovePlans = new ChangeTrackingList<string>();
+            AddPlans = new Core.ChangeTrackingList<string>();
+            RemovePlans = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Gets or sets a value indicating whether acknowledge action flag is enabled. </summary>

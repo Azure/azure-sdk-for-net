@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class CrossSiteAccessPolicies : IUtf8JsonSerializable
+    public partial class CrossSiteAccessPolicies : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientAccessPolicy))
+            if (Core.Optional.IsDefined(ClientAccessPolicy))
             {
                 writer.WritePropertyName("clientAccessPolicy"u8);
                 writer.WriteStringValue(ClientAccessPolicy);
             }
-            if (Optional.IsDefined(CrossDomainPolicy))
+            if (Core.Optional.IsDefined(CrossDomainPolicy))
             {
                 writer.WritePropertyName("crossDomainPolicy"u8);
                 writer.WriteStringValue(CrossDomainPolicy);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> clientAccessPolicy = default;
-            Optional<string> crossDomainPolicy = default;
+            Core.Optional<string> clientAccessPolicy = default;
+            Core.Optional<string> crossDomainPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientAccessPolicy"u8))

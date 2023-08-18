@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningWorkspaceDiagnoseProperties : IUtf8JsonSerializable
+    public partial class MachineLearningWorkspaceDiagnoseProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Udr))
+            if (Core.Optional.IsCollectionDefined(Udr))
             {
                 writer.WritePropertyName("udr"u8);
                 writer.WriteStartObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Nsg))
+            if (Core.Optional.IsCollectionDefined(Nsg))
             {
                 writer.WritePropertyName("nsg"u8);
                 writer.WriteStartObject();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ResourceLock))
+            if (Core.Optional.IsCollectionDefined(ResourceLock))
             {
                 writer.WritePropertyName("resourceLock"u8);
                 writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(DnsResolution))
+            if (Core.Optional.IsCollectionDefined(DnsResolution))
             {
                 writer.WritePropertyName("dnsResolution"u8);
                 writer.WriteStartObject();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(StorageAccount))
+            if (Core.Optional.IsCollectionDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteStartObject();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(KeyVault))
+            if (Core.Optional.IsCollectionDefined(KeyVault))
             {
                 writer.WritePropertyName("keyVault"u8);
                 writer.WriteStartObject();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ContainerRegistry))
+            if (Core.Optional.IsCollectionDefined(ContainerRegistry))
             {
                 writer.WritePropertyName("containerRegistry"u8);
                 writer.WriteStartObject();
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ApplicationInsights))
+            if (Core.Optional.IsCollectionDefined(ApplicationInsights))
             {
                 writer.WritePropertyName("applicationInsights"u8);
                 writer.WriteStartObject();
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Others))
+            if (Core.Optional.IsCollectionDefined(Others))
             {
                 writer.WritePropertyName("others"u8);
                 writer.WriteStartObject();

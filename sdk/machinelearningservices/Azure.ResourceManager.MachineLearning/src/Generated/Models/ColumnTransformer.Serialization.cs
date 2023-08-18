@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class ColumnTransformer : IUtf8JsonSerializable
+    public partial class ColumnTransformer : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Fields))
+            if (Core.Optional.IsCollectionDefined(Fields))
             {
                 if (Fields != null)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("fields");
                 }
             }
-            if (Optional.IsDefined(Parameters))
+            if (Core.Optional.IsDefined(Parameters))
             {
                 if (Parameters != null)
                 {
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IList<string>> fields = default;
-            Optional<BinaryData> parameters = default;
+            Core.Optional<IList<string>> fields = default;
+            Core.Optional<BinaryData> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fields"u8))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new ColumnTransformer(Optional.ToList(fields), parameters.Value);
+            return new ColumnTransformer(Core.Optional.ToList(fields), parameters.Value);
         }
     }
 }

@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningBatchRetrySettings : IUtf8JsonSerializable
+    public partial class MachineLearningBatchRetrySettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxRetries))
+            if (Core.Optional.IsDefined(MaxRetries))
             {
                 writer.WritePropertyName("maxRetries"u8);
                 writer.WriteNumberValue(MaxRetries.Value);
             }
-            if (Optional.IsDefined(Timeout))
+            if (Core.Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> maxRetries = default;
-            Optional<TimeSpan> timeout = default;
+            Core.Optional<int> maxRetries = default;
+            Core.Optional<TimeSpan> timeout = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxRetries"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningBatchRetrySettings(Optional.ToNullable(maxRetries), Optional.ToNullable(timeout));
+            return new MachineLearningBatchRetrySettings(Core.Optional.ToNullable(maxRetries), Core.Optional.ToNullable(timeout));
         }
     }
 }

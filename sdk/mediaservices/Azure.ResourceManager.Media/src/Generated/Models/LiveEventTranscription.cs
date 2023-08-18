@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of LiveEventTranscription. </summary>
         public LiveEventTranscription()
         {
-            InputTrackSelection = new ChangeTrackingList<LiveEventInputTrackSelection>();
+            InputTrackSelection = new Core.ChangeTrackingList<LiveEventInputTrackSelection>();
         }
 
         /// <summary> Initializes a new instance of LiveEventTranscription. </summary>

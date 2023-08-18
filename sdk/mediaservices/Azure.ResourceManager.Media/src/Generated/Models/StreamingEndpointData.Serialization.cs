@@ -14,17 +14,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    public partial class StreamingEndpointData : IUtf8JsonSerializable
+    public partial class StreamingEndpointData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.Media
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ScaleUnits))
+            if (Core.Optional.IsDefined(ScaleUnits))
             {
                 writer.WritePropertyName("scaleUnits"u8);
                 writer.WriteNumberValue(ScaleUnits.Value);
             }
-            if (Optional.IsDefined(AvailabilitySetName))
+            if (Core.Optional.IsDefined(AvailabilitySetName))
             {
                 writer.WritePropertyName("availabilitySetName"u8);
                 writer.WriteStringValue(AvailabilitySetName);
             }
-            if (Optional.IsDefined(AccessControl))
+            if (Core.Optional.IsDefined(AccessControl))
             {
                 if (AccessControl != null)
                 {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Media
                     writer.WriteNull("accessControl");
                 }
             }
-            if (Optional.IsDefined(MaxCacheAge))
+            if (Core.Optional.IsDefined(MaxCacheAge))
             {
                 if (MaxCacheAge != null)
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Media
                     writer.WriteNull("maxCacheAge");
                 }
             }
-            if (Optional.IsCollectionDefined(CustomHostNames))
+            if (Core.Optional.IsCollectionDefined(CustomHostNames))
             {
                 writer.WritePropertyName("customHostNames"u8);
                 writer.WriteStartArray();
@@ -88,22 +88,22 @@ namespace Azure.ResourceManager.Media
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsCdnEnabled))
+            if (Core.Optional.IsDefined(IsCdnEnabled))
             {
                 writer.WritePropertyName("cdnEnabled"u8);
                 writer.WriteBooleanValue(IsCdnEnabled.Value);
             }
-            if (Optional.IsDefined(CdnProvider))
+            if (Core.Optional.IsDefined(CdnProvider))
             {
                 writer.WritePropertyName("cdnProvider"u8);
                 writer.WriteStringValue(CdnProvider);
             }
-            if (Optional.IsDefined(CdnProfile))
+            if (Core.Optional.IsDefined(CdnProfile))
             {
                 writer.WritePropertyName("cdnProfile"u8);
                 writer.WriteStringValue(CdnProfile);
             }
-            if (Optional.IsDefined(CrossSiteAccessPolicies))
+            if (Core.Optional.IsDefined(CrossSiteAccessPolicies))
             {
                 if (CrossSiteAccessPolicies != null)
                 {
@@ -125,29 +125,29 @@ namespace Azure.ResourceManager.Media
             {
                 return null;
             }
-            Optional<StreamingEndpointCurrentSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<StreamingEndpointCurrentSku> sku = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<int> scaleUnits = default;
-            Optional<string> availabilitySetName = default;
-            Optional<StreamingEndpointAccessControl> accessControl = default;
-            Optional<long?> maxCacheAge = default;
-            Optional<IList<string>> customHostNames = default;
-            Optional<string> hostName = default;
-            Optional<bool> cdnEnabled = default;
-            Optional<string> cdnProvider = default;
-            Optional<string> cdnProfile = default;
-            Optional<string> provisioningState = default;
-            Optional<StreamingEndpointResourceState> resourceState = default;
-            Optional<CrossSiteAccessPolicies> crossSiteAccessPolicies = default;
-            Optional<DateTimeOffset> freeTrialEndTime = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> lastModified = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> description = default;
+            Core.Optional<int> scaleUnits = default;
+            Core.Optional<string> availabilitySetName = default;
+            Core.Optional<StreamingEndpointAccessControl> accessControl = default;
+            Core.Optional<long?> maxCacheAge = default;
+            Core.Optional<IList<string>> customHostNames = default;
+            Core.Optional<string> hostName = default;
+            Core.Optional<bool> cdnEnabled = default;
+            Core.Optional<string> cdnProvider = default;
+            Core.Optional<string> cdnProfile = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<StreamingEndpointResourceState> resourceState = default;
+            Core.Optional<CrossSiteAccessPolicies> crossSiteAccessPolicies = default;
+            Core.Optional<DateTimeOffset> freeTrialEndTime = default;
+            Core.Optional<DateTimeOffset> created = default;
+            Core.Optional<DateTimeOffset> lastModified = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Media
                     continue;
                 }
             }
-            return new StreamingEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, description.Value, Optional.ToNullable(scaleUnits), availabilitySetName.Value, accessControl.Value, Optional.ToNullable(maxCacheAge), Optional.ToList(customHostNames), hostName.Value, Optional.ToNullable(cdnEnabled), cdnProvider.Value, cdnProfile.Value, provisioningState.Value, Optional.ToNullable(resourceState), crossSiteAccessPolicies.Value, Optional.ToNullable(freeTrialEndTime), Optional.ToNullable(created), Optional.ToNullable(lastModified));
+            return new StreamingEndpointData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku.Value, description.Value, Core.Optional.ToNullable(scaleUnits), availabilitySetName.Value, accessControl.Value, Core.Optional.ToNullable(maxCacheAge), Core.Optional.ToList(customHostNames), hostName.Value, Core.Optional.ToNullable(cdnEnabled), cdnProvider.Value, cdnProfile.Value, provisioningState.Value, Core.Optional.ToNullable(resourceState), crossSiteAccessPolicies.Value, Core.Optional.ToNullable(freeTrialEndTime), Core.Optional.ToNullable(created), Core.Optional.ToNullable(lastModified));
         }
     }
 }

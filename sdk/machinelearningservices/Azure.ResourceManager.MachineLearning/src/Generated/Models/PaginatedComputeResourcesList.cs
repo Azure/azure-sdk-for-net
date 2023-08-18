@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of PaginatedComputeResourcesList. </summary>
         internal PaginatedComputeResourcesList()
         {
-            Value = new ChangeTrackingList<MachineLearningComputeData>();
+            Value = new Core.ChangeTrackingList<MachineLearningComputeData>();
         }
 
         /// <summary> Initializes a new instance of PaginatedComputeResourcesList. </summary>

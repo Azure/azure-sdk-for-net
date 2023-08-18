@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> Initializes a new instance of ProvisionedClustersCommonPropertiesStatus. </summary>
         internal ProvisionedClustersCommonPropertiesStatus()
         {
-            AddonStatus = new ChangeTrackingDictionary<string, AddonStatus>();
+            AddonStatus = new Core.ChangeTrackingDictionary<string, AddonStatus>();
         }
 
         /// <summary> Initializes a new instance of ProvisionedClustersCommonPropertiesStatus. </summary>

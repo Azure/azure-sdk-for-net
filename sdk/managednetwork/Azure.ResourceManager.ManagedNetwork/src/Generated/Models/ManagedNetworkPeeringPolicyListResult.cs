@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
         /// <summary> Initializes a new instance of ManagedNetworkPeeringPolicyListResult. </summary>
         internal ManagedNetworkPeeringPolicyListResult()
         {
-            Value = new ChangeTrackingList<ManagedNetworkPeeringPolicyData>();
+            Value = new Core.ChangeTrackingList<ManagedNetworkPeeringPolicyData>();
         }
 
         /// <summary> Initializes a new instance of ManagedNetworkPeeringPolicyListResult. </summary>

@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> text = default;
-            Optional<BinaryData> value = default;
-            Optional<IReadOnlyList<LogicExpression>> subexpressions = default;
-            Optional<LogicExpressionErrorInfo> error = default;
+            Core.Optional<string> text = default;
+            Core.Optional<BinaryData> value = default;
+            Core.Optional<IReadOnlyList<LogicExpression>> subexpressions = default;
+            Core.Optional<LogicExpressionErrorInfo> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new LogicExpression(text.Value, value.Value, Optional.ToList(subexpressions), error.Value);
+            return new LogicExpression(text.Value, value.Value, Core.Optional.ToList(subexpressions), error.Value);
         }
     }
 }

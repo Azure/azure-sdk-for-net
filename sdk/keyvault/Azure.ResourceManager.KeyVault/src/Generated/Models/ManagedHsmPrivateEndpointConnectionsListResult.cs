@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionsListResult. </summary>
         internal ManagedHsmPrivateEndpointConnectionsListResult()
         {
-            Value = new ChangeTrackingList<ManagedHsmPrivateEndpointConnectionData>();
+            Value = new Core.ChangeTrackingList<ManagedHsmPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionsListResult. </summary>

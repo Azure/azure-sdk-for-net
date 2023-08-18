@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningComputeInstanceContainer. </summary>
         internal MachineLearningComputeInstanceContainer()
         {
-            Services = new ChangeTrackingList<BinaryData>();
+            Services = new Core.ChangeTrackingList<BinaryData>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningComputeInstanceContainer. </summary>

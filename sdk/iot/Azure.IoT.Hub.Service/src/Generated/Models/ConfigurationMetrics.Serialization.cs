@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class ConfigurationMetrics : IUtf8JsonSerializable
+    public partial class ConfigurationMetrics : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Results))
+            if (Core.Optional.IsCollectionDefined(Results))
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteStartObject();
@@ -27,7 +27,7 @@ namespace Azure.IoT.Hub.Service.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Queries))
+            if (Core.Optional.IsCollectionDefined(Queries))
             {
                 writer.WritePropertyName("queries"u8);
                 writer.WriteStartObject();
@@ -47,8 +47,8 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, long>> results = default;
-            Optional<IDictionary<string, string>> queries = default;
+            Core.Optional<IDictionary<string, long>> results = default;
+            Core.Optional<IDictionary<string, string>> queries = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"u8))
@@ -80,7 +80,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new ConfigurationMetrics(Optional.ToDictionary(results), Optional.ToDictionary(queries));
+            return new ConfigurationMetrics(Core.Optional.ToDictionary(results), Core.Optional.ToDictionary(queries));
         }
     }
 }

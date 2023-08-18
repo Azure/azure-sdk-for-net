@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearningCompute
 {
-    public partial class OperationalizationClusterData : IUtf8JsonSerializable
+    public partial class OperationalizationClusterData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,37 +34,37 @@ namespace Azure.ResourceManager.MachineLearningCompute
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ClusterType))
+            if (Core.Optional.IsDefined(ClusterType))
             {
                 writer.WritePropertyName("clusterType"u8);
                 writer.WriteStringValue(ClusterType.Value.ToString());
             }
-            if (Optional.IsDefined(StorageAccount))
+            if (Core.Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteObjectValue(StorageAccount);
             }
-            if (Optional.IsDefined(ContainerRegistry))
+            if (Core.Optional.IsDefined(ContainerRegistry))
             {
                 writer.WritePropertyName("containerRegistry"u8);
                 writer.WriteObjectValue(ContainerRegistry);
             }
-            if (Optional.IsDefined(ContainerService))
+            if (Core.Optional.IsDefined(ContainerService))
             {
                 writer.WritePropertyName("containerService"u8);
                 writer.WriteObjectValue(ContainerService);
             }
-            if (Optional.IsDefined(AppInsights))
+            if (Core.Optional.IsDefined(AppInsights))
             {
                 writer.WritePropertyName("appInsights"u8);
                 writer.WriteObjectValue(AppInsights);
             }
-            if (Optional.IsDefined(GlobalServiceConfiguration))
+            if (Core.Optional.IsDefined(GlobalServiceConfiguration))
             {
                 writer.WritePropertyName("globalServiceConfiguration"u8);
                 writer.WriteObjectValue(GlobalServiceConfiguration);
@@ -79,23 +79,23 @@ namespace Azure.ResourceManager.MachineLearningCompute
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<DateTimeOffset> modifiedOn = default;
-            Optional<OperationStatus> provisioningState = default;
-            Optional<IReadOnlyList<ErrorResponseWrapper>> provisioningErrors = default;
-            Optional<ClusterType> clusterType = default;
-            Optional<StorageAccountProperties> storageAccount = default;
-            Optional<ContainerRegistryProperties> containerRegistry = default;
-            Optional<AcsClusterProperties> containerService = default;
-            Optional<AppInsightsProperties> appInsights = default;
-            Optional<GlobalServiceConfiguration> globalServiceConfiguration = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> description = default;
+            Core.Optional<DateTimeOffset> createdOn = default;
+            Core.Optional<DateTimeOffset> modifiedOn = default;
+            Core.Optional<OperationStatus> provisioningState = default;
+            Core.Optional<IReadOnlyList<ErrorResponseWrapper>> provisioningErrors = default;
+            Core.Optional<ClusterType> clusterType = default;
+            Core.Optional<StorageAccountProperties> storageAccount = default;
+            Core.Optional<ContainerRegistryProperties> containerRegistry = default;
+            Core.Optional<AcsClusterProperties> containerService = default;
+            Core.Optional<AppInsightsProperties> appInsights = default;
+            Core.Optional<GlobalServiceConfiguration> globalServiceConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                     continue;
                 }
             }
-            return new OperationalizationClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), Optional.ToNullable(provisioningState), Optional.ToList(provisioningErrors), Optional.ToNullable(clusterType), storageAccount.Value, containerRegistry.Value, containerService.Value, appInsights.Value, globalServiceConfiguration.Value);
+            return new OperationalizationClusterData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, description.Value, Core.Optional.ToNullable(createdOn), Core.Optional.ToNullable(modifiedOn), Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(provisioningErrors), Core.Optional.ToNullable(clusterType), storageAccount.Value, containerRegistry.Value, containerService.Value, appInsights.Value, globalServiceConfiguration.Value);
         }
     }
 }

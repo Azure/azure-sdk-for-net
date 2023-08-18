@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
 
             PrincipalId = principalId;
             RoleDefinitionId = roleDefinitionId;
-            DelegatedRoleDefinitionIds = new ChangeTrackingList<Guid>();
+            DelegatedRoleDefinitionIds = new Core.ChangeTrackingList<Guid>();
         }
 
         /// <summary> Initializes a new instance of ManagedServicesAuthorization. </summary>

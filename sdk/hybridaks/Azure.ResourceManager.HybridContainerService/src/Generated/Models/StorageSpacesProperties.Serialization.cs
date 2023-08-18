@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class StorageSpacesProperties : IUtf8JsonSerializable
+    public partial class StorageSpacesProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(HciStorageProfile))
+            if (Core.Optional.IsDefined(HciStorageProfile))
             {
                 writer.WritePropertyName("hciStorageProfile"u8);
                 writer.WriteObjectValue(HciStorageProfile);
             }
-            if (Optional.IsDefined(VmwareStorageProfile))
+            if (Core.Optional.IsDefined(VmwareStorageProfile))
             {
                 writer.WritePropertyName("vmwareStorageProfile"u8);
                 writer.WriteObjectValue(VmwareStorageProfile);
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<StorageSpacesPropertiesHciStorageProfile> hciStorageProfile = default;
-            Optional<StorageSpacesPropertiesVmwareStorageProfile> vmwareStorageProfile = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<StorageSpacesPropertiesStatus> status = default;
+            Core.Optional<StorageSpacesPropertiesHciStorageProfile> hciStorageProfile = default;
+            Core.Optional<StorageSpacesPropertiesVmwareStorageProfile> vmwareStorageProfile = default;
+            Core.Optional<ProvisioningState> provisioningState = default;
+            Core.Optional<StorageSpacesPropertiesStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hciStorageProfile"u8))
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new StorageSpacesProperties(hciStorageProfile.Value, vmwareStorageProfile.Value, Optional.ToNullable(provisioningState), status.Value);
+            return new StorageSpacesProperties(hciStorageProfile.Value, vmwareStorageProfile.Value, Core.Optional.ToNullable(provisioningState), status.Value);
         }
     }
 }

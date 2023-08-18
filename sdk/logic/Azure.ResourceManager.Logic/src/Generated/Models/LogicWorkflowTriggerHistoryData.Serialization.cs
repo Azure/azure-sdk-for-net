@@ -24,19 +24,19 @@ namespace Azure.ResourceManager.Logic
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<DateTimeOffset> scheduledTime = default;
-            Optional<LogicWorkflowStatus> status = default;
-            Optional<string> code = default;
-            Optional<BinaryData> error = default;
-            Optional<Guid> trackingId = default;
-            Optional<Correlation> correlation = default;
-            Optional<LogicContentLink> inputsLink = default;
-            Optional<LogicContentLink> outputsLink = default;
-            Optional<bool> fired = default;
-            Optional<LogicResourceReference> run = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<DateTimeOffset> scheduledTime = default;
+            Core.Optional<LogicWorkflowStatus> status = default;
+            Core.Optional<string> code = default;
+            Core.Optional<BinaryData> error = default;
+            Core.Optional<Guid> trackingId = default;
+            Core.Optional<Correlation> correlation = default;
+            Core.Optional<LogicContentLink> inputsLink = default;
+            Core.Optional<LogicContentLink> outputsLink = default;
+            Core.Optional<bool> fired = default;
+            Core.Optional<LogicResourceReference> run = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Logic
                     continue;
                 }
             }
-            return new LogicWorkflowTriggerHistoryData(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(scheduledTime), Optional.ToNullable(status), code.Value, error.Value, Optional.ToNullable(trackingId), correlation.Value, inputsLink.Value, outputsLink.Value, Optional.ToNullable(fired), run.Value);
+            return new LogicWorkflowTriggerHistoryData(id, name, type, systemData.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToNullable(scheduledTime), Core.Optional.ToNullable(status), code.Value, error.Value, Core.Optional.ToNullable(trackingId), correlation.Value, inputsLink.Value, outputsLink.Value, Core.Optional.ToNullable(fired), run.Value);
         }
     }
 }

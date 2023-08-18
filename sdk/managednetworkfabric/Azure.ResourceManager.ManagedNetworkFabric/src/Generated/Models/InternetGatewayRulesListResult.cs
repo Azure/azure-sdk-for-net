@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of InternetGatewayRulesListResult. </summary>
         internal InternetGatewayRulesListResult()
         {
-            Value = new ChangeTrackingList<NetworkFabricInternetGatewayRuleData>();
+            Value = new Core.ChangeTrackingList<NetworkFabricInternetGatewayRuleData>();
         }
 
         /// <summary> Initializes a new instance of InternetGatewayRulesListResult. </summary>

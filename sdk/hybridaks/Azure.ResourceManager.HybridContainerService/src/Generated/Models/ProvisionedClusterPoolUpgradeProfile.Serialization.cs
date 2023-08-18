@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class ProvisionedClusterPoolUpgradeProfile : IUtf8JsonSerializable
+    public partial class ProvisionedClusterPoolUpgradeProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Upgrades))
+            if (Core.Optional.IsCollectionDefined(Upgrades))
             {
                 writer.WritePropertyName("upgrades"u8);
                 writer.WriteStartArray();
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<string> kubernetesVersion = default;
-            Optional<string> name = default;
-            Optional<OSType> osType = default;
-            Optional<IList<ProvisionedClusterPoolUpgradeProfileProperties>> upgrades = default;
+            Core.Optional<string> kubernetesVersion = default;
+            Core.Optional<string> name = default;
+            Core.Optional<OSType> osType = default;
+            Core.Optional<IList<ProvisionedClusterPoolUpgradeProfileProperties>> upgrades = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kubernetesVersion"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new ProvisionedClusterPoolUpgradeProfile(kubernetesVersion.Value, name.Value, Optional.ToNullable(osType), Optional.ToList(upgrades));
+            return new ProvisionedClusterPoolUpgradeProfile(kubernetesVersion.Value, name.Value, Core.Optional.ToNullable(osType), Core.Optional.ToList(upgrades));
         }
     }
 }

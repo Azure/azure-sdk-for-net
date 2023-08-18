@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class IPRange : IUtf8JsonSerializable
+    public partial class IPRange : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Address))
+            if (Core.Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address.ToString());
             }
-            if (Optional.IsDefined(SubnetPrefixLength))
+            if (Core.Optional.IsDefined(SubnetPrefixLength))
             {
                 writer.WritePropertyName("subnetPrefixLength"u8);
                 writer.WriteNumberValue(SubnetPrefixLength.Value);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IPAddress> address = default;
-            Optional<int> subnetPrefixLength = default;
+            Core.Optional<string> name = default;
+            Core.Optional<IPAddress> address = default;
+            Core.Optional<int> subnetPrefixLength = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new IPRange(name.Value, address.Value, Optional.ToNullable(subnetPrefixLength));
+            return new IPRange(name.Value, address.Value, Core.Optional.ToNullable(subnetPrefixLength));
         }
     }
 }

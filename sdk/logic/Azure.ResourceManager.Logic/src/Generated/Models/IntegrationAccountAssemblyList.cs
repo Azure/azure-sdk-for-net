@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of IntegrationAccountAssemblyList. </summary>
         internal IntegrationAccountAssemblyList()
         {
-            Value = new ChangeTrackingList<IntegrationAccountAssemblyDefinitionData>();
+            Value = new Core.ChangeTrackingList<IntegrationAccountAssemblyDefinitionData>();
         }
 
         /// <summary> Initializes a new instance of IntegrationAccountAssemblyList. </summary>

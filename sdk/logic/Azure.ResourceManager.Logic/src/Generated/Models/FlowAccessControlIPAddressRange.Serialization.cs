@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class FlowAccessControlIPAddressRange : IUtf8JsonSerializable
+    public partial class FlowAccessControlIPAddressRange : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AddressRange))
+            if (Core.Optional.IsDefined(AddressRange))
             {
                 writer.WritePropertyName("addressRange"u8);
                 writer.WriteStringValue(AddressRange);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> addressRange = default;
+            Core.Optional<string> addressRange = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addressRange"u8))

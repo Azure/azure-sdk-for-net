@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of IPMatchCondition. </summary>
         public IPMatchCondition()
         {
-            IPPrefixValues = new ChangeTrackingList<string>();
-            IPGroupNames = new ChangeTrackingList<string>();
+            IPPrefixValues = new Core.ChangeTrackingList<string>();
+            IPGroupNames = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of IPMatchCondition. </summary>

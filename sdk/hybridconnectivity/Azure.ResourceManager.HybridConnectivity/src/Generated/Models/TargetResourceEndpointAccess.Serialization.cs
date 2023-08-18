@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             {
                 return null;
             }
-            Optional<string> namespaceName = default;
-            Optional<string> namespaceNameSuffix = default;
-            Optional<string> hybridConnectionName = default;
-            Optional<string> accessKey = default;
-            Optional<long> expiresOn = default;
+            Core.Optional<string> namespaceName = default;
+            Core.Optional<string> namespaceNameSuffix = default;
+            Core.Optional<string> hybridConnectionName = default;
+            Core.Optional<string> accessKey = default;
+            Core.Optional<long> expiresOn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("relay"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                     continue;
                 }
             }
-            return new TargetResourceEndpointAccess(namespaceName.Value, namespaceNameSuffix.Value, hybridConnectionName.Value, accessKey.Value, Optional.ToNullable(expiresOn));
+            return new TargetResourceEndpointAccess(namespaceName.Value, namespaceNameSuffix.Value, hybridConnectionName.Value, accessKey.Value, Core.Optional.ToNullable(expiresOn));
         }
     }
 }

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class IPPrefixRule : IUtf8JsonSerializable
+    public partial class IPPrefixRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("action"u8);
@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             writer.WriteNumberValue(SequenceNumber);
             writer.WritePropertyName("networkPrefix"u8);
             writer.WriteStringValue(NetworkPrefix);
-            if (Optional.IsDefined(Condition))
+            if (Core.Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);
                 writer.WriteStringValue(Condition.Value.ToString());
             }
-            if (Optional.IsDefined(SubnetMaskLength))
+            if (Core.Optional.IsDefined(SubnetMaskLength))
             {
                 writer.WritePropertyName("subnetMaskLength"u8);
                 writer.WriteStringValue(SubnetMaskLength);
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             CommunityActionType action = default;
             long sequenceNumber = default;
             string networkPrefix = default;
-            Optional<IPPrefixRuleCondition> condition = default;
-            Optional<string> subnetMaskLength = default;
+            Core.Optional<IPPrefixRuleCondition> condition = default;
+            Core.Optional<string> subnetMaskLength = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"u8))
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new IPPrefixRule(action, sequenceNumber, networkPrefix, Optional.ToNullable(condition), subnetMaskLength.Value);
+            return new IPPrefixRule(action, sequenceNumber, networkPrefix, Core.Optional.ToNullable(condition), subnetMaskLength.Value);
         }
     }
 }

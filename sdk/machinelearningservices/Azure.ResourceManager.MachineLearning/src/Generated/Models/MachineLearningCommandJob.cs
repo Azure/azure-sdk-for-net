@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             Command = command;
             EnvironmentId = environmentId;
-            EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
-            Inputs = new ChangeTrackingDictionary<string, MachineLearningJobInput>();
-            Outputs = new ChangeTrackingDictionary<string, MachineLearningJobOutput>();
+            EnvironmentVariables = new Core.ChangeTrackingDictionary<string, string>();
+            Inputs = new Core.ChangeTrackingDictionary<string, MachineLearningJobInput>();
+            Outputs = new Core.ChangeTrackingDictionary<string, MachineLearningJobOutput>();
             JobType = JobType.Command;
         }
 

@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class VirtualNetworksPropertiesInfraVnetProfile : IUtf8JsonSerializable
+    public partial class VirtualNetworksPropertiesInfraVnetProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Hci))
+            if (Core.Optional.IsDefined(Hci))
             {
                 writer.WritePropertyName("hci"u8);
                 writer.WriteObjectValue(Hci);
             }
-            if (Optional.IsDefined(NetworkCloud))
+            if (Core.Optional.IsDefined(NetworkCloud))
             {
                 writer.WritePropertyName("networkCloud"u8);
                 writer.WriteObjectValue(NetworkCloud);
             }
-            if (Optional.IsDefined(Vmware))
+            if (Core.Optional.IsDefined(Vmware))
             {
                 writer.WritePropertyName("vmware"u8);
                 writer.WriteObjectValue(Vmware);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<VirtualNetworksPropertiesInfraVnetProfileHci> hci = default;
-            Optional<VirtualNetworksPropertiesInfraVnetProfileNetworkCloud> networkCloud = default;
-            Optional<VirtualNetworksPropertiesInfraVnetProfileVmware> vmware = default;
+            Core.Optional<VirtualNetworksPropertiesInfraVnetProfileHci> hci = default;
+            Core.Optional<VirtualNetworksPropertiesInfraVnetProfileNetworkCloud> networkCloud = default;
+            Core.Optional<VirtualNetworksPropertiesInfraVnetProfileVmware> vmware = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hci"u8))

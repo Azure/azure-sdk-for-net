@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class TableVerticalFeaturizationSettings : IUtf8JsonSerializable
+    public partial class TableVerticalFeaturizationSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(BlockedTransformers))
+            if (Core.Optional.IsCollectionDefined(BlockedTransformers))
             {
                 if (BlockedTransformers != null)
                 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("blockedTransformers");
                 }
             }
-            if (Optional.IsCollectionDefined(ColumnNameAndTypes))
+            if (Core.Optional.IsCollectionDefined(ColumnNameAndTypes))
             {
                 if (ColumnNameAndTypes != null)
                 {
@@ -51,17 +51,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("columnNameAndTypes");
                 }
             }
-            if (Optional.IsDefined(EnableDnnFeaturization))
+            if (Core.Optional.IsDefined(EnableDnnFeaturization))
             {
                 writer.WritePropertyName("enableDnnFeaturization"u8);
                 writer.WriteBooleanValue(EnableDnnFeaturization.Value);
             }
-            if (Optional.IsDefined(Mode))
+            if (Core.Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(TransformerParams))
+            if (Core.Optional.IsCollectionDefined(TransformerParams))
             {
                 if (TransformerParams != null)
                 {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("transformerParams");
                 }
             }
-            if (Optional.IsDefined(DatasetLanguage))
+            if (Core.Optional.IsDefined(DatasetLanguage))
             {
                 if (DatasetLanguage != null)
                 {
@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IList<BlockedTransformer>> blockedTransformers = default;
-            Optional<IDictionary<string, string>> columnNameAndTypes = default;
-            Optional<bool> enableDnnFeaturization = default;
-            Optional<MachineLearningFeaturizationMode> mode = default;
-            Optional<IDictionary<string, IList<ColumnTransformer>>> transformerParams = default;
-            Optional<string> datasetLanguage = default;
+            Core.Optional<IList<BlockedTransformer>> blockedTransformers = default;
+            Core.Optional<IDictionary<string, string>> columnNameAndTypes = default;
+            Core.Optional<bool> enableDnnFeaturization = default;
+            Core.Optional<MachineLearningFeaturizationMode> mode = default;
+            Core.Optional<IDictionary<string, IList<ColumnTransformer>>> transformerParams = default;
+            Core.Optional<string> datasetLanguage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blockedTransformers"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new TableVerticalFeaturizationSettings(datasetLanguage.Value, Optional.ToList(blockedTransformers), Optional.ToDictionary(columnNameAndTypes), Optional.ToNullable(enableDnnFeaturization), Optional.ToNullable(mode), Optional.ToDictionary(transformerParams));
+            return new TableVerticalFeaturizationSettings(datasetLanguage.Value, Core.Optional.ToList(blockedTransformers), Core.Optional.ToDictionary(columnNameAndTypes), Core.Optional.ToNullable(enableDnnFeaturization), Core.Optional.ToNullable(mode), Core.Optional.ToDictionary(transformerParams));
         }
     }
 }

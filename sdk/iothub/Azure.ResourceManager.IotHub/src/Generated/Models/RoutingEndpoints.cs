@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Initializes a new instance of RoutingEndpoints. </summary>
         public RoutingEndpoints()
         {
-            ServiceBusQueues = new ChangeTrackingList<RoutingServiceBusQueueEndpointProperties>();
-            ServiceBusTopics = new ChangeTrackingList<RoutingServiceBusTopicEndpointProperties>();
-            EventHubs = new ChangeTrackingList<RoutingEventHubProperties>();
-            StorageContainers = new ChangeTrackingList<RoutingStorageContainerProperties>();
+            ServiceBusQueues = new Core.ChangeTrackingList<RoutingServiceBusQueueEndpointProperties>();
+            ServiceBusTopics = new Core.ChangeTrackingList<RoutingServiceBusTopicEndpointProperties>();
+            EventHubs = new Core.ChangeTrackingList<RoutingEventHubProperties>();
+            StorageContainers = new Core.ChangeTrackingList<RoutingStorageContainerProperties>();
         }
 
         /// <summary> Initializes a new instance of RoutingEndpoints. </summary>

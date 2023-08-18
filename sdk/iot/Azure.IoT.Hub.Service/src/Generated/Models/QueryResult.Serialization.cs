@@ -19,9 +19,9 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<QueryResultType> type = default;
-            Optional<IReadOnlyList<object>> items = default;
-            Optional<string> continuationToken = default;
+            Core.Optional<QueryResultType> type = default;
+            Core.Optional<IReadOnlyList<object>> items = default;
+            Core.Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -60,7 +60,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new QueryResult(Optional.ToNullable(type), Optional.ToList(items), continuationToken.Value);
+            return new QueryResult(Core.Optional.ToNullable(type), Core.Optional.ToList(items), continuationToken.Value);
         }
     }
 }

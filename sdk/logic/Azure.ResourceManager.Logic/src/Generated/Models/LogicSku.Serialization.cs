@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             LogicSkuName name = default;
-            Optional<LogicResourceReference> plan = default;
+            Core.Optional<LogicResourceReference> plan = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

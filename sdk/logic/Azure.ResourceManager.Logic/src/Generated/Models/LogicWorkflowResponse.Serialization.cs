@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicWorkflowResponse : IUtf8JsonSerializable
+    public partial class LogicWorkflowResponse : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Headers))
+            if (Core.Optional.IsDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
 #if NET6_0_OR_GREATER
@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.Logic.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Headers.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(StatusCode))
+            if (Core.Optional.IsDefined(StatusCode))
             {
                 writer.WritePropertyName("statusCode"u8);
                 writer.WriteNumberValue(StatusCode.Value);
             }
-            if (Optional.IsDefined(BodyLink))
+            if (Core.Optional.IsDefined(BodyLink))
             {
                 writer.WritePropertyName("bodyLink"u8);
                 writer.WriteObjectValue(BodyLink);
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<BinaryData> headers = default;
-            Optional<int> statusCode = default;
-            Optional<LogicContentLink> bodyLink = default;
+            Core.Optional<BinaryData> headers = default;
+            Core.Optional<int> statusCode = default;
+            Core.Optional<LogicContentLink> bodyLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("headers"u8))
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new LogicWorkflowResponse(headers.Value, Optional.ToNullable(statusCode), bodyLink.Value);
+            return new LogicWorkflowResponse(headers.Value, Core.Optional.ToNullable(statusCode), bodyLink.Value);
         }
     }
 }

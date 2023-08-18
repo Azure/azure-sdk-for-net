@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubSkuInfo : IUtf8JsonSerializable
+    public partial class IotHubSkuInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
-            if (Optional.IsDefined(Capacity))
+            if (Core.Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.IotHub.Models
                 return null;
             }
             IotHubSku name = default;
-            Optional<IotHubSkuTier> tier = default;
-            Optional<long> capacity = default;
+            Core.Optional<IotHubSkuTier> tier = default;
+            Core.Optional<long> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new IotHubSkuInfo(name, Optional.ToNullable(tier), Optional.ToNullable(capacity));
+            return new IotHubSkuInfo(name, Core.Optional.ToNullable(tier), Core.Optional.ToNullable(capacity));
         }
     }
 }

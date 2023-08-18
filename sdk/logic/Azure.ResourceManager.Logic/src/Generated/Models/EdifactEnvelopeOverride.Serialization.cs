@@ -10,82 +10,82 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class EdifactEnvelopeOverride : IUtf8JsonSerializable
+    public partial class EdifactEnvelopeOverride : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MessageId))
+            if (Core.Optional.IsDefined(MessageId))
             {
                 writer.WritePropertyName("messageId"u8);
                 writer.WriteStringValue(MessageId);
             }
-            if (Optional.IsDefined(MessageVersion))
+            if (Core.Optional.IsDefined(MessageVersion))
             {
                 writer.WritePropertyName("messageVersion"u8);
                 writer.WriteStringValue(MessageVersion);
             }
-            if (Optional.IsDefined(MessageRelease))
+            if (Core.Optional.IsDefined(MessageRelease))
             {
                 writer.WritePropertyName("messageRelease"u8);
                 writer.WriteStringValue(MessageRelease);
             }
-            if (Optional.IsDefined(MessageAssociationAssignedCode))
+            if (Core.Optional.IsDefined(MessageAssociationAssignedCode))
             {
                 writer.WritePropertyName("messageAssociationAssignedCode"u8);
                 writer.WriteStringValue(MessageAssociationAssignedCode);
             }
-            if (Optional.IsDefined(TargetNamespace))
+            if (Core.Optional.IsDefined(TargetNamespace))
             {
                 writer.WritePropertyName("targetNamespace"u8);
                 writer.WriteStringValue(TargetNamespace);
             }
-            if (Optional.IsDefined(FunctionalGroupId))
+            if (Core.Optional.IsDefined(FunctionalGroupId))
             {
                 writer.WritePropertyName("functionalGroupId"u8);
                 writer.WriteStringValue(FunctionalGroupId);
             }
-            if (Optional.IsDefined(SenderApplicationQualifier))
+            if (Core.Optional.IsDefined(SenderApplicationQualifier))
             {
                 writer.WritePropertyName("senderApplicationQualifier"u8);
                 writer.WriteStringValue(SenderApplicationQualifier);
             }
-            if (Optional.IsDefined(SenderApplicationId))
+            if (Core.Optional.IsDefined(SenderApplicationId))
             {
                 writer.WritePropertyName("senderApplicationId"u8);
                 writer.WriteStringValue(SenderApplicationId);
             }
-            if (Optional.IsDefined(ReceiverApplicationQualifier))
+            if (Core.Optional.IsDefined(ReceiverApplicationQualifier))
             {
                 writer.WritePropertyName("receiverApplicationQualifier"u8);
                 writer.WriteStringValue(ReceiverApplicationQualifier);
             }
-            if (Optional.IsDefined(ReceiverApplicationId))
+            if (Core.Optional.IsDefined(ReceiverApplicationId))
             {
                 writer.WritePropertyName("receiverApplicationId"u8);
                 writer.WriteStringValue(ReceiverApplicationId);
             }
-            if (Optional.IsDefined(ControllingAgencyCode))
+            if (Core.Optional.IsDefined(ControllingAgencyCode))
             {
                 writer.WritePropertyName("controllingAgencyCode"u8);
                 writer.WriteStringValue(ControllingAgencyCode);
             }
-            if (Optional.IsDefined(GroupHeaderMessageVersion))
+            if (Core.Optional.IsDefined(GroupHeaderMessageVersion))
             {
                 writer.WritePropertyName("groupHeaderMessageVersion"u8);
                 writer.WriteStringValue(GroupHeaderMessageVersion);
             }
-            if (Optional.IsDefined(GroupHeaderMessageRelease))
+            if (Core.Optional.IsDefined(GroupHeaderMessageRelease))
             {
                 writer.WritePropertyName("groupHeaderMessageRelease"u8);
                 writer.WriteStringValue(GroupHeaderMessageRelease);
             }
-            if (Optional.IsDefined(AssociationAssignedCode))
+            if (Core.Optional.IsDefined(AssociationAssignedCode))
             {
                 writer.WritePropertyName("associationAssignedCode"u8);
                 writer.WriteStringValue(AssociationAssignedCode);
             }
-            if (Optional.IsDefined(ApplicationPassword))
+            if (Core.Optional.IsDefined(ApplicationPassword))
             {
                 writer.WritePropertyName("applicationPassword"u8);
                 writer.WriteStringValue(ApplicationPassword);
@@ -99,21 +99,21 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> messageId = default;
-            Optional<string> messageVersion = default;
-            Optional<string> messageRelease = default;
-            Optional<string> messageAssociationAssignedCode = default;
-            Optional<string> targetNamespace = default;
-            Optional<string> functionalGroupId = default;
-            Optional<string> senderApplicationQualifier = default;
-            Optional<string> senderApplicationId = default;
-            Optional<string> receiverApplicationQualifier = default;
-            Optional<string> receiverApplicationId = default;
-            Optional<string> controllingAgencyCode = default;
-            Optional<string> groupHeaderMessageVersion = default;
-            Optional<string> groupHeaderMessageRelease = default;
-            Optional<string> associationAssignedCode = default;
-            Optional<string> applicationPassword = default;
+            Core.Optional<string> messageId = default;
+            Core.Optional<string> messageVersion = default;
+            Core.Optional<string> messageRelease = default;
+            Core.Optional<string> messageAssociationAssignedCode = default;
+            Core.Optional<string> targetNamespace = default;
+            Core.Optional<string> functionalGroupId = default;
+            Core.Optional<string> senderApplicationQualifier = default;
+            Core.Optional<string> senderApplicationId = default;
+            Core.Optional<string> receiverApplicationQualifier = default;
+            Core.Optional<string> receiverApplicationId = default;
+            Core.Optional<string> controllingAgencyCode = default;
+            Core.Optional<string> groupHeaderMessageVersion = default;
+            Core.Optional<string> groupHeaderMessageRelease = default;
+            Core.Optional<string> associationAssignedCode = default;
+            Core.Optional<string> applicationPassword = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("messageId"u8))

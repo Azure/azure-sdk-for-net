@@ -13,34 +13,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LabServices
 {
-    public partial class LabServicesScheduleData : IUtf8JsonSerializable
+    public partial class LabServicesScheduleData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartOn))
+            if (Core.Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startAt"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(StopOn))
+            if (Core.Optional.IsDefined(StopOn))
             {
                 writer.WritePropertyName("stopAt"u8);
                 writer.WriteStringValue(StopOn.Value, "O");
             }
-            if (Optional.IsDefined(RecurrencePattern))
+            if (Core.Optional.IsDefined(RecurrencePattern))
             {
                 writer.WritePropertyName("recurrencePattern"u8);
                 writer.WriteObjectValue(RecurrencePattern);
             }
-            if (Optional.IsDefined(TimeZoneId))
+            if (Core.Optional.IsDefined(TimeZoneId))
             {
                 writer.WritePropertyName("timeZoneId"u8);
                 writer.WriteStringValue(TimeZoneId);
             }
-            if (Optional.IsDefined(Notes))
+            if (Core.Optional.IsDefined(Notes))
             {
                 writer.WritePropertyName("notes"u8);
 #if NET6_0_OR_GREATER
@@ -62,13 +62,13 @@ namespace Azure.ResourceManager.LabServices
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> startAt = default;
-            Optional<DateTimeOffset> stopAt = default;
-            Optional<LabServicesRecurrencePattern> recurrencePattern = default;
-            Optional<string> timeZoneId = default;
-            Optional<BinaryData> notes = default;
-            Optional<LabServicesProvisioningState> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DateTimeOffset> startAt = default;
+            Core.Optional<DateTimeOffset> stopAt = default;
+            Core.Optional<LabServicesRecurrencePattern> recurrencePattern = default;
+            Core.Optional<string> timeZoneId = default;
+            Core.Optional<BinaryData> notes = default;
+            Core.Optional<LabServicesProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.LabServices
                     continue;
                 }
             }
-            return new LabServicesScheduleData(id, name, type, systemData.Value, Optional.ToNullable(startAt), Optional.ToNullable(stopAt), recurrencePattern.Value, timeZoneId.Value, notes.Value, Optional.ToNullable(provisioningState));
+            return new LabServicesScheduleData(id, name, type, systemData.Value, Core.Optional.ToNullable(startAt), Core.Optional.ToNullable(stopAt), recurrencePattern.Value, timeZoneId.Value, notes.Value, Core.Optional.ToNullable(provisioningState));
         }
     }
 }

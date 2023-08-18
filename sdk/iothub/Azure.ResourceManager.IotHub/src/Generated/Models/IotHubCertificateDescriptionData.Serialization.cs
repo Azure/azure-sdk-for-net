@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotHub
 {
-    public partial class IotHubCertificateDescriptionData : IUtf8JsonSerializable
+    public partial class IotHubCertificateDescriptionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.IotHub
             {
                 return null;
             }
-            Optional<IotHubCertificateProperties> properties = default;
-            Optional<ETag> etag = default;
+            Core.Optional<IotHubCertificateProperties> properties = default;
+            Core.Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.IotHub
                     continue;
                 }
             }
-            return new IotHubCertificateDescriptionData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(etag));
+            return new IotHubCertificateDescriptionData(id, name, type, systemData.Value, properties.Value, Core.Optional.ToNullable(etag));
         }
     }
 }

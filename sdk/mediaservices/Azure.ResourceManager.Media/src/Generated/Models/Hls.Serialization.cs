@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    internal partial class Hls : IUtf8JsonSerializable
+    internal partial class Hls : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FragmentsPerTsSegment))
+            if (Core.Optional.IsDefined(FragmentsPerTsSegment))
             {
                 writer.WritePropertyName("fragmentsPerTsSegment"u8);
                 writer.WriteNumberValue(FragmentsPerTsSegment.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<int> fragmentsPerTsSegment = default;
+            Core.Optional<int> fragmentsPerTsSegment = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fragmentsPerTsSegment"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new Hls(Optional.ToNullable(fragmentsPerTsSegment));
+            return new Hls(Core.Optional.ToNullable(fragmentsPerTsSegment));
         }
     }
 }

@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of NetworkFabricControllerPatch. </summary>
         public NetworkFabricControllerPatch()
         {
-            InfrastructureExpressRouteConnections = new ChangeTrackingList<ExpressRouteConnectionInformation>();
-            WorkloadExpressRouteConnections = new ChangeTrackingList<ExpressRouteConnectionInformation>();
+            InfrastructureExpressRouteConnections = new Core.ChangeTrackingList<ExpressRouteConnectionInformation>();
+            WorkloadExpressRouteConnections = new Core.ChangeTrackingList<ExpressRouteConnectionInformation>();
         }
 
         /// <summary> As part of an update, the Infrastructure ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Infrastructure services. (This is a Mandatory attribute). </summary>

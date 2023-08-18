@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentManagedApiListResult. </summary>
         internal IntegrationServiceEnvironmentManagedApiListResult()
         {
-            Value = new ChangeTrackingList<IntegrationServiceEnvironmentManagedApiData>();
+            Value = new Core.ChangeTrackingList<IntegrationServiceEnvironmentManagedApiData>();
         }
 
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentManagedApiListResult. </summary>

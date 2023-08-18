@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _mediaServicesAccountMediaservicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation<MediaServicesAccountResource>(new MediaServicesAccountOperationSource(Client), _mediaServicesAccountMediaservicesClientDiagnostics, Pipeline, _mediaServicesAccountMediaservicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation<MediaServicesAccountResource>(new MediaServicesAccountOperationSource(Client), _mediaServicesAccountMediaservicesClientDiagnostics, Pipeline, _mediaServicesAccountMediaservicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _mediaServicesAccountMediaservicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, accountName, data, cancellationToken);
-                var operation = new MediaArmOperation<MediaServicesAccountResource>(new MediaServicesAccountOperationSource(Client), _mediaServicesAccountMediaservicesClientDiagnostics, Pipeline, _mediaServicesAccountMediaservicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation<MediaServicesAccountResource>(new MediaServicesAccountOperationSource(Client), _mediaServicesAccountMediaservicesClientDiagnostics, Pipeline, _mediaServicesAccountMediaservicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaServicesAccountMediaservicesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaServicesAccountMediaservicesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MediaServicesAccountResource(Client, MediaServicesAccountData.DeserializeMediaServicesAccountData(e)), _mediaServicesAccountMediaservicesClientDiagnostics, Pipeline, "MediaServicesAccountCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MediaServicesAccountResource(Client, MediaServicesAccountData.DeserializeMediaServicesAccountData(e)), _mediaServicesAccountMediaservicesClientDiagnostics, Pipeline, "MediaServicesAccountCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaServicesAccountMediaservicesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaServicesAccountMediaservicesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MediaServicesAccountResource(Client, MediaServicesAccountData.DeserializeMediaServicesAccountData(e)), _mediaServicesAccountMediaservicesClientDiagnostics, Pipeline, "MediaServicesAccountCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MediaServicesAccountResource(Client, MediaServicesAccountData.DeserializeMediaServicesAccountData(e)), _mediaServicesAccountMediaservicesClientDiagnostics, Pipeline, "MediaServicesAccountCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>

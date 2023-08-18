@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of CodeVersionResourceArmPaginatedResult. </summary>
         internal CodeVersionResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<MachineLearningCodeVersionData>();
+            Value = new Core.ChangeTrackingList<MachineLearningCodeVersionData>();
         }
 
         /// <summary> Initializes a new instance of CodeVersionResourceArmPaginatedResult. </summary>

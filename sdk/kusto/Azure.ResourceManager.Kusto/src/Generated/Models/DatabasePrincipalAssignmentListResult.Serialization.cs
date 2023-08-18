@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KustoDatabasePrincipalAssignmentData>> value = default;
+            Core.Optional<IReadOnlyList<KustoDatabasePrincipalAssignmentData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new DatabasePrincipalAssignmentListResult(Optional.ToList(value));
+            return new DatabasePrincipalAssignmentListResult(Core.Optional.ToList(value));
         }
     }
 }

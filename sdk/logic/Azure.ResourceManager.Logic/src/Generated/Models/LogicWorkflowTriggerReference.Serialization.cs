@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicWorkflowTriggerReference : IUtf8JsonSerializable
+    public partial class LogicWorkflowTriggerReference : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FlowName))
+            if (Core.Optional.IsDefined(FlowName))
             {
                 writer.WritePropertyName("flowName"u8);
                 writer.WriteStringValue(FlowName);
             }
-            if (Optional.IsDefined(TriggerName))
+            if (Core.Optional.IsDefined(TriggerName))
             {
                 writer.WritePropertyName("triggerName"u8);
                 writer.WriteStringValue(TriggerName);
             }
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> flowName = default;
-            Optional<string> triggerName = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
+            Core.Optional<string> flowName = default;
+            Core.Optional<string> triggerName = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("flowName"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new LogicWorkflowTriggerReference(id.Value, name.Value, Optional.ToNullable(type), flowName.Value, triggerName.Value);
+            return new LogicWorkflowTriggerReference(id.Value, name.Value, Core.Optional.ToNullable(type), flowName.Value, triggerName.Value);
         }
     }
 }

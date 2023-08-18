@@ -18,7 +18,7 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<GeometryIdentifier> geometry = default;
+            Core.Optional<GeometryIdentifier> geometry = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("geometry"u8))

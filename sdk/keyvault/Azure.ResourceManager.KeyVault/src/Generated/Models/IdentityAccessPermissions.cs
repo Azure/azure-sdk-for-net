@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of IdentityAccessPermissions. </summary>
         public IdentityAccessPermissions()
         {
-            Keys = new ChangeTrackingList<IdentityAccessKeyPermission>();
-            Secrets = new ChangeTrackingList<IdentityAccessSecretPermission>();
-            Certificates = new ChangeTrackingList<IdentityAccessCertificatePermission>();
-            Storage = new ChangeTrackingList<IdentityAccessStoragePermission>();
+            Keys = new Core.ChangeTrackingList<IdentityAccessKeyPermission>();
+            Secrets = new Core.ChangeTrackingList<IdentityAccessSecretPermission>();
+            Certificates = new Core.ChangeTrackingList<IdentityAccessCertificatePermission>();
+            Storage = new Core.ChangeTrackingList<IdentityAccessStoragePermission>();
         }
 
         /// <summary> Initializes a new instance of IdentityAccessPermissions. </summary>

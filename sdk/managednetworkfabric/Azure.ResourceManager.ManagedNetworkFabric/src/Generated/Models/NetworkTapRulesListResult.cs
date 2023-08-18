@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of NetworkTapRulesListResult. </summary>
         internal NetworkTapRulesListResult()
         {
-            Value = new ChangeTrackingList<NetworkTapRuleData>();
+            Value = new Core.ChangeTrackingList<NetworkTapRuleData>();
         }
 
         /// <summary> Initializes a new instance of NetworkTapRulesListResult. </summary>

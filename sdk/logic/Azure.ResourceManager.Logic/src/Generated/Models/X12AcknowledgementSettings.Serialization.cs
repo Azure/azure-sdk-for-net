@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class X12AcknowledgementSettings : IUtf8JsonSerializable
+    public partial class X12AcknowledgementSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("needTechnicalAcknowledgement"u8);
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(BatchTechnicalAcknowledgement);
             writer.WritePropertyName("needFunctionalAcknowledgement"u8);
             writer.WriteBooleanValue(NeedFunctionalAcknowledgement);
-            if (Optional.IsDefined(FunctionalAcknowledgementVersion))
+            if (Core.Optional.IsDefined(FunctionalAcknowledgementVersion))
             {
                 writer.WritePropertyName("functionalAcknowledgementVersion"u8);
                 writer.WriteStringValue(FunctionalAcknowledgementVersion);
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(BatchFunctionalAcknowledgement);
             writer.WritePropertyName("needImplementationAcknowledgement"u8);
             writer.WriteBooleanValue(NeedImplementationAcknowledgement);
-            if (Optional.IsDefined(ImplementationAcknowledgementVersion))
+            if (Core.Optional.IsDefined(ImplementationAcknowledgementVersion))
             {
                 writer.WritePropertyName("implementationAcknowledgementVersion"u8);
                 writer.WriteStringValue(ImplementationAcknowledgementVersion);
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(NeedLoopForValidMessages);
             writer.WritePropertyName("sendSynchronousAcknowledgement"u8);
             writer.WriteBooleanValue(SendSynchronousAcknowledgement);
-            if (Optional.IsDefined(AcknowledgementControlNumberPrefix))
+            if (Core.Optional.IsDefined(AcknowledgementControlNumberPrefix))
             {
                 writer.WritePropertyName("acknowledgementControlNumberPrefix"u8);
                 writer.WriteStringValue(AcknowledgementControlNumberPrefix);
             }
-            if (Optional.IsDefined(AcknowledgementControlNumberSuffix))
+            if (Core.Optional.IsDefined(AcknowledgementControlNumberSuffix))
             {
                 writer.WritePropertyName("acknowledgementControlNumberSuffix"u8);
                 writer.WriteStringValue(AcknowledgementControlNumberSuffix);
@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.Logic.Models
             bool needTechnicalAcknowledgement = default;
             bool batchTechnicalAcknowledgements = default;
             bool needFunctionalAcknowledgement = default;
-            Optional<string> functionalAcknowledgementVersion = default;
+            Core.Optional<string> functionalAcknowledgementVersion = default;
             bool batchFunctionalAcknowledgements = default;
             bool needImplementationAcknowledgement = default;
-            Optional<string> implementationAcknowledgementVersion = default;
+            Core.Optional<string> implementationAcknowledgementVersion = default;
             bool batchImplementationAcknowledgements = default;
             bool needLoopForValidMessages = default;
             bool sendSynchronousAcknowledgement = default;
-            Optional<string> acknowledgementControlNumberPrefix = default;
-            Optional<string> acknowledgementControlNumberSuffix = default;
+            Core.Optional<string> acknowledgementControlNumberPrefix = default;
+            Core.Optional<string> acknowledgementControlNumberSuffix = default;
             int acknowledgementControlNumberLowerBound = default;
             int acknowledgementControlNumberUpperBound = default;
             bool rolloverAcknowledgementControlNumber = default;

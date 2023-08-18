@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    internal partial class CloudProviderProfileInfraStorageProfile : IUtf8JsonSerializable
+    internal partial class CloudProviderProfileInfraStorageProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(StorageSpaceIds))
+            if (Core.Optional.IsCollectionDefined(StorageSpaceIds))
             {
                 writer.WritePropertyName("storageSpaceIds"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<IList<string>> storageSpaceIds = default;
+            Core.Optional<IList<string>> storageSpaceIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageSpaceIds"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new CloudProviderProfileInfraStorageProfile(Optional.ToList(storageSpaceIds));
+            return new CloudProviderProfileInfraStorageProfile(Core.Optional.ToList(storageSpaceIds));
         }
     }
 }

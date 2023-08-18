@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Argument.AssertNotNull(searchSpace, nameof(searchSpace));
             Argument.AssertNotNull(trial, nameof(trial));
 
-            Inputs = new ChangeTrackingDictionary<string, MachineLearningJobInput>();
+            Inputs = new Core.ChangeTrackingDictionary<string, MachineLearningJobInput>();
             Objective = objective;
-            Outputs = new ChangeTrackingDictionary<string, MachineLearningJobOutput>();
+            Outputs = new Core.ChangeTrackingDictionary<string, MachineLearningJobOutput>();
             SamplingAlgorithm = samplingAlgorithm;
             SearchSpace = searchSpace;
             Trial = trial;

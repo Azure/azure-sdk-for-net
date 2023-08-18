@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningContainerRegistryCredentials. </summary>
         internal MachineLearningContainerRegistryCredentials()
         {
-            Passwords = new ChangeTrackingList<MachineLearningPasswordDetail>();
+            Passwords = new Core.ChangeTrackingList<MachineLearningPasswordDetail>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningContainerRegistryCredentials. </summary>

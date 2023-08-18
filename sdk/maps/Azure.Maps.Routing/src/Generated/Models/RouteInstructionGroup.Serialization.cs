@@ -18,10 +18,10 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Optional<int> firstInstructionIndex = default;
-            Optional<int> lastInstructionIndex = default;
-            Optional<int> groupLengthInMeters = default;
-            Optional<string> groupMessage = default;
+            Core.Optional<int> firstInstructionIndex = default;
+            Core.Optional<int> lastInstructionIndex = default;
+            Core.Optional<int> groupLengthInMeters = default;
+            Core.Optional<string> groupMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("firstInstructionIndex"u8))
@@ -57,7 +57,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteInstructionGroup(Optional.ToNullable(firstInstructionIndex), Optional.ToNullable(lastInstructionIndex), Optional.ToNullable(groupLengthInMeters), groupMessage.Value);
+            return new RouteInstructionGroup(Core.Optional.ToNullable(firstInstructionIndex), Core.Optional.ToNullable(lastInstructionIndex), Core.Optional.ToNullable(groupLengthInMeters), groupMessage.Value);
         }
     }
 }

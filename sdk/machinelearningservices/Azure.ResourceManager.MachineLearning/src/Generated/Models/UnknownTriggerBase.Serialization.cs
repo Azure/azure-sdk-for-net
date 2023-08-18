@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class UnknownTriggerBase : IUtf8JsonSerializable
+    internal partial class UnknownTriggerBase : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EndTime))
+            if (Core.Optional.IsDefined(EndTime))
             {
                 if (EndTime != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("endTime");
                 }
             }
-            if (Optional.IsDefined(StartTime))
+            if (Core.Optional.IsDefined(StartTime))
             {
                 if (StartTime != null)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("startTime");
                 }
             }
-            if (Optional.IsDefined(TimeZone))
+            if (Core.Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> endTime = default;
-            Optional<string> startTime = default;
-            Optional<string> timeZone = default;
+            Core.Optional<string> endTime = default;
+            Core.Optional<string> startTime = default;
+            Core.Optional<string> timeZone = default;
             MachineLearningTriggerType triggerType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

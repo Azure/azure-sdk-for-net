@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IotCentralPrivateEndpointConnectionData>> value = default;
+            Core.Optional<IReadOnlyList<IotCentralPrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                     continue;
                 }
             }
-            return new IotCentralPrivateEndpointConnectionListResult(Optional.ToList(value));
+            return new IotCentralPrivateEndpointConnectionListResult(Core.Optional.ToList(value));
         }
     }
 }

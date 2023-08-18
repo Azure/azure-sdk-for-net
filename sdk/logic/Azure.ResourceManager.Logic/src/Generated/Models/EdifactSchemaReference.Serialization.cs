@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class EdifactSchemaReference : IUtf8JsonSerializable
+    public partial class EdifactSchemaReference : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("messageId"u8);
@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(MessageVersion);
             writer.WritePropertyName("messageRelease"u8);
             writer.WriteStringValue(MessageRelease);
-            if (Optional.IsDefined(SenderApplicationId))
+            if (Core.Optional.IsDefined(SenderApplicationId))
             {
                 writer.WritePropertyName("senderApplicationId"u8);
                 writer.WriteStringValue(SenderApplicationId);
             }
-            if (Optional.IsDefined(SenderApplicationQualifier))
+            if (Core.Optional.IsDefined(SenderApplicationQualifier))
             {
                 writer.WritePropertyName("senderApplicationQualifier"u8);
                 writer.WriteStringValue(SenderApplicationQualifier);
             }
-            if (Optional.IsDefined(AssociationAssignedCode))
+            if (Core.Optional.IsDefined(AssociationAssignedCode))
             {
                 writer.WritePropertyName("associationAssignedCode"u8);
                 writer.WriteStringValue(AssociationAssignedCode);
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Logic.Models
             string messageId = default;
             string messageVersion = default;
             string messageRelease = default;
-            Optional<string> senderApplicationId = default;
-            Optional<string> senderApplicationQualifier = default;
-            Optional<string> associationAssignedCode = default;
+            Core.Optional<string> senderApplicationId = default;
+            Core.Optional<string> senderApplicationQualifier = default;
+            Core.Optional<string> associationAssignedCode = default;
             string schemaName = default;
             foreach (var property in element.EnumerateObject())
             {

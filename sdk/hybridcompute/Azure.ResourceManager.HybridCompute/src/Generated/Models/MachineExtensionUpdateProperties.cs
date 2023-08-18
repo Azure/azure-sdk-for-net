@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of MachineExtensionUpdateProperties. </summary>
         public MachineExtensionUpdateProperties()
         {
-            Settings = new ChangeTrackingDictionary<string, BinaryData>();
-            ProtectedSettings = new ChangeTrackingDictionary<string, BinaryData>();
+            Settings = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            ProtectedSettings = new Core.ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> How the extension handler should be forced to update even if the extension configuration has not changed. </summary>

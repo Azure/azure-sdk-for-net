@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="authMode"> [Required] Use 'Key' for key based authentication and 'AMLToken' for Azure Machine Learning token-based authentication. 'Key' doesn't expire but 'AMLToken' does. </param>
         public MachineLearningOnlineEndpointProperties(MachineLearningEndpointAuthMode authMode) : base(authMode)
         {
-            Traffic = new ChangeTrackingDictionary<string, int>();
+            Traffic = new Core.ChangeTrackingDictionary<string, int>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningOnlineEndpointProperties. </summary>

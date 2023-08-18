@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IntegrationAccountKeyVaultKey>> value = default;
-            Optional<string> skipToken = default;
+            Core.Optional<IReadOnlyList<IntegrationAccountKeyVaultKey>> value = default;
+            Core.Optional<string> skipToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new IntegrationAccountKeyVaultKeyList(Optional.ToList(value), skipToken.Value);
+            return new IntegrationAccountKeyVaultKeyList(Core.Optional.ToList(value), skipToken.Value);
         }
     }
 }

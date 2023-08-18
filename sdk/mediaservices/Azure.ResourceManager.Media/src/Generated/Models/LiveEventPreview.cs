@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of LiveEventPreview. </summary>
         public LiveEventPreview()
         {
-            Endpoints = new ChangeTrackingList<LiveEventEndpoint>();
+            Endpoints = new Core.ChangeTrackingList<LiveEventEndpoint>();
         }
 
         /// <summary> Initializes a new instance of LiveEventPreview. </summary>

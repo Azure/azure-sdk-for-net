@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class CloudToDeviceFeedbackQueueProperties : IUtf8JsonSerializable
+    public partial class CloudToDeviceFeedbackQueueProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LockDurationAsIso8601))
+            if (Core.Optional.IsDefined(LockDurationAsIso8601))
             {
                 writer.WritePropertyName("lockDurationAsIso8601"u8);
                 writer.WriteStringValue(LockDurationAsIso8601.Value, "P");
             }
-            if (Optional.IsDefined(TtlAsIso8601))
+            if (Core.Optional.IsDefined(TtlAsIso8601))
             {
                 writer.WritePropertyName("ttlAsIso8601"u8);
                 writer.WriteStringValue(TtlAsIso8601.Value, "P");
             }
-            if (Optional.IsDefined(MaxDeliveryCount))
+            if (Core.Optional.IsDefined(MaxDeliveryCount))
             {
                 writer.WritePropertyName("maxDeliveryCount"u8);
                 writer.WriteNumberValue(MaxDeliveryCount.Value);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<TimeSpan> lockDurationAsIso8601 = default;
-            Optional<TimeSpan> ttlAsIso8601 = default;
-            Optional<int> maxDeliveryCount = default;
+            Core.Optional<TimeSpan> lockDurationAsIso8601 = default;
+            Core.Optional<TimeSpan> ttlAsIso8601 = default;
+            Core.Optional<int> maxDeliveryCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lockDurationAsIso8601"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new CloudToDeviceFeedbackQueueProperties(Optional.ToNullable(lockDurationAsIso8601), Optional.ToNullable(ttlAsIso8601), Optional.ToNullable(maxDeliveryCount));
+            return new CloudToDeviceFeedbackQueueProperties(Core.Optional.ToNullable(lockDurationAsIso8601), Core.Optional.ToNullable(ttlAsIso8601), Core.Optional.ToNullable(maxDeliveryCount));
         }
     }
 }

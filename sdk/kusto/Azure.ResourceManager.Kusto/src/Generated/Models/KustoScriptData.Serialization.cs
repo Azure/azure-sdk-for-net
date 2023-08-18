@@ -13,34 +13,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    public partial class KustoScriptData : IUtf8JsonSerializable
+    public partial class KustoScriptData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScriptUri))
+            if (Core.Optional.IsDefined(ScriptUri))
             {
                 writer.WritePropertyName("scriptUrl"u8);
                 writer.WriteStringValue(ScriptUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ScriptUriSasToken))
+            if (Core.Optional.IsDefined(ScriptUriSasToken))
             {
                 writer.WritePropertyName("scriptUrlSasToken"u8);
                 writer.WriteStringValue(ScriptUriSasToken);
             }
-            if (Optional.IsDefined(ScriptContent))
+            if (Core.Optional.IsDefined(ScriptContent))
             {
                 writer.WritePropertyName("scriptContent"u8);
                 writer.WriteStringValue(ScriptContent);
             }
-            if (Optional.IsDefined(ForceUpdateTag))
+            if (Core.Optional.IsDefined(ForceUpdateTag))
             {
                 writer.WritePropertyName("forceUpdateTag"u8);
                 writer.WriteStringValue(ForceUpdateTag);
             }
-            if (Optional.IsDefined(ShouldContinueOnErrors))
+            if (Core.Optional.IsDefined(ShouldContinueOnErrors))
             {
                 writer.WritePropertyName("continueOnErrors"u8);
                 writer.WriteBooleanValue(ShouldContinueOnErrors.Value);
@@ -58,13 +58,13 @@ namespace Azure.ResourceManager.Kusto
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> scriptUrl = default;
-            Optional<string> scriptUrlSasToken = default;
-            Optional<string> scriptContent = default;
-            Optional<string> forceUpdateTag = default;
-            Optional<bool> continueOnErrors = default;
-            Optional<KustoProvisioningState> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<Uri> scriptUrl = default;
+            Core.Optional<string> scriptUrlSasToken = default;
+            Core.Optional<string> scriptContent = default;
+            Core.Optional<string> forceUpdateTag = default;
+            Core.Optional<bool> continueOnErrors = default;
+            Core.Optional<KustoProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Kusto
                     continue;
                 }
             }
-            return new KustoScriptData(id, name, type, systemData.Value, scriptUrl.Value, scriptUrlSasToken.Value, scriptContent.Value, forceUpdateTag.Value, Optional.ToNullable(continueOnErrors), Optional.ToNullable(provisioningState));
+            return new KustoScriptData(id, name, type, systemData.Value, scriptUrl.Value, scriptUrlSasToken.Value, scriptContent.Value, forceUpdateTag.Value, Core.Optional.ToNullable(continueOnErrors), Core.Optional.ToNullable(provisioningState));
         }
     }
 }

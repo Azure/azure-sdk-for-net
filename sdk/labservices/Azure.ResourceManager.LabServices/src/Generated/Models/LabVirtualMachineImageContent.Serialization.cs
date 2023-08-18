@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class LabVirtualMachineImageContent : IUtf8JsonSerializable
+    public partial class LabVirtualMachineImageContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(LabVirtualMachineId))
+            if (Core.Optional.IsDefined(LabVirtualMachineId))
             {
                 writer.WritePropertyName("labVirtualMachineId"u8);
                 writer.WriteStringValue(LabVirtualMachineId);

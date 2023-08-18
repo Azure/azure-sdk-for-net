@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<Uri> serviceUrl = default;
+            Core.Optional<Uri> serviceUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceUrl"u8))

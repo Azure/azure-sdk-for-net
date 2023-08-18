@@ -20,16 +20,16 @@ namespace Azure.Security.KeyVault.Storage.Models
             {
                 return null;
             }
-            Optional<string> recoveryId = default;
-            Optional<DateTimeOffset> scheduledPurgeDate = default;
-            Optional<DateTimeOffset> deletedDate = default;
-            Optional<string> id = default;
-            Optional<string> resourceId = default;
-            Optional<string> activeKeyName = default;
-            Optional<bool> autoRegenerateKey = default;
-            Optional<string> regenerationPeriod = default;
-            Optional<StorageAccountAttributes> attributes = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Core.Optional<string> recoveryId = default;
+            Core.Optional<DateTimeOffset> scheduledPurgeDate = default;
+            Core.Optional<DateTimeOffset> deletedDate = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> resourceId = default;
+            Core.Optional<string> activeKeyName = default;
+            Core.Optional<bool> autoRegenerateKey = default;
+            Core.Optional<string> regenerationPeriod = default;
+            Core.Optional<StorageAccountAttributes> attributes = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryId"u8))
@@ -108,7 +108,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new DeletedStorageBundle(id.Value, resourceId.Value, activeKeyName.Value, Optional.ToNullable(autoRegenerateKey), regenerationPeriod.Value, attributes.Value, Optional.ToDictionary(tags), recoveryId.Value, Optional.ToNullable(scheduledPurgeDate), Optional.ToNullable(deletedDate));
+            return new DeletedStorageBundle(id.Value, resourceId.Value, activeKeyName.Value, Core.Optional.ToNullable(autoRegenerateKey), regenerationPeriod.Value, attributes.Value, Core.Optional.ToDictionary(tags), recoveryId.Value, Core.Optional.ToNullable(scheduledPurgeDate), Core.Optional.ToNullable(deletedDate));
         }
     }
 }

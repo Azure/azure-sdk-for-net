@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.LoadTesting.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<LoadTestingResourceData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<LoadTestingResourceData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     continue;
                 }
             }
-            return new LoadTestResourcePageList(Optional.ToList(value), nextLink.Value);
+            return new LoadTestResourcePageList(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

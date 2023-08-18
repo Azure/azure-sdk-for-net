@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class RoutingMessage : IUtf8JsonSerializable
+    public partial class RoutingMessage : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Body))
+            if (Core.Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
                 writer.WriteStringValue(Body);
             }
-            if (Optional.IsCollectionDefined(AppProperties))
+            if (Core.Optional.IsCollectionDefined(AppProperties))
             {
                 writer.WritePropertyName("appProperties"u8);
                 writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(SystemProperties))
+            if (Core.Optional.IsCollectionDefined(SystemProperties))
             {
                 writer.WritePropertyName("systemProperties"u8);
                 writer.WriteStartObject();

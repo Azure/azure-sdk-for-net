@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    public partial class MediaLiveEventData : IUtf8JsonSerializable
+    public partial class MediaLiveEventData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,27 +34,27 @@ namespace Azure.ResourceManager.Media
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Input))
+            if (Core.Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
             }
-            if (Optional.IsDefined(Preview))
+            if (Core.Optional.IsDefined(Preview))
             {
                 writer.WritePropertyName("preview"u8);
                 writer.WriteObjectValue(Preview);
             }
-            if (Optional.IsDefined(Encoding))
+            if (Core.Optional.IsDefined(Encoding))
             {
                 writer.WritePropertyName("encoding"u8);
                 writer.WriteObjectValue(Encoding);
             }
-            if (Optional.IsCollectionDefined(Transcriptions))
+            if (Core.Optional.IsCollectionDefined(Transcriptions))
             {
                 writer.WritePropertyName("transcriptions"u8);
                 writer.WriteStartArray();
@@ -64,22 +64,22 @@ namespace Azure.ResourceManager.Media
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CrossSiteAccessPolicies))
+            if (Core.Optional.IsDefined(CrossSiteAccessPolicies))
             {
                 writer.WritePropertyName("crossSiteAccessPolicies"u8);
                 writer.WriteObjectValue(CrossSiteAccessPolicies);
             }
-            if (Optional.IsDefined(UseStaticHostname))
+            if (Core.Optional.IsDefined(UseStaticHostname))
             {
                 writer.WritePropertyName("useStaticHostname"u8);
                 writer.WriteBooleanValue(UseStaticHostname.Value);
             }
-            if (Optional.IsDefined(HostnamePrefix))
+            if (Core.Optional.IsDefined(HostnamePrefix))
             {
                 writer.WritePropertyName("hostnamePrefix"u8);
                 writer.WriteStringValue(HostnamePrefix);
             }
-            if (Optional.IsCollectionDefined(StreamOptions))
+            if (Core.Optional.IsCollectionDefined(StreamOptions))
             {
                 writer.WritePropertyName("streamOptions"u8);
                 writer.WriteStartArray();
@@ -99,25 +99,25 @@ namespace Azure.ResourceManager.Media
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<LiveEventInput> input = default;
-            Optional<LiveEventPreview> preview = default;
-            Optional<LiveEventEncoding> encoding = default;
-            Optional<IList<LiveEventTranscription>> transcriptions = default;
-            Optional<string> provisioningState = default;
-            Optional<LiveEventResourceState> resourceState = default;
-            Optional<CrossSiteAccessPolicies> crossSiteAccessPolicies = default;
-            Optional<bool> useStaticHostname = default;
-            Optional<string> hostnamePrefix = default;
-            Optional<IList<StreamOptionsFlag>> streamOptions = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> lastModified = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> description = default;
+            Core.Optional<LiveEventInput> input = default;
+            Core.Optional<LiveEventPreview> preview = default;
+            Core.Optional<LiveEventEncoding> encoding = default;
+            Core.Optional<IList<LiveEventTranscription>> transcriptions = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<LiveEventResourceState> resourceState = default;
+            Core.Optional<CrossSiteAccessPolicies> crossSiteAccessPolicies = default;
+            Core.Optional<bool> useStaticHostname = default;
+            Core.Optional<string> hostnamePrefix = default;
+            Core.Optional<IList<StreamOptionsFlag>> streamOptions = default;
+            Core.Optional<DateTimeOffset> created = default;
+            Core.Optional<DateTimeOffset> lastModified = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Media
                     continue;
                 }
             }
-            return new MediaLiveEventData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, input.Value, preview.Value, encoding.Value, Optional.ToList(transcriptions), provisioningState.Value, Optional.ToNullable(resourceState), crossSiteAccessPolicies.Value, Optional.ToNullable(useStaticHostname), hostnamePrefix.Value, Optional.ToList(streamOptions), Optional.ToNullable(created), Optional.ToNullable(lastModified));
+            return new MediaLiveEventData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, description.Value, input.Value, preview.Value, encoding.Value, Core.Optional.ToList(transcriptions), provisioningState.Value, Core.Optional.ToNullable(resourceState), crossSiteAccessPolicies.Value, Core.Optional.ToNullable(useStaticHostname), hostnamePrefix.Value, Core.Optional.ToList(streamOptions), Core.Optional.ToNullable(created), Core.Optional.ToNullable(lastModified));
         }
     }
 }

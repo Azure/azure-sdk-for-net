@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class FlowAccessControlConfiguration : IUtf8JsonSerializable
+    public partial class FlowAccessControlConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Triggers))
+            if (Core.Optional.IsDefined(Triggers))
             {
                 writer.WritePropertyName("triggers"u8);
                 writer.WriteObjectValue(Triggers);
             }
-            if (Optional.IsDefined(Contents))
+            if (Core.Optional.IsDefined(Contents))
             {
                 writer.WritePropertyName("contents"u8);
                 writer.WriteObjectValue(Contents);
             }
-            if (Optional.IsDefined(Actions))
+            if (Core.Optional.IsDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteObjectValue(Actions);
             }
-            if (Optional.IsDefined(WorkflowManagement))
+            if (Core.Optional.IsDefined(WorkflowManagement))
             {
                 writer.WritePropertyName("workflowManagement"u8);
                 writer.WriteObjectValue(WorkflowManagement);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<FlowAccessControlConfigurationPolicy> triggers = default;
-            Optional<FlowAccessControlConfigurationPolicy> contents = default;
-            Optional<FlowAccessControlConfigurationPolicy> actions = default;
-            Optional<FlowAccessControlConfigurationPolicy> workflowManagement = default;
+            Core.Optional<FlowAccessControlConfigurationPolicy> triggers = default;
+            Core.Optional<FlowAccessControlConfigurationPolicy> contents = default;
+            Core.Optional<FlowAccessControlConfigurationPolicy> actions = default;
+            Core.Optional<FlowAccessControlConfigurationPolicy> workflowManagement = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("triggers"u8))

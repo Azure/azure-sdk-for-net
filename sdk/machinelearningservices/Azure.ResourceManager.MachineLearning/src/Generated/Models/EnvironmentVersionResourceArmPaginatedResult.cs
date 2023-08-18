@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of EnvironmentVersionResourceArmPaginatedResult. </summary>
         internal EnvironmentVersionResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<MachineLearningEnvironmentVersionData>();
+            Value = new Core.ChangeTrackingList<MachineLearningEnvironmentVersionData>();
         }
 
         /// <summary> Initializes a new instance of EnvironmentVersionResourceArmPaginatedResult. </summary>

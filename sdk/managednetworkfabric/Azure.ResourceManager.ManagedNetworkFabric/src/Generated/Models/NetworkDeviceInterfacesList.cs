@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of NetworkDeviceInterfacesList. </summary>
         internal NetworkDeviceInterfacesList()
         {
-            Value = new ChangeTrackingList<NetworkDeviceInterfaceData>();
+            Value = new Core.ChangeTrackingList<NetworkDeviceInterfaceData>();
         }
 
         /// <summary> Initializes a new instance of NetworkDeviceInterfacesList. </summary>

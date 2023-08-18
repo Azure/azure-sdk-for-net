@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    internal partial class IPExtendedCommunityIdList : IUtf8JsonSerializable
+    internal partial class IPExtendedCommunityIdList : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IPExtendedCommunityIds))
+            if (Core.Optional.IsCollectionDefined(IPExtendedCommunityIds))
             {
                 writer.WritePropertyName("ipExtendedCommunityIds"u8);
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IList<ResourceIdentifier>> ipExtendedCommunityIds = default;
+            Core.Optional<IList<ResourceIdentifier>> ipExtendedCommunityIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipExtendedCommunityIds"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new IPExtendedCommunityIdList(Optional.ToList(ipExtendedCommunityIds));
+            return new IPExtendedCommunityIdList(Core.Optional.ToList(ipExtendedCommunityIds));
         }
     }
 }

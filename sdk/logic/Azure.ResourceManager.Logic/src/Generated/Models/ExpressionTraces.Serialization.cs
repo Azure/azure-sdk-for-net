@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<LogicExpressionRoot>> inputs = default;
+            Core.Optional<IReadOnlyList<LogicExpressionRoot>> inputs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inputs"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new ExpressionTraces(Optional.ToList(inputs));
+            return new ExpressionTraces(Core.Optional.ToList(inputs));
         }
     }
 }

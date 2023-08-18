@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Storage.Models
         /// <summary> Initializes a new instance of DeletedStorageListResult. </summary>
         internal DeletedStorageListResult()
         {
-            Value = new ChangeTrackingList<DeletedStorageAccountItem>();
+            Value = new Core.ChangeTrackingList<DeletedStorageAccountItem>();
         }
 
         /// <summary> Initializes a new instance of DeletedStorageListResult. </summary>

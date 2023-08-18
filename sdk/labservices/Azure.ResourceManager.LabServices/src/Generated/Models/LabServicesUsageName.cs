@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <summary> Initializes a new instance of LabServicesUsageName. </summary>
         internal LabServicesUsageName()
         {
-            SkuInstances = new ChangeTrackingList<string>();
+            SkuInstances = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of LabServicesUsageName. </summary>

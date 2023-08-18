@@ -16,7 +16,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of SearchAddressResult. </summary>
         internal SearchAddressResult()
         {
-            Results = new ChangeTrackingList<SearchAddressResultItem>();
+            Results = new Core.ChangeTrackingList<SearchAddressResultItem>();
         }
 
         /// <summary> Initializes a new instance of SearchAddressResult. </summary>

@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class StorageSpacesPropertiesVmwareStorageProfile : IUtf8JsonSerializable
+    public partial class StorageSpacesPropertiesVmwareStorageProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Datacenter))
+            if (Core.Optional.IsDefined(Datacenter))
             {
                 writer.WritePropertyName("datacenter"u8);
                 writer.WriteStringValue(Datacenter);
             }
-            if (Optional.IsDefined(Datastore))
+            if (Core.Optional.IsDefined(Datastore))
             {
                 writer.WritePropertyName("datastore"u8);
                 writer.WriteStringValue(Datastore);
             }
-            if (Optional.IsDefined(Folder))
+            if (Core.Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteStringValue(Folder);
             }
-            if (Optional.IsDefined(ResourcePool))
+            if (Core.Optional.IsDefined(ResourcePool))
             {
                 writer.WritePropertyName("resourcePool"u8);
                 writer.WriteStringValue(ResourcePool);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<string> datacenter = default;
-            Optional<string> datastore = default;
-            Optional<string> folder = default;
-            Optional<string> resourcePool = default;
+            Core.Optional<string> datacenter = default;
+            Core.Optional<string> datastore = default;
+            Core.Optional<string> folder = default;
+            Core.Optional<string> resourcePool = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("datacenter"u8))

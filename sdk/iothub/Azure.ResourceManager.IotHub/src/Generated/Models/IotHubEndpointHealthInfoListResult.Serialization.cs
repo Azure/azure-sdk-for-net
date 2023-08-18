@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IotHubEndpointHealthInfo>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<IotHubEndpointHealthInfo>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new IotHubEndpointHealthInfoListResult(Optional.ToList(value), nextLink.Value);
+            return new IotHubEndpointHealthInfoListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

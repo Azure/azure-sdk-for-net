@@ -14,44 +14,44 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    public partial class StreamingLocatorData : IUtf8JsonSerializable
+    public partial class StreamingLocatorData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AssetName))
+            if (Core.Optional.IsDefined(AssetName))
             {
                 writer.WritePropertyName("assetName"u8);
                 writer.WriteStringValue(AssetName);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Core.Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Core.Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(StreamingLocatorId))
+            if (Core.Optional.IsDefined(StreamingLocatorId))
             {
                 writer.WritePropertyName("streamingLocatorId"u8);
                 writer.WriteStringValue(StreamingLocatorId.Value);
             }
-            if (Optional.IsDefined(StreamingPolicyName))
+            if (Core.Optional.IsDefined(StreamingPolicyName))
             {
                 writer.WritePropertyName("streamingPolicyName"u8);
                 writer.WriteStringValue(StreamingPolicyName);
             }
-            if (Optional.IsDefined(DefaultContentKeyPolicyName))
+            if (Core.Optional.IsDefined(DefaultContentKeyPolicyName))
             {
                 writer.WritePropertyName("defaultContentKeyPolicyName"u8);
                 writer.WriteStringValue(DefaultContentKeyPolicyName);
             }
-            if (Optional.IsCollectionDefined(ContentKeys))
+            if (Core.Optional.IsCollectionDefined(ContentKeys))
             {
                 writer.WritePropertyName("contentKeys"u8);
                 writer.WriteStartArray();
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.Media
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AlternativeMediaId))
+            if (Core.Optional.IsDefined(AlternativeMediaId))
             {
                 writer.WritePropertyName("alternativeMediaId"u8);
                 writer.WriteStringValue(AlternativeMediaId);
             }
-            if (Optional.IsCollectionDefined(Filters))
+            if (Core.Optional.IsCollectionDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
@@ -89,17 +89,17 @@ namespace Azure.ResourceManager.Media
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> assetName = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<Guid> streamingLocatorId = default;
-            Optional<string> streamingPolicyName = default;
-            Optional<string> defaultContentKeyPolicyName = default;
-            Optional<IList<StreamingLocatorContentKey>> contentKeys = default;
-            Optional<string> alternativeMediaId = default;
-            Optional<IList<string>> filters = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> assetName = default;
+            Core.Optional<DateTimeOffset> created = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<Guid> streamingLocatorId = default;
+            Core.Optional<string> streamingPolicyName = default;
+            Core.Optional<string> defaultContentKeyPolicyName = default;
+            Core.Optional<IList<StreamingLocatorContentKey>> contentKeys = default;
+            Core.Optional<string> alternativeMediaId = default;
+            Core.Optional<IList<string>> filters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Media
                     continue;
                 }
             }
-            return new StreamingLocatorData(id, name, type, systemData.Value, assetName.Value, Optional.ToNullable(created), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(streamingLocatorId), streamingPolicyName.Value, defaultContentKeyPolicyName.Value, Optional.ToList(contentKeys), alternativeMediaId.Value, Optional.ToList(filters));
+            return new StreamingLocatorData(id, name, type, systemData.Value, assetName.Value, Core.Optional.ToNullable(created), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToNullable(streamingLocatorId), streamingPolicyName.Value, defaultContentKeyPolicyName.Value, Core.Optional.ToList(contentKeys), alternativeMediaId.Value, Core.Optional.ToList(filters));
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IotHubCertificateDescriptionData>> value = default;
+            Core.Optional<IReadOnlyList<IotHubCertificateDescriptionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new IotHubCertificateListDescription(Optional.ToList(value));
+            return new IotHubCertificateListDescription(Core.Optional.ToList(value));
         }
     }
 }

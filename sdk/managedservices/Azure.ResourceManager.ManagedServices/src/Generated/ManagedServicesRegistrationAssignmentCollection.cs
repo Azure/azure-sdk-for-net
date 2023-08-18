@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ManagedServices
             try
             {
                 var response = await _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateOrUpdateAsync(Id, registrationAssignmentId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedServicesArmOperation<ManagedServicesRegistrationAssignmentResource>(new ManagedServicesRegistrationAssignmentOperationSource(Client), _managedServicesRegistrationAssignmentRegistrationAssignmentsClientDiagnostics, Pipeline, _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateCreateOrUpdateRequest(Id, registrationAssignmentId, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedServicesArmOperation<ManagedServicesRegistrationAssignmentResource>(new ManagedServicesRegistrationAssignmentOperationSource(Client), _managedServicesRegistrationAssignmentRegistrationAssignmentsClientDiagnostics, Pipeline, _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateCreateOrUpdateRequest(Id, registrationAssignmentId, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ManagedServices
             try
             {
                 var response = _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateOrUpdate(Id, registrationAssignmentId, data, cancellationToken);
-                var operation = new ManagedServicesArmOperation<ManagedServicesRegistrationAssignmentResource>(new ManagedServicesRegistrationAssignmentOperationSource(Client), _managedServicesRegistrationAssignmentRegistrationAssignmentsClientDiagnostics, Pipeline, _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateCreateOrUpdateRequest(Id, registrationAssignmentId, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedServicesArmOperation<ManagedServicesRegistrationAssignmentResource>(new ManagedServicesRegistrationAssignmentOperationSource(Client), _managedServicesRegistrationAssignmentRegistrationAssignmentsClientDiagnostics, Pipeline, _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateCreateOrUpdateRequest(Id, registrationAssignmentId, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ManagedServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateListRequest(Id, expandRegistrationDefinition, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateListNextPageRequest(nextLink, Id, expandRegistrationDefinition, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedServicesRegistrationAssignmentResource(Client, ManagedServicesRegistrationAssignmentData.DeserializeManagedServicesRegistrationAssignmentData(e)), _managedServicesRegistrationAssignmentRegistrationAssignmentsClientDiagnostics, Pipeline, "ManagedServicesRegistrationAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedServicesRegistrationAssignmentResource(Client, ManagedServicesRegistrationAssignmentData.DeserializeManagedServicesRegistrationAssignmentData(e)), _managedServicesRegistrationAssignmentRegistrationAssignmentsClientDiagnostics, Pipeline, "ManagedServicesRegistrationAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ManagedServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateListRequest(Id, expandRegistrationDefinition, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedServicesRegistrationAssignmentRegistrationAssignmentsRestClient.CreateListNextPageRequest(nextLink, Id, expandRegistrationDefinition, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedServicesRegistrationAssignmentResource(Client, ManagedServicesRegistrationAssignmentData.DeserializeManagedServicesRegistrationAssignmentData(e)), _managedServicesRegistrationAssignmentRegistrationAssignmentsClientDiagnostics, Pipeline, "ManagedServicesRegistrationAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedServicesRegistrationAssignmentResource(Client, ManagedServicesRegistrationAssignmentData.DeserializeManagedServicesRegistrationAssignmentData(e)), _managedServicesRegistrationAssignmentRegistrationAssignmentsClientDiagnostics, Pipeline, "ManagedServicesRegistrationAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

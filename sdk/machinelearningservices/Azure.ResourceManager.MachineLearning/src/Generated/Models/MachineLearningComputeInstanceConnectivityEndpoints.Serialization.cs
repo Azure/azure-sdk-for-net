@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> publicIPAddress = default;
-            Optional<string> privateIPAddress = default;
+            Core.Optional<string> publicIPAddress = default;
+            Core.Optional<string> privateIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicIpAddress"u8))

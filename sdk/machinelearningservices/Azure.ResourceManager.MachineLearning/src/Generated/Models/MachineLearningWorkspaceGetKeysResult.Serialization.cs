@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> userStorageKey = default;
-            Optional<string> userStorageResourceId = default;
-            Optional<string> appInsightsInstrumentationKey = default;
-            Optional<MachineLearningContainerRegistryCredentials> containerRegistryCredentials = default;
-            Optional<MachineLearningWorkspaceGetNotebookKeysResult> notebookAccessKeys = default;
+            Core.Optional<string> userStorageKey = default;
+            Core.Optional<string> userStorageResourceId = default;
+            Core.Optional<string> appInsightsInstrumentationKey = default;
+            Core.Optional<MachineLearningContainerRegistryCredentials> containerRegistryCredentials = default;
+            Core.Optional<MachineLearningWorkspaceGetNotebookKeysResult> notebookAccessKeys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userStorageKey"u8))

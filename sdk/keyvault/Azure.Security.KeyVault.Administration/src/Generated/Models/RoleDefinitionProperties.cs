@@ -17,8 +17,8 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <summary> Initializes a new instance of RoleDefinitionProperties. </summary>
         public RoleDefinitionProperties()
         {
-            Permissions = new ChangeTrackingList<KeyVaultPermission>();
-            AssignableScopes = new ChangeTrackingList<KeyVaultRoleScope>();
+            Permissions = new Core.ChangeTrackingList<KeyVaultPermission>();
+            AssignableScopes = new Core.ChangeTrackingList<KeyVaultRoleScope>();
         }
 
         /// <summary> The role name. </summary>

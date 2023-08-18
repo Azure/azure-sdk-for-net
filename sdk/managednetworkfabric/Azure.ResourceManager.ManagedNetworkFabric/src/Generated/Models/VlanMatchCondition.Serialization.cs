@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class VlanMatchCondition : IUtf8JsonSerializable
+    public partial class VlanMatchCondition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Vlans))
+            if (Core.Optional.IsCollectionDefined(Vlans))
             {
                 writer.WritePropertyName("vlans"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(InnerVlans))
+            if (Core.Optional.IsCollectionDefined(InnerVlans))
             {
                 writer.WritePropertyName("innerVlans"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VlanGroupNames))
+            if (Core.Optional.IsCollectionDefined(VlanGroupNames))
             {
                 writer.WritePropertyName("vlanGroupNames"u8);
                 writer.WriteStartArray();
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IList<string>> vlans = default;
-            Optional<IList<string>> innerVlans = default;
-            Optional<IList<string>> vlanGroupNames = default;
+            Core.Optional<IList<string>> vlans = default;
+            Core.Optional<IList<string>> innerVlans = default;
+            Core.Optional<IList<string>> vlanGroupNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vlans"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new VlanMatchCondition(Optional.ToList(vlans), Optional.ToList(innerVlans), Optional.ToList(vlanGroupNames));
+            return new VlanMatchCondition(Core.Optional.ToList(vlans), Core.Optional.ToList(innerVlans), Core.Optional.ToList(vlanGroupNames));
         }
     }
 }

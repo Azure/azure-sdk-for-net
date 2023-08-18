@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of AkamaiAccessControl. </summary>
         public AkamaiAccessControl()
         {
-            AkamaiSignatureHeaderAuthenticationKeyList = new ChangeTrackingList<AkamaiSignatureHeaderAuthenticationKey>();
+            AkamaiSignatureHeaderAuthenticationKeyList = new Core.ChangeTrackingList<AkamaiSignatureHeaderAuthenticationKey>();
         }
 
         /// <summary> Initializes a new instance of AkamaiAccessControl. </summary>

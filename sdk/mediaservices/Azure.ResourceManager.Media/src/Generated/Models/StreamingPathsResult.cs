@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of StreamingPathsResult. </summary>
         internal StreamingPathsResult()
         {
-            StreamingPaths = new ChangeTrackingList<StreamingPath>();
-            DownloadPaths = new ChangeTrackingList<string>();
+            StreamingPaths = new Core.ChangeTrackingList<StreamingPath>();
+            DownloadPaths = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of StreamingPathsResult. </summary>

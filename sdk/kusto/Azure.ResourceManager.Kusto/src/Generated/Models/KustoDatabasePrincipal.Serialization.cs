@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoDatabasePrincipal : IUtf8JsonSerializable
+    public partial class KustoDatabasePrincipal : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("role"u8);
@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(PrincipalType.ToString());
-            if (Optional.IsDefined(Fqn))
+            if (Core.Optional.IsDefined(Fqn))
             {
                 writer.WritePropertyName("fqn"u8);
                 writer.WriteStringValue(Fqn);
             }
-            if (Optional.IsDefined(Email))
+            if (Core.Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (Optional.IsDefined(AppId))
+            if (Core.Optional.IsDefined(AppId))
             {
                 writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Kusto.Models
             KustoDatabasePrincipalRole role = default;
             string name = default;
             KustoDatabasePrincipalType type = default;
-            Optional<string> fqn = default;
-            Optional<string> email = default;
-            Optional<string> appId = default;
-            Optional<string> tenantName = default;
+            Core.Optional<string> fqn = default;
+            Core.Optional<string> email = default;
+            Core.Optional<string> appId = default;
+            Core.Optional<string> tenantName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("role"u8))

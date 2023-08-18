@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<MachineLearningScheduleProvisioningState> provisioningStatus = default;
-            Optional<MachineLearningScheduleStatus> status = default;
+            Core.Optional<string> id = default;
+            Core.Optional<MachineLearningScheduleProvisioningState> provisioningStatus = default;
+            Core.Optional<MachineLearningScheduleStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningScheduleBase(id.Value, Optional.ToNullable(provisioningStatus), Optional.ToNullable(status));
+            return new MachineLearningScheduleBase(id.Value, Core.Optional.ToNullable(provisioningStatus), Core.Optional.ToNullable(status));
         }
     }
 }

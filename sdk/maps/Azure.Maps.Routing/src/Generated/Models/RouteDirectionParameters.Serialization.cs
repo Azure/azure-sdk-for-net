@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Maps.Routing
 {
-    public partial class RouteDirectionParameters : IUtf8JsonSerializable
+    public partial class RouteDirectionParameters : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(_GeoJsonSupportingPoints))
+            if (Core.Optional.IsDefined(_GeoJsonSupportingPoints))
             {
                 writer.WritePropertyName("supportingPoints"u8);
                 writer.WriteObjectValue(_GeoJsonSupportingPoints);
             }
-            if (Optional.IsCollectionDefined(AvoidVignette))
+            if (Core.Optional.IsCollectionDefined(AvoidVignette))
             {
                 writer.WritePropertyName("avoidVignette"u8);
                 writer.WriteStartArray();
@@ -30,7 +30,7 @@ namespace Azure.Maps.Routing
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AllowVignette))
+            if (Core.Optional.IsCollectionDefined(AllowVignette))
             {
                 writer.WritePropertyName("allowVignette"u8);
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.Maps.Routing
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(_GeoJsonAvoidAreas))
+            if (Core.Optional.IsDefined(_GeoJsonAvoidAreas))
             {
                 writer.WritePropertyName("avoidAreas"u8);
                 writer.WriteObjectValue(_GeoJsonAvoidAreas);

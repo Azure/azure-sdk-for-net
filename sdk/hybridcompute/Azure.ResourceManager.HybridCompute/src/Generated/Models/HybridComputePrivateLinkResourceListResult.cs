@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of HybridComputePrivateLinkResourceListResult. </summary>
         internal HybridComputePrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<HybridComputePrivateLinkResourceData>();
+            Value = new Core.ChangeTrackingList<HybridComputePrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of HybridComputePrivateLinkResourceListResult. </summary>

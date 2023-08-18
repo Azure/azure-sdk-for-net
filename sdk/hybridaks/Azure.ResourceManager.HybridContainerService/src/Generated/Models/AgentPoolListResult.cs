@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> Initializes a new instance of AgentPoolListResult. </summary>
         internal AgentPoolListResult()
         {
-            Value = new ChangeTrackingList<HybridContainerServiceAgentPoolData>();
+            Value = new Core.ChangeTrackingList<HybridContainerServiceAgentPoolData>();
         }
 
         /// <summary> Initializes a new instance of AgentPoolListResult. </summary>

@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class X12SchemaReference : IUtf8JsonSerializable
+    public partial class X12SchemaReference : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("messageId"u8);
             writer.WriteStringValue(MessageId);
-            if (Optional.IsDefined(SenderApplicationId))
+            if (Core.Optional.IsDefined(SenderApplicationId))
             {
                 writer.WritePropertyName("senderApplicationId"u8);
                 writer.WriteStringValue(SenderApplicationId);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             string messageId = default;
-            Optional<string> senderApplicationId = default;
+            Core.Optional<string> senderApplicationId = default;
             string schemaVersion = default;
             string schemaName = default;
             foreach (var property in element.EnumerateObject())

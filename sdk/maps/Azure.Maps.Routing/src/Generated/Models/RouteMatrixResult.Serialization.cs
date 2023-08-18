@@ -19,9 +19,9 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Optional<string> formatVersion = default;
-            Optional<IReadOnlyList<IList<RouteMatrix>>> matrix = default;
-            Optional<RouteMatrixSummary> summary = default;
+            Core.Optional<string> formatVersion = default;
+            Core.Optional<IReadOnlyList<IList<RouteMatrix>>> matrix = default;
+            Core.Optional<RouteMatrixSummary> summary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("formatVersion"u8))
@@ -65,7 +65,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteMatrixResult(formatVersion.Value, Optional.ToList(matrix), summary.Value);
+            return new RouteMatrixResult(formatVersion.Value, Core.Optional.ToList(matrix), summary.Value);
         }
     }
 }

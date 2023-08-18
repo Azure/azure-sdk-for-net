@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningUserAccountCredentials : IUtf8JsonSerializable
+    public partial class MachineLearningUserAccountCredentials : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("adminUserName"u8);
             writer.WriteStringValue(AdminUserName);
-            if (Optional.IsDefined(AdminUserSshPublicKey))
+            if (Core.Optional.IsDefined(AdminUserSshPublicKey))
             {
                 writer.WritePropertyName("adminUserSshPublicKey"u8);
                 writer.WriteStringValue(AdminUserSshPublicKey);
             }
-            if (Optional.IsDefined(AdminUserPassword))
+            if (Core.Optional.IsDefined(AdminUserPassword))
             {
                 writer.WritePropertyName("adminUserPassword"u8);
                 writer.WriteStringValue(AdminUserPassword);
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string adminUserName = default;
-            Optional<string> adminUserSshPublicKey = default;
-            Optional<string> adminUserPassword = default;
+            Core.Optional<string> adminUserSshPublicKey = default;
+            Core.Optional<string> adminUserPassword = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("adminUserName"u8))

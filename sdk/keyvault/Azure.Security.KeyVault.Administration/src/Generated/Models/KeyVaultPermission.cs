@@ -16,10 +16,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary> Initializes a new instance of KeyVaultPermission. </summary>
         public KeyVaultPermission()
         {
-            Actions = new ChangeTrackingList<string>();
-            NotActions = new ChangeTrackingList<string>();
-            DataActions = new ChangeTrackingList<KeyVaultDataAction>();
-            NotDataActions = new ChangeTrackingList<KeyVaultDataAction>();
+            Actions = new Core.ChangeTrackingList<string>();
+            NotActions = new Core.ChangeTrackingList<string>();
+            DataActions = new Core.ChangeTrackingList<KeyVaultDataAction>();
+            NotDataActions = new Core.ChangeTrackingList<KeyVaultDataAction>();
         }
 
         /// <summary> Initializes a new instance of KeyVaultPermission. </summary>

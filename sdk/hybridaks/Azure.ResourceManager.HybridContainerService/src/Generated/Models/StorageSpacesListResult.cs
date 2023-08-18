@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> Initializes a new instance of StorageSpacesListResult. </summary>
         internal StorageSpacesListResult()
         {
-            Value = new ChangeTrackingList<StorageSpaceData>();
+            Value = new Core.ChangeTrackingList<StorageSpaceData>();
         }
 
         /// <summary> Initializes a new instance of StorageSpacesListResult. </summary>

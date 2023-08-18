@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Marketplace
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(info);
             request.Content = content;
             _userAgent.Apply(message);
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Marketplace
             if (payload != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
+                var content = new Core.Utf8JsonRequestContent();
                 content.JsonWriter.WriteStringValue(payload.Value.ToString());
                 request.Content = content;
             }
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Marketplace
             if (content != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content0 = new Utf8JsonRequestContent();
+                var content0 = new Core.Utf8JsonRequestContent();
                 content0.JsonWriter.WriteObjectValue(content);
                 request.Content = content0;
             }

@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
-    public partial class ManagedServicesRegistrationProperties : IUtf8JsonSerializable
+    public partial class ManagedServicesRegistrationProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(EligibleAuthorizations))
+            if (Core.Optional.IsCollectionDefined(EligibleAuthorizations))
             {
                 writer.WritePropertyName("eligibleAuthorizations"u8);
                 writer.WriteStartArray();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RegistrationDefinitionName))
+            if (Core.Optional.IsDefined(RegistrationDefinitionName))
             {
                 writer.WritePropertyName("registrationDefinitionName"u8);
                 writer.WriteStringValue(RegistrationDefinitionName);
@@ -55,15 +55,15 @@ namespace Azure.ResourceManager.ManagedServices.Models
             {
                 return null;
             }
-            Optional<string> description = default;
+            Core.Optional<string> description = default;
             IList<ManagedServicesAuthorization> authorizations = default;
-            Optional<IList<ManagedServicesEligibleAuthorization>> eligibleAuthorizations = default;
-            Optional<string> registrationDefinitionName = default;
+            Core.Optional<IList<ManagedServicesEligibleAuthorization>> eligibleAuthorizations = default;
+            Core.Optional<string> registrationDefinitionName = default;
             Guid managedByTenantId = default;
-            Optional<ManagedServicesProvisioningState> provisioningState = default;
-            Optional<Guid> manageeTenantId = default;
-            Optional<string> manageeTenantName = default;
-            Optional<string> managedByTenantName = default;
+            Core.Optional<ManagedServicesProvisioningState> provisioningState = default;
+            Core.Optional<Guid> manageeTenantId = default;
+            Core.Optional<string> manageeTenantName = default;
+            Core.Optional<string> managedByTenantName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     continue;
                 }
             }
-            return new ManagedServicesRegistrationProperties(description.Value, authorizations, Optional.ToList(eligibleAuthorizations), registrationDefinitionName.Value, managedByTenantId, Optional.ToNullable(provisioningState), Optional.ToNullable(manageeTenantId), manageeTenantName.Value, managedByTenantName.Value);
+            return new ManagedServicesRegistrationProperties(description.Value, authorizations, Core.Optional.ToList(eligibleAuthorizations), registrationDefinitionName.Value, managedByTenantId, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(manageeTenantId), manageeTenantName.Value, managedByTenantName.Value);
         }
     }
 }

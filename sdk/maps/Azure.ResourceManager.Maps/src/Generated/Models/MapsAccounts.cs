@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <summary> Initializes a new instance of MapsAccounts. </summary>
         internal MapsAccounts()
         {
-            Value = new ChangeTrackingList<MapsAccountData>();
+            Value = new Core.ChangeTrackingList<MapsAccountData>();
         }
 
         /// <summary> Initializes a new instance of MapsAccounts. </summary>

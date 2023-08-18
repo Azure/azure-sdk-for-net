@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <summary> Initializes a new instance of ExtensionsList. </summary>
         internal ExtensionsList()
         {
-            Value = new ChangeTrackingList<KubernetesClusterExtensionData>();
+            Value = new Core.ChangeTrackingList<KubernetesClusterExtensionData>();
         }
 
         /// <summary> Initializes a new instance of ExtensionsList. </summary>

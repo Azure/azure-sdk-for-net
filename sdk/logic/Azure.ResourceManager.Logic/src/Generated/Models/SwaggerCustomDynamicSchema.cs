@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of SwaggerCustomDynamicSchema. </summary>
         public SwaggerCustomDynamicSchema()
         {
-            Parameters = new ChangeTrackingDictionary<string, BinaryData>();
+            Parameters = new Core.ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of SwaggerCustomDynamicSchema. </summary>

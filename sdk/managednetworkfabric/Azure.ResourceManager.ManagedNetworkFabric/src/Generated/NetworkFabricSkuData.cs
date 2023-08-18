@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Initializes a new instance of NetworkFabricSkuData. </summary>
         public NetworkFabricSkuData()
         {
-            SupportedVersions = new ChangeTrackingList<string>();
+            SupportedVersions = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of NetworkFabricSkuData. </summary>

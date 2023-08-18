@@ -19,8 +19,8 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Optional<RouteLegSummary> summary = default;
-            Optional<IReadOnlyList<LatLongPair>> points = default;
+            Core.Optional<RouteLegSummary> summary = default;
+            Core.Optional<IReadOnlyList<LatLongPair>> points = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summary"u8))
@@ -47,7 +47,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteLeg(summary.Value, Optional.ToList(points));
+            return new RouteLeg(summary.Value, Core.Optional.ToList(points));
         }
     }
 }

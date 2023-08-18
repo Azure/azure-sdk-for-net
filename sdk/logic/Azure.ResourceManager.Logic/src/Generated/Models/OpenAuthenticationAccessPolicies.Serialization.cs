@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    internal partial class OpenAuthenticationAccessPolicies : IUtf8JsonSerializable
+    internal partial class OpenAuthenticationAccessPolicies : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AccessPolicies))
+            if (Core.Optional.IsCollectionDefined(AccessPolicies))
             {
                 writer.WritePropertyName("policies"u8);
                 writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, OpenAuthenticationAccessPolicy>> policies = default;
+            Core.Optional<IDictionary<string, OpenAuthenticationAccessPolicy>> policies = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policies"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new OpenAuthenticationAccessPolicies(Optional.ToDictionary(policies));
+            return new OpenAuthenticationAccessPolicies(Core.Optional.ToDictionary(policies));
         }
     }
 }

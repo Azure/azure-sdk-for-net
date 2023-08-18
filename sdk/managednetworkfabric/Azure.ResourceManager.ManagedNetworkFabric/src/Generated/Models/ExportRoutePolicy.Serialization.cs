@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ExportRoutePolicy : IUtf8JsonSerializable
+    public partial class ExportRoutePolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExportIPv4RoutePolicyId))
+            if (Core.Optional.IsDefined(ExportIPv4RoutePolicyId))
             {
                 writer.WritePropertyName("exportIpv4RoutePolicyId"u8);
                 writer.WriteStringValue(ExportIPv4RoutePolicyId);
             }
-            if (Optional.IsDefined(ExportIPv6RoutePolicyId))
+            if (Core.Optional.IsDefined(ExportIPv6RoutePolicyId))
             {
                 writer.WritePropertyName("exportIpv6RoutePolicyId"u8);
                 writer.WriteStringValue(ExportIPv6RoutePolicyId);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> exportIPv4RoutePolicyId = default;
-            Optional<ResourceIdentifier> exportIPv6RoutePolicyId = default;
+            Core.Optional<ResourceIdentifier> exportIPv4RoutePolicyId = default;
+            Core.Optional<ResourceIdentifier> exportIPv6RoutePolicyId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("exportIpv4RoutePolicyId"u8))

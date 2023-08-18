@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class FlowAccessControlConfigurationPolicy : IUtf8JsonSerializable
+    public partial class FlowAccessControlConfigurationPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AllowedCallerIPAddresses))
+            if (Core.Optional.IsCollectionDefined(AllowedCallerIPAddresses))
             {
                 writer.WritePropertyName("allowedCallerIpAddresses"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OpenAuthenticationPolicies))
+            if (Core.Optional.IsDefined(OpenAuthenticationPolicies))
             {
                 writer.WritePropertyName("openAuthenticationPolicies"u8);
                 writer.WriteObjectValue(OpenAuthenticationPolicies);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IList<FlowAccessControlIPAddressRange>> allowedCallerIPAddresses = default;
-            Optional<OpenAuthenticationAccessPolicies> openAuthenticationPolicies = default;
+            Core.Optional<IList<FlowAccessControlIPAddressRange>> allowedCallerIPAddresses = default;
+            Core.Optional<OpenAuthenticationAccessPolicies> openAuthenticationPolicies = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedCallerIpAddresses"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new FlowAccessControlConfigurationPolicy(Optional.ToList(allowedCallerIPAddresses), openAuthenticationPolicies.Value);
+            return new FlowAccessControlConfigurationPolicy(Core.Optional.ToList(allowedCallerIPAddresses), openAuthenticationPolicies.Value);
         }
     }
 }

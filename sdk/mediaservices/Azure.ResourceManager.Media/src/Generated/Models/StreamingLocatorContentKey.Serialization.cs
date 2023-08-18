@@ -12,19 +12,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class StreamingLocatorContentKey : IUtf8JsonSerializable
+    public partial class StreamingLocatorContentKey : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(LabelReferenceInStreamingPolicy))
+            if (Core.Optional.IsDefined(LabelReferenceInStreamingPolicy))
             {
                 writer.WritePropertyName("labelReferenceInStreamingPolicy"u8);
                 writer.WriteStringValue(LabelReferenceInStreamingPolicy);
             }
-            if (Optional.IsDefined(Value))
+            if (Core.Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             Guid id = default;
-            Optional<StreamingLocatorContentKeyType> type = default;
-            Optional<string> labelReferenceInStreamingPolicy = default;
-            Optional<string> value = default;
-            Optional<string> policyName = default;
-            Optional<IReadOnlyList<MediaTrackSelection>> tracks = default;
+            Core.Optional<StreamingLocatorContentKeyType> type = default;
+            Core.Optional<string> labelReferenceInStreamingPolicy = default;
+            Core.Optional<string> value = default;
+            Core.Optional<string> policyName = default;
+            Core.Optional<IReadOnlyList<MediaTrackSelection>> tracks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new StreamingLocatorContentKey(id, Optional.ToNullable(type), labelReferenceInStreamingPolicy.Value, value.Value, policyName.Value, Optional.ToList(tracks));
+            return new StreamingLocatorContentKey(id, Core.Optional.ToNullable(type), labelReferenceInStreamingPolicy.Value, value.Value, policyName.Value, Core.Optional.ToList(tracks));
         }
     }
 }

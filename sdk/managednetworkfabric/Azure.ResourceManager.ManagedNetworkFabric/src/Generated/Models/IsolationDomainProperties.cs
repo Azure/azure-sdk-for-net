@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of IsolationDomainProperties. </summary>
         public IsolationDomainProperties()
         {
-            NeighborGroupIds = new ChangeTrackingList<ResourceIdentifier>();
+            NeighborGroupIds = new Core.ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of IsolationDomainProperties. </summary>

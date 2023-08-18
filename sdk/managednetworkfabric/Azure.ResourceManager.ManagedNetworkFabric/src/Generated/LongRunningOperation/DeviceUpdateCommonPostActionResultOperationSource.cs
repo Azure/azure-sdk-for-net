@@ -14,15 +14,15 @@ using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class DeviceUpdateCommonPostActionResultOperationSource : IOperationSource<DeviceUpdateCommonPostActionResult>
+    internal class DeviceUpdateCommonPostActionResultOperationSource : Core.IOperationSource<DeviceUpdateCommonPostActionResult>
     {
-        DeviceUpdateCommonPostActionResult IOperationSource<DeviceUpdateCommonPostActionResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        DeviceUpdateCommonPostActionResult Core.IOperationSource<DeviceUpdateCommonPostActionResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return DeviceUpdateCommonPostActionResult.DeserializeDeviceUpdateCommonPostActionResult(document.RootElement);
         }
 
-        async ValueTask<DeviceUpdateCommonPostActionResult> IOperationSource<DeviceUpdateCommonPostActionResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DeviceUpdateCommonPostActionResult> Core.IOperationSource<DeviceUpdateCommonPostActionResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return DeviceUpdateCommonPostActionResult.DeserializeDeviceUpdateCommonPostActionResult(document.RootElement);

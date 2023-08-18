@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class NetworkFabricInternetGatewayRuleOperationSource : IOperationSource<NetworkFabricInternetGatewayRuleResource>
+    internal class NetworkFabricInternetGatewayRuleOperationSource : Core.IOperationSource<NetworkFabricInternetGatewayRuleResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             _client = client;
         }
 
-        NetworkFabricInternetGatewayRuleResource IOperationSource<NetworkFabricInternetGatewayRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkFabricInternetGatewayRuleResource Core.IOperationSource<NetworkFabricInternetGatewayRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NetworkFabricInternetGatewayRuleData.DeserializeNetworkFabricInternetGatewayRuleData(document.RootElement);
             return new NetworkFabricInternetGatewayRuleResource(_client, data);
         }
 
-        async ValueTask<NetworkFabricInternetGatewayRuleResource> IOperationSource<NetworkFabricInternetGatewayRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkFabricInternetGatewayRuleResource> Core.IOperationSource<NetworkFabricInternetGatewayRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NetworkFabricInternetGatewayRuleData.DeserializeNetworkFabricInternetGatewayRuleData(document.RootElement);
