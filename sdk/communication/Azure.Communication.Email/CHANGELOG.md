@@ -1,15 +1,10 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.0.1 (2023-08-17)
 
 ### Other Changes
-
+- Improve memory management for attachment handling
+ 
 ## 1.0.0 (2023-03-31)
 
 ### Breaking Changes
