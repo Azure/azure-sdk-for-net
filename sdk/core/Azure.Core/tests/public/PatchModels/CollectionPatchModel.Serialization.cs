@@ -3,10 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
-using System.Xml.Linq;
-using Azure.Core.Json;
 using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.PatchModels
@@ -16,9 +13,7 @@ namespace Azure.Core.Tests.PatchModels
         internal static CollectionPatchModel Deserialize(JsonElement element)
         {
             string id = default;
-
-            IDictionary<string, string> values;
-            Dictionary<string, string> valuesDictionary = new();
+            Dictionary<string, string> variables = default;
 
             foreach (JsonProperty property in element.EnumerateObject())
             {
@@ -28,18 +23,17 @@ namespace Azure.Core.Tests.PatchModels
                     continue;
                 }
 
-                if (property.NameEquals("values"))
+                if (property.NameEquals("variables"))
                 {
+                    variables = new();
                     foreach (JsonProperty value in property.Value.EnumerateObject())
                     {
-                        valuesDictionary.Add(value.Name, value.Value.GetString());
+                        variables.Add(value.Name, value.Value.GetString());
                     }
                 }
             }
 
-            values = valuesDictionary;
-
-            return new CollectionPatchModel(id, values);
+            return new CollectionPatchModel(id, variables);
         }
 
         CollectionPatchModel IModelJsonSerializable<CollectionPatchModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)

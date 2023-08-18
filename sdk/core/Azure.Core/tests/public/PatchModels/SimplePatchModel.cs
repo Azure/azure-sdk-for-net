@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.PatchModels
 {
@@ -10,11 +11,15 @@ namespace Azure.Core.Tests.PatchModels
     /// </summary>
     public partial class SimplePatchModel
     {
+        private readonly ChangeList _rootChanges = new();
+        private readonly ChangeListElement _changes;
+
         /// <summary>
         /// Public constructor.
         /// </summary>
         public SimplePatchModel()
         {
+            _changes = _rootChanges.RootElement;
         }
 
         /// <summary>
@@ -26,10 +31,11 @@ namespace Azure.Core.Tests.PatchModels
             _name = name;
             _count = count;
             _updatedOn = updatedOn;
+
+            _changes = _rootChanges.RootElement;
         }
 
         private string _name;
-        private bool _namePatchFlag;
         /// <summary>
         /// Optional string property corresponding to JSON """{"name": "abc"}""".
         /// </summary>
@@ -39,12 +45,11 @@ namespace Azure.Core.Tests.PatchModels
             set
             {
                 _name = value;
-                _namePatchFlag = true;
+                _changes.Set("name", value);
             }
         }
 
         private int? _count;
-        private bool _countPatchFlag;
         /// <summary>
         /// Optional int property corresponding to JSON """{"count": 1}""".
         /// </summary>
@@ -54,12 +59,11 @@ namespace Azure.Core.Tests.PatchModels
             set
             {
                 _count = value;
-                _countPatchFlag = true;
+                _changes.Set("count", value);
             }
         }
 
         private DateTimeOffset? _updatedOn;
-        private bool _updatedOnPatchFlag;
         /// <summary>
         /// Optional DateTimeOffset property corresponding to JSON """{"updatedOn": "2020-06-25T17:44:37.6830000Z"}""".
         /// </summary>
@@ -69,7 +73,7 @@ namespace Azure.Core.Tests.PatchModels
             set
             {
                 _updatedOn = value;
-                _updatedOnPatchFlag = true;
+                _changes.Set("updatedOn", value);
             }
         }
     }

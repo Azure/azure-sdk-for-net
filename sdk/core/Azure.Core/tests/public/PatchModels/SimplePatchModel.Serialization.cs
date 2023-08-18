@@ -101,27 +101,7 @@ namespace Azure.Core.Tests.PatchModels
 
         private void SerializePatch(Utf8JsonWriter writer)
         {
-            writer.WriteStartObject();
-
-            if (_namePatchFlag)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-
-            if (_countPatchFlag)
-            {
-                writer.WritePropertyName("count");
-                writer.WriteNumberValue(Count.Value);
-            }
-
-            if (_updatedOnPatchFlag)
-            {
-                writer.WritePropertyName("updatedOn");
-                writer.WriteStringValue(UpdatedOn.Value!, "O");
-            }
-
-            writer.WriteEndObject();
+            _rootChanges.WriteMergePatch(writer);
         }
 
         void IModelJsonSerializable<SimplePatchModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)

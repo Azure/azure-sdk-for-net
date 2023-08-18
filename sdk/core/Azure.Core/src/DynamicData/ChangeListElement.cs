@@ -26,9 +26,19 @@ namespace Azure.Core.Serialization
             return new ChangeListElement(_root, _path +  path);
         }
 
-        public readonly void Set(string path, object value)
+        public readonly void Set(string path, string value)
         {
-            _root.AddChange(new ChangeListChange(path, value));
+            _root.AddChange(path, value);
+        }
+
+        public readonly void Set(string path, int? value)
+        {
+            _root.AddChange(path, value);
+        }
+
+        public readonly void Set(string path, DateTimeOffset? value)
+        {
+            _root.AddChange(path, value);
         }
     }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

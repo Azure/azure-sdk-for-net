@@ -3,11 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Text.Json;
 
 namespace Azure.Core.Serialization
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+#pragma warning disable AZC0014 // No STJ in public APIs
     public class ChangeList
     {
         private readonly List<ChangeListChange> _changes;
@@ -24,15 +25,44 @@ namespace Azure.Core.Serialization
 
         public ChangeListElement RootElement { get => _rootElement; }
 
-        public void AddChange(ChangeListChange change)
+        internal void AddChange(string path, object? value)
         {
-            _changes.Add(change);
+            _changes.Add(new ChangeListChange(path, value));
         }
 
-        public void WriteMergePatch()
+        public void WriteMergePatch(Utf8JsonWriter writer)
         {
-            // TODO
+            writer.WriteStartObject();
+            foreach (ChangeListChange change in _changes)
+            {
+                writer.WritePropertyName(change.Path);
+                WriteValue(writer, change.Value);
+            }
+            writer.WriteEndObject();
+        }
+
+        private static void WriteValue(Utf8JsonWriter writer, object? value)
+        {
+            switch (value)
+            {
+                case int i:
+                    writer.WriteNumberValue(i);
+                    break;
+                case string s:
+                    writer.WriteStringValue(s);
+                    break;
+                case DateTimeOffset d:
+                    // TODO: use model formatter
+                    writer.WriteStringValue(d);
+                    break;
+                case null:
+                    writer.WriteNullValue();
+                    break;
+                default:
+                    throw new NotImplementedException($"Unknown value type: '{value.GetType()}'.");
+            }
         }
     }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+#pragma warning restore AZC0014
+#pragma warning restore CS1591
 }

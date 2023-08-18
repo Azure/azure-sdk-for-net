@@ -23,6 +23,8 @@ namespace Azure.Core.Tests.PatchModels
         /// <param name="element"></param>
         internal CollectionPatchModel(string id, IDictionary<string, string> values)
         {
+            _id = id;
+            _variables = values;
         }
 
         private string _id;
@@ -35,7 +37,7 @@ namespace Azure.Core.Tests.PatchModels
             set => _id = value;
         }
 
-        private Dictionary<string, string> _variables;
+        private IDictionary<string, string> _variables;
         /// <summary> Environment variables which are defined as a set of &lt;name,value&gt; pairs. </summary>
         public IDictionary<string, string> Variables
         {

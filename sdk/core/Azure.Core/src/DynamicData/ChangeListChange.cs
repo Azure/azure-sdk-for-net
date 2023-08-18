@@ -8,9 +8,9 @@ using System.Text;
 namespace Azure.Core.Serialization
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public readonly struct ChangeListChange
+    internal readonly struct ChangeListChange
     {
-        internal ChangeListChange(string path, object value)
+        internal ChangeListChange(string path, object? value)
         {
             Path = path;
             Value = value;
@@ -19,7 +19,7 @@ namespace Azure.Core.Serialization
         // TODO: implement as Memory<char>
         public readonly string Path { get; }
 
-        public readonly object Value { get; }
+        public readonly object? Value { get; }
     }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }
