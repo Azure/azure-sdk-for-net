@@ -32,6 +32,8 @@ namespace Azure.Core.Serialization
 
         public void WriteMergePatch(Utf8JsonWriter writer)
         {
+            // TODO: Write this correctly
+            // TODO: Add nesting
             writer.WriteStartObject();
             foreach (ChangeListChange change in _changes)
             {

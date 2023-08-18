@@ -82,6 +82,15 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        public void CanPatchNestedModel_AssignChild()
+        {
+            ParentPatchModel model = new();
+            model.Child = new ChildPatchModel("aa", "bb");
+
+            ValidatePatch("""{"child": {"a": "aa", "b": "bb"}}""", model);
+        }
+
+        [Test]
         public void CanPatchNestedModelOneProperty()
         {
             ParentPatchModel model = new();
