@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<ExtendedLocationType> type = default;
+            Optional<HciExtendedLocationType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    type = new ExtendedLocationType(property.Value.GetString());
+                    type = new HciExtendedLocationType(property.Value.GetString());
                     continue;
                 }
             }

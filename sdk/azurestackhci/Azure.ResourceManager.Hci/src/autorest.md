@@ -60,7 +60,6 @@ prepend-rp-prefix:
   - ClusterReportedProperties
   - AvailabilityType
   - HealthState
-  - ManagedServiceIdentityType
   - OfferList
   - PackageVersionInfo
   - PrecheckResult
@@ -92,7 +91,7 @@ prepend-rp-prefix:
   - MachineExtension
   - DiskFileFormat
   - ExtendedLocation
-  - ExtendedLocationType
+  - ExtendedLocationTypes
   - HyperVGeneration
   - IPConfiguration
   - IPConfigurationProperties

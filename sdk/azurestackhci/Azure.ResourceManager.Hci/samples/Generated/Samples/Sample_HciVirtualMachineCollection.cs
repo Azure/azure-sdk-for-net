@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Hci.Samples
                 ExtendedLocation = new HciExtendedLocation()
                 {
                     Name = "/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c/resourceGroups/dogfoodarc/providers/Microsoft.ExtendedLocation/customLocations/dogfood-location",
-                    ExtendedLocationType = ExtendedLocationType.CustomLocation,
+                    ExtendedLocationType = HciExtendedLocationType.CustomLocation,
                 },
                 HardwareProfile = new HciHardwareProfile()
                 {
@@ -184,7 +184,7 @@ Id = new ResourceIdentifier("test-nic"),
                 ExtendedLocation = new HciExtendedLocation()
                 {
                     Name = "/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c/resourceGroups/dogfoodarc/providers/Microsoft.ExtendedLocation/customLocations/dogfood-location",
-                    ExtendedLocationType = ExtendedLocationType.CustomLocation,
+                    ExtendedLocationType = HciExtendedLocationType.CustomLocation,
                 },
                 HardwareProfile = new HciHardwareProfile()
                 {
@@ -254,7 +254,7 @@ Id = new ResourceIdentifier("test-nic"),
                 ExtendedLocation = new HciExtendedLocation()
                 {
                     Name = "/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c/resourceGroups/dogfoodarc/providers/Microsoft.ExtendedLocation/customLocations/dogfood-location",
-                    ExtendedLocationType = ExtendedLocationType.CustomLocation,
+                    ExtendedLocationType = HciExtendedLocationType.CustomLocation,
                 },
                 HardwareProfile = new HciHardwareProfile()
                 {

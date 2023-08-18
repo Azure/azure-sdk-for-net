@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of HciExtendedLocation. </summary>
         /// <param name="name"> The name of the extended location. </param>
         /// <param name="extendedLocationType"> The type of the extended location. </param>
-        internal HciExtendedLocation(string name, ExtendedLocationType? extendedLocationType)
+        internal HciExtendedLocation(string name, HciExtendedLocationType? extendedLocationType)
         {
             Name = name;
             ExtendedLocationType = extendedLocationType;
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> The name of the extended location. </summary>
         public string Name { get; set; }
         /// <summary> The type of the extended location. </summary>
-        public ExtendedLocationType? ExtendedLocationType { get; set; }
+        public HciExtendedLocationType? ExtendedLocationType { get; set; }
     }
 }
