@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class ScheduledQueryRuleCriteria : IUtf8JsonSerializable
+    internal partial class ScheduledQueryRuleCriteria : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AllOf))
+            if (Core.Optional.IsCollectionDefined(AllOf))
             {
                 writer.WritePropertyName("allOf"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<ScheduledQueryRuleCondition>> allOf = default;
+            Core.Optional<IList<ScheduledQueryRuleCondition>> allOf = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allOf"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new ScheduledQueryRuleCriteria(Optional.ToList(allOf));
+            return new ScheduledQueryRuleCriteria(Core.Optional.ToList(allOf));
         }
     }
 }

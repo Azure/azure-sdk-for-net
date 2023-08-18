@@ -10,37 +10,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class PeeringDirectConnection : IUtf8JsonSerializable
+    public partial class PeeringDirectConnection : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BandwidthInMbps))
+            if (Core.Optional.IsDefined(BandwidthInMbps))
             {
                 writer.WritePropertyName("bandwidthInMbps"u8);
                 writer.WriteNumberValue(BandwidthInMbps.Value);
             }
-            if (Optional.IsDefined(SessionAddressProvider))
+            if (Core.Optional.IsDefined(SessionAddressProvider))
             {
                 writer.WritePropertyName("sessionAddressProvider"u8);
                 writer.WriteStringValue(SessionAddressProvider.Value.ToString());
             }
-            if (Optional.IsDefined(UseForPeeringService))
+            if (Core.Optional.IsDefined(UseForPeeringService))
             {
                 writer.WritePropertyName("useForPeeringService"u8);
                 writer.WriteBooleanValue(UseForPeeringService.Value);
             }
-            if (Optional.IsDefined(PeeringDBFacilityId))
+            if (Core.Optional.IsDefined(PeeringDBFacilityId))
             {
                 writer.WritePropertyName("peeringDBFacilityId"u8);
                 writer.WriteNumberValue(PeeringDBFacilityId.Value);
             }
-            if (Optional.IsDefined(BgpSession))
+            if (Core.Optional.IsDefined(BgpSession))
             {
                 writer.WritePropertyName("bgpSession"u8);
                 writer.WriteObjectValue(BgpSession);
             }
-            if (Optional.IsDefined(ConnectionIdentifier))
+            if (Core.Optional.IsDefined(ConnectionIdentifier))
             {
                 writer.WritePropertyName("connectionIdentifier"u8);
                 writer.WriteStringValue(ConnectionIdentifier);
@@ -54,16 +54,16 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<int> bandwidthInMbps = default;
-            Optional<int> provisionedBandwidthInMbps = default;
-            Optional<PeeringSessionAddressProvider> sessionAddressProvider = default;
-            Optional<bool> useForPeeringService = default;
-            Optional<string> microsoftTrackingId = default;
-            Optional<int> peeringDBFacilityId = default;
-            Optional<PeeringConnectionState> connectionState = default;
-            Optional<PeeringBgpSession> bgpSession = default;
-            Optional<string> connectionIdentifier = default;
-            Optional<string> errorMessage = default;
+            Core.Optional<int> bandwidthInMbps = default;
+            Core.Optional<int> provisionedBandwidthInMbps = default;
+            Core.Optional<PeeringSessionAddressProvider> sessionAddressProvider = default;
+            Core.Optional<bool> useForPeeringService = default;
+            Core.Optional<string> microsoftTrackingId = default;
+            Core.Optional<int> peeringDBFacilityId = default;
+            Core.Optional<PeeringConnectionState> connectionState = default;
+            Core.Optional<PeeringBgpSession> bgpSession = default;
+            Core.Optional<string> connectionIdentifier = default;
+            Core.Optional<string> errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bandwidthInMbps"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Peering.Models
                     continue;
                 }
             }
-            return new PeeringDirectConnection(Optional.ToNullable(bandwidthInMbps), Optional.ToNullable(provisionedBandwidthInMbps), Optional.ToNullable(sessionAddressProvider), Optional.ToNullable(useForPeeringService), microsoftTrackingId.Value, Optional.ToNullable(peeringDBFacilityId), Optional.ToNullable(connectionState), bgpSession.Value, connectionIdentifier.Value, errorMessage.Value);
+            return new PeeringDirectConnection(Core.Optional.ToNullable(bandwidthInMbps), Core.Optional.ToNullable(provisionedBandwidthInMbps), Core.Optional.ToNullable(sessionAddressProvider), Core.Optional.ToNullable(useForPeeringService), microsoftTrackingId.Value, Core.Optional.ToNullable(peeringDBFacilityId), Core.Optional.ToNullable(connectionState), bgpSession.Value, connectionIdentifier.Value, errorMessage.Value);
         }
     }
 }

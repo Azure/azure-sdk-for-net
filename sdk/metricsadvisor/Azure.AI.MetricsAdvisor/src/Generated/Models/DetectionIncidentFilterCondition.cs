@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of DetectionIncidentFilterCondition. </summary>
         public DetectionIncidentFilterCondition()
         {
-            DimensionFilter = new ChangeTrackingList<DimensionKey>();
+            DimensionFilter = new Core.ChangeTrackingList<DimensionKey>();
         }
 
         /// <summary> dimension filter. </summary>

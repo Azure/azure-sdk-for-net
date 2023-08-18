@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Network.Models
             Argument.AssertNotNull(providerLocation, nameof(providerLocation));
 
             ProviderLocation = providerLocation;
-            Providers = new ChangeTrackingList<string>();
-            AzureLocations = new ChangeTrackingList<AzureLocation>();
+            Providers = new Core.ChangeTrackingList<string>();
+            AzureLocations = new Core.ChangeTrackingList<AzureLocation>();
             StartOn = startOn;
             EndOn = endOn;
         }

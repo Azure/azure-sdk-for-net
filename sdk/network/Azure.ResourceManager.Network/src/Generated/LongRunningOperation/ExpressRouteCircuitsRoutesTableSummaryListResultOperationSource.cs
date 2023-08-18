@@ -14,15 +14,15 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class ExpressRouteCircuitsRoutesTableSummaryListResultOperationSource : IOperationSource<ExpressRouteCircuitsRoutesTableSummaryListResult>
+    internal class ExpressRouteCircuitsRoutesTableSummaryListResultOperationSource : Core.IOperationSource<ExpressRouteCircuitsRoutesTableSummaryListResult>
     {
-        ExpressRouteCircuitsRoutesTableSummaryListResult IOperationSource<ExpressRouteCircuitsRoutesTableSummaryListResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        ExpressRouteCircuitsRoutesTableSummaryListResult Core.IOperationSource<ExpressRouteCircuitsRoutesTableSummaryListResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return ExpressRouteCircuitsRoutesTableSummaryListResult.DeserializeExpressRouteCircuitsRoutesTableSummaryListResult(document.RootElement);
         }
 
-        async ValueTask<ExpressRouteCircuitsRoutesTableSummaryListResult> IOperationSource<ExpressRouteCircuitsRoutesTableSummaryListResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ExpressRouteCircuitsRoutesTableSummaryListResult> Core.IOperationSource<ExpressRouteCircuitsRoutesTableSummaryListResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return ExpressRouteCircuitsRoutesTableSummaryListResult.DeserializeExpressRouteCircuitsRoutesTableSummaryListResult(document.RootElement);

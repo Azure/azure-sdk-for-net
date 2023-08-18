@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<int> totalResources = default;
+            Core.Optional<ResourceIdentifier> resourceId = default;
+            Core.Optional<int> totalResources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     continue;
                 }
             }
-            return new IfNotExistsEvaluationDetails(resourceId.Value, Optional.ToNullable(totalResources));
+            return new IfNotExistsEvaluationDetails(resourceId.Value, Core.Optional.ToNullable(totalResources));
         }
     }
 }

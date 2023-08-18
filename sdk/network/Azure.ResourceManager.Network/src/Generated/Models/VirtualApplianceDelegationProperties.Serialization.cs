@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualApplianceDelegationProperties : IUtf8JsonSerializable
+    public partial class VirtualApplianceDelegationProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceName))
+            if (Core.Optional.IsDefined(ServiceName))
             {
                 writer.WritePropertyName("serviceName"u8);
                 writer.WriteStringValue(ServiceName);
@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> serviceName = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            Core.Optional<string> serviceName = default;
+            Core.Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceName"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VirtualApplianceDelegationProperties(serviceName.Value, Optional.ToNullable(provisioningState));
+            return new VirtualApplianceDelegationProperties(serviceName.Value, Core.Optional.ToNullable(provisioningState));
         }
     }
 }

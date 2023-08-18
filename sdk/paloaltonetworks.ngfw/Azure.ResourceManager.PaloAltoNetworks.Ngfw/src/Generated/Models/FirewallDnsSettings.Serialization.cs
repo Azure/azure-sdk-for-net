@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class FirewallDnsSettings : IUtf8JsonSerializable
+    public partial class FirewallDnsSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableDnsProxy))
+            if (Core.Optional.IsDefined(EnableDnsProxy))
             {
                 writer.WritePropertyName("enableDnsProxy"u8);
                 writer.WriteStringValue(EnableDnsProxy.Value.ToString());
             }
-            if (Optional.IsDefined(EnabledDnsType))
+            if (Core.Optional.IsDefined(EnabledDnsType))
             {
                 writer.WritePropertyName("enabledDnsType"u8);
                 writer.WriteStringValue(EnabledDnsType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DnsServers))
+            if (Core.Optional.IsCollectionDefined(DnsServers))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<AllowDnsProxyType> enableDnsProxy = default;
-            Optional<EnabledDnsType> enabledDnsType = default;
-            Optional<IList<IPAddressInfo>> dnsServers = default;
+            Core.Optional<AllowDnsProxyType> enableDnsProxy = default;
+            Core.Optional<EnabledDnsType> enabledDnsType = default;
+            Core.Optional<IList<IPAddressInfo>> dnsServers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableDnsProxy"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     continue;
                 }
             }
-            return new FirewallDnsSettings(Optional.ToNullable(enableDnsProxy), Optional.ToNullable(enabledDnsType), Optional.ToList(dnsServers));
+            return new FirewallDnsSettings(Core.Optional.ToNullable(enableDnsProxy), Core.Optional.ToNullable(enabledDnsType), Core.Optional.ToList(dnsServers));
         }
     }
 }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class PostgreSqlDataFeedPatch : IUtf8JsonSerializable
+    internal partial class PostgreSqlDataFeedPatch : Core.IUtf8JsonSerializable
     {
     }
 }

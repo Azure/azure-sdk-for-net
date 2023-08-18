@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of EffectiveRoute. </summary>
         internal EffectiveRoute()
         {
-            AddressPrefix = new ChangeTrackingList<string>();
-            NextHopIPAddress = new ChangeTrackingList<string>();
+            AddressPrefix = new Core.ChangeTrackingList<string>();
+            NextHopIPAddress = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of EffectiveRoute. </summary>

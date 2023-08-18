@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <summary> Initializes a new instance of PostgreSqlPrivateLinkResourceProperties. </summary>
         internal PostgreSqlPrivateLinkResourceProperties()
         {
-            RequiredMembers = new ChangeTrackingList<string>();
+            RequiredMembers = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlPrivateLinkResourceProperties. </summary>

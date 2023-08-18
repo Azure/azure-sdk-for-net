@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> localAddress = default;
-            Optional<string> neighbor = default;
-            Optional<long> asn = default;
-            Optional<BgpPeerState> state = default;
-            Optional<TimeSpan> connectedDuration = default;
-            Optional<long> routesReceived = default;
-            Optional<long> messagesSent = default;
-            Optional<long> messagesReceived = default;
+            Core.Optional<string> localAddress = default;
+            Core.Optional<string> neighbor = default;
+            Core.Optional<long> asn = default;
+            Core.Optional<BgpPeerState> state = default;
+            Core.Optional<TimeSpan> connectedDuration = default;
+            Core.Optional<long> routesReceived = default;
+            Core.Optional<long> messagesSent = default;
+            Core.Optional<long> messagesReceived = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("localAddress"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new BgpPeerStatus(localAddress.Value, neighbor.Value, Optional.ToNullable(asn), Optional.ToNullable(state), Optional.ToNullable(connectedDuration), Optional.ToNullable(routesReceived), Optional.ToNullable(messagesSent), Optional.ToNullable(messagesReceived));
+            return new BgpPeerStatus(localAddress.Value, neighbor.Value, Core.Optional.ToNullable(asn), Core.Optional.ToNullable(state), Core.Optional.ToNullable(connectedDuration), Core.Optional.ToNullable(routesReceived), Core.Optional.ToNullable(messagesSent), Core.Optional.ToNullable(messagesReceived));
         }
     }
 }

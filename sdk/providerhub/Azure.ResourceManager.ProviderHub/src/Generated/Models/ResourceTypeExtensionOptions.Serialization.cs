@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    internal partial class ResourceTypeExtensionOptions : IUtf8JsonSerializable
+    internal partial class ResourceTypeExtensionOptions : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceCreationBegin))
+            if (Core.Optional.IsDefined(ResourceCreationBegin))
             {
                 writer.WritePropertyName("resourceCreationBegin"u8);
                 writer.WriteObjectValue(ResourceCreationBegin);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<ExtensionOptions> resourceCreationBegin = default;
+            Core.Optional<ExtensionOptions> resourceCreationBegin = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceCreationBegin"u8))

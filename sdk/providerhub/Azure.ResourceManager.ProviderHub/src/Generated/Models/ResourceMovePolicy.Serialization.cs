@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ResourceMovePolicy : IUtf8JsonSerializable
+    public partial class ResourceMovePolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsValidationRequired))
+            if (Core.Optional.IsDefined(IsValidationRequired))
             {
                 writer.WritePropertyName("validationRequired"u8);
                 writer.WriteBooleanValue(IsValidationRequired.Value);
             }
-            if (Optional.IsDefined(IsCrossResourceGroupMoveEnabled))
+            if (Core.Optional.IsDefined(IsCrossResourceGroupMoveEnabled))
             {
                 writer.WritePropertyName("crossResourceGroupMoveEnabled"u8);
                 writer.WriteBooleanValue(IsCrossResourceGroupMoveEnabled.Value);
             }
-            if (Optional.IsDefined(IsCrossSubscriptionMoveEnabled))
+            if (Core.Optional.IsDefined(IsCrossSubscriptionMoveEnabled))
             {
                 writer.WritePropertyName("crossSubscriptionMoveEnabled"u8);
                 writer.WriteBooleanValue(IsCrossSubscriptionMoveEnabled.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<bool> validationRequired = default;
-            Optional<bool> crossResourceGroupMoveEnabled = default;
-            Optional<bool> crossSubscriptionMoveEnabled = default;
+            Core.Optional<bool> validationRequired = default;
+            Core.Optional<bool> crossResourceGroupMoveEnabled = default;
+            Core.Optional<bool> crossSubscriptionMoveEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validationRequired"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new ResourceMovePolicy(Optional.ToNullable(validationRequired), Optional.ToNullable(crossResourceGroupMoveEnabled), Optional.ToNullable(crossSubscriptionMoveEnabled));
+            return new ResourceMovePolicy(Core.Optional.ToNullable(validationRequired), Core.Optional.ToNullable(crossResourceGroupMoveEnabled), Core.Optional.ToNullable(crossSubscriptionMoveEnabled));
         }
     }
 }

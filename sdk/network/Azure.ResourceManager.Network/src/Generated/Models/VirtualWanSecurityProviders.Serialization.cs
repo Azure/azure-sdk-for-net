@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VirtualWanSecurityProvider>> supportedProviders = default;
+            Core.Optional<IReadOnlyList<VirtualWanSecurityProvider>> supportedProviders = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("supportedProviders"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VirtualWanSecurityProviders(Optional.ToList(supportedProviders));
+            return new VirtualWanSecurityProviders(Core.Optional.ToList(supportedProviders));
         }
     }
 }

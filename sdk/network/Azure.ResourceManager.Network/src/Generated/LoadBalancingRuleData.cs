@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of LoadBalancingRuleData. </summary>
         public LoadBalancingRuleData()
         {
-            BackendAddressPools = new ChangeTrackingList<WritableSubResource>();
+            BackendAddressPools = new Core.ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of LoadBalancingRuleData. </summary>

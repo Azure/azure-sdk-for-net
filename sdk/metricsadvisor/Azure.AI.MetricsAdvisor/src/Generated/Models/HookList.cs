@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of HookList. </summary>
         internal HookList()
         {
-            Value = new ChangeTrackingList<NotificationHook>();
+            Value = new Core.ChangeTrackingList<NotificationHook>();
         }
 
         /// <summary> Initializes a new instance of HookList. </summary>

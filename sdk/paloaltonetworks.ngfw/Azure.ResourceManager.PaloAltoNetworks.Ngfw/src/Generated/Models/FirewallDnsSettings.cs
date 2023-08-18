@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <summary> Initializes a new instance of FirewallDnsSettings. </summary>
         public FirewallDnsSettings()
         {
-            DnsServers = new ChangeTrackingList<IPAddressInfo>();
+            DnsServers = new Core.ChangeTrackingList<IPAddressInfo>();
         }
 
         /// <summary> Initializes a new instance of FirewallDnsSettings. </summary>

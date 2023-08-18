@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MySqlWaitStatisticData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<MySqlWaitStatisticData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MySql.Models
                     continue;
                 }
             }
-            return new MySqlWaitStatisticsListResult(Optional.ToList(value), nextLink.Value);
+            return new MySqlWaitStatisticsListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

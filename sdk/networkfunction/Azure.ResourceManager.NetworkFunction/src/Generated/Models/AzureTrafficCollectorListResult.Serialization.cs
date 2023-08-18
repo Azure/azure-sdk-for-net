@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AzureTrafficCollectorData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<AzureTrafficCollectorData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                     continue;
                 }
             }
-            return new AzureTrafficCollectorListResult(Optional.ToList(value), nextLink.Value);
+            return new AzureTrafficCollectorListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

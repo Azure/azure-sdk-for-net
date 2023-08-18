@@ -12,27 +12,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class DefaultRolloutStatus : IUtf8JsonSerializable
+    public partial class DefaultRolloutStatus : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextTrafficRegion))
+            if (Core.Optional.IsDefined(NextTrafficRegion))
             {
                 writer.WritePropertyName("nextTrafficRegion"u8);
                 writer.WriteStringValue(NextTrafficRegion.Value.ToString());
             }
-            if (Optional.IsDefined(NextTrafficRegionScheduledOn))
+            if (Core.Optional.IsDefined(NextTrafficRegionScheduledOn))
             {
                 writer.WritePropertyName("nextTrafficRegionScheduledTime"u8);
                 writer.WriteStringValue(NextTrafficRegionScheduledOn.Value, "O");
             }
-            if (Optional.IsDefined(SubscriptionReregistrationResult))
+            if (Core.Optional.IsDefined(SubscriptionReregistrationResult))
             {
                 writer.WritePropertyName("subscriptionReregistrationResult"u8);
                 writer.WriteStringValue(SubscriptionReregistrationResult.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(CompletedRegions))
+            if (Core.Optional.IsCollectionDefined(CompletedRegions))
             {
                 writer.WritePropertyName("completedRegions"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FailedOrSkippedRegions))
+            if (Core.Optional.IsCollectionDefined(FailedOrSkippedRegions))
             {
                 writer.WritePropertyName("failedOrSkippedRegions"u8);
                 writer.WriteStartObject();
@@ -62,11 +62,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<TrafficRegionCategory> nextTrafficRegion = default;
-            Optional<DateTimeOffset> nextTrafficRegionScheduledTime = default;
-            Optional<SubscriptionReregistrationResult> subscriptionReregistrationResult = default;
-            Optional<IList<AzureLocation>> completedRegions = default;
-            Optional<IDictionary<string, ExtendedErrorInfo>> failedOrSkippedRegions = default;
+            Core.Optional<TrafficRegionCategory> nextTrafficRegion = default;
+            Core.Optional<DateTimeOffset> nextTrafficRegionScheduledTime = default;
+            Core.Optional<SubscriptionReregistrationResult> subscriptionReregistrationResult = default;
+            Core.Optional<IList<AzureLocation>> completedRegions = default;
+            Core.Optional<IDictionary<string, ExtendedErrorInfo>> failedOrSkippedRegions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextTrafficRegion"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new DefaultRolloutStatus(Optional.ToList(completedRegions), Optional.ToDictionary(failedOrSkippedRegions), Optional.ToNullable(nextTrafficRegion), Optional.ToNullable(nextTrafficRegionScheduledTime), Optional.ToNullable(subscriptionReregistrationResult));
+            return new DefaultRolloutStatus(Core.Optional.ToList(completedRegions), Core.Optional.ToDictionary(failedOrSkippedRegions), Core.Optional.ToNullable(nextTrafficRegion), Core.Optional.ToNullable(nextTrafficRegionScheduledTime), Core.Optional.ToNullable(subscriptionReregistrationResult));
         }
     }
 }

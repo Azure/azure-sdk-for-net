@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VpnClientConnectionHealth. </summary>
         internal VpnClientConnectionHealth()
         {
-            AllocatedIPAddresses = new ChangeTrackingList<string>();
+            AllocatedIPAddresses = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VpnClientConnectionHealth. </summary>

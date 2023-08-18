@@ -10,29 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayFirewallRule : IUtf8JsonSerializable
+    public partial class ApplicationGatewayFirewallRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("ruleId"u8);
             writer.WriteNumberValue(RuleId);
-            if (Optional.IsDefined(RuleIdString))
+            if (Core.Optional.IsDefined(RuleIdString))
             {
                 writer.WritePropertyName("ruleIdString"u8);
                 writer.WriteStringValue(RuleIdString);
             }
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(Action))
+            if (Core.Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             int ruleId = default;
-            Optional<string> ruleIdString = default;
-            Optional<ApplicationGatewayWafRuleStateType> state = default;
-            Optional<ApplicationGatewayWafRuleActionType> action = default;
-            Optional<string> description = default;
+            Core.Optional<string> ruleIdString = default;
+            Core.Optional<ApplicationGatewayWafRuleStateType> state = default;
+            Core.Optional<ApplicationGatewayWafRuleActionType> action = default;
+            Core.Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleId"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayFirewallRule(ruleId, ruleIdString.Value, Optional.ToNullable(state), Optional.ToNullable(action), description.Value);
+            return new ApplicationGatewayFirewallRule(ruleId, ruleIdString.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(action), description.Value);
         }
     }
 }

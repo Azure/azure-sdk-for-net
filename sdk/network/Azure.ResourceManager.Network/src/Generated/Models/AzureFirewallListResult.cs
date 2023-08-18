@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of AzureFirewallListResult. </summary>
         internal AzureFirewallListResult()
         {
-            Value = new ChangeTrackingList<AzureFirewallData>();
+            Value = new Core.ChangeTrackingList<AzureFirewallData>();
         }
 
         /// <summary> Initializes a new instance of AzureFirewallListResult. </summary>

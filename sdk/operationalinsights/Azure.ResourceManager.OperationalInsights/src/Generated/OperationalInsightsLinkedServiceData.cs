@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <summary> Initializes a new instance of OperationalInsightsLinkedServiceData. </summary>
         public OperationalInsightsLinkedServiceData()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of OperationalInsightsLinkedServiceData. </summary>

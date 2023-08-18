@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<SecurityRuleAssociations> securityRuleAssociations = default;
+            Core.Optional<string> id = default;
+            Core.Optional<SecurityRuleAssociations> securityRuleAssociations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

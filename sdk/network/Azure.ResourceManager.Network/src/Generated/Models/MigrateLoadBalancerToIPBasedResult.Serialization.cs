@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> migratedPools = default;
+            Core.Optional<IReadOnlyList<string>> migratedPools = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("migratedPools"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new MigrateLoadBalancerToIPBasedResult(Optional.ToList(migratedPools));
+            return new MigrateLoadBalancerToIPBasedResult(Core.Optional.ToList(migratedPools));
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Argument.AssertNotNull(resourceDetails, nameof(resourceDetails));
 
             ResourceDetails = resourceDetails;
-            PendingFields = new ChangeTrackingList<PendingField>();
+            PendingFields = new Core.ChangeTrackingList<PendingField>();
         }
 
         /// <summary> The information about the resource that will be evaluated. </summary>

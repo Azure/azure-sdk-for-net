@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of EmailHookParameterPatch. </summary>
         public EmailHookParameterPatch()
         {
-            ToList = new ChangeTrackingList<string>();
+            ToList = new Core.ChangeTrackingList<string>();
         }
     }
 }

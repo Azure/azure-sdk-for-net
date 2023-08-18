@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.OperationalInsights
 
             Properties = properties;
             Kind = kind;
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of OperationalInsightsDataSourceData. </summary>

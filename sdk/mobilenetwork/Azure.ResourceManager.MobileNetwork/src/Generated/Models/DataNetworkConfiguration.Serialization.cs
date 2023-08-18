@@ -12,40 +12,40 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class DataNetworkConfiguration : IUtf8JsonSerializable
+    public partial class DataNetworkConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dataNetwork"u8);
             JsonSerializer.Serialize(writer, DataNetwork); writer.WritePropertyName("sessionAmbr"u8);
             writer.WriteObjectValue(SessionAmbr);
-            if (Optional.IsDefined(FiveQi))
+            if (Core.Optional.IsDefined(FiveQi))
             {
                 writer.WritePropertyName("5qi"u8);
                 writer.WriteNumberValue(FiveQi.Value);
             }
-            if (Optional.IsDefined(AllocationAndRetentionPriorityLevel))
+            if (Core.Optional.IsDefined(AllocationAndRetentionPriorityLevel))
             {
                 writer.WritePropertyName("allocationAndRetentionPriorityLevel"u8);
                 writer.WriteNumberValue(AllocationAndRetentionPriorityLevel.Value);
             }
-            if (Optional.IsDefined(PreemptionCapability))
+            if (Core.Optional.IsDefined(PreemptionCapability))
             {
                 writer.WritePropertyName("preemptionCapability"u8);
                 writer.WriteStringValue(PreemptionCapability.Value.ToString());
             }
-            if (Optional.IsDefined(PreemptionVulnerability))
+            if (Core.Optional.IsDefined(PreemptionVulnerability))
             {
                 writer.WritePropertyName("preemptionVulnerability"u8);
                 writer.WriteStringValue(PreemptionVulnerability.Value.ToString());
             }
-            if (Optional.IsDefined(DefaultSessionType))
+            if (Core.Optional.IsDefined(DefaultSessionType))
             {
                 writer.WritePropertyName("defaultSessionType"u8);
                 writer.WriteStringValue(DefaultSessionType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AdditionalAllowedSessionTypes))
+            if (Core.Optional.IsCollectionDefined(AdditionalAllowedSessionTypes))
             {
                 writer.WritePropertyName("additionalAllowedSessionTypes"u8);
                 writer.WriteStartArray();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(MaximumNumberOfBufferedPackets))
+            if (Core.Optional.IsDefined(MaximumNumberOfBufferedPackets))
             {
                 writer.WritePropertyName("maximumNumberOfBufferedPackets"u8);
                 writer.WriteNumberValue(MaximumNumberOfBufferedPackets.Value);
@@ -78,14 +78,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
             WritableSubResource dataNetwork = default;
             Ambr sessionAmbr = default;
-            Optional<int> _5qi = default;
-            Optional<int> allocationAndRetentionPriorityLevel = default;
-            Optional<MobileNetworkPreemptionCapability> preemptionCapability = default;
-            Optional<MobileNetworkPreemptionVulnerability> preemptionVulnerability = default;
-            Optional<MobileNetworkPduSessionType> defaultSessionType = default;
-            Optional<IList<MobileNetworkPduSessionType>> additionalAllowedSessionTypes = default;
+            Core.Optional<int> _5qi = default;
+            Core.Optional<int> allocationAndRetentionPriorityLevel = default;
+            Core.Optional<MobileNetworkPreemptionCapability> preemptionCapability = default;
+            Core.Optional<MobileNetworkPreemptionVulnerability> preemptionVulnerability = default;
+            Core.Optional<MobileNetworkPduSessionType> defaultSessionType = default;
+            Core.Optional<IList<MobileNetworkPduSessionType>> additionalAllowedSessionTypes = default;
             IList<WritableSubResource> allowedServices = default;
-            Optional<int> maximumNumberOfBufferedPackets = default;
+            Core.Optional<int> maximumNumberOfBufferedPackets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataNetwork"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     continue;
                 }
             }
-            return new DataNetworkConfiguration(dataNetwork, sessionAmbr, Optional.ToNullable(_5qi), Optional.ToNullable(allocationAndRetentionPriorityLevel), Optional.ToNullable(preemptionCapability), Optional.ToNullable(preemptionVulnerability), Optional.ToNullable(defaultSessionType), Optional.ToList(additionalAllowedSessionTypes), allowedServices, Optional.ToNullable(maximumNumberOfBufferedPackets));
+            return new DataNetworkConfiguration(dataNetwork, sessionAmbr, Core.Optional.ToNullable(_5qi), Core.Optional.ToNullable(allocationAndRetentionPriorityLevel), Core.Optional.ToNullable(preemptionCapability), Core.Optional.ToNullable(preemptionVulnerability), Core.Optional.ToNullable(defaultSessionType), Core.Optional.ToList(additionalAllowedSessionTypes), allowedServices, Core.Optional.ToNullable(maximumNumberOfBufferedPackets));
         }
     }
 }

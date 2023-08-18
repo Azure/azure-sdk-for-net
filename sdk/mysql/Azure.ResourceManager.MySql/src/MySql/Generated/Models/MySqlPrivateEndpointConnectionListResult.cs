@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <summary> Initializes a new instance of MySqlPrivateEndpointConnectionListResult. </summary>
         internal MySqlPrivateEndpointConnectionListResult()
         {
-            Value = new ChangeTrackingList<MySqlPrivateEndpointConnectionData>();
+            Value = new Core.ChangeTrackingList<MySqlPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of MySqlPrivateEndpointConnectionListResult. </summary>

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    internal class LocalRulestackOperationSource : IOperationSource<LocalRulestackResource>
+    internal class LocalRulestackOperationSource : Core.IOperationSource<LocalRulestackResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             _client = client;
         }
 
-        LocalRulestackResource IOperationSource<LocalRulestackResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        LocalRulestackResource Core.IOperationSource<LocalRulestackResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = LocalRulestackData.DeserializeLocalRulestackData(document.RootElement);
             return new LocalRulestackResource(_client, data);
         }
 
-        async ValueTask<LocalRulestackResource> IOperationSource<LocalRulestackResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<LocalRulestackResource> Core.IOperationSource<LocalRulestackResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = LocalRulestackData.DeserializeLocalRulestackData(document.RootElement);

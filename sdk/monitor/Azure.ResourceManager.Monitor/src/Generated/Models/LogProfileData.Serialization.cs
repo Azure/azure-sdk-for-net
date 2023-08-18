@@ -13,12 +13,12 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class LogProfileData : IUtf8JsonSerializable
+    public partial class LogProfileData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageAccountId))
+            if (Core.Optional.IsDefined(StorageAccountId))
             {
                 if (StorageAccountId != null)
                 {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor
                     writer.WriteNull("storageAccountId");
                 }
             }
-            if (Optional.IsDefined(ServiceBusRuleId))
+            if (Core.Optional.IsDefined(ServiceBusRuleId))
             {
                 if (ServiceBusRuleId != null)
                 {

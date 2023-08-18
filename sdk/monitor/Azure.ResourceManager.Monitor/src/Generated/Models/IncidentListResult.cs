@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of IncidentListResult. </summary>
         internal IncidentListResult()
         {
-            Value = new ChangeTrackingList<MonitorIncident>();
+            Value = new Core.ChangeTrackingList<MonitorIncident>();
         }
 
         /// <summary> Initializes a new instance of IncidentListResult. </summary>

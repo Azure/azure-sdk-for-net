@@ -12,19 +12,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class PeeringServiceProvider : IUtf8JsonSerializable
+    public partial class PeeringServiceProvider : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceProviderName))
+            if (Core.Optional.IsDefined(ServiceProviderName))
             {
                 writer.WritePropertyName("serviceProviderName"u8);
                 writer.WriteStringValue(ServiceProviderName);
             }
-            if (Optional.IsCollectionDefined(PeeringLocations))
+            if (Core.Optional.IsCollectionDefined(PeeringLocations))
             {
                 writer.WritePropertyName("peeringLocations"u8);
                 writer.WriteStartArray();
@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.Peering.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> serviceProviderName = default;
-            Optional<IList<string>> peeringLocations = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> serviceProviderName = default;
+            Core.Optional<IList<string>> peeringLocations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Peering.Models
                     continue;
                 }
             }
-            return new PeeringServiceProvider(id, name, type, systemData.Value, serviceProviderName.Value, Optional.ToList(peeringLocations));
+            return new PeeringServiceProvider(id, name, type, systemData.Value, serviceProviderName.Value, Core.Optional.ToList(peeringLocations));
         }
     }
 }

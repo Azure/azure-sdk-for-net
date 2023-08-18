@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of VirtualMachineList. </summary>
         internal VirtualMachineList()
         {
-            Value = new ChangeTrackingList<NetworkCloudVirtualMachineData>();
+            Value = new Core.ChangeTrackingList<NetworkCloudVirtualMachineData>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineList. </summary>

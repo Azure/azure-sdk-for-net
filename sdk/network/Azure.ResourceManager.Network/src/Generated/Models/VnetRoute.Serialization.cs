@@ -12,17 +12,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VnetRoute : IUtf8JsonSerializable
+    public partial class VnetRoute : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StaticRoutesConfig))
+            if (Core.Optional.IsDefined(StaticRoutesConfig))
             {
                 writer.WritePropertyName("staticRoutesConfig"u8);
                 writer.WriteObjectValue(StaticRoutesConfig);
             }
-            if (Optional.IsCollectionDefined(StaticRoutes))
+            if (Core.Optional.IsCollectionDefined(StaticRoutes))
             {
                 writer.WritePropertyName("staticRoutes"u8);
                 writer.WriteStartArray();
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<StaticRoutesConfig> staticRoutesConfig = default;
-            Optional<IList<StaticRoute>> staticRoutes = default;
-            Optional<IReadOnlyList<WritableSubResource>> bgpConnections = default;
+            Core.Optional<StaticRoutesConfig> staticRoutesConfig = default;
+            Core.Optional<IList<StaticRoute>> staticRoutes = default;
+            Core.Optional<IReadOnlyList<WritableSubResource>> bgpConnections = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("staticRoutesConfig"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VnetRoute(staticRoutesConfig.Value, Optional.ToList(staticRoutes), Optional.ToList(bgpConnections));
+            return new VnetRoute(staticRoutesConfig.Value, Core.Optional.ToList(staticRoutes), Core.Optional.ToList(bgpConnections));
         }
     }
 }

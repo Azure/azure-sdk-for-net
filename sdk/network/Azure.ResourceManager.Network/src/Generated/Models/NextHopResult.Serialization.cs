@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<NextHopType> nextHopType = default;
-            Optional<string> nextHopIPAddress = default;
-            Optional<ResourceIdentifier> routeTableId = default;
+            Core.Optional<NextHopType> nextHopType = default;
+            Core.Optional<string> nextHopIPAddress = default;
+            Core.Optional<ResourceIdentifier> routeTableId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextHopType"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NextHopResult(Optional.ToNullable(nextHopType), nextHopIPAddress.Value, routeTableId.Value);
+            return new NextHopResult(Core.Optional.ToNullable(nextHopType), nextHopIPAddress.Value, routeTableId.Value);
         }
     }
 }

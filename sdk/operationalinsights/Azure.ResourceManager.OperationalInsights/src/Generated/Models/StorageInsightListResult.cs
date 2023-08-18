@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of StorageInsightListResult. </summary>
         internal StorageInsightListResult()
         {
-            Value = new ChangeTrackingList<StorageInsightData>();
+            Value = new Core.ChangeTrackingList<StorageInsightData>();
         }
 
         /// <summary> Initializes a new instance of StorageInsightListResult. </summary>

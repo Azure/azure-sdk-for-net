@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class PeeringSku : IUtf8JsonSerializable
+    public partial class PeeringSku : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<PeeringTier> tier = default;
-            Optional<PeeringFamily> family = default;
-            Optional<PeeringSize> size = default;
+            Core.Optional<string> name = default;
+            Core.Optional<PeeringTier> tier = default;
+            Core.Optional<PeeringFamily> family = default;
+            Core.Optional<PeeringSize> size = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Peering.Models
                     continue;
                 }
             }
-            return new PeeringSku(name.Value, Optional.ToNullable(tier), Optional.ToNullable(family), Optional.ToNullable(size));
+            return new PeeringSku(name.Value, Core.Optional.ToNullable(tier), Core.Optional.ToNullable(family), Core.Optional.ToNullable(size));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of BackendAddressInboundNatRulePortMappings. </summary>
         internal BackendAddressInboundNatRulePortMappings()
         {
-            InboundNatRulePortMappings = new ChangeTrackingList<InboundNatRulePortMapping>();
+            InboundNatRulePortMappings = new Core.ChangeTrackingList<InboundNatRulePortMapping>();
         }
 
         /// <summary> Initializes a new instance of BackendAddressInboundNatRulePortMappings. </summary>

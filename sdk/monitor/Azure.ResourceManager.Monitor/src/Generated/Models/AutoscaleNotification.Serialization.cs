@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class AutoscaleNotification : IUtf8JsonSerializable
+    public partial class AutoscaleNotification : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("operation"u8);
             writer.WriteStringValue(Operation.ToString());
-            if (Optional.IsDefined(Email))
+            if (Core.Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteObjectValue(Email);
             }
-            if (Optional.IsCollectionDefined(Webhooks))
+            if (Core.Optional.IsCollectionDefined(Webhooks))
             {
                 writer.WritePropertyName("webhooks"u8);
                 writer.WriteStartArray();
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             MonitorOperationType operation = default;
-            Optional<EmailNotification> email = default;
-            Optional<IList<WebhookNotification>> webhooks = default;
+            Core.Optional<EmailNotification> email = default;
+            Core.Optional<IList<WebhookNotification>> webhooks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operation"u8))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new AutoscaleNotification(operation, email.Value, Optional.ToList(webhooks));
+            return new AutoscaleNotification(operation, email.Value, Core.Optional.ToList(webhooks));
         }
     }
 }

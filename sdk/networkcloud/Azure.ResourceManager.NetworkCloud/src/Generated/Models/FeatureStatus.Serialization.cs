@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<FeatureDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<string> name = default;
-            Optional<string> version = default;
+            Core.Optional<FeatureDetailedStatus> detailedStatus = default;
+            Core.Optional<string> detailedStatusMessage = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("detailedStatus"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new FeatureStatus(Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, name.Value, version.Value);
+            return new FeatureStatus(Core.Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, name.Value, version.Value);
         }
     }
 }

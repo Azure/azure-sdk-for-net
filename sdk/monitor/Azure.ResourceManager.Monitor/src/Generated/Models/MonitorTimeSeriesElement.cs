@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of MonitorTimeSeriesElement. </summary>
         internal MonitorTimeSeriesElement()
         {
-            Metadatavalues = new ChangeTrackingList<MonitorMetadataValue>();
-            Data = new ChangeTrackingList<MonitorMetricValue>();
+            Metadatavalues = new Core.ChangeTrackingList<MonitorMetadataValue>();
+            Data = new Core.ChangeTrackingList<MonitorMetricValue>();
         }
 
         /// <summary> Initializes a new instance of MonitorTimeSeriesElement. </summary>

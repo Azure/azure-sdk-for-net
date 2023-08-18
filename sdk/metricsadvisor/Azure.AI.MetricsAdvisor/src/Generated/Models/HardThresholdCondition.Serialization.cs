@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class HardThresholdCondition : IUtf8JsonSerializable
+    public partial class HardThresholdCondition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LowerBound))
+            if (Core.Optional.IsDefined(LowerBound))
             {
                 writer.WritePropertyName("lowerBound"u8);
                 writer.WriteNumberValue(LowerBound.Value);
             }
-            if (Optional.IsDefined(UpperBound))
+            if (Core.Optional.IsDefined(UpperBound))
             {
                 writer.WritePropertyName("upperBound"u8);
                 writer.WriteNumberValue(UpperBound.Value);
@@ -38,8 +38,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<double> lowerBound = default;
-            Optional<double> upperBound = default;
+            Core.Optional<double> lowerBound = default;
+            Core.Optional<double> upperBound = default;
             AnomalyDetectorDirection anomalyDetectorDirection = default;
             SuppressCondition suppressCondition = default;
             foreach (var property in element.EnumerateObject())
@@ -73,7 +73,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new HardThresholdCondition(Optional.ToNullable(lowerBound), Optional.ToNullable(upperBound), anomalyDetectorDirection, suppressCondition);
+            return new HardThresholdCondition(Core.Optional.ToNullable(lowerBound), Core.Optional.ToNullable(upperBound), anomalyDetectorDirection, suppressCondition);
         }
     }
 }

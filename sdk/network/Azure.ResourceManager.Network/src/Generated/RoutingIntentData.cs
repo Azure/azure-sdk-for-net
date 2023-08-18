@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of RoutingIntentData. </summary>
         public RoutingIntentData()
         {
-            RoutingPolicies = new ChangeTrackingList<RoutingPolicy>();
+            RoutingPolicies = new Core.ChangeTrackingList<RoutingPolicy>();
         }
 
         /// <summary> Initializes a new instance of RoutingIntentData. </summary>

@@ -14,41 +14,41 @@ using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
-    public partial class PolicyAttestationData : IUtf8JsonSerializable
+    public partial class PolicyAttestationData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("policyAssignmentId"u8);
             writer.WriteStringValue(PolicyAssignmentId);
-            if (Optional.IsDefined(PolicyDefinitionReferenceId))
+            if (Core.Optional.IsDefined(PolicyDefinitionReferenceId))
             {
                 writer.WritePropertyName("policyDefinitionReferenceId"u8);
                 writer.WriteStringValue(PolicyDefinitionReferenceId);
             }
-            if (Optional.IsDefined(ComplianceState))
+            if (Core.Optional.IsDefined(ComplianceState))
             {
                 writer.WritePropertyName("complianceState"u8);
                 writer.WriteStringValue(ComplianceState.Value.ToString());
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (Core.Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiresOn"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(Owner))
+            if (Core.Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
                 writer.WriteStringValue(Owner);
             }
-            if (Optional.IsDefined(Comments))
+            if (Core.Optional.IsDefined(Comments))
             {
                 writer.WritePropertyName("comments"u8);
                 writer.WriteStringValue(Comments);
             }
-            if (Optional.IsCollectionDefined(Evidence))
+            if (Core.Optional.IsCollectionDefined(Evidence))
             {
                 writer.WritePropertyName("evidence"u8);
                 writer.WriteStartArray();
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.PolicyInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AssessOn))
+            if (Core.Optional.IsDefined(AssessOn))
             {
                 writer.WritePropertyName("assessmentDate"u8);
                 writer.WriteStringValue(AssessOn.Value, "O");
             }
-            if (Optional.IsDefined(Metadata))
+            if (Core.Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -85,18 +85,18 @@ namespace Azure.ResourceManager.PolicyInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             ResourceIdentifier policyAssignmentId = default;
-            Optional<string> policyDefinitionReferenceId = default;
-            Optional<PolicyComplianceState> complianceState = default;
-            Optional<DateTimeOffset> expiresOn = default;
-            Optional<string> owner = default;
-            Optional<string> comments = default;
-            Optional<IList<AttestationEvidence>> evidence = default;
-            Optional<string> provisioningState = default;
-            Optional<DateTimeOffset> lastComplianceStateChangeAt = default;
-            Optional<DateTimeOffset> assessmentDate = default;
-            Optional<BinaryData> metadata = default;
+            Core.Optional<string> policyDefinitionReferenceId = default;
+            Core.Optional<PolicyComplianceState> complianceState = default;
+            Core.Optional<DateTimeOffset> expiresOn = default;
+            Core.Optional<string> owner = default;
+            Core.Optional<string> comments = default;
+            Core.Optional<IList<AttestationEvidence>> evidence = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<DateTimeOffset> lastComplianceStateChangeAt = default;
+            Core.Optional<DateTimeOffset> assessmentDate = default;
+            Core.Optional<BinaryData> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.PolicyInsights
                     continue;
                 }
             }
-            return new PolicyAttestationData(id, name, type, systemData.Value, policyAssignmentId, policyDefinitionReferenceId.Value, Optional.ToNullable(complianceState), Optional.ToNullable(expiresOn), owner.Value, comments.Value, Optional.ToList(evidence), provisioningState.Value, Optional.ToNullable(lastComplianceStateChangeAt), Optional.ToNullable(assessmentDate), metadata.Value);
+            return new PolicyAttestationData(id, name, type, systemData.Value, policyAssignmentId, policyDefinitionReferenceId.Value, Core.Optional.ToNullable(complianceState), Core.Optional.ToNullable(expiresOn), owner.Value, comments.Value, Core.Optional.ToList(evidence), provisioningState.Value, Core.Optional.ToNullable(lastComplianceStateChangeAt), Core.Optional.ToNullable(assessmentDate), metadata.Value);
         }
     }
 }

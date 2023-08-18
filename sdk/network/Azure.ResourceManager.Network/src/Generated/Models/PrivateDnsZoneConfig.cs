@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PrivateDnsZoneConfig. </summary>
         public PrivateDnsZoneConfig()
         {
-            RecordSets = new ChangeTrackingList<RecordSet>();
+            RecordSets = new Core.ChangeTrackingList<RecordSet>();
         }
 
         /// <summary> Initializes a new instance of PrivateDnsZoneConfig. </summary>

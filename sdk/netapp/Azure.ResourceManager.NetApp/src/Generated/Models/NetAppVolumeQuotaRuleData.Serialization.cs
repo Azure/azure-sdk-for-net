@@ -13,12 +13,12 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    public partial class NetAppVolumeQuotaRuleData : IUtf8JsonSerializable
+    public partial class NetAppVolumeQuotaRuleData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,17 +33,17 @@ namespace Azure.ResourceManager.NetApp
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(QuotaSizeInKiBs))
+            if (Core.Optional.IsDefined(QuotaSizeInKiBs))
             {
                 writer.WritePropertyName("quotaSizeInKiBs"u8);
                 writer.WriteNumberValue(QuotaSizeInKiBs.Value);
             }
-            if (Optional.IsDefined(QuotaType))
+            if (Core.Optional.IsDefined(QuotaType))
             {
                 writer.WritePropertyName("quotaType"u8);
                 writer.WriteStringValue(QuotaType.Value.ToString());
             }
-            if (Optional.IsDefined(QuotaTarget))
+            if (Core.Optional.IsDefined(QuotaTarget))
             {
                 writer.WritePropertyName("quotaTarget"u8);
                 writer.WriteStringValue(QuotaTarget);
@@ -58,16 +58,16 @@ namespace Azure.ResourceManager.NetApp
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NetAppProvisioningState> provisioningState = default;
-            Optional<long> quotaSizeInKiBs = default;
-            Optional<NetAppVolumeQuotaType> quotaType = default;
-            Optional<string> quotaTarget = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<NetAppProvisioningState> provisioningState = default;
+            Core.Optional<long> quotaSizeInKiBs = default;
+            Core.Optional<NetAppVolumeQuotaType> quotaType = default;
+            Core.Optional<string> quotaTarget = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.NetApp
                     continue;
                 }
             }
-            return new NetAppVolumeQuotaRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToNullable(quotaSizeInKiBs), Optional.ToNullable(quotaType), quotaTarget.Value);
+            return new NetAppVolumeQuotaRuleData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(quotaSizeInKiBs), Core.Optional.ToNullable(quotaType), quotaTarget.Value);
         }
     }
 }

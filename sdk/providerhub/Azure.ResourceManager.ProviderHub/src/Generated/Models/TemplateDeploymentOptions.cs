@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of TemplateDeploymentOptions. </summary>
         public TemplateDeploymentOptions()
         {
-            PreflightOptions = new ChangeTrackingList<PreflightOption>();
+            PreflightOptions = new Core.ChangeTrackingList<PreflightOption>();
         }
 
         /// <summary> Initializes a new instance of TemplateDeploymentOptions. </summary>

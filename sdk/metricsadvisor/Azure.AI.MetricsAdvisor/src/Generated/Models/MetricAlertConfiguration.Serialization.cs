@@ -10,41 +10,41 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class MetricAlertConfiguration : IUtf8JsonSerializable
+    public partial class MetricAlertConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("anomalyDetectionConfigurationId"u8);
             writer.WriteStringValue(DetectionConfigurationId);
             writer.WritePropertyName("anomalyScopeType"u8);
             writer.WriteStringValue(AnomalyScopeType.ToString());
-            if (Optional.IsDefined(UseDetectionResultToFilterAnomalies))
+            if (Core.Optional.IsDefined(UseDetectionResultToFilterAnomalies))
             {
                 writer.WritePropertyName("negationOperation"u8);
                 writer.WriteBooleanValue(UseDetectionResultToFilterAnomalies.Value);
             }
-            if (Optional.IsDefined(DimensionAnomalyScope))
+            if (Core.Optional.IsDefined(DimensionAnomalyScope))
             {
                 writer.WritePropertyName("dimensionAnomalyScope"u8);
                 writer.WriteObjectValue(DimensionAnomalyScope);
             }
-            if (Optional.IsDefined(TopNAnomalyScope))
+            if (Core.Optional.IsDefined(TopNAnomalyScope))
             {
                 writer.WritePropertyName("topNAnomalyScope"u8);
                 writer.WriteObjectValue(TopNAnomalyScope);
             }
-            if (Optional.IsDefined(SeverityFilter))
+            if (Core.Optional.IsDefined(SeverityFilter))
             {
                 writer.WritePropertyName("severityFilter"u8);
                 writer.WriteObjectValue(SeverityFilter);
             }
-            if (Optional.IsDefined(AlertSnoozeCondition))
+            if (Core.Optional.IsDefined(AlertSnoozeCondition))
             {
                 writer.WritePropertyName("snoozeFilter"u8);
                 writer.WriteObjectValue(AlertSnoozeCondition);
             }
-            if (Optional.IsDefined(ValueFilter))
+            if (Core.Optional.IsDefined(ValueFilter))
             {
                 writer.WritePropertyName("valueFilter"u8);
                 writer.WriteObjectValue(ValueFilter);
@@ -60,12 +60,12 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             string anomalyDetectionConfigurationId = default;
             MetricAnomalyAlertScopeType anomalyScopeType = default;
-            Optional<bool> negationOperation = default;
-            Optional<DimensionKey> dimensionAnomalyScope = default;
-            Optional<TopNGroupScope> topNAnomalyScope = default;
-            Optional<SeverityCondition> severityFilter = default;
-            Optional<MetricAnomalyAlertSnoozeCondition> snoozeFilter = default;
-            Optional<MetricBoundaryCondition> valueFilter = default;
+            Core.Optional<bool> negationOperation = default;
+            Core.Optional<DimensionKey> dimensionAnomalyScope = default;
+            Core.Optional<TopNGroupScope> topNAnomalyScope = default;
+            Core.Optional<SeverityCondition> severityFilter = default;
+            Core.Optional<MetricAnomalyAlertSnoozeCondition> snoozeFilter = default;
+            Core.Optional<MetricBoundaryCondition> valueFilter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("anomalyDetectionConfigurationId"u8))
@@ -133,7 +133,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricAlertConfiguration(anomalyDetectionConfigurationId, anomalyScopeType, Optional.ToNullable(negationOperation), dimensionAnomalyScope.Value, topNAnomalyScope.Value, severityFilter.Value, snoozeFilter.Value, valueFilter.Value);
+            return new MetricAlertConfiguration(anomalyDetectionConfigurationId, anomalyScopeType, Core.Optional.ToNullable(negationOperation), dimensionAnomalyScope.Value, topNAnomalyScope.Value, severityFilter.Value, snoozeFilter.Value, valueFilter.Value);
         }
     }
 }

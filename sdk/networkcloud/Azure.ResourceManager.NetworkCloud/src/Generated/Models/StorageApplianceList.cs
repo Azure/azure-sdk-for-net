@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of StorageApplianceList. </summary>
         internal StorageApplianceList()
         {
-            Value = new ChangeTrackingList<NetworkCloudStorageApplianceData>();
+            Value = new Core.ChangeTrackingList<NetworkCloudStorageApplianceData>();
         }
 
         /// <summary> Initializes a new instance of StorageApplianceList. </summary>

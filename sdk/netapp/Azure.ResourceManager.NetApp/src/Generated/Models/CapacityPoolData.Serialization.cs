@@ -15,12 +15,12 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    public partial class CapacityPoolData : IUtf8JsonSerializable
+    public partial class CapacityPoolData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.NetApp
             writer.WriteNumberValue(Size);
             writer.WritePropertyName("serviceLevel"u8);
             writer.WriteStringValue(ServiceLevel.ToString());
-            if (Optional.IsDefined(QosType))
+            if (Core.Optional.IsDefined(QosType))
             {
                 writer.WritePropertyName("qosType"u8);
                 writer.WriteStringValue(QosType.Value.ToString());
             }
-            if (Optional.IsDefined(IsCoolAccessEnabled))
+            if (Core.Optional.IsDefined(IsCoolAccessEnabled))
             {
                 writer.WritePropertyName("coolAccess"u8);
                 writer.WriteBooleanValue(IsCoolAccessEnabled.Value);
             }
-            if (Optional.IsDefined(EncryptionType))
+            if (Core.Optional.IsDefined(EncryptionType))
             {
                 if (EncryptionType != null)
                 {
@@ -71,22 +71,22 @@ namespace Azure.ResourceManager.NetApp
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> poolId = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<Guid> poolId = default;
             long size = default;
             NetAppFileServiceLevel serviceLevel = default;
-            Optional<string> provisioningState = default;
-            Optional<float> totalThroughputMibps = default;
-            Optional<float> utilizedThroughputMibps = default;
-            Optional<CapacityPoolQosType> qosType = default;
-            Optional<bool> coolAccess = default;
-            Optional<CapacityPoolEncryptionType?> encryptionType = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<float> totalThroughputMibps = default;
+            Core.Optional<float> utilizedThroughputMibps = default;
+            Core.Optional<CapacityPoolQosType> qosType = default;
+            Core.Optional<bool> coolAccess = default;
+            Core.Optional<CapacityPoolEncryptionType?> encryptionType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.NetApp
                     continue;
                 }
             }
-            return new CapacityPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(poolId), size, serviceLevel, provisioningState.Value, Optional.ToNullable(totalThroughputMibps), Optional.ToNullable(utilizedThroughputMibps), Optional.ToNullable(qosType), Optional.ToNullable(coolAccess), Optional.ToNullable(encryptionType));
+            return new CapacityPoolData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(etag), Core.Optional.ToNullable(poolId), size, serviceLevel, provisioningState.Value, Core.Optional.ToNullable(totalThroughputMibps), Core.Optional.ToNullable(utilizedThroughputMibps), Core.Optional.ToNullable(qosType), Core.Optional.ToNullable(coolAccess), Core.Optional.ToNullable(encryptionType));
         }
     }
 }

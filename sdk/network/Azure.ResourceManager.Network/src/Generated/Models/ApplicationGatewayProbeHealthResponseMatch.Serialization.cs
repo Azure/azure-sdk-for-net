@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayProbeHealthResponseMatch : IUtf8JsonSerializable
+    public partial class ApplicationGatewayProbeHealthResponseMatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Body))
+            if (Core.Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
 #if NET6_0_OR_GREATER
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Body.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsCollectionDefined(StatusCodes))
+            if (Core.Optional.IsCollectionDefined(StatusCodes))
             {
                 writer.WritePropertyName("statusCodes"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<BinaryData> body = default;
-            Optional<IList<string>> statusCodes = default;
+            Core.Optional<BinaryData> body = default;
+            Core.Optional<IList<string>> statusCodes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("body"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayProbeHealthResponseMatch(body.Value, Optional.ToList(statusCodes));
+            return new ApplicationGatewayProbeHealthResponseMatch(body.Value, Core.Optional.ToList(statusCodes));
         }
     }
 }

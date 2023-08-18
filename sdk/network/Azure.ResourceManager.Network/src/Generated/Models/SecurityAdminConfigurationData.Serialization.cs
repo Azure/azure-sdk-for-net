@@ -15,19 +15,19 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class SecurityAdminConfigurationData : IUtf8JsonSerializable
+    public partial class SecurityAdminConfigurationData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(ApplyOnNetworkIntentPolicyBasedServices))
+            if (Core.Optional.IsCollectionDefined(ApplyOnNetworkIntentPolicyBasedServices))
             {
                 writer.WritePropertyName("applyOnNetworkIntentPolicyBasedServices"u8);
                 writer.WriteStartArray();
@@ -47,15 +47,15 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            Core.Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<IList<NetworkIntentPolicyBasedService>> applyOnNetworkIntentPolicyBasedServices = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<Guid> resourceGuid = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> description = default;
+            Core.Optional<IList<NetworkIntentPolicyBasedService>> applyOnNetworkIntentPolicyBasedServices = default;
+            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Core.Optional<Guid> resourceGuid = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new SecurityAdminConfigurationData(id, name, type, systemData.Value, description.Value, Optional.ToList(applyOnNetworkIntentPolicyBasedServices), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid), Optional.ToNullable(etag));
+            return new SecurityAdminConfigurationData(id, name, type, systemData.Value, description.Value, Core.Optional.ToList(applyOnNetworkIntentPolicyBasedServices), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(resourceGuid), Core.Optional.ToNullable(etag));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of ClusterMetricsConfigurationList. </summary>
         internal ClusterMetricsConfigurationList()
         {
-            Value = new ChangeTrackingList<NetworkCloudClusterMetricsConfigurationData>();
+            Value = new Core.ChangeTrackingList<NetworkCloudClusterMetricsConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of ClusterMetricsConfigurationList. </summary>

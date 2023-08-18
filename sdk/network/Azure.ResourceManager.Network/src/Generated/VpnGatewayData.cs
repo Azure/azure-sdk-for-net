@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of VpnGatewayData. </summary>
         public VpnGatewayData()
         {
-            Connections = new ChangeTrackingList<VpnConnectionData>();
-            IPConfigurations = new ChangeTrackingList<VpnGatewayIPConfiguration>();
-            NatRules = new ChangeTrackingList<VpnGatewayNatRuleData>();
+            Connections = new Core.ChangeTrackingList<VpnConnectionData>();
+            IPConfigurations = new Core.ChangeTrackingList<VpnGatewayIPConfiguration>();
+            NatRules = new Core.ChangeTrackingList<VpnGatewayNatRuleData>();
         }
 
         /// <summary> Initializes a new instance of VpnGatewayData. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ListVpnSiteLinksResult. </summary>
         internal ListVpnSiteLinksResult()
         {
-            Value = new ChangeTrackingList<VpnSiteLinkData>();
+            Value = new Core.ChangeTrackingList<VpnSiteLinkData>();
         }
 
         /// <summary> Initializes a new instance of ListVpnSiteLinksResult. </summary>

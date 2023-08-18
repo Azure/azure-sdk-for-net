@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of FrontendIPConfigurationData. </summary>
         public FrontendIPConfigurationData()
         {
-            Zones = new ChangeTrackingList<string>();
-            InboundNatRules = new ChangeTrackingList<WritableSubResource>();
-            InboundNatPools = new ChangeTrackingList<WritableSubResource>();
-            OutboundRules = new ChangeTrackingList<WritableSubResource>();
-            LoadBalancingRules = new ChangeTrackingList<WritableSubResource>();
+            Zones = new Core.ChangeTrackingList<string>();
+            InboundNatRules = new Core.ChangeTrackingList<WritableSubResource>();
+            InboundNatPools = new Core.ChangeTrackingList<WritableSubResource>();
+            OutboundRules = new Core.ChangeTrackingList<WritableSubResource>();
+            LoadBalancingRules = new Core.ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of FrontendIPConfigurationData. </summary>

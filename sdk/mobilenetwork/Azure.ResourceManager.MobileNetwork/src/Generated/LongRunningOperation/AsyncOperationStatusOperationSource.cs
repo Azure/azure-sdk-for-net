@@ -14,15 +14,15 @@ using Azure.ResourceManager.MobileNetwork.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    internal class AsyncOperationStatusOperationSource : IOperationSource<AsyncOperationStatus>
+    internal class AsyncOperationStatusOperationSource : Core.IOperationSource<AsyncOperationStatus>
     {
-        AsyncOperationStatus IOperationSource<AsyncOperationStatus>.CreateResult(Response response, CancellationToken cancellationToken)
+        AsyncOperationStatus Core.IOperationSource<AsyncOperationStatus>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return AsyncOperationStatus.DeserializeAsyncOperationStatus(document.RootElement);
         }
 
-        async ValueTask<AsyncOperationStatus> IOperationSource<AsyncOperationStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AsyncOperationStatus> Core.IOperationSource<AsyncOperationStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return AsyncOperationStatus.DeserializeAsyncOperationStatus(document.RootElement);

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class PolicySignaturesOverridesForIdpsProperties : IUtf8JsonSerializable
+    internal partial class PolicySignaturesOverridesForIdpsProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Signatures))
+            if (Core.Optional.IsCollectionDefined(Signatures))
             {
                 writer.WritePropertyName("signatures"u8);
                 writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> signatures = default;
+            Core.Optional<IDictionary<string, string>> signatures = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("signatures"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PolicySignaturesOverridesForIdpsProperties(Optional.ToDictionary(signatures));
+            return new PolicySignaturesOverridesForIdpsProperties(Core.Optional.ToDictionary(signatures));
         }
     }
 }

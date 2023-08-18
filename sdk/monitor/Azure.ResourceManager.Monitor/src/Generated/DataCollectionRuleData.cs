@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="location"> The location. </param>
         public DataCollectionRuleData(AzureLocation location) : base(location)
         {
-            StreamDeclarations = new ChangeTrackingDictionary<string, DataStreamDeclaration>();
-            DataFlows = new ChangeTrackingList<DataFlow>();
+            StreamDeclarations = new Core.ChangeTrackingDictionary<string, DataStreamDeclaration>();
+            DataFlows = new Core.ChangeTrackingList<DataFlow>();
         }
 
         /// <summary> Initializes a new instance of DataCollectionRuleData. </summary>

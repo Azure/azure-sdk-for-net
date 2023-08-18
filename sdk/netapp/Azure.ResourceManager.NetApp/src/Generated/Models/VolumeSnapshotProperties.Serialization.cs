@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    internal partial class VolumeSnapshotProperties : IUtf8JsonSerializable
+    internal partial class VolumeSnapshotProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SnapshotPolicyId))
+            if (Core.Optional.IsDefined(SnapshotPolicyId))
             {
                 writer.WritePropertyName("snapshotPolicyId"u8);
                 writer.WriteStringValue(SnapshotPolicyId);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> snapshotPolicyId = default;
+            Core.Optional<ResourceIdentifier> snapshotPolicyId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("snapshotPolicyId"u8))

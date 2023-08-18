@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    internal class GlobalRulestackFqdnOperationSource : IOperationSource<GlobalRulestackFqdnResource>
+    internal class GlobalRulestackFqdnOperationSource : Core.IOperationSource<GlobalRulestackFqdnResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             _client = client;
         }
 
-        GlobalRulestackFqdnResource IOperationSource<GlobalRulestackFqdnResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        GlobalRulestackFqdnResource Core.IOperationSource<GlobalRulestackFqdnResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = GlobalRulestackFqdnData.DeserializeGlobalRulestackFqdnData(document.RootElement);
             return new GlobalRulestackFqdnResource(_client, data);
         }
 
-        async ValueTask<GlobalRulestackFqdnResource> IOperationSource<GlobalRulestackFqdnResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<GlobalRulestackFqdnResource> Core.IOperationSource<GlobalRulestackFqdnResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = GlobalRulestackFqdnData.DeserializeGlobalRulestackFqdnData(document.RootElement);

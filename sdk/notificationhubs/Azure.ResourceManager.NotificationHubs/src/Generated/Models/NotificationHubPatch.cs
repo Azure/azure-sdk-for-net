@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="location"> The location. </param>
         public NotificationHubPatch(AzureLocation location) : base(location)
         {
-            AuthorizationRules = new ChangeTrackingList<SharedAccessAuthorizationRuleProperties>();
+            AuthorizationRules = new Core.ChangeTrackingList<SharedAccessAuthorizationRuleProperties>();
         }
 
         /// <summary> Initializes a new instance of NotificationHubPatch. </summary>

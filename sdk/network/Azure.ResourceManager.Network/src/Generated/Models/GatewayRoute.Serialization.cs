@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> localAddress = default;
-            Optional<string> network = default;
-            Optional<string> nextHop = default;
-            Optional<string> sourcePeer = default;
-            Optional<string> origin = default;
-            Optional<string> asPath = default;
-            Optional<int> weight = default;
+            Core.Optional<string> localAddress = default;
+            Core.Optional<string> network = default;
+            Core.Optional<string> nextHop = default;
+            Core.Optional<string> sourcePeer = default;
+            Core.Optional<string> origin = default;
+            Core.Optional<string> asPath = default;
+            Core.Optional<int> weight = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("localAddress"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new GatewayRoute(localAddress.Value, network.Value, nextHop.Value, sourcePeer.Value, origin.Value, asPath.Value, Optional.ToNullable(weight));
+            return new GatewayRoute(localAddress.Value, network.Value, nextHop.Value, sourcePeer.Value, origin.Value, asPath.Value, Core.Optional.ToNullable(weight));
         }
     }
 }

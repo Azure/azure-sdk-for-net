@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class BastionHostOperationSource : IOperationSource<BastionHostResource>
+    internal class BastionHostOperationSource : Core.IOperationSource<BastionHostResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        BastionHostResource IOperationSource<BastionHostResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        BastionHostResource Core.IOperationSource<BastionHostResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = BastionHostData.DeserializeBastionHostData(document.RootElement);
             return new BastionHostResource(_client, data);
         }
 
-        async ValueTask<BastionHostResource> IOperationSource<BastionHostResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<BastionHostResource> Core.IOperationSource<BastionHostResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = BastionHostData.DeserializeBastionHostData(document.RootElement);

@@ -23,26 +23,26 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<AzureLocation> location = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ConnectionMonitorSource> source = default;
-            Optional<ConnectionMonitorDestination> destination = default;
-            Optional<bool> autoStart = default;
-            Optional<int> monitoringIntervalInSeconds = default;
-            Optional<IReadOnlyList<ConnectionMonitorEndpoint>> endpoints = default;
-            Optional<IReadOnlyList<ConnectionMonitorTestConfiguration>> testConfigurations = default;
-            Optional<IReadOnlyList<ConnectionMonitorTestGroup>> testGroups = default;
-            Optional<IReadOnlyList<ConnectionMonitorOutput>> outputs = default;
-            Optional<string> notes = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> monitoringStatus = default;
-            Optional<ConnectionMonitorType> connectionMonitorType = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ConnectionMonitorSource> source = default;
+            Core.Optional<ConnectionMonitorDestination> destination = default;
+            Core.Optional<bool> autoStart = default;
+            Core.Optional<int> monitoringIntervalInSeconds = default;
+            Core.Optional<IReadOnlyList<ConnectionMonitorEndpoint>> endpoints = default;
+            Core.Optional<IReadOnlyList<ConnectionMonitorTestConfiguration>> testConfigurations = default;
+            Core.Optional<IReadOnlyList<ConnectionMonitorTestGroup>> testGroups = default;
+            Core.Optional<IReadOnlyList<ConnectionMonitorOutput>> outputs = default;
+            Core.Optional<string> notes = default;
+            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<string> monitoringStatus = default;
+            Core.Optional<ConnectionMonitorType> connectionMonitorType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ConnectionMonitorData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToNullable(location), Optional.ToDictionary(tags), source.Value, destination.Value, Optional.ToNullable(autoStart), Optional.ToNullable(monitoringIntervalInSeconds), Optional.ToList(endpoints), Optional.ToList(testConfigurations), Optional.ToList(testGroups), Optional.ToList(outputs), notes.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), monitoringStatus.Value, Optional.ToNullable(connectionMonitorType));
+            return new ConnectionMonitorData(id, name, type, systemData.Value, Core.Optional.ToNullable(etag), Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags), source.Value, destination.Value, Core.Optional.ToNullable(autoStart), Core.Optional.ToNullable(monitoringIntervalInSeconds), Core.Optional.ToList(endpoints), Core.Optional.ToList(testConfigurations), Core.Optional.ToList(testGroups), Core.Optional.ToList(outputs), notes.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(startTime), monitoringStatus.Value, Core.Optional.ToNullable(connectionMonitorType));
         }
     }
 }

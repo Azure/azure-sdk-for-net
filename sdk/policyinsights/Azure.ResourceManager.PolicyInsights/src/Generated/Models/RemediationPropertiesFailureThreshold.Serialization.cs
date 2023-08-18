@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    internal partial class RemediationPropertiesFailureThreshold : IUtf8JsonSerializable
+    internal partial class RemediationPropertiesFailureThreshold : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Percentage))
+            if (Core.Optional.IsDefined(Percentage))
             {
                 writer.WritePropertyName("percentage"u8);
                 writer.WriteNumberValue(Percentage.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<float> percentage = default;
+            Core.Optional<float> percentage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("percentage"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     continue;
                 }
             }
-            return new RemediationPropertiesFailureThreshold(Optional.ToNullable(percentage));
+            return new RemediationPropertiesFailureThreshold(Core.Optional.ToNullable(percentage));
         }
     }
 }

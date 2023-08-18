@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = await _mobileNetworkDiagnosticsPackageDiagnosticsPackagesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diagnosticsPackageName, cancellationToken).ConfigureAwait(false);
-                var operation = new MobileNetworkArmOperation<MobileNetworkDiagnosticsPackageResource>(new MobileNetworkDiagnosticsPackageOperationSource(Client), _mobileNetworkDiagnosticsPackageDiagnosticsPackagesClientDiagnostics, Pipeline, _mobileNetworkDiagnosticsPackageDiagnosticsPackagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diagnosticsPackageName).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MobileNetworkArmOperation<MobileNetworkDiagnosticsPackageResource>(new MobileNetworkDiagnosticsPackageOperationSource(Client), _mobileNetworkDiagnosticsPackageDiagnosticsPackagesClientDiagnostics, Pipeline, _mobileNetworkDiagnosticsPackageDiagnosticsPackagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diagnosticsPackageName).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = _mobileNetworkDiagnosticsPackageDiagnosticsPackagesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diagnosticsPackageName, cancellationToken);
-                var operation = new MobileNetworkArmOperation<MobileNetworkDiagnosticsPackageResource>(new MobileNetworkDiagnosticsPackageOperationSource(Client), _mobileNetworkDiagnosticsPackageDiagnosticsPackagesClientDiagnostics, Pipeline, _mobileNetworkDiagnosticsPackageDiagnosticsPackagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diagnosticsPackageName).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MobileNetworkArmOperation<MobileNetworkDiagnosticsPackageResource>(new MobileNetworkDiagnosticsPackageOperationSource(Client), _mobileNetworkDiagnosticsPackageDiagnosticsPackagesClientDiagnostics, Pipeline, _mobileNetworkDiagnosticsPackageDiagnosticsPackagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, diagnosticsPackageName).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkDiagnosticsPackageDiagnosticsPackagesRestClient.CreateListByPacketCoreControlPlaneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mobileNetworkDiagnosticsPackageDiagnosticsPackagesRestClient.CreateListByPacketCoreControlPlaneNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkDiagnosticsPackageResource(Client, MobileNetworkDiagnosticsPackageData.DeserializeMobileNetworkDiagnosticsPackageData(e)), _mobileNetworkDiagnosticsPackageDiagnosticsPackagesClientDiagnostics, Pipeline, "MobileNetworkDiagnosticsPackageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkDiagnosticsPackageResource(Client, MobileNetworkDiagnosticsPackageData.DeserializeMobileNetworkDiagnosticsPackageData(e)), _mobileNetworkDiagnosticsPackageDiagnosticsPackagesClientDiagnostics, Pipeline, "MobileNetworkDiagnosticsPackageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkDiagnosticsPackageDiagnosticsPackagesRestClient.CreateListByPacketCoreControlPlaneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mobileNetworkDiagnosticsPackageDiagnosticsPackagesRestClient.CreateListByPacketCoreControlPlaneNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkDiagnosticsPackageResource(Client, MobileNetworkDiagnosticsPackageData.DeserializeMobileNetworkDiagnosticsPackageData(e)), _mobileNetworkDiagnosticsPackageDiagnosticsPackagesClientDiagnostics, Pipeline, "MobileNetworkDiagnosticsPackageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkDiagnosticsPackageResource(Client, MobileNetworkDiagnosticsPackageData.DeserializeMobileNetworkDiagnosticsPackageData(e)), _mobileNetworkDiagnosticsPackageDiagnosticsPackagesClientDiagnostics, Pipeline, "MobileNetworkDiagnosticsPackageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

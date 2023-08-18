@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    internal class PostRulestackRuleOperationSource : IOperationSource<PostRulestackRuleResource>
+    internal class PostRulestackRuleOperationSource : Core.IOperationSource<PostRulestackRuleResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             _client = client;
         }
 
-        PostRulestackRuleResource IOperationSource<PostRulestackRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PostRulestackRuleResource Core.IOperationSource<PostRulestackRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PostRulestackRuleData.DeserializePostRulestackRuleData(document.RootElement);
             return new PostRulestackRuleResource(_client, data);
         }
 
-        async ValueTask<PostRulestackRuleResource> IOperationSource<PostRulestackRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PostRulestackRuleResource> Core.IOperationSource<PostRulestackRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PostRulestackRuleData.DeserializePostRulestackRuleData(document.RootElement);

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class P2SVpnGatewayOperationSource : IOperationSource<P2SVpnGatewayResource>
+    internal class P2SVpnGatewayOperationSource : Core.IOperationSource<P2SVpnGatewayResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        P2SVpnGatewayResource IOperationSource<P2SVpnGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        P2SVpnGatewayResource Core.IOperationSource<P2SVpnGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = P2SVpnGatewayData.DeserializeP2SVpnGatewayData(document.RootElement);
             return new P2SVpnGatewayResource(_client, data);
         }
 
-        async ValueTask<P2SVpnGatewayResource> IOperationSource<P2SVpnGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<P2SVpnGatewayResource> Core.IOperationSource<P2SVpnGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = P2SVpnGatewayData.DeserializeP2SVpnGatewayData(document.RootElement);

@@ -14,22 +14,22 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class DataCollectionEndpointData : IUtf8JsonSerializable
+    public partial class DataCollectionEndpointData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,32 +44,32 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ImmutableId))
+            if (Core.Optional.IsDefined(ImmutableId))
             {
                 writer.WritePropertyName("immutableId"u8);
                 writer.WriteStringValue(ImmutableId);
             }
-            if (Optional.IsDefined(ConfigurationAccess))
+            if (Core.Optional.IsDefined(ConfigurationAccess))
             {
                 writer.WritePropertyName("configurationAccess"u8);
                 writer.WriteObjectValue(ConfigurationAccess);
             }
-            if (Optional.IsDefined(LogsIngestion))
+            if (Core.Optional.IsDefined(LogsIngestion))
             {
                 writer.WritePropertyName("logsIngestion"u8);
                 writer.WriteObjectValue(LogsIngestion);
             }
-            if (Optional.IsDefined(MetricsIngestion))
+            if (Core.Optional.IsDefined(MetricsIngestion))
             {
                 writer.WritePropertyName("metricsIngestion"u8);
                 writer.WriteObjectValue(MetricsIngestion);
             }
-            if (Optional.IsDefined(NetworkAcls))
+            if (Core.Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls"u8);
                 writer.WriteObjectValue(NetworkAcls);
@@ -84,25 +84,25 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
-            Optional<DataCollectionEndpointResourceKind> kind = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<DataCollectionEndpointResourceKind> kind = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> immutableId = default;
-            Optional<DataCollectionEndpointConfigurationAccess> configurationAccess = default;
-            Optional<DataCollectionEndpointLogsIngestion> logsIngestion = default;
-            Optional<DataCollectionEndpointMetricsIngestion> metricsIngestion = default;
-            Optional<DataCollectionEndpointNetworkAcls> networkAcls = default;
-            Optional<DataCollectionEndpointProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<DataCollectionRulePrivateLinkScopedResourceInfo>> privateLinkScopedResources = default;
-            Optional<DataCollectionEndpointFailoverConfiguration> failoverConfiguration = default;
-            Optional<DataCollectionEndpointMetadata> metadata = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> immutableId = default;
+            Core.Optional<DataCollectionEndpointConfigurationAccess> configurationAccess = default;
+            Core.Optional<DataCollectionEndpointLogsIngestion> logsIngestion = default;
+            Core.Optional<DataCollectionEndpointMetricsIngestion> metricsIngestion = default;
+            Core.Optional<DataCollectionEndpointNetworkAcls> networkAcls = default;
+            Core.Optional<DataCollectionEndpointProvisioningState> provisioningState = default;
+            Core.Optional<IReadOnlyList<DataCollectionRulePrivateLinkScopedResourceInfo>> privateLinkScopedResources = default;
+            Core.Optional<DataCollectionEndpointFailoverConfiguration> failoverConfiguration = default;
+            Core.Optional<DataCollectionEndpointMetadata> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new DataCollectionEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), identity, Optional.ToNullable(etag), description.Value, immutableId.Value, configurationAccess.Value, logsIngestion.Value, metricsIngestion.Value, networkAcls.Value, Optional.ToNullable(provisioningState), Optional.ToList(privateLinkScopedResources), failoverConfiguration.Value, metadata.Value);
+            return new DataCollectionEndpointData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(kind), identity, Core.Optional.ToNullable(etag), description.Value, immutableId.Value, configurationAccess.Value, logsIngestion.Value, metricsIngestion.Value, networkAcls.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(privateLinkScopedResources), failoverConfiguration.Value, metadata.Value);
         }
     }
 }

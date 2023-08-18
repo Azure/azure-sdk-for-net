@@ -13,49 +13,49 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayBackendHttpSettings : IUtf8JsonSerializable
+    public partial class ApplicationGatewayBackendHttpSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Port))
+            if (Core.Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Optional.IsDefined(Protocol))
+            if (Core.Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsDefined(CookieBasedAffinity))
+            if (Core.Optional.IsDefined(CookieBasedAffinity))
             {
                 writer.WritePropertyName("cookieBasedAffinity"u8);
                 writer.WriteStringValue(CookieBasedAffinity.Value.ToString());
             }
-            if (Optional.IsDefined(RequestTimeoutInSeconds))
+            if (Core.Optional.IsDefined(RequestTimeoutInSeconds))
             {
                 writer.WritePropertyName("requestTimeout"u8);
                 writer.WriteNumberValue(RequestTimeoutInSeconds.Value);
             }
-            if (Optional.IsDefined(Probe))
+            if (Core.Optional.IsDefined(Probe))
             {
                 writer.WritePropertyName("probe"u8);
                 JsonSerializer.Serialize(writer, Probe);
             }
-            if (Optional.IsCollectionDefined(AuthenticationCertificates))
+            if (Core.Optional.IsCollectionDefined(AuthenticationCertificates))
             {
                 writer.WritePropertyName("authenticationCertificates"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TrustedRootCertificates))
+            if (Core.Optional.IsCollectionDefined(TrustedRootCertificates))
             {
                 writer.WritePropertyName("trustedRootCertificates"u8);
                 writer.WriteStartArray();
@@ -75,32 +75,32 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ConnectionDraining))
+            if (Core.Optional.IsDefined(ConnectionDraining))
             {
                 writer.WritePropertyName("connectionDraining"u8);
                 writer.WriteObjectValue(ConnectionDraining);
             }
-            if (Optional.IsDefined(HostName))
+            if (Core.Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsDefined(PickHostNameFromBackendAddress))
+            if (Core.Optional.IsDefined(PickHostNameFromBackendAddress))
             {
                 writer.WritePropertyName("pickHostNameFromBackendAddress"u8);
                 writer.WriteBooleanValue(PickHostNameFromBackendAddress.Value);
             }
-            if (Optional.IsDefined(AffinityCookieName))
+            if (Core.Optional.IsDefined(AffinityCookieName))
             {
                 writer.WritePropertyName("affinityCookieName"u8);
                 writer.WriteStringValue(AffinityCookieName);
             }
-            if (Optional.IsDefined(ProbeEnabled))
+            if (Core.Optional.IsDefined(ProbeEnabled))
             {
                 writer.WritePropertyName("probeEnabled"u8);
                 writer.WriteBooleanValue(ProbeEnabled.Value);
             }
-            if (Optional.IsDefined(Path))
+            if (Core.Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
@@ -115,24 +115,24 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<int> port = default;
-            Optional<ApplicationGatewayProtocol> protocol = default;
-            Optional<ApplicationGatewayCookieBasedAffinity> cookieBasedAffinity = default;
-            Optional<int> requestTimeout = default;
-            Optional<WritableSubResource> probe = default;
-            Optional<IList<WritableSubResource>> authenticationCertificates = default;
-            Optional<IList<WritableSubResource>> trustedRootCertificates = default;
-            Optional<ApplicationGatewayConnectionDraining> connectionDraining = default;
-            Optional<string> hostName = default;
-            Optional<bool> pickHostNameFromBackendAddress = default;
-            Optional<string> affinityCookieName = default;
-            Optional<bool> probeEnabled = default;
-            Optional<string> path = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceType> type = default;
+            Core.Optional<int> port = default;
+            Core.Optional<ApplicationGatewayProtocol> protocol = default;
+            Core.Optional<ApplicationGatewayCookieBasedAffinity> cookieBasedAffinity = default;
+            Core.Optional<int> requestTimeout = default;
+            Core.Optional<WritableSubResource> probe = default;
+            Core.Optional<IList<WritableSubResource>> authenticationCertificates = default;
+            Core.Optional<IList<WritableSubResource>> trustedRootCertificates = default;
+            Core.Optional<ApplicationGatewayConnectionDraining> connectionDraining = default;
+            Core.Optional<string> hostName = default;
+            Core.Optional<bool> pickHostNameFromBackendAddress = default;
+            Core.Optional<string> affinityCookieName = default;
+            Core.Optional<bool> probeEnabled = default;
+            Core.Optional<string> path = default;
+            Core.Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayBackendHttpSettings(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(port), Optional.ToNullable(protocol), Optional.ToNullable(cookieBasedAffinity), Optional.ToNullable(requestTimeout), probe, Optional.ToList(authenticationCertificates), Optional.ToList(trustedRootCertificates), connectionDraining.Value, hostName.Value, Optional.ToNullable(pickHostNameFromBackendAddress), affinityCookieName.Value, Optional.ToNullable(probeEnabled), path.Value, Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayBackendHttpSettings(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), Core.Optional.ToNullable(port), Core.Optional.ToNullable(protocol), Core.Optional.ToNullable(cookieBasedAffinity), Core.Optional.ToNullable(requestTimeout), probe, Core.Optional.ToList(authenticationCertificates), Core.Optional.ToList(trustedRootCertificates), connectionDraining.Value, hostName.Value, Core.Optional.ToNullable(pickHostNameFromBackendAddress), affinityCookieName.Value, Core.Optional.ToNullable(probeEnabled), path.Value, Core.Optional.ToNullable(provisioningState));
         }
     }
 }

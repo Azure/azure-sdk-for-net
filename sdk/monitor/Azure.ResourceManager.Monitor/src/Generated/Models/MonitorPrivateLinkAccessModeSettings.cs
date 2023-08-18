@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             QueryAccessMode = queryAccessMode;
             IngestionAccessMode = ingestionAccessMode;
-            Exclusions = new ChangeTrackingList<MonitorPrivateLinkAccessModeSettingsExclusion>();
+            Exclusions = new Core.ChangeTrackingList<MonitorPrivateLinkAccessModeSettingsExclusion>();
         }
 
         /// <summary> Initializes a new instance of MonitorPrivateLinkAccessModeSettings. </summary>

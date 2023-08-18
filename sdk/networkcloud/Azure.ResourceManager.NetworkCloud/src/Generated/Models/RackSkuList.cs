@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of RackSkuList. </summary>
         internal RackSkuList()
         {
-            Value = new ChangeTrackingList<NetworkCloudRackSkuData>();
+            Value = new Core.ChangeTrackingList<NetworkCloudRackSkuData>();
         }
 
         /// <summary> Initializes a new instance of RackSkuList. </summary>

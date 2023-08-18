@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
             DataNetwork = dataNetwork;
             SessionAmbr = sessionAmbr;
-            AdditionalAllowedSessionTypes = new ChangeTrackingList<MobileNetworkPduSessionType>();
+            AdditionalAllowedSessionTypes = new Core.ChangeTrackingList<MobileNetworkPduSessionType>();
             AllowedServices = allowedServices.ToList();
         }
 

@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = await _operationalInsightsLinkedServiceLinkedServicesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedServiceResource>(new OperationalInsightsLinkedServiceOperationSource(Client), _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics, Pipeline, _operationalInsightsLinkedServiceLinkedServicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedServiceResource>(new OperationalInsightsLinkedServiceOperationSource(Client), _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics, Pipeline, _operationalInsightsLinkedServiceLinkedServicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = _operationalInsightsLinkedServiceLinkedServicesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedServiceResource>(new OperationalInsightsLinkedServiceOperationSource(Client), _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics, Pipeline, _operationalInsightsLinkedServiceLinkedServicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedServiceResource>(new OperationalInsightsLinkedServiceOperationSource(Client), _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics, Pipeline, _operationalInsightsLinkedServiceLinkedServicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = await _operationalInsightsLinkedServiceLinkedServicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedServiceResource>(new OperationalInsightsLinkedServiceOperationSource(Client), _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics, Pipeline, _operationalInsightsLinkedServiceLinkedServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedServiceResource>(new OperationalInsightsLinkedServiceOperationSource(Client), _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics, Pipeline, _operationalInsightsLinkedServiceLinkedServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = _operationalInsightsLinkedServiceLinkedServicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedServiceResource>(new OperationalInsightsLinkedServiceOperationSource(Client), _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics, Pipeline, _operationalInsightsLinkedServiceLinkedServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedServiceResource>(new OperationalInsightsLinkedServiceOperationSource(Client), _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics, Pipeline, _operationalInsightsLinkedServiceLinkedServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

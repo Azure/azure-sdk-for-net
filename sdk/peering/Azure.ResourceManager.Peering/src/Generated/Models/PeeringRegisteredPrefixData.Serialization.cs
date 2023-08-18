@@ -12,14 +12,14 @@ using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    public partial class PeeringRegisteredPrefixData : IUtf8JsonSerializable
+    public partial class PeeringRegisteredPrefixData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Prefix))
+            if (Core.Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Peering
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> prefix = default;
-            Optional<PeeringPrefixValidationState> prefixValidationState = default;
-            Optional<string> peeringServicePrefixKey = default;
-            Optional<string> errorMessage = default;
-            Optional<PeeringProvisioningState> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> prefix = default;
+            Core.Optional<PeeringPrefixValidationState> prefixValidationState = default;
+            Core.Optional<string> peeringServicePrefixKey = default;
+            Core.Optional<string> errorMessage = default;
+            Core.Optional<PeeringProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Peering
                     continue;
                 }
             }
-            return new PeeringRegisteredPrefixData(id, name, type, systemData.Value, prefix.Value, Optional.ToNullable(prefixValidationState), peeringServicePrefixKey.Value, errorMessage.Value, Optional.ToNullable(provisioningState));
+            return new PeeringRegisteredPrefixData(id, name, type, systemData.Value, prefix.Value, Core.Optional.ToNullable(prefixValidationState), peeringServicePrefixKey.Value, errorMessage.Value, Core.Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AlertRuleData>> value = default;
+            Core.Optional<IReadOnlyList<AlertRuleData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new AlertRuleResourceCollection(Optional.ToList(value));
+            return new AlertRuleResourceCollection(Core.Optional.ToList(value));
         }
     }
 }

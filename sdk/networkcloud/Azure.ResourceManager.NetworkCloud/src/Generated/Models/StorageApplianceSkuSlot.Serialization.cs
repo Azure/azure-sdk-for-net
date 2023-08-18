@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<long> rackSlot = default;
-            Optional<long> capacityGB = default;
-            Optional<string> model = default;
+            Core.Optional<long> rackSlot = default;
+            Core.Optional<long> capacityGB = default;
+            Core.Optional<string> model = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rackSlot"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new StorageApplianceSkuSlot(Optional.ToNullable(rackSlot), Optional.ToNullable(capacityGB), model.Value);
+            return new StorageApplianceSkuSlot(Core.Optional.ToNullable(rackSlot), Core.Optional.ToNullable(capacityGB), model.Value);
         }
     }
 }

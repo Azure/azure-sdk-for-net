@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ExpressRouteCrossConnectionPeeringList. </summary>
         internal ExpressRouteCrossConnectionPeeringList()
         {
-            Value = new ChangeTrackingList<ExpressRouteCrossConnectionPeeringData>();
+            Value = new Core.ChangeTrackingList<ExpressRouteCrossConnectionPeeringData>();
         }
 
         /// <summary> Initializes a new instance of ExpressRouteCrossConnectionPeeringList. </summary>

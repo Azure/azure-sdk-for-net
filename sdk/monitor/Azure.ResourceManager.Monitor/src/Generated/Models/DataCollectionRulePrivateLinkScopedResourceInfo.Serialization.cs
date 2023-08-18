@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> scopeId = default;
+            Core.Optional<ResourceIdentifier> resourceId = default;
+            Core.Optional<string> scopeId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))

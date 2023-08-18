@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Nginx
 {
-    internal class NginxDeploymentOperationSource : IOperationSource<NginxDeploymentResource>
+    internal class NginxDeploymentOperationSource : Core.IOperationSource<NginxDeploymentResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Nginx
             _client = client;
         }
 
-        NginxDeploymentResource IOperationSource<NginxDeploymentResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NginxDeploymentResource Core.IOperationSource<NginxDeploymentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NginxDeploymentData.DeserializeNginxDeploymentData(document.RootElement);
             return new NginxDeploymentResource(_client, data);
         }
 
-        async ValueTask<NginxDeploymentResource> IOperationSource<NginxDeploymentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NginxDeploymentResource> Core.IOperationSource<NginxDeploymentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NginxDeploymentData.DeserializeNginxDeploymentData(document.RootElement);

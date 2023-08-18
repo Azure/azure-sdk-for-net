@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> timespan = default;
-            Optional<TimeSpan> interval = default;
-            Optional<string> metricName = default;
-            Optional<ResourceIdentifier> targetResourceId = default;
-            Optional<IReadOnlyList<PredictiveValue>> data = default;
+            Core.Optional<string> timespan = default;
+            Core.Optional<TimeSpan> interval = default;
+            Core.Optional<string> metricName = default;
+            Core.Optional<ResourceIdentifier> targetResourceId = default;
+            Core.Optional<IReadOnlyList<PredictiveValue>> data = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timespan"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new AutoscaleSettingPredicativeResult(timespan.Value, Optional.ToNullable(interval), metricName.Value, targetResourceId.Value, Optional.ToList(data));
+            return new AutoscaleSettingPredicativeResult(timespan.Value, Core.Optional.ToNullable(interval), metricName.Value, targetResourceId.Value, Core.Optional.ToList(data));
         }
     }
 }

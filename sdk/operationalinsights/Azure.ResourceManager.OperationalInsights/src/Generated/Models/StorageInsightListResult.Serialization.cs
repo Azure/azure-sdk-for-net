@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StorageInsightData>> value = default;
-            Optional<string> odataNextLink = default;
+            Core.Optional<IReadOnlyList<StorageInsightData>> value = default;
+            Core.Optional<string> odataNextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     continue;
                 }
             }
-            return new StorageInsightListResult(Optional.ToList(value), odataNextLink.Value);
+            return new StorageInsightListResult(Core.Optional.ToList(value), odataNextLink.Value);
         }
     }
 }

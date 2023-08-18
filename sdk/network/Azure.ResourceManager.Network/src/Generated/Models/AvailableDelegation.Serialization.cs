@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> serviceName = default;
-            Optional<IReadOnlyList<string>> actions = default;
+            Core.Optional<string> serviceName = default;
+            Core.Optional<IReadOnlyList<string>> actions = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceName"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new AvailableDelegation(id, name, type, systemData.Value, serviceName.Value, Optional.ToList(actions));
+            return new AvailableDelegation(id, name, type, systemData.Value, serviceName.Value, Core.Optional.ToList(actions));
         }
     }
 }

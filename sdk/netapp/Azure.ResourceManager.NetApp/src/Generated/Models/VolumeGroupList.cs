@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of VolumeGroupList. </summary>
         internal VolumeGroupList()
         {
-            Value = new ChangeTrackingList<NetAppVolumeGroupResult>();
+            Value = new Core.ChangeTrackingList<NetAppVolumeGroupResult>();
         }
 
         /// <summary> Initializes a new instance of VolumeGroupList. </summary>

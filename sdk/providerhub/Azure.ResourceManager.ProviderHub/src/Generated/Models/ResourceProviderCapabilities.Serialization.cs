@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ResourceProviderCapabilities : IUtf8JsonSerializable
+    public partial class ResourceProviderCapabilities : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("quotaId"u8);
             writer.WriteStringValue(QuotaId);
             writer.WritePropertyName("effect"u8);
             writer.WriteStringValue(Effect.ToString());
-            if (Optional.IsCollectionDefined(RequiredFeatures))
+            if (Core.Optional.IsCollectionDefined(RequiredFeatures))
             {
                 writer.WritePropertyName("requiredFeatures"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             string quotaId = default;
             ResourceProviderCapabilitiesEffect effect = default;
-            Optional<IList<string>> requiredFeatures = default;
+            Core.Optional<IList<string>> requiredFeatures = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("quotaId"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new ResourceProviderCapabilities(quotaId, effect, Optional.ToList(requiredFeatures));
+            return new ResourceProviderCapabilities(quotaId, effect, Core.Optional.ToList(requiredFeatures));
         }
     }
 }

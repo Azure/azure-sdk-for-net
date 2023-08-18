@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <summary> Initializes a new instance of PeeringLogAnalyticsWorkspaceProperties. </summary>
         public PeeringLogAnalyticsWorkspaceProperties()
         {
-            ConnectedAgents = new ChangeTrackingList<string>();
+            ConnectedAgents = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PeeringLogAnalyticsWorkspaceProperties. </summary>

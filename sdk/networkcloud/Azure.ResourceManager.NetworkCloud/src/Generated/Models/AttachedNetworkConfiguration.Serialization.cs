@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class AttachedNetworkConfiguration : IUtf8JsonSerializable
+    public partial class AttachedNetworkConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(L2Networks))
+            if (Core.Optional.IsCollectionDefined(L2Networks))
             {
                 writer.WritePropertyName("l2Networks"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(L3Networks))
+            if (Core.Optional.IsCollectionDefined(L3Networks))
             {
                 writer.WritePropertyName("l3Networks"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TrunkedNetworks))
+            if (Core.Optional.IsCollectionDefined(TrunkedNetworks))
             {
                 writer.WritePropertyName("trunkedNetworks"u8);
                 writer.WriteStartArray();
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<IList<L2NetworkAttachmentConfiguration>> l2Networks = default;
-            Optional<IList<L3NetworkAttachmentConfiguration>> l3Networks = default;
-            Optional<IList<TrunkedNetworkAttachmentConfiguration>> trunkedNetworks = default;
+            Core.Optional<IList<L2NetworkAttachmentConfiguration>> l2Networks = default;
+            Core.Optional<IList<L3NetworkAttachmentConfiguration>> l3Networks = default;
+            Core.Optional<IList<TrunkedNetworkAttachmentConfiguration>> trunkedNetworks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("l2Networks"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new AttachedNetworkConfiguration(Optional.ToList(l2Networks), Optional.ToList(l3Networks), Optional.ToList(trunkedNetworks));
+            return new AttachedNetworkConfiguration(Core.Optional.ToList(l2Networks), Core.Optional.ToList(l3Networks), Core.Optional.ToList(trunkedNetworks));
         }
     }
 }

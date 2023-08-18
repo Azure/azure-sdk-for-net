@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             Argument.AssertNotNull(extensionName, nameof(extensionName));
 
-            Streams = new ChangeTrackingList<ExtensionDataSourceStream>();
+            Streams = new Core.ChangeTrackingList<ExtensionDataSourceStream>();
             ExtensionName = extensionName;
-            InputDataSources = new ChangeTrackingList<string>();
+            InputDataSources = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ExtensionDataSource. </summary>

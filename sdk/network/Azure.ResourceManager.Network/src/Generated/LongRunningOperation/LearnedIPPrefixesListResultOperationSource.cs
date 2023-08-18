@@ -14,15 +14,15 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class LearnedIPPrefixesListResultOperationSource : IOperationSource<LearnedIPPrefixesListResult>
+    internal class LearnedIPPrefixesListResultOperationSource : Core.IOperationSource<LearnedIPPrefixesListResult>
     {
-        LearnedIPPrefixesListResult IOperationSource<LearnedIPPrefixesListResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        LearnedIPPrefixesListResult Core.IOperationSource<LearnedIPPrefixesListResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return LearnedIPPrefixesListResult.DeserializeLearnedIPPrefixesListResult(document.RootElement);
         }
 
-        async ValueTask<LearnedIPPrefixesListResult> IOperationSource<LearnedIPPrefixesListResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<LearnedIPPrefixesListResult> Core.IOperationSource<LearnedIPPrefixesListResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return LearnedIPPrefixesListResult.DeserializeLearnedIPPrefixesListResult(document.RootElement);

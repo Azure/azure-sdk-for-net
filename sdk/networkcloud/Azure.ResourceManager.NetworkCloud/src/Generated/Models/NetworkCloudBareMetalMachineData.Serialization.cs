@@ -14,14 +14,14 @@ using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudBareMetalMachineData : IUtf8JsonSerializable
+    public partial class NetworkCloudBareMetalMachineData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,40 +67,40 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> associatedResourceIds = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IReadOnlyList<ResourceIdentifier>> associatedResourceIds = default;
             string bmcConnectionString = default;
             AdministrativeCredentials bmcCredentials = default;
             string bmcMacAddress = default;
             string bootMacAddress = default;
-            Optional<ResourceIdentifier> clusterId = default;
-            Optional<BareMetalMachineCordonStatus> cordonStatus = default;
-            Optional<BareMetalMachineDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<HardwareInventory> hardwareInventory = default;
-            Optional<HardwareValidationStatus> hardwareValidationStatus = default;
-            Optional<IReadOnlyList<string>> hybridAksClustersAssociatedIds = default;
-            Optional<string> kubernetesNodeName = default;
-            Optional<string> kubernetesVersion = default;
+            Core.Optional<ResourceIdentifier> clusterId = default;
+            Core.Optional<BareMetalMachineCordonStatus> cordonStatus = default;
+            Core.Optional<BareMetalMachineDetailedStatus> detailedStatus = default;
+            Core.Optional<string> detailedStatusMessage = default;
+            Core.Optional<HardwareInventory> hardwareInventory = default;
+            Core.Optional<HardwareValidationStatus> hardwareValidationStatus = default;
+            Core.Optional<IReadOnlyList<string>> hybridAksClustersAssociatedIds = default;
+            Core.Optional<string> kubernetesNodeName = default;
+            Core.Optional<string> kubernetesVersion = default;
             string machineDetails = default;
             string machineName = default;
             string machineSkuId = default;
-            Optional<IPAddress> oamIPv4Address = default;
-            Optional<string> oamIPv6Address = default;
-            Optional<string> osImage = default;
-            Optional<BareMetalMachinePowerState> powerState = default;
-            Optional<BareMetalMachineProvisioningState> provisioningState = default;
+            Core.Optional<IPAddress> oamIPv4Address = default;
+            Core.Optional<string> oamIPv6Address = default;
+            Core.Optional<string> osImage = default;
+            Core.Optional<BareMetalMachinePowerState> powerState = default;
+            Core.Optional<BareMetalMachineProvisioningState> provisioningState = default;
             ResourceIdentifier rackId = default;
             long rackSlot = default;
-            Optional<BareMetalMachineReadyState> readyState = default;
+            Core.Optional<BareMetalMachineReadyState> readyState = default;
             string serialNumber = default;
-            Optional<string> serviceTag = default;
-            Optional<IReadOnlyList<string>> virtualMachinesAssociatedIds = default;
+            Core.Optional<string> serviceTag = default;
+            Core.Optional<IReadOnlyList<string>> virtualMachinesAssociatedIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     continue;
                 }
             }
-            return new NetworkCloudBareMetalMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToList(associatedResourceIds), bmcConnectionString, bmcCredentials, bmcMacAddress, bootMacAddress, clusterId.Value, Optional.ToNullable(cordonStatus), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, hardwareInventory.Value, hardwareValidationStatus.Value, Optional.ToList(hybridAksClustersAssociatedIds), kubernetesNodeName.Value, kubernetesVersion.Value, machineDetails, machineName, machineSkuId, oamIPv4Address.Value, oamIPv6Address.Value, osImage.Value, Optional.ToNullable(powerState), Optional.ToNullable(provisioningState), rackId, rackSlot, Optional.ToNullable(readyState), serialNumber, serviceTag.Value, Optional.ToList(virtualMachinesAssociatedIds));
+            return new NetworkCloudBareMetalMachineData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, extendedLocation, Core.Optional.ToList(associatedResourceIds), bmcConnectionString, bmcCredentials, bmcMacAddress, bootMacAddress, clusterId.Value, Core.Optional.ToNullable(cordonStatus), Core.Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, hardwareInventory.Value, hardwareValidationStatus.Value, Core.Optional.ToList(hybridAksClustersAssociatedIds), kubernetesNodeName.Value, kubernetesVersion.Value, machineDetails, machineName, machineSkuId, oamIPv4Address.Value, oamIPv6Address.Value, osImage.Value, Core.Optional.ToNullable(powerState), Core.Optional.ToNullable(provisioningState), rackId, rackSlot, Core.Optional.ToNullable(readyState), serialNumber, serviceTag.Value, Core.Optional.ToList(virtualMachinesAssociatedIds));
         }
     }
 }

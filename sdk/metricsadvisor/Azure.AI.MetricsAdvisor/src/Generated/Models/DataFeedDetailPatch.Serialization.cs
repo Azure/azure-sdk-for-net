@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class DataFeedDetailPatch : IUtf8JsonSerializable
+    internal partial class DataFeedDetailPatch : Core.IUtf8JsonSerializable
     {
     }
 }

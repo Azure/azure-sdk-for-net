@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <summary> Initializes a new instance of NetworkCloudRackSkuData. </summary>
         public NetworkCloudRackSkuData()
         {
-            ComputeMachines = new ChangeTrackingList<MachineSkuSlot>();
-            ControllerMachines = new ChangeTrackingList<MachineSkuSlot>();
-            StorageAppliances = new ChangeTrackingList<StorageApplianceSkuSlot>();
-            SupportedRackSkuIds = new ChangeTrackingList<string>();
+            ComputeMachines = new Core.ChangeTrackingList<MachineSkuSlot>();
+            ControllerMachines = new Core.ChangeTrackingList<MachineSkuSlot>();
+            StorageAppliances = new Core.ChangeTrackingList<StorageApplianceSkuSlot>();
+            SupportedRackSkuIds = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of NetworkCloudRackSkuData. </summary>

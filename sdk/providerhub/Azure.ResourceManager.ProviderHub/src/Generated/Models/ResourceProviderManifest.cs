@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of ResourceProviderManifest. </summary>
         internal ResourceProviderManifest()
         {
-            ProviderAuthorizations = new ChangeTrackingList<ResourceProviderAuthorization>();
-            RequiredFeatures = new ChangeTrackingList<string>();
-            ResourceTypes = new ChangeTrackingList<ProviderResourceType>();
-            Capabilities = new ChangeTrackingList<ResourceProviderCapabilities>();
-            GlobalNotificationEndpoints = new ChangeTrackingList<ResourceProviderEndpoint>();
+            ProviderAuthorizations = new Core.ChangeTrackingList<ResourceProviderAuthorization>();
+            RequiredFeatures = new Core.ChangeTrackingList<string>();
+            ResourceTypes = new Core.ChangeTrackingList<ProviderResourceType>();
+            Capabilities = new Core.ChangeTrackingList<ResourceProviderCapabilities>();
+            GlobalNotificationEndpoints = new Core.ChangeTrackingList<ResourceProviderEndpoint>();
         }
 
         /// <summary> Initializes a new instance of ResourceProviderManifest. </summary>

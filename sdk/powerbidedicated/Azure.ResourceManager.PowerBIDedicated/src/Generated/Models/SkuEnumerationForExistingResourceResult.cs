@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         /// <summary> Initializes a new instance of SkuEnumerationForExistingResourceResult. </summary>
         internal SkuEnumerationForExistingResourceResult()
         {
-            Value = new ChangeTrackingList<SkuDetailsForExistingResource>();
+            Value = new Core.ChangeTrackingList<SkuDetailsForExistingResource>();
         }
 
         /// <summary> Initializes a new instance of SkuEnumerationForExistingResourceResult. </summary>

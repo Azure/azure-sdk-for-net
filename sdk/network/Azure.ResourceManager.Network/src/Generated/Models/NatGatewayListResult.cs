@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NatGatewayListResult. </summary>
         internal NatGatewayListResult()
         {
-            Value = new ChangeTrackingList<NatGatewayData>();
+            Value = new Core.ChangeTrackingList<NatGatewayData>();
         }
 
         /// <summary> Initializes a new instance of NatGatewayListResult. </summary>

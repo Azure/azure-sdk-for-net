@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of LoadBalancerBackendAddressPoolListResult. </summary>
         internal LoadBalancerBackendAddressPoolListResult()
         {
-            Value = new ChangeTrackingList<BackendAddressPoolData>();
+            Value = new Core.ChangeTrackingList<BackendAddressPoolData>();
         }
 
         /// <summary> Initializes a new instance of LoadBalancerBackendAddressPoolListResult. </summary>

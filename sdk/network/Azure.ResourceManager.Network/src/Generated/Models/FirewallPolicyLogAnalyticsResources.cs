@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of FirewallPolicyLogAnalyticsResources. </summary>
         public FirewallPolicyLogAnalyticsResources()
         {
-            Workspaces = new ChangeTrackingList<FirewallPolicyLogAnalyticsWorkspace>();
+            Workspaces = new Core.ChangeTrackingList<FirewallPolicyLogAnalyticsWorkspace>();
         }
 
         /// <summary> Initializes a new instance of FirewallPolicyLogAnalyticsResources. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of EffectiveNetworkSecurityGroupListResult. </summary>
         internal EffectiveNetworkSecurityGroupListResult()
         {
-            Value = new ChangeTrackingList<EffectiveNetworkSecurityGroup>();
+            Value = new Core.ChangeTrackingList<EffectiveNetworkSecurityGroup>();
         }
 
         /// <summary> Initializes a new instance of EffectiveNetworkSecurityGroupListResult. </summary>

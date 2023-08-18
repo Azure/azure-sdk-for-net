@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsTableRestoredLogs : IUtf8JsonSerializable
+    public partial class OperationalInsightsTableRestoredLogs : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartRestoreOn))
+            if (Core.Optional.IsDefined(StartRestoreOn))
             {
                 writer.WritePropertyName("startRestoreTime"u8);
                 writer.WriteStringValue(StartRestoreOn.Value, "O");
             }
-            if (Optional.IsDefined(EndRestoreOn))
+            if (Core.Optional.IsDefined(EndRestoreOn))
             {
                 writer.WritePropertyName("endRestoreTime"u8);
                 writer.WriteStringValue(EndRestoreOn.Value, "O");
             }
-            if (Optional.IsDefined(SourceTable))
+            if (Core.Optional.IsDefined(SourceTable))
             {
                 writer.WritePropertyName("sourceTable"u8);
                 writer.WriteStringValue(SourceTable);
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startRestoreTime = default;
-            Optional<DateTimeOffset> endRestoreTime = default;
-            Optional<string> sourceTable = default;
-            Optional<Guid> azureAsyncOperationId = default;
+            Core.Optional<DateTimeOffset> startRestoreTime = default;
+            Core.Optional<DateTimeOffset> endRestoreTime = default;
+            Core.Optional<string> sourceTable = default;
+            Core.Optional<Guid> azureAsyncOperationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startRestoreTime"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     continue;
                 }
             }
-            return new OperationalInsightsTableRestoredLogs(Optional.ToNullable(startRestoreTime), Optional.ToNullable(endRestoreTime), sourceTable.Value, Optional.ToNullable(azureAsyncOperationId));
+            return new OperationalInsightsTableRestoredLogs(Core.Optional.ToNullable(startRestoreTime), Core.Optional.ToNullable(endRestoreTime), sourceTable.Value, Core.Optional.ToNullable(azureAsyncOperationId));
         }
     }
 }

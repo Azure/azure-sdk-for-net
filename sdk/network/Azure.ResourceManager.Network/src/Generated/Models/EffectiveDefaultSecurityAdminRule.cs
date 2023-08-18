@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of EffectiveDefaultSecurityAdminRule. </summary>
         internal EffectiveDefaultSecurityAdminRule()
         {
-            Sources = new ChangeTrackingList<AddressPrefixItem>();
-            Destinations = new ChangeTrackingList<AddressPrefixItem>();
-            SourcePortRanges = new ChangeTrackingList<string>();
-            DestinationPortRanges = new ChangeTrackingList<string>();
+            Sources = new Core.ChangeTrackingList<AddressPrefixItem>();
+            Destinations = new Core.ChangeTrackingList<AddressPrefixItem>();
+            SourcePortRanges = new Core.ChangeTrackingList<string>();
+            DestinationPortRanges = new Core.ChangeTrackingList<string>();
             Kind = EffectiveAdminRuleKind.Default;
         }
 

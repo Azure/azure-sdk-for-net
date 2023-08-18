@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ExpressRouteConnectionData>> value = default;
+            Core.Optional<IReadOnlyList<ExpressRouteConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ExpressRouteConnectionList(Optional.ToList(value));
+            return new ExpressRouteConnectionList(Core.Optional.ToList(value));
         }
     }
 }

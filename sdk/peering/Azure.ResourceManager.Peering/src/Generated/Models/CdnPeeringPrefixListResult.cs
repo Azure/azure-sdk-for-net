@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <summary> Initializes a new instance of CdnPeeringPrefixListResult. </summary>
         internal CdnPeeringPrefixListResult()
         {
-            Value = new ChangeTrackingList<CdnPeeringPrefix>();
+            Value = new Core.ChangeTrackingList<CdnPeeringPrefix>();
         }
 
         /// <summary> Initializes a new instance of CdnPeeringPrefixListResult. </summary>

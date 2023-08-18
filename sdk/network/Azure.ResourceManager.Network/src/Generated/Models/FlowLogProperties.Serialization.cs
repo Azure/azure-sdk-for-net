@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class FlowLogProperties : IUtf8JsonSerializable
+    public partial class FlowLogProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FormatType))
+            if (Core.Optional.IsDefined(FormatType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(FormatType.Value.ToString());
             }
-            if (Optional.IsDefined(Version))
+            if (Core.Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<FlowLogFormatType> type = default;
-            Optional<int> version = default;
+            Core.Optional<FlowLogFormatType> type = default;
+            Core.Optional<int> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new FlowLogProperties(Optional.ToNullable(type), Optional.ToNullable(version));
+            return new FlowLogProperties(Core.Optional.ToNullable(type), Core.Optional.ToNullable(version));
         }
     }
 }

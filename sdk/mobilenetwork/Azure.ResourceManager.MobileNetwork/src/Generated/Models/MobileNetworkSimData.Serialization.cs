@@ -14,31 +14,31 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    public partial class MobileNetworkSimData : IUtf8JsonSerializable
+    public partial class MobileNetworkSimData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("internationalMobileSubscriberIdentity"u8);
             writer.WriteStringValue(InternationalMobileSubscriberIdentity);
-            if (Optional.IsDefined(IntegratedCircuitCardIdentifier))
+            if (Core.Optional.IsDefined(IntegratedCircuitCardIdentifier))
             {
                 writer.WritePropertyName("integratedCircuitCardIdentifier"u8);
                 writer.WriteStringValue(IntegratedCircuitCardIdentifier);
             }
-            if (Optional.IsDefined(DeviceType))
+            if (Core.Optional.IsDefined(DeviceType))
             {
                 writer.WritePropertyName("deviceType"u8);
                 writer.WriteStringValue(DeviceType);
             }
-            if (Optional.IsDefined(SimPolicy))
+            if (Core.Optional.IsDefined(SimPolicy))
             {
                 writer.WritePropertyName("simPolicy"u8);
                 JsonSerializer.Serialize(writer, SimPolicy);
             }
-            if (Optional.IsCollectionDefined(StaticIPConfiguration))
+            if (Core.Optional.IsCollectionDefined(StaticIPConfiguration))
             {
                 writer.WritePropertyName("staticIpConfiguration"u8);
                 writer.WriteStartArray();
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AuthenticationKey))
+            if (Core.Optional.IsDefined(AuthenticationKey))
             {
                 writer.WritePropertyName("authenticationKey"u8);
                 writer.WriteStringValue(AuthenticationKey);
             }
-            if (Optional.IsDefined(OperatorKeyCode))
+            if (Core.Optional.IsDefined(OperatorKeyCode))
             {
                 writer.WritePropertyName("operatorKeyCode"u8);
                 writer.WriteStringValue(OperatorKeyCode);
@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.MobileNetwork
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MobileNetworkProvisioningState> provisioningState = default;
-            Optional<MobileNetworkSimState> simState = default;
-            Optional<IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState>> siteProvisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<MobileNetworkProvisioningState> provisioningState = default;
+            Core.Optional<MobileNetworkSimState> simState = default;
+            Core.Optional<IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState>> siteProvisioningState = default;
             string internationalMobileSubscriberIdentity = default;
-            Optional<string> integratedCircuitCardIdentifier = default;
-            Optional<string> deviceType = default;
-            Optional<WritableSubResource> simPolicy = default;
-            Optional<IList<SimStaticIPProperties>> staticIPConfiguration = default;
-            Optional<string> vendorName = default;
-            Optional<string> vendorKeyFingerprint = default;
-            Optional<string> authenticationKey = default;
-            Optional<string> operatorKeyCode = default;
+            Core.Optional<string> integratedCircuitCardIdentifier = default;
+            Core.Optional<string> deviceType = default;
+            Core.Optional<WritableSubResource> simPolicy = default;
+            Core.Optional<IList<SimStaticIPProperties>> staticIPConfiguration = default;
+            Core.Optional<string> vendorName = default;
+            Core.Optional<string> vendorKeyFingerprint = default;
+            Core.Optional<string> authenticationKey = default;
+            Core.Optional<string> operatorKeyCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     continue;
                 }
             }
-            return new MobileNetworkSimData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(simState), Optional.ToDictionary(siteProvisioningState), internationalMobileSubscriberIdentity, integratedCircuitCardIdentifier.Value, deviceType.Value, simPolicy, Optional.ToList(staticIPConfiguration), vendorName.Value, vendorKeyFingerprint.Value, authenticationKey.Value, operatorKeyCode.Value);
+            return new MobileNetworkSimData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(simState), Core.Optional.ToDictionary(siteProvisioningState), internationalMobileSubscriberIdentity, integratedCircuitCardIdentifier.Value, deviceType.Value, simPolicy, Core.Optional.ToList(staticIPConfiguration), vendorName.Value, vendorKeyFingerprint.Value, authenticationKey.Value, operatorKeyCode.Value);
         }
     }
 }

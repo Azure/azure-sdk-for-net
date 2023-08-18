@@ -15,22 +15,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class VirtualNetworkGatewayConnectionData : IUtf8JsonSerializable
+    public partial class VirtualNetworkGatewayConnectionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AuthorizationKey))
+            if (Core.Optional.IsDefined(AuthorizationKey))
             {
                 writer.WritePropertyName("authorizationKey"u8);
                 writer.WriteStringValue(AuthorizationKey);
             }
             writer.WritePropertyName("virtualNetworkGateway1"u8);
             writer.WriteObjectValue(VirtualNetworkGateway1);
-            if (Optional.IsDefined(VirtualNetworkGateway2))
+            if (Core.Optional.IsDefined(VirtualNetworkGateway2))
             {
                 writer.WritePropertyName("virtualNetworkGateway2"u8);
                 writer.WriteObjectValue(VirtualNetworkGateway2);
             }
-            if (Optional.IsDefined(LocalNetworkGateway2))
+            if (Core.Optional.IsDefined(LocalNetworkGateway2))
             {
                 writer.WritePropertyName("localNetworkGateway2"u8);
                 writer.WriteObjectValue(LocalNetworkGateway2);
             }
-            if (Optional.IsCollectionDefined(IngressNatRules))
+            if (Core.Optional.IsCollectionDefined(IngressNatRules))
             {
                 writer.WritePropertyName("ingressNatRules"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EgressNatRules))
+            if (Core.Optional.IsCollectionDefined(EgressNatRules))
             {
                 writer.WritePropertyName("egressNatRules"u8);
                 writer.WriteStartArray();
@@ -82,42 +82,42 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("connectionType"u8);
             writer.WriteStringValue(ConnectionType.ToString());
-            if (Optional.IsDefined(ConnectionProtocol))
+            if (Core.Optional.IsDefined(ConnectionProtocol))
             {
                 writer.WritePropertyName("connectionProtocol"u8);
                 writer.WriteStringValue(ConnectionProtocol.Value.ToString());
             }
-            if (Optional.IsDefined(RoutingWeight))
+            if (Core.Optional.IsDefined(RoutingWeight))
             {
                 writer.WritePropertyName("routingWeight"u8);
                 writer.WriteNumberValue(RoutingWeight.Value);
             }
-            if (Optional.IsDefined(DpdTimeoutSeconds))
+            if (Core.Optional.IsDefined(DpdTimeoutSeconds))
             {
                 writer.WritePropertyName("dpdTimeoutSeconds"u8);
                 writer.WriteNumberValue(DpdTimeoutSeconds.Value);
             }
-            if (Optional.IsDefined(ConnectionMode))
+            if (Core.Optional.IsDefined(ConnectionMode))
             {
                 writer.WritePropertyName("connectionMode"u8);
                 writer.WriteStringValue(ConnectionMode.Value.ToString());
             }
-            if (Optional.IsDefined(SharedKey))
+            if (Core.Optional.IsDefined(SharedKey))
             {
                 writer.WritePropertyName("sharedKey"u8);
                 writer.WriteStringValue(SharedKey);
             }
-            if (Optional.IsDefined(Peer))
+            if (Core.Optional.IsDefined(Peer))
             {
                 writer.WritePropertyName("peer"u8);
                 JsonSerializer.Serialize(writer, Peer);
             }
-            if (Optional.IsDefined(EnableBgp))
+            if (Core.Optional.IsDefined(EnableBgp))
             {
                 writer.WritePropertyName("enableBgp"u8);
                 writer.WriteBooleanValue(EnableBgp.Value);
             }
-            if (Optional.IsCollectionDefined(GatewayCustomBgpIPAddresses))
+            if (Core.Optional.IsCollectionDefined(GatewayCustomBgpIPAddresses))
             {
                 writer.WritePropertyName("gatewayCustomBgpIpAddresses"u8);
                 writer.WriteStartArray();
@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(UseLocalAzureIPAddress))
+            if (Core.Optional.IsDefined(UseLocalAzureIPAddress))
             {
                 writer.WritePropertyName("useLocalAzureIpAddress"u8);
                 writer.WriteBooleanValue(UseLocalAzureIPAddress.Value);
             }
-            if (Optional.IsDefined(UsePolicyBasedTrafficSelectors))
+            if (Core.Optional.IsDefined(UsePolicyBasedTrafficSelectors))
             {
                 writer.WritePropertyName("usePolicyBasedTrafficSelectors"u8);
                 writer.WriteBooleanValue(UsePolicyBasedTrafficSelectors.Value);
             }
-            if (Optional.IsCollectionDefined(IPsecPolicies))
+            if (Core.Optional.IsCollectionDefined(IPsecPolicies))
             {
                 writer.WritePropertyName("ipsecPolicies"u8);
                 writer.WriteStartArray();
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TrafficSelectorPolicies))
+            if (Core.Optional.IsCollectionDefined(TrafficSelectorPolicies))
             {
                 writer.WritePropertyName("trafficSelectorPolicies"u8);
                 writer.WriteStartArray();
@@ -157,12 +157,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ExpressRouteGatewayBypass))
+            if (Core.Optional.IsDefined(ExpressRouteGatewayBypass))
             {
                 writer.WritePropertyName("expressRouteGatewayBypass"u8);
                 writer.WriteBooleanValue(ExpressRouteGatewayBypass.Value);
             }
-            if (Optional.IsDefined(EnablePrivateLinkFastPath))
+            if (Core.Optional.IsDefined(EnablePrivateLinkFastPath))
             {
                 writer.WritePropertyName("enablePrivateLinkFastPath"u8);
                 writer.WriteBooleanValue(EnablePrivateLinkFastPath.Value);
@@ -177,39 +177,39 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> authorizationKey = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceType> type = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<string> authorizationKey = default;
             VirtualNetworkGatewayData virtualNetworkGateway1 = default;
-            Optional<VirtualNetworkGatewayData> virtualNetworkGateway2 = default;
-            Optional<LocalNetworkGatewayData> localNetworkGateway2 = default;
-            Optional<IList<WritableSubResource>> ingressNatRules = default;
-            Optional<IList<WritableSubResource>> egressNatRules = default;
+            Core.Optional<VirtualNetworkGatewayData> virtualNetworkGateway2 = default;
+            Core.Optional<LocalNetworkGatewayData> localNetworkGateway2 = default;
+            Core.Optional<IList<WritableSubResource>> ingressNatRules = default;
+            Core.Optional<IList<WritableSubResource>> egressNatRules = default;
             VirtualNetworkGatewayConnectionType connectionType = default;
-            Optional<VirtualNetworkGatewayConnectionProtocol> connectionProtocol = default;
-            Optional<int> routingWeight = default;
-            Optional<int> dpdTimeoutSeconds = default;
-            Optional<VirtualNetworkGatewayConnectionMode> connectionMode = default;
-            Optional<string> sharedKey = default;
-            Optional<VirtualNetworkGatewayConnectionStatus> connectionStatus = default;
-            Optional<IReadOnlyList<TunnelConnectionHealth>> tunnelConnectionStatus = default;
-            Optional<long> egressBytesTransferred = default;
-            Optional<long> ingressBytesTransferred = default;
-            Optional<WritableSubResource> peer = default;
-            Optional<bool> enableBgp = default;
-            Optional<IList<GatewayCustomBgpIPAddressIPConfiguration>> gatewayCustomBgpIPAddresses = default;
-            Optional<bool> useLocalAzureIPAddress = default;
-            Optional<bool> usePolicyBasedTrafficSelectors = default;
-            Optional<IList<IPsecPolicy>> ipsecPolicies = default;
-            Optional<IList<TrafficSelectorPolicy>> trafficSelectorPolicies = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<bool> expressRouteGatewayBypass = default;
-            Optional<bool> enablePrivateLinkFastPath = default;
+            Core.Optional<VirtualNetworkGatewayConnectionProtocol> connectionProtocol = default;
+            Core.Optional<int> routingWeight = default;
+            Core.Optional<int> dpdTimeoutSeconds = default;
+            Core.Optional<VirtualNetworkGatewayConnectionMode> connectionMode = default;
+            Core.Optional<string> sharedKey = default;
+            Core.Optional<VirtualNetworkGatewayConnectionStatus> connectionStatus = default;
+            Core.Optional<IReadOnlyList<TunnelConnectionHealth>> tunnelConnectionStatus = default;
+            Core.Optional<long> egressBytesTransferred = default;
+            Core.Optional<long> ingressBytesTransferred = default;
+            Core.Optional<WritableSubResource> peer = default;
+            Core.Optional<bool> enableBgp = default;
+            Core.Optional<IList<GatewayCustomBgpIPAddressIPConfiguration>> gatewayCustomBgpIPAddresses = default;
+            Core.Optional<bool> useLocalAzureIPAddress = default;
+            Core.Optional<bool> usePolicyBasedTrafficSelectors = default;
+            Core.Optional<IList<IPsecPolicy>> ipsecPolicies = default;
+            Core.Optional<IList<TrafficSelectorPolicy>> trafficSelectorPolicies = default;
+            Core.Optional<Guid> resourceGuid = default;
+            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Core.Optional<bool> expressRouteGatewayBypass = default;
+            Core.Optional<bool> enablePrivateLinkFastPath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VirtualNetworkGatewayConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), authorizationKey.Value, virtualNetworkGateway1, virtualNetworkGateway2.Value, localNetworkGateway2.Value, Optional.ToList(ingressNatRules), Optional.ToList(egressNatRules), connectionType, Optional.ToNullable(connectionProtocol), Optional.ToNullable(routingWeight), Optional.ToNullable(dpdTimeoutSeconds), Optional.ToNullable(connectionMode), sharedKey.Value, Optional.ToNullable(connectionStatus), Optional.ToList(tunnelConnectionStatus), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(ingressBytesTransferred), peer, Optional.ToNullable(enableBgp), Optional.ToList(gatewayCustomBgpIPAddresses), Optional.ToNullable(useLocalAzureIPAddress), Optional.ToNullable(usePolicyBasedTrafficSelectors), Optional.ToList(ipsecPolicies), Optional.ToList(trafficSelectorPolicies), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToNullable(expressRouteGatewayBypass), Optional.ToNullable(enablePrivateLinkFastPath));
+            return new VirtualNetworkGatewayConnectionData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags), Core.Optional.ToNullable(etag), authorizationKey.Value, virtualNetworkGateway1, virtualNetworkGateway2.Value, localNetworkGateway2.Value, Core.Optional.ToList(ingressNatRules), Core.Optional.ToList(egressNatRules), connectionType, Core.Optional.ToNullable(connectionProtocol), Core.Optional.ToNullable(routingWeight), Core.Optional.ToNullable(dpdTimeoutSeconds), Core.Optional.ToNullable(connectionMode), sharedKey.Value, Core.Optional.ToNullable(connectionStatus), Core.Optional.ToList(tunnelConnectionStatus), Core.Optional.ToNullable(egressBytesTransferred), Core.Optional.ToNullable(ingressBytesTransferred), peer, Core.Optional.ToNullable(enableBgp), Core.Optional.ToList(gatewayCustomBgpIPAddresses), Core.Optional.ToNullable(useLocalAzureIPAddress), Core.Optional.ToNullable(usePolicyBasedTrafficSelectors), Core.Optional.ToList(ipsecPolicies), Core.Optional.ToList(trafficSelectorPolicies), Core.Optional.ToNullable(resourceGuid), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(expressRouteGatewayBypass), Core.Optional.ToNullable(enablePrivateLinkFastPath));
         }
     }
 }

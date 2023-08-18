@@ -14,15 +14,15 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class SecurityGroupViewResultOperationSource : IOperationSource<SecurityGroupViewResult>
+    internal class SecurityGroupViewResultOperationSource : Core.IOperationSource<SecurityGroupViewResult>
     {
-        SecurityGroupViewResult IOperationSource<SecurityGroupViewResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        SecurityGroupViewResult Core.IOperationSource<SecurityGroupViewResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return SecurityGroupViewResult.DeserializeSecurityGroupViewResult(document.RootElement);
         }
 
-        async ValueTask<SecurityGroupViewResult> IOperationSource<SecurityGroupViewResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SecurityGroupViewResult> Core.IOperationSource<SecurityGroupViewResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return SecurityGroupViewResult.DeserializeSecurityGroupViewResult(document.RootElement);

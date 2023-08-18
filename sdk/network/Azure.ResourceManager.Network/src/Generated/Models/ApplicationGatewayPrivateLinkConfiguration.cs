@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayPrivateLinkConfiguration. </summary>
         public ApplicationGatewayPrivateLinkConfiguration()
         {
-            IPConfigurations = new ChangeTrackingList<ApplicationGatewayPrivateLinkIPConfiguration>();
+            IPConfigurations = new Core.ChangeTrackingList<ApplicationGatewayPrivateLinkIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayPrivateLinkConfiguration. </summary>

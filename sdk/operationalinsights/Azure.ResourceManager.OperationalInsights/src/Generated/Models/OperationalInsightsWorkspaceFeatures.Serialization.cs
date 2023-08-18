@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsWorkspaceFeatures : IUtf8JsonSerializable
+    public partial class OperationalInsightsWorkspaceFeatures : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsDataExportEnabled))
+            if (Core.Optional.IsDefined(IsDataExportEnabled))
             {
                 if (IsDataExportEnabled != null)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     writer.WriteNull("enableDataExport");
                 }
             }
-            if (Optional.IsDefined(ImmediatePurgeDataOn30Days))
+            if (Core.Optional.IsDefined(ImmediatePurgeDataOn30Days))
             {
                 if (ImmediatePurgeDataOn30Days != null)
                 {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     writer.WriteNull("immediatePurgeDataOn30Days");
                 }
             }
-            if (Optional.IsDefined(IsLogAccessUsingOnlyResourcePermissionsEnabled))
+            if (Core.Optional.IsDefined(IsLogAccessUsingOnlyResourcePermissionsEnabled))
             {
                 if (IsLogAccessUsingOnlyResourcePermissionsEnabled != null)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     writer.WriteNull("enableLogAccessUsingOnlyResourcePermissions");
                 }
             }
-            if (Optional.IsDefined(ClusterResourceId))
+            if (Core.Optional.IsDefined(ClusterResourceId))
             {
                 if (ClusterResourceId != null)
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     writer.WriteNull("clusterResourceId");
                 }
             }
-            if (Optional.IsDefined(IsLocalAuthDisabled))
+            if (Core.Optional.IsDefined(IsLocalAuthDisabled))
             {
                 if (IsLocalAuthDisabled != null)
                 {
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<bool?> enableDataExport = default;
-            Optional<bool?> immediatePurgeDataOn30Days = default;
-            Optional<bool?> enableLogAccessUsingOnlyResourcePermissions = default;
-            Optional<ResourceIdentifier> clusterResourceId = default;
-            Optional<bool?> disableLocalAuth = default;
+            Core.Optional<bool?> enableDataExport = default;
+            Core.Optional<bool?> immediatePurgeDataOn30Days = default;
+            Core.Optional<bool?> enableLogAccessUsingOnlyResourcePermissions = default;
+            Core.Optional<ResourceIdentifier> clusterResourceId = default;
+            Core.Optional<bool?> disableLocalAuth = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new OperationalInsightsWorkspaceFeatures(Optional.ToNullable(enableDataExport), Optional.ToNullable(immediatePurgeDataOn30Days), Optional.ToNullable(enableLogAccessUsingOnlyResourcePermissions), clusterResourceId.Value, Optional.ToNullable(disableLocalAuth), additionalProperties);
+            return new OperationalInsightsWorkspaceFeatures(Core.Optional.ToNullable(enableDataExport), Core.Optional.ToNullable(immediatePurgeDataOn30Days), Core.Optional.ToNullable(enableLogAccessUsingOnlyResourcePermissions), clusterResourceId.Value, Core.Optional.ToNullable(disableLocalAuth), additionalProperties);
         }
     }
 }

@@ -14,34 +14,34 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class VpnServerConfigurationPolicyGroupData : IUtf8JsonSerializable
+    public partial class VpnServerConfigurationPolicyGroupData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsDefault))
+            if (Core.Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (Optional.IsDefined(Priority))
+            if (Core.Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Optional.IsCollectionDefined(PolicyMembers))
+            if (Core.Optional.IsCollectionDefined(PolicyMembers))
             {
                 writer.WritePropertyName("policyMembers"u8);
                 writer.WriteStartArray();
@@ -61,15 +61,15 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<bool> isDefault = default;
-            Optional<int> priority = default;
-            Optional<IList<VpnServerConfigurationPolicyGroupMember>> policyMembers = default;
-            Optional<IReadOnlyList<WritableSubResource>> p2sConnectionConfigurations = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceType> type = default;
+            Core.Optional<bool> isDefault = default;
+            Core.Optional<int> priority = default;
+            Core.Optional<IList<VpnServerConfigurationPolicyGroupMember>> policyMembers = default;
+            Core.Optional<IReadOnlyList<WritableSubResource>> p2sConnectionConfigurations = default;
+            Core.Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VpnServerConfigurationPolicyGroupData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(isDefault), Optional.ToNullable(priority), Optional.ToList(policyMembers), Optional.ToList(p2sConnectionConfigurations), Optional.ToNullable(provisioningState));
+            return new VpnServerConfigurationPolicyGroupData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), Core.Optional.ToNullable(isDefault), Core.Optional.ToNullable(priority), Core.Optional.ToList(policyMembers), Core.Optional.ToList(p2sConnectionConfigurations), Core.Optional.ToNullable(provisioningState));
         }
     }
 }

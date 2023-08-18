@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of ClusterListResult. </summary>
         internal ClusterListResult()
         {
-            Value = new ChangeTrackingList<OperationalInsightsClusterData>();
+            Value = new Core.ChangeTrackingList<OperationalInsightsClusterData>();
         }
 
         /// <summary> Initializes a new instance of ClusterListResult. </summary>

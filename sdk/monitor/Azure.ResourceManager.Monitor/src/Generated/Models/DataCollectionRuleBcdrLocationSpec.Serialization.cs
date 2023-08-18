@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<DataCollectionRuleBcdrLocationSpecProvisioningStatus> provisioningStatus = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<DataCollectionRuleBcdrLocationSpecProvisioningStatus> provisioningStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new DataCollectionRuleBcdrLocationSpec(Optional.ToNullable(location), Optional.ToNullable(provisioningStatus));
+            return new DataCollectionRuleBcdrLocationSpec(Core.Optional.ToNullable(location), Core.Optional.ToNullable(provisioningStatus));
         }
     }
 }

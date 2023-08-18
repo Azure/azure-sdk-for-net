@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AzureFirewallPacketCaptureRule : IUtf8JsonSerializable
+    public partial class AzureFirewallPacketCaptureRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Sources))
+            if (Core.Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Destinations))
+            if (Core.Optional.IsCollectionDefined(Destinations))
             {
                 writer.WritePropertyName("destinations"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DestinationPorts))
+            if (Core.Optional.IsCollectionDefined(DestinationPorts))
             {
                 writer.WritePropertyName("destinationPorts"u8);
                 writer.WriteStartArray();
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> sources = default;
-            Optional<IList<string>> destinations = default;
-            Optional<IList<string>> destinationPorts = default;
+            Core.Optional<IList<string>> sources = default;
+            Core.Optional<IList<string>> destinations = default;
+            Core.Optional<IList<string>> destinationPorts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sources"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new AzureFirewallPacketCaptureRule(Optional.ToList(sources), Optional.ToList(destinations), Optional.ToList(destinationPorts));
+            return new AzureFirewallPacketCaptureRule(Core.Optional.ToList(sources), Core.Optional.ToList(destinations), Core.Optional.ToList(destinationPorts));
         }
     }
 }

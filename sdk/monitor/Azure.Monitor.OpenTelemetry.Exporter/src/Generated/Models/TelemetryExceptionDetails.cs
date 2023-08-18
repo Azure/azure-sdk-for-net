@@ -22,7 +22,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Argument.AssertNotNull(message, nameof(message));
 
             Message = message;
-            ParsedStack = new ChangeTrackingList<StackFrame>();
+            ParsedStack = new Core.ChangeTrackingList<StackFrame>();
         }
 
         /// <summary> In case exception is nested (outer exception contains inner one), the id and outerId properties are used to represent the nesting. </summary>

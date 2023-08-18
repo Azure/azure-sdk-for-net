@@ -14,22 +14,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class VpnSiteData : IUtf8JsonSerializable
+    public partial class VpnSiteData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -42,42 +42,42 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualWan))
+            if (Core.Optional.IsDefined(VirtualWan))
             {
                 writer.WritePropertyName("virtualWan"u8);
                 JsonSerializer.Serialize(writer, VirtualWan);
             }
-            if (Optional.IsDefined(DeviceProperties))
+            if (Core.Optional.IsDefined(DeviceProperties))
             {
                 writer.WritePropertyName("deviceProperties"u8);
                 writer.WriteObjectValue(DeviceProperties);
             }
-            if (Optional.IsDefined(IPAddress))
+            if (Core.Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (Optional.IsDefined(SiteKey))
+            if (Core.Optional.IsDefined(SiteKey))
             {
                 writer.WritePropertyName("siteKey"u8);
                 writer.WriteStringValue(SiteKey);
             }
-            if (Optional.IsDefined(AddressSpace))
+            if (Core.Optional.IsDefined(AddressSpace))
             {
                 writer.WritePropertyName("addressSpace"u8);
                 writer.WriteObjectValue(AddressSpace);
             }
-            if (Optional.IsDefined(BgpProperties))
+            if (Core.Optional.IsDefined(BgpProperties))
             {
                 writer.WritePropertyName("bgpProperties"u8);
                 writer.WriteObjectValue(BgpProperties);
             }
-            if (Optional.IsDefined(IsSecuritySite))
+            if (Core.Optional.IsDefined(IsSecuritySite))
             {
                 writer.WritePropertyName("isSecuritySite"u8);
                 writer.WriteBooleanValue(IsSecuritySite.Value);
             }
-            if (Optional.IsCollectionDefined(VpnSiteLinks))
+            if (Core.Optional.IsCollectionDefined(VpnSiteLinks))
             {
                 writer.WritePropertyName("vpnSiteLinks"u8);
                 writer.WriteStartArray();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(O365Policy))
+            if (Core.Optional.IsDefined(O365Policy))
             {
                 writer.WritePropertyName("o365Policy"u8);
                 writer.WriteObjectValue(O365Policy);
@@ -102,22 +102,22 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<WritableSubResource> virtualWan = default;
-            Optional<DeviceProperties> deviceProperties = default;
-            Optional<string> ipAddress = default;
-            Optional<string> siteKey = default;
-            Optional<AddressSpace> addressSpace = default;
-            Optional<BgpSettings> bgpProperties = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<bool> isSecuritySite = default;
-            Optional<IList<VpnSiteLinkData>> vpnSiteLinks = default;
-            Optional<O365PolicyProperties> o365Policy = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceType> type = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<WritableSubResource> virtualWan = default;
+            Core.Optional<DeviceProperties> deviceProperties = default;
+            Core.Optional<string> ipAddress = default;
+            Core.Optional<string> siteKey = default;
+            Core.Optional<AddressSpace> addressSpace = default;
+            Core.Optional<BgpSettings> bgpProperties = default;
+            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Core.Optional<bool> isSecuritySite = default;
+            Core.Optional<IList<VpnSiteLinkData>> vpnSiteLinks = default;
+            Core.Optional<O365PolicyProperties> o365Policy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VpnSiteData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), virtualWan, deviceProperties.Value, ipAddress.Value, siteKey.Value, addressSpace.Value, bgpProperties.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(isSecuritySite), Optional.ToList(vpnSiteLinks), o365Policy.Value);
+            return new VpnSiteData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags), Core.Optional.ToNullable(etag), virtualWan, deviceProperties.Value, ipAddress.Value, siteKey.Value, addressSpace.Value, bgpProperties.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(isSecuritySite), Core.Optional.ToList(vpnSiteLinks), o365Policy.Value);
         }
     }
 }

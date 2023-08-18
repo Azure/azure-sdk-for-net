@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    internal class PostgreSqlFlexibleServerFirewallRuleOperationSource : IOperationSource<PostgreSqlFlexibleServerFirewallRuleResource>
+    internal class PostgreSqlFlexibleServerFirewallRuleOperationSource : Core.IOperationSource<PostgreSqlFlexibleServerFirewallRuleResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _client = client;
         }
 
-        PostgreSqlFlexibleServerFirewallRuleResource IOperationSource<PostgreSqlFlexibleServerFirewallRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PostgreSqlFlexibleServerFirewallRuleResource Core.IOperationSource<PostgreSqlFlexibleServerFirewallRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PostgreSqlFlexibleServerFirewallRuleData.DeserializePostgreSqlFlexibleServerFirewallRuleData(document.RootElement);
             return new PostgreSqlFlexibleServerFirewallRuleResource(_client, data);
         }
 
-        async ValueTask<PostgreSqlFlexibleServerFirewallRuleResource> IOperationSource<PostgreSqlFlexibleServerFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PostgreSqlFlexibleServerFirewallRuleResource> Core.IOperationSource<PostgreSqlFlexibleServerFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PostgreSqlFlexibleServerFirewallRuleData.DeserializePostgreSqlFlexibleServerFirewallRuleData(document.RootElement);

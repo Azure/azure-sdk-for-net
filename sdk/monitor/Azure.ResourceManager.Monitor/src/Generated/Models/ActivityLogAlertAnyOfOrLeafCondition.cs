@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of ActivityLogAlertAnyOfOrLeafCondition. </summary>
         public ActivityLogAlertAnyOfOrLeafCondition()
         {
-            AnyOf = new ChangeTrackingList<AlertRuleLeafCondition>();
+            AnyOf = new Core.ChangeTrackingList<AlertRuleLeafCondition>();
         }
 
         /// <summary> Initializes a new instance of ActivityLogAlertAnyOfOrLeafCondition. </summary>

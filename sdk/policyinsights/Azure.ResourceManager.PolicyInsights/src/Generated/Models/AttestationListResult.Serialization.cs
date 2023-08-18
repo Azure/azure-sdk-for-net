@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PolicyAttestationData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<PolicyAttestationData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     continue;
                 }
             }
-            return new AttestationListResult(Optional.ToList(value), nextLink.Value);
+            return new AttestationListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

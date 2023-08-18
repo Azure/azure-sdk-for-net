@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AddressPrefixItem : IUtf8JsonSerializable
+    public partial class AddressPrefixItem : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AddressPrefix))
+            if (Core.Optional.IsDefined(AddressPrefix))
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (Optional.IsDefined(AddressPrefixType))
+            if (Core.Optional.IsDefined(AddressPrefixType))
             {
                 writer.WritePropertyName("addressPrefixType"u8);
                 writer.WriteStringValue(AddressPrefixType.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> addressPrefix = default;
-            Optional<AddressPrefixType> addressPrefixType = default;
+            Core.Optional<string> addressPrefix = default;
+            Core.Optional<AddressPrefixType> addressPrefixType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addressPrefix"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new AddressPrefixItem(addressPrefix.Value, Optional.ToNullable(addressPrefixType));
+            return new AddressPrefixItem(addressPrefix.Value, Core.Optional.ToNullable(addressPrefixType));
         }
     }
 }

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRoutePortsLocationBandwidths : IUtf8JsonSerializable
+    public partial class ExpressRoutePortsLocationBandwidths : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> offerName = default;
-            Optional<int> valueInGbps = default;
+            Core.Optional<string> offerName = default;
+            Core.Optional<int> valueInGbps = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offerName"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ExpressRoutePortsLocationBandwidths(offerName.Value, Optional.ToNullable(valueInGbps));
+            return new ExpressRoutePortsLocationBandwidths(offerName.Value, Core.Optional.ToNullable(valueInGbps));
         }
     }
 }

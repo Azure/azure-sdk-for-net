@@ -14,12 +14,12 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class AzureFirewallData : IUtf8JsonSerializable
+    public partial class AzureFirewallData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Zones))
+            if (Core.Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ApplicationRuleCollections))
+            if (Core.Optional.IsCollectionDefined(ApplicationRuleCollections))
             {
                 writer.WritePropertyName("applicationRuleCollections"u8);
                 writer.WriteStartArray();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NatRuleCollections))
+            if (Core.Optional.IsCollectionDefined(NatRuleCollections))
             {
                 writer.WritePropertyName("natRuleCollections"u8);
                 writer.WriteStartArray();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NetworkRuleCollections))
+            if (Core.Optional.IsCollectionDefined(NetworkRuleCollections))
             {
                 writer.WritePropertyName("networkRuleCollections"u8);
                 writer.WriteStartArray();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPConfigurations))
+            if (Core.Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
@@ -92,37 +92,37 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ManagementIPConfiguration))
+            if (Core.Optional.IsDefined(ManagementIPConfiguration))
             {
                 writer.WritePropertyName("managementIpConfiguration"u8);
                 writer.WriteObjectValue(ManagementIPConfiguration);
             }
-            if (Optional.IsDefined(ThreatIntelMode))
+            if (Core.Optional.IsDefined(ThreatIntelMode))
             {
                 writer.WritePropertyName("threatIntelMode"u8);
                 writer.WriteStringValue(ThreatIntelMode.Value.ToString());
             }
-            if (Optional.IsDefined(VirtualHub))
+            if (Core.Optional.IsDefined(VirtualHub))
             {
                 writer.WritePropertyName("virtualHub"u8);
                 JsonSerializer.Serialize(writer, VirtualHub);
             }
-            if (Optional.IsDefined(FirewallPolicy))
+            if (Core.Optional.IsDefined(FirewallPolicy))
             {
                 writer.WritePropertyName("firewallPolicy"u8);
                 JsonSerializer.Serialize(writer, FirewallPolicy);
             }
-            if (Optional.IsDefined(HubIPAddresses))
+            if (Core.Optional.IsDefined(HubIPAddresses))
             {
                 writer.WritePropertyName("hubIPAddresses"u8);
                 writer.WriteObjectValue(HubIPAddresses);
             }
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(AdditionalProperties))
+            if (Core.Optional.IsCollectionDefined(AdditionalProperties))
             {
                 writer.WritePropertyName("additionalProperties"u8);
                 writer.WriteStartObject();
@@ -143,26 +143,26 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<IList<string>> zones = default;
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<AzureFirewallApplicationRuleCollectionData>> applicationRuleCollections = default;
-            Optional<IList<AzureFirewallNatRuleCollectionData>> natRuleCollections = default;
-            Optional<IList<AzureFirewallNetworkRuleCollectionData>> networkRuleCollections = default;
-            Optional<IList<AzureFirewallIPConfiguration>> ipConfigurations = default;
-            Optional<AzureFirewallIPConfiguration> managementIPConfiguration = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<AzureFirewallThreatIntelMode> threatIntelMode = default;
-            Optional<WritableSubResource> virtualHub = default;
-            Optional<WritableSubResource> firewallPolicy = default;
-            Optional<HubIPAddresses> hubIPAddresses = default;
-            Optional<IReadOnlyList<AzureFirewallIPGroups>> ipGroups = default;
-            Optional<AzureFirewallSku> sku = default;
-            Optional<IDictionary<string, string>> additionalProperties = default;
+            Core.Optional<IList<string>> zones = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceType> type = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IList<AzureFirewallApplicationRuleCollectionData>> applicationRuleCollections = default;
+            Core.Optional<IList<AzureFirewallNatRuleCollectionData>> natRuleCollections = default;
+            Core.Optional<IList<AzureFirewallNetworkRuleCollectionData>> networkRuleCollections = default;
+            Core.Optional<IList<AzureFirewallIPConfiguration>> ipConfigurations = default;
+            Core.Optional<AzureFirewallIPConfiguration> managementIPConfiguration = default;
+            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Core.Optional<AzureFirewallThreatIntelMode> threatIntelMode = default;
+            Core.Optional<WritableSubResource> virtualHub = default;
+            Core.Optional<WritableSubResource> firewallPolicy = default;
+            Core.Optional<HubIPAddresses> hubIPAddresses = default;
+            Core.Optional<IReadOnlyList<AzureFirewallIPGroups>> ipGroups = default;
+            Core.Optional<AzureFirewallSku> sku = default;
+            Core.Optional<IDictionary<string, string>> additionalProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zones"u8))
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new AzureFirewallData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToList(zones), Optional.ToNullable(etag), Optional.ToList(applicationRuleCollections), Optional.ToList(natRuleCollections), Optional.ToList(networkRuleCollections), Optional.ToList(ipConfigurations), managementIPConfiguration.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(threatIntelMode), virtualHub, firewallPolicy, hubIPAddresses.Value, Optional.ToList(ipGroups), sku.Value, Optional.ToDictionary(additionalProperties));
+            return new AzureFirewallData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags), Core.Optional.ToList(zones), Core.Optional.ToNullable(etag), Core.Optional.ToList(applicationRuleCollections), Core.Optional.ToList(natRuleCollections), Core.Optional.ToList(networkRuleCollections), Core.Optional.ToList(ipConfigurations), managementIPConfiguration.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(threatIntelMode), virtualHub, firewallPolicy, hubIPAddresses.Value, Core.Optional.ToList(ipGroups), sku.Value, Core.Optional.ToDictionary(additionalProperties));
         }
     }
 }

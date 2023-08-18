@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of MetricBaselinesResponse. </summary>
         internal MetricBaselinesResponse()
         {
-            Value = new ChangeTrackingList<MonitorSingleMetricBaseline>();
+            Value = new Core.ChangeTrackingList<MonitorSingleMetricBaseline>();
         }
 
         /// <summary> Initializes a new instance of MetricBaselinesResponse. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <summary> Initializes a new instance of PostgreSqlPerformanceTierProperties. </summary>
         internal PostgreSqlPerformanceTierProperties()
         {
-            ServiceLevelObjectives = new ChangeTrackingList<PostgreSqlPerformanceTierServiceLevelObjectives>();
+            ServiceLevelObjectives = new Core.ChangeTrackingList<PostgreSqlPerformanceTierServiceLevelObjectives>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlPerformanceTierProperties. </summary>

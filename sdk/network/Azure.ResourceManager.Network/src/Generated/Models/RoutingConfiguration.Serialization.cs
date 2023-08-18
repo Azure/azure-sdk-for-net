@@ -11,32 +11,32 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class RoutingConfiguration : IUtf8JsonSerializable
+    public partial class RoutingConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AssociatedRouteTable))
+            if (Core.Optional.IsDefined(AssociatedRouteTable))
             {
                 writer.WritePropertyName("associatedRouteTable"u8);
                 JsonSerializer.Serialize(writer, AssociatedRouteTable);
             }
-            if (Optional.IsDefined(PropagatedRouteTables))
+            if (Core.Optional.IsDefined(PropagatedRouteTables))
             {
                 writer.WritePropertyName("propagatedRouteTables"u8);
                 writer.WriteObjectValue(PropagatedRouteTables);
             }
-            if (Optional.IsDefined(VnetRoutes))
+            if (Core.Optional.IsDefined(VnetRoutes))
             {
                 writer.WritePropertyName("vnetRoutes"u8);
                 writer.WriteObjectValue(VnetRoutes);
             }
-            if (Optional.IsDefined(InboundRouteMap))
+            if (Core.Optional.IsDefined(InboundRouteMap))
             {
                 writer.WritePropertyName("inboundRouteMap"u8);
                 JsonSerializer.Serialize(writer, InboundRouteMap);
             }
-            if (Optional.IsDefined(OutboundRouteMap))
+            if (Core.Optional.IsDefined(OutboundRouteMap))
             {
                 writer.WritePropertyName("outboundRouteMap"u8);
                 JsonSerializer.Serialize(writer, OutboundRouteMap);
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> associatedRouteTable = default;
-            Optional<PropagatedRouteTable> propagatedRouteTables = default;
-            Optional<VnetRoute> vnetRoutes = default;
-            Optional<WritableSubResource> inboundRouteMap = default;
-            Optional<WritableSubResource> outboundRouteMap = default;
+            Core.Optional<WritableSubResource> associatedRouteTable = default;
+            Core.Optional<PropagatedRouteTable> propagatedRouteTables = default;
+            Core.Optional<VnetRoute> vnetRoutes = default;
+            Core.Optional<WritableSubResource> inboundRouteMap = default;
+            Core.Optional<WritableSubResource> outboundRouteMap = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("associatedRouteTable"u8))

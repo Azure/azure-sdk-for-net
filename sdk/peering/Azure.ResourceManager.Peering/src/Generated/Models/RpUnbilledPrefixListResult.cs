@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <summary> Initializes a new instance of RpUnbilledPrefixListResult. </summary>
         internal RpUnbilledPrefixListResult()
         {
-            Value = new ChangeTrackingList<RoutingPreferenceUnbilledPrefix>();
+            Value = new Core.ChangeTrackingList<RoutingPreferenceUnbilledPrefix>();
         }
 
         /// <summary> Initializes a new instance of RpUnbilledPrefixListResult. </summary>

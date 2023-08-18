@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = await _providerRegistrationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ProviderHubArmOperation<ProviderRegistrationResource>(new ProviderRegistrationOperationSource(Client), _providerRegistrationClientDiagnostics, Pipeline, _providerRegistrationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ProviderHubArmOperation<ProviderRegistrationResource>(new ProviderRegistrationOperationSource(Client), _providerRegistrationClientDiagnostics, Pipeline, _providerRegistrationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = _providerRegistrationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.Name, data, cancellationToken);
-                var operation = new ProviderHubArmOperation<ProviderRegistrationResource>(new ProviderRegistrationOperationSource(Client), _providerRegistrationClientDiagnostics, Pipeline, _providerRegistrationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ProviderHubArmOperation<ProviderRegistrationResource>(new ProviderRegistrationOperationSource(Client), _providerRegistrationClientDiagnostics, Pipeline, _providerRegistrationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

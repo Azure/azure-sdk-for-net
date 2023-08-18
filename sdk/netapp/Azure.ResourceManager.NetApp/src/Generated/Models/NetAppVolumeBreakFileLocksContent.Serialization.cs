@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppVolumeBreakFileLocksContent : IUtf8JsonSerializable
+    public partial class NetAppVolumeBreakFileLocksContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientIP))
+            if (Core.Optional.IsDefined(ClientIP))
             {
                 writer.WritePropertyName("clientIp"u8);
                 writer.WriteStringValue(ClientIP.ToString());
             }
-            if (Optional.IsDefined(ConfirmRunningDisruptiveOperation))
+            if (Core.Optional.IsDefined(ConfirmRunningDisruptiveOperation))
             {
                 writer.WritePropertyName("confirmRunningDisruptiveOperation"u8);
                 writer.WriteBooleanValue(ConfirmRunningDisruptiveOperation.Value);

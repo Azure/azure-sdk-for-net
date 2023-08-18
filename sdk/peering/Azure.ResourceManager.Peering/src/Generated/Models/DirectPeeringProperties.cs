@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <summary> Initializes a new instance of DirectPeeringProperties. </summary>
         public DirectPeeringProperties()
         {
-            Connections = new ChangeTrackingList<PeeringDirectConnection>();
+            Connections = new Core.ChangeTrackingList<PeeringDirectConnection>();
         }
 
         /// <summary> Initializes a new instance of DirectPeeringProperties. </summary>

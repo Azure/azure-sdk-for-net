@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of InboundNatRuleListResult. </summary>
         internal InboundNatRuleListResult()
         {
-            Value = new ChangeTrackingList<InboundNatRuleData>();
+            Value = new Core.ChangeTrackingList<InboundNatRuleData>();
         }
 
         /// <summary> Initializes a new instance of InboundNatRuleListResult. </summary>

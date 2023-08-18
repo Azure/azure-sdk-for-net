@@ -13,34 +13,34 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class BgpConnectionData : IUtf8JsonSerializable
+    public partial class BgpConnectionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PeerAsn))
+            if (Core.Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerAsn"u8);
                 writer.WriteNumberValue(PeerAsn.Value);
             }
-            if (Optional.IsDefined(PeerIP))
+            if (Core.Optional.IsDefined(PeerIP))
             {
                 writer.WritePropertyName("peerIp"u8);
                 writer.WriteStringValue(PeerIP);
             }
-            if (Optional.IsDefined(HubVirtualNetworkConnection))
+            if (Core.Optional.IsDefined(HubVirtualNetworkConnection))
             {
                 writer.WritePropertyName("hubVirtualNetworkConnection"u8);
                 JsonSerializer.Serialize(writer, HubVirtualNetworkConnection);
@@ -55,15 +55,15 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<long> peerAsn = default;
-            Optional<string> peerIP = default;
-            Optional<WritableSubResource> hubVirtualNetworkConnection = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<HubBgpConnectionStatus> connectionState = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceType> type = default;
+            Core.Optional<long> peerAsn = default;
+            Core.Optional<string> peerIP = default;
+            Core.Optional<WritableSubResource> hubVirtualNetworkConnection = default;
+            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Core.Optional<HubBgpConnectionStatus> connectionState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new BgpConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(peerAsn), peerIP.Value, hubVirtualNetworkConnection, Optional.ToNullable(provisioningState), Optional.ToNullable(connectionState));
+            return new BgpConnectionData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), Core.Optional.ToNullable(peerAsn), peerIP.Value, hubVirtualNetworkConnection, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(connectionState));
         }
     }
 }

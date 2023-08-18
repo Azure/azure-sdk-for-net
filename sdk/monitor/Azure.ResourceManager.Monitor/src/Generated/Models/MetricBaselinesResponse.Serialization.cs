@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MonitorSingleMetricBaseline>> value = default;
+            Core.Optional<IReadOnlyList<MonitorSingleMetricBaseline>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MetricBaselinesResponse(Optional.ToList(value));
+            return new MetricBaselinesResponse(Core.Optional.ToList(value));
         }
     }
 }

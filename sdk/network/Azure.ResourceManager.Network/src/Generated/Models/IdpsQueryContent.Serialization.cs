@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class IdpsQueryContent : IUtf8JsonSerializable
+    public partial class IdpsQueryContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Filters))
+            if (Core.Optional.IsCollectionDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
@@ -25,22 +25,22 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Search))
+            if (Core.Optional.IsDefined(Search))
             {
                 writer.WritePropertyName("search"u8);
                 writer.WriteStringValue(Search);
             }
-            if (Optional.IsDefined(OrderBy))
+            if (Core.Optional.IsDefined(OrderBy))
             {
                 writer.WritePropertyName("orderBy"u8);
                 writer.WriteObjectValue(OrderBy);
             }
-            if (Optional.IsDefined(ResultsPerPage))
+            if (Core.Optional.IsDefined(ResultsPerPage))
             {
                 writer.WritePropertyName("resultsPerPage"u8);
                 writer.WriteNumberValue(ResultsPerPage.Value);
             }
-            if (Optional.IsDefined(Skip))
+            if (Core.Optional.IsDefined(Skip))
             {
                 writer.WritePropertyName("skip"u8);
                 writer.WriteNumberValue(Skip.Value);

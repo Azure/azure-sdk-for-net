@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Initializes a new instance of PolicySummaryResults. </summary>
         internal PolicySummaryResults()
         {
-            ResourceDetails = new ChangeTrackingList<ComplianceDetail>();
-            PolicyDetails = new ChangeTrackingList<ComplianceDetail>();
-            PolicyGroupDetails = new ChangeTrackingList<ComplianceDetail>();
+            ResourceDetails = new Core.ChangeTrackingList<ComplianceDetail>();
+            PolicyDetails = new Core.ChangeTrackingList<ComplianceDetail>();
+            PolicyGroupDetails = new Core.ChangeTrackingList<ComplianceDetail>();
         }
 
         /// <summary> Initializes a new instance of PolicySummaryResults. </summary>

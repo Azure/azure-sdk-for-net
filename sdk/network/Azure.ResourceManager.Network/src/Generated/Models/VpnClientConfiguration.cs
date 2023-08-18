@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VpnClientConfiguration. </summary>
         public VpnClientConfiguration()
         {
-            VpnClientRootCertificates = new ChangeTrackingList<VpnClientRootCertificate>();
-            VpnClientRevokedCertificates = new ChangeTrackingList<VpnClientRevokedCertificate>();
-            VpnClientProtocols = new ChangeTrackingList<VpnClientProtocol>();
-            VpnAuthenticationTypes = new ChangeTrackingList<VpnAuthenticationType>();
-            VpnClientIPsecPolicies = new ChangeTrackingList<IPsecPolicy>();
-            RadiusServers = new ChangeTrackingList<RadiusServer>();
-            VngClientConnectionConfigurations = new ChangeTrackingList<VngClientConnectionConfiguration>();
+            VpnClientRootCertificates = new Core.ChangeTrackingList<VpnClientRootCertificate>();
+            VpnClientRevokedCertificates = new Core.ChangeTrackingList<VpnClientRevokedCertificate>();
+            VpnClientProtocols = new Core.ChangeTrackingList<VpnClientProtocol>();
+            VpnAuthenticationTypes = new Core.ChangeTrackingList<VpnAuthenticationType>();
+            VpnClientIPsecPolicies = new Core.ChangeTrackingList<IPsecPolicy>();
+            RadiusServers = new Core.ChangeTrackingList<RadiusServer>();
+            VngClientConnectionConfigurations = new Core.ChangeTrackingList<VngClientConnectionConfiguration>();
         }
 
         /// <summary> Initializes a new instance of VpnClientConfiguration. </summary>

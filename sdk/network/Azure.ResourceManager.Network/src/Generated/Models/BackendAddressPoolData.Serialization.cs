@@ -14,29 +14,29 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class BackendAddressPoolData : IUtf8JsonSerializable
+    public partial class BackendAddressPoolData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(TunnelInterfaces))
+            if (Core.Optional.IsCollectionDefined(TunnelInterfaces))
             {
                 writer.WritePropertyName("tunnelInterfaces"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LoadBalancerBackendAddresses))
+            if (Core.Optional.IsCollectionDefined(LoadBalancerBackendAddresses))
             {
                 writer.WritePropertyName("loadBalancerBackendAddresses"u8);
                 writer.WriteStartArray();
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DrainPeriodInSeconds))
+            if (Core.Optional.IsDefined(DrainPeriodInSeconds))
             {
                 writer.WritePropertyName("drainPeriodInSeconds"u8);
                 writer.WriteNumberValue(DrainPeriodInSeconds.Value);
             }
-            if (Optional.IsDefined(VirtualNetwork))
+            if (Core.Optional.IsDefined(VirtualNetwork))
             {
                 writer.WritePropertyName("virtualNetwork"u8);
                 JsonSerializer.Serialize(writer, VirtualNetwork);
             }
-            if (Optional.IsDefined(SyncMode))
+            if (Core.Optional.IsDefined(SyncMode))
             {
                 writer.WritePropertyName("syncMode"u8);
                 writer.WriteStringValue(SyncMode.Value.ToString());
@@ -81,22 +81,22 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IList<GatewayLoadBalancerTunnelInterface>> tunnelInterfaces = default;
-            Optional<IList<LoadBalancerBackendAddress>> loadBalancerBackendAddresses = default;
-            Optional<IReadOnlyList<NetworkInterfaceIPConfigurationData>> backendIPConfigurations = default;
-            Optional<IReadOnlyList<WritableSubResource>> loadBalancingRules = default;
-            Optional<WritableSubResource> outboundRule = default;
-            Optional<IReadOnlyList<WritableSubResource>> outboundRules = default;
-            Optional<IReadOnlyList<WritableSubResource>> inboundNatRules = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<int> drainPeriodInSeconds = default;
-            Optional<WritableSubResource> virtualNetwork = default;
-            Optional<BackendAddressSyncMode> syncMode = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceType> type = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<IList<GatewayLoadBalancerTunnelInterface>> tunnelInterfaces = default;
+            Core.Optional<IList<LoadBalancerBackendAddress>> loadBalancerBackendAddresses = default;
+            Core.Optional<IReadOnlyList<NetworkInterfaceIPConfigurationData>> backendIPConfigurations = default;
+            Core.Optional<IReadOnlyList<WritableSubResource>> loadBalancingRules = default;
+            Core.Optional<WritableSubResource> outboundRule = default;
+            Core.Optional<IReadOnlyList<WritableSubResource>> outboundRules = default;
+            Core.Optional<IReadOnlyList<WritableSubResource>> inboundNatRules = default;
+            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Core.Optional<int> drainPeriodInSeconds = default;
+            Core.Optional<WritableSubResource> virtualNetwork = default;
+            Core.Optional<BackendAddressSyncMode> syncMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new BackendAddressPoolData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(location), Optional.ToList(tunnelInterfaces), Optional.ToList(loadBalancerBackendAddresses), Optional.ToList(backendIPConfigurations), Optional.ToList(loadBalancingRules), outboundRule, Optional.ToList(outboundRules), Optional.ToList(inboundNatRules), Optional.ToNullable(provisioningState), Optional.ToNullable(drainPeriodInSeconds), virtualNetwork, Optional.ToNullable(syncMode));
+            return new BackendAddressPoolData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), Core.Optional.ToNullable(location), Core.Optional.ToList(tunnelInterfaces), Core.Optional.ToList(loadBalancerBackendAddresses), Core.Optional.ToList(backendIPConfigurations), Core.Optional.ToList(loadBalancingRules), outboundRule, Core.Optional.ToList(outboundRules), Core.Optional.ToList(inboundNatRules), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(drainPeriodInSeconds), virtualNetwork, Core.Optional.ToNullable(syncMode));
         }
     }
 }

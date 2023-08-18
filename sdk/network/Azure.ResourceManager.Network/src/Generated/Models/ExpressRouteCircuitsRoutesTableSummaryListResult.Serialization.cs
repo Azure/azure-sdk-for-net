@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ExpressRouteCircuitRoutesTableSummary>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<ExpressRouteCircuitRoutesTableSummary>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ExpressRouteCircuitsRoutesTableSummaryListResult(Optional.ToList(value), nextLink.Value);
+            return new ExpressRouteCircuitsRoutesTableSummaryListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

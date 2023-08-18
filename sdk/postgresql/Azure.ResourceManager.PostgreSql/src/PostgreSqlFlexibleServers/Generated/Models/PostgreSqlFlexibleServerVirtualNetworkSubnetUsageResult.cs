@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult. </summary>
         internal PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult()
         {
-            DelegatedSubnetsUsage = new ChangeTrackingList<PostgreSqlFlexibleServerDelegatedSubnetUsage>();
+            DelegatedSubnetsUsage = new Core.ChangeTrackingList<PostgreSqlFlexibleServerDelegatedSubnetUsage>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult. </summary>

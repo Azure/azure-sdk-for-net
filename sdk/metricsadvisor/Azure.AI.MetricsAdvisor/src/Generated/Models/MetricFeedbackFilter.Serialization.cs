@@ -11,34 +11,34 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class MetricFeedbackFilter : IUtf8JsonSerializable
+    internal partial class MetricFeedbackFilter : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("metricId"u8);
             writer.WriteStringValue(MetricId);
-            if (Optional.IsDefined(DimensionFilter))
+            if (Core.Optional.IsDefined(DimensionFilter))
             {
                 writer.WritePropertyName("dimensionFilter"u8);
                 writer.WriteObjectValue(DimensionFilter);
             }
-            if (Optional.IsDefined(FeedbackType))
+            if (Core.Optional.IsDefined(FeedbackType))
             {
                 writer.WritePropertyName("feedbackType"u8);
                 writer.WriteStringValue(FeedbackType.Value.ToString());
             }
-            if (Optional.IsDefined(StartTime))
+            if (Core.Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime.Value, "O");
             }
-            if (Optional.IsDefined(EndTime))
+            if (Core.Optional.IsDefined(EndTime))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndTime.Value, "O");
             }
-            if (Optional.IsDefined(TimeMode))
+            if (Core.Optional.IsDefined(TimeMode))
             {
                 writer.WritePropertyName("timeMode"u8);
                 writer.WriteStringValue(TimeMode.Value.ToSerialString());

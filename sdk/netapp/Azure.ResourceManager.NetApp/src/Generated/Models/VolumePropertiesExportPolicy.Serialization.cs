@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    internal partial class VolumePropertiesExportPolicy : IUtf8JsonSerializable
+    internal partial class VolumePropertiesExportPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Rules))
+            if (Core.Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IList<NetAppVolumeExportPolicyRule>> rules = default;
+            Core.Optional<IList<NetAppVolumeExportPolicyRule>> rules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rules"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new VolumePropertiesExportPolicy(Optional.ToList(rules));
+            return new VolumePropertiesExportPolicy(Core.Optional.ToList(rules));
         }
     }
 }

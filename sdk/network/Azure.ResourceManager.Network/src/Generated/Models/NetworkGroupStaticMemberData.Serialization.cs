@@ -13,14 +13,14 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class NetworkGroupStaticMemberData : IUtf8JsonSerializable
+    public partial class NetworkGroupStaticMemberData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (Core.Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            Core.Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> region = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ResourceIdentifier> resourceId = default;
+            Core.Optional<string> region = default;
+            Core.Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new NetworkGroupStaticMemberData(id, name, type, systemData.Value, resourceId.Value, region.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(etag));
+            return new NetworkGroupStaticMemberData(id, name, type, systemData.Value, resourceId.Value, region.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(etag));
         }
     }
 }

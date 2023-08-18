@@ -15,17 +15,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    public partial class PacketCoreControlPlaneData : IUtf8JsonSerializable
+    public partial class PacketCoreControlPlaneData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserAssignedIdentity))
+            if (Core.Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(UserAssignedIdentity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MobileNetwork
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Installation))
+            if (Core.Optional.IsDefined(Installation))
             {
                 writer.WritePropertyName("installation"u8);
                 writer.WriteObjectValue(Installation);
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.MobileNetwork
             writer.WriteEndArray();
             writer.WritePropertyName("platform"u8);
             writer.WriteObjectValue(Platform);
-            if (Optional.IsDefined(CoreNetworkTechnology))
+            if (Core.Optional.IsDefined(CoreNetworkTechnology))
             {
                 writer.WritePropertyName("coreNetworkTechnology"u8);
                 writer.WriteStringValue(CoreNetworkTechnology.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Version))
+            if (Core.Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -68,19 +68,19 @@ namespace Azure.ResourceManager.MobileNetwork
             writer.WriteObjectValue(ControlPlaneAccessInterface);
             writer.WritePropertyName("sku"u8);
             writer.WriteStringValue(Sku.ToString());
-            if (Optional.IsDefined(UeMtu))
+            if (Core.Optional.IsDefined(UeMtu))
             {
                 writer.WritePropertyName("ueMtu"u8);
                 writer.WriteNumberValue(UeMtu.Value);
             }
             writer.WritePropertyName("localDiagnosticsAccess"u8);
             writer.WriteObjectValue(LocalDiagnosticsAccess);
-            if (Optional.IsDefined(DiagnosticsUpload))
+            if (Core.Optional.IsDefined(DiagnosticsUpload))
             {
                 writer.WritePropertyName("diagnosticsUpload"u8);
                 writer.WriteObjectValue(DiagnosticsUpload);
             }
-            if (Optional.IsDefined(InteropSettings))
+            if (Core.Optional.IsDefined(InteropSettings))
             {
                 writer.WritePropertyName("interopSettings"u8);
 #if NET6_0_OR_GREATER
@@ -99,27 +99,27 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 return null;
             }
-            Optional<MobileNetworkManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<MobileNetworkManagedServiceIdentity> identity = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MobileNetworkProvisioningState> provisioningState = default;
-            Optional<MobileNetworkInstallation> installation = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<MobileNetworkProvisioningState> provisioningState = default;
+            Core.Optional<MobileNetworkInstallation> installation = default;
             IList<WritableSubResource> sites = default;
             MobileNetworkPlatformConfiguration platform = default;
-            Optional<MobileNetworkCoreNetworkType> coreNetworkTechnology = default;
-            Optional<string> version = default;
-            Optional<string> installedVersion = default;
-            Optional<string> rollbackVersion = default;
+            Core.Optional<MobileNetworkCoreNetworkType> coreNetworkTechnology = default;
+            Core.Optional<string> version = default;
+            Core.Optional<string> installedVersion = default;
+            Core.Optional<string> rollbackVersion = default;
             MobileNetworkInterfaceProperties controlPlaneAccessInterface = default;
             MobileNetworkBillingSku sku = default;
-            Optional<int> ueMtu = default;
+            Core.Optional<int> ueMtu = default;
             MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess = default;
-            Optional<DiagnosticsUploadConfiguration> diagnosticsUpload = default;
-            Optional<BinaryData> interopSettings = default;
+            Core.Optional<DiagnosticsUploadConfiguration> diagnosticsUpload = default;
+            Core.Optional<BinaryData> interopSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     continue;
                 }
             }
-            return new PacketCoreControlPlaneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, Optional.ToNullable(provisioningState), installation.Value, sites, platform, Optional.ToNullable(coreNetworkTechnology), version.Value, installedVersion.Value, rollbackVersion.Value, controlPlaneAccessInterface, sku, Optional.ToNullable(ueMtu), localDiagnosticsAccess, diagnosticsUpload.Value, interopSettings.Value);
+            return new PacketCoreControlPlaneData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity.Value, Core.Optional.ToNullable(provisioningState), installation.Value, sites, platform, Core.Optional.ToNullable(coreNetworkTechnology), version.Value, installedVersion.Value, rollbackVersion.Value, controlPlaneAccessInterface, sku, Core.Optional.ToNullable(ueMtu), localDiagnosticsAccess, diagnosticsUpload.Value, interopSettings.Value);
         }
     }
 }

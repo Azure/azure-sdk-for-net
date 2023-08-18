@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualWanVpnProfileContent : IUtf8JsonSerializable
+    public partial class VirtualWanVpnProfileContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(VpnServerConfigurationResourceId))
+            if (Core.Optional.IsDefined(VpnServerConfigurationResourceId))
             {
                 writer.WritePropertyName("vpnServerConfigurationResourceId"u8);
                 writer.WriteStringValue(VpnServerConfigurationResourceId);
             }
-            if (Optional.IsDefined(AuthenticationMethod))
+            if (Core.Optional.IsDefined(AuthenticationMethod))
             {
                 writer.WritePropertyName("authenticationMethod"u8);
                 writer.WriteStringValue(AuthenticationMethod.Value.ToString());

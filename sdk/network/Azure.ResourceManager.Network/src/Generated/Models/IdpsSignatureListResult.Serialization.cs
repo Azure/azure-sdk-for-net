@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<long> matchingRecordsCount = default;
-            Optional<IReadOnlyList<IdpsSignatureResult>> signatures = default;
+            Core.Optional<long> matchingRecordsCount = default;
+            Core.Optional<IReadOnlyList<IdpsSignatureResult>> signatures = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("matchingRecordsCount"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new IdpsSignatureListResult(Optional.ToNullable(matchingRecordsCount), Optional.ToList(signatures));
+            return new IdpsSignatureListResult(Core.Optional.ToNullable(matchingRecordsCount), Core.Optional.ToList(signatures));
         }
     }
 }

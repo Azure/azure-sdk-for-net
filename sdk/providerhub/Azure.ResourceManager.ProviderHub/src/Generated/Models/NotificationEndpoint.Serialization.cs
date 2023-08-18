@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class NotificationEndpoint : IUtf8JsonSerializable
+    public partial class NotificationEndpoint : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(NotificationDestination))
+            if (Core.Optional.IsDefined(NotificationDestination))
             {
                 writer.WritePropertyName("notificationDestination"u8);
                 writer.WriteStringValue(NotificationDestination);
             }
-            if (Optional.IsCollectionDefined(Locations))
+            if (Core.Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> notificationDestination = default;
-            Optional<IList<AzureLocation>> locations = default;
+            Core.Optional<ResourceIdentifier> notificationDestination = default;
+            Core.Optional<IList<AzureLocation>> locations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("notificationDestination"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new NotificationEndpoint(notificationDestination.Value, Optional.ToList(locations));
+            return new NotificationEndpoint(notificationDestination.Value, Core.Optional.ToList(locations));
         }
     }
 }

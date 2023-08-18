@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualNetworkBgpCommunities : IUtf8JsonSerializable
+    public partial class VirtualNetworkBgpCommunities : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("virtualNetworkCommunity"u8);
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string virtualNetworkCommunity = default;
-            Optional<string> regionalCommunity = default;
+            Core.Optional<string> regionalCommunity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualNetworkCommunity"u8))

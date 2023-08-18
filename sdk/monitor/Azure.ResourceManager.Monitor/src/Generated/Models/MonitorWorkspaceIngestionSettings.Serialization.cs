@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> dataCollectionRuleResourceId = default;
-            Optional<ResourceIdentifier> dataCollectionEndpointResourceId = default;
+            Core.Optional<ResourceIdentifier> dataCollectionRuleResourceId = default;
+            Core.Optional<ResourceIdentifier> dataCollectionEndpointResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataCollectionRuleResourceId"u8))

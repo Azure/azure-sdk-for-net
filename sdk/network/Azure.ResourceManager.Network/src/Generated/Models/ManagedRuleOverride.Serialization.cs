@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ManagedRuleOverride : IUtf8JsonSerializable
+    public partial class ManagedRuleOverride : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("ruleId"u8);
             writer.WriteStringValue(RuleId);
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(Action))
+            if (Core.Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string ruleId = default;
-            Optional<ManagedRuleEnabledState> state = default;
-            Optional<RuleMatchActionType> action = default;
+            Core.Optional<ManagedRuleEnabledState> state = default;
+            Core.Optional<RuleMatchActionType> action = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleId"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ManagedRuleOverride(ruleId, Optional.ToNullable(state), Optional.ToNullable(action));
+            return new ManagedRuleOverride(ruleId, Core.Optional.ToNullable(state), Core.Optional.ToNullable(action));
         }
     }
 }

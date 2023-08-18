@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of MetricAlertSingleResourceMultipleMetricCriteria. </summary>
         public MetricAlertSingleResourceMultipleMetricCriteria()
         {
-            AllOf = new ChangeTrackingList<MetricCriteria>();
+            AllOf = new Core.ChangeTrackingList<MetricCriteria>();
             OdataType = MonitorOdataType.MicrosoftAzureMonitorSingleResourceMultipleMetricCriteria;
         }
 

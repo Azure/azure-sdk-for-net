@@ -15,17 +15,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class CustomIPPrefixData : IUtf8JsonSerializable
+    public partial class CustomIPPrefixData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtendedLocation))
+            if (Core.Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Optional.IsCollectionDefined(Zones))
+            if (Core.Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -35,17 +35,17 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,52 +58,52 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Asn))
+            if (Core.Optional.IsDefined(Asn))
             {
                 writer.WritePropertyName("asn"u8);
                 writer.WriteStringValue(Asn);
             }
-            if (Optional.IsDefined(Cidr))
+            if (Core.Optional.IsDefined(Cidr))
             {
                 writer.WritePropertyName("cidr"u8);
                 writer.WriteStringValue(Cidr);
             }
-            if (Optional.IsDefined(SignedMessage))
+            if (Core.Optional.IsDefined(SignedMessage))
             {
                 writer.WritePropertyName("signedMessage"u8);
                 writer.WriteStringValue(SignedMessage);
             }
-            if (Optional.IsDefined(AuthorizationMessage))
+            if (Core.Optional.IsDefined(AuthorizationMessage))
             {
                 writer.WritePropertyName("authorizationMessage"u8);
                 writer.WriteStringValue(AuthorizationMessage);
             }
-            if (Optional.IsDefined(ParentCustomIPPrefix))
+            if (Core.Optional.IsDefined(ParentCustomIPPrefix))
             {
                 writer.WritePropertyName("customIpPrefixParent"u8);
                 JsonSerializer.Serialize(writer, ParentCustomIPPrefix);
             }
-            if (Optional.IsDefined(CommissionedState))
+            if (Core.Optional.IsDefined(CommissionedState))
             {
                 writer.WritePropertyName("commissionedState"u8);
                 writer.WriteStringValue(CommissionedState.Value.ToString());
             }
-            if (Optional.IsDefined(ExpressRouteAdvertise))
+            if (Core.Optional.IsDefined(ExpressRouteAdvertise))
             {
                 writer.WritePropertyName("expressRouteAdvertise"u8);
                 writer.WriteBooleanValue(ExpressRouteAdvertise.Value);
             }
-            if (Optional.IsDefined(Geo))
+            if (Core.Optional.IsDefined(Geo))
             {
                 writer.WritePropertyName("geo"u8);
                 writer.WriteStringValue(Geo.Value.ToString());
             }
-            if (Optional.IsDefined(NoInternetAdvertise))
+            if (Core.Optional.IsDefined(NoInternetAdvertise))
             {
                 writer.WritePropertyName("noInternetAdvertise"u8);
                 writer.WriteBooleanValue(NoInternetAdvertise.Value);
             }
-            if (Optional.IsDefined(PrefixType))
+            if (Core.Optional.IsDefined(PrefixType))
             {
                 writer.WritePropertyName("prefixType"u8);
                 writer.WriteStringValue(PrefixType.Value.ToString());
@@ -118,29 +118,29 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<ETag> etag = default;
-            Optional<IList<string>> zones = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> asn = default;
-            Optional<string> cidr = default;
-            Optional<string> signedMessage = default;
-            Optional<string> authorizationMessage = default;
-            Optional<WritableSubResource> customIPPrefixParent = default;
-            Optional<IReadOnlyList<WritableSubResource>> childCustomIPPrefixes = default;
-            Optional<CommissionedState> commissionedState = default;
-            Optional<bool> expressRouteAdvertise = default;
-            Optional<CidrAdvertisingGeoCode> geo = default;
-            Optional<bool> noInternetAdvertise = default;
-            Optional<CustomIPPrefixType> prefixType = default;
-            Optional<IReadOnlyList<WritableSubResource>> publicIPPrefixes = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<string> failedReason = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            Core.Optional<ExtendedLocation> extendedLocation = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<IList<string>> zones = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceType> type = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<string> asn = default;
+            Core.Optional<string> cidr = default;
+            Core.Optional<string> signedMessage = default;
+            Core.Optional<string> authorizationMessage = default;
+            Core.Optional<WritableSubResource> customIPPrefixParent = default;
+            Core.Optional<IReadOnlyList<WritableSubResource>> childCustomIPPrefixes = default;
+            Core.Optional<CommissionedState> commissionedState = default;
+            Core.Optional<bool> expressRouteAdvertise = default;
+            Core.Optional<CidrAdvertisingGeoCode> geo = default;
+            Core.Optional<bool> noInternetAdvertise = default;
+            Core.Optional<CustomIPPrefixType> prefixType = default;
+            Core.Optional<IReadOnlyList<WritableSubResource>> publicIPPrefixes = default;
+            Core.Optional<Guid> resourceGuid = default;
+            Core.Optional<string> failedReason = default;
+            Core.Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new CustomIPPrefixData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, Optional.ToNullable(etag), Optional.ToList(zones), asn.Value, cidr.Value, signedMessage.Value, authorizationMessage.Value, customIPPrefixParent, Optional.ToList(childCustomIPPrefixes), Optional.ToNullable(commissionedState), Optional.ToNullable(expressRouteAdvertise), Optional.ToNullable(geo), Optional.ToNullable(noInternetAdvertise), Optional.ToNullable(prefixType), Optional.ToList(publicIPPrefixes), Optional.ToNullable(resourceGuid), failedReason.Value, Optional.ToNullable(provisioningState));
+            return new CustomIPPrefixData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags), extendedLocation, Core.Optional.ToNullable(etag), Core.Optional.ToList(zones), asn.Value, cidr.Value, signedMessage.Value, authorizationMessage.Value, customIPPrefixParent, Core.Optional.ToList(childCustomIPPrefixes), Core.Optional.ToNullable(commissionedState), Core.Optional.ToNullable(expressRouteAdvertise), Core.Optional.ToNullable(geo), Core.Optional.ToNullable(noInternetAdvertise), Core.Optional.ToNullable(prefixType), Core.Optional.ToList(publicIPPrefixes), Core.Optional.ToNullable(resourceGuid), failedReason.Value, Core.Optional.ToNullable(provisioningState));
         }
     }
 }

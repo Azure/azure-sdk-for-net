@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetworkFunction
 {
-    internal class CollectorPolicyOperationSource : IOperationSource<CollectorPolicyResource>
+    internal class CollectorPolicyOperationSource : Core.IOperationSource<CollectorPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.NetworkFunction
             _client = client;
         }
 
-        CollectorPolicyResource IOperationSource<CollectorPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CollectorPolicyResource Core.IOperationSource<CollectorPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CollectorPolicyData.DeserializeCollectorPolicyData(document.RootElement);
             return new CollectorPolicyResource(_client, data);
         }
 
-        async ValueTask<CollectorPolicyResource> IOperationSource<CollectorPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CollectorPolicyResource> Core.IOperationSource<CollectorPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CollectorPolicyData.DeserializeCollectorPolicyData(document.RootElement);

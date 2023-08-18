@@ -20,30 +20,30 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceRoutingType> routingType = default;
-            Optional<ResourceValidation> resourceValidation = default;
-            Optional<IReadOnlyList<string>> allowedUnauthorizedActions = default;
-            Optional<IReadOnlyList<AuthorizationActionMapping>> authorizationActionMappings = default;
-            Optional<IReadOnlyList<LinkedAccessCheck>> linkedAccessChecks = default;
-            Optional<string> defaultApiVersion = default;
-            Optional<IReadOnlyList<LoggingRule>> loggingRules = default;
-            Optional<IReadOnlyList<ThrottlingRule>> throttlingRules = default;
-            Optional<IReadOnlyList<ResourceProviderEndpoint>> endpoints = default;
-            Optional<MarketplaceType> marketplaceType = default;
-            Optional<IdentityManagement> identityManagement = default;
-            Optional<BinaryData> metadata = default;
-            Optional<IReadOnlyList<string>> requiredFeatures = default;
-            Optional<FeaturesRule> featuresRule = default;
-            Optional<IReadOnlyList<ProviderSubscriptionStateRule>> subscriptionStateRules = default;
-            Optional<IReadOnlyList<ServiceTreeInfo>> serviceTreeInfos = default;
-            Optional<RequestHeaderOptions> requestHeaderOptions = default;
-            Optional<string> skuLink = default;
-            Optional<IReadOnlyList<string>> disallowedActionVerbs = default;
-            Optional<TemplateDeploymentPolicy> templateDeploymentPolicy = default;
-            Optional<IReadOnlyList<ProviderHubExtendedLocationOptions>> extendedLocations = default;
-            Optional<IReadOnlyList<LinkedOperationRule>> linkedOperationRules = default;
-            Optional<ManifestResourceDeletionPolicy> resourceDeletionPolicy = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceRoutingType> routingType = default;
+            Core.Optional<ResourceValidation> resourceValidation = default;
+            Core.Optional<IReadOnlyList<string>> allowedUnauthorizedActions = default;
+            Core.Optional<IReadOnlyList<AuthorizationActionMapping>> authorizationActionMappings = default;
+            Core.Optional<IReadOnlyList<LinkedAccessCheck>> linkedAccessChecks = default;
+            Core.Optional<string> defaultApiVersion = default;
+            Core.Optional<IReadOnlyList<LoggingRule>> loggingRules = default;
+            Core.Optional<IReadOnlyList<ThrottlingRule>> throttlingRules = default;
+            Core.Optional<IReadOnlyList<ResourceProviderEndpoint>> endpoints = default;
+            Core.Optional<MarketplaceType> marketplaceType = default;
+            Core.Optional<IdentityManagement> identityManagement = default;
+            Core.Optional<BinaryData> metadata = default;
+            Core.Optional<IReadOnlyList<string>> requiredFeatures = default;
+            Core.Optional<FeaturesRule> featuresRule = default;
+            Core.Optional<IReadOnlyList<ProviderSubscriptionStateRule>> subscriptionStateRules = default;
+            Core.Optional<IReadOnlyList<ServiceTreeInfo>> serviceTreeInfos = default;
+            Core.Optional<RequestHeaderOptions> requestHeaderOptions = default;
+            Core.Optional<string> skuLink = default;
+            Core.Optional<IReadOnlyList<string>> disallowedActionVerbs = default;
+            Core.Optional<TemplateDeploymentPolicy> templateDeploymentPolicy = default;
+            Core.Optional<IReadOnlyList<ProviderHubExtendedLocationOptions>> extendedLocations = default;
+            Core.Optional<IReadOnlyList<LinkedOperationRule>> linkedOperationRules = default;
+            Core.Optional<ManifestResourceDeletionPolicy> resourceDeletionPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new ProviderResourceType(name.Value, Optional.ToNullable(routingType), Optional.ToNullable(resourceValidation), Optional.ToList(allowedUnauthorizedActions), Optional.ToList(authorizationActionMappings), Optional.ToList(linkedAccessChecks), defaultApiVersion.Value, Optional.ToList(loggingRules), Optional.ToList(throttlingRules), Optional.ToList(endpoints), Optional.ToNullable(marketplaceType), identityManagement.Value, metadata.Value, Optional.ToList(requiredFeatures), featuresRule.Value, Optional.ToList(subscriptionStateRules), Optional.ToList(serviceTreeInfos), requestHeaderOptions.Value, skuLink.Value, Optional.ToList(disallowedActionVerbs), templateDeploymentPolicy.Value, Optional.ToList(extendedLocations), Optional.ToList(linkedOperationRules), Optional.ToNullable(resourceDeletionPolicy));
+            return new ProviderResourceType(name.Value, Core.Optional.ToNullable(routingType), Core.Optional.ToNullable(resourceValidation), Core.Optional.ToList(allowedUnauthorizedActions), Core.Optional.ToList(authorizationActionMappings), Core.Optional.ToList(linkedAccessChecks), defaultApiVersion.Value, Core.Optional.ToList(loggingRules), Core.Optional.ToList(throttlingRules), Core.Optional.ToList(endpoints), Core.Optional.ToNullable(marketplaceType), identityManagement.Value, metadata.Value, Core.Optional.ToList(requiredFeatures), featuresRule.Value, Core.Optional.ToList(subscriptionStateRules), Core.Optional.ToList(serviceTreeInfos), requestHeaderOptions.Value, skuLink.Value, Core.Optional.ToList(disallowedActionVerbs), templateDeploymentPolicy.Value, Core.Optional.ToList(extendedLocations), Core.Optional.ToList(linkedOperationRules), Core.Optional.ToNullable(resourceDeletionPolicy));
         }
     }
 }

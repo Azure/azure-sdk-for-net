@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of IPGroupListResult. </summary>
         internal IPGroupListResult()
         {
-            Value = new ChangeTrackingList<IPGroupData>();
+            Value = new Core.ChangeTrackingList<IPGroupData>();
         }
 
         /// <summary> Initializes a new instance of IPGroupListResult. </summary>

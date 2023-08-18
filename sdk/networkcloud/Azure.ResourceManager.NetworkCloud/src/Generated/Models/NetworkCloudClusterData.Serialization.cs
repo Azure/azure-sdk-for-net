@@ -14,14 +14,14 @@ using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudClusterData : IUtf8JsonSerializable
+    public partial class NetworkCloudClusterData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("aggregatorOrSingleRackDefinition"u8);
             writer.WriteObjectValue(AggregatorOrSingleRackDefinition);
-            if (Optional.IsDefined(AnalyticsWorkspaceId))
+            if (Core.Optional.IsDefined(AnalyticsWorkspaceId))
             {
                 writer.WritePropertyName("analyticsWorkspaceId"u8);
                 writer.WriteStringValue(AnalyticsWorkspaceId);
             }
-            if (Optional.IsDefined(ClusterLocation))
+            if (Core.Optional.IsDefined(ClusterLocation))
             {
                 writer.WritePropertyName("clusterLocation"u8);
                 writer.WriteStringValue(ClusterLocation);
             }
-            if (Optional.IsDefined(ClusterServicePrincipal))
+            if (Core.Optional.IsDefined(ClusterServicePrincipal))
             {
                 writer.WritePropertyName("clusterServicePrincipal"u8);
                 writer.WriteObjectValue(ClusterServicePrincipal);
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStringValue(ClusterType.ToString());
             writer.WritePropertyName("clusterVersion"u8);
             writer.WriteStringValue(ClusterVersion);
-            if (Optional.IsDefined(ComputeDeploymentThreshold))
+            if (Core.Optional.IsDefined(ComputeDeploymentThreshold))
             {
                 writer.WritePropertyName("computeDeploymentThreshold"u8);
                 writer.WriteObjectValue(ComputeDeploymentThreshold);
             }
-            if (Optional.IsCollectionDefined(ComputeRackDefinitions))
+            if (Core.Optional.IsCollectionDefined(ComputeRackDefinitions))
             {
                 writer.WritePropertyName("computeRackDefinitions"u8);
                 writer.WriteStartArray();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ManagedResourceGroupConfiguration))
+            if (Core.Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
                 writer.WriteObjectValue(ManagedResourceGroupConfiguration);
@@ -90,35 +90,35 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             NetworkCloudRackDefinition aggregatorOrSingleRackDefinition = default;
-            Optional<ResourceIdentifier> analyticsWorkspaceId = default;
-            Optional<IReadOnlyList<ClusterAvailableUpgradeVersion>> availableUpgradeVersions = default;
-            Optional<ClusterCapacity> clusterCapacity = default;
-            Optional<ClusterConnectionStatus> clusterConnectionStatus = default;
-            Optional<ExtendedLocation> clusterExtendedLocation = default;
-            Optional<string> clusterLocation = default;
-            Optional<ClusterManagerConnectionStatus> clusterManagerConnectionStatus = default;
-            Optional<ResourceIdentifier> clusterManagerId = default;
-            Optional<ServicePrincipalInformation> clusterServicePrincipal = default;
+            Core.Optional<ResourceIdentifier> analyticsWorkspaceId = default;
+            Core.Optional<IReadOnlyList<ClusterAvailableUpgradeVersion>> availableUpgradeVersions = default;
+            Core.Optional<ClusterCapacity> clusterCapacity = default;
+            Core.Optional<ClusterConnectionStatus> clusterConnectionStatus = default;
+            Core.Optional<ExtendedLocation> clusterExtendedLocation = default;
+            Core.Optional<string> clusterLocation = default;
+            Core.Optional<ClusterManagerConnectionStatus> clusterManagerConnectionStatus = default;
+            Core.Optional<ResourceIdentifier> clusterManagerId = default;
+            Core.Optional<ServicePrincipalInformation> clusterServicePrincipal = default;
             ClusterType clusterType = default;
             string clusterVersion = default;
-            Optional<ValidationThreshold> computeDeploymentThreshold = default;
-            Optional<IList<NetworkCloudRackDefinition>> computeRackDefinitions = default;
-            Optional<ClusterDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<ExtendedLocation> hybridAksExtendedLocation = default;
-            Optional<ManagedResourceGroupConfiguration> managedResourceGroupConfiguration = default;
-            Optional<long> manualActionCount = default;
+            Core.Optional<ValidationThreshold> computeDeploymentThreshold = default;
+            Core.Optional<IList<NetworkCloudRackDefinition>> computeRackDefinitions = default;
+            Core.Optional<ClusterDetailedStatus> detailedStatus = default;
+            Core.Optional<string> detailedStatusMessage = default;
+            Core.Optional<ExtendedLocation> hybridAksExtendedLocation = default;
+            Core.Optional<ManagedResourceGroupConfiguration> managedResourceGroupConfiguration = default;
+            Core.Optional<long> manualActionCount = default;
             ResourceIdentifier networkFabricId = default;
-            Optional<ClusterProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> supportExpiryDate = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> workloadResourceIds = default;
+            Core.Optional<ClusterProvisioningState> provisioningState = default;
+            Core.Optional<DateTimeOffset> supportExpiryDate = default;
+            Core.Optional<IReadOnlyList<ResourceIdentifier>> workloadResourceIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     continue;
                 }
             }
-            return new NetworkCloudClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, aggregatorOrSingleRackDefinition, analyticsWorkspaceId.Value, Optional.ToList(availableUpgradeVersions), clusterCapacity.Value, Optional.ToNullable(clusterConnectionStatus), clusterExtendedLocation.Value, clusterLocation.Value, Optional.ToNullable(clusterManagerConnectionStatus), clusterManagerId.Value, clusterServicePrincipal.Value, clusterType, clusterVersion, computeDeploymentThreshold.Value, Optional.ToList(computeRackDefinitions), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, hybridAksExtendedLocation.Value, managedResourceGroupConfiguration.Value, Optional.ToNullable(manualActionCount), networkFabricId, Optional.ToNullable(provisioningState), Optional.ToNullable(supportExpiryDate), Optional.ToList(workloadResourceIds));
+            return new NetworkCloudClusterData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, extendedLocation, aggregatorOrSingleRackDefinition, analyticsWorkspaceId.Value, Core.Optional.ToList(availableUpgradeVersions), clusterCapacity.Value, Core.Optional.ToNullable(clusterConnectionStatus), clusterExtendedLocation.Value, clusterLocation.Value, Core.Optional.ToNullable(clusterManagerConnectionStatus), clusterManagerId.Value, clusterServicePrincipal.Value, clusterType, clusterVersion, computeDeploymentThreshold.Value, Core.Optional.ToList(computeRackDefinitions), Core.Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, hybridAksExtendedLocation.Value, managedResourceGroupConfiguration.Value, Core.Optional.ToNullable(manualActionCount), networkFabricId, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(supportExpiryDate), Core.Optional.ToList(workloadResourceIds));
         }
     }
 }

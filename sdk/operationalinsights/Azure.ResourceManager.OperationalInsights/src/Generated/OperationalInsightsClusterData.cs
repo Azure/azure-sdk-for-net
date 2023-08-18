@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="location"> The location. </param>
         public OperationalInsightsClusterData(AzureLocation location) : base(location)
         {
-            AssociatedWorkspaces = new ChangeTrackingList<OperationalInsightsClusterAssociatedWorkspace>();
+            AssociatedWorkspaces = new Core.ChangeTrackingList<OperationalInsightsClusterAssociatedWorkspace>();
         }
 
         /// <summary> Initializes a new instance of OperationalInsightsClusterData. </summary>

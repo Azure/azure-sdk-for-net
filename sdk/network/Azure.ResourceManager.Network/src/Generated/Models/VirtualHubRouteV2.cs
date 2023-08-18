@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VirtualHubRouteV2. </summary>
         public VirtualHubRouteV2()
         {
-            Destinations = new ChangeTrackingList<string>();
-            NextHops = new ChangeTrackingList<string>();
+            Destinations = new Core.ChangeTrackingList<string>();
+            NextHops = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VirtualHubRouteV2. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of AuthorizationListResult. </summary>
         internal AuthorizationListResult()
         {
-            Value = new ChangeTrackingList<ExpressRouteCircuitAuthorizationData>();
+            Value = new Core.ChangeTrackingList<ExpressRouteCircuitAuthorizationData>();
         }
 
         /// <summary> Initializes a new instance of AuthorizationListResult. </summary>

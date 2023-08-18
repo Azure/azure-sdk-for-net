@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <summary> Initializes a new instance of AttachedDataNetworkListResult. </summary>
         internal AttachedDataNetworkListResult()
         {
-            Value = new ChangeTrackingList<MobileAttachedDataNetworkData>();
+            Value = new Core.ChangeTrackingList<MobileAttachedDataNetworkData>();
         }
 
         /// <summary> Initializes a new instance of AttachedDataNetworkListResult. </summary>

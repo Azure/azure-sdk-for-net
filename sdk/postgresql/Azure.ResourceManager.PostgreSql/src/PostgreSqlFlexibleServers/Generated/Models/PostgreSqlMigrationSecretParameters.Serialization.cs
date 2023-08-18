@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlMigrationSecretParameters : IUtf8JsonSerializable
+    public partial class PostgreSqlMigrationSecretParameters : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("adminCredentials"u8);
             writer.WriteObjectValue(AdminCredentials);
-            if (Optional.IsDefined(SourceServerUsername))
+            if (Core.Optional.IsDefined(SourceServerUsername))
             {
                 writer.WritePropertyName("sourceServerUsername"u8);
                 writer.WriteStringValue(SourceServerUsername);
             }
-            if (Optional.IsDefined(TargetServerUsername))
+            if (Core.Optional.IsDefined(TargetServerUsername))
             {
                 writer.WritePropertyName("targetServerUsername"u8);
                 writer.WriteStringValue(TargetServerUsername);
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 return null;
             }
             PostgreSqlMigrationAdminCredentials adminCredentials = default;
-            Optional<string> sourceServerUsername = default;
-            Optional<string> targetServerUsername = default;
+            Core.Optional<string> sourceServerUsername = default;
+            Core.Optional<string> targetServerUsername = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("adminCredentials"u8))

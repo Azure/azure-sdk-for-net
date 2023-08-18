@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            Locations = new ChangeTrackingList<string>();
-            LocationInfo = new ChangeTrackingList<ResourceTypeSkuLocationInfo>();
-            RequiredQuotaIds = new ChangeTrackingList<string>();
-            RequiredFeatures = new ChangeTrackingList<string>();
-            Costs = new ChangeTrackingList<ResourceTypeSkuCost>();
-            Capabilities = new ChangeTrackingList<ResourceSkuCapability>();
+            Locations = new Core.ChangeTrackingList<string>();
+            LocationInfo = new Core.ChangeTrackingList<ResourceTypeSkuLocationInfo>();
+            RequiredQuotaIds = new Core.ChangeTrackingList<string>();
+            RequiredFeatures = new Core.ChangeTrackingList<string>();
+            Costs = new Core.ChangeTrackingList<ResourceTypeSkuCost>();
+            Capabilities = new Core.ChangeTrackingList<ResourceSkuCapability>();
         }
 
         /// <summary> Initializes a new instance of ResourceTypeSkuSetting. </summary>

@@ -12,9 +12,9 @@ using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    public partial class PaloAltoNetworksFirewallStatusData : IUtf8JsonSerializable
+    public partial class PaloAltoNetworksFirewallStatusData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<FirewallBooleanType> isPanoramaManaged = default;
-            Optional<FirewallHealthStatus> healthStatus = default;
-            Optional<string> healthReason = default;
-            Optional<FirewallPanoramaStatus> panoramaStatus = default;
-            Optional<FirewallProvisioningStateType> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<FirewallBooleanType> isPanoramaManaged = default;
+            Core.Optional<FirewallHealthStatus> healthStatus = default;
+            Core.Optional<string> healthReason = default;
+            Core.Optional<FirewallPanoramaStatus> panoramaStatus = default;
+            Core.Optional<FirewallProvisioningStateType> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     continue;
                 }
             }
-            return new PaloAltoNetworksFirewallStatusData(id, name, type, systemData.Value, Optional.ToNullable(isPanoramaManaged), Optional.ToNullable(healthStatus), healthReason.Value, panoramaStatus.Value, Optional.ToNullable(provisioningState));
+            return new PaloAltoNetworksFirewallStatusData(id, name, type, systemData.Value, Core.Optional.ToNullable(isPanoramaManaged), Core.Optional.ToNullable(healthStatus), healthReason.Value, panoramaStatus.Value, Core.Optional.ToNullable(provisioningState));
         }
     }
 }

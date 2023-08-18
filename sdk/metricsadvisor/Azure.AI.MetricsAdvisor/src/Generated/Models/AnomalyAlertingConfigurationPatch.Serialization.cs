@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class AnomalyAlertingConfigurationPatch : IUtf8JsonSerializable
+    internal partial class AnomalyAlertingConfigurationPatch : Core.IUtf8JsonSerializable
     {
     }
 }

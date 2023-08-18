@@ -13,19 +13,19 @@ using Azure.ResourceManager.PostgreSql.Models;
 
 namespace Azure.ResourceManager.PostgreSql
 {
-    public partial class PostgreSqlServerKeyData : IUtf8JsonSerializable
+    public partial class PostgreSqlServerKeyData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServerKeyType))
+            if (Core.Optional.IsDefined(ServerKeyType))
             {
                 writer.WritePropertyName("serverKeyType"u8);
                 writer.WriteStringValue(ServerKeyType.Value.ToString());
             }
-            if (Optional.IsDefined(Uri))
+            if (Core.Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
@@ -40,14 +40,14 @@ namespace Azure.ResourceManager.PostgreSql
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<PostgreSqlServerKeyType> serverKeyType = default;
-            Optional<Uri> uri = default;
-            Optional<DateTimeOffset> creationDate = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<PostgreSqlServerKeyType> serverKeyType = default;
+            Core.Optional<Uri> uri = default;
+            Core.Optional<DateTimeOffset> creationDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.PostgreSql
                     continue;
                 }
             }
-            return new PostgreSqlServerKeyData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(serverKeyType), uri.Value, Optional.ToNullable(creationDate));
+            return new PostgreSqlServerKeyData(id, name, type, systemData.Value, kind.Value, Core.Optional.ToNullable(serverKeyType), uri.Value, Core.Optional.ToNullable(creationDate));
         }
     }
 }

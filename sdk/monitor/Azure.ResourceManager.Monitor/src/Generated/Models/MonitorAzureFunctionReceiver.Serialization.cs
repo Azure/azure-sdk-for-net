@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorAzureFunctionReceiver : IUtf8JsonSerializable
+    public partial class MonitorAzureFunctionReceiver : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(FunctionName);
             writer.WritePropertyName("httpTriggerUrl"u8);
             writer.WriteStringValue(HttpTriggerUri.AbsoluteUri);
-            if (Optional.IsDefined(UseCommonAlertSchema))
+            if (Core.Optional.IsDefined(UseCommonAlertSchema))
             {
                 writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Monitor.Models
             ResourceIdentifier functionAppResourceId = default;
             string functionName = default;
             Uri httpTriggerUrl = default;
-            Optional<bool> useCommonAlertSchema = default;
+            Core.Optional<bool> useCommonAlertSchema = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MonitorAzureFunctionReceiver(name, functionAppResourceId, functionName, httpTriggerUrl, Optional.ToNullable(useCommonAlertSchema));
+            return new MonitorAzureFunctionReceiver(name, functionAppResourceId, functionName, httpTriggerUrl, Core.Optional.ToNullable(useCommonAlertSchema));
         }
     }
 }

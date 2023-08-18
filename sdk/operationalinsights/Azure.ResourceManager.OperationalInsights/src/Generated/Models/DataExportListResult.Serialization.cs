@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<OperationalInsightsDataExportData>> value = default;
+            Core.Optional<IReadOnlyList<OperationalInsightsDataExportData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     continue;
                 }
             }
-            return new DataExportListResult(Optional.ToList(value));
+            return new DataExportListResult(Core.Optional.ToList(value));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of ProviderHubMetadata. </summary>
         public ProviderHubMetadata()
         {
-            ProviderAuthorizations = new ChangeTrackingList<ResourceProviderAuthorization>();
+            ProviderAuthorizations = new Core.ChangeTrackingList<ResourceProviderAuthorization>();
         }
 
         /// <summary> Initializes a new instance of ProviderHubMetadata. </summary>

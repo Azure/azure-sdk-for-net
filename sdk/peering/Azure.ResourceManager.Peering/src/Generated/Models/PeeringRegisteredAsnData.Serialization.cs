@@ -12,14 +12,14 @@ using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    public partial class PeeringRegisteredAsnData : IUtf8JsonSerializable
+    public partial class PeeringRegisteredAsnData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Asn))
+            if (Core.Optional.IsDefined(Asn))
             {
                 writer.WritePropertyName("asn"u8);
                 writer.WriteNumberValue(Asn.Value);
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Peering
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> asn = default;
-            Optional<string> peeringServicePrefixKey = default;
-            Optional<PeeringProvisioningState> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<int> asn = default;
+            Core.Optional<string> peeringServicePrefixKey = default;
+            Core.Optional<PeeringProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Peering
                     continue;
                 }
             }
-            return new PeeringRegisteredAsnData(id, name, type, systemData.Value, Optional.ToNullable(asn), peeringServicePrefixKey.Value, Optional.ToNullable(provisioningState));
+            return new PeeringRegisteredAsnData(id, name, type, systemData.Value, Core.Optional.ToNullable(asn), peeringServicePrefixKey.Value, Core.Optional.ToNullable(provisioningState));
         }
     }
 }

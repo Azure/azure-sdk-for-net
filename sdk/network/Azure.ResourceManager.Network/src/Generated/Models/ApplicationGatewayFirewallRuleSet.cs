@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayFirewallRuleSet. </summary>
         public ApplicationGatewayFirewallRuleSet()
         {
-            RuleGroups = new ChangeTrackingList<ApplicationGatewayFirewallRuleGroup>();
-            Tiers = new ChangeTrackingList<ApplicationGatewayTierType>();
+            RuleGroups = new Core.ChangeTrackingList<ApplicationGatewayFirewallRuleGroup>();
+            Tiers = new Core.ChangeTrackingList<ApplicationGatewayTierType>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayFirewallRuleSet. </summary>

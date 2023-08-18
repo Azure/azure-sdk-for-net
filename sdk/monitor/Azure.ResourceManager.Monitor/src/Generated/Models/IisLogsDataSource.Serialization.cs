@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class IisLogsDataSource : IUtf8JsonSerializable
+    public partial class IisLogsDataSource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("streams"u8);
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(LogDirectories))
+            if (Core.Optional.IsCollectionDefined(LogDirectories))
             {
                 writer.WritePropertyName("logDirectories"u8);
                 writer.WriteStartArray();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             IList<string> streams = default;
-            Optional<IList<string>> logDirectories = default;
-            Optional<string> name = default;
+            Core.Optional<IList<string>> logDirectories = default;
+            Core.Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streams"u8))
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new IisLogsDataSource(streams, Optional.ToList(logDirectories), name.Value);
+            return new IisLogsDataSource(streams, Core.Optional.ToList(logDirectories), name.Value);
         }
     }
 }

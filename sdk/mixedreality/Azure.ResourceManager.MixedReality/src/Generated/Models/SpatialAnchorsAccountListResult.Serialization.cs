@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.MixedReality.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SpatialAnchorsAccountData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<SpatialAnchorsAccountData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MixedReality.Models
                     continue;
                 }
             }
-            return new SpatialAnchorsAccountListResult(Optional.ToList(value), nextLink.Value);
+            return new SpatialAnchorsAccountListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

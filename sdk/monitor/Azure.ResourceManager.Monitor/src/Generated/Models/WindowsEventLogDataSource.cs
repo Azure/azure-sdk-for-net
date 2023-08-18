@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of WindowsEventLogDataSource. </summary>
         public WindowsEventLogDataSource()
         {
-            Streams = new ChangeTrackingList<WindowsEventLogDataSourceStream>();
-            XPathQueries = new ChangeTrackingList<string>();
+            Streams = new Core.ChangeTrackingList<WindowsEventLogDataSourceStream>();
+            XPathQueries = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of WindowsEventLogDataSource. </summary>

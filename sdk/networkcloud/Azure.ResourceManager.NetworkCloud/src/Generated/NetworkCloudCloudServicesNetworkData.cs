@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
             ExtendedLocation = extendedLocation;
-            AdditionalEgressEndpoints = new ChangeTrackingList<EgressEndpoint>();
-            AssociatedResourceIds = new ChangeTrackingList<ResourceIdentifier>();
-            EnabledEgressEndpoints = new ChangeTrackingList<EgressEndpoint>();
-            HybridAksClustersAssociatedIds = new ChangeTrackingList<ResourceIdentifier>();
-            VirtualMachinesAssociatedIds = new ChangeTrackingList<ResourceIdentifier>();
+            AdditionalEgressEndpoints = new Core.ChangeTrackingList<EgressEndpoint>();
+            AssociatedResourceIds = new Core.ChangeTrackingList<ResourceIdentifier>();
+            EnabledEgressEndpoints = new Core.ChangeTrackingList<EgressEndpoint>();
+            HybridAksClustersAssociatedIds = new Core.ChangeTrackingList<ResourceIdentifier>();
+            VirtualMachinesAssociatedIds = new Core.ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of NetworkCloudCloudServicesNetworkData. </summary>

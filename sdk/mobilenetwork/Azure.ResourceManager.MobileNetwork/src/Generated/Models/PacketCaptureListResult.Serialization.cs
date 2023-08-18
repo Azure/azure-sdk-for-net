@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MobileNetworkPacketCaptureData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<MobileNetworkPacketCaptureData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     continue;
                 }
             }
-            return new PacketCaptureListResult(Optional.ToList(value), nextLink.Value);
+            return new PacketCaptureListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

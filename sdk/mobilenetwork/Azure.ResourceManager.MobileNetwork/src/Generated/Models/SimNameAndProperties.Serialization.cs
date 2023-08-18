@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class SimNameAndProperties : IUtf8JsonSerializable
+    public partial class SimNameAndProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -21,22 +21,22 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartObject();
             writer.WritePropertyName("internationalMobileSubscriberIdentity"u8);
             writer.WriteStringValue(InternationalMobileSubscriberIdentity);
-            if (Optional.IsDefined(IntegratedCircuitCardIdentifier))
+            if (Core.Optional.IsDefined(IntegratedCircuitCardIdentifier))
             {
                 writer.WritePropertyName("integratedCircuitCardIdentifier"u8);
                 writer.WriteStringValue(IntegratedCircuitCardIdentifier);
             }
-            if (Optional.IsDefined(DeviceType))
+            if (Core.Optional.IsDefined(DeviceType))
             {
                 writer.WritePropertyName("deviceType"u8);
                 writer.WriteStringValue(DeviceType);
             }
-            if (Optional.IsDefined(SimPolicy))
+            if (Core.Optional.IsDefined(SimPolicy))
             {
                 writer.WritePropertyName("simPolicy"u8);
                 JsonSerializer.Serialize(writer, SimPolicy);
             }
-            if (Optional.IsCollectionDefined(StaticIPConfiguration))
+            if (Core.Optional.IsCollectionDefined(StaticIPConfiguration))
             {
                 writer.WritePropertyName("staticIpConfiguration"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AuthenticationKey))
+            if (Core.Optional.IsDefined(AuthenticationKey))
             {
                 writer.WritePropertyName("authenticationKey"u8);
                 writer.WriteStringValue(AuthenticationKey);
             }
-            if (Optional.IsDefined(OperatorKeyCode))
+            if (Core.Optional.IsDefined(OperatorKeyCode))
             {
                 writer.WritePropertyName("operatorKeyCode"u8);
                 writer.WriteStringValue(OperatorKeyCode);

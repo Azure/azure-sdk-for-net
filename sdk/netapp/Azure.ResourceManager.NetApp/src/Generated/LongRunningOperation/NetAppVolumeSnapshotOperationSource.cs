@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal class NetAppVolumeSnapshotOperationSource : IOperationSource<NetAppVolumeSnapshotResource>
+    internal class NetAppVolumeSnapshotOperationSource : Core.IOperationSource<NetAppVolumeSnapshotResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.NetApp
             _client = client;
         }
 
-        NetAppVolumeSnapshotResource IOperationSource<NetAppVolumeSnapshotResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetAppVolumeSnapshotResource Core.IOperationSource<NetAppVolumeSnapshotResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NetAppVolumeSnapshotData.DeserializeNetAppVolumeSnapshotData(document.RootElement);
             return new NetAppVolumeSnapshotResource(_client, data);
         }
 
-        async ValueTask<NetAppVolumeSnapshotResource> IOperationSource<NetAppVolumeSnapshotResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetAppVolumeSnapshotResource> Core.IOperationSource<NetAppVolumeSnapshotResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NetAppVolumeSnapshotData.DeserializeNetAppVolumeSnapshotData(document.RootElement);

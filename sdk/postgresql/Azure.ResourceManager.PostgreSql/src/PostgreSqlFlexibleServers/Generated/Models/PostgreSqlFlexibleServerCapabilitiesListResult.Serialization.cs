@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PostgreSqlFlexibleServerCapabilityProperties>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<PostgreSqlFlexibleServerCapabilityProperties>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerCapabilitiesListResult(Optional.ToList(value), nextLink.Value);
+            return new PostgreSqlFlexibleServerCapabilitiesListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

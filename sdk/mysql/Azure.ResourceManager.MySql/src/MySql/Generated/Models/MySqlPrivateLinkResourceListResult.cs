@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <summary> Initializes a new instance of MySqlPrivateLinkResourceListResult. </summary>
         internal MySqlPrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<MySqlPrivateLinkResourceData>();
+            Value = new Core.ChangeTrackingList<MySqlPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of MySqlPrivateLinkResourceListResult. </summary>

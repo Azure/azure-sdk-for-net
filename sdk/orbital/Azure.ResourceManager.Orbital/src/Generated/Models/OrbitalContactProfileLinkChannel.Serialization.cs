@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
-    public partial class OrbitalContactProfileLinkChannel : IUtf8JsonSerializable
+    public partial class OrbitalContactProfileLinkChannel : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -23,22 +23,22 @@ namespace Azure.ResourceManager.Orbital.Models
             writer.WriteNumberValue(BandwidthMHz);
             writer.WritePropertyName("endPoint"u8);
             writer.WriteObjectValue(EndPoint);
-            if (Optional.IsDefined(ModulationConfiguration))
+            if (Core.Optional.IsDefined(ModulationConfiguration))
             {
                 writer.WritePropertyName("modulationConfiguration"u8);
                 writer.WriteStringValue(ModulationConfiguration);
             }
-            if (Optional.IsDefined(DemodulationConfiguration))
+            if (Core.Optional.IsDefined(DemodulationConfiguration))
             {
                 writer.WritePropertyName("demodulationConfiguration"u8);
                 writer.WriteStringValue(DemodulationConfiguration);
             }
-            if (Optional.IsDefined(EncodingConfiguration))
+            if (Core.Optional.IsDefined(EncodingConfiguration))
             {
                 writer.WritePropertyName("encodingConfiguration"u8);
                 writer.WriteStringValue(EncodingConfiguration);
             }
-            if (Optional.IsDefined(DecodingConfiguration))
+            if (Core.Optional.IsDefined(DecodingConfiguration))
             {
                 writer.WritePropertyName("decodingConfiguration"u8);
                 writer.WriteStringValue(DecodingConfiguration);
@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.Orbital.Models
             float centerFrequencyMHz = default;
             float bandwidthMHz = default;
             OrbitalContactEndpoint endPoint = default;
-            Optional<string> modulationConfiguration = default;
-            Optional<string> demodulationConfiguration = default;
-            Optional<string> encodingConfiguration = default;
-            Optional<string> decodingConfiguration = default;
+            Core.Optional<string> modulationConfiguration = default;
+            Core.Optional<string> demodulationConfiguration = default;
+            Core.Optional<string> encodingConfiguration = default;
+            Core.Optional<string> decodingConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

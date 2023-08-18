@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of AlertRulePatch. </summary>
         public AlertRulePatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            Actions = new ChangeTrackingList<AlertRuleAction>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Actions = new Core.ChangeTrackingList<AlertRuleAction>();
         }
 
         /// <summary> Resource tags. </summary>

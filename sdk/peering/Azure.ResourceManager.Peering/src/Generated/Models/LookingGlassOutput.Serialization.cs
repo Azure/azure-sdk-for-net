@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<LookingGlassCommand> command = default;
-            Optional<string> output = default;
+            Core.Optional<LookingGlassCommand> command = default;
+            Core.Optional<string> output = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("command"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Peering.Models
                     continue;
                 }
             }
-            return new LookingGlassOutput(Optional.ToNullable(command), output.Value);
+            return new LookingGlassOutput(Core.Optional.ToNullable(command), output.Value);
         }
     }
 }

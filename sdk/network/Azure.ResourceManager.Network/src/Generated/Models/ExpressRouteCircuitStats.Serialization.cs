@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRouteCircuitStats : IUtf8JsonSerializable
+    public partial class ExpressRouteCircuitStats : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrimarybytesIn))
+            if (Core.Optional.IsDefined(PrimarybytesIn))
             {
                 writer.WritePropertyName("primarybytesIn"u8);
                 writer.WriteNumberValue(PrimarybytesIn.Value);
             }
-            if (Optional.IsDefined(PrimarybytesOut))
+            if (Core.Optional.IsDefined(PrimarybytesOut))
             {
                 writer.WritePropertyName("primarybytesOut"u8);
                 writer.WriteNumberValue(PrimarybytesOut.Value);
             }
-            if (Optional.IsDefined(SecondarybytesIn))
+            if (Core.Optional.IsDefined(SecondarybytesIn))
             {
                 writer.WritePropertyName("secondarybytesIn"u8);
                 writer.WriteNumberValue(SecondarybytesIn.Value);
             }
-            if (Optional.IsDefined(SecondarybytesOut))
+            if (Core.Optional.IsDefined(SecondarybytesOut))
             {
                 writer.WritePropertyName("secondarybytesOut"u8);
                 writer.WriteNumberValue(SecondarybytesOut.Value);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<long> primarybytesIn = default;
-            Optional<long> primarybytesOut = default;
-            Optional<long> secondarybytesIn = default;
-            Optional<long> secondarybytesOut = default;
+            Core.Optional<long> primarybytesIn = default;
+            Core.Optional<long> primarybytesOut = default;
+            Core.Optional<long> secondarybytesIn = default;
+            Core.Optional<long> secondarybytesOut = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primarybytesIn"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ExpressRouteCircuitStats(Optional.ToNullable(primarybytesIn), Optional.ToNullable(primarybytesOut), Optional.ToNullable(secondarybytesIn), Optional.ToNullable(secondarybytesOut));
+            return new ExpressRouteCircuitStats(Core.Optional.ToNullable(primarybytesIn), Core.Optional.ToNullable(primarybytesOut), Core.Optional.ToNullable(secondarybytesIn), Core.Optional.ToNullable(secondarybytesOut));
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             Endpoint = endpoint;
-            Headers = new ChangeTrackingDictionary<string, string>();
+            Headers = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of WebhookHookParameter. </summary>

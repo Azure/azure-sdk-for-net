@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> version = default;
-            Optional<int> storageMb = default;
-            Optional<ServerSku> sku = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<string> version = default;
+            Core.Optional<int> storageMb = default;
+            Core.Optional<ServerSku> sku = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlServerMetadata(Optional.ToNullable(location), version.Value, Optional.ToNullable(storageMb), sku.Value);
+            return new PostgreSqlServerMetadata(Core.Optional.ToNullable(location), version.Value, Core.Optional.ToNullable(storageMb), sku.Value);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of DataCollectionRuleBcdrFailoverConfigurationSpec. </summary>
         internal DataCollectionRuleBcdrFailoverConfigurationSpec()
         {
-            Locations = new ChangeTrackingList<DataCollectionRuleBcdrLocationSpec>();
+            Locations = new Core.ChangeTrackingList<DataCollectionRuleBcdrLocationSpec>();
         }
 
         /// <summary> Initializes a new instance of DataCollectionRuleBcdrFailoverConfigurationSpec. </summary>

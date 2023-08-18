@@ -10,37 +10,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class MobileNetworkPlatform : IUtf8JsonSerializable
+    public partial class MobileNetworkPlatform : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PlatformType))
+            if (Core.Optional.IsDefined(PlatformType))
             {
                 writer.WritePropertyName("platformType"u8);
                 writer.WriteStringValue(PlatformType.Value.ToString());
             }
-            if (Optional.IsDefined(VersionState))
+            if (Core.Optional.IsDefined(VersionState))
             {
                 writer.WritePropertyName("versionState"u8);
                 writer.WriteStringValue(VersionState.Value.ToString());
             }
-            if (Optional.IsDefined(MinimumPlatformSoftwareVersion))
+            if (Core.Optional.IsDefined(MinimumPlatformSoftwareVersion))
             {
                 writer.WritePropertyName("minimumPlatformSoftwareVersion"u8);
                 writer.WriteStringValue(MinimumPlatformSoftwareVersion);
             }
-            if (Optional.IsDefined(MaximumPlatformSoftwareVersion))
+            if (Core.Optional.IsDefined(MaximumPlatformSoftwareVersion))
             {
                 writer.WritePropertyName("maximumPlatformSoftwareVersion"u8);
                 writer.WriteStringValue(MaximumPlatformSoftwareVersion);
             }
-            if (Optional.IsDefined(RecommendedVersion))
+            if (Core.Optional.IsDefined(RecommendedVersion))
             {
                 writer.WritePropertyName("recommendedVersion"u8);
                 writer.WriteStringValue(RecommendedVersion.Value.ToString());
             }
-            if (Optional.IsDefined(ObsoleteVersion))
+            if (Core.Optional.IsDefined(ObsoleteVersion))
             {
                 writer.WritePropertyName("obsoleteVersion"u8);
                 writer.WriteStringValue(ObsoleteVersion.Value.ToString());
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<MobileNetworkPlatformType> platformType = default;
-            Optional<MobileNetworkVersionState> versionState = default;
-            Optional<string> minimumPlatformSoftwareVersion = default;
-            Optional<string> maximumPlatformSoftwareVersion = default;
-            Optional<MobileNetworkRecommendedVersion> recommendedVersion = default;
-            Optional<MobileNetworkObsoleteVersion> obsoleteVersion = default;
+            Core.Optional<MobileNetworkPlatformType> platformType = default;
+            Core.Optional<MobileNetworkVersionState> versionState = default;
+            Core.Optional<string> minimumPlatformSoftwareVersion = default;
+            Core.Optional<string> maximumPlatformSoftwareVersion = default;
+            Core.Optional<MobileNetworkRecommendedVersion> recommendedVersion = default;
+            Core.Optional<MobileNetworkObsoleteVersion> obsoleteVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("platformType"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     continue;
                 }
             }
-            return new MobileNetworkPlatform(Optional.ToNullable(platformType), Optional.ToNullable(versionState), minimumPlatformSoftwareVersion.Value, maximumPlatformSoftwareVersion.Value, Optional.ToNullable(recommendedVersion), Optional.ToNullable(obsoleteVersion));
+            return new MobileNetworkPlatform(Core.Optional.ToNullable(platformType), Core.Optional.ToNullable(versionState), minimumPlatformSoftwareVersion.Value, maximumPlatformSoftwareVersion.Value, Core.Optional.ToNullable(recommendedVersion), Core.Optional.ToNullable(obsoleteVersion));
         }
     }
 }

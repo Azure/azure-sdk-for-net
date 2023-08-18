@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Peering
         /// <summary> Initializes a new instance of PeerAsnData. </summary>
         public PeerAsnData()
         {
-            PeerContactDetail = new ChangeTrackingList<PeerAsnContactDetail>();
+            PeerContactDetail = new Core.ChangeTrackingList<PeerAsnContactDetail>();
         }
 
         /// <summary> Initializes a new instance of PeerAsnData. </summary>

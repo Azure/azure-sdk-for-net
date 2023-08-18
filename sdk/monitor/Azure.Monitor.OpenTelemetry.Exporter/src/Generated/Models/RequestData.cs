@@ -31,8 +31,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Duration = duration;
             Success = success;
             ResponseCode = responseCode;
-            Properties = new ChangeTrackingDictionary<string, string>();
-            Measurements = new ChangeTrackingDictionary<string, double>();
+            Properties = new Core.ChangeTrackingDictionary<string, string>();
+            Measurements = new Core.ChangeTrackingDictionary<string, double>();
         }
 
         /// <summary> Identifier of a request call instance. Used for correlation between request and other telemetry items. </summary>

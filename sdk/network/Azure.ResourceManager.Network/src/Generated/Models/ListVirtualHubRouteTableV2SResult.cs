@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ListVirtualHubRouteTableV2SResult. </summary>
         internal ListVirtualHubRouteTableV2SResult()
         {
-            Value = new ChangeTrackingList<VirtualHubRouteTableV2Data>();
+            Value = new Core.ChangeTrackingList<VirtualHubRouteTableV2Data>();
         }
 
         /// <summary> Initializes a new instance of ListVirtualHubRouteTableV2SResult. </summary>

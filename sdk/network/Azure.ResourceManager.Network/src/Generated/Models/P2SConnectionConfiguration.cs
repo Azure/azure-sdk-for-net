@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of P2SConnectionConfiguration. </summary>
         public P2SConnectionConfiguration()
         {
-            ConfigurationPolicyGroupAssociations = new ChangeTrackingList<WritableSubResource>();
-            PreviousConfigurationPolicyGroupAssociations = new ChangeTrackingList<VpnServerConfigurationPolicyGroupData>();
+            ConfigurationPolicyGroupAssociations = new Core.ChangeTrackingList<WritableSubResource>();
+            PreviousConfigurationPolicyGroupAssociations = new Core.ChangeTrackingList<VpnServerConfigurationPolicyGroupData>();
         }
 
         /// <summary> Initializes a new instance of P2SConnectionConfiguration. </summary>

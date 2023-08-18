@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualNetworkGatewaySku : IUtf8JsonSerializable
+    public partial class VirtualNetworkGatewaySku : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name.Value.ToString());
             }
-            if (Optional.IsDefined(Tier))
+            if (Core.Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<VirtualNetworkGatewaySkuName> name = default;
-            Optional<VirtualNetworkGatewaySkuTier> tier = default;
-            Optional<int> capacity = default;
+            Core.Optional<VirtualNetworkGatewaySkuName> name = default;
+            Core.Optional<VirtualNetworkGatewaySkuTier> tier = default;
+            Core.Optional<int> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VirtualNetworkGatewaySku(Optional.ToNullable(name), Optional.ToNullable(tier), Optional.ToNullable(capacity));
+            return new VirtualNetworkGatewaySku(Core.Optional.ToNullable(name), Core.Optional.ToNullable(tier), Core.Optional.ToNullable(capacity));
         }
     }
 }

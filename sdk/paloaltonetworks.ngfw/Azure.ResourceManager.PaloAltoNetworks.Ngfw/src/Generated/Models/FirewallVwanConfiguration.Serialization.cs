@@ -10,29 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class FirewallVwanConfiguration : IUtf8JsonSerializable
+    public partial class FirewallVwanConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(NetworkVirtualApplianceId))
+            if (Core.Optional.IsDefined(NetworkVirtualApplianceId))
             {
                 writer.WritePropertyName("networkVirtualApplianceId"u8);
                 writer.WriteStringValue(NetworkVirtualApplianceId);
             }
             writer.WritePropertyName("vHub"u8);
             writer.WriteObjectValue(Vhub);
-            if (Optional.IsDefined(TrustSubnet))
+            if (Core.Optional.IsDefined(TrustSubnet))
             {
                 writer.WritePropertyName("trustSubnet"u8);
                 writer.WriteObjectValue(TrustSubnet);
             }
-            if (Optional.IsDefined(UnTrustSubnet))
+            if (Core.Optional.IsDefined(UnTrustSubnet))
             {
                 writer.WritePropertyName("unTrustSubnet"u8);
                 writer.WriteObjectValue(UnTrustSubnet);
             }
-            if (Optional.IsDefined(IPOfTrustSubnetForUdr))
+            if (Core.Optional.IsDefined(IPOfTrustSubnetForUdr))
             {
                 writer.WritePropertyName("ipOfTrustSubnetForUdr"u8);
                 writer.WriteObjectValue(IPOfTrustSubnetForUdr);
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<string> networkVirtualApplianceId = default;
+            Core.Optional<string> networkVirtualApplianceId = default;
             IPAddressSpaceInfo vHub = default;
-            Optional<IPAddressSpaceInfo> trustSubnet = default;
-            Optional<IPAddressSpaceInfo> unTrustSubnet = default;
-            Optional<IPAddressInfo> ipOfTrustSubnetForUdr = default;
+            Core.Optional<IPAddressSpaceInfo> trustSubnet = default;
+            Core.Optional<IPAddressSpaceInfo> unTrustSubnet = default;
+            Core.Optional<IPAddressInfo> ipOfTrustSubnetForUdr = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkVirtualApplianceId"u8))

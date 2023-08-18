@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NotificationRegistrationData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<NotificationRegistrationData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new NotificationRegistrationListResult(Optional.ToList(value), nextLink.Value);
+            return new NotificationRegistrationListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

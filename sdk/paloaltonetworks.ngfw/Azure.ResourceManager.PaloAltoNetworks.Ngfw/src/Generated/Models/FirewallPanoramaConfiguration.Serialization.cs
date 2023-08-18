@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class FirewallPanoramaConfiguration : IUtf8JsonSerializable
+    public partial class FirewallPanoramaConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("configString"u8);
@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 return null;
             }
             string configString = default;
-            Optional<string> vmAuthKey = default;
-            Optional<string> panoramaServer = default;
-            Optional<string> panoramaServer2 = default;
-            Optional<string> dgName = default;
-            Optional<string> tplName = default;
-            Optional<string> cgName = default;
-            Optional<string> hostName = default;
+            Core.Optional<string> vmAuthKey = default;
+            Core.Optional<string> panoramaServer = default;
+            Core.Optional<string> panoramaServer2 = default;
+            Core.Optional<string> dgName = default;
+            Core.Optional<string> tplName = default;
+            Core.Optional<string> cgName = default;
+            Core.Optional<string> hostName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("configString"u8))

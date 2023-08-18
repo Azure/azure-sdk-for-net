@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<bool> isDimensionRequired = default;
-            Optional<string> resourceId = default;
-            Optional<string> @namespace = default;
-            Optional<MonitorLocalizableString> name = default;
-            Optional<string> displayDescription = default;
-            Optional<string> category = default;
-            Optional<MonitorMetricClass> metricClass = default;
-            Optional<MonitorMetricUnit> unit = default;
-            Optional<MonitorAggregationType> primaryAggregationType = default;
-            Optional<IReadOnlyList<MonitorAggregationType>> supportedAggregationTypes = default;
-            Optional<IReadOnlyList<MonitorMetricAvailability>> metricAvailabilities = default;
-            Optional<string> id = default;
-            Optional<IReadOnlyList<MonitorLocalizableString>> dimensions = default;
+            Core.Optional<bool> isDimensionRequired = default;
+            Core.Optional<string> resourceId = default;
+            Core.Optional<string> @namespace = default;
+            Core.Optional<MonitorLocalizableString> name = default;
+            Core.Optional<string> displayDescription = default;
+            Core.Optional<string> category = default;
+            Core.Optional<MonitorMetricClass> metricClass = default;
+            Core.Optional<MonitorMetricUnit> unit = default;
+            Core.Optional<MonitorAggregationType> primaryAggregationType = default;
+            Core.Optional<IReadOnlyList<MonitorAggregationType>> supportedAggregationTypes = default;
+            Core.Optional<IReadOnlyList<MonitorMetricAvailability>> metricAvailabilities = default;
+            Core.Optional<string> id = default;
+            Core.Optional<IReadOnlyList<MonitorLocalizableString>> dimensions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isDimensionRequired"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MonitorMetricDefinition(Optional.ToNullable(isDimensionRequired), resourceId.Value, @namespace.Value, name.Value, displayDescription.Value, category.Value, Optional.ToNullable(metricClass), Optional.ToNullable(unit), Optional.ToNullable(primaryAggregationType), Optional.ToList(supportedAggregationTypes), Optional.ToList(metricAvailabilities), id.Value, Optional.ToList(dimensions));
+            return new MonitorMetricDefinition(Core.Optional.ToNullable(isDimensionRequired), resourceId.Value, @namespace.Value, name.Value, displayDescription.Value, category.Value, Core.Optional.ToNullable(metricClass), Core.Optional.ToNullable(unit), Core.Optional.ToNullable(primaryAggregationType), Core.Optional.ToList(supportedAggregationTypes), Core.Optional.ToList(metricAvailabilities), id.Value, Core.Optional.ToList(dimensions));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayAvailableSslPredefinedPolicies. </summary>
         internal ApplicationGatewayAvailableSslPredefinedPolicies()
         {
-            Value = new ChangeTrackingList<ApplicationGatewaySslPredefinedPolicy>();
+            Value = new Core.ChangeTrackingList<ApplicationGatewaySslPredefinedPolicy>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayAvailableSslPredefinedPolicies. </summary>

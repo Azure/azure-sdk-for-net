@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of ResourceTypeEndpoint. </summary>
         public ResourceTypeEndpoint()
         {
-            ApiVersions = new ChangeTrackingList<string>();
-            Locations = new ChangeTrackingList<AzureLocation>();
-            RequiredFeatures = new ChangeTrackingList<string>();
-            Extensions = new ChangeTrackingList<ResourceTypeExtension>();
+            ApiVersions = new Core.ChangeTrackingList<string>();
+            Locations = new Core.ChangeTrackingList<AzureLocation>();
+            RequiredFeatures = new Core.ChangeTrackingList<string>();
+            Extensions = new Core.ChangeTrackingList<ResourceTypeExtension>();
         }
 
         /// <summary> Initializes a new instance of ResourceTypeEndpoint. </summary>

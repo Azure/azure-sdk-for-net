@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class WebhookHookInfoPatch : IUtf8JsonSerializable
+    internal partial class WebhookHookInfoPatch : Core.IUtf8JsonSerializable
     {
     }
 }

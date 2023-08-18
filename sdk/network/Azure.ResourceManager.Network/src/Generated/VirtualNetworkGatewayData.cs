@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of VirtualNetworkGatewayData. </summary>
         public VirtualNetworkGatewayData()
         {
-            IPConfigurations = new ChangeTrackingList<VirtualNetworkGatewayIPConfiguration>();
-            VirtualNetworkGatewayPolicyGroups = new ChangeTrackingList<VirtualNetworkGatewayPolicyGroup>();
-            NatRules = new ChangeTrackingList<VirtualNetworkGatewayNatRuleData>();
+            IPConfigurations = new Core.ChangeTrackingList<VirtualNetworkGatewayIPConfiguration>();
+            VirtualNetworkGatewayPolicyGroups = new Core.ChangeTrackingList<VirtualNetworkGatewayPolicyGroup>();
+            NatRules = new Core.ChangeTrackingList<VirtualNetworkGatewayNatRuleData>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewayData. </summary>

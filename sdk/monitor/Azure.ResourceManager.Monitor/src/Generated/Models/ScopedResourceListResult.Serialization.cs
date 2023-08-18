@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MonitorPrivateLinkScopedResourceData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<MonitorPrivateLinkScopedResourceData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new ScopedResourceListResult(Optional.ToList(value), nextLink.Value);
+            return new ScopedResourceListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

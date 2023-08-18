@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class RadiusServer : IUtf8JsonSerializable
+    public partial class RadiusServer : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("radiusServerAddress"u8);
             writer.WriteStringValue(RadiusServerAddress);
-            if (Optional.IsDefined(RadiusServerScore))
+            if (Core.Optional.IsDefined(RadiusServerScore))
             {
                 writer.WritePropertyName("radiusServerScore"u8);
                 writer.WriteNumberValue(RadiusServerScore.Value);
             }
-            if (Optional.IsDefined(RadiusServerSecret))
+            if (Core.Optional.IsDefined(RadiusServerSecret))
             {
                 writer.WritePropertyName("radiusServerSecret"u8);
                 writer.WriteStringValue(RadiusServerSecret);
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string radiusServerAddress = default;
-            Optional<long> radiusServerScore = default;
-            Optional<string> radiusServerSecret = default;
+            Core.Optional<long> radiusServerScore = default;
+            Core.Optional<string> radiusServerSecret = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("radiusServerAddress"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new RadiusServer(radiusServerAddress, Optional.ToNullable(radiusServerScore), radiusServerSecret.Value);
+            return new RadiusServer(radiusServerAddress, Core.Optional.ToNullable(radiusServerScore), radiusServerSecret.Value);
         }
     }
 }

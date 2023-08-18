@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         /// <summary> Initializes a new instance of EmissionPoliciesPropertiesFormat. </summary>
         public EmissionPoliciesPropertiesFormat()
         {
-            EmissionDestinations = new ChangeTrackingList<EmissionPolicyDestination>();
+            EmissionDestinations = new Core.ChangeTrackingList<EmissionPolicyDestination>();
         }
 
         /// <summary> Initializes a new instance of EmissionPoliciesPropertiesFormat. </summary>

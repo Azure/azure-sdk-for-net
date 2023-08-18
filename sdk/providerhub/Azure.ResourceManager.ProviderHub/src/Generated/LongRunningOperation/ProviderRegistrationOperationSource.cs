@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ProviderHub
 {
-    internal class ProviderRegistrationOperationSource : IOperationSource<ProviderRegistrationResource>
+    internal class ProviderRegistrationOperationSource : Core.IOperationSource<ProviderRegistrationResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ProviderHub
             _client = client;
         }
 
-        ProviderRegistrationResource IOperationSource<ProviderRegistrationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ProviderRegistrationResource Core.IOperationSource<ProviderRegistrationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ProviderRegistrationData.DeserializeProviderRegistrationData(document.RootElement);
             return new ProviderRegistrationResource(_client, data);
         }
 
-        async ValueTask<ProviderRegistrationResource> IOperationSource<ProviderRegistrationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ProviderRegistrationResource> Core.IOperationSource<ProviderRegistrationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ProviderRegistrationData.DeserializeProviderRegistrationData(document.RootElement);

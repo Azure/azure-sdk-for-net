@@ -11,36 +11,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorWebhookReceiver : IUtf8JsonSerializable
+    public partial class MonitorWebhookReceiver : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("serviceUri"u8);
             writer.WriteStringValue(ServiceUri.AbsoluteUri);
-            if (Optional.IsDefined(UseCommonAlertSchema))
+            if (Core.Optional.IsDefined(UseCommonAlertSchema))
             {
                 writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);
             }
-            if (Optional.IsDefined(UseAadAuth))
+            if (Core.Optional.IsDefined(UseAadAuth))
             {
                 writer.WritePropertyName("useAadAuth"u8);
                 writer.WriteBooleanValue(UseAadAuth.Value);
             }
-            if (Optional.IsDefined(ObjectId))
+            if (Core.Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId);
             }
-            if (Optional.IsDefined(IdentifierUri))
+            if (Core.Optional.IsDefined(IdentifierUri))
             {
                 writer.WritePropertyName("identifierUri"u8);
                 writer.WriteStringValue(IdentifierUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(TenantId))
+            if (Core.Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             string name = default;
             Uri serviceUri = default;
-            Optional<bool> useCommonAlertSchema = default;
-            Optional<bool> useAadAuth = default;
-            Optional<string> objectId = default;
-            Optional<Uri> identifierUri = default;
-            Optional<Guid> tenantId = default;
+            Core.Optional<bool> useCommonAlertSchema = default;
+            Core.Optional<bool> useAadAuth = default;
+            Core.Optional<string> objectId = default;
+            Core.Optional<Uri> identifierUri = default;
+            Core.Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MonitorWebhookReceiver(name, serviceUri, Optional.ToNullable(useCommonAlertSchema), Optional.ToNullable(useAadAuth), objectId.Value, identifierUri.Value, Optional.ToNullable(tenantId));
+            return new MonitorWebhookReceiver(name, serviceUri, Core.Optional.ToNullable(useCommonAlertSchema), Core.Optional.ToNullable(useAadAuth), objectId.Value, identifierUri.Value, Core.Optional.ToNullable(tenantId));
         }
     }
 }

@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNull(vlans, nameof(vlans));
 
             ExtendedLocation = extendedLocation;
-            AssociatedResourceIds = new ChangeTrackingList<string>();
-            HybridAksClustersAssociatedIds = new ChangeTrackingList<ResourceIdentifier>();
+            AssociatedResourceIds = new Core.ChangeTrackingList<string>();
+            HybridAksClustersAssociatedIds = new Core.ChangeTrackingList<ResourceIdentifier>();
             IsolationDomainIds = isolationDomainIds.ToList();
-            VirtualMachinesAssociatedIds = new ChangeTrackingList<ResourceIdentifier>();
+            VirtualMachinesAssociatedIds = new Core.ChangeTrackingList<ResourceIdentifier>();
             Vlans = vlans.ToList();
         }
 

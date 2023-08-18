@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExclusionManagedRuleSet : IUtf8JsonSerializable
+    public partial class ExclusionManagedRuleSet : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("ruleSetType"u8);
             writer.WriteStringValue(RuleSetType);
             writer.WritePropertyName("ruleSetVersion"u8);
             writer.WriteStringValue(RuleSetVersion);
-            if (Optional.IsCollectionDefined(RuleGroups))
+            if (Core.Optional.IsCollectionDefined(RuleGroups))
             {
                 writer.WritePropertyName("ruleGroups"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             string ruleSetType = default;
             string ruleSetVersion = default;
-            Optional<IList<ExclusionManagedRuleGroup>> ruleGroups = default;
+            Core.Optional<IList<ExclusionManagedRuleGroup>> ruleGroups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleSetType"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ExclusionManagedRuleSet(ruleSetType, ruleSetVersion, Optional.ToList(ruleGroups));
+            return new ExclusionManagedRuleSet(ruleSetType, ruleSetVersion, Core.Optional.ToList(ruleGroups));
         }
     }
 }

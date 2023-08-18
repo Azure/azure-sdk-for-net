@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkManagerDeploymentStatusContent. </summary>
         public NetworkManagerDeploymentStatusContent()
         {
-            Regions = new ChangeTrackingList<string>();
-            DeploymentTypes = new ChangeTrackingList<NetworkConfigurationDeploymentType>();
+            Regions = new Core.ChangeTrackingList<string>();
+            DeploymentTypes = new Core.ChangeTrackingList<NetworkConfigurationDeploymentType>();
         }
 
         /// <summary> List of locations. </summary>

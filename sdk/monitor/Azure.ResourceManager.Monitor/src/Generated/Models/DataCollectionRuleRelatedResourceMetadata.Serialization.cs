@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> provisionedBy = default;
-            Optional<string> provisionedByResourceId = default;
+            Core.Optional<string> provisionedBy = default;
+            Core.Optional<string> provisionedByResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisionedBy"u8))

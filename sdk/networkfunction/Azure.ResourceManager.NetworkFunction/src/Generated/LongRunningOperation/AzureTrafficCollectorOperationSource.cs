@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetworkFunction
 {
-    internal class AzureTrafficCollectorOperationSource : IOperationSource<AzureTrafficCollectorResource>
+    internal class AzureTrafficCollectorOperationSource : Core.IOperationSource<AzureTrafficCollectorResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.NetworkFunction
             _client = client;
         }
 
-        AzureTrafficCollectorResource IOperationSource<AzureTrafficCollectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        AzureTrafficCollectorResource Core.IOperationSource<AzureTrafficCollectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AzureTrafficCollectorData.DeserializeAzureTrafficCollectorData(document.RootElement);
             return new AzureTrafficCollectorResource(_client, data);
         }
 
-        async ValueTask<AzureTrafficCollectorResource> IOperationSource<AzureTrafficCollectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AzureTrafficCollectorResource> Core.IOperationSource<AzureTrafficCollectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AzureTrafficCollectorData.DeserializeAzureTrafficCollectorData(document.RootElement);

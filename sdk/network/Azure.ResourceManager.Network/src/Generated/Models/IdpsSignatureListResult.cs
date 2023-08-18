@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of IdpsSignatureListResult. </summary>
         internal IdpsSignatureListResult()
         {
-            Signatures = new ChangeTrackingList<IdpsSignatureResult>();
+            Signatures = new Core.ChangeTrackingList<IdpsSignatureResult>();
         }
 
         /// <summary> Initializes a new instance of IdpsSignatureListResult. </summary>

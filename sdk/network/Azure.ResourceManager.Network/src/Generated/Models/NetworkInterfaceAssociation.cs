@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkInterfaceAssociation. </summary>
         internal NetworkInterfaceAssociation()
         {
-            SecurityRules = new ChangeTrackingList<SecurityRuleData>();
+            SecurityRules = new Core.ChangeTrackingList<SecurityRuleData>();
         }
 
         /// <summary> Initializes a new instance of NetworkInterfaceAssociation. </summary>

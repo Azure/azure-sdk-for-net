@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class FirewallBillingPlanInfo : IUtf8JsonSerializable
+    public partial class FirewallBillingPlanInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(UsageType))
+            if (Core.Optional.IsDefined(UsageType))
             {
                 writer.WritePropertyName("usageType"u8);
                 writer.WriteStringValue(UsageType.Value.ToString());
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<FirewallBillingPlanUsageType> usageType = default;
+            Core.Optional<FirewallBillingPlanUsageType> usageType = default;
             FirewallBillingCycle billingCycle = default;
             string planId = default;
-            Optional<DateTimeOffset> effectiveDate = default;
+            Core.Optional<DateTimeOffset> effectiveDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("usageType"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     continue;
                 }
             }
-            return new FirewallBillingPlanInfo(Optional.ToNullable(usageType), billingCycle, planId, Optional.ToNullable(effectiveDate));
+            return new FirewallBillingPlanInfo(Core.Optional.ToNullable(usageType), billingCycle, planId, Core.Optional.ToNullable(effectiveDate));
         }
     }
 }

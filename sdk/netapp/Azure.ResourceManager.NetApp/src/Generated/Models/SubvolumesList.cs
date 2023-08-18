@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of SubvolumesList. </summary>
         internal SubvolumesList()
         {
-            Value = new ChangeTrackingList<NetAppSubvolumeInfoData>();
+            Value = new Core.ChangeTrackingList<NetAppSubvolumeInfoData>();
         }
 
         /// <summary> Initializes a new instance of SubvolumesList. </summary>

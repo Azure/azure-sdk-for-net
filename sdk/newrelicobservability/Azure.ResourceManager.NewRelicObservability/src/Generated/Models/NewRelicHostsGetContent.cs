@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         {
             Argument.AssertNotNull(userEmail, nameof(userEmail));
 
-            VmIds = new ChangeTrackingList<ResourceIdentifier>();
+            VmIds = new Core.ChangeTrackingList<ResourceIdentifier>();
             UserEmail = userEmail;
         }
 

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<string> status = default;
+            Core.Optional<string> status = default;
             long numberOfDocuments = default;
             foreach (var property in element.EnumerateObject())
             {

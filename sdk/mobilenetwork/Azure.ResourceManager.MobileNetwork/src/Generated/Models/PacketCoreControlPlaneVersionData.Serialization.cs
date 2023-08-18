@@ -13,14 +13,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    public partial class PacketCoreControlPlaneVersionData : IUtf8JsonSerializable
+    public partial class PacketCoreControlPlaneVersionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Platforms))
+            if (Core.Optional.IsCollectionDefined(Platforms))
             {
                 writer.WritePropertyName("platforms"u8);
                 writer.WriteStartArray();
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.MobileNetwork
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MobileNetworkProvisioningState> provisioningState = default;
-            Optional<IList<MobileNetworkPlatform>> platforms = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<MobileNetworkProvisioningState> provisioningState = default;
+            Core.Optional<IList<MobileNetworkPlatform>> platforms = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     continue;
                 }
             }
-            return new PacketCoreControlPlaneVersionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToList(platforms));
+            return new PacketCoreControlPlaneVersionData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(platforms));
         }
     }
 }

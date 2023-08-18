@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PeerExpressRouteCircuitConnectionListResult. </summary>
         internal PeerExpressRouteCircuitConnectionListResult()
         {
-            Value = new ChangeTrackingList<PeerExpressRouteCircuitConnectionData>();
+            Value = new Core.ChangeTrackingList<PeerExpressRouteCircuitConnectionData>();
         }
 
         /// <summary> Initializes a new instance of PeerExpressRouteCircuitConnectionListResult. </summary>

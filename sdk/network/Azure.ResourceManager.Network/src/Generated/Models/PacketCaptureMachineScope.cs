@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PacketCaptureMachineScope. </summary>
         public PacketCaptureMachineScope()
         {
-            Include = new ChangeTrackingList<string>();
-            Exclude = new ChangeTrackingList<string>();
+            Include = new Core.ChangeTrackingList<string>();
+            Exclude = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PacketCaptureMachineScope. </summary>

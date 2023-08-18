@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectionMonitorEndpointFilter : IUtf8JsonSerializable
+    public partial class ConnectionMonitorEndpointFilter : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FilterType))
+            if (Core.Optional.IsDefined(FilterType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(FilterType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Items))
+            if (Core.Optional.IsCollectionDefined(Items))
             {
                 writer.WritePropertyName("items"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ConnectionMonitorEndpointFilterType> type = default;
-            Optional<IList<ConnectionMonitorEndpointFilterItem>> items = default;
+            Core.Optional<ConnectionMonitorEndpointFilterType> type = default;
+            Core.Optional<IList<ConnectionMonitorEndpointFilterItem>> items = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ConnectionMonitorEndpointFilter(Optional.ToNullable(type), Optional.ToList(items));
+            return new ConnectionMonitorEndpointFilter(Core.Optional.ToNullable(type), Core.Optional.ToList(items));
         }
     }
 }

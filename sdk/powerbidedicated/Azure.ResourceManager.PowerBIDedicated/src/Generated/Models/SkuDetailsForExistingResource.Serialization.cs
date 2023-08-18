@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<CapacitySku> sku = default;
+            Core.Optional<string> resourceType = default;
+            Core.Optional<CapacitySku> sku = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))

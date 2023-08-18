@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <summary> Initializes a new instance of SiteListResult. </summary>
         internal SiteListResult()
         {
-            Value = new ChangeTrackingList<MobileNetworkSiteData>();
+            Value = new Core.ChangeTrackingList<MobileNetworkSiteData>();
         }
 
         /// <summary> Initializes a new instance of SiteListResult. </summary>

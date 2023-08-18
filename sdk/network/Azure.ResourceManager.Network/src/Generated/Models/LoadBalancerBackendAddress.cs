@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of LoadBalancerBackendAddress. </summary>
         public LoadBalancerBackendAddress()
         {
-            InboundNatRulesPortMapping = new ChangeTrackingList<NatRulePortMapping>();
+            InboundNatRulesPortMapping = new Core.ChangeTrackingList<NatRulePortMapping>();
         }
 
         /// <summary> Initializes a new instance of LoadBalancerBackendAddress. </summary>

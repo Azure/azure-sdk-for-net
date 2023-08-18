@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of CapacityPoolList. </summary>
         internal CapacityPoolList()
         {
-            Value = new ChangeTrackingList<CapacityPoolData>();
+            Value = new Core.ChangeTrackingList<CapacityPoolData>();
         }
 
         /// <summary> Initializes a new instance of CapacityPoolList. </summary>

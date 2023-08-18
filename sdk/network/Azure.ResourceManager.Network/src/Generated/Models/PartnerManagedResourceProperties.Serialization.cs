@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PartnerManagedResourceProperties : IUtf8JsonSerializable
+    public partial class PartnerManagedResourceProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<ResourceIdentifier> internalLoadBalancerId = default;
-            Optional<ResourceIdentifier> standardLoadBalancerId = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<ResourceIdentifier> internalLoadBalancerId = default;
+            Core.Optional<ResourceIdentifier> standardLoadBalancerId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

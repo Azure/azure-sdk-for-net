@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = await _mobileNetworkSimGroupSimGroupsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MobileNetworkArmOperation(_mobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, _mobileNetworkSimGroupSimGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MobileNetworkArmOperation(_mobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, _mobileNetworkSimGroupSimGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = _mobileNetworkSimGroupSimGroupsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new MobileNetworkArmOperation(_mobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, _mobileNetworkSimGroupSimGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MobileNetworkArmOperation(_mobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, _mobileNetworkSimGroupSimGroupsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = await _mobileNetworkSimSimsRestClient.BulkUploadAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simUploadList, cancellationToken).ConfigureAwait(false);
-                var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkSimSimsClientDiagnostics, Pipeline, _mobileNetworkSimSimsRestClient.CreateBulkUploadRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simUploadList).Request, response, OperationFinalStateVia.Location);
+                var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkSimSimsClientDiagnostics, Pipeline, _mobileNetworkSimSimsRestClient.CreateBulkUploadRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simUploadList).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = _mobileNetworkSimSimsRestClient.BulkUpload(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simUploadList, cancellationToken);
-                var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkSimSimsClientDiagnostics, Pipeline, _mobileNetworkSimSimsRestClient.CreateBulkUploadRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simUploadList).Request, response, OperationFinalStateVia.Location);
+                var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkSimSimsClientDiagnostics, Pipeline, _mobileNetworkSimSimsRestClient.CreateBulkUploadRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simUploadList).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = await _mobileNetworkSimSimsRestClient.BulkDeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simDeleteList, cancellationToken).ConfigureAwait(false);
-                var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkSimSimsClientDiagnostics, Pipeline, _mobileNetworkSimSimsRestClient.CreateBulkDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simDeleteList).Request, response, OperationFinalStateVia.Location);
+                var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkSimSimsClientDiagnostics, Pipeline, _mobileNetworkSimSimsRestClient.CreateBulkDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simDeleteList).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = _mobileNetworkSimSimsRestClient.BulkDelete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simDeleteList, cancellationToken);
-                var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkSimSimsClientDiagnostics, Pipeline, _mobileNetworkSimSimsRestClient.CreateBulkDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simDeleteList).Request, response, OperationFinalStateVia.Location);
+                var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkSimSimsClientDiagnostics, Pipeline, _mobileNetworkSimSimsRestClient.CreateBulkDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simDeleteList).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = await _mobileNetworkSimSimsRestClient.BulkUploadEncryptedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptedSimUploadList, cancellationToken).ConfigureAwait(false);
-                var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkSimSimsClientDiagnostics, Pipeline, _mobileNetworkSimSimsRestClient.CreateBulkUploadEncryptedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptedSimUploadList).Request, response, OperationFinalStateVia.Location);
+                var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkSimSimsClientDiagnostics, Pipeline, _mobileNetworkSimSimsRestClient.CreateBulkUploadEncryptedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptedSimUploadList).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = _mobileNetworkSimSimsRestClient.BulkUploadEncrypted(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptedSimUploadList, cancellationToken);
-                var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkSimSimsClientDiagnostics, Pipeline, _mobileNetworkSimSimsRestClient.CreateBulkUploadEncryptedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptedSimUploadList).Request, response, OperationFinalStateVia.Location);
+                var operation = new MobileNetworkArmOperation<AsyncOperationStatus>(new AsyncOperationStatusOperationSource(), _mobileNetworkSimSimsClientDiagnostics, Pipeline, _mobileNetworkSimSimsRestClient.CreateBulkUploadEncryptedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptedSimUploadList).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -16,16 +16,16 @@ namespace Azure.Monitor.Query.Models
         /// <summary> Initializes a new instance of MetadataResults. </summary>
         internal MetadataResults()
         {
-            Categories = new ChangeTrackingList<MetadataCategory>();
-            ResourceTypes = new ChangeTrackingList<MetadataResourceType>();
-            Solutions = new ChangeTrackingList<MetadataSolution>();
-            Tables = new ChangeTrackingList<MetadataTable>();
-            Functions = new ChangeTrackingList<MetadataFunction>();
-            Queries = new ChangeTrackingList<MetadataQuery>();
-            Applications = new ChangeTrackingList<MetadataApplication>();
-            Workspaces = new ChangeTrackingList<MetadataWorkspace>();
-            Resources = new ChangeTrackingList<object>();
-            Permissions = new ChangeTrackingList<MetadataPermissions>();
+            Categories = new Core.ChangeTrackingList<MetadataCategory>();
+            ResourceTypes = new Core.ChangeTrackingList<MetadataResourceType>();
+            Solutions = new Core.ChangeTrackingList<MetadataSolution>();
+            Tables = new Core.ChangeTrackingList<MetadataTable>();
+            Functions = new Core.ChangeTrackingList<MetadataFunction>();
+            Queries = new Core.ChangeTrackingList<MetadataQuery>();
+            Applications = new Core.ChangeTrackingList<MetadataApplication>();
+            Workspaces = new Core.ChangeTrackingList<MetadataWorkspace>();
+            Resources = new Core.ChangeTrackingList<object>();
+            Permissions = new Core.ChangeTrackingList<MetadataPermissions>();
         }
 
         /// <summary> The list of categories that are referenced in this metadata response. </summary>

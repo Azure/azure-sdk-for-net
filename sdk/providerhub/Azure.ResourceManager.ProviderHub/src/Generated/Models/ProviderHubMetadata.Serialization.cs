@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ProviderHubMetadata : IUtf8JsonSerializable
+    public partial class ProviderHubMetadata : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ProviderAuthorizations))
+            if (Core.Optional.IsCollectionDefined(ProviderAuthorizations))
             {
                 writer.WritePropertyName("providerAuthorizations"u8);
                 writer.WriteStartArray();
@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ProviderAuthentication))
+            if (Core.Optional.IsDefined(ProviderAuthentication))
             {
                 writer.WritePropertyName("providerAuthentication"u8);
                 writer.WriteObjectValue(ProviderAuthentication);
             }
-            if (Optional.IsDefined(ThirdPartyProviderAuthorization))
+            if (Core.Optional.IsDefined(ThirdPartyProviderAuthorization))
             {
                 writer.WritePropertyName("thirdPartyProviderAuthorization"u8);
                 writer.WriteObjectValue(ThirdPartyProviderAuthorization);
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<IList<ResourceProviderAuthorization>> providerAuthorizations = default;
-            Optional<ResourceProviderAuthentication> providerAuthentication = default;
-            Optional<ThirdPartyProviderAuthorization> thirdPartyProviderAuthorization = default;
+            Core.Optional<IList<ResourceProviderAuthorization>> providerAuthorizations = default;
+            Core.Optional<ResourceProviderAuthentication> providerAuthentication = default;
+            Core.Optional<ThirdPartyProviderAuthorization> thirdPartyProviderAuthorization = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("providerAuthorizations"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new ProviderHubMetadata(Optional.ToList(providerAuthorizations), providerAuthentication.Value, thirdPartyProviderAuthorization.Value);
+            return new ProviderHubMetadata(Core.Optional.ToList(providerAuthorizations), providerAuthentication.Value, thirdPartyProviderAuthorization.Value);
         }
     }
 }

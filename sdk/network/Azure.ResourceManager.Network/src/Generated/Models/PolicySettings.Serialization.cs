@@ -10,62 +10,62 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PolicySettings : IUtf8JsonSerializable
+    public partial class PolicySettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(Mode))
+            if (Core.Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsDefined(RequestBodyCheck))
+            if (Core.Optional.IsDefined(RequestBodyCheck))
             {
                 writer.WritePropertyName("requestBodyCheck"u8);
                 writer.WriteBooleanValue(RequestBodyCheck.Value);
             }
-            if (Optional.IsDefined(RequestBodyInspectLimitInKB))
+            if (Core.Optional.IsDefined(RequestBodyInspectLimitInKB))
             {
                 writer.WritePropertyName("requestBodyInspectLimitInKB"u8);
                 writer.WriteNumberValue(RequestBodyInspectLimitInKB.Value);
             }
-            if (Optional.IsDefined(RequestBodyEnforcement))
+            if (Core.Optional.IsDefined(RequestBodyEnforcement))
             {
                 writer.WritePropertyName("requestBodyEnforcement"u8);
                 writer.WriteBooleanValue(RequestBodyEnforcement.Value);
             }
-            if (Optional.IsDefined(MaxRequestBodySizeInKb))
+            if (Core.Optional.IsDefined(MaxRequestBodySizeInKb))
             {
                 writer.WritePropertyName("maxRequestBodySizeInKb"u8);
                 writer.WriteNumberValue(MaxRequestBodySizeInKb.Value);
             }
-            if (Optional.IsDefined(FileUploadEnforcement))
+            if (Core.Optional.IsDefined(FileUploadEnforcement))
             {
                 writer.WritePropertyName("fileUploadEnforcement"u8);
                 writer.WriteBooleanValue(FileUploadEnforcement.Value);
             }
-            if (Optional.IsDefined(FileUploadLimitInMb))
+            if (Core.Optional.IsDefined(FileUploadLimitInMb))
             {
                 writer.WritePropertyName("fileUploadLimitInMb"u8);
                 writer.WriteNumberValue(FileUploadLimitInMb.Value);
             }
-            if (Optional.IsDefined(CustomBlockResponseStatusCode))
+            if (Core.Optional.IsDefined(CustomBlockResponseStatusCode))
             {
                 writer.WritePropertyName("customBlockResponseStatusCode"u8);
                 writer.WriteNumberValue(CustomBlockResponseStatusCode.Value);
             }
-            if (Optional.IsDefined(CustomBlockResponseBody))
+            if (Core.Optional.IsDefined(CustomBlockResponseBody))
             {
                 writer.WritePropertyName("customBlockResponseBody"u8);
                 writer.WriteStringValue(CustomBlockResponseBody);
             }
-            if (Optional.IsDefined(LogScrubbing))
+            if (Core.Optional.IsDefined(LogScrubbing))
             {
                 writer.WritePropertyName("logScrubbing"u8);
                 writer.WriteObjectValue(LogScrubbing);
@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<WebApplicationFirewallEnabledState> state = default;
-            Optional<WebApplicationFirewallMode> mode = default;
-            Optional<bool> requestBodyCheck = default;
-            Optional<int> requestBodyInspectLimitInKB = default;
-            Optional<bool> requestBodyEnforcement = default;
-            Optional<int> maxRequestBodySizeInKb = default;
-            Optional<bool> fileUploadEnforcement = default;
-            Optional<int> fileUploadLimitInMb = default;
-            Optional<int> customBlockResponseStatusCode = default;
-            Optional<string> customBlockResponseBody = default;
-            Optional<PolicySettingsLogScrubbing> logScrubbing = default;
+            Core.Optional<WebApplicationFirewallEnabledState> state = default;
+            Core.Optional<WebApplicationFirewallMode> mode = default;
+            Core.Optional<bool> requestBodyCheck = default;
+            Core.Optional<int> requestBodyInspectLimitInKB = default;
+            Core.Optional<bool> requestBodyEnforcement = default;
+            Core.Optional<int> maxRequestBodySizeInKb = default;
+            Core.Optional<bool> fileUploadEnforcement = default;
+            Core.Optional<int> fileUploadLimitInMb = default;
+            Core.Optional<int> customBlockResponseStatusCode = default;
+            Core.Optional<string> customBlockResponseBody = default;
+            Core.Optional<PolicySettingsLogScrubbing> logScrubbing = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PolicySettings(Optional.ToNullable(state), Optional.ToNullable(mode), Optional.ToNullable(requestBodyCheck), Optional.ToNullable(requestBodyInspectLimitInKB), Optional.ToNullable(requestBodyEnforcement), Optional.ToNullable(maxRequestBodySizeInKb), Optional.ToNullable(fileUploadEnforcement), Optional.ToNullable(fileUploadLimitInMb), Optional.ToNullable(customBlockResponseStatusCode), customBlockResponseBody.Value, logScrubbing.Value);
+            return new PolicySettings(Core.Optional.ToNullable(state), Core.Optional.ToNullable(mode), Core.Optional.ToNullable(requestBodyCheck), Core.Optional.ToNullable(requestBodyInspectLimitInKB), Core.Optional.ToNullable(requestBodyEnforcement), Core.Optional.ToNullable(maxRequestBodySizeInKb), Core.Optional.ToNullable(fileUploadEnforcement), Core.Optional.ToNullable(fileUploadLimitInMb), Core.Optional.ToNullable(customBlockResponseStatusCode), customBlockResponseBody.Value, logScrubbing.Value);
         }
     }
 }

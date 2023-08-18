@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of EffectiveConnectivityConfiguration. </summary>
         internal EffectiveConnectivityConfiguration()
         {
-            ConfigurationGroups = new ChangeTrackingList<NetworkConfigurationGroup>();
-            Hubs = new ChangeTrackingList<ConnectivityHub>();
-            AppliesToGroups = new ChangeTrackingList<ConnectivityGroupItem>();
+            ConfigurationGroups = new Core.ChangeTrackingList<NetworkConfigurationGroup>();
+            Hubs = new Core.ChangeTrackingList<ConnectivityHub>();
+            AppliesToGroups = new Core.ChangeTrackingList<ConnectivityGroupItem>();
         }
 
         /// <summary> Initializes a new instance of EffectiveConnectivityConfiguration. </summary>

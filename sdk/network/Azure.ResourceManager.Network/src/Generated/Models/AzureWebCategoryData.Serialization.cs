@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            Core.Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> group = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> group = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new AzureWebCategoryData(id, name, type, systemData.Value, Optional.ToNullable(etag), group.Value);
+            return new AzureWebCategoryData(id, name, type, systemData.Value, Core.Optional.ToNullable(etag), group.Value);
         }
     }
 }

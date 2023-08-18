@@ -19,18 +19,18 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<long> rackSlot = default;
-            Optional<BootstrapProtocol> bootstrapProtocol = default;
-            Optional<long> cpuCores = default;
-            Optional<long> cpuSockets = default;
-            Optional<IReadOnlyList<MachineDisk>> disks = default;
-            Optional<string> generation = default;
-            Optional<string> hardwareVersion = default;
-            Optional<long> memoryCapacityGB = default;
-            Optional<string> model = default;
-            Optional<IReadOnlyList<NetworkCloudNetworkInterface>> networkInterfaces = default;
-            Optional<long> totalThreads = default;
-            Optional<string> vendor = default;
+            Core.Optional<long> rackSlot = default;
+            Core.Optional<BootstrapProtocol> bootstrapProtocol = default;
+            Core.Optional<long> cpuCores = default;
+            Core.Optional<long> cpuSockets = default;
+            Core.Optional<IReadOnlyList<MachineDisk>> disks = default;
+            Core.Optional<string> generation = default;
+            Core.Optional<string> hardwareVersion = default;
+            Core.Optional<long> memoryCapacityGB = default;
+            Core.Optional<string> model = default;
+            Core.Optional<IReadOnlyList<NetworkCloudNetworkInterface>> networkInterfaces = default;
+            Core.Optional<long> totalThreads = default;
+            Core.Optional<string> vendor = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rackSlot"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new MachineSkuSlot(Optional.ToNullable(rackSlot), Optional.ToNullable(bootstrapProtocol), Optional.ToNullable(cpuCores), Optional.ToNullable(cpuSockets), Optional.ToList(disks), generation.Value, hardwareVersion.Value, Optional.ToNullable(memoryCapacityGB), model.Value, Optional.ToList(networkInterfaces), Optional.ToNullable(totalThreads), vendor.Value);
+            return new MachineSkuSlot(Core.Optional.ToNullable(rackSlot), Core.Optional.ToNullable(bootstrapProtocol), Core.Optional.ToNullable(cpuCores), Core.Optional.ToNullable(cpuSockets), Core.Optional.ToList(disks), generation.Value, hardwareVersion.Value, Core.Optional.ToNullable(memoryCapacityGB), model.Value, Core.Optional.ToList(networkInterfaces), Core.Optional.ToNullable(totalThreads), vendor.Value);
         }
     }
 }

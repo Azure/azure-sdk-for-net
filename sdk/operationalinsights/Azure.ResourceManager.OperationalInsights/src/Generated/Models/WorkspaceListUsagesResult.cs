@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of WorkspaceListUsagesResult. </summary>
         internal WorkspaceListUsagesResult()
         {
-            Value = new ChangeTrackingList<OperationalInsightsUsageMetric>();
+            Value = new Core.ChangeTrackingList<OperationalInsightsUsageMetric>();
         }
 
         /// <summary> Initializes a new instance of WorkspaceListUsagesResult. </summary>

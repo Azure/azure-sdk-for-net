@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Direction = direction;
             Protocol = protocol.ToList();
             RemoteIPList = remoteIPList.ToList();
-            Ports = new ChangeTrackingList<string>();
+            Ports = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of MobileNetworkServiceDataFlowTemplate. </summary>

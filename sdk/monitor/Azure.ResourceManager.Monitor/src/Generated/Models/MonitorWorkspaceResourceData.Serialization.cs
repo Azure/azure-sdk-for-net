@@ -14,12 +14,12 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class MonitorWorkspaceResourceData : IUtf8JsonSerializable
+    public partial class MonitorWorkspaceResourceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,19 +44,19 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> accountId = default;
-            Optional<MonitorWorkspaceMetrics> metrics = default;
-            Optional<MonitorProvisioningState> provisioningState = default;
-            Optional<MonitorWorkspaceDefaultIngestionSettings> defaultIngestionSettings = default;
-            Optional<IReadOnlyList<MonitorWorkspacePrivateEndpointConnection>> privateEndpointConnections = default;
-            Optional<MonitorWorkspacePublicNetworkAccess> publicNetworkAccess = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> accountId = default;
+            Core.Optional<MonitorWorkspaceMetrics> metrics = default;
+            Core.Optional<MonitorProvisioningState> provisioningState = default;
+            Core.Optional<MonitorWorkspaceDefaultIngestionSettings> defaultIngestionSettings = default;
+            Core.Optional<IReadOnlyList<MonitorWorkspacePrivateEndpointConnection>> privateEndpointConnections = default;
+            Core.Optional<MonitorWorkspacePublicNetworkAccess> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new MonitorWorkspaceResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), accountId.Value, metrics.Value, Optional.ToNullable(provisioningState), defaultIngestionSettings.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess));
+            return new MonitorWorkspaceResourceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(etag), accountId.Value, metrics.Value, Core.Optional.ToNullable(provisioningState), defaultIngestionSettings.Value, Core.Optional.ToList(privateEndpointConnections), Core.Optional.ToNullable(publicNetworkAccess));
         }
     }
 }

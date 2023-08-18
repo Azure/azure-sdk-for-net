@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Initializes a new instance of VmInsightsOnboardingStatusData. </summary>
         internal VmInsightsOnboardingStatusData()
         {
-            Data = new ChangeTrackingList<DataContainer>();
+            Data = new Core.ChangeTrackingList<DataContainer>();
         }
 
         /// <summary> Initializes a new instance of VmInsightsOnboardingStatusData. </summary>

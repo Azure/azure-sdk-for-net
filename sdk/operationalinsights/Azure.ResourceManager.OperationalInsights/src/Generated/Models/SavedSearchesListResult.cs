@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of SavedSearchesListResult. </summary>
         internal SavedSearchesListResult()
         {
-            Value = new ChangeTrackingList<OperationalInsightsSavedSearchData>();
+            Value = new Core.ChangeTrackingList<OperationalInsightsSavedSearchData>();
         }
 
         /// <summary> Initializes a new instance of SavedSearchesListResult. </summary>

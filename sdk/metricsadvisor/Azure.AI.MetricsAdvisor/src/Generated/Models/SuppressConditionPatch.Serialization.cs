@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class SuppressConditionPatch : IUtf8JsonSerializable
+    internal partial class SuppressConditionPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinNumber))
+            if (Core.Optional.IsDefined(MinNumber))
             {
                 writer.WritePropertyName("minNumber"u8);
                 writer.WriteNumberValue(MinNumber.Value);
             }
-            if (Optional.IsDefined(MinRatio))
+            if (Core.Optional.IsDefined(MinRatio))
             {
                 writer.WritePropertyName("minRatio"u8);
                 writer.WriteNumberValue(MinRatio.Value);

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class LocationThresholdRuleCondition : IUtf8JsonSerializable
+    public partial class LocationThresholdRuleCondition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(WindowSize))
+            if (Core.Optional.IsDefined(WindowSize))
             {
                 writer.WritePropertyName("windowSize"u8);
                 writer.WriteStringValue(WindowSize.Value, "P");
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteNumberValue(FailedLocationCount);
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Optional.IsDefined(DataSource))
+            if (Core.Optional.IsDefined(DataSource))
             {
                 writer.WritePropertyName("dataSource"u8);
                 writer.WriteObjectValue(DataSource);
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<TimeSpan> windowSize = default;
+            Core.Optional<TimeSpan> windowSize = default;
             int failedLocationCount = default;
             string odataType = default;
-            Optional<RuleDataSource> dataSource = default;
+            Core.Optional<RuleDataSource> dataSource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("windowSize"u8))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new LocationThresholdRuleCondition(odataType, dataSource.Value, Optional.ToNullable(windowSize), failedLocationCount);
+            return new LocationThresholdRuleCondition(odataType, dataSource.Value, Core.Optional.ToNullable(windowSize), failedLocationCount);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Azure.Monitor.Query.Models
 
             Id = id;
             Type = type;
-            Labels = new ChangeTrackingList<string>();
+            Labels = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> The ID of the resource-type. </summary>

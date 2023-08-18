@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of PublicIPPrefixData. </summary>
         public PublicIPPrefixData()
         {
-            Zones = new ChangeTrackingList<string>();
-            IPTags = new ChangeTrackingList<IPTag>();
-            PublicIPAddresses = new ChangeTrackingList<SubResource>();
+            Zones = new Core.ChangeTrackingList<string>();
+            IPTags = new Core.ChangeTrackingList<IPTag>();
+            PublicIPAddresses = new Core.ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of PublicIPPrefixData. </summary>

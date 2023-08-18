@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApplicationGatewayData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<ApplicationGatewayData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayListResult(Optional.ToList(value), nextLink.Value);
+            return new ApplicationGatewayListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

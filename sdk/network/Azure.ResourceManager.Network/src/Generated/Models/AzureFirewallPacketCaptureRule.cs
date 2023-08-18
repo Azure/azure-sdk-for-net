@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of AzureFirewallPacketCaptureRule. </summary>
         public AzureFirewallPacketCaptureRule()
         {
-            Sources = new ChangeTrackingList<string>();
-            Destinations = new ChangeTrackingList<string>();
-            DestinationPorts = new ChangeTrackingList<string>();
+            Sources = new Core.ChangeTrackingList<string>();
+            Destinations = new Core.ChangeTrackingList<string>();
+            DestinationPorts = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AzureFirewallPacketCaptureRule. </summary>

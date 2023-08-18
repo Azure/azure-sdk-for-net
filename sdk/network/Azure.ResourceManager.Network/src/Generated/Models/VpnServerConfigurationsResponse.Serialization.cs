@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> vpnServerConfigurationResourceIds = default;
+            Core.Optional<IReadOnlyList<string>> vpnServerConfigurationResourceIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vpnServerConfigurationResourceIds"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VpnServerConfigurationsResponse(Optional.ToList(vpnServerConfigurationResourceIds));
+            return new VpnServerConfigurationsResponse(Core.Optional.ToList(vpnServerConfigurationResourceIds));
         }
     }
 }

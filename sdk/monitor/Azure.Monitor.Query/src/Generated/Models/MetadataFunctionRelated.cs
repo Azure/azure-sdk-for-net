@@ -16,11 +16,11 @@ namespace Azure.Monitor.Query.Models
         /// <summary> Initializes a new instance of MetadataFunctionRelated. </summary>
         internal MetadataFunctionRelated()
         {
-            Tables = new ChangeTrackingList<string>();
-            Solutions = new ChangeTrackingList<string>();
-            ResourceTypes = new ChangeTrackingList<string>();
-            Categories = new ChangeTrackingList<string>();
-            Workspaces = new ChangeTrackingList<string>();
+            Tables = new Core.ChangeTrackingList<string>();
+            Solutions = new Core.ChangeTrackingList<string>();
+            ResourceTypes = new Core.ChangeTrackingList<string>();
+            Categories = new Core.ChangeTrackingList<string>();
+            Workspaces = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> The related tables for the function. </summary>

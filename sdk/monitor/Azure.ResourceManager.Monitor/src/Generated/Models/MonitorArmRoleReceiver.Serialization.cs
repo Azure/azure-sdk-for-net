@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorArmRoleReceiver : IUtf8JsonSerializable
+    public partial class MonitorArmRoleReceiver : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("roleId"u8);
             writer.WriteStringValue(RoleId);
-            if (Optional.IsDefined(UseCommonAlertSchema))
+            if (Core.Optional.IsDefined(UseCommonAlertSchema))
             {
                 writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             string name = default;
             string roleId = default;
-            Optional<bool> useCommonAlertSchema = default;
+            Core.Optional<bool> useCommonAlertSchema = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MonitorArmRoleReceiver(name, roleId, Optional.ToNullable(useCommonAlertSchema));
+            return new MonitorArmRoleReceiver(name, roleId, Core.Optional.ToNullable(useCommonAlertSchema));
         }
     }
 }

@@ -14,15 +14,15 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class NetworkConfigurationDiagnosticResponseOperationSource : IOperationSource<NetworkConfigurationDiagnosticResponse>
+    internal class NetworkConfigurationDiagnosticResponseOperationSource : Core.IOperationSource<NetworkConfigurationDiagnosticResponse>
     {
-        NetworkConfigurationDiagnosticResponse IOperationSource<NetworkConfigurationDiagnosticResponse>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkConfigurationDiagnosticResponse Core.IOperationSource<NetworkConfigurationDiagnosticResponse>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return NetworkConfigurationDiagnosticResponse.DeserializeNetworkConfigurationDiagnosticResponse(document.RootElement);
         }
 
-        async ValueTask<NetworkConfigurationDiagnosticResponse> IOperationSource<NetworkConfigurationDiagnosticResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkConfigurationDiagnosticResponse> Core.IOperationSource<NetworkConfigurationDiagnosticResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return NetworkConfigurationDiagnosticResponse.DeserializeNetworkConfigurationDiagnosticResponse(document.RootElement);

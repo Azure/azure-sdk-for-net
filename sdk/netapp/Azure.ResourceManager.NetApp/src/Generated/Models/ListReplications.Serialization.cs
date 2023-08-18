@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetAppVolumeReplication>> value = default;
+            Core.Optional<IReadOnlyList<NetAppVolumeReplication>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new ListReplications(Optional.ToList(value));
+            return new ListReplications(Core.Optional.ToList(value));
         }
     }
 }

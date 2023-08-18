@@ -15,9 +15,9 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class IDictionaryOperationSource : IOperationSource<IDictionary<string, IList<PeerRoute>>>
+    internal class IDictionaryOperationSource : Core.IOperationSource<IDictionary<string, IList<PeerRoute>>>
     {
-        IDictionary<string, IList<PeerRoute>> IOperationSource<IDictionary<string, IList<PeerRoute>>>.CreateResult(Response response, CancellationToken cancellationToken)
+        IDictionary<string, IList<PeerRoute>> Core.IOperationSource<IDictionary<string, IList<PeerRoute>>>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             Dictionary<string, IList<PeerRoute>> dictionary = new Dictionary<string, IList<PeerRoute>>();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
             return dictionary;
         }
 
-        async ValueTask<IDictionary<string, IList<PeerRoute>>> IOperationSource<IDictionary<string, IList<PeerRoute>>>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<IDictionary<string, IList<PeerRoute>>> Core.IOperationSource<IDictionary<string, IList<PeerRoute>>>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             Dictionary<string, IList<PeerRoute>> dictionary = new Dictionary<string, IList<PeerRoute>>();

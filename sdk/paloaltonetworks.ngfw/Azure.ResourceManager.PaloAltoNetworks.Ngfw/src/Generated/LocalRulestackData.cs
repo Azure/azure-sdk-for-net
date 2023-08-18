@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="location"> The location. </param>
         public LocalRulestackData(AzureLocation location) : base(location)
         {
-            AssociatedSubscriptions = new ChangeTrackingList<string>();
+            AssociatedSubscriptions = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of LocalRulestackData. </summary>

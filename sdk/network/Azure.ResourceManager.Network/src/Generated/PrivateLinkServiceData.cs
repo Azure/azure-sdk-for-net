@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of PrivateLinkServiceData. </summary>
         public PrivateLinkServiceData()
         {
-            LoadBalancerFrontendIPConfigurations = new ChangeTrackingList<FrontendIPConfigurationData>();
-            IPConfigurations = new ChangeTrackingList<PrivateLinkServiceIPConfiguration>();
-            NetworkInterfaces = new ChangeTrackingList<NetworkInterfaceData>();
-            PrivateEndpointConnections = new ChangeTrackingList<NetworkPrivateEndpointConnectionData>();
-            Fqdns = new ChangeTrackingList<string>();
+            LoadBalancerFrontendIPConfigurations = new Core.ChangeTrackingList<FrontendIPConfigurationData>();
+            IPConfigurations = new Core.ChangeTrackingList<PrivateLinkServiceIPConfiguration>();
+            NetworkInterfaces = new Core.ChangeTrackingList<NetworkInterfaceData>();
+            PrivateEndpointConnections = new Core.ChangeTrackingList<NetworkPrivateEndpointConnectionData>();
+            Fqdns = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkServiceData. </summary>

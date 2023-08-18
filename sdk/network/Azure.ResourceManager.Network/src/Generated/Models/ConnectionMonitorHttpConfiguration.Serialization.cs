@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectionMonitorHttpConfiguration : IUtf8JsonSerializable
+    public partial class ConnectionMonitorHttpConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Port))
+            if (Core.Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Optional.IsDefined(Method))
+            if (Core.Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method.Value.ToString());
             }
-            if (Optional.IsDefined(Path))
+            if (Core.Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsCollectionDefined(RequestHeaders))
+            if (Core.Optional.IsCollectionDefined(RequestHeaders))
             {
                 writer.WritePropertyName("requestHeaders"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ValidStatusCodeRanges))
+            if (Core.Optional.IsCollectionDefined(ValidStatusCodeRanges))
             {
                 writer.WritePropertyName("validStatusCodeRanges"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PreferHttps))
+            if (Core.Optional.IsDefined(PreferHttps))
             {
                 writer.WritePropertyName("preferHTTPS"u8);
                 writer.WriteBooleanValue(PreferHttps.Value);
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<int> port = default;
-            Optional<NetworkHttpConfigurationMethod> method = default;
-            Optional<string> path = default;
-            Optional<IList<NetworkWatcherHttpHeader>> requestHeaders = default;
-            Optional<IList<string>> validStatusCodeRanges = default;
-            Optional<bool> preferHTTPS = default;
+            Core.Optional<int> port = default;
+            Core.Optional<NetworkHttpConfigurationMethod> method = default;
+            Core.Optional<string> path = default;
+            Core.Optional<IList<NetworkWatcherHttpHeader>> requestHeaders = default;
+            Core.Optional<IList<string>> validStatusCodeRanges = default;
+            Core.Optional<bool> preferHTTPS = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("port"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ConnectionMonitorHttpConfiguration(Optional.ToNullable(port), Optional.ToNullable(method), path.Value, Optional.ToList(requestHeaders), Optional.ToList(validStatusCodeRanges), Optional.ToNullable(preferHTTPS));
+            return new ConnectionMonitorHttpConfiguration(Core.Optional.ToNullable(port), Core.Optional.ToNullable(method), path.Value, Core.Optional.ToList(requestHeaders), Core.Optional.ToList(validStatusCodeRanges), Core.Optional.ToNullable(preferHTTPS));
         }
     }
 }

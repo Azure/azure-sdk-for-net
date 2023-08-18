@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of CheckNameAvailabilitySpecifications. </summary>
         public CheckNameAvailabilitySpecifications()
         {
-            ResourceTypesWithCustomValidation = new ChangeTrackingList<string>();
+            ResourceTypesWithCustomValidation = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of CheckNameAvailabilitySpecifications. </summary>

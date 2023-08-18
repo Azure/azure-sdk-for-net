@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PropagatedRouteTable. </summary>
         public PropagatedRouteTable()
         {
-            Labels = new ChangeTrackingList<string>();
-            Ids = new ChangeTrackingList<WritableSubResource>();
+            Labels = new Core.ChangeTrackingList<string>();
+            Ids = new Core.ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of PropagatedRouteTable. </summary>

@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkIPConfigurationBgpPeeringAddress : IUtf8JsonSerializable
+    public partial class NetworkIPConfigurationBgpPeeringAddress : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPConfigurationId))
+            if (Core.Optional.IsDefined(IPConfigurationId))
             {
                 writer.WritePropertyName("ipconfigurationId"u8);
                 writer.WriteStringValue(IPConfigurationId);
             }
-            if (Optional.IsCollectionDefined(CustomBgpIPAddresses))
+            if (Core.Optional.IsCollectionDefined(CustomBgpIPAddresses))
             {
                 writer.WritePropertyName("customBgpIpAddresses"u8);
                 writer.WriteStartArray();
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> ipconfigurationId = default;
-            Optional<IReadOnlyList<string>> defaultBgpIPAddresses = default;
-            Optional<IList<string>> customBgpIPAddresses = default;
-            Optional<IReadOnlyList<string>> tunnelIPAddresses = default;
+            Core.Optional<string> ipconfigurationId = default;
+            Core.Optional<IReadOnlyList<string>> defaultBgpIPAddresses = default;
+            Core.Optional<IList<string>> customBgpIPAddresses = default;
+            Core.Optional<IReadOnlyList<string>> tunnelIPAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipconfigurationId"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NetworkIPConfigurationBgpPeeringAddress(ipconfigurationId.Value, Optional.ToList(defaultBgpIPAddresses), Optional.ToList(customBgpIPAddresses), Optional.ToList(tunnelIPAddresses));
+            return new NetworkIPConfigurationBgpPeeringAddress(ipconfigurationId.Value, Core.Optional.ToList(defaultBgpIPAddresses), Core.Optional.ToList(customBgpIPAddresses), Core.Optional.ToList(tunnelIPAddresses));
         }
     }
 }

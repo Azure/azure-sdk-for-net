@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayProbeHealthResponseMatch. </summary>
         public ApplicationGatewayProbeHealthResponseMatch()
         {
-            StatusCodes = new ChangeTrackingList<string>();
+            StatusCodes = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayProbeHealthResponseMatch. </summary>

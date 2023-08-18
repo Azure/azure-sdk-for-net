@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DiagnosticSettingData>> value = default;
+            Core.Optional<IReadOnlyList<DiagnosticSettingData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new DiagnosticSettingsResourceCollection(Optional.ToList(value));
+            return new DiagnosticSettingsResourceCollection(Core.Optional.ToList(value));
         }
     }
 }

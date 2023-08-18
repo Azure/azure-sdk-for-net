@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<IdentityManagementType> type = default;
+            Core.Optional<IdentityManagementType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new IdentityManagement(Optional.ToNullable(type));
+            return new IdentityManagement(Core.Optional.ToNullable(type));
         }
     }
 }

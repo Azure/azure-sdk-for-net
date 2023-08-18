@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectionMonitorEndpointFilterItem : IUtf8JsonSerializable
+    public partial class ConnectionMonitorEndpointFilterItem : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ItemType))
+            if (Core.Optional.IsDefined(ItemType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ItemType.Value.ToString());
             }
-            if (Optional.IsDefined(Address))
+            if (Core.Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ConnectionMonitorEndpointFilterItemType> type = default;
-            Optional<string> address = default;
+            Core.Optional<ConnectionMonitorEndpointFilterItemType> type = default;
+            Core.Optional<string> address = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ConnectionMonitorEndpointFilterItem(Optional.ToNullable(type), address.Value);
+            return new ConnectionMonitorEndpointFilterItem(Core.Optional.ToNullable(type), address.Value);
         }
     }
 }

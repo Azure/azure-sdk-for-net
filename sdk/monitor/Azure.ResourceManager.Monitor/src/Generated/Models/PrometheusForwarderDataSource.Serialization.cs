@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class PrometheusForwarderDataSource : IUtf8JsonSerializable
+    public partial class PrometheusForwarderDataSource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Streams))
+            if (Core.Optional.IsCollectionDefined(Streams))
             {
                 writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LabelIncludeFilter))
+            if (Core.Optional.IsCollectionDefined(LabelIncludeFilter))
             {
                 writer.WritePropertyName("labelIncludeFilter"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<DataCollectionRuleKnownPrometheusForwarderDataSourceStream>> streams = default;
-            Optional<IDictionary<string, string>> labelIncludeFilter = default;
-            Optional<string> name = default;
+            Core.Optional<IList<DataCollectionRuleKnownPrometheusForwarderDataSourceStream>> streams = default;
+            Core.Optional<IDictionary<string, string>> labelIncludeFilter = default;
+            Core.Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streams"u8))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new PrometheusForwarderDataSource(Optional.ToList(streams), Optional.ToDictionary(labelIncludeFilter), name.Value);
+            return new PrometheusForwarderDataSource(Core.Optional.ToList(streams), Core.Optional.ToDictionary(labelIncludeFilter), name.Value);
         }
     }
 }

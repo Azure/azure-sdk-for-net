@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of RouteFilterRuleListResult. </summary>
         internal RouteFilterRuleListResult()
         {
-            Value = new ChangeTrackingList<RouteFilterRuleData>();
+            Value = new Core.ChangeTrackingList<RouteFilterRuleData>();
         }
 
         /// <summary> Initializes a new instance of RouteFilterRuleListResult. </summary>

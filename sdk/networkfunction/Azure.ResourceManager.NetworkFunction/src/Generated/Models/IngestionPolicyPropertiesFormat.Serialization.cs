@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
-    public partial class IngestionPolicyPropertiesFormat : IUtf8JsonSerializable
+    public partial class IngestionPolicyPropertiesFormat : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IngestionType))
+            if (Core.Optional.IsDefined(IngestionType))
             {
                 writer.WritePropertyName("ingestionType"u8);
                 writer.WriteStringValue(IngestionType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IngestionSources))
+            if (Core.Optional.IsCollectionDefined(IngestionSources))
             {
                 writer.WritePropertyName("ingestionSources"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             {
                 return null;
             }
-            Optional<IngestionType> ingestionType = default;
-            Optional<IList<IngestionSourcesPropertiesFormat>> ingestionSources = default;
+            Core.Optional<IngestionType> ingestionType = default;
+            Core.Optional<IList<IngestionSourcesPropertiesFormat>> ingestionSources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ingestionType"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                     continue;
                 }
             }
-            return new IngestionPolicyPropertiesFormat(Optional.ToNullable(ingestionType), Optional.ToList(ingestionSources));
+            return new IngestionPolicyPropertiesFormat(Core.Optional.ToNullable(ingestionType), Core.Optional.ToList(ingestionSources));
         }
     }
 }

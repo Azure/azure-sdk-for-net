@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<string> policyGroupName = default;
-            Optional<PolicySummaryResults> results = default;
+            Core.Optional<string> policyGroupName = default;
+            Core.Optional<PolicySummaryResults> results = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyGroupName"u8))

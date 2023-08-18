@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ContainerNetworkInterfaceConfiguration. </summary>
         public ContainerNetworkInterfaceConfiguration()
         {
-            IPConfigurations = new ChangeTrackingList<NetworkIPConfigurationProfile>();
-            ContainerNetworkInterfaces = new ChangeTrackingList<WritableSubResource>();
+            IPConfigurations = new Core.ChangeTrackingList<NetworkIPConfigurationProfile>();
+            ContainerNetworkInterfaces = new Core.ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of ContainerNetworkInterfaceConfiguration. </summary>

@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Argument.AssertNotNull(rackSerialNumber, nameof(rackSerialNumber));
             Argument.AssertNotNull(rackSkuId, nameof(rackSkuId));
 
-            BareMetalMachineConfigurationData = new ChangeTrackingList<BareMetalMachineConfiguration>();
+            BareMetalMachineConfigurationData = new Core.ChangeTrackingList<BareMetalMachineConfiguration>();
             NetworkRackId = networkRackId;
             RackSerialNumber = rackSerialNumber;
             RackSkuId = rackSkuId;
-            StorageApplianceConfigurationData = new ChangeTrackingList<StorageApplianceConfiguration>();
+            StorageApplianceConfigurationData = new Core.ChangeTrackingList<StorageApplianceConfiguration>();
         }
 
         /// <summary> Initializes a new instance of NetworkCloudRackDefinition. </summary>

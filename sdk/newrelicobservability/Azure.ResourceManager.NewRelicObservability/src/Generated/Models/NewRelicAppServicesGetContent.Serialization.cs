@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class NewRelicAppServicesGetContent : IUtf8JsonSerializable
+    public partial class NewRelicAppServicesGetContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AzureResourceIds))
+            if (Core.Optional.IsCollectionDefined(AzureResourceIds))
             {
                 writer.WritePropertyName("azureResourceIds"u8);
                 writer.WriteStartArray();

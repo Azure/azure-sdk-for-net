@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> Initializes a new instance of NetAppVolumeGroupData. </summary>
         public NetAppVolumeGroupData()
         {
-            Volumes = new ChangeTrackingList<NetAppVolumeGroupVolume>();
+            Volumes = new Core.ChangeTrackingList<NetAppVolumeGroupVolume>();
         }
 
         /// <summary> Initializes a new instance of NetAppVolumeGroupData. </summary>

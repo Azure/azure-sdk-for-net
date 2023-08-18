@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor
             AlertRuleName = alertRuleName;
             IsEnabled = isEnabled;
             Condition = condition;
-            Actions = new ChangeTrackingList<AlertRuleAction>();
+            Actions = new Core.ChangeTrackingList<AlertRuleAction>();
         }
 
         /// <summary> Initializes a new instance of AlertRuleData. </summary>

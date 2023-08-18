@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorEventHubReceiver : IUtf8JsonSerializable
+    public partial class MonitorEventHubReceiver : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(EventHubNameSpace);
             writer.WritePropertyName("eventHubName"u8);
             writer.WriteStringValue(EventHubName);
-            if (Optional.IsDefined(UseCommonAlertSchema))
+            if (Core.Optional.IsDefined(UseCommonAlertSchema))
             {
                 writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);
             }
-            if (Optional.IsDefined(TenantId))
+            if (Core.Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.Monitor.Models
             string name = default;
             string eventHubNameSpace = default;
             string eventHubName = default;
-            Optional<bool> useCommonAlertSchema = default;
-            Optional<Guid> tenantId = default;
+            Core.Optional<bool> useCommonAlertSchema = default;
+            Core.Optional<Guid> tenantId = default;
             string subscriptionId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MonitorEventHubReceiver(name, eventHubNameSpace, eventHubName, Optional.ToNullable(useCommonAlertSchema), Optional.ToNullable(tenantId), subscriptionId);
+            return new MonitorEventHubReceiver(name, eventHubNameSpace, eventHubName, Core.Optional.ToNullable(useCommonAlertSchema), Core.Optional.ToNullable(tenantId), subscriptionId);
         }
     }
 }

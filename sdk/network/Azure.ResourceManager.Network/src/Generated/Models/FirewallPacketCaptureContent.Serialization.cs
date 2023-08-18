@@ -12,44 +12,44 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class FirewallPacketCaptureContent : IUtf8JsonSerializable
+    public partial class FirewallPacketCaptureContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DurationInSeconds))
+            if (Core.Optional.IsDefined(DurationInSeconds))
             {
                 writer.WritePropertyName("durationInSeconds"u8);
                 writer.WriteNumberValue(DurationInSeconds.Value);
             }
-            if (Optional.IsDefined(NumberOfPacketsToCapture))
+            if (Core.Optional.IsDefined(NumberOfPacketsToCapture))
             {
                 writer.WritePropertyName("numberOfPacketsToCapture"u8);
                 writer.WriteNumberValue(NumberOfPacketsToCapture.Value);
             }
-            if (Optional.IsDefined(SasUri))
+            if (Core.Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUrl"u8);
                 writer.WriteStringValue(SasUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(FileName))
+            if (Core.Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Optional.IsDefined(Protocol))
+            if (Core.Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Flags))
+            if (Core.Optional.IsCollectionDefined(Flags))
             {
                 writer.WritePropertyName("flags"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Filters))
+            if (Core.Optional.IsCollectionDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
@@ -79,14 +79,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<int> durationInSeconds = default;
-            Optional<int> numberOfPacketsToCapture = default;
-            Optional<Uri> sasUrl = default;
-            Optional<string> fileName = default;
-            Optional<AzureFirewallNetworkRuleProtocol> protocol = default;
-            Optional<IList<AzureFirewallPacketCaptureFlags>> flags = default;
-            Optional<IList<AzureFirewallPacketCaptureRule>> filters = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<int> durationInSeconds = default;
+            Core.Optional<int> numberOfPacketsToCapture = default;
+            Core.Optional<Uri> sasUrl = default;
+            Core.Optional<string> fileName = default;
+            Core.Optional<AzureFirewallNetworkRuleProtocol> protocol = default;
+            Core.Optional<IList<AzureFirewallPacketCaptureFlags>> flags = default;
+            Core.Optional<IList<AzureFirewallPacketCaptureRule>> filters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new FirewallPacketCaptureContent(id.Value, Optional.ToNullable(durationInSeconds), Optional.ToNullable(numberOfPacketsToCapture), sasUrl.Value, fileName.Value, Optional.ToNullable(protocol), Optional.ToList(flags), Optional.ToList(filters));
+            return new FirewallPacketCaptureContent(id.Value, Core.Optional.ToNullable(durationInSeconds), Core.Optional.ToNullable(numberOfPacketsToCapture), sasUrl.Value, fileName.Value, Core.Optional.ToNullable(protocol), Core.Optional.ToList(flags), Core.Optional.ToList(filters));
         }
     }
 }

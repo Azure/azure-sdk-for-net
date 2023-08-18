@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class TemplateDeploymentOptions : IUtf8JsonSerializable
+    public partial class TemplateDeploymentOptions : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsPreflightSupported))
+            if (Core.Optional.IsDefined(IsPreflightSupported))
             {
                 writer.WritePropertyName("preflightSupported"u8);
                 writer.WriteBooleanValue(IsPreflightSupported.Value);
             }
-            if (Optional.IsCollectionDefined(PreflightOptions))
+            if (Core.Optional.IsCollectionDefined(PreflightOptions))
             {
                 writer.WritePropertyName("preflightOptions"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<bool> preflightSupported = default;
-            Optional<IList<PreflightOption>> preflightOptions = default;
+            Core.Optional<bool> preflightSupported = default;
+            Core.Optional<IList<PreflightOption>> preflightOptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("preflightSupported"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new TemplateDeploymentOptions(Optional.ToNullable(preflightSupported), Optional.ToList(preflightOptions));
+            return new TemplateDeploymentOptions(Core.Optional.ToNullable(preflightSupported), Core.Optional.ToList(preflightOptions));
         }
     }
 }

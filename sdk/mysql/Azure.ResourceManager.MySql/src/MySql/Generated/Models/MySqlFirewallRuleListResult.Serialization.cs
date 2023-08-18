@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MySqlFirewallRuleData>> value = default;
+            Core.Optional<IReadOnlyList<MySqlFirewallRuleData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MySql.Models
                     continue;
                 }
             }
-            return new MySqlFirewallRuleListResult(Optional.ToList(value));
+            return new MySqlFirewallRuleListResult(Core.Optional.ToList(value));
         }
     }
 }

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
 {
-    internal partial class Quaternion : IUtf8JsonSerializable
+    internal partial class Quaternion : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("x"u8);
@@ -36,7 +36,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
             float y = default;
             float z = default;
             float w = default;
-            Optional<bool> isIdentity = default;
+            Core.Optional<bool> isIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("x"u8))

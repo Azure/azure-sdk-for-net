@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class DataFlow : IUtf8JsonSerializable
+    public partial class DataFlow : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Streams))
+            if (Core.Optional.IsCollectionDefined(Streams))
             {
                 writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Destinations))
+            if (Core.Optional.IsCollectionDefined(Destinations))
             {
                 writer.WritePropertyName("destinations"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TransformKql))
+            if (Core.Optional.IsDefined(TransformKql))
             {
                 writer.WritePropertyName("transformKql"u8);
                 writer.WriteStringValue(TransformKql);
             }
-            if (Optional.IsDefined(OutputStream))
+            if (Core.Optional.IsDefined(OutputStream))
             {
                 writer.WritePropertyName("outputStream"u8);
                 writer.WriteStringValue(OutputStream);
             }
-            if (Optional.IsDefined(BuiltInTransform))
+            if (Core.Optional.IsDefined(BuiltInTransform))
             {
                 writer.WritePropertyName("builtInTransform"u8);
                 writer.WriteStringValue(BuiltInTransform);
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<DataFlowStream>> streams = default;
-            Optional<IList<string>> destinations = default;
-            Optional<string> transformKql = default;
-            Optional<string> outputStream = default;
-            Optional<string> builtInTransform = default;
+            Core.Optional<IList<DataFlowStream>> streams = default;
+            Core.Optional<IList<string>> destinations = default;
+            Core.Optional<string> transformKql = default;
+            Core.Optional<string> outputStream = default;
+            Core.Optional<string> builtInTransform = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streams"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new DataFlow(Optional.ToList(streams), Optional.ToList(destinations), transformKql.Value, outputStream.Value, builtInTransform.Value);
+            return new DataFlow(Core.Optional.ToList(streams), Core.Optional.ToList(destinations), transformKql.Value, outputStream.Value, builtInTransform.Value);
         }
     }
 }

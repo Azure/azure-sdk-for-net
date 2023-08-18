@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VpnClientConnectionHealthDetailListResult. </summary>
         internal VpnClientConnectionHealthDetailListResult()
         {
-            Value = new ChangeTrackingList<VpnClientConnectionHealthDetail>();
+            Value = new Core.ChangeTrackingList<VpnClientConnectionHealthDetail>();
         }
 
         /// <summary> Initializes a new instance of VpnClientConnectionHealthDetailListResult. </summary>

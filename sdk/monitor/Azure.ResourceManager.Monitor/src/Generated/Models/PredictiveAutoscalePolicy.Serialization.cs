@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class PredictiveAutoscalePolicy : IUtf8JsonSerializable
+    public partial class PredictiveAutoscalePolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("scaleMode"u8);
             writer.WriteStringValue(ScaleMode.ToSerialString());
-            if (Optional.IsDefined(ScaleLookAheadTime))
+            if (Core.Optional.IsDefined(ScaleLookAheadTime))
             {
                 writer.WritePropertyName("scaleLookAheadTime"u8);
                 writer.WriteStringValue(ScaleLookAheadTime.Value, "P");
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             PredictiveAutoscalePolicyScaleMode scaleMode = default;
-            Optional<TimeSpan> scaleLookAheadTime = default;
+            Core.Optional<TimeSpan> scaleLookAheadTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scaleMode"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new PredictiveAutoscalePolicy(scaleMode, Optional.ToNullable(scaleLookAheadTime));
+            return new PredictiveAutoscalePolicy(scaleMode, Core.Optional.ToNullable(scaleLookAheadTime));
         }
     }
 }

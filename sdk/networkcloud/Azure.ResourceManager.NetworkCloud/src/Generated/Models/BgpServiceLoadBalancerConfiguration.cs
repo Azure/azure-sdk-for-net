@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of BgpServiceLoadBalancerConfiguration. </summary>
         public BgpServiceLoadBalancerConfiguration()
         {
-            BgpAdvertisements = new ChangeTrackingList<BgpAdvertisement>();
-            BgpPeers = new ChangeTrackingList<ServiceLoadBalancerBgpPeer>();
-            IPAddressPools = new ChangeTrackingList<IPAddressPool>();
+            BgpAdvertisements = new Core.ChangeTrackingList<BgpAdvertisement>();
+            BgpPeers = new Core.ChangeTrackingList<ServiceLoadBalancerBgpPeer>();
+            IPAddressPools = new Core.ChangeTrackingList<IPAddressPool>();
         }
 
         /// <summary> Initializes a new instance of BgpServiceLoadBalancerConfiguration. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <summary> Initializes a new instance of MySqlFlexibleServerFirewallRuleListResult. </summary>
         internal MySqlFlexibleServerFirewallRuleListResult()
         {
-            Value = new ChangeTrackingList<MySqlFlexibleServerFirewallRuleData>();
+            Value = new Core.ChangeTrackingList<MySqlFlexibleServerFirewallRuleData>();
         }
 
         /// <summary> Initializes a new instance of MySqlFlexibleServerFirewallRuleListResult. </summary>

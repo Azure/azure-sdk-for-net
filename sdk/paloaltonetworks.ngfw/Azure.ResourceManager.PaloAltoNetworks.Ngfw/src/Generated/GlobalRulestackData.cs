@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public GlobalRulestackData(AzureLocation location)
         {
             Location = location;
-            AssociatedSubscriptions = new ChangeTrackingList<string>();
+            AssociatedSubscriptions = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of GlobalRulestackData. </summary>

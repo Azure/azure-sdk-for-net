@@ -25,7 +25,7 @@ namespace Azure.Monitor.Query.Models
 
             Code = code;
             Message = message;
-            Resources = new ChangeTrackingList<string>();
+            Resources = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ErrorDetail. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayBackendHealthHttpSettings. </summary>
         internal ApplicationGatewayBackendHealthHttpSettings()
         {
-            Servers = new ChangeTrackingList<ApplicationGatewayBackendHealthServer>();
+            Servers = new Core.ChangeTrackingList<ApplicationGatewayBackendHealthServer>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayBackendHealthHttpSettings. </summary>

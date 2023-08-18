@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of AzureReachabilityReportItem. </summary>
         internal AzureReachabilityReportItem()
         {
-            Latencies = new ChangeTrackingList<AzureReachabilityReportLatencyInfo>();
+            Latencies = new Core.ChangeTrackingList<AzureReachabilityReportLatencyInfo>();
         }
 
         /// <summary> Initializes a new instance of AzureReachabilityReportItem. </summary>

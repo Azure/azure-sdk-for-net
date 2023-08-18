@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal class SnapshotPolicyOperationSource : IOperationSource<SnapshotPolicyResource>
+    internal class SnapshotPolicyOperationSource : Core.IOperationSource<SnapshotPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.NetApp
             _client = client;
         }
 
-        SnapshotPolicyResource IOperationSource<SnapshotPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SnapshotPolicyResource Core.IOperationSource<SnapshotPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SnapshotPolicyData.DeserializeSnapshotPolicyData(document.RootElement);
             return new SnapshotPolicyResource(_client, data);
         }
 
-        async ValueTask<SnapshotPolicyResource> IOperationSource<SnapshotPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SnapshotPolicyResource> Core.IOperationSource<SnapshotPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SnapshotPolicyData.DeserializeSnapshotPolicyData(document.RootElement);

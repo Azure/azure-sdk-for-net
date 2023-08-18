@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsTableSearchResults : IUtf8JsonSerializable
+    public partial class OperationalInsightsTableSearchResults : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Query))
+            if (Core.Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Limit))
+            if (Core.Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (Optional.IsDefined(StartSearchOn))
+            if (Core.Optional.IsDefined(StartSearchOn))
             {
                 writer.WritePropertyName("startSearchTime"u8);
                 writer.WriteStringValue(StartSearchOn.Value, "O");
             }
-            if (Optional.IsDefined(EndSearchOn))
+            if (Core.Optional.IsDefined(EndSearchOn))
             {
                 writer.WritePropertyName("endSearchTime"u8);
                 writer.WriteStringValue(EndSearchOn.Value, "O");
@@ -50,13 +50,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<string> query = default;
-            Optional<string> description = default;
-            Optional<int> limit = default;
-            Optional<DateTimeOffset> startSearchTime = default;
-            Optional<DateTimeOffset> endSearchTime = default;
-            Optional<string> sourceTable = default;
-            Optional<Guid> azureAsyncOperationId = default;
+            Core.Optional<string> query = default;
+            Core.Optional<string> description = default;
+            Core.Optional<int> limit = default;
+            Core.Optional<DateTimeOffset> startSearchTime = default;
+            Core.Optional<DateTimeOffset> endSearchTime = default;
+            Core.Optional<string> sourceTable = default;
+            Core.Optional<Guid> azureAsyncOperationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("query"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     continue;
                 }
             }
-            return new OperationalInsightsTableSearchResults(query.Value, description.Value, Optional.ToNullable(limit), Optional.ToNullable(startSearchTime), Optional.ToNullable(endSearchTime), sourceTable.Value, Optional.ToNullable(azureAsyncOperationId));
+            return new OperationalInsightsTableSearchResults(query.Value, description.Value, Core.Optional.ToNullable(limit), Core.Optional.ToNullable(startSearchTime), Core.Optional.ToNullable(endSearchTime), sourceTable.Value, Core.Optional.ToNullable(azureAsyncOperationId));
         }
     }
 }

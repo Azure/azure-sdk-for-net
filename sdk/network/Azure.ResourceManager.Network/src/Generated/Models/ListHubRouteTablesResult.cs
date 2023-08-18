@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ListHubRouteTablesResult. </summary>
         internal ListHubRouteTablesResult()
         {
-            Value = new ChangeTrackingList<HubRouteTableData>();
+            Value = new Core.ChangeTrackingList<HubRouteTableData>();
         }
 
         /// <summary> Initializes a new instance of ListHubRouteTablesResult. </summary>

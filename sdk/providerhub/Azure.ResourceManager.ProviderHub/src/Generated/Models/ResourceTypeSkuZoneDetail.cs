@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of ResourceTypeSkuZoneDetail. </summary>
         public ResourceTypeSkuZoneDetail()
         {
-            Name = new ChangeTrackingList<string>();
-            Capabilities = new ChangeTrackingList<ResourceSkuCapability>();
+            Name = new Core.ChangeTrackingList<string>();
+            Capabilities = new Core.ChangeTrackingList<ResourceSkuCapability>();
         }
 
         /// <summary> Initializes a new instance of ResourceTypeSkuZoneDetail. </summary>

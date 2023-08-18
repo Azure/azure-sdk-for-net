@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <summary> Initializes a new instance of LogAnalyticsQueryData. </summary>
         public LogAnalyticsQueryData()
         {
-            Tags = new ChangeTrackingDictionary<string, IList<string>>();
+            Tags = new Core.ChangeTrackingDictionary<string, IList<string>>();
         }
 
         /// <summary> Initializes a new instance of LogAnalyticsQueryData. </summary>

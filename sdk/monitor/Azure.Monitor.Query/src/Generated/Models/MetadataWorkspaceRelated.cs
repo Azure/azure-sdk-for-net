@@ -16,11 +16,11 @@ namespace Azure.Monitor.Query.Models
         /// <summary> Initializes a new instance of MetadataWorkspaceRelated. </summary>
         internal MetadataWorkspaceRelated()
         {
-            Tables = new ChangeTrackingList<string>();
-            Solutions = new ChangeTrackingList<string>();
-            ResourceTypes = new ChangeTrackingList<string>();
-            Functions = new ChangeTrackingList<string>();
-            Resources = new ChangeTrackingList<string>();
+            Tables = new Core.ChangeTrackingList<string>();
+            Solutions = new Core.ChangeTrackingList<string>();
+            ResourceTypes = new Core.ChangeTrackingList<string>();
+            Functions = new Core.ChangeTrackingList<string>();
+            Resources = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> The related tables for the Log Analytics workspace. </summary>

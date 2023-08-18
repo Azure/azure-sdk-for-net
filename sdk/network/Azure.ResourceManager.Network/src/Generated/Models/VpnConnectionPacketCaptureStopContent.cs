@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VpnConnectionPacketCaptureStopContent. </summary>
         public VpnConnectionPacketCaptureStopContent()
         {
-            LinkConnectionNames = new ChangeTrackingList<string>();
+            LinkConnectionNames = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> SAS url for packet capture on vpn connection. </summary>

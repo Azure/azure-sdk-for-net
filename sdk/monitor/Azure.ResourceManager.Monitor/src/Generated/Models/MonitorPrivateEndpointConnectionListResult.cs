@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of MonitorPrivateEndpointConnectionListResult. </summary>
         internal MonitorPrivateEndpointConnectionListResult()
         {
-            Value = new ChangeTrackingList<MonitorPrivateEndpointConnectionData>();
+            Value = new Core.ChangeTrackingList<MonitorPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of MonitorPrivateEndpointConnectionListResult. </summary>

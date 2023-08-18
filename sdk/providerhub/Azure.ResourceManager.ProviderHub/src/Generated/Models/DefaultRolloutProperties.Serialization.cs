@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class DefaultRolloutProperties : IUtf8JsonSerializable
+    public partial class DefaultRolloutProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (Core.Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Specification))
+            if (Core.Optional.IsDefined(Specification))
             {
                 writer.WritePropertyName("specification"u8);
                 writer.WriteObjectValue(Specification);
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<ProviderHubProvisioningState> provisioningState = default;
-            Optional<DefaultRolloutSpecification> specification = default;
-            Optional<DefaultRolloutStatus> status = default;
+            Core.Optional<ProviderHubProvisioningState> provisioningState = default;
+            Core.Optional<DefaultRolloutSpecification> specification = default;
+            Core.Optional<DefaultRolloutStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new DefaultRolloutProperties(Optional.ToNullable(provisioningState), specification.Value, status.Value);
+            return new DefaultRolloutProperties(Core.Optional.ToNullable(provisioningState), specification.Value, status.Value);
         }
     }
 }

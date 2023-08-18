@@ -12,17 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class TrafficRegionRolloutConfiguration : IUtf8JsonSerializable
+    public partial class TrafficRegionRolloutConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(WaitDuration))
+            if (Core.Optional.IsDefined(WaitDuration))
             {
                 writer.WritePropertyName("waitDuration"u8);
                 writer.WriteStringValue(WaitDuration.Value, "P");
             }
-            if (Optional.IsCollectionDefined(Regions))
+            if (Core.Optional.IsCollectionDefined(Regions))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<TimeSpan> waitDuration = default;
-            Optional<IList<AzureLocation>> regions = default;
+            Core.Optional<TimeSpan> waitDuration = default;
+            Core.Optional<IList<AzureLocation>> regions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("waitDuration"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new TrafficRegionRolloutConfiguration(Optional.ToList(regions), Optional.ToNullable(waitDuration));
+            return new TrafficRegionRolloutConfiguration(Core.Optional.ToList(regions), Core.Optional.ToNullable(waitDuration));
         }
     }
 }

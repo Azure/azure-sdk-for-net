@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="location"> The location. </param>
         public MonitorWorkspaceResourceData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<MonitorWorkspacePrivateEndpointConnection>();
+            PrivateEndpointConnections = new Core.ChangeTrackingList<MonitorWorkspacePrivateEndpointConnection>();
         }
 
         /// <summary> Initializes a new instance of MonitorWorkspaceResourceData. </summary>

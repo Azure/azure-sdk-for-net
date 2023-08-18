@@ -10,29 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.Models
 {
-    public partial class MySqlSku : IUtf8JsonSerializable
+    public partial class MySqlSku : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Tier))
+            if (Core.Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
             }
-            if (Optional.IsDefined(Capacity))
+            if (Core.Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
-            if (Optional.IsDefined(Size))
+            if (Core.Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (Optional.IsDefined(Family))
+            if (Core.Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.MySql.Models
                 return null;
             }
             string name = default;
-            Optional<MySqlSkuTier> tier = default;
-            Optional<int> capacity = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
+            Core.Optional<MySqlSkuTier> tier = default;
+            Core.Optional<int> capacity = default;
+            Core.Optional<string> size = default;
+            Core.Optional<string> family = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MySql.Models
                     continue;
                 }
             }
-            return new MySqlSku(name, Optional.ToNullable(tier), Optional.ToNullable(capacity), size.Value, family.Value);
+            return new MySqlSku(name, Core.Optional.ToNullable(tier), Core.Optional.ToNullable(capacity), size.Value, family.Value);
         }
     }
 }

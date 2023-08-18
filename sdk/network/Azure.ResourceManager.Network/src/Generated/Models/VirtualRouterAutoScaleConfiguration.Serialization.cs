@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class VirtualRouterAutoScaleConfiguration : IUtf8JsonSerializable
+    internal partial class VirtualRouterAutoScaleConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinCapacity))
+            if (Core.Optional.IsDefined(MinCapacity))
             {
                 writer.WritePropertyName("minCapacity"u8);
                 writer.WriteNumberValue(MinCapacity.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<int> minCapacity = default;
+            Core.Optional<int> minCapacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minCapacity"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VirtualRouterAutoScaleConfiguration(Optional.ToNullable(minCapacity));
+            return new VirtualRouterAutoScaleConfiguration(Core.Optional.ToNullable(minCapacity));
         }
     }
 }

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class DataSourcesSpec : IUtf8JsonSerializable
+    public partial class DataSourcesSpec : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PerformanceCounters))
+            if (Core.Optional.IsCollectionDefined(PerformanceCounters))
             {
                 writer.WritePropertyName("performanceCounters"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(WindowsEventLogs))
+            if (Core.Optional.IsCollectionDefined(WindowsEventLogs))
             {
                 writer.WritePropertyName("windowsEventLogs"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Syslog))
+            if (Core.Optional.IsCollectionDefined(Syslog))
             {
                 writer.WritePropertyName("syslog"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Extensions))
+            if (Core.Optional.IsCollectionDefined(Extensions))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LogFiles))
+            if (Core.Optional.IsCollectionDefined(LogFiles))
             {
                 writer.WritePropertyName("logFiles"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IisLogs))
+            if (Core.Optional.IsCollectionDefined(IisLogs))
             {
                 writer.WritePropertyName("iisLogs"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(WindowsFirewallLogs))
+            if (Core.Optional.IsCollectionDefined(WindowsFirewallLogs))
             {
                 writer.WritePropertyName("windowsFirewallLogs"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PrometheusForwarder))
+            if (Core.Optional.IsCollectionDefined(PrometheusForwarder))
             {
                 writer.WritePropertyName("prometheusForwarder"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PlatformTelemetry))
+            if (Core.Optional.IsCollectionDefined(PlatformTelemetry))
             {
                 writer.WritePropertyName("platformTelemetry"u8);
                 writer.WriteStartArray();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DataImports))
+            if (Core.Optional.IsDefined(DataImports))
             {
                 writer.WritePropertyName("dataImports"u8);
                 writer.WriteObjectValue(DataImports);
@@ -120,16 +120,16 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<PerfCounterDataSource>> performanceCounters = default;
-            Optional<IList<WindowsEventLogDataSource>> windowsEventLogs = default;
-            Optional<IList<SyslogDataSource>> syslog = default;
-            Optional<IList<ExtensionDataSource>> extensions = default;
-            Optional<IList<LogFilesDataSource>> logFiles = default;
-            Optional<IList<IisLogsDataSource>> iisLogs = default;
-            Optional<IList<WindowsFirewallLogsDataSource>> windowsFirewallLogs = default;
-            Optional<IList<PrometheusForwarderDataSource>> prometheusForwarder = default;
-            Optional<IList<PlatformTelemetryDataSource>> platformTelemetry = default;
-            Optional<DataSourcesSpecDataImports> dataImports = default;
+            Core.Optional<IList<PerfCounterDataSource>> performanceCounters = default;
+            Core.Optional<IList<WindowsEventLogDataSource>> windowsEventLogs = default;
+            Core.Optional<IList<SyslogDataSource>> syslog = default;
+            Core.Optional<IList<ExtensionDataSource>> extensions = default;
+            Core.Optional<IList<LogFilesDataSource>> logFiles = default;
+            Core.Optional<IList<IisLogsDataSource>> iisLogs = default;
+            Core.Optional<IList<WindowsFirewallLogsDataSource>> windowsFirewallLogs = default;
+            Core.Optional<IList<PrometheusForwarderDataSource>> prometheusForwarder = default;
+            Core.Optional<IList<PlatformTelemetryDataSource>> platformTelemetry = default;
+            Core.Optional<DataSourcesSpecDataImports> dataImports = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("performanceCounters"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new DataSourcesSpec(Optional.ToList(performanceCounters), Optional.ToList(windowsEventLogs), Optional.ToList(syslog), Optional.ToList(extensions), Optional.ToList(logFiles), Optional.ToList(iisLogs), Optional.ToList(windowsFirewallLogs), Optional.ToList(prometheusForwarder), Optional.ToList(platformTelemetry), dataImports.Value);
+            return new DataSourcesSpec(Core.Optional.ToList(performanceCounters), Core.Optional.ToList(windowsEventLogs), Core.Optional.ToList(syslog), Core.Optional.ToList(extensions), Core.Optional.ToList(logFiles), Core.Optional.ToList(iisLogs), Core.Optional.ToList(windowsFirewallLogs), Core.Optional.ToList(prometheusForwarder), Core.Optional.ToList(platformTelemetry), dataImports.Value);
         }
     }
 }

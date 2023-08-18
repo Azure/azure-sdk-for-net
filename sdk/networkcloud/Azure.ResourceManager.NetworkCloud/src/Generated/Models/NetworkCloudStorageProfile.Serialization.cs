@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class NetworkCloudStorageProfile : IUtf8JsonSerializable
+    public partial class NetworkCloudStorageProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("osDisk"u8);
             writer.WriteObjectValue(OSDisk);
-            if (Optional.IsCollectionDefined(VolumeAttachments))
+            if (Core.Optional.IsCollectionDefined(VolumeAttachments))
             {
                 writer.WritePropertyName("volumeAttachments"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             NetworkCloudOSDisk osDisk = default;
-            Optional<IList<ResourceIdentifier>> volumeAttachments = default;
+            Core.Optional<IList<ResourceIdentifier>> volumeAttachments = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osDisk"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new NetworkCloudStorageProfile(osDisk, Optional.ToList(volumeAttachments));
+            return new NetworkCloudStorageProfile(osDisk, Core.Optional.ToList(volumeAttachments));
         }
     }
 }

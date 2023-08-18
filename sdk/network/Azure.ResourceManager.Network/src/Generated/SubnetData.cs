@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of SubnetData. </summary>
         public SubnetData()
         {
-            AddressPrefixes = new ChangeTrackingList<string>();
-            ServiceEndpoints = new ChangeTrackingList<ServiceEndpointProperties>();
-            ServiceEndpointPolicies = new ChangeTrackingList<ServiceEndpointPolicyData>();
-            PrivateEndpoints = new ChangeTrackingList<PrivateEndpointData>();
-            IPConfigurations = new ChangeTrackingList<NetworkIPConfiguration>();
-            IPConfigurationProfiles = new ChangeTrackingList<NetworkIPConfigurationProfile>();
-            IPAllocations = new ChangeTrackingList<WritableSubResource>();
-            ResourceNavigationLinks = new ChangeTrackingList<ResourceNavigationLink>();
-            ServiceAssociationLinks = new ChangeTrackingList<ServiceAssociationLink>();
-            Delegations = new ChangeTrackingList<ServiceDelegation>();
-            ApplicationGatewayIPConfigurations = new ChangeTrackingList<ApplicationGatewayIPConfiguration>();
+            AddressPrefixes = new Core.ChangeTrackingList<string>();
+            ServiceEndpoints = new Core.ChangeTrackingList<ServiceEndpointProperties>();
+            ServiceEndpointPolicies = new Core.ChangeTrackingList<ServiceEndpointPolicyData>();
+            PrivateEndpoints = new Core.ChangeTrackingList<PrivateEndpointData>();
+            IPConfigurations = new Core.ChangeTrackingList<NetworkIPConfiguration>();
+            IPConfigurationProfiles = new Core.ChangeTrackingList<NetworkIPConfigurationProfile>();
+            IPAllocations = new Core.ChangeTrackingList<WritableSubResource>();
+            ResourceNavigationLinks = new Core.ChangeTrackingList<ResourceNavigationLink>();
+            ServiceAssociationLinks = new Core.ChangeTrackingList<ServiceAssociationLink>();
+            Delegations = new Core.ChangeTrackingList<ServiceDelegation>();
+            ApplicationGatewayIPConfigurations = new Core.ChangeTrackingList<ApplicationGatewayIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of SubnetData. </summary>

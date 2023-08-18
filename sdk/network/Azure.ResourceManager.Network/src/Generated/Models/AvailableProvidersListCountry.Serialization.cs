@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> countryName = default;
-            Optional<IReadOnlyList<string>> providers = default;
-            Optional<IReadOnlyList<AvailableProvidersListState>> states = default;
+            Core.Optional<string> countryName = default;
+            Core.Optional<IReadOnlyList<string>> providers = default;
+            Core.Optional<IReadOnlyList<AvailableProvidersListState>> states = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("countryName"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new AvailableProvidersListCountry(countryName.Value, Optional.ToList(providers), Optional.ToList(states));
+            return new AvailableProvidersListCountry(countryName.Value, Core.Optional.ToList(providers), Core.Optional.ToList(states));
         }
     }
 }

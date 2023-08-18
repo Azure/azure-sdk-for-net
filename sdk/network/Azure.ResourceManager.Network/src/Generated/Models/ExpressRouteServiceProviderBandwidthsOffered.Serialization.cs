@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRouteServiceProviderBandwidthsOffered : IUtf8JsonSerializable
+    public partial class ExpressRouteServiceProviderBandwidthsOffered : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(OfferName))
+            if (Core.Optional.IsDefined(OfferName))
             {
                 writer.WritePropertyName("offerName"u8);
                 writer.WriteStringValue(OfferName);
             }
-            if (Optional.IsDefined(ValueInMbps))
+            if (Core.Optional.IsDefined(ValueInMbps))
             {
                 writer.WritePropertyName("valueInMbps"u8);
                 writer.WriteNumberValue(ValueInMbps.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> offerName = default;
-            Optional<int> valueInMbps = default;
+            Core.Optional<string> offerName = default;
+            Core.Optional<int> valueInMbps = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offerName"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ExpressRouteServiceProviderBandwidthsOffered(offerName.Value, Optional.ToNullable(valueInMbps));
+            return new ExpressRouteServiceProviderBandwidthsOffered(offerName.Value, Core.Optional.ToNullable(valueInMbps));
         }
     }
 }

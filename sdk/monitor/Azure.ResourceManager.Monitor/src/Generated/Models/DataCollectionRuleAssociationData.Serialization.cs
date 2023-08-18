@@ -13,24 +13,24 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class DataCollectionRuleAssociationData : IUtf8JsonSerializable
+    public partial class DataCollectionRuleAssociationData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(DataCollectionRuleId))
+            if (Core.Optional.IsDefined(DataCollectionRuleId))
             {
                 writer.WritePropertyName("dataCollectionRuleId"u8);
                 writer.WriteStringValue(DataCollectionRuleId);
             }
-            if (Optional.IsDefined(DataCollectionEndpointId))
+            if (Core.Optional.IsDefined(DataCollectionEndpointId))
             {
                 writer.WritePropertyName("dataCollectionEndpointId"u8);
                 writer.WriteStringValue(DataCollectionEndpointId);
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            Core.Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<ResourceIdentifier> dataCollectionRuleId = default;
-            Optional<ResourceIdentifier> dataCollectionEndpointId = default;
-            Optional<DataCollectionRuleAssociationProvisioningState> provisioningState = default;
-            Optional<DataCollectionRuleAssociationMetadata> metadata = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> description = default;
+            Core.Optional<ResourceIdentifier> dataCollectionRuleId = default;
+            Core.Optional<ResourceIdentifier> dataCollectionEndpointId = default;
+            Core.Optional<DataCollectionRuleAssociationProvisioningState> provisioningState = default;
+            Core.Optional<DataCollectionRuleAssociationMetadata> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new DataCollectionRuleAssociationData(id, name, type, systemData.Value, Optional.ToNullable(etag), description.Value, dataCollectionRuleId.Value, dataCollectionEndpointId.Value, Optional.ToNullable(provisioningState), metadata.Value);
+            return new DataCollectionRuleAssociationData(id, name, type, systemData.Value, Core.Optional.ToNullable(etag), description.Value, dataCollectionRuleId.Value, dataCollectionEndpointId.Value, Core.Optional.ToNullable(provisioningState), metadata.Value);
         }
     }
 }

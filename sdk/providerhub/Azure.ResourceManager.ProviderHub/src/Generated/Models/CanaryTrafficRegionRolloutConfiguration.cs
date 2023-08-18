@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of CanaryTrafficRegionRolloutConfiguration. </summary>
         public CanaryTrafficRegionRolloutConfiguration()
         {
-            SkipRegions = new ChangeTrackingList<AzureLocation>();
-            Regions = new ChangeTrackingList<AzureLocation>();
+            SkipRegions = new Core.ChangeTrackingList<AzureLocation>();
+            Regions = new Core.ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Initializes a new instance of CanaryTrafficRegionRolloutConfiguration. </summary>

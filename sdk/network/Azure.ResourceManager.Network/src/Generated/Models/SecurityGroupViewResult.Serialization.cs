@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecurityGroupNetworkInterface>> networkInterfaces = default;
+            Core.Optional<IReadOnlyList<SecurityGroupNetworkInterface>> networkInterfaces = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkInterfaces"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new SecurityGroupViewResult(Optional.ToList(networkInterfaces));
+            return new SecurityGroupViewResult(Core.Optional.ToList(networkInterfaces));
         }
     }
 }

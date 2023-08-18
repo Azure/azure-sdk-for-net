@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of NetworkInterfaceData. </summary>
         public NetworkInterfaceData()
         {
-            IPConfigurations = new ChangeTrackingList<NetworkInterfaceIPConfigurationData>();
-            TapConfigurations = new ChangeTrackingList<NetworkInterfaceTapConfigurationData>();
-            HostedWorkloads = new ChangeTrackingList<string>();
+            IPConfigurations = new Core.ChangeTrackingList<NetworkInterfaceIPConfigurationData>();
+            TapConfigurations = new Core.ChangeTrackingList<NetworkInterfaceTapConfigurationData>();
+            HostedWorkloads = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of NetworkInterfaceData. </summary>

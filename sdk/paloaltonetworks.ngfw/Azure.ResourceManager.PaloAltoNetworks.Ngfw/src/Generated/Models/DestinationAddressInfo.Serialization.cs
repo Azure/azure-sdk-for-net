@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class DestinationAddressInfo : IUtf8JsonSerializable
+    public partial class DestinationAddressInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Cidrs))
+            if (Core.Optional.IsCollectionDefined(Cidrs))
             {
                 writer.WritePropertyName("cidrs"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Countries))
+            if (Core.Optional.IsCollectionDefined(Countries))
             {
                 writer.WritePropertyName("countries"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Feeds))
+            if (Core.Optional.IsCollectionDefined(Feeds))
             {
                 writer.WritePropertyName("feeds"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PrefixLists))
+            if (Core.Optional.IsCollectionDefined(PrefixLists))
             {
                 writer.WritePropertyName("prefixLists"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FqdnLists))
+            if (Core.Optional.IsCollectionDefined(FqdnLists))
             {
                 writer.WritePropertyName("fqdnLists"u8);
                 writer.WriteStartArray();
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<IList<string>> cidrs = default;
-            Optional<IList<string>> countries = default;
-            Optional<IList<string>> feeds = default;
-            Optional<IList<string>> prefixLists = default;
-            Optional<IList<string>> fqdnLists = default;
+            Core.Optional<IList<string>> cidrs = default;
+            Core.Optional<IList<string>> countries = default;
+            Core.Optional<IList<string>> feeds = default;
+            Core.Optional<IList<string>> prefixLists = default;
+            Core.Optional<IList<string>> fqdnLists = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cidrs"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     continue;
                 }
             }
-            return new DestinationAddressInfo(Optional.ToList(cidrs), Optional.ToList(countries), Optional.ToList(feeds), Optional.ToList(prefixLists), Optional.ToList(fqdnLists));
+            return new DestinationAddressInfo(Core.Optional.ToList(cidrs), Core.Optional.ToList(countries), Core.Optional.ToList(feeds), Core.Optional.ToList(prefixLists), Core.Optional.ToList(fqdnLists));
         }
     }
 }

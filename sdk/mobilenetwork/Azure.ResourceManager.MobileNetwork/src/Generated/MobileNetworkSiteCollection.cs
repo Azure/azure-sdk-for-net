@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = await _mobileNetworkSiteSitesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MobileNetworkArmOperation<MobileNetworkSiteResource>(new MobileNetworkSiteOperationSource(Client), _mobileNetworkSiteSitesClientDiagnostics, Pipeline, _mobileNetworkSiteSitesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MobileNetworkArmOperation<MobileNetworkSiteResource>(new MobileNetworkSiteOperationSource(Client), _mobileNetworkSiteSitesClientDiagnostics, Pipeline, _mobileNetworkSiteSitesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = _mobileNetworkSiteSitesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, data, cancellationToken);
-                var operation = new MobileNetworkArmOperation<MobileNetworkSiteResource>(new MobileNetworkSiteOperationSource(Client), _mobileNetworkSiteSitesClientDiagnostics, Pipeline, _mobileNetworkSiteSitesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MobileNetworkArmOperation<MobileNetworkSiteResource>(new MobileNetworkSiteOperationSource(Client), _mobileNetworkSiteSitesClientDiagnostics, Pipeline, _mobileNetworkSiteSitesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, siteName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkSiteSitesRestClient.CreateListByMobileNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mobileNetworkSiteSitesRestClient.CreateListByMobileNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSiteResource(Client, MobileNetworkSiteData.DeserializeMobileNetworkSiteData(e)), _mobileNetworkSiteSitesClientDiagnostics, Pipeline, "MobileNetworkSiteCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSiteResource(Client, MobileNetworkSiteData.DeserializeMobileNetworkSiteData(e)), _mobileNetworkSiteSitesClientDiagnostics, Pipeline, "MobileNetworkSiteCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkSiteSitesRestClient.CreateListByMobileNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mobileNetworkSiteSitesRestClient.CreateListByMobileNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSiteResource(Client, MobileNetworkSiteData.DeserializeMobileNetworkSiteData(e)), _mobileNetworkSiteSitesClientDiagnostics, Pipeline, "MobileNetworkSiteCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSiteResource(Client, MobileNetworkSiteData.DeserializeMobileNetworkSiteData(e)), _mobileNetworkSiteSitesClientDiagnostics, Pipeline, "MobileNetworkSiteCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

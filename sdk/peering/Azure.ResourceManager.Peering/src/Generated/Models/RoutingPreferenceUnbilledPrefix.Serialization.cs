@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<string> prefix = default;
-            Optional<AzureLocation> azureRegion = default;
-            Optional<int> peerAsn = default;
+            Core.Optional<string> prefix = default;
+            Core.Optional<AzureLocation> azureRegion = default;
+            Core.Optional<int> peerAsn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("prefix"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Peering.Models
                     continue;
                 }
             }
-            return new RoutingPreferenceUnbilledPrefix(prefix.Value, Optional.ToNullable(azureRegion), Optional.ToNullable(peerAsn));
+            return new RoutingPreferenceUnbilledPrefix(prefix.Value, Core.Optional.ToNullable(azureRegion), Core.Optional.ToNullable(peerAsn));
         }
     }
 }

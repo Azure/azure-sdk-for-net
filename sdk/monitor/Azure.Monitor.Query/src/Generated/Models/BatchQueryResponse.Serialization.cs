@@ -19,10 +19,10 @@ namespace Azure.Monitor.Query.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<int> status = default;
-            Optional<LogsBatchQueryResult> body = default;
-            Optional<IReadOnlyDictionary<string, string>> headers = default;
+            Core.Optional<string> id = default;
+            Core.Optional<int> status = default;
+            Core.Optional<LogsBatchQueryResult> body = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> headers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -63,7 +63,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new BatchQueryResponse(id.Value, Optional.ToNullable(status), body.Value, Optional.ToDictionary(headers));
+            return new BatchQueryResponse(id.Value, Core.Optional.ToNullable(status), body.Value, Core.Optional.ToDictionary(headers));
         }
     }
 }

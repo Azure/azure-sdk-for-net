@@ -15,17 +15,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    public partial class VirtualNetworkLinkData : IUtf8JsonSerializable
+    public partial class VirtualNetworkLinkData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.PrivateDns
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualNetwork))
+            if (Core.Optional.IsDefined(VirtualNetwork))
             {
                 writer.WritePropertyName("virtualNetwork"u8);
                 JsonSerializer.Serialize(writer, VirtualNetwork);
             }
-            if (Optional.IsDefined(RegistrationEnabled))
+            if (Core.Optional.IsDefined(RegistrationEnabled))
             {
                 writer.WritePropertyName("registrationEnabled"u8);
                 writer.WriteBooleanValue(RegistrationEnabled.Value);
@@ -60,17 +60,17 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<WritableSubResource> virtualNetwork = default;
-            Optional<bool> registrationEnabled = default;
-            Optional<VirtualNetworkLinkState> virtualNetworkLinkState = default;
-            Optional<PrivateDnsProvisioningState> privateDnsProvisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<WritableSubResource> virtualNetwork = default;
+            Core.Optional<bool> registrationEnabled = default;
+            Core.Optional<VirtualNetworkLinkState> virtualNetworkLinkState = default;
+            Core.Optional<PrivateDnsProvisioningState> privateDnsProvisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.PrivateDns
                     continue;
                 }
             }
-            return new VirtualNetworkLinkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), virtualNetwork, Optional.ToNullable(registrationEnabled), Optional.ToNullable(virtualNetworkLinkState), Optional.ToNullable(privateDnsProvisioningState));
+            return new VirtualNetworkLinkData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(etag), virtualNetwork, Core.Optional.ToNullable(registrationEnabled), Core.Optional.ToNullable(virtualNetworkLinkState), Core.Optional.ToNullable(privateDnsProvisioningState));
         }
     }
 }

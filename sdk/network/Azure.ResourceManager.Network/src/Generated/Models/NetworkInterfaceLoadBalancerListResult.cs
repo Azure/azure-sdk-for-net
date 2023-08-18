@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkInterfaceLoadBalancerListResult. </summary>
         internal NetworkInterfaceLoadBalancerListResult()
         {
-            Value = new ChangeTrackingList<LoadBalancerData>();
+            Value = new Core.ChangeTrackingList<LoadBalancerData>();
         }
 
         /// <summary> Initializes a new instance of NetworkInterfaceLoadBalancerListResult. </summary>

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Monitor
             EvaluationFrequency = evaluationFrequency;
             WindowSize = windowSize;
             Criteria = criteria;
-            Actions = new ChangeTrackingList<MetricAlertAction>();
+            Actions = new Core.ChangeTrackingList<MetricAlertAction>();
         }
 
         /// <summary> Initializes a new instance of MetricAlertData. </summary>

@@ -22,7 +22,7 @@ namespace Azure.Monitor.Query.Models
             Argument.AssertNotNull(query, nameof(query));
 
             Query = query;
-            Workspaces = new ChangeTrackingList<string>();
+            Workspaces = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> The query to execute. </summary>

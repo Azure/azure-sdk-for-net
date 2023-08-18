@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of CloudServiceSwapListResult. </summary>
         internal CloudServiceSwapListResult()
         {
-            Value = new ChangeTrackingList<CloudServiceSwapData>();
+            Value = new Core.ChangeTrackingList<CloudServiceSwapData>();
         }
 
         /// <summary> Initializes a new instance of CloudServiceSwapListResult. </summary>

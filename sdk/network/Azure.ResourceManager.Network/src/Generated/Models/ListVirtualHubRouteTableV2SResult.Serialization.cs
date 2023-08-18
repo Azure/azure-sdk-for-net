@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VirtualHubRouteTableV2Data>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<VirtualHubRouteTableV2Data>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ListVirtualHubRouteTableV2SResult(Optional.ToList(value), nextLink.Value);
+            return new ListVirtualHubRouteTableV2SResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PostgreSql
 {
-    internal class PostgreSqlServerSecurityAlertPolicyOperationSource : IOperationSource<PostgreSqlServerSecurityAlertPolicyResource>
+    internal class PostgreSqlServerSecurityAlertPolicyOperationSource : Core.IOperationSource<PostgreSqlServerSecurityAlertPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.PostgreSql
             _client = client;
         }
 
-        PostgreSqlServerSecurityAlertPolicyResource IOperationSource<PostgreSqlServerSecurityAlertPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PostgreSqlServerSecurityAlertPolicyResource Core.IOperationSource<PostgreSqlServerSecurityAlertPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PostgreSqlServerSecurityAlertPolicyData.DeserializePostgreSqlServerSecurityAlertPolicyData(document.RootElement);
             return new PostgreSqlServerSecurityAlertPolicyResource(_client, data);
         }
 
-        async ValueTask<PostgreSqlServerSecurityAlertPolicyResource> IOperationSource<PostgreSqlServerSecurityAlertPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PostgreSqlServerSecurityAlertPolicyResource> Core.IOperationSource<PostgreSqlServerSecurityAlertPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PostgreSqlServerSecurityAlertPolicyData.DeserializePostgreSqlServerSecurityAlertPolicyData(document.RootElement);

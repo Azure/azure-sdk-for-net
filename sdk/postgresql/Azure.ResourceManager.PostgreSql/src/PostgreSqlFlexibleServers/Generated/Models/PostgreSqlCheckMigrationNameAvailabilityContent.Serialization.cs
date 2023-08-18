@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlCheckMigrationNameAvailabilityContent : IUtf8JsonSerializable
+    public partial class PostgreSqlCheckMigrationNameAvailabilityContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             string name = default;
             ResourceType type = default;
-            Optional<bool> nameAvailable = default;
-            Optional<PostgreSqlMigrationNameUnavailableReason> reason = default;
-            Optional<string> message = default;
+            Core.Optional<bool> nameAvailable = default;
+            Core.Optional<PostgreSqlMigrationNameUnavailableReason> reason = default;
+            Core.Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlCheckMigrationNameAvailabilityContent(name, type, Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value);
+            return new PostgreSqlCheckMigrationNameAvailabilityContent(name, type, Core.Optional.ToNullable(nameAvailable), Core.Optional.ToNullable(reason), message.Value);
         }
     }
 }

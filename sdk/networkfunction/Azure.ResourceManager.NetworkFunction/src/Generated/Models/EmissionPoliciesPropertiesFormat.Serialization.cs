@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
-    public partial class EmissionPoliciesPropertiesFormat : IUtf8JsonSerializable
+    public partial class EmissionPoliciesPropertiesFormat : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EmissionType))
+            if (Core.Optional.IsDefined(EmissionType))
             {
                 writer.WritePropertyName("emissionType"u8);
                 writer.WriteStringValue(EmissionType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(EmissionDestinations))
+            if (Core.Optional.IsCollectionDefined(EmissionDestinations))
             {
                 writer.WritePropertyName("emissionDestinations"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             {
                 return null;
             }
-            Optional<EmissionType> emissionType = default;
-            Optional<IList<EmissionPolicyDestination>> emissionDestinations = default;
+            Core.Optional<EmissionType> emissionType = default;
+            Core.Optional<IList<EmissionPolicyDestination>> emissionDestinations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("emissionType"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                     continue;
                 }
             }
-            return new EmissionPoliciesPropertiesFormat(Optional.ToNullable(emissionType), Optional.ToList(emissionDestinations));
+            return new EmissionPoliciesPropertiesFormat(Core.Optional.ToNullable(emissionType), Core.Optional.ToList(emissionDestinations));
         }
     }
 }

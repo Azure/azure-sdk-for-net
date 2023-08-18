@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewaySslPolicy. </summary>
         public ApplicationGatewaySslPolicy()
         {
-            DisabledSslProtocols = new ChangeTrackingList<ApplicationGatewaySslProtocol>();
-            CipherSuites = new ChangeTrackingList<ApplicationGatewaySslCipherSuite>();
+            DisabledSslProtocols = new Core.ChangeTrackingList<ApplicationGatewaySslProtocol>();
+            CipherSuites = new Core.ChangeTrackingList<ApplicationGatewaySslCipherSuite>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewaySslPolicy. </summary>

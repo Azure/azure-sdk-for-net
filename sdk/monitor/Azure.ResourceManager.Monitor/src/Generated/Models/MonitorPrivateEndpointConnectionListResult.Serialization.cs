@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MonitorPrivateEndpointConnectionData>> value = default;
+            Core.Optional<IReadOnlyList<MonitorPrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MonitorPrivateEndpointConnectionListResult(Optional.ToList(value));
+            return new MonitorPrivateEndpointConnectionListResult(Core.Optional.ToList(value));
         }
     }
 }

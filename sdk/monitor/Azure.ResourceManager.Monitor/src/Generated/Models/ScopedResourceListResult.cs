@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of ScopedResourceListResult. </summary>
         internal ScopedResourceListResult()
         {
-            Value = new ChangeTrackingList<MonitorPrivateLinkScopedResourceData>();
+            Value = new Core.ChangeTrackingList<MonitorPrivateLinkScopedResourceData>();
         }
 
         /// <summary> Initializes a new instance of ScopedResourceListResult. </summary>

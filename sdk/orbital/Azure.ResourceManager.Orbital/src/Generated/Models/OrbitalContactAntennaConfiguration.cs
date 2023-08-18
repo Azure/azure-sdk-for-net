@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Orbital.Models
         /// <summary> Initializes a new instance of OrbitalContactAntennaConfiguration. </summary>
         internal OrbitalContactAntennaConfiguration()
         {
-            SourceIPs = new ChangeTrackingList<IPAddress>();
+            SourceIPs = new Core.ChangeTrackingList<IPAddress>();
         }
 
         /// <summary> Initializes a new instance of OrbitalContactAntennaConfiguration. </summary>

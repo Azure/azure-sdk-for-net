@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> networkManager = default;
-            Optional<WritableSubResource> subnet = default;
-            Optional<WritableSubResource> networkInterface = default;
+            Core.Optional<WritableSubResource> networkManager = default;
+            Core.Optional<WritableSubResource> subnet = default;
+            Core.Optional<WritableSubResource> networkInterface = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkManager"u8))

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VirtualNetworkListResult. </summary>
         internal VirtualNetworkListResult()
         {
-            Value = new ChangeTrackingList<VirtualNetworkData>();
+            Value = new Core.ChangeTrackingList<VirtualNetworkData>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkListResult. </summary>

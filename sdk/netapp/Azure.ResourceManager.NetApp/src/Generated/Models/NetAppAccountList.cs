@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of NetAppAccountList. </summary>
         internal NetAppAccountList()
         {
-            Value = new ChangeTrackingList<NetAppAccountData>();
+            Value = new Core.ChangeTrackingList<NetAppAccountData>();
         }
 
         /// <summary> Initializes a new instance of NetAppAccountList. </summary>

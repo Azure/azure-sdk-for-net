@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of ResourceTypeExtension. </summary>
         public ResourceTypeExtension()
         {
-            ExtensionCategories = new ChangeTrackingList<ResourceTypeExtensionCategory>();
+            ExtensionCategories = new Core.ChangeTrackingList<ResourceTypeExtensionCategory>();
         }
 
         /// <summary> Initializes a new instance of ResourceTypeExtension. </summary>

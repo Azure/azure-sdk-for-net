@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class LoggingRule : IUtf8JsonSerializable
+    public partial class LoggingRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("action"u8);
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStringValue(Direction.ToString());
             writer.WritePropertyName("detailLevel"u8);
             writer.WriteStringValue(DetailLevel.ToString());
-            if (Optional.IsDefined(HiddenPropertyPaths))
+            if (Core.Optional.IsDefined(HiddenPropertyPaths))
             {
                 writer.WritePropertyName("hiddenPropertyPaths"u8);
                 writer.WriteObjectValue(HiddenPropertyPaths);
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             string action = default;
             LoggingDirection direction = default;
             LoggingDetail detailLevel = default;
-            Optional<LoggingHiddenPropertyPaths> hiddenPropertyPaths = default;
+            Core.Optional<LoggingHiddenPropertyPaths> hiddenPropertyPaths = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"u8))

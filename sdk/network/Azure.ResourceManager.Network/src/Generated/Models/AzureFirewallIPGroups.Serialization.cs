@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> changeNumber = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> changeNumber = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

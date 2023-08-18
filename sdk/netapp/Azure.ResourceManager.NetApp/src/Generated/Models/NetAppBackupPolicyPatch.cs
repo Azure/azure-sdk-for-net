@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="location"> The location. </param>
         public NetAppBackupPolicyPatch(AzureLocation location) : base(location)
         {
-            VolumeBackups = new ChangeTrackingList<NetAppVolumeBackupDetail>();
+            VolumeBackups = new Core.ChangeTrackingList<NetAppVolumeBackupDetail>();
         }
 
         /// <summary> Backup Policy Resource ID. </summary>

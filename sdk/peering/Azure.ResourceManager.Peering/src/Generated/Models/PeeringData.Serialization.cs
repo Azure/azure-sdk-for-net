@@ -13,16 +13,16 @@ using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    public partial class PeeringData : IUtf8JsonSerializable
+    public partial class PeeringData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.Peering
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Direct))
+            if (Core.Optional.IsDefined(Direct))
             {
                 writer.WritePropertyName("direct"u8);
                 writer.WriteObjectValue(Direct);
             }
-            if (Optional.IsDefined(Exchange))
+            if (Core.Optional.IsDefined(Exchange))
             {
                 writer.WritePropertyName("exchange"u8);
                 writer.WriteObjectValue(Exchange);
             }
-            if (Optional.IsDefined(PeeringLocation))
+            if (Core.Optional.IsDefined(PeeringLocation))
             {
                 writer.WritePropertyName("peeringLocation"u8);
                 writer.WriteStringValue(PeeringLocation);
@@ -64,16 +64,16 @@ namespace Azure.ResourceManager.Peering
             }
             PeeringSku sku = default;
             PeeringKind kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DirectPeeringProperties> direct = default;
-            Optional<ExchangePeeringProperties> exchange = default;
-            Optional<string> peeringLocation = default;
-            Optional<PeeringProvisioningState> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DirectPeeringProperties> direct = default;
+            Core.Optional<ExchangePeeringProperties> exchange = default;
+            Core.Optional<string> peeringLocation = default;
+            Core.Optional<PeeringProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Peering
                     continue;
                 }
             }
-            return new PeeringData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, kind, direct.Value, exchange.Value, peeringLocation.Value, Optional.ToNullable(provisioningState));
+            return new PeeringData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku, kind, direct.Value, exchange.Value, peeringLocation.Value, Core.Optional.ToNullable(provisioningState));
         }
     }
 }

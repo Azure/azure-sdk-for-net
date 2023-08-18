@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="location"> The location. </param>
         public NetAppAccountData(AzureLocation location) : base(location)
         {
-            ActiveDirectories = new ChangeTrackingList<NetAppAccountActiveDirectory>();
+            ActiveDirectories = new Core.ChangeTrackingList<NetAppAccountActiveDirectory>();
         }
 
         /// <summary> Initializes a new instance of NetAppAccountData. </summary>

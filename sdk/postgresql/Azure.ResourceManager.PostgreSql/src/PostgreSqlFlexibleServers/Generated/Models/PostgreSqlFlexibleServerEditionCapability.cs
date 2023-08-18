@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerEditionCapability. </summary>
         internal PostgreSqlFlexibleServerEditionCapability()
         {
-            SupportedStorageEditions = new ChangeTrackingList<PostgreSqlFlexibleServerStorageEditionCapability>();
-            SupportedServerSkus = new ChangeTrackingList<PostgreSqlFlexibleServerSkuCapability>();
+            SupportedStorageEditions = new Core.ChangeTrackingList<PostgreSqlFlexibleServerStorageEditionCapability>();
+            SupportedServerSkus = new Core.ChangeTrackingList<PostgreSqlFlexibleServerSkuCapability>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerEditionCapability. </summary>

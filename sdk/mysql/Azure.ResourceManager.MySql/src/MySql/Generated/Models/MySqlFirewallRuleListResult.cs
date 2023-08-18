@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <summary> Initializes a new instance of MySqlFirewallRuleListResult. </summary>
         internal MySqlFirewallRuleListResult()
         {
-            Value = new ChangeTrackingList<MySqlFirewallRuleData>();
+            Value = new Core.ChangeTrackingList<MySqlFirewallRuleData>();
         }
 
         /// <summary> Initializes a new instance of MySqlFirewallRuleListResult. </summary>

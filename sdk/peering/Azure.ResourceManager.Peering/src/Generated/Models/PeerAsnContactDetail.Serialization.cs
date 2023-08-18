@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class PeerAsnContactDetail : IUtf8JsonSerializable
+    public partial class PeerAsnContactDetail : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Role))
+            if (Core.Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToString());
             }
-            if (Optional.IsDefined(Email))
+            if (Core.Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (Optional.IsDefined(Phone))
+            if (Core.Optional.IsDefined(Phone))
             {
                 writer.WritePropertyName("phone"u8);
                 writer.WriteStringValue(Phone);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<PeeringRole> role = default;
-            Optional<string> email = default;
-            Optional<string> phone = default;
+            Core.Optional<PeeringRole> role = default;
+            Core.Optional<string> email = default;
+            Core.Optional<string> phone = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("role"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Peering.Models
                     continue;
                 }
             }
-            return new PeerAsnContactDetail(Optional.ToNullable(role), email.Value, phone.Value);
+            return new PeerAsnContactDetail(Core.Optional.ToNullable(role), email.Value, phone.Value);
         }
     }
 }

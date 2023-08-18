@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="location"> The location. </param>
         public AzureTrafficCollectorData(AzureLocation location) : base(location)
         {
-            CollectorPolicies = new ChangeTrackingList<SubResource>();
+            CollectorPolicies = new Core.ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of AzureTrafficCollectorData. </summary>

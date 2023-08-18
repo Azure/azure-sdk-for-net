@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VpnServerConfigurationsResponse. </summary>
         internal VpnServerConfigurationsResponse()
         {
-            VpnServerConfigurationResourceIds = new ChangeTrackingList<string>();
+            VpnServerConfigurationResourceIds = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VpnServerConfigurationsResponse. </summary>

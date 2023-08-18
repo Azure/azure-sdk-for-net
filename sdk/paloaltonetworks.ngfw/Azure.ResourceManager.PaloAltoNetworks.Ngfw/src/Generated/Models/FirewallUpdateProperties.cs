@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <summary> Initializes a new instance of FirewallUpdateProperties. </summary>
         public FirewallUpdateProperties()
         {
-            FrontEndSettings = new ChangeTrackingList<FirewallFrontendSetting>();
+            FrontEndSettings = new Core.ChangeTrackingList<FirewallFrontendSetting>();
         }
 
         /// <summary> panEtag info. </summary>

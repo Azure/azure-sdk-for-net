@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VirtualNetworkGatewayConnectionListResult. </summary>
         internal VirtualNetworkGatewayConnectionListResult()
         {
-            Value = new ChangeTrackingList<VirtualNetworkGatewayConnectionData>();
+            Value = new Core.ChangeTrackingList<VirtualNetworkGatewayConnectionData>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewayConnectionListResult. </summary>

@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorPrivateLinkAccessModeSettings : IUtf8JsonSerializable
+    public partial class MonitorPrivateLinkAccessModeSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("queryAccessMode"u8);
             writer.WriteStringValue(QueryAccessMode.ToString());
             writer.WritePropertyName("ingestionAccessMode"u8);
             writer.WriteStringValue(IngestionAccessMode.ToString());
-            if (Optional.IsCollectionDefined(Exclusions))
+            if (Core.Optional.IsCollectionDefined(Exclusions))
             {
                 writer.WritePropertyName("exclusions"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             MonitorPrivateLinkAccessMode queryAccessMode = default;
             MonitorPrivateLinkAccessMode ingestionAccessMode = default;
-            Optional<IList<MonitorPrivateLinkAccessModeSettingsExclusion>> exclusions = default;
+            Core.Optional<IList<MonitorPrivateLinkAccessModeSettingsExclusion>> exclusions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queryAccessMode"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MonitorPrivateLinkAccessModeSettings(queryAccessMode, ingestionAccessMode, Optional.ToList(exclusions));
+            return new MonitorPrivateLinkAccessModeSettings(queryAccessMode, ingestionAccessMode, Core.Optional.ToList(exclusions));
         }
     }
 }

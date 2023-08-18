@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<Uri> sasUrl = default;
+            Core.Optional<Uri> sasUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sasUrl"u8))

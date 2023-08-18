@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PostgreSqlLogFile>> value = default;
+            Core.Optional<IReadOnlyList<PostgreSqlLogFile>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     continue;
                 }
             }
-            return new PostgreSqlLogFileListResult(Optional.ToList(value));
+            return new PostgreSqlLogFileListResult(Core.Optional.ToList(value));
         }
     }
 }

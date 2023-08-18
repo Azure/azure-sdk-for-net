@@ -13,14 +13,14 @@ using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudL3NetworkData : IUtf8JsonSerializable
+    public partial class NetworkCloudL3NetworkData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -35,32 +35,32 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(HybridAksIpamEnabled))
+            if (Core.Optional.IsDefined(HybridAksIpamEnabled))
             {
                 writer.WritePropertyName("hybridAksIpamEnabled"u8);
                 writer.WriteStringValue(HybridAksIpamEnabled.Value.ToString());
             }
-            if (Optional.IsDefined(HybridAksPluginType))
+            if (Core.Optional.IsDefined(HybridAksPluginType))
             {
                 writer.WritePropertyName("hybridAksPluginType"u8);
                 writer.WriteStringValue(HybridAksPluginType.Value.ToString());
             }
-            if (Optional.IsDefined(InterfaceName))
+            if (Core.Optional.IsDefined(InterfaceName))
             {
                 writer.WritePropertyName("interfaceName"u8);
                 writer.WriteStringValue(InterfaceName);
             }
-            if (Optional.IsDefined(IPAllocationType))
+            if (Core.Optional.IsDefined(IPAllocationType))
             {
                 writer.WritePropertyName("ipAllocationType"u8);
                 writer.WriteStringValue(IPAllocationType.Value.ToString());
             }
-            if (Optional.IsDefined(IPv4ConnectedPrefix))
+            if (Core.Optional.IsDefined(IPv4ConnectedPrefix))
             {
                 writer.WritePropertyName("ipv4ConnectedPrefix"u8);
                 writer.WriteStringValue(IPv4ConnectedPrefix);
             }
-            if (Optional.IsDefined(IPv6ConnectedPrefix))
+            if (Core.Optional.IsDefined(IPv6ConnectedPrefix))
             {
                 writer.WritePropertyName("ipv6ConnectedPrefix"u8);
                 writer.WriteStringValue(IPv6ConnectedPrefix);
@@ -80,26 +80,26 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> associatedResourceIds = default;
-            Optional<ResourceIdentifier> clusterId = default;
-            Optional<L3NetworkDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> hybridAksClustersAssociatedIds = default;
-            Optional<HybridAksIpamEnabled> hybridAksIpamEnabled = default;
-            Optional<HybridAksPluginType> hybridAksPluginType = default;
-            Optional<string> interfaceName = default;
-            Optional<IPAllocationType> ipAllocationType = default;
-            Optional<string> ipv4ConnectedPrefix = default;
-            Optional<string> ipv6ConnectedPrefix = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IReadOnlyList<ResourceIdentifier>> associatedResourceIds = default;
+            Core.Optional<ResourceIdentifier> clusterId = default;
+            Core.Optional<L3NetworkDetailedStatus> detailedStatus = default;
+            Core.Optional<string> detailedStatusMessage = default;
+            Core.Optional<IReadOnlyList<ResourceIdentifier>> hybridAksClustersAssociatedIds = default;
+            Core.Optional<HybridAksIpamEnabled> hybridAksIpamEnabled = default;
+            Core.Optional<HybridAksPluginType> hybridAksPluginType = default;
+            Core.Optional<string> interfaceName = default;
+            Core.Optional<IPAllocationType> ipAllocationType = default;
+            Core.Optional<string> ipv4ConnectedPrefix = default;
+            Core.Optional<string> ipv6ConnectedPrefix = default;
             ResourceIdentifier l3IsolationDomainId = default;
-            Optional<L3NetworkProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> virtualMachinesAssociatedIds = default;
+            Core.Optional<L3NetworkProvisioningState> provisioningState = default;
+            Core.Optional<IReadOnlyList<ResourceIdentifier>> virtualMachinesAssociatedIds = default;
             long vlan = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     continue;
                 }
             }
-            return new NetworkCloudL3NetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToList(associatedResourceIds), clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToList(hybridAksClustersAssociatedIds), Optional.ToNullable(hybridAksIpamEnabled), Optional.ToNullable(hybridAksPluginType), interfaceName.Value, Optional.ToNullable(ipAllocationType), ipv4ConnectedPrefix.Value, ipv6ConnectedPrefix.Value, l3IsolationDomainId, Optional.ToNullable(provisioningState), Optional.ToList(virtualMachinesAssociatedIds), vlan);
+            return new NetworkCloudL3NetworkData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, extendedLocation, Core.Optional.ToList(associatedResourceIds), clusterId.Value, Core.Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Core.Optional.ToList(hybridAksClustersAssociatedIds), Core.Optional.ToNullable(hybridAksIpamEnabled), Core.Optional.ToNullable(hybridAksPluginType), interfaceName.Value, Core.Optional.ToNullable(ipAllocationType), ipv4ConnectedPrefix.Value, ipv6ConnectedPrefix.Value, l3IsolationDomainId, Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(virtualMachinesAssociatedIds), vlan);
         }
     }
 }

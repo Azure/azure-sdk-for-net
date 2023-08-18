@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ExpressRouteCircuitsRoutesTableListResult. </summary>
         internal ExpressRouteCircuitsRoutesTableListResult()
         {
-            Value = new ChangeTrackingList<ExpressRouteCircuitRoutesTable>();
+            Value = new Core.ChangeTrackingList<ExpressRouteCircuitRoutesTable>();
         }
 
         /// <summary> Initializes a new instance of ExpressRouteCircuitsRoutesTableListResult. </summary>

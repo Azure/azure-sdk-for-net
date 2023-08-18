@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of BackupsList. </summary>
         internal BackupsList()
         {
-            Value = new ChangeTrackingList<NetAppBackupData>();
+            Value = new Core.ChangeTrackingList<NetAppBackupData>();
         }
 
         /// <summary> Initializes a new instance of BackupsList. </summary>

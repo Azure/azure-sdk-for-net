@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<NetworkConfigurationDiagnosticProfile> profile = default;
-            Optional<NetworkSecurityGroupResult> networkSecurityGroupResult = default;
+            Core.Optional<NetworkConfigurationDiagnosticProfile> profile = default;
+            Core.Optional<NetworkSecurityGroupResult> networkSecurityGroupResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("profile"u8))

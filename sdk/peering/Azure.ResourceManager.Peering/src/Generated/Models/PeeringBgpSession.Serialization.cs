@@ -11,52 +11,52 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class PeeringBgpSession : IUtf8JsonSerializable
+    public partial class PeeringBgpSession : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SessionPrefixV4))
+            if (Core.Optional.IsDefined(SessionPrefixV4))
             {
                 writer.WritePropertyName("sessionPrefixV4"u8);
                 writer.WriteStringValue(SessionPrefixV4);
             }
-            if (Optional.IsDefined(SessionPrefixV6))
+            if (Core.Optional.IsDefined(SessionPrefixV6))
             {
                 writer.WritePropertyName("sessionPrefixV6"u8);
                 writer.WriteStringValue(SessionPrefixV6);
             }
-            if (Optional.IsDefined(MicrosoftSessionIPv4Address))
+            if (Core.Optional.IsDefined(MicrosoftSessionIPv4Address))
             {
                 writer.WritePropertyName("microsoftSessionIPv4Address"u8);
                 writer.WriteStringValue(MicrosoftSessionIPv4Address.ToString());
             }
-            if (Optional.IsDefined(MicrosoftSessionIPv6Address))
+            if (Core.Optional.IsDefined(MicrosoftSessionIPv6Address))
             {
                 writer.WritePropertyName("microsoftSessionIPv6Address"u8);
                 writer.WriteStringValue(MicrosoftSessionIPv6Address.ToString());
             }
-            if (Optional.IsDefined(PeerSessionIPv4Address))
+            if (Core.Optional.IsDefined(PeerSessionIPv4Address))
             {
                 writer.WritePropertyName("peerSessionIPv4Address"u8);
                 writer.WriteStringValue(PeerSessionIPv4Address.ToString());
             }
-            if (Optional.IsDefined(PeerSessionIPv6Address))
+            if (Core.Optional.IsDefined(PeerSessionIPv6Address))
             {
                 writer.WritePropertyName("peerSessionIPv6Address"u8);
                 writer.WriteStringValue(PeerSessionIPv6Address.ToString());
             }
-            if (Optional.IsDefined(MaxPrefixesAdvertisedV4))
+            if (Core.Optional.IsDefined(MaxPrefixesAdvertisedV4))
             {
                 writer.WritePropertyName("maxPrefixesAdvertisedV4"u8);
                 writer.WriteNumberValue(MaxPrefixesAdvertisedV4.Value);
             }
-            if (Optional.IsDefined(MaxPrefixesAdvertisedV6))
+            if (Core.Optional.IsDefined(MaxPrefixesAdvertisedV6))
             {
                 writer.WritePropertyName("maxPrefixesAdvertisedV6"u8);
                 writer.WriteNumberValue(MaxPrefixesAdvertisedV6.Value);
             }
-            if (Optional.IsDefined(Md5AuthenticationKey))
+            if (Core.Optional.IsDefined(Md5AuthenticationKey))
             {
                 writer.WritePropertyName("md5AuthenticationKey"u8);
                 writer.WriteStringValue(Md5AuthenticationKey);
@@ -70,17 +70,17 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<string> sessionPrefixV4 = default;
-            Optional<string> sessionPrefixV6 = default;
-            Optional<IPAddress> microsoftSessionIPv4Address = default;
-            Optional<IPAddress> microsoftSessionIPv6Address = default;
-            Optional<IPAddress> peerSessionIPv4Address = default;
-            Optional<IPAddress> peerSessionIPv6Address = default;
-            Optional<PeeringSessionStateV4> sessionStateV4 = default;
-            Optional<PeeringSessionStateV6> sessionStateV6 = default;
-            Optional<int> maxPrefixesAdvertisedV4 = default;
-            Optional<int> maxPrefixesAdvertisedV6 = default;
-            Optional<string> md5AuthenticationKey = default;
+            Core.Optional<string> sessionPrefixV4 = default;
+            Core.Optional<string> sessionPrefixV6 = default;
+            Core.Optional<IPAddress> microsoftSessionIPv4Address = default;
+            Core.Optional<IPAddress> microsoftSessionIPv6Address = default;
+            Core.Optional<IPAddress> peerSessionIPv4Address = default;
+            Core.Optional<IPAddress> peerSessionIPv6Address = default;
+            Core.Optional<PeeringSessionStateV4> sessionStateV4 = default;
+            Core.Optional<PeeringSessionStateV6> sessionStateV6 = default;
+            Core.Optional<int> maxPrefixesAdvertisedV4 = default;
+            Core.Optional<int> maxPrefixesAdvertisedV6 = default;
+            Core.Optional<string> md5AuthenticationKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sessionPrefixV4"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Peering.Models
                     continue;
                 }
             }
-            return new PeeringBgpSession(sessionPrefixV4.Value, sessionPrefixV6.Value, microsoftSessionIPv4Address.Value, microsoftSessionIPv6Address.Value, peerSessionIPv4Address.Value, peerSessionIPv6Address.Value, Optional.ToNullable(sessionStateV4), Optional.ToNullable(sessionStateV6), Optional.ToNullable(maxPrefixesAdvertisedV4), Optional.ToNullable(maxPrefixesAdvertisedV6), md5AuthenticationKey.Value);
+            return new PeeringBgpSession(sessionPrefixV4.Value, sessionPrefixV6.Value, microsoftSessionIPv4Address.Value, microsoftSessionIPv6Address.Value, peerSessionIPv4Address.Value, peerSessionIPv6Address.Value, Core.Optional.ToNullable(sessionStateV4), Core.Optional.ToNullable(sessionStateV6), Core.Optional.ToNullable(maxPrefixesAdvertisedV4), Core.Optional.ToNullable(maxPrefixesAdvertisedV6), md5AuthenticationKey.Value);
         }
     }
 }

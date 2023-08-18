@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EffectiveConnectivityConfiguration>> value = default;
-            Optional<string> skipToken = default;
+            Core.Optional<IReadOnlyList<EffectiveConnectivityConfiguration>> value = default;
+            Core.Optional<string> skipToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NetworkManagerEffectiveConnectivityConfigurationListResult(Optional.ToList(value), skipToken.Value);
+            return new NetworkManagerEffectiveConnectivityConfigurationListResult(Core.Optional.ToList(value), skipToken.Value);
         }
     }
 }

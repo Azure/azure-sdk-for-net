@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayAvailableWafRuleSetsResult. </summary>
         internal ApplicationGatewayAvailableWafRuleSetsResult()
         {
-            Value = new ChangeTrackingList<ApplicationGatewayFirewallRuleSet>();
+            Value = new Core.ChangeTrackingList<ApplicationGatewayFirewallRuleSet>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayAvailableWafRuleSetsResult. </summary>

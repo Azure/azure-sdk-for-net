@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class StaticRoute : IUtf8JsonSerializable
+    public partial class StaticRoute : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(AddressPrefixes))
+            if (Core.Optional.IsCollectionDefined(AddressPrefixes))
             {
                 writer.WritePropertyName("addressPrefixes"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextHopIPAddress))
+            if (Core.Optional.IsDefined(NextHopIPAddress))
             {
                 writer.WritePropertyName("nextHopIpAddress"u8);
                 writer.WriteStringValue(NextHopIPAddress);
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IList<string>> addressPrefixes = default;
-            Optional<string> nextHopIPAddress = default;
+            Core.Optional<string> name = default;
+            Core.Optional<IList<string>> addressPrefixes = default;
+            Core.Optional<string> nextHopIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new StaticRoute(name.Value, Optional.ToList(addressPrefixes), nextHopIPAddress.Value);
+            return new StaticRoute(name.Value, Core.Optional.ToList(addressPrefixes), nextHopIPAddress.Value);
         }
     }
 }

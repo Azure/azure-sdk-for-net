@@ -14,14 +14,14 @@ using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudStorageApplianceData : IUtf8JsonSerializable
+    public partial class NetworkCloudStorageApplianceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -57,24 +57,24 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             AdministrativeCredentials administratorCredentials = default;
-            Optional<long> capacity = default;
-            Optional<long> capacityUsed = default;
-            Optional<ResourceIdentifier> clusterId = default;
-            Optional<StorageApplianceDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<IPAddress> managementIPv4Address = default;
-            Optional<StorageApplianceProvisioningState> provisioningState = default;
+            Core.Optional<long> capacity = default;
+            Core.Optional<long> capacityUsed = default;
+            Core.Optional<ResourceIdentifier> clusterId = default;
+            Core.Optional<StorageApplianceDetailedStatus> detailedStatus = default;
+            Core.Optional<string> detailedStatusMessage = default;
+            Core.Optional<IPAddress> managementIPv4Address = default;
+            Core.Optional<StorageApplianceProvisioningState> provisioningState = default;
             ResourceIdentifier rackId = default;
             long rackSlot = default;
-            Optional<RemoteVendorManagementFeature> remoteVendorManagementFeature = default;
-            Optional<RemoteVendorManagementStatus> remoteVendorManagementStatus = default;
+            Core.Optional<RemoteVendorManagementFeature> remoteVendorManagementFeature = default;
+            Core.Optional<RemoteVendorManagementStatus> remoteVendorManagementStatus = default;
             string serialNumber = default;
             string storageApplianceSkuId = default;
             foreach (var property in element.EnumerateObject())
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     continue;
                 }
             }
-            return new NetworkCloudStorageApplianceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, administratorCredentials, Optional.ToNullable(capacity), Optional.ToNullable(capacityUsed), clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, managementIPv4Address.Value, Optional.ToNullable(provisioningState), rackId, rackSlot, Optional.ToNullable(remoteVendorManagementFeature), Optional.ToNullable(remoteVendorManagementStatus), serialNumber, storageApplianceSkuId);
+            return new NetworkCloudStorageApplianceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, extendedLocation, administratorCredentials, Core.Optional.ToNullable(capacity), Core.Optional.ToNullable(capacityUsed), clusterId.Value, Core.Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, managementIPv4Address.Value, Core.Optional.ToNullable(provisioningState), rackId, rackSlot, Core.Optional.ToNullable(remoteVendorManagementFeature), Core.Optional.ToNullable(remoteVendorManagementStatus), serialNumber, storageApplianceSkuId);
         }
     }
 }

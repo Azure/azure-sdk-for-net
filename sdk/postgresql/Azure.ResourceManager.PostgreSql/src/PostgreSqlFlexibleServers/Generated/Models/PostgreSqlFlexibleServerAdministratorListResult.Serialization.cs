@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerAdministratorListResult(Optional.ToList(value), nextLink.Value);
+            return new PostgreSqlFlexibleServerAdministratorListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

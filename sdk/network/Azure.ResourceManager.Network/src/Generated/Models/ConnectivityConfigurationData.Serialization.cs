@@ -15,24 +15,24 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ConnectivityConfigurationData : IUtf8JsonSerializable
+    public partial class ConnectivityConfigurationData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ConnectivityTopology))
+            if (Core.Optional.IsDefined(ConnectivityTopology))
             {
                 writer.WritePropertyName("connectivityTopology"u8);
                 writer.WriteStringValue(ConnectivityTopology.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Hubs))
+            if (Core.Optional.IsCollectionDefined(Hubs))
             {
                 writer.WritePropertyName("hubs"u8);
                 writer.WriteStartArray();
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsGlobal))
+            if (Core.Optional.IsDefined(IsGlobal))
             {
                 writer.WritePropertyName("isGlobal"u8);
                 writer.WriteStringValue(IsGlobal.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AppliesToGroups))
+            if (Core.Optional.IsCollectionDefined(AppliesToGroups))
             {
                 writer.WritePropertyName("appliesToGroups"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DeleteExistingPeering))
+            if (Core.Optional.IsDefined(DeleteExistingPeering))
             {
                 writer.WritePropertyName("deleteExistingPeering"u8);
                 writer.WriteStringValue(DeleteExistingPeering.Value.ToString());
@@ -72,19 +72,19 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            Core.Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<ConnectivityTopology> connectivityTopology = default;
-            Optional<IList<ConnectivityHub>> hubs = default;
-            Optional<GlobalMeshSupportFlag> isGlobal = default;
-            Optional<IList<ConnectivityGroupItem>> appliesToGroups = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<DeleteExistingPeering> deleteExistingPeering = default;
-            Optional<Guid> resourceGuid = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> description = default;
+            Core.Optional<ConnectivityTopology> connectivityTopology = default;
+            Core.Optional<IList<ConnectivityHub>> hubs = default;
+            Core.Optional<GlobalMeshSupportFlag> isGlobal = default;
+            Core.Optional<IList<ConnectivityGroupItem>> appliesToGroups = default;
+            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Core.Optional<DeleteExistingPeering> deleteExistingPeering = default;
+            Core.Optional<Guid> resourceGuid = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ConnectivityConfigurationData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(connectivityTopology), Optional.ToList(hubs), Optional.ToNullable(isGlobal), Optional.ToList(appliesToGroups), Optional.ToNullable(provisioningState), Optional.ToNullable(deleteExistingPeering), Optional.ToNullable(resourceGuid), Optional.ToNullable(etag));
+            return new ConnectivityConfigurationData(id, name, type, systemData.Value, description.Value, Core.Optional.ToNullable(connectivityTopology), Core.Optional.ToList(hubs), Core.Optional.ToNullable(isGlobal), Core.Optional.ToList(appliesToGroups), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(deleteExistingPeering), Core.Optional.ToNullable(resourceGuid), Core.Optional.ToNullable(etag));
         }
     }
 }

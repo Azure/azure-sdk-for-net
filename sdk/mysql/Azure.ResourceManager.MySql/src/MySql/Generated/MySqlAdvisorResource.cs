@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = await _defaultRestClient.CreateRecommendedActionSessionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseName, cancellationToken).ConfigureAwait(false);
-                var operation = new MySqlArmOperation(_defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateCreateRecommendedActionSessionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseName).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation(_defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateCreateRecommendedActionSessionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseName).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = _defaultRestClient.CreateRecommendedActionSession(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseName, cancellationToken);
-                var operation = new MySqlArmOperation(_defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateCreateRecommendedActionSessionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseName).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation(_defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateCreateRecommendedActionSessionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databaseName).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

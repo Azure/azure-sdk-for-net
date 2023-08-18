@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayBackendAddressPool. </summary>
         public ApplicationGatewayBackendAddressPool()
         {
-            BackendIPConfigurations = new ChangeTrackingList<NetworkInterfaceIPConfigurationData>();
-            BackendAddresses = new ChangeTrackingList<ApplicationGatewayBackendAddress>();
+            BackendIPConfigurations = new Core.ChangeTrackingList<NetworkInterfaceIPConfigurationData>();
+            BackendAddresses = new Core.ChangeTrackingList<ApplicationGatewayBackendAddress>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayBackendAddressPool. </summary>

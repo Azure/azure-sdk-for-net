@@ -13,17 +13,17 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ExpressRoutePortAuthorizationData : IUtf8JsonSerializable
+    public partial class ExpressRoutePortAuthorizationData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -40,14 +40,14 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> authorizationKey = default;
-            Optional<ExpressRoutePortAuthorizationUseStatus> authorizationUseStatus = default;
-            Optional<Uri> circuitResourceUri = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceType> type = default;
+            Core.Optional<string> authorizationKey = default;
+            Core.Optional<ExpressRoutePortAuthorizationUseStatus> authorizationUseStatus = default;
+            Core.Optional<Uri> circuitResourceUri = default;
+            Core.Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRoutePortAuthorizationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), authorizationKey.Value, Optional.ToNullable(authorizationUseStatus), circuitResourceUri.Value, Optional.ToNullable(provisioningState));
+            return new ExpressRoutePortAuthorizationData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), authorizationKey.Value, Core.Optional.ToNullable(authorizationUseStatus), circuitResourceUri.Value, Core.Optional.ToNullable(provisioningState));
         }
     }
 }

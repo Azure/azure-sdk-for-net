@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MetricAlertStatus>> value = default;
+            Core.Optional<IReadOnlyList<MetricAlertStatus>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MetricAlertStatusCollection(Optional.ToList(value));
+            return new MetricAlertStatusCollection(Core.Optional.ToList(value));
         }
     }
 }

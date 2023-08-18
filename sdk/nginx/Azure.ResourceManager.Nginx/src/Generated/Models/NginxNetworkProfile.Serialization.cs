@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    public partial class NginxNetworkProfile : IUtf8JsonSerializable
+    public partial class NginxNetworkProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FrontEndIPConfiguration))
+            if (Core.Optional.IsDefined(FrontEndIPConfiguration))
             {
                 writer.WritePropertyName("frontEndIPConfiguration"u8);
                 writer.WriteObjectValue(FrontEndIPConfiguration);
             }
-            if (Optional.IsDefined(NetworkInterfaceConfiguration))
+            if (Core.Optional.IsDefined(NetworkInterfaceConfiguration))
             {
                 writer.WritePropertyName("networkInterfaceConfiguration"u8);
                 writer.WriteObjectValue(NetworkInterfaceConfiguration);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<NginxFrontendIPConfiguration> frontEndIPConfiguration = default;
-            Optional<NginxNetworkInterfaceConfiguration> networkInterfaceConfiguration = default;
+            Core.Optional<NginxFrontendIPConfiguration> frontEndIPConfiguration = default;
+            Core.Optional<NginxNetworkInterfaceConfiguration> networkInterfaceConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("frontEndIPConfiguration"u8))

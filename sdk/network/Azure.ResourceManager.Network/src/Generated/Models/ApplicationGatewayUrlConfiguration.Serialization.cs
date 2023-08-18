@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayUrlConfiguration : IUtf8JsonSerializable
+    public partial class ApplicationGatewayUrlConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ModifiedPath))
+            if (Core.Optional.IsDefined(ModifiedPath))
             {
                 writer.WritePropertyName("modifiedPath"u8);
                 writer.WriteStringValue(ModifiedPath);
             }
-            if (Optional.IsDefined(ModifiedQueryString))
+            if (Core.Optional.IsDefined(ModifiedQueryString))
             {
                 writer.WritePropertyName("modifiedQueryString"u8);
                 writer.WriteStringValue(ModifiedQueryString);
             }
-            if (Optional.IsDefined(Reroute))
+            if (Core.Optional.IsDefined(Reroute))
             {
                 writer.WritePropertyName("reroute"u8);
                 writer.WriteBooleanValue(Reroute.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> modifiedPath = default;
-            Optional<string> modifiedQueryString = default;
-            Optional<bool> reroute = default;
+            Core.Optional<string> modifiedPath = default;
+            Core.Optional<string> modifiedQueryString = default;
+            Core.Optional<bool> reroute = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modifiedPath"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayUrlConfiguration(modifiedPath.Value, modifiedQueryString.Value, Optional.ToNullable(reroute));
+            return new ApplicationGatewayUrlConfiguration(modifiedPath.Value, modifiedQueryString.Value, Core.Optional.ToNullable(reroute));
         }
     }
 }

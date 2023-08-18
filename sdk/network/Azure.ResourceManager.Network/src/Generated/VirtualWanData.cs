@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of VirtualWanData. </summary>
         public VirtualWanData()
         {
-            VirtualHubs = new ChangeTrackingList<WritableSubResource>();
-            VpnSites = new ChangeTrackingList<WritableSubResource>();
+            VirtualHubs = new Core.ChangeTrackingList<WritableSubResource>();
+            VpnSites = new Core.ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of VirtualWanData. </summary>

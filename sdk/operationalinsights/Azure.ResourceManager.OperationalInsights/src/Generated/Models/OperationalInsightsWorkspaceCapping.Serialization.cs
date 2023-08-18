@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsWorkspaceCapping : IUtf8JsonSerializable
+    public partial class OperationalInsightsWorkspaceCapping : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DailyQuotaInGB))
+            if (Core.Optional.IsDefined(DailyQuotaInGB))
             {
                 writer.WritePropertyName("dailyQuotaGb"u8);
                 writer.WriteNumberValue(DailyQuotaInGB.Value);
@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<double> dailyQuotaGb = default;
-            Optional<string> quotaNextResetTime = default;
-            Optional<OperationalInsightsDataIngestionStatus> dataIngestionStatus = default;
+            Core.Optional<double> dailyQuotaGb = default;
+            Core.Optional<string> quotaNextResetTime = default;
+            Core.Optional<OperationalInsightsDataIngestionStatus> dataIngestionStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dailyQuotaGb"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     continue;
                 }
             }
-            return new OperationalInsightsWorkspaceCapping(Optional.ToNullable(dailyQuotaGb), quotaNextResetTime.Value, Optional.ToNullable(dataIngestionStatus));
+            return new OperationalInsightsWorkspaceCapping(Core.Optional.ToNullable(dailyQuotaGb), quotaNextResetTime.Value, Core.Optional.ToNullable(dataIngestionStatus));
         }
     }
 }

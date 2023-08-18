@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class StorageApplianceConfiguration : IUtf8JsonSerializable
+    public partial class StorageApplianceConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("adminCredentials"u8);
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteNumberValue(RackSlot);
             writer.WritePropertyName("serialNumber"u8);
             writer.WriteStringValue(SerialNumber);
-            if (Optional.IsDefined(StorageApplianceName))
+            if (Core.Optional.IsDefined(StorageApplianceName))
             {
                 writer.WritePropertyName("storageApplianceName"u8);
                 writer.WriteStringValue(StorageApplianceName);
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             AdministrativeCredentials adminCredentials = default;
             long rackSlot = default;
             string serialNumber = default;
-            Optional<string> storageApplianceName = default;
+            Core.Optional<string> storageApplianceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("adminCredentials"u8))

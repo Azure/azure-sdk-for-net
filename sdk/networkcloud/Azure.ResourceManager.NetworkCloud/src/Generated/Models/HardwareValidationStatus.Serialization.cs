@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastValidationTime = default;
-            Optional<BareMetalMachineHardwareValidationResult> result = default;
+            Core.Optional<DateTimeOffset> lastValidationTime = default;
+            Core.Optional<BareMetalMachineHardwareValidationResult> result = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastValidationTime"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new HardwareValidationStatus(Optional.ToNullable(lastValidationTime), Optional.ToNullable(result));
+            return new HardwareValidationStatus(Core.Optional.ToNullable(lastValidationTime), Core.Optional.ToNullable(result));
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> filterValues = default;
+            Core.Optional<IReadOnlyList<string>> filterValues = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filterValues"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new SignatureOverridesFilterValuesResult(Optional.ToList(filterValues));
+            return new SignatureOverridesFilterValuesResult(Core.Optional.ToList(filterValues));
         }
     }
 }

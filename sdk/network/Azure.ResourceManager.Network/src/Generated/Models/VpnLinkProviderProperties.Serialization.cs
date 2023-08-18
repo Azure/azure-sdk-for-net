@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VpnLinkProviderProperties : IUtf8JsonSerializable
+    public partial class VpnLinkProviderProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkProviderName))
+            if (Core.Optional.IsDefined(LinkProviderName))
             {
                 writer.WritePropertyName("linkProviderName"u8);
                 writer.WriteStringValue(LinkProviderName);
             }
-            if (Optional.IsDefined(LinkSpeedInMbps))
+            if (Core.Optional.IsDefined(LinkSpeedInMbps))
             {
                 writer.WritePropertyName("linkSpeedInMbps"u8);
                 writer.WriteNumberValue(LinkSpeedInMbps.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> linkProviderName = default;
-            Optional<int> linkSpeedInMbps = default;
+            Core.Optional<string> linkProviderName = default;
+            Core.Optional<int> linkSpeedInMbps = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkProviderName"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VpnLinkProviderProperties(linkProviderName.Value, Optional.ToNullable(linkSpeedInMbps));
+            return new VpnLinkProviderProperties(linkProviderName.Value, Core.Optional.ToNullable(linkSpeedInMbps));
         }
     }
 }

@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <summary> Initializes a new instance of DestinationAddressInfo. </summary>
         public DestinationAddressInfo()
         {
-            Cidrs = new ChangeTrackingList<string>();
-            Countries = new ChangeTrackingList<string>();
-            Feeds = new ChangeTrackingList<string>();
-            PrefixLists = new ChangeTrackingList<string>();
-            FqdnLists = new ChangeTrackingList<string>();
+            Cidrs = new Core.ChangeTrackingList<string>();
+            Countries = new Core.ChangeTrackingList<string>();
+            Feeds = new Core.ChangeTrackingList<string>();
+            PrefixLists = new Core.ChangeTrackingList<string>();
+            FqdnLists = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DestinationAddressInfo. </summary>

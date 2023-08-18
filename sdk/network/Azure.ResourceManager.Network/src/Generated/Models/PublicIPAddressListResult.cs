@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PublicIPAddressListResult. </summary>
         internal PublicIPAddressListResult()
         {
-            Value = new ChangeTrackingList<PublicIPAddressData>();
+            Value = new Core.ChangeTrackingList<PublicIPAddressData>();
         }
 
         /// <summary> Initializes a new instance of PublicIPAddressListResult. </summary>

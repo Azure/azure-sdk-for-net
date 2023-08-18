@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class FirewallLogDestination : IUtf8JsonSerializable
+    public partial class FirewallLogDestination : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageConfiguration))
+            if (Core.Optional.IsDefined(StorageConfiguration))
             {
                 writer.WritePropertyName("storageConfigurations"u8);
                 writer.WriteObjectValue(StorageConfiguration);
             }
-            if (Optional.IsDefined(EventHubConfiguration))
+            if (Core.Optional.IsDefined(EventHubConfiguration))
             {
                 writer.WritePropertyName("eventHubConfigurations"u8);
                 writer.WriteObjectValue(EventHubConfiguration);
             }
-            if (Optional.IsDefined(MonitorConfiguration))
+            if (Core.Optional.IsDefined(MonitorConfiguration))
             {
                 writer.WritePropertyName("monitorConfigurations"u8);
                 writer.WriteObjectValue(MonitorConfiguration);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<StorageAccountConfiguration> storageConfigurations = default;
-            Optional<EventHubConfiguration> eventHubConfigurations = default;
-            Optional<MonitorLogConfiguration> monitorConfigurations = default;
+            Core.Optional<StorageAccountConfiguration> storageConfigurations = default;
+            Core.Optional<EventHubConfiguration> eventHubConfigurations = default;
+            Core.Optional<MonitorLogConfiguration> monitorConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageConfigurations"u8))

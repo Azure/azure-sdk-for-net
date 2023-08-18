@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<bool> available = default;
+            Core.Optional<bool> available = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("available"u8))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new DnsNameAvailabilityResult(Optional.ToNullable(available));
+            return new DnsNameAvailabilityResult(Core.Optional.ToNullable(available));
         }
     }
 }

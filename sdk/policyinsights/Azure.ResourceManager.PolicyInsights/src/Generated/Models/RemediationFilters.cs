@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Initializes a new instance of RemediationFilters. </summary>
         public RemediationFilters()
         {
-            Locations = new ChangeTrackingList<AzureLocation>();
+            Locations = new Core.ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Initializes a new instance of RemediationFilters. </summary>

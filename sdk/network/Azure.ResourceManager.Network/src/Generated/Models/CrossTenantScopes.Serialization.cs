@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
-            Optional<IReadOnlyList<string>> managementGroups = default;
-            Optional<IReadOnlyList<string>> subscriptions = default;
+            Core.Optional<Guid> tenantId = default;
+            Core.Optional<IReadOnlyList<string>> managementGroups = default;
+            Core.Optional<IReadOnlyList<string>> subscriptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new CrossTenantScopes(Optional.ToNullable(tenantId), Optional.ToList(managementGroups), Optional.ToList(subscriptions));
+            return new CrossTenantScopes(Core.Optional.ToNullable(tenantId), Core.Optional.ToList(managementGroups), Core.Optional.ToList(subscriptions));
         }
     }
 }

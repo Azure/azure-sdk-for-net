@@ -14,12 +14,12 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    public partial class SnapshotPolicyData : IUtf8JsonSerializable
+    public partial class SnapshotPolicyData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,27 +34,27 @@ namespace Azure.ResourceManager.NetApp
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(HourlySchedule))
+            if (Core.Optional.IsDefined(HourlySchedule))
             {
                 writer.WritePropertyName("hourlySchedule"u8);
                 writer.WriteObjectValue(HourlySchedule);
             }
-            if (Optional.IsDefined(DailySchedule))
+            if (Core.Optional.IsDefined(DailySchedule))
             {
                 writer.WritePropertyName("dailySchedule"u8);
                 writer.WriteObjectValue(DailySchedule);
             }
-            if (Optional.IsDefined(WeeklySchedule))
+            if (Core.Optional.IsDefined(WeeklySchedule))
             {
                 writer.WritePropertyName("weeklySchedule"u8);
                 writer.WriteObjectValue(WeeklySchedule);
             }
-            if (Optional.IsDefined(MonthlySchedule))
+            if (Core.Optional.IsDefined(MonthlySchedule))
             {
                 writer.WritePropertyName("monthlySchedule"u8);
                 writer.WriteObjectValue(MonthlySchedule);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (Core.Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -69,19 +69,19 @@ namespace Azure.ResourceManager.NetApp
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SnapshotPolicyHourlySchedule> hourlySchedule = default;
-            Optional<SnapshotPolicyDailySchedule> dailySchedule = default;
-            Optional<SnapshotPolicyWeeklySchedule> weeklySchedule = default;
-            Optional<SnapshotPolicyMonthlySchedule> monthlySchedule = default;
-            Optional<bool> enabled = default;
-            Optional<string> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<SnapshotPolicyHourlySchedule> hourlySchedule = default;
+            Core.Optional<SnapshotPolicyDailySchedule> dailySchedule = default;
+            Core.Optional<SnapshotPolicyWeeklySchedule> weeklySchedule = default;
+            Core.Optional<SnapshotPolicyMonthlySchedule> monthlySchedule = default;
+            Core.Optional<bool> enabled = default;
+            Core.Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.NetApp
                     continue;
                 }
             }
-            return new SnapshotPolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), hourlySchedule.Value, dailySchedule.Value, weeklySchedule.Value, monthlySchedule.Value, Optional.ToNullable(enabled), provisioningState.Value);
+            return new SnapshotPolicyData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(etag), hourlySchedule.Value, dailySchedule.Value, weeklySchedule.Value, monthlySchedule.Value, Core.Optional.ToNullable(enabled), provisioningState.Value);
         }
     }
 }

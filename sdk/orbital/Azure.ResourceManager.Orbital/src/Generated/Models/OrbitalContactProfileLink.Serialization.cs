@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
-    public partial class OrbitalContactProfileLink : IUtf8JsonSerializable
+    public partial class OrbitalContactProfileLink : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Orbital.Models
             writer.WriteStringValue(Polarization.ToString());
             writer.WritePropertyName("direction"u8);
             writer.WriteStringValue(Direction.ToString());
-            if (Optional.IsDefined(GainOverTemperature))
+            if (Core.Optional.IsDefined(GainOverTemperature))
             {
                 writer.WritePropertyName("gainOverTemperature"u8);
                 writer.WriteNumberValue(GainOverTemperature.Value);
             }
-            if (Optional.IsDefined(EirpdBW))
+            if (Core.Optional.IsDefined(EirpdBW))
             {
                 writer.WritePropertyName("eirpdBW"u8);
                 writer.WriteNumberValue(EirpdBW.Value);
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Orbital.Models
             string name = default;
             OrbitalLinkPolarization polarization = default;
             OrbitalLinkDirection direction = default;
-            Optional<float> gainOverTemperature = default;
-            Optional<float> eirpdBW = default;
+            Core.Optional<float> gainOverTemperature = default;
+            Core.Optional<float> eirpdBW = default;
             IList<OrbitalContactProfileLinkChannel> channels = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Orbital.Models
                     continue;
                 }
             }
-            return new OrbitalContactProfileLink(name, polarization, direction, Optional.ToNullable(gainOverTemperature), Optional.ToNullable(eirpdBW), channels);
+            return new OrbitalContactProfileLink(name, polarization, direction, Core.Optional.ToNullable(gainOverTemperature), Core.Optional.ToNullable(eirpdBW), channels);
         }
     }
 }

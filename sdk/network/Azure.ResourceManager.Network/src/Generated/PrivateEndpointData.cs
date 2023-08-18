@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of PrivateEndpointData. </summary>
         public PrivateEndpointData()
         {
-            NetworkInterfaces = new ChangeTrackingList<NetworkInterfaceData>();
-            PrivateLinkServiceConnections = new ChangeTrackingList<NetworkPrivateLinkServiceConnection>();
-            ManualPrivateLinkServiceConnections = new ChangeTrackingList<NetworkPrivateLinkServiceConnection>();
-            CustomDnsConfigs = new ChangeTrackingList<CustomDnsConfigProperties>();
-            ApplicationSecurityGroups = new ChangeTrackingList<ApplicationSecurityGroupData>();
-            IPConfigurations = new ChangeTrackingList<PrivateEndpointIPConfiguration>();
+            NetworkInterfaces = new Core.ChangeTrackingList<NetworkInterfaceData>();
+            PrivateLinkServiceConnections = new Core.ChangeTrackingList<NetworkPrivateLinkServiceConnection>();
+            ManualPrivateLinkServiceConnections = new Core.ChangeTrackingList<NetworkPrivateLinkServiceConnection>();
+            CustomDnsConfigs = new Core.ChangeTrackingList<CustomDnsConfigProperties>();
+            ApplicationSecurityGroups = new Core.ChangeTrackingList<ApplicationSecurityGroupData>();
+            IPConfigurations = new Core.ChangeTrackingList<PrivateEndpointIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointData. </summary>

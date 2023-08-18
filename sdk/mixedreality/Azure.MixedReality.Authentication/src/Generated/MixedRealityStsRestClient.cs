@@ -62,7 +62,7 @@ namespace Azure.MixedReality.Authentication
         /// <param name="accountId"> The Mixed Reality account identifier. </param>
         /// <param name="tokenRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<StsTokenResponseMessage, MixedRealityStsGetTokenHeaders>> GetTokenAsync(Guid accountId, MixedRealityTokenRequestOptions tokenRequestOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<StsTokenResponseMessage, MixedRealityStsGetTokenHeaders>> GetTokenAsync(Guid accountId, MixedRealityTokenRequestOptions tokenRequestOptions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetTokenRequest(accountId, tokenRequestOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -74,7 +74,7 @@ namespace Azure.MixedReality.Authentication
                         StsTokenResponseMessage value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = StsTokenResponseMessage.DeserializeStsTokenResponseMessage(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -85,7 +85,7 @@ namespace Azure.MixedReality.Authentication
         /// <param name="accountId"> The Mixed Reality account identifier. </param>
         /// <param name="tokenRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<StsTokenResponseMessage, MixedRealityStsGetTokenHeaders> GetToken(Guid accountId, MixedRealityTokenRequestOptions tokenRequestOptions = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<StsTokenResponseMessage, MixedRealityStsGetTokenHeaders> GetToken(Guid accountId, MixedRealityTokenRequestOptions tokenRequestOptions = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetTokenRequest(accountId, tokenRequestOptions);
             _pipeline.Send(message, cancellationToken);
@@ -97,7 +97,7 @@ namespace Azure.MixedReality.Authentication
                         StsTokenResponseMessage value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = StsTokenResponseMessage.DeserializeStsTokenResponseMessage(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);

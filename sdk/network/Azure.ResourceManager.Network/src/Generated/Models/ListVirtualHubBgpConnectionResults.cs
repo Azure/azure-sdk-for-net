@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ListVirtualHubBgpConnectionResults. </summary>
         internal ListVirtualHubBgpConnectionResults()
         {
-            Value = new ChangeTrackingList<BgpConnectionData>();
+            Value = new Core.ChangeTrackingList<BgpConnectionData>();
         }
 
         /// <summary> Initializes a new instance of ListVirtualHubBgpConnectionResults. </summary>

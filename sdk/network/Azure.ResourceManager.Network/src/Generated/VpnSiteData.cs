@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of VpnSiteData. </summary>
         public VpnSiteData()
         {
-            VpnSiteLinks = new ChangeTrackingList<VpnSiteLinkData>();
+            VpnSiteLinks = new Core.ChangeTrackingList<VpnSiteLinkData>();
         }
 
         /// <summary> Initializes a new instance of VpnSiteData. </summary>

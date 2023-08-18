@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of NetworkCloudCloudServicesNetworkPatch. </summary>
         public NetworkCloudCloudServicesNetworkPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            AdditionalEgressEndpoints = new ChangeTrackingList<EgressEndpoint>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            AdditionalEgressEndpoints = new Core.ChangeTrackingList<EgressEndpoint>();
         }
 
         /// <summary> The Azure resource tags that will replace the existing ones. </summary>

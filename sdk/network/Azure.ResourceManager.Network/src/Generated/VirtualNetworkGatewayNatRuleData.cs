@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of VirtualNetworkGatewayNatRuleData. </summary>
         public VirtualNetworkGatewayNatRuleData()
         {
-            InternalMappings = new ChangeTrackingList<VpnNatRuleMapping>();
-            ExternalMappings = new ChangeTrackingList<VpnNatRuleMapping>();
+            InternalMappings = new Core.ChangeTrackingList<VpnNatRuleMapping>();
+            ExternalMappings = new Core.ChangeTrackingList<VpnNatRuleMapping>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewayNatRuleData. </summary>

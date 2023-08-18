@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class BgpSettings : IUtf8JsonSerializable
+    public partial class BgpSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Asn))
+            if (Core.Optional.IsDefined(Asn))
             {
                 writer.WritePropertyName("asn"u8);
                 writer.WriteNumberValue(Asn.Value);
             }
-            if (Optional.IsDefined(BgpPeeringAddress))
+            if (Core.Optional.IsDefined(BgpPeeringAddress))
             {
                 writer.WritePropertyName("bgpPeeringAddress"u8);
                 writer.WriteStringValue(BgpPeeringAddress);
             }
-            if (Optional.IsDefined(PeerWeight))
+            if (Core.Optional.IsDefined(PeerWeight))
             {
                 writer.WritePropertyName("peerWeight"u8);
                 writer.WriteNumberValue(PeerWeight.Value);
             }
-            if (Optional.IsCollectionDefined(BgpPeeringAddresses))
+            if (Core.Optional.IsCollectionDefined(BgpPeeringAddresses))
             {
                 writer.WritePropertyName("bgpPeeringAddresses"u8);
                 writer.WriteStartArray();
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<long> asn = default;
-            Optional<string> bgpPeeringAddress = default;
-            Optional<int> peerWeight = default;
-            Optional<IList<NetworkIPConfigurationBgpPeeringAddress>> bgpPeeringAddresses = default;
+            Core.Optional<long> asn = default;
+            Core.Optional<string> bgpPeeringAddress = default;
+            Core.Optional<int> peerWeight = default;
+            Core.Optional<IList<NetworkIPConfigurationBgpPeeringAddress>> bgpPeeringAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("asn"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new BgpSettings(Optional.ToNullable(asn), bgpPeeringAddress.Value, Optional.ToNullable(peerWeight), Optional.ToList(bgpPeeringAddresses));
+            return new BgpSettings(Core.Optional.ToNullable(asn), bgpPeeringAddress.Value, Core.Optional.ToNullable(peerWeight), Core.Optional.ToList(bgpPeeringAddresses));
         }
     }
 }
