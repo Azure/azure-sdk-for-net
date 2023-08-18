@@ -129,6 +129,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <summary>Indicates whether or not this instance has been closed.</summary>
         private volatile bool _isClosed;
 
+        /// <summary>The client diagnostics instance used to instrument events when enqueueing.</summary>
         private readonly MessagingClientDiagnostics _clientDiagnostics;
 
         /// <summary>
