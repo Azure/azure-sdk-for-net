@@ -22,8 +22,16 @@
   
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)ModelSerializerHelper.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonChange.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonChangeKind.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonDocument.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonDocument.ChangeTracker.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonElement.ArrayEnumerator.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonElement.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonElement.ObjectEnumerator.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonElement.WriteTo.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)MutableJsonElement.WriteTo.MergePatch.cs" LinkBase="Shared" />
   </ItemGroup>
 
 </Project>
