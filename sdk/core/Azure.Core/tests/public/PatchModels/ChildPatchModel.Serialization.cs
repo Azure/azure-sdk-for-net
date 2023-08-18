@@ -9,7 +9,7 @@ namespace Azure.Core.Tests.PatchModels
 {
     public partial class ChildPatchModel : IModelJsonSerializable<ChildPatchModel>, IUtf8JsonSerializable
     {
-        internal static ChildPatchModel Deserialize(JsonElement element)
+        internal static ChildPatchModel Deserialize(ChangeListElement changes, JsonElement element)
         {
             string a = default;
             string b = default;
@@ -29,7 +29,17 @@ namespace Azure.Core.Tests.PatchModels
                 }
             }
 
-            return new ChildPatchModel(a, b);
+            return new ChildPatchModel(changes, a, b);
+        }
+
+        internal static ChildPatchModel Deserialize(JsonElement element)
+        {
+            // If we deserialize outside the context of a parent model with a
+            // change list to connect to, we can assume the child model
+            // is not nested in a parent model, so it has an independent change
+            // tracking mechanism.
+
+            return Deserialize(new ChangeList().RootElement, element);
         }
 
         ChildPatchModel IModelJsonSerializable<ChildPatchModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
@@ -62,23 +72,8 @@ namespace Azure.Core.Tests.PatchModels
         {
             writer.WriteStartObject();
 
-            // It's required for GET, so assume we have it
-            //if (A == null)
-            //{
-            //    throw new InvalidOperationException("'a' was not initialized during Deserialization.");
-            //}
-
             writer.WritePropertyName("a");
             writer.WriteStringValue(A);
-
-            // It's required for GET, so assume we have it
-            // TODO: note actually, it could have been set to null for the patch.
-            // It's ok, we just write it out no matter what, and don't throw.
-            // TODO: Update this in other models.
-            //if (B == null)
-            //{
-            //    throw new InvalidOperationException("'b' was not initialized during Deserialization.");
-            //}
 
             writer.WritePropertyName("b");
             writer.WriteStringValue(B);

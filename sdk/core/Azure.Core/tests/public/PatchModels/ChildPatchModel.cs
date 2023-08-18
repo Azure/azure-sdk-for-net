@@ -10,11 +10,11 @@ namespace Azure.Core.Tests.PatchModels
     /// </summary>
     public partial class ChildPatchModel
     {
-        private ChangeListElement _changes;
+        private readonly ChangeListElement _changes;
 
-        internal ChildPatchModel(string path, ChangeListElement changes)
+        internal ChildPatchModel(ChangeListElement changes)
         {
-            _changes = changes.GetElement(path);
+            _changes = changes;
         }
 
         /// <summary>
@@ -22,34 +22,17 @@ namespace Azure.Core.Tests.PatchModels
         /// </summary>
         internal ChildPatchModel()
         {
-            // TODO: Make it so it throws if this is called and changes is later accessed.
+            // TODO: Make it so it throws if this is called and _changes is later accessed.
         }
 
-        /// <summary> Serialization constructor. </summary>
-        internal ChildPatchModel(string a, string b)
+        /// <summary> Deserialization constructor. </summary>
+        internal ChildPatchModel(ChangeListElement changes, string a, string b)
         {
             _a = a;
             _b = b;
 
-            // TODO: Make it so it throws if this is called and _changes is later accessed.
-        }
-
-        internal void RegisterWithParent(string path, ChangeListElement changes)
-        {
-            _changes = changes.GetElement(path);
-
-            // TODO: add freezing mechanism to make sure this isn't called multiple times?
-
-            // TODO:
-            // Note: we could simplify this a lot if we just pass around the root changelist
-            // and tell a nested model what its parent path prefix is.
-            // The parent doesn't need to maintain a registration.
-            // It does have the implication that a model can only be rooted with one
-            // change list at a time, not shared between instances.
-            // Although, honestly, if something is set, it doesn't need to track
-            // its changes anymore, because the entire thing will be written out when
-            // any changes happen to it, since it is a wholesale replacement.
-            // Set of an "object" is a fairly atomic thing.
+            // Connect the child's changes to the parent's changes.
+            _changes = changes;
         }
 
         private string _a;

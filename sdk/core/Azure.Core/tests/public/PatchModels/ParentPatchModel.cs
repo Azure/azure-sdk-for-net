@@ -10,27 +10,27 @@ namespace Azure.Core.Tests.PatchModels
     /// </summary>
     public partial class ParentPatchModel
     {
-        private readonly ChangeList _rootChanges = new();
-        private readonly ChangeListElement _changes;
+        private readonly ChangeList _rootChanges;
+        private ChangeListElement _changes => _rootChanges.RootElement;
 
         /// <summary>
         /// Public constructor.
         /// </summary>
         public ParentPatchModel()
         {
-            _changes = _rootChanges.RootElement;
+            _rootChanges = new ChangeList();
         }
 
         /// <summary>
         /// Serialization constructor.
         /// </summary>
         /// <param name="element"></param>
-        internal ParentPatchModel(string id, ChildPatchModel child)
+        internal ParentPatchModel(ChangeList changes, string id, ChildPatchModel child)
         {
             _id = id;
             _child = child;
 
-            _changes = _rootChanges.RootElement;
+            _rootChanges = changes;
         }
 
         private string _id;
@@ -55,14 +55,18 @@ namespace Azure.Core.Tests.PatchModels
         {
             get
             {
-                _child ??= new ChildPatchModel("child", _changes);
+                _child ??= new ChildPatchModel( _changes.GetElement("child"));
                 return _child;
             }
             set
             {
                 _child = value;
-                _child.RegisterWithParent("child", _changes);
                 _changes.Set("child", value);
+
+                // Note, we don't have to connect the child's changelist
+                // to the parent's changelist, because if we overwrite the child
+                // we will need to write the whole thing out anyway, and we
+                // don't have to worry about tracking changes in that case.
             }
         }
     }

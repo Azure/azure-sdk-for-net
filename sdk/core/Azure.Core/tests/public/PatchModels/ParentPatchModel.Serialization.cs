@@ -11,6 +11,8 @@ namespace Azure.Core.Tests.PatchModels
     {
         internal static ParentPatchModel Deserialize(JsonElement element)
         {
+            ChangeList changes = new ChangeList();
+
             string id = default;
             ChildPatchModel child = default;
 
@@ -24,12 +26,12 @@ namespace Azure.Core.Tests.PatchModels
 
                 if (property.NameEquals("child"))
                 {
-                    child = ChildPatchModel.Deserialize(property.Value);
+                    child = ChildPatchModel.Deserialize(changes.RootElement.GetElement("child"), property.Value);
                     continue;
                 }
             }
 
-            return new ParentPatchModel(id, child);
+            return new ParentPatchModel(changes, id, child);
         }
 
         ParentPatchModel IModelJsonSerializable<ParentPatchModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
@@ -62,20 +64,8 @@ namespace Azure.Core.Tests.PatchModels
         {
             writer.WriteStartObject();
 
-            // It's required for GET, so assume we have it
-            if (Id == null)
-            {
-                throw new InvalidOperationException("'id' was not initialized during Deserialization.");
-            }
-
             writer.WritePropertyName("id");
             writer.WriteStringValue(Id);
-
-            // It's required for GET, so assume we have it
-            if (Child == null)
-            {
-                throw new InvalidOperationException("'child' was not initialized during Deserialization.");
-            }
 
             writer.WritePropertyName("child");
             Child.SerializeFull(writer);
