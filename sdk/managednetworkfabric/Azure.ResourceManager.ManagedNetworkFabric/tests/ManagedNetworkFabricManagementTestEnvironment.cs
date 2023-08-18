@@ -139,6 +139,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests
         /// </summary>
         public string InternetGatewayRuleName => GetRecordedVariable("INTERNET_GATEWAY_RULE_NAME");
 
+        /// <summary>
+        ///   The name of the Access Control List to be used for playback tests. Recorded.
+        /// </summary>
+        public string AccessControlListName => GetRecordedVariable("ACCESS_CONTROL_LIST_NAME");
+
+        /// <summary>
+        ///   The name of the Network Packet Broker to be used for playback tests. Recorded.
+        /// </summary>
+        public string NetworkPacketBrokerName => GetRecordedVariable("NETWORK_PACKET_BROKER_NAME");
+
+        /// <summary>
+        /// The name of the Network Tap Rule to be used for playback tests. Recorded.
+        /// </summary>
+        public string NetworkTapRuleName => GetRecordedVariable("NETWORK_TAP_RULE_NAME");
+
+        /// <summary>
+        /// The name of the Network Tap to be used for playback tests. Recorded.
+        /// </summary>
+        public string NetworkTapName => GetRecordedVariable("NETWORK_TAP_NAME");
+
+        /// <summary>
+        /// The name of the Neighbor Group to be used for playback tests. Recorded.
+        /// </summary>
+        public string NeighborGroupName => GetRecordedVariable("NEIGHBOR_GROUP_NAME");
+
         // Support using the Default Credential created by Azure CLI so
         // that we don't have to support creating a service principal, etc. to run these tests.
         public override TokenCredential Credential
