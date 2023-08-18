@@ -11,7 +11,7 @@ namespace Azure.Core.Tests.PatchModels
     {
         internal static ParentPatchModel Deserialize(JsonElement element)
         {
-            ChangeList changes = new ChangeList();
+            ChangeList changes = new();
 
             string id = default;
             ChildPatchModel child = default;

@@ -11,25 +11,27 @@ namespace Azure.Core.Tests.PatchModels
     /// </summary>
     public partial class CollectionPatchModel
     {
-        private readonly ChangeList _rootChanges = new();
-        private readonly ChangeListElement _changes;
+        private readonly ChangeList _rootChanges;
+        private ChangeListElement _changes => _rootChanges.RootElement;
 
         /// <summary>
         /// Public constructor.
         /// </summary>
         public CollectionPatchModel()
         {
-            _changes = _rootChanges.RootElement;
+            _rootChanges = new ChangeList();
         }
 
         /// <summary>
         /// Serialization constructor.
         /// </summary>
         /// <param name="element"></param>
-        internal CollectionPatchModel(string id, IDictionary<string, string> values)
+        internal CollectionPatchModel(ChangeList changes, string id, ChangeListDictionary<string> values)
         {
             _id = id;
             _variables = values;
+
+            _rootChanges = changes;
         }
 
         private string _id;
@@ -46,13 +48,13 @@ namespace Azure.Core.Tests.PatchModels
             }
         }
 
-        private IDictionary<string, string> _variables;
+        private ChangeListDictionary<string> _variables;
         /// <summary> Environment variables which are defined as a set of &lt;name,value&gt; pairs. </summary>
         public IDictionary<string, string> Variables
         {
             get
             {
-                _variables ??= new ChangeListDictionary<string>("variables", _changes);
+                _variables ??= new ChangeListDictionary<string>(_changes.GetElement("variables"));
                 return _variables;
             }
         }

@@ -6,6 +6,7 @@ using System.IO;
 using System.Text.Json;
 using Azure.Core.Serialization;
 using Azure.Core.Tests.PatchModels;
+using Azure.Core.Tests.Public.ModelSerializationTests.Models;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public
@@ -82,12 +83,12 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
-        public void CanPatchNestedModel_AssignChild()
+        public void CanPatchNestedModel_DeleteChild()
         {
             ParentPatchModel model = new();
-            model.Child = new ChildPatchModel("aa", "bb");
+            model.Child = null;
 
-            ValidatePatch("""{"child": {"a": "aa", "b": "bb"}}""", model);
+            ValidatePatch("""{"child": null}""", model);
         }
 
         [Test]
@@ -203,6 +204,47 @@ namespace Azure.Core.Tests.Public
 
             ValidateSerialize("""{"id": "abc", "value": 2}""", model);
             ValidatePatch("""{"value": 2}""", model);
+        }
+        #endregion
+
+        #region CollectionPatchModel
+        [Test]
+        public void CanPatchCollectionProperty()
+        {
+            CollectionPatchModel model = new();
+            model.Variables["abc"] = "123";
+            model.Variables["xyz"] = "456";
+
+            ValidatePatch("""{"variables": {"abc":"123", "xyz":"456"}}""", model);
+        }
+
+        [Test]
+        public void CanRoundTripCollectionPatchModel()
+        {
+            BinaryData json = BinaryData.FromString("""
+                {
+                    "id": "abc",
+                    "variables":
+                    {
+                        "a": "aa",
+                        "b": "bb"
+                    }
+                }
+                """);
+
+            CollectionPatchModel model = ModelSerializer.Deserialize<CollectionPatchModel>(json);
+
+            Assert.AreEqual("abc", model.Id);
+            Assert.AreEqual("aa", model.Variables["a"]);
+            Assert.AreEqual("bb", model.Variables["b"]);
+
+            ValidateSerialize("""{"id": "abc","variables":{"a": "aa","b": "bb"}}""", model);
+            ValidatePatch("{}", model);
+
+            model.Variables["a"] = "a2";
+
+            ValidateSerialize("""{"id": "abc","variables":{"a": "a2","b": "bb"}}""", model);
+            ValidatePatch("""{"variables": {"a":"a2"}}""", model);
         }
         #endregion
 

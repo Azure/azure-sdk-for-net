@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -15,16 +14,31 @@ namespace Azure.Core.Serialization
         private readonly ChangeListElement _changes;
         private readonly Dictionary<string, T> _dictionary;
 
-        public ChangeListDictionary(string path, ChangeListElement changes)
+        public ChangeListDictionary(ChangeListElement changes)
         {
-            _changes = changes.GetElement(path);
+            _changes = changes;
             _dictionary = new Dictionary<string, T>();
         }
 
-        T IDictionary<string, T>.this[string key]
+        /// <summary>
+        /// Deserialization constructor.
+        /// </summary>
+        /// <param name="changes"></param>
+        /// <param name="dictionary"></param>
+        public ChangeListDictionary(ChangeListElement changes, Dictionary<string, T> dictionary) : this(changes)
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            _changes = changes;
+            _dictionary = dictionary;
+        }
+
+        public T this[string key]
+        {
+            get => _dictionary[key];
+            set
+            {
+                _dictionary[key] = value;
+                _changes.Set(key, value);
+            }
         }
 
         ICollection<string> IDictionary<string, T>.Keys => _dictionary.Keys;
@@ -35,7 +49,7 @@ namespace Azure.Core.Serialization
 
         bool ICollection<KeyValuePair<string, T>>.IsReadOnly => false;
 
-        void IDictionary<string, T>.Add(string key, T value)
+        public void Add(string key, T value)
         {
             _dictionary.Add(key, value);
             _changes.Set(key, value);
@@ -58,30 +72,19 @@ namespace Azure.Core.Serialization
             collection.Clear();
         }
 
-        bool ICollection<KeyValuePair<string, T>>.Contains(KeyValuePair<string, T> item)
-        {
-            return (_dictionary as ICollection<KeyValuePair<string, T>>).Contains(item);
-        }
+        bool ICollection<KeyValuePair<string, T>>.Contains(KeyValuePair<string, T> item) =>
+            (_dictionary as ICollection<KeyValuePair<string, T>>).Contains(item);
 
         bool IDictionary<string, T>.ContainsKey(string key)
-        {
-            return _dictionary.ContainsKey(key);
-        }
+            => _dictionary.ContainsKey(key);
 
         void ICollection<KeyValuePair<string, T>>.CopyTo(KeyValuePair<string, T>[] array, int arrayIndex)
-        {
-            (_dictionary as ICollection<KeyValuePair<string, T>>).CopyTo(array, arrayIndex);
-        }
+            => (_dictionary as ICollection<KeyValuePair<string, T>>).CopyTo(array, arrayIndex);
 
         IEnumerator<KeyValuePair<string, T>> IEnumerable<KeyValuePair<string, T>>.GetEnumerator()
-        {
-            return (_dictionary as IEnumerable<KeyValuePair<string, T>>).GetEnumerator();
-        }
+            => (_dictionary as IEnumerable<KeyValuePair<string, T>>).GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return (_dictionary as IEnumerable).GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => (_dictionary as IEnumerable).GetEnumerator();
 
         bool IDictionary<string, T>.Remove(string key)
         {
@@ -100,9 +103,7 @@ namespace Azure.Core.Serialization
 #else
         public bool TryGetValue(string key, out T value)
 #endif
-        {
-            return _dictionary.TryGetValue(key, out value);
-        }
+            => _dictionary.TryGetValue(key, out value);
     }
 #pragma warning restore CS1591
 }
