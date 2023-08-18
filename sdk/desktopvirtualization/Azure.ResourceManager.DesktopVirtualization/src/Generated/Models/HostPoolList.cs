@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of HostPoolList. </summary>
         internal HostPoolList()
         {
-            Value = new ChangeTrackingList<HostPoolData>();
+            Value = new Core.ChangeTrackingList<HostPoolData>();
         }
 
         /// <summary> Initializes a new instance of HostPoolList. </summary>

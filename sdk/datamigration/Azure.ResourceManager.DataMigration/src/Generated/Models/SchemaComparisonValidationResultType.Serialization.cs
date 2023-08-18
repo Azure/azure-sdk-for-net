@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> objectName = default;
-            Optional<ObjectType> objectType = default;
-            Optional<UpdateActionType> updateAction = default;
+            Core.Optional<string> objectName = default;
+            Core.Optional<ObjectType> objectType = default;
+            Core.Optional<UpdateActionType> updateAction = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("objectName"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new SchemaComparisonValidationResultType(objectName.Value, Optional.ToNullable(objectType), Optional.ToNullable(updateAction));
+            return new SchemaComparisonValidationResultType(objectName.Value, Core.Optional.ToNullable(objectType), Core.Optional.ToNullable(updateAction));
         }
     }
 }

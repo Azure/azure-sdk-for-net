@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput : IUtf8JsonSerializable
+    public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("selectedDatabases"u8);
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteObjectValue(TargetConnectionInfo);
             writer.WritePropertyName("sourceConnectionInfo"u8);
             writer.WriteObjectValue(SourceConnectionInfo);
-            if (Optional.IsDefined(EncryptedKeyForSecureFields))
+            if (Core.Optional.IsDefined(EncryptedKeyForSecureFields))
             {
                 writer.WritePropertyName("encryptedKeyForSecureFields"u8);
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             IList<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput> selectedDatabases = default;
             PostgreSqlConnectionInfo targetConnectionInfo = default;
             PostgreSqlConnectionInfo sourceConnectionInfo = default;
-            Optional<string> encryptedKeyForSecureFields = default;
-            Optional<DateTimeOffset> startedOn = default;
+            Core.Optional<string> encryptedKeyForSecureFields = default;
+            Core.Optional<DateTimeOffset> startedOn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("selectedDatabases"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput(selectedDatabases, targetConnectionInfo, sourceConnectionInfo, encryptedKeyForSecureFields.Value, Optional.ToNullable(startedOn));
+            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput(selectedDatabases, targetConnectionInfo, sourceConnectionInfo, encryptedKeyForSecureFields.Value, Core.Optional.ToNullable(startedOn));
         }
     }
 }

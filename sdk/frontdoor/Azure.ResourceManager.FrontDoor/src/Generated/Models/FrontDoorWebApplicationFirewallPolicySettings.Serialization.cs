@@ -11,37 +11,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class FrontDoorWebApplicationFirewallPolicySettings : IUtf8JsonSerializable
+    public partial class FrontDoorWebApplicationFirewallPolicySettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnabledState))
+            if (Core.Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
-            if (Optional.IsDefined(Mode))
+            if (Core.Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsDefined(RedirectUri))
+            if (Core.Optional.IsDefined(RedirectUri))
             {
                 writer.WritePropertyName("redirectUrl"u8);
                 writer.WriteStringValue(RedirectUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(CustomBlockResponseStatusCode))
+            if (Core.Optional.IsDefined(CustomBlockResponseStatusCode))
             {
                 writer.WritePropertyName("customBlockResponseStatusCode"u8);
                 writer.WriteNumberValue(CustomBlockResponseStatusCode.Value);
             }
-            if (Optional.IsDefined(CustomBlockResponseBody))
+            if (Core.Optional.IsDefined(CustomBlockResponseBody))
             {
                 writer.WritePropertyName("customBlockResponseBody"u8);
                 writer.WriteStringValue(CustomBlockResponseBody);
             }
-            if (Optional.IsDefined(RequestBodyCheck))
+            if (Core.Optional.IsDefined(RequestBodyCheck))
             {
                 writer.WritePropertyName("requestBodyCheck"u8);
                 writer.WriteStringValue(RequestBodyCheck.Value.ToString());
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<PolicyEnabledState> enabledState = default;
-            Optional<FrontDoorWebApplicationFirewallPolicyMode> mode = default;
-            Optional<Uri> redirectUrl = default;
-            Optional<int> customBlockResponseStatusCode = default;
-            Optional<string> customBlockResponseBody = default;
-            Optional<PolicyRequestBodyCheck> requestBodyCheck = default;
+            Core.Optional<PolicyEnabledState> enabledState = default;
+            Core.Optional<FrontDoorWebApplicationFirewallPolicyMode> mode = default;
+            Core.Optional<Uri> redirectUrl = default;
+            Core.Optional<int> customBlockResponseStatusCode = default;
+            Core.Optional<string> customBlockResponseBody = default;
+            Core.Optional<PolicyRequestBodyCheck> requestBodyCheck = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabledState"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new FrontDoorWebApplicationFirewallPolicySettings(Optional.ToNullable(enabledState), Optional.ToNullable(mode), redirectUrl.Value, Optional.ToNullable(customBlockResponseStatusCode), customBlockResponseBody.Value, Optional.ToNullable(requestBodyCheck));
+            return new FrontDoorWebApplicationFirewallPolicySettings(Core.Optional.ToNullable(enabledState), Core.Optional.ToNullable(mode), redirectUrl.Value, Core.Optional.ToNullable(customBlockResponseStatusCode), customBlockResponseBody.Value, Core.Optional.ToNullable(requestBodyCheck));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <summary> Initializes a new instance of SharedAccessSignatureAuthorizationRuleListResult. </summary>
         internal SharedAccessSignatureAuthorizationRuleListResult()
         {
-            Value = new ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey>();
+            Value = new Core.ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey>();
         }
 
         /// <summary> Initializes a new instance of SharedAccessSignatureAuthorizationRuleListResult. </summary>

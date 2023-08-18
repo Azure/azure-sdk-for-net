@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<int> count = default;
-            Optional<string> message = default;
-            Optional<MongoDBErrorType> type = default;
+            Core.Optional<string> code = default;
+            Core.Optional<int> count = default;
+            Core.Optional<string> message = default;
+            Core.Optional<MongoDBErrorType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MongoDBError(code.Value, Optional.ToNullable(count), message.Value, Optional.ToNullable(type));
+            return new MongoDBError(code.Value, Core.Optional.ToNullable(count), message.Value, Core.Optional.ToNullable(type));
         }
     }
 }

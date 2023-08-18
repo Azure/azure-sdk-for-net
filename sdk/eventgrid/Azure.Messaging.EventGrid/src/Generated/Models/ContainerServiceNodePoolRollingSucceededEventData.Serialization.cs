@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> nodePoolName = default;
+            Core.Optional<string> nodePoolName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nodePoolName"u8))

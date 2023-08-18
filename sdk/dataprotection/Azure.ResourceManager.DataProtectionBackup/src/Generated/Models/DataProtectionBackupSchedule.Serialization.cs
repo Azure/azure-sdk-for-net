@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionBackupSchedule : IUtf8JsonSerializable
+    public partial class DataProtectionBackupSchedule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("repeatingTimeIntervals"u8);
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(TimeZone))
+            if (Core.Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             IList<string> repeatingTimeIntervals = default;
-            Optional<string> timeZone = default;
+            Core.Optional<string> timeZone = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("repeatingTimeIntervals"u8))

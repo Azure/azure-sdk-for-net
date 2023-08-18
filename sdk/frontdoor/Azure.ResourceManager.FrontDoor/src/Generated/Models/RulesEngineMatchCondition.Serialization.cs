@@ -11,21 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class RulesEngineMatchCondition : IUtf8JsonSerializable
+    public partial class RulesEngineMatchCondition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("rulesEngineMatchVariable"u8);
             writer.WriteStringValue(RulesEngineMatchVariable.ToString());
-            if (Optional.IsDefined(Selector))
+            if (Core.Optional.IsDefined(Selector))
             {
                 writer.WritePropertyName("selector"u8);
                 writer.WriteStringValue(Selector);
             }
             writer.WritePropertyName("rulesEngineOperator"u8);
             writer.WriteStringValue(RulesEngineOperator.ToString());
-            if (Optional.IsDefined(IsNegateCondition))
+            if (Core.Optional.IsDefined(IsNegateCondition))
             {
                 writer.WritePropertyName("negateCondition"u8);
                 writer.WriteBooleanValue(IsNegateCondition.Value);
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Transforms))
+            if (Core.Optional.IsCollectionDefined(Transforms))
             {
                 writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();
@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 return null;
             }
             RulesEngineMatchVariable rulesEngineMatchVariable = default;
-            Optional<string> selector = default;
+            Core.Optional<string> selector = default;
             RulesEngineOperator rulesEngineOperator = default;
-            Optional<bool> negateCondition = default;
+            Core.Optional<bool> negateCondition = default;
             IList<string> rulesEngineMatchValue = default;
-            Optional<IList<RulesEngineMatchTransform>> transforms = default;
+            Core.Optional<IList<RulesEngineMatchTransform>> transforms = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rulesEngineMatchVariable"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new RulesEngineMatchCondition(rulesEngineMatchVariable, selector.Value, rulesEngineOperator, Optional.ToNullable(negateCondition), rulesEngineMatchValue, Optional.ToList(transforms));
+            return new RulesEngineMatchCondition(rulesEngineMatchVariable, selector.Value, rulesEngineOperator, Core.Optional.ToNullable(negateCondition), rulesEngineMatchValue, Core.Optional.ToList(transforms));
         }
     }
 }

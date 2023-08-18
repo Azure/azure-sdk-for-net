@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of AzureBackupJobResourceList. </summary>
         internal AzureBackupJobResourceList()
         {
-            Value = new ChangeTrackingList<DataProtectionBackupJobData>();
+            Value = new Core.ChangeTrackingList<DataProtectionBackupJobData>();
         }
 
         /// <summary> Initializes a new instance of AzureBackupJobResourceList. </summary>

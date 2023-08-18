@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> databasesToTables = default;
-            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> databasesToTables = default;
+            Core.Optional<IReadOnlyList<ReportableException>> validationErrors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new GetUserTablesSqlTaskOutput(id.Value, databasesToTables.Value, Optional.ToList(validationErrors));
+            return new GetUserTablesSqlTaskOutput(id.Value, databasesToTables.Value, Core.Optional.ToList(validationErrors));
         }
     }
 }

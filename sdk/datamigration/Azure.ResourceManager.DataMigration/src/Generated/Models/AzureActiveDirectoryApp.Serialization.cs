@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class AzureActiveDirectoryApp : IUtf8JsonSerializable
+    public partial class AzureActiveDirectoryApp : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ApplicationId))
+            if (Core.Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId);
             }
-            if (Optional.IsDefined(AppKey))
+            if (Core.Optional.IsDefined(AppKey))
             {
                 writer.WritePropertyName("appKey"u8);
                 writer.WriteStringValue(AppKey);
             }
-            if (Optional.IsDefined(TenantId))
+            if (Core.Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(IgnoreAzurePermissions))
+            if (Core.Optional.IsDefined(IgnoreAzurePermissions))
             {
                 writer.WritePropertyName("ignoreAzurePermissions"u8);
                 writer.WriteBooleanValue(IgnoreAzurePermissions.Value);
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> applicationId = default;
-            Optional<string> appKey = default;
-            Optional<Guid> tenantId = default;
-            Optional<bool> ignoreAzurePermissions = default;
+            Core.Optional<string> applicationId = default;
+            Core.Optional<string> appKey = default;
+            Core.Optional<Guid> tenantId = default;
+            Core.Optional<bool> ignoreAzurePermissions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("applicationId"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new AzureActiveDirectoryApp(applicationId.Value, appKey.Value, Optional.ToNullable(tenantId), Optional.ToNullable(ignoreAzurePermissions));
+            return new AzureActiveDirectoryApp(applicationId.Value, appKey.Value, Core.Optional.ToNullable(tenantId), Core.Optional.ToNullable(ignoreAzurePermissions));
         }
     }
 }

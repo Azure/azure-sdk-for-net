@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DigitalTwins
             try
             {
                 var response = await _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DigitalTwinsArmOperation<DigitalTwinsEndpointResource>(new DigitalTwinsEndpointResourceOperationSource(Client), _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics, Pipeline, _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DigitalTwinsArmOperation<DigitalTwinsEndpointResource>(new DigitalTwinsEndpointResourceOperationSource(Client), _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics, Pipeline, _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DigitalTwins
             try
             {
                 var response = _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data, cancellationToken);
-                var operation = new DigitalTwinsArmOperation<DigitalTwinsEndpointResource>(new DigitalTwinsEndpointResourceOperationSource(Client), _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics, Pipeline, _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DigitalTwinsArmOperation<DigitalTwinsEndpointResource>(new DigitalTwinsEndpointResourceOperationSource(Client), _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics, Pipeline, _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DigitalTwins
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DigitalTwinsEndpointResource(Client, DigitalTwinsEndpointResourceData.DeserializeDigitalTwinsEndpointResourceData(e)), _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics, Pipeline, "DigitalTwinsEndpointResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DigitalTwinsEndpointResource(Client, DigitalTwinsEndpointResourceData.DeserializeDigitalTwinsEndpointResourceData(e)), _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics, Pipeline, "DigitalTwinsEndpointResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DigitalTwins
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _digitalTwinsEndpointResourceDigitalTwinsEndpointRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DigitalTwinsEndpointResource(Client, DigitalTwinsEndpointResourceData.DeserializeDigitalTwinsEndpointResourceData(e)), _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics, Pipeline, "DigitalTwinsEndpointResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DigitalTwinsEndpointResource(Client, DigitalTwinsEndpointResourceData.DeserializeDigitalTwinsEndpointResourceData(e)), _digitalTwinsEndpointResourceDigitalTwinsEndpointClientDiagnostics, Pipeline, "DigitalTwinsEndpointResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

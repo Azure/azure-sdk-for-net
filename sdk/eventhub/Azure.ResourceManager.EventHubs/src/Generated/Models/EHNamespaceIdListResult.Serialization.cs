@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SubResource>> value = default;
+            Core.Optional<IReadOnlyList<SubResource>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new EHNamespaceIdListResult(Optional.ToList(value));
+            return new EHNamespaceIdListResult(Core.Optional.ToList(value));
         }
     }
 }

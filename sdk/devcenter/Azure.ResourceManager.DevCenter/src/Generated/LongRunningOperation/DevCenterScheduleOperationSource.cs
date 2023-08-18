@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    internal class DevCenterScheduleOperationSource : IOperationSource<DevCenterScheduleResource>
+    internal class DevCenterScheduleOperationSource : Core.IOperationSource<DevCenterScheduleResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DevCenter
             _client = client;
         }
 
-        DevCenterScheduleResource IOperationSource<DevCenterScheduleResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DevCenterScheduleResource Core.IOperationSource<DevCenterScheduleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DevCenterScheduleData.DeserializeDevCenterScheduleData(document.RootElement);
             return new DevCenterScheduleResource(_client, data);
         }
 
-        async ValueTask<DevCenterScheduleResource> IOperationSource<DevCenterScheduleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DevCenterScheduleResource> Core.IOperationSource<DevCenterScheduleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DevCenterScheduleData.DeserializeDevCenterScheduleData(document.RootElement);

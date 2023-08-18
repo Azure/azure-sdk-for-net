@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    internal partial class MonitoringSettings : IUtf8JsonSerializable
+    internal partial class MonitoringSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureMonitorAlertSettings))
+            if (Core.Optional.IsDefined(AzureMonitorAlertSettings))
             {
                 writer.WritePropertyName("azureMonitorAlertSettings"u8);
                 writer.WriteObjectValue(AzureMonitorAlertSettings);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<AzureMonitorAlertSettings> azureMonitorAlertSettings = default;
+            Core.Optional<AzureMonitorAlertSettings> azureMonitorAlertSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureMonitorAlertSettings"u8))

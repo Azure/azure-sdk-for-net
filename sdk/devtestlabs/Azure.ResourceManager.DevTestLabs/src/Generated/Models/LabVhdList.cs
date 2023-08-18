@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of LabVhdList. </summary>
         internal LabVhdList()
         {
-            Value = new ChangeTrackingList<SubResource>();
+            Value = new Core.ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of LabVhdList. </summary>

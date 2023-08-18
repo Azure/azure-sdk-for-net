@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabPort : IUtf8JsonSerializable
+    public partial class DevTestLabPort : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TransportProtocol))
+            if (Core.Optional.IsDefined(TransportProtocol))
             {
                 writer.WritePropertyName("transportProtocol"u8);
                 writer.WriteStringValue(TransportProtocol.Value.ToString());
             }
-            if (Optional.IsDefined(BackendPort))
+            if (Core.Optional.IsDefined(BackendPort))
             {
                 writer.WritePropertyName("backendPort"u8);
                 writer.WriteNumberValue(BackendPort.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<DevTestLabTransportProtocol> transportProtocol = default;
-            Optional<int> backendPort = default;
+            Core.Optional<DevTestLabTransportProtocol> transportProtocol = default;
+            Core.Optional<int> backendPort = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("transportProtocol"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new DevTestLabPort(Optional.ToNullable(transportProtocol), Optional.ToNullable(backendPort));
+            return new DevTestLabPort(Core.Optional.ToNullable(transportProtocol), Core.Optional.ToNullable(backendPort));
         }
     }
 }

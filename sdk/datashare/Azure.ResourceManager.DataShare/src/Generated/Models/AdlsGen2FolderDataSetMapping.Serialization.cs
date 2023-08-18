@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class AdlsGen2FolderDataSetMapping : IUtf8JsonSerializable
+    public partial class AdlsGen2FolderDataSetMapping : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             Guid dataSetId = default;
-            Optional<DataSetMappingStatus> dataSetMappingStatus = default;
+            Core.Optional<DataSetMappingStatus> dataSetMappingStatus = default;
             string fileSystem = default;
             string folderPath = default;
-            Optional<DataShareProvisioningState> provisioningState = default;
+            Core.Optional<DataShareProvisioningState> provisioningState = default;
             string resourceGroup = default;
             string storageAccountName = default;
             string subscriptionId = default;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new AdlsGen2FolderDataSetMapping(id, name, type, systemData.Value, kind, dataSetId, Optional.ToNullable(dataSetMappingStatus), fileSystem, folderPath, Optional.ToNullable(provisioningState), resourceGroup, storageAccountName, subscriptionId);
+            return new AdlsGen2FolderDataSetMapping(id, name, type, systemData.Value, kind, dataSetId, Core.Optional.ToNullable(dataSetMappingStatus), fileSystem, folderPath, Core.Optional.ToNullable(provisioningState), resourceGroup, storageAccountName, subscriptionId);
         }
     }
 }

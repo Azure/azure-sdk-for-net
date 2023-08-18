@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class BlobShare : IUtf8JsonSerializable
+    public partial class BlobShare : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SasUri))
+            if (Core.Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUri"u8);
                 writer.WriteStringValue(SasUri.AbsoluteUri);
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<Uri> sasUri = default;
+            Core.Optional<Uri> sasUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sasUri"u8))

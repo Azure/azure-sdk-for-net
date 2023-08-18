@@ -13,28 +13,28 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Grafana
 {
-    public partial class ManagedGrafanaData : IUtf8JsonSerializable
+    public partial class ManagedGrafanaData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,15 +56,15 @@ namespace Azure.ResourceManager.Grafana
             {
                 return null;
             }
-            Optional<ManagedGrafanaSku> sku = default;
-            Optional<ManagedGrafanaProperties> properties = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ManagedGrafanaSku> sku = default;
+            Core.Optional<ManagedGrafanaProperties> properties = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Grafana
                     continue;
                 }
             }
-            return new ManagedGrafanaData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, properties.Value, identity);
+            return new ManagedGrafanaData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku.Value, properties.Value, identity);
         }
     }
 }

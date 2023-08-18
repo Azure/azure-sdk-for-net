@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of HDInsightPrivateLinkResourceListResult. </summary>
         internal HDInsightPrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<HDInsightPrivateLinkResourceData>();
+            Value = new Core.ChangeTrackingList<HDInsightPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of HDInsightPrivateLinkResourceListResult. </summary>

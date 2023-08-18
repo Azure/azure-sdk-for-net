@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabEvaluatePolicy : IUtf8JsonSerializable
+    public partial class DevTestLabEvaluatePolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FactName))
+            if (Core.Optional.IsDefined(FactName))
             {
                 writer.WritePropertyName("factName"u8);
                 writer.WriteStringValue(FactName);
             }
-            if (Optional.IsDefined(FactData))
+            if (Core.Optional.IsDefined(FactData))
             {
                 writer.WritePropertyName("factData"u8);
                 writer.WriteStringValue(FactData);
             }
-            if (Optional.IsDefined(ValueOffset))
+            if (Core.Optional.IsDefined(ValueOffset))
             {
                 writer.WritePropertyName("valueOffset"u8);
                 writer.WriteStringValue(ValueOffset);
             }
-            if (Optional.IsDefined(UserObjectId))
+            if (Core.Optional.IsDefined(UserObjectId))
             {
                 writer.WritePropertyName("userObjectId"u8);
                 writer.WriteStringValue(UserObjectId);

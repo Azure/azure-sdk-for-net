@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionBackupDay : IUtf8JsonSerializable
+    public partial class DataProtectionBackupDay : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Date))
+            if (Core.Optional.IsDefined(Date))
             {
                 writer.WritePropertyName("date"u8);
                 writer.WriteNumberValue(Date.Value);
             }
-            if (Optional.IsDefined(IsLast))
+            if (Core.Optional.IsDefined(IsLast))
             {
                 writer.WritePropertyName("isLast"u8);
                 writer.WriteBooleanValue(IsLast.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<int> date = default;
-            Optional<bool> isLast = default;
+            Core.Optional<int> date = default;
+            Core.Optional<bool> isLast = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("date"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new DataProtectionBackupDay(Optional.ToNullable(date), Optional.ToNullable(isLast));
+            return new DataProtectionBackupDay(Core.Optional.ToNullable(date), Core.Optional.ToNullable(isLast));
         }
     }
 }

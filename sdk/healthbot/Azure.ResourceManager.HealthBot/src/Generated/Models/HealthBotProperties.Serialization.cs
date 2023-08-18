@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HealthBot.Models
 {
-    public partial class HealthBotProperties : IUtf8JsonSerializable
+    public partial class HealthBotProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyVaultProperties))
+            if (Core.Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.HealthBot.Models
             {
                 return null;
             }
-            Optional<string> provisioningState = default;
-            Optional<Uri> botManagementPortalLink = default;
-            Optional<HealthBotKeyVaultProperties> keyVaultProperties = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<Uri> botManagementPortalLink = default;
+            Core.Optional<HealthBotKeyVaultProperties> keyVaultProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))

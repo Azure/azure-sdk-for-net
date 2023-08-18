@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of ClientCertificateAuthentication. </summary>
         public ClientCertificateAuthentication()
         {
-            AllowedThumbprints = new ChangeTrackingList<string>();
+            AllowedThumbprints = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ClientCertificateAuthentication. </summary>

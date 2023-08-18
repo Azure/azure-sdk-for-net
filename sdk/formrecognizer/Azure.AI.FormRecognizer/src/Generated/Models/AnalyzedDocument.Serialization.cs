@@ -20,9 +20,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 return null;
             }
             string docType = default;
-            Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
+            Core.Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
-            Optional<IReadOnlyDictionary<string, DocumentField>> fields = default;
+            Core.Optional<IReadOnlyDictionary<string, DocumentField>> fields = default;
             float confidence = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -75,7 +75,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new AnalyzedDocument(docType, Optional.ToList(boundingRegions), spans, Optional.ToDictionary(fields), confidence);
+            return new AnalyzedDocument(docType, Core.Optional.ToList(boundingRegions), spans, Core.Optional.ToDictionary(fields), confidence);
         }
     }
 }

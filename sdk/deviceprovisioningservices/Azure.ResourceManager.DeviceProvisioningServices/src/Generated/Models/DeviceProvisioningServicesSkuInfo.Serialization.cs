@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
-    public partial class DeviceProvisioningServicesSkuInfo : IUtf8JsonSerializable
+    public partial class DeviceProvisioningServicesSkuInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name.Value.ToString());
             }
-            if (Optional.IsDefined(Capacity))
+            if (Core.Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Optional<DeviceProvisioningServicesSku> name = default;
-            Optional<string> tier = default;
-            Optional<long> capacity = default;
+            Core.Optional<DeviceProvisioningServicesSku> name = default;
+            Core.Optional<string> tier = default;
+            Core.Optional<long> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     continue;
                 }
             }
-            return new DeviceProvisioningServicesSkuInfo(Optional.ToNullable(name), tier.Value, Optional.ToNullable(capacity));
+            return new DeviceProvisioningServicesSkuInfo(Core.Optional.ToNullable(name), tier.Value, Core.Optional.ToNullable(capacity));
         }
     }
 }

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class EdgeOrderItemAddressDetails : IUtf8JsonSerializable
+    public partial class EdgeOrderItemAddressDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("forwardAddress"u8);
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 return null;
             }
             EdgeOrderItemAddressProperties forwardAddress = default;
-            Optional<EdgeOrderItemAddressProperties> returnAddress = default;
+            Core.Optional<EdgeOrderItemAddressProperties> returnAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("forwardAddress"u8))

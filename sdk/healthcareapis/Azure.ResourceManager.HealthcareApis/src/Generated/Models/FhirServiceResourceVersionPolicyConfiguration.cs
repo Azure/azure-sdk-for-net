@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of FhirServiceResourceVersionPolicyConfiguration. </summary>
         public FhirServiceResourceVersionPolicyConfiguration()
         {
-            ResourceTypeOverrides = new ChangeTrackingDictionary<string, FhirResourceVersionPolicy>();
+            ResourceTypeOverrides = new Core.ChangeTrackingDictionary<string, FhirResourceVersionPolicy>();
         }
 
         /// <summary> Initializes a new instance of FhirServiceResourceVersionPolicyConfiguration. </summary>

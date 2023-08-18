@@ -11,31 +11,31 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class WebApplicationCustomRule : IUtf8JsonSerializable
+    public partial class WebApplicationCustomRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("priority"u8);
             writer.WriteNumberValue(Priority);
-            if (Optional.IsDefined(EnabledState))
+            if (Core.Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
-            if (Optional.IsDefined(RateLimitDurationInMinutes))
+            if (Core.Optional.IsDefined(RateLimitDurationInMinutes))
             {
                 writer.WritePropertyName("rateLimitDurationInMinutes"u8);
                 writer.WriteNumberValue(RateLimitDurationInMinutes.Value);
             }
-            if (Optional.IsDefined(RateLimitThreshold))
+            if (Core.Optional.IsDefined(RateLimitThreshold))
             {
                 writer.WritePropertyName("rateLimitThreshold"u8);
                 writer.WriteNumberValue(RateLimitThreshold.Value);
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            Core.Optional<string> name = default;
             int priority = default;
-            Optional<CustomRuleEnabledState> enabledState = default;
+            Core.Optional<CustomRuleEnabledState> enabledState = default;
             WebApplicationRuleType ruleType = default;
-            Optional<int> rateLimitDurationInMinutes = default;
-            Optional<int> rateLimitThreshold = default;
+            Core.Optional<int> rateLimitDurationInMinutes = default;
+            Core.Optional<int> rateLimitThreshold = default;
             IList<WebApplicationRuleMatchCondition> matchConditions = default;
             RuleMatchActionType action = default;
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new WebApplicationCustomRule(name.Value, priority, Optional.ToNullable(enabledState), ruleType, Optional.ToNullable(rateLimitDurationInMinutes), Optional.ToNullable(rateLimitThreshold), matchConditions, action);
+            return new WebApplicationCustomRule(name.Value, priority, Core.Optional.ToNullable(enabledState), ruleType, Core.Optional.ToNullable(rateLimitDurationInMinutes), Core.Optional.ToNullable(rateLimitThreshold), matchConditions, action);
         }
     }
 }

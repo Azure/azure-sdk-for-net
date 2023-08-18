@@ -13,14 +13,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    public partial class FrontDoorRulesEngineData : IUtf8JsonSerializable
+    public partial class FrontDoorRulesEngineData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Rules))
+            if (Core.Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.FrontDoor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<RulesEngineRule>> rules = default;
-            Optional<FrontDoorResourceState> resourceState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IList<RulesEngineRule>> rules = default;
+            Core.Optional<FrontDoorResourceState> resourceState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.FrontDoor
                     continue;
                 }
             }
-            return new FrontDoorRulesEngineData(id, name, type, systemData.Value, Optional.ToList(rules), Optional.ToNullable(resourceState));
+            return new FrontDoorRulesEngineData(id, name, type, systemData.Value, Core.Optional.ToList(rules), Core.Optional.ToNullable(resourceState));
         }
     }
 }

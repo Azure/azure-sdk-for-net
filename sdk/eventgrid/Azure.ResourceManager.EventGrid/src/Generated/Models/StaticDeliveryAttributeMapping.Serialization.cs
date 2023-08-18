@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class StaticDeliveryAttributeMapping : IUtf8JsonSerializable
+    public partial class StaticDeliveryAttributeMapping : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStringValue(MappingType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
+            if (Core.Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(IsSecret))
+            if (Core.Optional.IsDefined(IsSecret))
             {
                 writer.WritePropertyName("isSecret"u8);
                 writer.WriteBooleanValue(IsSecret.Value);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            Core.Optional<string> name = default;
             DeliveryAttributeMappingType type = default;
-            Optional<string> value = default;
-            Optional<bool> isSecret = default;
+            Core.Optional<string> value = default;
+            Core.Optional<bool> isSecret = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new StaticDeliveryAttributeMapping(name.Value, type, value.Value, Optional.ToNullable(isSecret));
+            return new StaticDeliveryAttributeMapping(name.Value, type, value.Value, Core.Optional.ToNullable(isSecret));
         }
     }
 }

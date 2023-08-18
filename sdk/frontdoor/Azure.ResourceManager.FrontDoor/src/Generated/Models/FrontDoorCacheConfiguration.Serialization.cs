@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class FrontDoorCacheConfiguration : IUtf8JsonSerializable
+    public partial class FrontDoorCacheConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(QueryParameterStripDirective))
+            if (Core.Optional.IsDefined(QueryParameterStripDirective))
             {
                 writer.WritePropertyName("queryParameterStripDirective"u8);
                 writer.WriteStringValue(QueryParameterStripDirective.Value.ToString());
             }
-            if (Optional.IsDefined(QueryParameters))
+            if (Core.Optional.IsDefined(QueryParameters))
             {
                 writer.WritePropertyName("queryParameters"u8);
                 writer.WriteStringValue(QueryParameters);
             }
-            if (Optional.IsDefined(DynamicCompression))
+            if (Core.Optional.IsDefined(DynamicCompression))
             {
                 writer.WritePropertyName("dynamicCompression"u8);
                 writer.WriteStringValue(DynamicCompression.Value.ToString());
             }
-            if (Optional.IsDefined(CacheDuration))
+            if (Core.Optional.IsDefined(CacheDuration))
             {
                 writer.WritePropertyName("cacheDuration"u8);
                 writer.WriteStringValue(CacheDuration.Value, "P");
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<FrontDoorQuery> queryParameterStripDirective = default;
-            Optional<string> queryParameters = default;
-            Optional<DynamicCompressionEnabled> dynamicCompression = default;
-            Optional<TimeSpan> cacheDuration = default;
+            Core.Optional<FrontDoorQuery> queryParameterStripDirective = default;
+            Core.Optional<string> queryParameters = default;
+            Core.Optional<DynamicCompressionEnabled> dynamicCompression = default;
+            Core.Optional<TimeSpan> cacheDuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queryParameterStripDirective"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new FrontDoorCacheConfiguration(Optional.ToNullable(queryParameterStripDirective), queryParameters.Value, Optional.ToNullable(dynamicCompression), Optional.ToNullable(cacheDuration));
+            return new FrontDoorCacheConfiguration(Core.Optional.ToNullable(queryParameterStripDirective), queryParameters.Value, Core.Optional.ToNullable(dynamicCompression), Core.Optional.ToNullable(cacheDuration));
         }
     }
 }

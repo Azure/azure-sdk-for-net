@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 return null;
             }
             BillingType billingType = "Unknown";
-            Optional<double> multiplier = default;
-            Optional<EdgeOrderProductChargingType> chargingType = default;
+            Core.Optional<double> multiplier = default;
+            Core.Optional<EdgeOrderProductChargingType> chargingType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("billingType"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     continue;
                 }
             }
-            return new UnknownMeterDetails(billingType, Optional.ToNullable(multiplier), Optional.ToNullable(chargingType));
+            return new UnknownMeterDetails(billingType, Core.Optional.ToNullable(multiplier), Core.Optional.ToNullable(chargingType));
         }
     }
 }

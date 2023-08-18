@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> date = default;
-            Optional<double> cost = default;
-            Optional<DevTestLabCostType> costType = default;
+            Core.Optional<DateTimeOffset> date = default;
+            Core.Optional<double> cost = default;
+            Core.Optional<DevTestLabCostType> costType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("date"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new DevTestLabCostDetails(Optional.ToNullable(date), Optional.ToNullable(cost), Optional.ToNullable(costType));
+            return new DevTestLabCostDetails(Core.Optional.ToNullable(date), Core.Optional.ToNullable(cost), Core.Optional.ToNullable(costType));
         }
     }
 }

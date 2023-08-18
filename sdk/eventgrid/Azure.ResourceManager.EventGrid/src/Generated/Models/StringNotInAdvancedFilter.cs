@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of StringNotInAdvancedFilter. </summary>
         public StringNotInAdvancedFilter()
         {
-            Values = new ChangeTrackingList<string>();
+            Values = new Core.ChangeTrackingList<string>();
             OperatorType = AdvancedFilterOperatorType.StringNotIn;
         }
 

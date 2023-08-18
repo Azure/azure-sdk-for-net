@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VmResources>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<VmResources>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     continue;
                 }
             }
-            return new VmHostListResponse(Optional.ToList(value), nextLink.Value);
+            return new VmHostListResponse(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

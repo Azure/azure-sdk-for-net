@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EventHubsDisasterRecoveryData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<EventHubsDisasterRecoveryData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new ArmDisasterRecoveryListResult(Optional.ToList(value), nextLink.Value);
+            return new ArmDisasterRecoveryListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

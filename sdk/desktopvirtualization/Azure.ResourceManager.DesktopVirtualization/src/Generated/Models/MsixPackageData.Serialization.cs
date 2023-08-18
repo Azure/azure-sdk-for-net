@@ -14,29 +14,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    public partial class MsixPackageData : IUtf8JsonSerializable
+    public partial class MsixPackageData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ImagePath))
+            if (Core.Optional.IsDefined(ImagePath))
             {
                 writer.WritePropertyName("imagePath"u8);
                 writer.WriteStringValue(ImagePath);
             }
-            if (Optional.IsDefined(PackageName))
+            if (Core.Optional.IsDefined(PackageName))
             {
                 writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
             }
-            if (Optional.IsDefined(PackageFamilyName))
+            if (Core.Optional.IsDefined(PackageFamilyName))
             {
                 writer.WritePropertyName("packageFamilyName"u8);
                 writer.WriteStringValue(PackageFamilyName);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 if (DisplayName != null)
                 {
@@ -48,22 +48,22 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     writer.WriteNull("displayName");
                 }
             }
-            if (Optional.IsDefined(PackageRelativePath))
+            if (Core.Optional.IsDefined(PackageRelativePath))
             {
                 writer.WritePropertyName("packageRelativePath"u8);
                 writer.WriteStringValue(PackageRelativePath);
             }
-            if (Optional.IsDefined(IsRegularRegistration))
+            if (Core.Optional.IsDefined(IsRegularRegistration))
             {
                 writer.WritePropertyName("isRegularRegistration"u8);
                 writer.WriteBooleanValue(IsRegularRegistration.Value);
             }
-            if (Optional.IsDefined(IsActive))
+            if (Core.Optional.IsDefined(IsActive))
             {
                 writer.WritePropertyName("isActive"u8);
                 writer.WriteBooleanValue(IsActive.Value);
             }
-            if (Optional.IsCollectionDefined(PackageDependencies))
+            if (Core.Optional.IsCollectionDefined(PackageDependencies))
             {
                 writer.WritePropertyName("packageDependencies"u8);
                 writer.WriteStartArray();
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Version))
+            if (Core.Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(LastUpdatedOn))
+            if (Core.Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(PackageApplications))
+            if (Core.Optional.IsCollectionDefined(PackageApplications))
             {
                 writer.WritePropertyName("packageApplications"u8);
                 writer.WriteStartArray();
@@ -106,18 +106,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> imagePath = default;
-            Optional<string> packageName = default;
-            Optional<string> packageFamilyName = default;
-            Optional<string> displayName = default;
-            Optional<string> packageRelativePath = default;
-            Optional<bool> isRegularRegistration = default;
-            Optional<bool> isActive = default;
-            Optional<IList<MsixPackageDependencies>> packageDependencies = default;
-            Optional<string> version = default;
-            Optional<DateTimeOffset> lastUpdated = default;
-            Optional<IList<MsixPackageApplications>> packageApplications = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> imagePath = default;
+            Core.Optional<string> packageName = default;
+            Core.Optional<string> packageFamilyName = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> packageRelativePath = default;
+            Core.Optional<bool> isRegularRegistration = default;
+            Core.Optional<bool> isActive = default;
+            Core.Optional<IList<MsixPackageDependencies>> packageDependencies = default;
+            Core.Optional<string> version = default;
+            Core.Optional<DateTimeOffset> lastUpdated = default;
+            Core.Optional<IList<MsixPackageApplications>> packageApplications = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     continue;
                 }
             }
-            return new MsixPackageData(id, name, type, systemData.Value, imagePath.Value, packageName.Value, packageFamilyName.Value, displayName.Value, packageRelativePath.Value, Optional.ToNullable(isRegularRegistration), Optional.ToNullable(isActive), Optional.ToList(packageDependencies), version.Value, Optional.ToNullable(lastUpdated), Optional.ToList(packageApplications));
+            return new MsixPackageData(id, name, type, systemData.Value, imagePath.Value, packageName.Value, packageFamilyName.Value, displayName.Value, packageRelativePath.Value, Core.Optional.ToNullable(isRegularRegistration), Core.Optional.ToNullable(isActive), Core.Optional.ToList(packageDependencies), version.Value, Core.Optional.ToNullable(lastUpdated), Core.Optional.ToList(packageApplications));
         }
     }
 }

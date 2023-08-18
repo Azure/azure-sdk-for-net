@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    internal class SystemTopicOperationSource : IOperationSource<SystemTopicResource>
+    internal class SystemTopicOperationSource : Core.IOperationSource<SystemTopicResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.EventGrid
             _client = client;
         }
 
-        SystemTopicResource IOperationSource<SystemTopicResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SystemTopicResource Core.IOperationSource<SystemTopicResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SystemTopicData.DeserializeSystemTopicData(document.RootElement);
             return new SystemTopicResource(_client, data);
         }
 
-        async ValueTask<SystemTopicResource> IOperationSource<SystemTopicResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SystemTopicResource> Core.IOperationSource<SystemTopicResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SystemTopicData.DeserializeSystemTopicData(document.RootElement);

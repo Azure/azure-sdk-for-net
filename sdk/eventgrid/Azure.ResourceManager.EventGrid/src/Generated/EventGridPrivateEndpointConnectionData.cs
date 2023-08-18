@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Initializes a new instance of EventGridPrivateEndpointConnectionData. </summary>
         public EventGridPrivateEndpointConnectionData()
         {
-            GroupIds = new ChangeTrackingList<string>();
+            GroupIds = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of EventGridPrivateEndpointConnectionData. </summary>

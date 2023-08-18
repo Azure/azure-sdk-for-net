@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<CertificateVerificationCodeProperties> properties = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<CertificateVerificationCodeProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     continue;
                 }
             }
-            return new CertificateVerificationCodeResult(id, name, type, systemData.Value, Optional.ToNullable(etag), properties.Value);
+            return new CertificateVerificationCodeResult(id, name, type, systemData.Value, Core.Optional.ToNullable(etag), properties.Value);
         }
     }
 }

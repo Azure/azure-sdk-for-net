@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="location"> The location. </param>
         public DeviceUpdateAccountData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<DeviceUpdatePrivateEndpointConnectionData>();
-            Locations = new ChangeTrackingList<DeviceUpdateAccountLocationDetail>();
+            PrivateEndpointConnections = new Core.ChangeTrackingList<DeviceUpdatePrivateEndpointConnectionData>();
+            Locations = new Core.ChangeTrackingList<DeviceUpdateAccountLocationDetail>();
         }
 
         /// <summary> Initializes a new instance of DeviceUpdateAccountData. </summary>

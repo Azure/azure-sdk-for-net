@@ -21,9 +21,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
             string code = default;
             string message = default;
-            Optional<string> target = default;
-            Optional<IReadOnlyList<Error>> details = default;
-            Optional<InnerError> innererror = default;
+            Core.Optional<string> target = default;
+            Core.Optional<IReadOnlyList<Error>> details = default;
+            Core.Optional<InnerError> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -65,7 +65,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new Error(code, message, target.Value, Optional.ToList(details), innererror.Value);
+            return new Error(code, message, target.Value, Core.Optional.ToList(details), innererror.Value);
         }
     }
 }

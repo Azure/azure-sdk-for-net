@@ -68,7 +68,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (features != null && Optional.IsCollectionDefined(features))
+            if (features != null && Core.Optional.IsCollectionDefined(features))
             {
                 uri.AppendQueryDelimited("features", features, ",", true);
             }
@@ -77,7 +77,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             if (analyzeRequest != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
+                var content = new Core.Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(analyzeRequest);
                 request.Content = content;
             }
@@ -93,7 +93,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="analyzeRequest"> Analyze request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DocumentAnalysisDocumentModelsAnalyzeDocumentHeaders>> DocumentModelsAnalyzeDocumentAsync(string modelId, string pages = null, string locale = null, StringIndexType? stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, AnalyzeDocumentRequest analyzeRequest = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<DocumentAnalysisDocumentModelsAnalyzeDocumentHeaders>> DocumentModelsAnalyzeDocumentAsync(string modelId, string pages = null, string locale = null, StringIndexType? stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, AnalyzeDocumentRequest analyzeRequest = null, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
@@ -106,7 +106,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -121,7 +121,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="analyzeRequest"> Analyze request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public ResponseWithHeaders<DocumentAnalysisDocumentModelsAnalyzeDocumentHeaders> DocumentModelsAnalyzeDocument(string modelId, string pages = null, string locale = null, StringIndexType? stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, AnalyzeDocumentRequest analyzeRequest = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<DocumentAnalysisDocumentModelsAnalyzeDocumentHeaders> DocumentModelsAnalyzeDocument(string modelId, string pages = null, string locale = null, StringIndexType? stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, AnalyzeDocumentRequest analyzeRequest = null, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
@@ -134,7 +134,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -164,7 +164,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (features != null && Optional.IsCollectionDefined(features))
+            if (features != null && Core.Optional.IsCollectionDefined(features))
             {
                 uri.AppendQueryDelimited("features", features, ",", true);
             }
@@ -188,7 +188,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="analyzeRequest"> Analyze request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DocumentAnalysisDocumentModelsAnalyzeDocumentHeaders>> DocumentModelsAnalyzeDocumentAsync(string modelId, InternalContentType contentType, string pages = null, string locale = null, StringIndexType? stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, Stream analyzeRequest = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<DocumentAnalysisDocumentModelsAnalyzeDocumentHeaders>> DocumentModelsAnalyzeDocumentAsync(string modelId, InternalContentType contentType, string pages = null, string locale = null, StringIndexType? stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, Stream analyzeRequest = null, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
@@ -201,7 +201,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -217,7 +217,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="analyzeRequest"> Analyze request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public ResponseWithHeaders<DocumentAnalysisDocumentModelsAnalyzeDocumentHeaders> DocumentModelsAnalyzeDocument(string modelId, InternalContentType contentType, string pages = null, string locale = null, StringIndexType? stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, Stream analyzeRequest = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<DocumentAnalysisDocumentModelsAnalyzeDocumentHeaders> DocumentModelsAnalyzeDocument(string modelId, InternalContentType contentType, string pages = null, string locale = null, StringIndexType? stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, Stream analyzeRequest = null, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
@@ -230,7 +230,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -260,7 +260,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (features != null && Optional.IsCollectionDefined(features))
+            if (features != null && Core.Optional.IsCollectionDefined(features))
             {
                 uri.AppendQueryDelimited("features", features, ",", true);
             }
@@ -269,7 +269,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             if (analyzeRequest != null)
             {
                 request.Headers.Add("Content-Type", "text/html");
-                request.Content = new StringRequestContent(analyzeRequest);
+                request.Content = new Core.StringRequestContent(analyzeRequest);
             }
             return message;
         }
@@ -283,7 +283,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="analyzeRequest"> Analyze request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DocumentAnalysisDocumentModelsAnalyzeDocumentHeaders>> DocumentModelsAnalyzeDocumentAsync(string modelId, string pages = null, string locale = null, StringIndexType? stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, string analyzeRequest = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<DocumentAnalysisDocumentModelsAnalyzeDocumentHeaders>> DocumentModelsAnalyzeDocumentAsync(string modelId, string pages = null, string locale = null, StringIndexType? stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, string analyzeRequest = null, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
@@ -296,7 +296,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -311,7 +311,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="analyzeRequest"> Analyze request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public ResponseWithHeaders<DocumentAnalysisDocumentModelsAnalyzeDocumentHeaders> DocumentModelsAnalyzeDocument(string modelId, string pages = null, string locale = null, StringIndexType? stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, string analyzeRequest = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<DocumentAnalysisDocumentModelsAnalyzeDocumentHeaders> DocumentModelsAnalyzeDocument(string modelId, string pages = null, string locale = null, StringIndexType? stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, string analyzeRequest = null, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
@@ -324,7 +324,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -425,7 +425,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(buildRequest);
             request.Content = content;
             return message;
@@ -435,7 +435,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="buildRequest"> Building request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="buildRequest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DocumentAnalysisDocumentModelsBuildModelHeaders>> DocumentModelsBuildModelAsync(BuildDocumentModelRequest buildRequest, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<DocumentAnalysisDocumentModelsBuildModelHeaders>> DocumentModelsBuildModelAsync(BuildDocumentModelRequest buildRequest, CancellationToken cancellationToken = default)
         {
             if (buildRequest == null)
             {
@@ -448,7 +448,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -458,7 +458,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="buildRequest"> Building request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="buildRequest"/> is null. </exception>
-        public ResponseWithHeaders<DocumentAnalysisDocumentModelsBuildModelHeaders> DocumentModelsBuildModel(BuildDocumentModelRequest buildRequest, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<DocumentAnalysisDocumentModelsBuildModelHeaders> DocumentModelsBuildModel(BuildDocumentModelRequest buildRequest, CancellationToken cancellationToken = default)
         {
             if (buildRequest == null)
             {
@@ -471,7 +471,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -490,7 +490,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(composeRequest);
             request.Content = content;
             return message;
@@ -500,7 +500,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="composeRequest"> Compose request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="composeRequest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DocumentAnalysisDocumentModelsComposeModelHeaders>> DocumentModelsComposeModelAsync(ComposeDocumentModelRequest composeRequest, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<DocumentAnalysisDocumentModelsComposeModelHeaders>> DocumentModelsComposeModelAsync(ComposeDocumentModelRequest composeRequest, CancellationToken cancellationToken = default)
         {
             if (composeRequest == null)
             {
@@ -513,7 +513,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -523,7 +523,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="composeRequest"> Compose request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="composeRequest"/> is null. </exception>
-        public ResponseWithHeaders<DocumentAnalysisDocumentModelsComposeModelHeaders> DocumentModelsComposeModel(ComposeDocumentModelRequest composeRequest, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<DocumentAnalysisDocumentModelsComposeModelHeaders> DocumentModelsComposeModel(ComposeDocumentModelRequest composeRequest, CancellationToken cancellationToken = default)
         {
             if (composeRequest == null)
             {
@@ -536,7 +536,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -555,7 +555,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(authorizeCopyRequest);
             request.Content = content;
             return message;
@@ -630,7 +630,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(copyToRequest);
             request.Content = content;
             return message;
@@ -641,7 +641,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="copyToRequest"> Copy to request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="copyToRequest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DocumentAnalysisDocumentModelsCopyModelToHeaders>> DocumentModelsCopyModelToAsync(string modelId, DocumentModelCopyAuthorization copyToRequest, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<DocumentAnalysisDocumentModelsCopyModelToHeaders>> DocumentModelsCopyModelToAsync(string modelId, DocumentModelCopyAuthorization copyToRequest, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
@@ -658,7 +658,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -669,7 +669,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="copyToRequest"> Copy to request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="copyToRequest"/> is null. </exception>
-        public ResponseWithHeaders<DocumentAnalysisDocumentModelsCopyModelToHeaders> DocumentModelsCopyModelTo(string modelId, DocumentModelCopyAuthorization copyToRequest, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<DocumentAnalysisDocumentModelsCopyModelToHeaders> DocumentModelsCopyModelTo(string modelId, DocumentModelCopyAuthorization copyToRequest, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
@@ -686,7 +686,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1015,7 +1015,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(buildRequest);
             request.Content = content;
             return message;
@@ -1025,7 +1025,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="buildRequest"> Building request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="buildRequest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DocumentAnalysisDocumentClassifiersBuildClassifierHeaders>> DocumentClassifiersBuildClassifierAsync(BuildDocumentClassifierRequest buildRequest, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<DocumentAnalysisDocumentClassifiersBuildClassifierHeaders>> DocumentClassifiersBuildClassifierAsync(BuildDocumentClassifierRequest buildRequest, CancellationToken cancellationToken = default)
         {
             if (buildRequest == null)
             {
@@ -1038,7 +1038,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1048,7 +1048,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="buildRequest"> Building request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="buildRequest"/> is null. </exception>
-        public ResponseWithHeaders<DocumentAnalysisDocumentClassifiersBuildClassifierHeaders> DocumentClassifiersBuildClassifier(BuildDocumentClassifierRequest buildRequest, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<DocumentAnalysisDocumentClassifiersBuildClassifierHeaders> DocumentClassifiersBuildClassifier(BuildDocumentClassifierRequest buildRequest, CancellationToken cancellationToken = default)
         {
             if (buildRequest == null)
             {
@@ -1061,7 +1061,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1273,7 +1273,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             if (classifyRequest != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
+                var content = new Core.Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(classifyRequest);
                 request.Content = content;
             }
@@ -1286,7 +1286,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="classifyRequest"> Classify request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders>> DocumentClassifiersClassifyDocumentAsync(string classifierId, StringIndexType? stringIndexType = null, ClassifyDocumentRequest classifyRequest = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders>> DocumentClassifiersClassifyDocumentAsync(string classifierId, StringIndexType? stringIndexType = null, ClassifyDocumentRequest classifyRequest = null, CancellationToken cancellationToken = default)
         {
             if (classifierId == null)
             {
@@ -1299,7 +1299,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1311,7 +1311,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="classifyRequest"> Classify request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
-        public ResponseWithHeaders<DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders> DocumentClassifiersClassifyDocument(string classifierId, StringIndexType? stringIndexType = null, ClassifyDocumentRequest classifyRequest = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders> DocumentClassifiersClassifyDocument(string classifierId, StringIndexType? stringIndexType = null, ClassifyDocumentRequest classifyRequest = null, CancellationToken cancellationToken = default)
         {
             if (classifierId == null)
             {
@@ -1324,7 +1324,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1363,7 +1363,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="classifyRequest"> Classify request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders>> DocumentClassifiersClassifyDocumentAsync(string classifierId, InternalContentType contentType, StringIndexType? stringIndexType = null, Stream classifyRequest = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders>> DocumentClassifiersClassifyDocumentAsync(string classifierId, InternalContentType contentType, StringIndexType? stringIndexType = null, Stream classifyRequest = null, CancellationToken cancellationToken = default)
         {
             if (classifierId == null)
             {
@@ -1376,7 +1376,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1389,7 +1389,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="classifyRequest"> Classify request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
-        public ResponseWithHeaders<DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders> DocumentClassifiersClassifyDocument(string classifierId, InternalContentType contentType, StringIndexType? stringIndexType = null, Stream classifyRequest = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders> DocumentClassifiersClassifyDocument(string classifierId, InternalContentType contentType, StringIndexType? stringIndexType = null, Stream classifyRequest = null, CancellationToken cancellationToken = default)
         {
             if (classifierId == null)
             {
@@ -1402,7 +1402,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1429,7 +1429,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             if (classifyRequest != null)
             {
                 request.Headers.Add("Content-Type", "text/html");
-                request.Content = new StringRequestContent(classifyRequest);
+                request.Content = new Core.StringRequestContent(classifyRequest);
             }
             return message;
         }
@@ -1440,7 +1440,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="classifyRequest"> Classify request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders>> DocumentClassifiersClassifyDocumentAsync(string classifierId, StringIndexType? stringIndexType = null, string classifyRequest = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders>> DocumentClassifiersClassifyDocumentAsync(string classifierId, StringIndexType? stringIndexType = null, string classifyRequest = null, CancellationToken cancellationToken = default)
         {
             if (classifierId == null)
             {
@@ -1453,7 +1453,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1465,7 +1465,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="classifyRequest"> Classify request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
-        public ResponseWithHeaders<DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders> DocumentClassifiersClassifyDocument(string classifierId, StringIndexType? stringIndexType = null, string classifyRequest = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders> DocumentClassifiersClassifyDocument(string classifierId, StringIndexType? stringIndexType = null, string classifyRequest = null, CancellationToken cancellationToken = default)
         {
             if (classifierId == null)
             {
@@ -1478,7 +1478,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             switch (message.Response.Status)
             {
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

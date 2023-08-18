@@ -12,12 +12,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class HostPoolPatch : IUtf8JsonSerializable
+    public partial class HostPoolPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -30,87 +30,87 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(FriendlyName))
+            if (Core.Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(CustomRdpProperty))
+            if (Core.Optional.IsDefined(CustomRdpProperty))
             {
                 writer.WritePropertyName("customRdpProperty"u8);
                 writer.WriteStringValue(CustomRdpProperty);
             }
-            if (Optional.IsDefined(MaxSessionLimit))
+            if (Core.Optional.IsDefined(MaxSessionLimit))
             {
                 writer.WritePropertyName("maxSessionLimit"u8);
                 writer.WriteNumberValue(MaxSessionLimit.Value);
             }
-            if (Optional.IsDefined(PersonalDesktopAssignmentType))
+            if (Core.Optional.IsDefined(PersonalDesktopAssignmentType))
             {
                 writer.WritePropertyName("personalDesktopAssignmentType"u8);
                 writer.WriteStringValue(PersonalDesktopAssignmentType.Value.ToString());
             }
-            if (Optional.IsDefined(LoadBalancerType))
+            if (Core.Optional.IsDefined(LoadBalancerType))
             {
                 writer.WritePropertyName("loadBalancerType"u8);
                 writer.WriteStringValue(LoadBalancerType.Value.ToString());
             }
-            if (Optional.IsDefined(Ring))
+            if (Core.Optional.IsDefined(Ring))
             {
                 writer.WritePropertyName("ring"u8);
                 writer.WriteNumberValue(Ring.Value);
             }
-            if (Optional.IsDefined(IsValidationEnvironment))
+            if (Core.Optional.IsDefined(IsValidationEnvironment))
             {
                 writer.WritePropertyName("validationEnvironment"u8);
                 writer.WriteBooleanValue(IsValidationEnvironment.Value);
             }
-            if (Optional.IsDefined(RegistrationInfo))
+            if (Core.Optional.IsDefined(RegistrationInfo))
             {
                 writer.WritePropertyName("registrationInfo"u8);
                 writer.WriteObjectValue(RegistrationInfo);
             }
-            if (Optional.IsDefined(VmTemplate))
+            if (Core.Optional.IsDefined(VmTemplate))
             {
                 writer.WritePropertyName("vmTemplate"u8);
                 writer.WriteStringValue(VmTemplate);
             }
-            if (Optional.IsDefined(SsoAdfsAuthority))
+            if (Core.Optional.IsDefined(SsoAdfsAuthority))
             {
                 writer.WritePropertyName("ssoadfsAuthority"u8);
                 writer.WriteStringValue(SsoAdfsAuthority);
             }
-            if (Optional.IsDefined(SsoClientId))
+            if (Core.Optional.IsDefined(SsoClientId))
             {
                 writer.WritePropertyName("ssoClientId"u8);
                 writer.WriteStringValue(SsoClientId);
             }
-            if (Optional.IsDefined(SsoClientSecretKeyVaultPath))
+            if (Core.Optional.IsDefined(SsoClientSecretKeyVaultPath))
             {
                 writer.WritePropertyName("ssoClientSecretKeyVaultPath"u8);
                 writer.WriteStringValue(SsoClientSecretKeyVaultPath);
             }
-            if (Optional.IsDefined(SsoSecretType))
+            if (Core.Optional.IsDefined(SsoSecretType))
             {
                 writer.WritePropertyName("ssoSecretType"u8);
                 writer.WriteStringValue(SsoSecretType.Value.ToString());
             }
-            if (Optional.IsDefined(PreferredAppGroupType))
+            if (Core.Optional.IsDefined(PreferredAppGroupType))
             {
                 writer.WritePropertyName("preferredAppGroupType"u8);
                 writer.WriteStringValue(PreferredAppGroupType.Value.ToString());
             }
-            if (Optional.IsDefined(StartVmOnConnect))
+            if (Core.Optional.IsDefined(StartVmOnConnect))
             {
                 writer.WritePropertyName("startVMOnConnect"u8);
                 writer.WriteBooleanValue(StartVmOnConnect.Value);
             }
-            if (Optional.IsDefined(AgentUpdate))
+            if (Core.Optional.IsDefined(AgentUpdate))
             {
                 writer.WritePropertyName("agentUpdate"u8);
                 writer.WriteObjectValue(AgentUpdate);
@@ -125,28 +125,28 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> friendlyName = default;
-            Optional<string> description = default;
-            Optional<string> customRdpProperty = default;
-            Optional<int> maxSessionLimit = default;
-            Optional<PersonalDesktopAssignmentType> personalDesktopAssignmentType = default;
-            Optional<HostPoolLoadBalancerType> loadBalancerType = default;
-            Optional<int> ring = default;
-            Optional<bool> validationEnvironment = default;
-            Optional<HostPoolRegistrationInfoPatch> registrationInfo = default;
-            Optional<string> vmTemplate = default;
-            Optional<string> ssoadfsAuthority = default;
-            Optional<string> ssoClientId = default;
-            Optional<string> ssoClientSecretKeyVaultPath = default;
-            Optional<HostPoolSsoSecretType> ssoSecretType = default;
-            Optional<PreferredAppGroupType> preferredAppGroupType = default;
-            Optional<bool> startVmOnConnect = default;
-            Optional<SessionHostAgentUpdatePatchProperties> agentUpdate = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> friendlyName = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> customRdpProperty = default;
+            Core.Optional<int> maxSessionLimit = default;
+            Core.Optional<PersonalDesktopAssignmentType> personalDesktopAssignmentType = default;
+            Core.Optional<HostPoolLoadBalancerType> loadBalancerType = default;
+            Core.Optional<int> ring = default;
+            Core.Optional<bool> validationEnvironment = default;
+            Core.Optional<HostPoolRegistrationInfoPatch> registrationInfo = default;
+            Core.Optional<string> vmTemplate = default;
+            Core.Optional<string> ssoadfsAuthority = default;
+            Core.Optional<string> ssoClientId = default;
+            Core.Optional<string> ssoClientSecretKeyVaultPath = default;
+            Core.Optional<HostPoolSsoSecretType> ssoSecretType = default;
+            Core.Optional<PreferredAppGroupType> preferredAppGroupType = default;
+            Core.Optional<bool> startVmOnConnect = default;
+            Core.Optional<SessionHostAgentUpdatePatchProperties> agentUpdate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     continue;
                 }
             }
-            return new HostPoolPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), friendlyName.Value, description.Value, customRdpProperty.Value, Optional.ToNullable(maxSessionLimit), Optional.ToNullable(personalDesktopAssignmentType), Optional.ToNullable(loadBalancerType), Optional.ToNullable(ring), Optional.ToNullable(validationEnvironment), registrationInfo.Value, vmTemplate.Value, ssoadfsAuthority.Value, ssoClientId.Value, ssoClientSecretKeyVaultPath.Value, Optional.ToNullable(ssoSecretType), Optional.ToNullable(preferredAppGroupType), Optional.ToNullable(startVmOnConnect), agentUpdate.Value);
+            return new HostPoolPatch(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), friendlyName.Value, description.Value, customRdpProperty.Value, Core.Optional.ToNullable(maxSessionLimit), Core.Optional.ToNullable(personalDesktopAssignmentType), Core.Optional.ToNullable(loadBalancerType), Core.Optional.ToNullable(ring), Core.Optional.ToNullable(validationEnvironment), registrationInfo.Value, vmTemplate.Value, ssoadfsAuthority.Value, ssoClientId.Value, ssoClientSecretKeyVaultPath.Value, Core.Optional.ToNullable(ssoSecretType), Core.Optional.ToNullable(preferredAppGroupType), Core.Optional.ToNullable(startVmOnConnect), agentUpdate.Value);
         }
     }
 }

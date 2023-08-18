@@ -12,19 +12,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class EventHubsDisasterRecoveryData : IUtf8JsonSerializable
+    public partial class EventHubsDisasterRecoveryData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PartnerNamespace))
+            if (Core.Optional.IsDefined(PartnerNamespace))
             {
                 writer.WritePropertyName("partnerNamespace"u8);
                 writer.WriteStringValue(PartnerNamespace);
             }
-            if (Optional.IsDefined(AlternateName))
+            if (Core.Optional.IsDefined(AlternateName))
             {
                 writer.WritePropertyName("alternateName"u8);
                 writer.WriteStringValue(AlternateName);
@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.EventHubs
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            Core.Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EventHubsDisasterRecoveryProvisioningState> provisioningState = default;
-            Optional<string> partnerNamespace = default;
-            Optional<string> alternateName = default;
-            Optional<EventHubsDisasterRecoveryRole> role = default;
-            Optional<long> pendingReplicationOperationsCount = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<EventHubsDisasterRecoveryProvisioningState> provisioningState = default;
+            Core.Optional<string> partnerNamespace = default;
+            Core.Optional<string> alternateName = default;
+            Core.Optional<EventHubsDisasterRecoveryRole> role = default;
+            Core.Optional<long> pendingReplicationOperationsCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new EventHubsDisasterRecoveryData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), partnerNamespace.Value, alternateName.Value, Optional.ToNullable(role), Optional.ToNullable(pendingReplicationOperationsCount), Optional.ToNullable(location));
+            return new EventHubsDisasterRecoveryData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), partnerNamespace.Value, alternateName.Value, Core.Optional.ToNullable(role), Core.Optional.ToNullable(pendingReplicationOperationsCount), Core.Optional.ToNullable(location));
         }
     }
 }

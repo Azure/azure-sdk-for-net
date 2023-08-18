@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class BackupRestoreWithRehydrationContent : IUtf8JsonSerializable
+    public partial class BackupRestoreWithRehydrationContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("rehydrationPriority"u8);
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteObjectValue(RestoreTargetInfo);
             writer.WritePropertyName("sourceDataStoreType"u8);
             writer.WriteStringValue(SourceDataStoreType.ToString());
-            if (Optional.IsDefined(SourceResourceId))
+            if (Core.Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);

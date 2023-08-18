@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class HierarchyInformation : IUtf8JsonSerializable
+    public partial class HierarchyInformation : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProductFamilyName))
+            if (Core.Optional.IsDefined(ProductFamilyName))
             {
                 writer.WritePropertyName("productFamilyName"u8);
                 writer.WriteStringValue(ProductFamilyName);
             }
-            if (Optional.IsDefined(ProductLineName))
+            if (Core.Optional.IsDefined(ProductLineName))
             {
                 writer.WritePropertyName("productLineName"u8);
                 writer.WriteStringValue(ProductLineName);
             }
-            if (Optional.IsDefined(ProductName))
+            if (Core.Optional.IsDefined(ProductName))
             {
                 writer.WritePropertyName("productName"u8);
                 writer.WriteStringValue(ProductName);
             }
-            if (Optional.IsDefined(ConfigurationName))
+            if (Core.Optional.IsDefined(ConfigurationName))
             {
                 writer.WritePropertyName("configurationName"u8);
                 writer.WriteStringValue(ConfigurationName);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<string> productFamilyName = default;
-            Optional<string> productLineName = default;
-            Optional<string> productName = default;
-            Optional<string> configurationName = default;
+            Core.Optional<string> productFamilyName = default;
+            Core.Optional<string> productLineName = default;
+            Core.Optional<string> productName = default;
+            Core.Optional<string> configurationName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("productFamilyName"u8))

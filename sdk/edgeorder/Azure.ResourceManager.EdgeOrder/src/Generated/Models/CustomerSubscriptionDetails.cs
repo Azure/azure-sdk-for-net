@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         {
             Argument.AssertNotNull(quotaId, nameof(quotaId));
 
-            RegisteredFeatures = new ChangeTrackingList<CustomerSubscriptionRegisteredFeatures>();
+            RegisteredFeatures = new Core.ChangeTrackingList<CustomerSubscriptionRegisteredFeatures>();
             QuotaId = quotaId;
         }
 

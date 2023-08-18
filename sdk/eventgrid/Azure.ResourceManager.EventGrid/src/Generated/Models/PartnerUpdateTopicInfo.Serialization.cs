@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    internal partial class PartnerUpdateTopicInfo : IUtf8JsonSerializable
+    internal partial class PartnerUpdateTopicInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EventTypeInfo))
+            if (Core.Optional.IsDefined(EventTypeInfo))
             {
                 writer.WritePropertyName("eventTypeInfo"u8);
                 writer.WriteObjectValue(EventTypeInfo);

@@ -13,14 +13,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare
 {
-    public partial class ShareSubscriptionData : IUtf8JsonSerializable
+    public partial class ShareSubscriptionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExpireOn))
+            if (Core.Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
@@ -42,22 +42,22 @@ namespace Azure.ResourceManager.DataShare
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> expirationDate = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DateTimeOffset> createdAt = default;
+            Core.Optional<DateTimeOffset> expirationDate = default;
             Guid invitationId = default;
-            Optional<string> providerEmail = default;
-            Optional<string> providerName = default;
-            Optional<string> providerTenantName = default;
-            Optional<DataShareProvisioningState> provisioningState = default;
-            Optional<string> shareDescription = default;
-            Optional<DataShareKind> shareKind = default;
-            Optional<string> shareName = default;
-            Optional<ShareSubscriptionStatus> shareSubscriptionStatus = default;
-            Optional<string> shareTerms = default;
+            Core.Optional<string> providerEmail = default;
+            Core.Optional<string> providerName = default;
+            Core.Optional<string> providerTenantName = default;
+            Core.Optional<DataShareProvisioningState> provisioningState = default;
+            Core.Optional<string> shareDescription = default;
+            Core.Optional<DataShareKind> shareKind = default;
+            Core.Optional<string> shareName = default;
+            Core.Optional<ShareSubscriptionStatus> shareSubscriptionStatus = default;
+            Core.Optional<string> shareTerms = default;
             AzureLocation sourceShareLocation = default;
-            Optional<string> userEmail = default;
-            Optional<string> userName = default;
+            Core.Optional<string> userEmail = default;
+            Core.Optional<string> userName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DataShare
                     continue;
                 }
             }
-            return new ShareSubscriptionData(id, name, type, systemData.Value, Optional.ToNullable(createdAt), Optional.ToNullable(expirationDate), invitationId, providerEmail.Value, providerName.Value, providerTenantName.Value, Optional.ToNullable(provisioningState), shareDescription.Value, Optional.ToNullable(shareKind), shareName.Value, Optional.ToNullable(shareSubscriptionStatus), shareTerms.Value, sourceShareLocation, userEmail.Value, userName.Value);
+            return new ShareSubscriptionData(id, name, type, systemData.Value, Core.Optional.ToNullable(createdAt), Core.Optional.ToNullable(expirationDate), invitationId, providerEmail.Value, providerName.Value, providerTenantName.Value, Core.Optional.ToNullable(provisioningState), shareDescription.Value, Core.Optional.ToNullable(shareKind), shareName.Value, Core.Optional.ToNullable(shareSubscriptionStatus), shareTerms.Value, sourceShareLocation, userEmail.Value, userName.Value);
         }
     }
 }

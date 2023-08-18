@@ -16,8 +16,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of AcsIncomingCallCustomContext. </summary>
         internal AcsIncomingCallCustomContext()
         {
-            SipHeaders = new ChangeTrackingDictionary<string, string>();
-            VoipHeaders = new ChangeTrackingDictionary<string, string>();
+            SipHeaders = new Core.ChangeTrackingDictionary<string, string>();
+            VoipHeaders = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of AcsIncomingCallCustomContext. </summary>

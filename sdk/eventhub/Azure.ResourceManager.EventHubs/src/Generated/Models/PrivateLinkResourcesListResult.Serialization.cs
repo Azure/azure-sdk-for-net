@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EventHubsPrivateLinkResourceData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<EventHubsPrivateLinkResourceData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new PrivateLinkResourcesListResult(Optional.ToList(value), nextLink.Value);
+            return new PrivateLinkResourcesListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

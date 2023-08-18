@@ -12,21 +12,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class EdgeOrderItemDetails : IUtf8JsonSerializable
+    public partial class EdgeOrderItemDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("productDetails"u8);
             writer.WriteObjectValue(ProductDetails);
             writer.WritePropertyName("orderItemType"u8);
             writer.WriteStringValue(OrderItemType.ToString());
-            if (Optional.IsDefined(Preferences))
+            if (Core.Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
                 writer.WriteObjectValue(Preferences);
             }
-            if (Optional.IsCollectionDefined(NotificationEmailList))
+            if (Core.Optional.IsCollectionDefined(NotificationEmailList))
             {
                 writer.WritePropertyName("notificationEmailList"u8);
                 writer.WriteStartArray();
@@ -47,20 +47,20 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             ProductDetails productDetails = default;
             OrderItemType orderItemType = default;
-            Optional<EdgeOrderStageDetails> currentStage = default;
-            Optional<IReadOnlyList<EdgeOrderStageDetails>> orderItemStageHistory = default;
-            Optional<OrderItemPreferences> preferences = default;
-            Optional<ForwardShippingDetails> forwardShippingDetails = default;
-            Optional<ReverseShippingDetails> reverseShippingDetails = default;
-            Optional<IList<string>> notificationEmailList = default;
-            Optional<string> cancellationReason = default;
-            Optional<OrderItemCancellationStatus> cancellationStatus = default;
-            Optional<EdgeOrderActionStatus> deletionStatus = default;
-            Optional<string> returnReason = default;
-            Optional<OrderItemReturnStatus> returnStatus = default;
-            Optional<ResourceProviderDetails> managementRPDetails = default;
-            Optional<IReadOnlyList<ResourceProviderDetails>> managementRPDetailsList = default;
-            Optional<ResponseError> error = default;
+            Core.Optional<EdgeOrderStageDetails> currentStage = default;
+            Core.Optional<IReadOnlyList<EdgeOrderStageDetails>> orderItemStageHistory = default;
+            Core.Optional<OrderItemPreferences> preferences = default;
+            Core.Optional<ForwardShippingDetails> forwardShippingDetails = default;
+            Core.Optional<ReverseShippingDetails> reverseShippingDetails = default;
+            Core.Optional<IList<string>> notificationEmailList = default;
+            Core.Optional<string> cancellationReason = default;
+            Core.Optional<OrderItemCancellationStatus> cancellationStatus = default;
+            Core.Optional<EdgeOrderActionStatus> deletionStatus = default;
+            Core.Optional<string> returnReason = default;
+            Core.Optional<OrderItemReturnStatus> returnStatus = default;
+            Core.Optional<ResourceProviderDetails> managementRPDetails = default;
+            Core.Optional<IReadOnlyList<ResourceProviderDetails>> managementRPDetailsList = default;
+            Core.Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("productDetails"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     continue;
                 }
             }
-            return new EdgeOrderItemDetails(productDetails, orderItemType, currentStage.Value, Optional.ToList(orderItemStageHistory), preferences.Value, forwardShippingDetails.Value, reverseShippingDetails.Value, Optional.ToList(notificationEmailList), cancellationReason.Value, Optional.ToNullable(cancellationStatus), Optional.ToNullable(deletionStatus), returnReason.Value, Optional.ToNullable(returnStatus), managementRPDetails.Value, Optional.ToList(managementRPDetailsList), error.Value);
+            return new EdgeOrderItemDetails(productDetails, orderItemType, currentStage.Value, Core.Optional.ToList(orderItemStageHistory), preferences.Value, forwardShippingDetails.Value, reverseShippingDetails.Value, Core.Optional.ToList(notificationEmailList), cancellationReason.Value, Core.Optional.ToNullable(cancellationStatus), Core.Optional.ToNullable(deletionStatus), returnReason.Value, Core.Optional.ToNullable(returnStatus), managementRPDetails.Value, Core.Optional.ToList(managementRPDetailsList), error.Value);
         }
     }
 }

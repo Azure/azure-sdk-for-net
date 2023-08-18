@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of NetworkRuleSetListResult. </summary>
         internal NetworkRuleSetListResult()
         {
-            Value = new ChangeTrackingList<EventHubsNetworkRuleSetData>();
+            Value = new Core.ChangeTrackingList<EventHubsNetworkRuleSetData>();
         }
 
         /// <summary> Initializes a new instance of NetworkRuleSetListResult. </summary>

@@ -20,7 +20,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         internal DocumentSelectionMark(V3SelectionMarkState statePrivate, DocumentSpan span, float confidence)
         {
             StatePrivate = statePrivate;
-            Polygon = new ChangeTrackingList<float>();
+            Polygon = new Core.ChangeTrackingList<float>();
             Span = span;
             Confidence = confidence;
         }

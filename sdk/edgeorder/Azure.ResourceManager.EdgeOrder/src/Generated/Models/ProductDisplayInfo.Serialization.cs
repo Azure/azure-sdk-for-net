@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class ProductDisplayInfo : IUtf8JsonSerializable
+    public partial class ProductDisplayInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<string> productFamilyDisplayName = default;
-            Optional<string> configurationDisplayName = default;
+            Core.Optional<string> productFamilyDisplayName = default;
+            Core.Optional<string> configurationDisplayName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("productFamilyDisplayName"u8))

@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of RoutingEnrichments. </summary>
         public RoutingEnrichments()
         {
-            Static = new ChangeTrackingList<StaticRoutingEnrichment>();
-            Dynamic = new ChangeTrackingList<DynamicRoutingEnrichment>();
+            Static = new Core.ChangeTrackingList<StaticRoutingEnrichment>();
+            Dynamic = new Core.ChangeTrackingList<DynamicRoutingEnrichment>();
         }
 
         /// <summary> Initializes a new instance of RoutingEnrichments. </summary>

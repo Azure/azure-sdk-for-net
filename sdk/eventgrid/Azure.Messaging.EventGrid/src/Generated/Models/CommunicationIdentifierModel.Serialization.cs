@@ -18,10 +18,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> rawId = default;
-            Optional<CommunicationUserIdentifierModel> communicationUser = default;
-            Optional<PhoneNumberIdentifierModel> phoneNumber = default;
-            Optional<MicrosoftTeamsUserIdentifierModel> microsoftTeamsUser = default;
+            Core.Optional<string> rawId = default;
+            Core.Optional<CommunicationUserIdentifierModel> communicationUser = default;
+            Core.Optional<PhoneNumberIdentifierModel> phoneNumber = default;
+            Core.Optional<MicrosoftTeamsUserIdentifierModel> microsoftTeamsUser = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rawId"u8))

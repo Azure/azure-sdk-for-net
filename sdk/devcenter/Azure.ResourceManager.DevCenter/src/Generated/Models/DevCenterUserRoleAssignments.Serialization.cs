@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class DevCenterUserRoleAssignments : IUtf8JsonSerializable
+    public partial class DevCenterUserRoleAssignments : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Roles))
+            if (Core.Optional.IsCollectionDefined(Roles))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, DevCenterEnvironmentRole>> roles = default;
+            Core.Optional<IDictionary<string, DevCenterEnvironmentRole>> roles = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("roles"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     continue;
                 }
             }
-            return new DevCenterUserRoleAssignments(Optional.ToDictionary(roles));
+            return new DevCenterUserRoleAssignments(Core.Optional.ToDictionary(roles));
         }
     }
 }

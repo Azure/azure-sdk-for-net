@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    internal partial class QuotaInfo : IUtf8JsonSerializable
+    internal partial class QuotaInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CoresUsed))
+            if (Core.Optional.IsDefined(CoresUsed))
             {
                 writer.WritePropertyName("coresUsed"u8);
                 writer.WriteNumberValue(CoresUsed.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<int> coresUsed = default;
+            Core.Optional<int> coresUsed = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("coresUsed"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new QuotaInfo(Optional.ToNullable(coresUsed));
+            return new QuotaInfo(Core.Optional.ToNullable(coresUsed));
         }
     }
 }

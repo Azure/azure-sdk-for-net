@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> Initializes a new instance of ElasticSanPrivateLinkResourceListResult. </summary>
         internal ElasticSanPrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<ElasticSanPrivateLinkResource>();
+            Value = new Core.ChangeTrackingList<ElasticSanPrivateLinkResource>();
         }
 
         /// <summary> Initializes a new instance of ElasticSanPrivateLinkResourceListResult. </summary>

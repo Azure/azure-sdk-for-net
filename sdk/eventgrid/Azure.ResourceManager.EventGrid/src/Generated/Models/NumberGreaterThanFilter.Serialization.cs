@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class NumberGreaterThanFilter : IUtf8JsonSerializable
+    public partial class NumberGreaterThanFilter : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
+            if (Core.Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
             }
             writer.WritePropertyName("operatorType"u8);
             writer.WriteStringValue(OperatorType.ToString());
-            if (Optional.IsDefined(Key))
+            if (Core.Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<double> value = default;
+            Core.Optional<double> value = default;
             FilterOperatorType operatorType = default;
-            Optional<string> key = default;
+            Core.Optional<string> key = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new NumberGreaterThanFilter(operatorType, key.Value, Optional.ToNullable(value));
+            return new NumberGreaterThanFilter(operatorType, key.Value, Core.Optional.ToNullable(value));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of ServiceFabricList. </summary>
         internal ServiceFabricList()
         {
-            Value = new ChangeTrackingList<DevTestLabServiceFabricData>();
+            Value = new Core.ChangeTrackingList<DevTestLabServiceFabricData>();
         }
 
         /// <summary> Initializes a new instance of ServiceFabricList. </summary>

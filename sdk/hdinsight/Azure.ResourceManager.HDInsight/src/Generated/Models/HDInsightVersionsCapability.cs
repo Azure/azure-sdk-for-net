@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of HDInsightVersionsCapability. </summary>
         internal HDInsightVersionsCapability()
         {
-            Available = new ChangeTrackingList<HDInsightVersionSpec>();
+            Available = new Core.ChangeTrackingList<HDInsightVersionSpec>();
         }
 
         /// <summary> Initializes a new instance of HDInsightVersionsCapability. </summary>

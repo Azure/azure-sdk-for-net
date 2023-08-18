@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<string> unlockDeleteExpiryTime = default;
+            Core.Optional<string> unlockDeleteExpiryTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unlockDeleteExpiryTime"u8))

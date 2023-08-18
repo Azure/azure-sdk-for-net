@@ -13,17 +13,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataProtectionBackup
 {
-    public partial class DataProtectionBackupInstanceData : IUtf8JsonSerializable
+    public partial class DataProtectionBackupInstanceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 return null;
             }
-            Optional<DataProtectionBackupInstanceProperties> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<DataProtectionBackupInstanceProperties> properties = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     continue;
                 }
             }
-            return new DataProtectionBackupInstanceData(id, name, type, systemData.Value, properties.Value, Optional.ToDictionary(tags));
+            return new DataProtectionBackupInstanceData(id, name, type, systemData.Value, properties.Value, Core.Optional.ToDictionary(tags));
         }
     }
 }

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class RulesEngineRule : IUtf8JsonSerializable
+    public partial class RulesEngineRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteNumberValue(Priority);
             writer.WritePropertyName("action"u8);
             writer.WriteObjectValue(Action);
-            if (Optional.IsCollectionDefined(MatchConditions))
+            if (Core.Optional.IsCollectionDefined(MatchConditions))
             {
                 if (MatchConditions != null)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     writer.WriteNull("matchConditions");
                 }
             }
-            if (Optional.IsDefined(MatchProcessingBehavior))
+            if (Core.Optional.IsDefined(MatchProcessingBehavior))
             {
                 if (MatchProcessingBehavior != null)
                 {
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             string name = default;
             int priority = default;
             RulesEngineAction action = default;
-            Optional<IList<RulesEngineMatchCondition>> matchConditions = default;
-            Optional<MatchProcessingBehavior?> matchProcessingBehavior = default;
+            Core.Optional<IList<RulesEngineMatchCondition>> matchConditions = default;
+            Core.Optional<MatchProcessingBehavior?> matchProcessingBehavior = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new RulesEngineRule(name, priority, action, Optional.ToList(matchConditions), Optional.ToNullable(matchProcessingBehavior));
+            return new RulesEngineRule(name, priority, action, Core.Optional.ToList(matchConditions), Core.Optional.ToNullable(matchProcessingBehavior));
         }
     }
 }

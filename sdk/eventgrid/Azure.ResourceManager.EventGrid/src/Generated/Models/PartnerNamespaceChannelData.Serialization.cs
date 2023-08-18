@@ -13,44 +13,44 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class PartnerNamespaceChannelData : IUtf8JsonSerializable
+    public partial class PartnerNamespaceChannelData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ChannelType))
+            if (Core.Optional.IsDefined(ChannelType))
             {
                 writer.WritePropertyName("channelType"u8);
                 writer.WriteStringValue(ChannelType.Value.ToString());
             }
-            if (Optional.IsDefined(PartnerTopicInfo))
+            if (Core.Optional.IsDefined(PartnerTopicInfo))
             {
                 writer.WritePropertyName("partnerTopicInfo"u8);
                 writer.WriteObjectValue(PartnerTopicInfo);
             }
-            if (Optional.IsDefined(PartnerDestinationInfo))
+            if (Core.Optional.IsDefined(PartnerDestinationInfo))
             {
                 writer.WritePropertyName("partnerDestinationInfo"u8);
                 writer.WriteObjectValue(PartnerDestinationInfo);
             }
-            if (Optional.IsDefined(MessageForActivation))
+            if (Core.Optional.IsDefined(MessageForActivation))
             {
                 writer.WritePropertyName("messageForActivation"u8);
                 writer.WriteStringValue(MessageForActivation);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (Core.Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(ReadinessState))
+            if (Core.Optional.IsDefined(ReadinessState))
             {
                 writer.WritePropertyName("readinessState"u8);
                 writer.WriteStringValue(ReadinessState.Value.ToString());
             }
-            if (Optional.IsDefined(ExpireOnIfNotActivated))
+            if (Core.Optional.IsDefined(ExpireOnIfNotActivated))
             {
                 writer.WritePropertyName("expirationTimeIfNotActivatedUtc"u8);
                 writer.WriteStringValue(ExpireOnIfNotActivated.Value, "O");
@@ -68,14 +68,14 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<PartnerNamespaceChannelType> channelType = default;
-            Optional<PartnerTopicInfo> partnerTopicInfo = default;
-            Optional<PartnerDestinationInfo> partnerDestinationInfo = default;
-            Optional<string> messageForActivation = default;
-            Optional<PartnerNamespaceChannelProvisioningState> provisioningState = default;
-            Optional<PartnerTopicReadinessState> readinessState = default;
-            Optional<DateTimeOffset> expirationTimeIfNotActivatedUtc = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<PartnerNamespaceChannelType> channelType = default;
+            Core.Optional<PartnerTopicInfo> partnerTopicInfo = default;
+            Core.Optional<PartnerDestinationInfo> partnerDestinationInfo = default;
+            Core.Optional<string> messageForActivation = default;
+            Core.Optional<PartnerNamespaceChannelProvisioningState> provisioningState = default;
+            Core.Optional<PartnerTopicReadinessState> readinessState = default;
+            Core.Optional<DateTimeOffset> expirationTimeIfNotActivatedUtc = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.EventGrid
                     continue;
                 }
             }
-            return new PartnerNamespaceChannelData(id, name, type, systemData.Value, Optional.ToNullable(channelType), partnerTopicInfo.Value, partnerDestinationInfo.Value, messageForActivation.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(readinessState), Optional.ToNullable(expirationTimeIfNotActivatedUtc));
+            return new PartnerNamespaceChannelData(id, name, type, systemData.Value, Core.Optional.ToNullable(channelType), partnerTopicInfo.Value, partnerDestinationInfo.Value, messageForActivation.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(readinessState), Core.Optional.ToNullable(expirationTimeIfNotActivatedUtc));
         }
     }
 }

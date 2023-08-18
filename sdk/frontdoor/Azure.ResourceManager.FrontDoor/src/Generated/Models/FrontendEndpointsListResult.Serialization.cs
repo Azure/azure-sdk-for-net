@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FrontendEndpointData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<FrontendEndpointData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new FrontendEndpointsListResult(Optional.ToList(value), nextLink.Value);
+            return new FrontendEndpointsListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

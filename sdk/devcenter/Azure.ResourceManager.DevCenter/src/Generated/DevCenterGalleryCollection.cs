@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = await _devCenterGalleryGalleriesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation<DevCenterGalleryResource>(new DevCenterGalleryOperationSource(Client), _devCenterGalleryGalleriesClientDiagnostics, Pipeline, _devCenterGalleryGalleriesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation<DevCenterGalleryResource>(new DevCenterGalleryOperationSource(Client), _devCenterGalleryGalleriesClientDiagnostics, Pipeline, _devCenterGalleryGalleriesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = _devCenterGalleryGalleriesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryName, data, cancellationToken);
-                var operation = new DevCenterArmOperation<DevCenterGalleryResource>(new DevCenterGalleryOperationSource(Client), _devCenterGalleryGalleriesClientDiagnostics, Pipeline, _devCenterGalleryGalleriesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation<DevCenterGalleryResource>(new DevCenterGalleryOperationSource(Client), _devCenterGalleryGalleriesClientDiagnostics, Pipeline, _devCenterGalleryGalleriesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterGalleryGalleriesRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterGalleryGalleriesRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterGalleryResource(Client, DevCenterGalleryData.DeserializeDevCenterGalleryData(e)), _devCenterGalleryGalleriesClientDiagnostics, Pipeline, "DevCenterGalleryCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterGalleryResource(Client, DevCenterGalleryData.DeserializeDevCenterGalleryData(e)), _devCenterGalleryGalleriesClientDiagnostics, Pipeline, "DevCenterGalleryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterGalleryGalleriesRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterGalleryGalleriesRestClient.CreateListByDevCenterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterGalleryResource(Client, DevCenterGalleryData.DeserializeDevCenterGalleryData(e)), _devCenterGalleryGalleriesClientDiagnostics, Pipeline, "DevCenterGalleryCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterGalleryResource(Client, DevCenterGalleryData.DeserializeDevCenterGalleryData(e)), _devCenterGalleryGalleriesClientDiagnostics, Pipeline, "DevCenterGalleryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

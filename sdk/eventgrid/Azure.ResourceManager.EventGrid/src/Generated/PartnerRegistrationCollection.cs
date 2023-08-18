@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = await _partnerRegistrationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, partnerRegistrationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<PartnerRegistrationResource>(new PartnerRegistrationOperationSource(Client), _partnerRegistrationClientDiagnostics, Pipeline, _partnerRegistrationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, partnerRegistrationName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation<PartnerRegistrationResource>(new PartnerRegistrationOperationSource(Client), _partnerRegistrationClientDiagnostics, Pipeline, _partnerRegistrationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, partnerRegistrationName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = _partnerRegistrationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, partnerRegistrationName, data, cancellationToken);
-                var operation = new EventGridArmOperation<PartnerRegistrationResource>(new PartnerRegistrationOperationSource(Client), _partnerRegistrationClientDiagnostics, Pipeline, _partnerRegistrationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, partnerRegistrationName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation<PartnerRegistrationResource>(new PartnerRegistrationOperationSource(Client), _partnerRegistrationClientDiagnostics, Pipeline, _partnerRegistrationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, partnerRegistrationName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _partnerRegistrationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _partnerRegistrationRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerRegistrationResource(Client, PartnerRegistrationData.DeserializePartnerRegistrationData(e)), _partnerRegistrationClientDiagnostics, Pipeline, "PartnerRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerRegistrationResource(Client, PartnerRegistrationData.DeserializePartnerRegistrationData(e)), _partnerRegistrationClientDiagnostics, Pipeline, "PartnerRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _partnerRegistrationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _partnerRegistrationRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerRegistrationResource(Client, PartnerRegistrationData.DeserializePartnerRegistrationData(e)), _partnerRegistrationClientDiagnostics, Pipeline, "PartnerRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerRegistrationResource(Client, PartnerRegistrationData.DeserializePartnerRegistrationData(e)), _partnerRegistrationClientDiagnostics, Pipeline, "PartnerRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

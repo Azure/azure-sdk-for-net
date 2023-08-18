@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            ResourceOperations = new ChangeTrackingList<ResourceOperation>();
-            Messages = new ChangeTrackingList<Message>();
+            ResourceOperations = new Core.ChangeTrackingList<ResourceOperation>();
+            Messages = new Core.ChangeTrackingList<Message>();
         }
 
         /// <summary> Initializes a new instance of RolloutStep. </summary>

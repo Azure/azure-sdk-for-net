@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> accessRulesVersion = default;
-            Optional<IReadOnlyList<EventHubsNspAccessRule>> accessRules = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> accessRulesVersion = default;
+            Core.Optional<IReadOnlyList<EventHubsNspAccessRule>> accessRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(name.Value, accessRulesVersion.Value, Optional.ToList(accessRules));
+            return new EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(name.Value, accessRulesVersion.Value, Core.Optional.ToList(accessRules));
         }
     }
 }

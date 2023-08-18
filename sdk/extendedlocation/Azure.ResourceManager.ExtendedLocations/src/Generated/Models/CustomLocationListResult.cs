@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         /// <summary> Initializes a new instance of CustomLocationListResult. </summary>
         internal CustomLocationListResult()
         {
-            Value = new ChangeTrackingList<CustomLocationData>();
+            Value = new Core.ChangeTrackingList<CustomLocationData>();
         }
 
         /// <summary> Initializes a new instance of CustomLocationListResult. </summary>

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionBackupRule : IUtf8JsonSerializable
+    public partial class DataProtectionBackupRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BackupParameters))
+            if (Core.Optional.IsDefined(BackupParameters))
             {
                 writer.WritePropertyName("backupParameters"u8);
                 writer.WriteObjectValue(BackupParameters);
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<DataProtectionBackupSettingsBase> backupParameters = default;
+            Core.Optional<DataProtectionBackupSettingsBase> backupParameters = default;
             DataStoreInfoBase dataStore = default;
             DataProtectionBackupTriggerContext trigger = default;
             string name = default;

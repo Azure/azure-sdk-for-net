@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = await _eventSubscriptionRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation(_eventSubscriptionClientDiagnostics, Pipeline, _eventSubscriptionRestClient.CreateDeleteRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation(_eventSubscriptionClientDiagnostics, Pipeline, _eventSubscriptionRestClient.CreateDeleteRequest(Id.Parent, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = _eventSubscriptionRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
-                var operation = new EventGridArmOperation(_eventSubscriptionClientDiagnostics, Pipeline, _eventSubscriptionRestClient.CreateDeleteRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation(_eventSubscriptionClientDiagnostics, Pipeline, _eventSubscriptionRestClient.CreateDeleteRequest(Id.Parent, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = await _eventSubscriptionRestClient.UpdateAsync(Id.Parent, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<EventSubscriptionResource>(new EventSubscriptionOperationSource(Client), _eventSubscriptionClientDiagnostics, Pipeline, _eventSubscriptionRestClient.CreateUpdateRequest(Id.Parent, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation<EventSubscriptionResource>(new EventSubscriptionOperationSource(Client), _eventSubscriptionClientDiagnostics, Pipeline, _eventSubscriptionRestClient.CreateUpdateRequest(Id.Parent, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = _eventSubscriptionRestClient.Update(Id.Parent, Id.Name, patch, cancellationToken);
-                var operation = new EventGridArmOperation<EventSubscriptionResource>(new EventSubscriptionOperationSource(Client), _eventSubscriptionClientDiagnostics, Pipeline, _eventSubscriptionRestClient.CreateUpdateRequest(Id.Parent, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation<EventSubscriptionResource>(new EventSubscriptionOperationSource(Client), _eventSubscriptionClientDiagnostics, Pipeline, _eventSubscriptionRestClient.CreateUpdateRequest(Id.Parent, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.EventGrid
         public virtual AsyncPageable<DeliveryAttributeMapping> GetDeliveryAttributesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateGetDeliveryAttributesRequest(Id.Parent, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping, _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionResource.GetDeliveryAttributes", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping, _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionResource.GetDeliveryAttributes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.EventGrid
         public virtual Pageable<DeliveryAttributeMapping> GetDeliveryAttributes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateGetDeliveryAttributesRequest(Id.Parent, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping, _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionResource.GetDeliveryAttributes", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping, _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionResource.GetDeliveryAttributes", "value", null, cancellationToken);
         }
 
         /// <summary>

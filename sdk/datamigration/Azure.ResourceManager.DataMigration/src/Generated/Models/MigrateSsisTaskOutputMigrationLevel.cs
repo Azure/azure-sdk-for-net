@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of MigrateSsisTaskOutputMigrationLevel. </summary>
         internal MigrateSsisTaskOutputMigrationLevel()
         {
-            ExceptionsAndWarnings = new ChangeTrackingList<ReportableException>();
+            ExceptionsAndWarnings = new Core.ChangeTrackingList<ReportableException>();
             ResultType = "MigrationLevelOutput";
         }
 

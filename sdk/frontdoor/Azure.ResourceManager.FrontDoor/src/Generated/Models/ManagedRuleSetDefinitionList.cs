@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Initializes a new instance of ManagedRuleSetDefinitionList. </summary>
         internal ManagedRuleSetDefinitionList()
         {
-            Value = new ChangeTrackingList<ManagedRuleSetDefinition>();
+            Value = new Core.ChangeTrackingList<ManagedRuleSetDefinition>();
         }
 
         /// <summary> Initializes a new instance of ManagedRuleSetDefinitionList. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.GraphServices.Models
         /// <summary> Initializes a new instance of GraphServicesTagUpdate. </summary>
         public GraphServicesTagUpdate()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> List of key value pairs that describe the resource. This will overwrite the existing tags. </summary>

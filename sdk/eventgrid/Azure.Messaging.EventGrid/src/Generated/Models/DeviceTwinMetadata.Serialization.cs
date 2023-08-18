@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> lastUpdated = default;
+            Core.Optional<string> lastUpdated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastUpdated"u8))

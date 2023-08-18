@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<Guid> backupSetId = default;
-            Optional<string> firstLSN = default;
-            Optional<string> lastLSN = default;
-            Optional<string> backupType = default;
-            Optional<IReadOnlyList<SqlBackupFileInfo>> listOfBackupFiles = default;
-            Optional<DateTimeOffset> backupStartDate = default;
-            Optional<DateTimeOffset> backupFinishDate = default;
-            Optional<bool> isBackupRestored = default;
-            Optional<bool> hasBackupChecksums = default;
-            Optional<int> familyCount = default;
-            Optional<IReadOnlyList<string>> ignoreReasons = default;
+            Core.Optional<Guid> backupSetId = default;
+            Core.Optional<string> firstLSN = default;
+            Core.Optional<string> lastLSN = default;
+            Core.Optional<string> backupType = default;
+            Core.Optional<IReadOnlyList<SqlBackupFileInfo>> listOfBackupFiles = default;
+            Core.Optional<DateTimeOffset> backupStartDate = default;
+            Core.Optional<DateTimeOffset> backupFinishDate = default;
+            Core.Optional<bool> isBackupRestored = default;
+            Core.Optional<bool> hasBackupChecksums = default;
+            Core.Optional<int> familyCount = default;
+            Core.Optional<IReadOnlyList<string>> ignoreReasons = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backupSetId"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new SqlBackupSetInfo(Optional.ToNullable(backupSetId), firstLSN.Value, lastLSN.Value, backupType.Value, Optional.ToList(listOfBackupFiles), Optional.ToNullable(backupStartDate), Optional.ToNullable(backupFinishDate), Optional.ToNullable(isBackupRestored), Optional.ToNullable(hasBackupChecksums), Optional.ToNullable(familyCount), Optional.ToList(ignoreReasons));
+            return new SqlBackupSetInfo(Core.Optional.ToNullable(backupSetId), firstLSN.Value, lastLSN.Value, backupType.Value, Core.Optional.ToList(listOfBackupFiles), Core.Optional.ToNullable(backupStartDate), Core.Optional.ToNullable(backupFinishDate), Core.Optional.ToNullable(isBackupRestored), Core.Optional.ToNullable(hasBackupChecksums), Core.Optional.ToNullable(familyCount), Core.Optional.ToList(ignoreReasons));
         }
     }
 }

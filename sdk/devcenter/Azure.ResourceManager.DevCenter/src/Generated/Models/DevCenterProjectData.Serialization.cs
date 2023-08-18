@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    public partial class DevCenterProjectData : IUtf8JsonSerializable
+    public partial class DevCenterProjectData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.DevCenter
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DevCenterId))
+            if (Core.Optional.IsDefined(DevCenterId))
             {
                 writer.WritePropertyName("devCenterId"u8);
                 writer.WriteStringValue(DevCenterId);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(MaxDevBoxesPerUser))
+            if (Core.Optional.IsDefined(MaxDevBoxesPerUser))
             {
                 writer.WritePropertyName("maxDevBoxesPerUser"u8);
                 writer.WriteNumberValue(MaxDevBoxesPerUser.Value);
@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.DevCenter
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> devCenterId = default;
-            Optional<string> description = default;
-            Optional<int> maxDevBoxesPerUser = default;
-            Optional<DevCenterProvisioningState> provisioningState = default;
-            Optional<Uri> devCenterUri = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ResourceIdentifier> devCenterId = default;
+            Core.Optional<string> description = default;
+            Core.Optional<int> maxDevBoxesPerUser = default;
+            Core.Optional<DevCenterProvisioningState> provisioningState = default;
+            Core.Optional<Uri> devCenterUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DevCenter
                     continue;
                 }
             }
-            return new DevCenterProjectData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, devCenterId.Value, description.Value, Optional.ToNullable(maxDevBoxesPerUser), Optional.ToNullable(provisioningState), devCenterUri.Value);
+            return new DevCenterProjectData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, devCenterId.Value, description.Value, Core.Optional.ToNullable(maxDevBoxesPerUser), Core.Optional.ToNullable(provisioningState), devCenterUri.Value);
         }
     }
 }

@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <summary> Initializes a new instance of DnsForwardingRulesetPatch. </summary>
         public DnsForwardingRulesetPatch()
         {
-            DnsResolverOutboundEndpoints = new ChangeTrackingList<WritableSubResource>();
-            Tags = new ChangeTrackingDictionary<string, string>();
+            DnsResolverOutboundEndpoints = new Core.ChangeTrackingList<WritableSubResource>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The reference to the DNS resolver outbound endpoints that are used to route DNS queries matching the forwarding rules in the ruleset to the target DNS servers. </summary>

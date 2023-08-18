@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> commandText = default;
-            Optional<string> errorText = default;
-            Optional<string> id = default;
+            Core.Optional<string> commandText = default;
+            Core.Optional<string> errorText = default;
+            Core.Optional<string> id = default;
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {

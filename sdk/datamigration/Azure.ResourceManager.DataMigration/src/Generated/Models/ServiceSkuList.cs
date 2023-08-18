@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of ServiceSkuList. </summary>
         internal ServiceSkuList()
         {
-            Value = new ChangeTrackingList<AvailableServiceSku>();
+            Value = new Core.ChangeTrackingList<AvailableServiceSku>();
         }
 
         /// <summary> Initializes a new instance of ServiceSkuList. </summary>

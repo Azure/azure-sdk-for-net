@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.GraphServices.Models
         /// <summary> Initializes a new instance of GraphServicesAccountResourceList. </summary>
         internal GraphServicesAccountResourceList()
         {
-            Value = new ChangeTrackingList<GraphServicesAccountResourceData>();
+            Value = new Core.ChangeTrackingList<GraphServicesAccountResourceData>();
         }
 
         /// <summary> Initializes a new instance of GraphServicesAccountResourceList. </summary>

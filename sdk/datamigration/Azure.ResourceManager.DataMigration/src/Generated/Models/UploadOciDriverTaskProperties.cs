@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of UploadOciDriverTaskProperties. </summary>
         public UploadOciDriverTaskProperties()
         {
-            Output = new ChangeTrackingList<UploadOciDriverTaskOutput>();
+            Output = new Core.ChangeTrackingList<UploadOciDriverTaskOutput>();
             TaskType = TaskType.ServiceUploadOci;
         }
 

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    internal partial class WindowsOSInfo : IUtf8JsonSerializable
+    internal partial class WindowsOSInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(WindowsOSState))
+            if (Core.Optional.IsDefined(WindowsOSState))
             {
                 writer.WritePropertyName("windowsOsState"u8);
                 writer.WriteStringValue(WindowsOSState.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<WindowsOSState> windowsOSState = default;
+            Core.Optional<WindowsOSState> windowsOSState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("windowsOsState"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new WindowsOSInfo(Optional.ToNullable(windowsOSState));
+            return new WindowsOSInfo(Core.Optional.ToNullable(windowsOSState));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of MigrationValidationResult. </summary>
         internal MigrationValidationResult()
         {
-            SummaryResults = new ChangeTrackingDictionary<string, MigrationValidationDatabaseSummaryResult>();
+            SummaryResults = new Core.ChangeTrackingDictionary<string, MigrationValidationDatabaseSummaryResult>();
         }
 
         /// <summary> Initializes a new instance of MigrationValidationResult. </summary>

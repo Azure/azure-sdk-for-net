@@ -21,9 +21,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> name = default;
-            Optional<string> status = default;
+            Core.Optional<DateTimeOffset> timestamp = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"u8))
@@ -46,7 +46,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new RedisExportRdbCompletedEventData(Optional.ToNullable(timestamp), name.Value, status.Value);
+            return new RedisExportRdbCompletedEventData(Core.Optional.ToNullable(timestamp), name.Value, status.Value);
         }
 
         internal partial class RedisExportRdbCompletedEventDataConverter : JsonConverter<RedisExportRdbCompletedEventData>

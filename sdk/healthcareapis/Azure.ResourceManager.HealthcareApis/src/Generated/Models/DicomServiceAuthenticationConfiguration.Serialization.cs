@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class DicomServiceAuthenticationConfiguration : IUtf8JsonSerializable
+    public partial class DicomServiceAuthenticationConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<string> authority = default;
-            Optional<IReadOnlyList<string>> audiences = default;
+            Core.Optional<string> authority = default;
+            Core.Optional<IReadOnlyList<string>> audiences = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authority"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     continue;
                 }
             }
-            return new DicomServiceAuthenticationConfiguration(authority.Value, Optional.ToList(audiences));
+            return new DicomServiceAuthenticationConfiguration(authority.Value, Core.Optional.ToList(audiences));
         }
     }
 }

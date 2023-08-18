@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of KafkaRestProperties. </summary>
         public KafkaRestProperties()
         {
-            ConfigurationOverride = new ChangeTrackingDictionary<string, string>();
+            ConfigurationOverride = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of KafkaRestProperties. </summary>

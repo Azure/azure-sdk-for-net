@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.Models
             string text = default;
             IReadOnlyList<float> boundingBox = default;
             IReadOnlyList<TextWord> words = default;
-            Optional<TextAppearance> appearance = default;
+            Core.Optional<TextAppearance> appearance = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))

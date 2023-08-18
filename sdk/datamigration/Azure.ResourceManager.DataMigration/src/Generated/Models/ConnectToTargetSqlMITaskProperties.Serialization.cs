@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ConnectToTargetSqlMITaskProperties : IUtf8JsonSerializable
+    public partial class ConnectToTargetSqlMITaskProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Input))
+            if (Core.Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
             }
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
-            if (Optional.IsCollectionDefined(ClientData))
+            if (Core.Optional.IsCollectionDefined(ClientData))
             {
                 writer.WritePropertyName("clientData"u8);
                 writer.WriteStartObject();
@@ -43,13 +43,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<ConnectToTargetSqlMITaskInput> input = default;
-            Optional<IReadOnlyList<ConnectToTargetSqlMITaskOutput>> output = default;
+            Core.Optional<ConnectToTargetSqlMITaskInput> input = default;
+            Core.Optional<IReadOnlyList<ConnectToTargetSqlMITaskOutput>> output = default;
             TaskType taskType = default;
-            Optional<IReadOnlyList<ODataError>> errors = default;
-            Optional<TaskState> state = default;
-            Optional<IReadOnlyList<CommandProperties>> commands = default;
-            Optional<IDictionary<string, string>> clientData = default;
+            Core.Optional<IReadOnlyList<ODataError>> errors = default;
+            Core.Optional<TaskState> state = default;
+            Core.Optional<IReadOnlyList<CommandProperties>> commands = default;
+            Core.Optional<IDictionary<string, string>> clientData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("input"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ConnectToTargetSqlMITaskProperties(taskType, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToList(commands), Optional.ToDictionary(clientData), input.Value, Optional.ToList(output));
+            return new ConnectToTargetSqlMITaskProperties(taskType, Core.Optional.ToList(errors), Core.Optional.ToNullable(state), Core.Optional.ToList(commands), Core.Optional.ToDictionary(clientData), input.Value, Core.Optional.ToList(output));
         }
     }
 }

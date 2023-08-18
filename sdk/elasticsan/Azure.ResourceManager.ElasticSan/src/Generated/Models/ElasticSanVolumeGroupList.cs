@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> Initializes a new instance of ElasticSanVolumeGroupList. </summary>
         internal ElasticSanVolumeGroupList()
         {
-            Value = new ChangeTrackingList<ElasticSanVolumeGroupData>();
+            Value = new Core.ChangeTrackingList<ElasticSanVolumeGroupData>();
         }
 
         /// <summary> Initializes a new instance of ElasticSanVolumeGroupList. </summary>

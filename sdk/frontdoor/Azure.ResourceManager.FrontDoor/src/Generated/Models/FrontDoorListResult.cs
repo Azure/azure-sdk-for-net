@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Initializes a new instance of FrontDoorListResult. </summary>
         internal FrontDoorListResult()
         {
-            Value = new ChangeTrackingList<FrontDoorData>();
+            Value = new Core.ChangeTrackingList<FrontDoorData>();
         }
 
         /// <summary> Initializes a new instance of FrontDoorListResult. </summary>

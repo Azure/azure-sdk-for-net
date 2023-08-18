@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class ConnectivityEndpoint : IUtf8JsonSerializable
+    public partial class ConnectivityEndpoint : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Protocol))
+            if (Core.Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol);
             }
-            if (Optional.IsDefined(EndpointLocation))
+            if (Core.Optional.IsDefined(EndpointLocation))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(EndpointLocation);
             }
-            if (Optional.IsDefined(Port))
+            if (Core.Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Optional.IsDefined(PrivateIPAddress))
+            if (Core.Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> protocol = default;
-            Optional<string> location = default;
-            Optional<int> port = default;
-            Optional<IPAddress> privateIPAddress = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> protocol = default;
+            Core.Optional<string> location = default;
+            Core.Optional<int> port = default;
+            Core.Optional<IPAddress> privateIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new ConnectivityEndpoint(name.Value, protocol.Value, location.Value, Optional.ToNullable(port), privateIPAddress.Value);
+            return new ConnectivityEndpoint(name.Value, protocol.Value, location.Value, Core.Optional.ToNullable(port), privateIPAddress.Value);
         }
     }
 }

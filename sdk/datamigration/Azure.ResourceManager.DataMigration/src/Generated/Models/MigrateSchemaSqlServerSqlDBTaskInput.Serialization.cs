@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSchemaSqlServerSqlDBTaskInput : IUtf8JsonSerializable
+    public partial class MigrateSchemaSqlServerSqlDBTaskInput : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("selectedDatabases"u8);
@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(EncryptedKeyForSecureFields))
+            if (Core.Optional.IsDefined(EncryptedKeyForSecureFields))
             {
                 writer.WritePropertyName("encryptedKeyForSecureFields"u8);
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
             }
-            if (Optional.IsDefined(StartedOn))
+            if (Core.Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn);
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             IList<MigrateSchemaSqlServerSqlDBDatabaseInput> selectedDatabases = default;
-            Optional<string> encryptedKeyForSecureFields = default;
-            Optional<string> startedOn = default;
+            Core.Optional<string> encryptedKeyForSecureFields = default;
+            Core.Optional<string> startedOn = default;
             SqlConnectionInfo sourceConnectionInfo = default;
             SqlConnectionInfo targetConnectionInfo = default;
             foreach (var property in element.EnumerateObject())

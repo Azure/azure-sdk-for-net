@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlDBTaskInput : IUtf8JsonSerializable
+    public partial class MigrateSqlServerSqlDBTaskInput : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("selectedDatabases"u8);
@@ -23,17 +23,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(ValidationOptions))
+            if (Core.Optional.IsDefined(ValidationOptions))
             {
                 writer.WritePropertyName("validationOptions"u8);
                 writer.WriteObjectValue(ValidationOptions);
             }
-            if (Optional.IsDefined(StartedOn))
+            if (Core.Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn);
             }
-            if (Optional.IsDefined(EncryptedKeyForSecureFields))
+            if (Core.Optional.IsDefined(EncryptedKeyForSecureFields))
             {
                 writer.WritePropertyName("encryptedKeyForSecureFields"u8);
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             IList<MigrateSqlServerSqlDBDatabaseInput> selectedDatabases = default;
-            Optional<MigrationValidationOptions> validationOptions = default;
-            Optional<string> startedOn = default;
-            Optional<string> encryptedKeyForSecureFields = default;
+            Core.Optional<MigrationValidationOptions> validationOptions = default;
+            Core.Optional<string> startedOn = default;
+            Core.Optional<string> encryptedKeyForSecureFields = default;
             SqlConnectionInfo sourceConnectionInfo = default;
             SqlConnectionInfo targetConnectionInfo = default;
             foreach (var property in element.EnumerateObject())

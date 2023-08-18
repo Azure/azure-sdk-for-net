@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = await _devCenterPoolPoolsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation(_devCenterPoolPoolsClientDiagnostics, Pipeline, _devCenterPoolPoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation(_devCenterPoolPoolsClientDiagnostics, Pipeline, _devCenterPoolPoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = _devCenterPoolPoolsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DevCenterArmOperation(_devCenterPoolPoolsClientDiagnostics, Pipeline, _devCenterPoolPoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation(_devCenterPoolPoolsClientDiagnostics, Pipeline, _devCenterPoolPoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = await _devCenterPoolPoolsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation<DevCenterPoolResource>(new DevCenterPoolOperationSource(Client), _devCenterPoolPoolsClientDiagnostics, Pipeline, _devCenterPoolPoolsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation<DevCenterPoolResource>(new DevCenterPoolOperationSource(Client), _devCenterPoolPoolsClientDiagnostics, Pipeline, _devCenterPoolPoolsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = _devCenterPoolPoolsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new DevCenterArmOperation<DevCenterPoolResource>(new DevCenterPoolOperationSource(Client), _devCenterPoolPoolsClientDiagnostics, Pipeline, _devCenterPoolPoolsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation<DevCenterPoolResource>(new DevCenterPoolOperationSource(Client), _devCenterPoolPoolsClientDiagnostics, Pipeline, _devCenterPoolPoolsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = await _devCenterPoolPoolsRestClient.RunHealthChecksAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation(_devCenterPoolPoolsClientDiagnostics, Pipeline, _devCenterPoolPoolsRestClient.CreateRunHealthChecksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation(_devCenterPoolPoolsClientDiagnostics, Pipeline, _devCenterPoolPoolsRestClient.CreateRunHealthChecksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = _devCenterPoolPoolsRestClient.RunHealthChecks(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DevCenterArmOperation(_devCenterPoolPoolsClientDiagnostics, Pipeline, _devCenterPoolPoolsRestClient.CreateRunHealthChecksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation(_devCenterPoolPoolsClientDiagnostics, Pipeline, _devCenterPoolPoolsRestClient.CreateRunHealthChecksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

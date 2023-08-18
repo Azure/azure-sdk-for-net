@@ -20,18 +20,18 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> sourceDatabaseName = default;
-            Optional<DatabaseMigrationState> migrationState = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<BackupSetInfo> fullBackupSetInfo = default;
-            Optional<BackupSetInfo> lastRestoredBackupSetInfo = default;
-            Optional<IReadOnlyList<BackupSetInfo>> activeBackupSets = default;
-            Optional<string> containerName = default;
-            Optional<string> errorPrefix = default;
-            Optional<bool> isFullBackupRestored = default;
-            Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
-            Optional<string> id = default;
+            Core.Optional<string> sourceDatabaseName = default;
+            Core.Optional<DatabaseMigrationState> migrationState = default;
+            Core.Optional<DateTimeOffset> startedOn = default;
+            Core.Optional<DateTimeOffset> endedOn = default;
+            Core.Optional<BackupSetInfo> fullBackupSetInfo = default;
+            Core.Optional<BackupSetInfo> lastRestoredBackupSetInfo = default;
+            Core.Optional<IReadOnlyList<BackupSetInfo>> activeBackupSets = default;
+            Core.Optional<string> containerName = default;
+            Core.Optional<string> errorPrefix = default;
+            Core.Optional<bool> isFullBackupRestored = default;
+            Core.Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
+            Core.Optional<string> id = default;
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(id.Value, resultType, sourceDatabaseName.Value, Optional.ToNullable(migrationState), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), fullBackupSetInfo.Value, lastRestoredBackupSetInfo.Value, Optional.ToList(activeBackupSets), containerName.Value, errorPrefix.Value, Optional.ToNullable(isFullBackupRestored), Optional.ToList(exceptionsAndWarnings));
+            return new MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(id.Value, resultType, sourceDatabaseName.Value, Core.Optional.ToNullable(migrationState), Core.Optional.ToNullable(startedOn), Core.Optional.ToNullable(endedOn), fullBackupSetInfo.Value, lastRestoredBackupSetInfo.Value, Core.Optional.ToList(activeBackupSets), containerName.Value, errorPrefix.Value, Core.Optional.ToNullable(isFullBackupRestored), Core.Optional.ToList(exceptionsAndWarnings));
         }
     }
 }

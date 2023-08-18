@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class SessionHostMaintenanceWindowProperties : IUtf8JsonSerializable
+    public partial class SessionHostMaintenanceWindowProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Hour))
+            if (Core.Optional.IsDefined(Hour))
             {
                 writer.WritePropertyName("hour"u8);
                 writer.WriteNumberValue(Hour.Value);
             }
-            if (Optional.IsDefined(DayOfWeek))
+            if (Core.Optional.IsDefined(DayOfWeek))
             {
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteStringValue(DayOfWeek.Value.ToSerialString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<int> hour = default;
-            Optional<DesktopVirtualizationDayOfWeek> dayOfWeek = default;
+            Core.Optional<int> hour = default;
+            Core.Optional<DesktopVirtualizationDayOfWeek> dayOfWeek = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hour"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     continue;
                 }
             }
-            return new SessionHostMaintenanceWindowProperties(Optional.ToNullable(hour), Optional.ToNullable(dayOfWeek));
+            return new SessionHostMaintenanceWindowProperties(Core.Optional.ToNullable(hour), Core.Optional.ToNullable(dayOfWeek));
         }
     }
 }

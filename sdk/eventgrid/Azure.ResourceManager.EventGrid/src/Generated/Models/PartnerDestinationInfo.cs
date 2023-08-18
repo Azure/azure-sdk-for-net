@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of PartnerDestinationInfo. </summary>
         protected PartnerDestinationInfo()
         {
-            ResourceMoveChangeHistory = new ChangeTrackingList<ResourceMoveChangeHistory>();
+            ResourceMoveChangeHistory = new Core.ChangeTrackingList<ResourceMoveChangeHistory>();
         }
 
         /// <summary> Initializes a new instance of PartnerDestinationInfo. </summary>

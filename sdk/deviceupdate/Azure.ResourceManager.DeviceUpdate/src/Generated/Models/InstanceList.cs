@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <summary> Initializes a new instance of InstanceList. </summary>
         internal InstanceList()
         {
-            Value = new ChangeTrackingList<DeviceUpdateInstanceData>();
+            Value = new Core.ChangeTrackingList<DeviceUpdateInstanceData>();
         }
 
         /// <summary> Initializes a new instance of InstanceList. </summary>

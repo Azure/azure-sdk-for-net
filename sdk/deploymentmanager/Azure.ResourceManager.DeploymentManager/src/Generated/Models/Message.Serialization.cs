@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> timeStamp = default;
-            Optional<string> message = default;
+            Core.Optional<DateTimeOffset> timeStamp = default;
+            Core.Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeStamp"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     continue;
                 }
             }
-            return new Message(Optional.ToNullable(timeStamp), message.Value);
+            return new Message(Core.Optional.ToNullable(timeStamp), message.Value);
         }
     }
 }

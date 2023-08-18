@@ -12,41 +12,41 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class WebHookEventSubscriptionDestination : IUtf8JsonSerializable
+    public partial class WebHookEventSubscriptionDestination : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Endpoint))
+            if (Core.Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpointUrl"u8);
                 writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
-            if (Optional.IsDefined(MaxEventsPerBatch))
+            if (Core.Optional.IsDefined(MaxEventsPerBatch))
             {
                 writer.WritePropertyName("maxEventsPerBatch"u8);
                 writer.WriteNumberValue(MaxEventsPerBatch.Value);
             }
-            if (Optional.IsDefined(PreferredBatchSizeInKilobytes))
+            if (Core.Optional.IsDefined(PreferredBatchSizeInKilobytes))
             {
                 writer.WritePropertyName("preferredBatchSizeInKilobytes"u8);
                 writer.WriteNumberValue(PreferredBatchSizeInKilobytes.Value);
             }
-            if (Optional.IsDefined(AzureActiveDirectoryTenantId))
+            if (Core.Optional.IsDefined(AzureActiveDirectoryTenantId))
             {
                 writer.WritePropertyName("azureActiveDirectoryTenantId"u8);
                 writer.WriteStringValue(AzureActiveDirectoryTenantId.Value);
             }
-            if (Optional.IsDefined(UriOrAzureActiveDirectoryApplicationId))
+            if (Core.Optional.IsDefined(UriOrAzureActiveDirectoryApplicationId))
             {
                 writer.WritePropertyName("azureActiveDirectoryApplicationIdOrUri"u8);
                 writer.WriteStringValue(UriOrAzureActiveDirectoryApplicationId);
             }
-            if (Optional.IsCollectionDefined(DeliveryAttributeMappings))
+            if (Core.Optional.IsCollectionDefined(DeliveryAttributeMappings))
             {
                 writer.WritePropertyName("deliveryAttributeMappings"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MinimumTlsVersionAllowed))
+            if (Core.Optional.IsDefined(MinimumTlsVersionAllowed))
             {
                 writer.WritePropertyName("minimumTlsVersionAllowed"u8);
                 writer.WriteStringValue(MinimumTlsVersionAllowed.Value.ToString());
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             EndpointType endpointType = default;
-            Optional<Uri> endpointUri = default;
-            Optional<Uri> endpointBaseUri = default;
-            Optional<int> maxEventsPerBatch = default;
-            Optional<int> preferredBatchSizeInKilobytes = default;
-            Optional<Guid> azureActiveDirectoryTenantId = default;
-            Optional<string> azureActiveDirectoryApplicationIdOrUri = default;
-            Optional<IList<DeliveryAttributeMapping>> deliveryAttributeMappings = default;
-            Optional<TlsVersion> minimumTlsVersionAllowed = default;
+            Core.Optional<Uri> endpointUri = default;
+            Core.Optional<Uri> endpointBaseUri = default;
+            Core.Optional<int> maxEventsPerBatch = default;
+            Core.Optional<int> preferredBatchSizeInKilobytes = default;
+            Core.Optional<Guid> azureActiveDirectoryTenantId = default;
+            Core.Optional<string> azureActiveDirectoryApplicationIdOrUri = default;
+            Core.Optional<IList<DeliveryAttributeMapping>> deliveryAttributeMappings = default;
+            Core.Optional<TlsVersion> minimumTlsVersionAllowed = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointType"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new WebHookEventSubscriptionDestination(endpointType, endpointUri.Value, endpointBaseUri.Value, Optional.ToNullable(maxEventsPerBatch), Optional.ToNullable(preferredBatchSizeInKilobytes), Optional.ToNullable(azureActiveDirectoryTenantId), azureActiveDirectoryApplicationIdOrUri.Value, Optional.ToList(deliveryAttributeMappings), Optional.ToNullable(minimumTlsVersionAllowed));
+            return new WebHookEventSubscriptionDestination(endpointType, endpointUri.Value, endpointBaseUri.Value, Core.Optional.ToNullable(maxEventsPerBatch), Core.Optional.ToNullable(preferredBatchSizeInKilobytes), Core.Optional.ToNullable(azureActiveDirectoryTenantId), azureActiveDirectoryApplicationIdOrUri.Value, Core.Optional.ToList(deliveryAttributeMappings), Core.Optional.ToNullable(minimumTlsVersionAllowed));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of PermissionBindingsListResult. </summary>
         internal PermissionBindingsListResult()
         {
-            Value = new ChangeTrackingList<EventGridNamespacePermissionBindingData>();
+            Value = new Core.ChangeTrackingList<EventGridNamespacePermissionBindingData>();
         }
 
         /// <summary> Initializes a new instance of PermissionBindingsListResult. </summary>

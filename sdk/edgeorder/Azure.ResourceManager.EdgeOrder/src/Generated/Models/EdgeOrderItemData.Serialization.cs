@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
-    public partial class EdgeOrderItemData : IUtf8JsonSerializable
+    public partial class EdgeOrderItemData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -50,15 +50,15 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             EdgeOrderItemDetails orderItemDetails = default;
             EdgeOrderItemAddressDetails addressDetails = default;
-            Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> startTime = default;
             ResourceIdentifier orderId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.EdgeOrder
                     continue;
                 }
             }
-            return new EdgeOrderItemData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, orderItemDetails, addressDetails, Optional.ToNullable(startTime), orderId);
+            return new EdgeOrderItemData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, orderItemDetails, addressDetails, Core.Optional.ToNullable(startTime), orderId);
         }
     }
 }

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    internal class HealthcareApisWorkspaceOperationSource : IOperationSource<HealthcareApisWorkspaceResource>
+    internal class HealthcareApisWorkspaceOperationSource : Core.IOperationSource<HealthcareApisWorkspaceResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.HealthcareApis
             _client = client;
         }
 
-        HealthcareApisWorkspaceResource IOperationSource<HealthcareApisWorkspaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        HealthcareApisWorkspaceResource Core.IOperationSource<HealthcareApisWorkspaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = HealthcareApisWorkspaceData.DeserializeHealthcareApisWorkspaceData(document.RootElement);
             return new HealthcareApisWorkspaceResource(_client, data);
         }
 
-        async ValueTask<HealthcareApisWorkspaceResource> IOperationSource<HealthcareApisWorkspaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HealthcareApisWorkspaceResource> Core.IOperationSource<HealthcareApisWorkspaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = HealthcareApisWorkspaceData.DeserializeHealthcareApisWorkspaceData(document.RootElement);

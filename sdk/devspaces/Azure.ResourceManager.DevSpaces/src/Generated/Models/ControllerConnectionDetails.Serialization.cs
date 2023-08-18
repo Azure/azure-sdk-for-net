@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             {
                 return null;
             }
-            Optional<OrchestratorSpecificConnectionDetails> orchestratorSpecificConnectionDetails = default;
+            Core.Optional<OrchestratorSpecificConnectionDetails> orchestratorSpecificConnectionDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("orchestratorSpecificConnectionDetails"u8))

@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class EventSubscriptionFilter : IUtf8JsonSerializable
+    public partial class EventSubscriptionFilter : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SubjectBeginsWith))
+            if (Core.Optional.IsDefined(SubjectBeginsWith))
             {
                 writer.WritePropertyName("subjectBeginsWith"u8);
                 writer.WriteStringValue(SubjectBeginsWith);
             }
-            if (Optional.IsDefined(SubjectEndsWith))
+            if (Core.Optional.IsDefined(SubjectEndsWith))
             {
                 writer.WritePropertyName("subjectEndsWith"u8);
                 writer.WriteStringValue(SubjectEndsWith);
             }
-            if (Optional.IsCollectionDefined(IncludedEventTypes))
+            if (Core.Optional.IsCollectionDefined(IncludedEventTypes))
             {
                 writer.WritePropertyName("includedEventTypes"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsSubjectCaseSensitive))
+            if (Core.Optional.IsDefined(IsSubjectCaseSensitive))
             {
                 writer.WritePropertyName("isSubjectCaseSensitive"u8);
                 writer.WriteBooleanValue(IsSubjectCaseSensitive.Value);
             }
-            if (Optional.IsDefined(IsAdvancedFilteringOnArraysEnabled))
+            if (Core.Optional.IsDefined(IsAdvancedFilteringOnArraysEnabled))
             {
                 writer.WritePropertyName("enableAdvancedFilteringOnArrays"u8);
                 writer.WriteBooleanValue(IsAdvancedFilteringOnArraysEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(AdvancedFilters))
+            if (Core.Optional.IsCollectionDefined(AdvancedFilters))
             {
                 writer.WritePropertyName("advancedFilters"u8);
                 writer.WriteStartArray();
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> subjectBeginsWith = default;
-            Optional<string> subjectEndsWith = default;
-            Optional<IList<string>> includedEventTypes = default;
-            Optional<bool> isSubjectCaseSensitive = default;
-            Optional<bool> enableAdvancedFilteringOnArrays = default;
-            Optional<IList<AdvancedFilter>> advancedFilters = default;
+            Core.Optional<string> subjectBeginsWith = default;
+            Core.Optional<string> subjectEndsWith = default;
+            Core.Optional<IList<string>> includedEventTypes = default;
+            Core.Optional<bool> isSubjectCaseSensitive = default;
+            Core.Optional<bool> enableAdvancedFilteringOnArrays = default;
+            Core.Optional<IList<AdvancedFilter>> advancedFilters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subjectBeginsWith"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new EventSubscriptionFilter(subjectBeginsWith.Value, subjectEndsWith.Value, Optional.ToList(includedEventTypes), Optional.ToNullable(isSubjectCaseSensitive), Optional.ToNullable(enableAdvancedFilteringOnArrays), Optional.ToList(advancedFilters));
+            return new EventSubscriptionFilter(subjectBeginsWith.Value, subjectEndsWith.Value, Core.Optional.ToList(includedEventTypes), Core.Optional.ToNullable(isSubjectCaseSensitive), Core.Optional.ToNullable(enableAdvancedFilteringOnArrays), Core.Optional.ToList(advancedFilters));
         }
     }
 }

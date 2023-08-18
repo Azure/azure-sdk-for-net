@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class BackupInstanceSyncContent : IUtf8JsonSerializable
+    public partial class BackupInstanceSyncContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SyncType))
+            if (Core.Optional.IsDefined(SyncType))
             {
                 writer.WritePropertyName("syncType"u8);
                 writer.WriteStringValue(SyncType.Value.ToString());

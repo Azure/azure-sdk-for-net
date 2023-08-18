@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<double> currentValue = default;
-            Optional<string> id = default;
-            Optional<double> limit = default;
-            Optional<QuotaName> name = default;
-            Optional<string> unit = default;
+            Core.Optional<double> currentValue = default;
+            Core.Optional<string> id = default;
+            Core.Optional<double> limit = default;
+            Core.Optional<QuotaName> name = default;
+            Core.Optional<string> unit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("currentValue"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new Quota(Optional.ToNullable(currentValue), id.Value, Optional.ToNullable(limit), name.Value, unit.Value);
+            return new Quota(Core.Optional.ToNullable(currentValue), id.Value, Core.Optional.ToNullable(limit), name.Value, unit.Value);
         }
     }
 }

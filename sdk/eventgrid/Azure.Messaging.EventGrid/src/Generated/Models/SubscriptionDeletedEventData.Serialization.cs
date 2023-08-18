@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> eventSubscriptionId = default;
+            Core.Optional<string> eventSubscriptionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventSubscriptionId"u8))

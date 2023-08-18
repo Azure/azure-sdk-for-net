@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class ScheduledTrigger : IUtf8JsonSerializable
+    public partial class ScheduledTrigger : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WriteStartObject();
             writer.WritePropertyName("recurrenceInterval"u8);
             writer.WriteStringValue(RecurrenceInterval.ToString());
-            if (Optional.IsDefined(SynchronizationMode))
+            if (Core.Optional.IsDefined(SynchronizationMode))
             {
                 writer.WritePropertyName("synchronizationMode"u8);
                 writer.WriteStringValue(SynchronizationMode.Value.ToString());
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DataShareProvisioningState> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DateTimeOffset> createdAt = default;
+            Core.Optional<DataShareProvisioningState> provisioningState = default;
             DataShareSynchronizationRecurrenceInterval recurrenceInterval = default;
-            Optional<SynchronizationMode> synchronizationMode = default;
+            Core.Optional<SynchronizationMode> synchronizationMode = default;
             DateTimeOffset synchronizationTime = default;
-            Optional<DataShareTriggerStatus> triggerStatus = default;
-            Optional<string> userName = default;
+            Core.Optional<DataShareTriggerStatus> triggerStatus = default;
+            Core.Optional<string> userName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new ScheduledTrigger(id, name, type, systemData.Value, kind, Optional.ToNullable(createdAt), Optional.ToNullable(provisioningState), recurrenceInterval, Optional.ToNullable(synchronizationMode), synchronizationTime, Optional.ToNullable(triggerStatus), userName.Value);
+            return new ScheduledTrigger(id, name, type, systemData.Value, kind, Core.Optional.ToNullable(createdAt), Core.Optional.ToNullable(provisioningState), recurrenceInterval, Core.Optional.ToNullable(synchronizationMode), synchronizationTime, Core.Optional.ToNullable(triggerStatus), userName.Value);
         }
     }
 }

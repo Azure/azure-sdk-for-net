@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of ConnectToTargetAzureDBForMySqlTaskProperties. </summary>
         public ConnectToTargetAzureDBForMySqlTaskProperties()
         {
-            Output = new ChangeTrackingList<ConnectToTargetAzureDBForMySqlTaskOutput>();
+            Output = new Core.ChangeTrackingList<ConnectToTargetAzureDBForMySqlTaskOutput>();
             TaskType = TaskType.ConnectToTargetAzureDBForMySql;
         }
 

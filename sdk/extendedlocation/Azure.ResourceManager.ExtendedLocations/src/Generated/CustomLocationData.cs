@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <param name="location"> The location. </param>
         public CustomLocationData(AzureLocation location) : base(location)
         {
-            ClusterExtensionIds = new ChangeTrackingList<ResourceIdentifier>();
+            ClusterExtensionIds = new Core.ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of CustomLocationData. </summary>

@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <summary> Initializes a new instance of RemotePrivateEndpoint. </summary>
         public RemotePrivateEndpoint()
         {
-            ManualPrivateLinkServiceConnections = new ChangeTrackingList<PrivateLinkServiceConnection>();
-            PrivateLinkServiceConnections = new ChangeTrackingList<PrivateLinkServiceConnection>();
-            PrivateLinkServiceProxies = new ChangeTrackingList<PrivateLinkServiceProxy>();
-            ConnectionDetails = new ChangeTrackingList<ConnectionDetails>();
+            ManualPrivateLinkServiceConnections = new Core.ChangeTrackingList<PrivateLinkServiceConnection>();
+            PrivateLinkServiceConnections = new Core.ChangeTrackingList<PrivateLinkServiceConnection>();
+            PrivateLinkServiceProxies = new Core.ChangeTrackingList<PrivateLinkServiceProxy>();
+            ConnectionDetails = new Core.ChangeTrackingList<ConnectionDetails>();
         }
 
         /// <summary> Initializes a new instance of RemotePrivateEndpoint. </summary>

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    public partial class GuestConfigurationAssignmentInfo : IUtf8JsonSerializable
+    public partial class GuestConfigurationAssignmentInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Configuration))
+            if (Core.Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<GuestConfigurationInfo> configuration = default;
+            Core.Optional<string> name = default;
+            Core.Optional<GuestConfigurationInfo> configuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

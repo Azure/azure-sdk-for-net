@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of StorageProfile. </summary>
         public StorageProfile()
         {
-            StorageAccounts = new ChangeTrackingList<HDInsightStorageAccountInfo>();
+            StorageAccounts = new Core.ChangeTrackingList<HDInsightStorageAccountInfo>();
         }
 
         /// <summary> Initializes a new instance of StorageProfile. </summary>

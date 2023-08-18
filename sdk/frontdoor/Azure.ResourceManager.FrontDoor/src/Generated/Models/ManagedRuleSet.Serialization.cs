@@ -11,21 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class ManagedRuleSet : IUtf8JsonSerializable
+    public partial class ManagedRuleSet : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("ruleSetType"u8);
             writer.WriteStringValue(RuleSetType);
             writer.WritePropertyName("ruleSetVersion"u8);
             writer.WriteStringValue(RuleSetVersion);
-            if (Optional.IsDefined(RuleSetAction))
+            if (Core.Optional.IsDefined(RuleSetAction))
             {
                 writer.WritePropertyName("ruleSetAction"u8);
                 writer.WriteStringValue(RuleSetAction.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Exclusions))
+            if (Core.Optional.IsCollectionDefined(Exclusions))
             {
                 writer.WritePropertyName("exclusions"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RuleGroupOverrides))
+            if (Core.Optional.IsCollectionDefined(RuleGroupOverrides))
             {
                 writer.WritePropertyName("ruleGroupOverrides"u8);
                 writer.WriteStartArray();
@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             string ruleSetType = default;
             string ruleSetVersion = default;
-            Optional<ManagedRuleSetActionType> ruleSetAction = default;
-            Optional<IList<ManagedRuleExclusion>> exclusions = default;
-            Optional<IList<ManagedRuleGroupOverride>> ruleGroupOverrides = default;
+            Core.Optional<ManagedRuleSetActionType> ruleSetAction = default;
+            Core.Optional<IList<ManagedRuleExclusion>> exclusions = default;
+            Core.Optional<IList<ManagedRuleGroupOverride>> ruleGroupOverrides = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleSetType"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new ManagedRuleSet(ruleSetType, ruleSetVersion, Optional.ToNullable(ruleSetAction), Optional.ToList(exclusions), Optional.ToList(ruleGroupOverrides));
+            return new ManagedRuleSet(ruleSetType, ruleSetVersion, Core.Optional.ToNullable(ruleSetAction), Core.Optional.ToList(exclusions), Core.Optional.ToList(ruleGroupOverrides));
         }
     }
 }

@@ -11,29 +11,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class DevCenterSkuDetails : IUtf8JsonSerializable
+    public partial class DevCenterSkuDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Tier))
+            if (Core.Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Size))
+            if (Core.Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (Optional.IsDefined(Family))
+            if (Core.Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (Optional.IsDefined(Capacity))
+            if (Core.Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<ResourceType> resourceType = default;
-            Optional<IReadOnlyList<string>> locations = default;
-            Optional<IReadOnlyList<DevCenterCapability>> capabilities = default;
+            Core.Optional<ResourceType> resourceType = default;
+            Core.Optional<IReadOnlyList<string>> locations = default;
+            Core.Optional<IReadOnlyList<DevCenterCapability>> capabilities = default;
             string name = default;
-            Optional<DevCenterSkuTier> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<int> capacity = default;
+            Core.Optional<DevCenterSkuTier> tier = default;
+            Core.Optional<string> size = default;
+            Core.Optional<string> family = default;
+            Core.Optional<int> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     continue;
                 }
             }
-            return new DevCenterSkuDetails(name, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToNullable(capacity), Optional.ToNullable(resourceType), Optional.ToList(locations), Optional.ToList(capabilities));
+            return new DevCenterSkuDetails(name, Core.Optional.ToNullable(tier), size.Value, family.Value, Core.Optional.ToNullable(capacity), Core.Optional.ToNullable(resourceType), Core.Optional.ToList(locations), Core.Optional.ToList(capabilities));
         }
     }
 }

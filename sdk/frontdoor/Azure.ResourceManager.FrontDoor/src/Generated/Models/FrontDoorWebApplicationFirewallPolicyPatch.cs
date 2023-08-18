@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Initializes a new instance of FrontDoorWebApplicationFirewallPolicyPatch. </summary>
         public FrontDoorWebApplicationFirewallPolicyPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Resource tags. </summary>

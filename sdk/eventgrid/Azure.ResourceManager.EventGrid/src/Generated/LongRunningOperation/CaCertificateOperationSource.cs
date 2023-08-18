@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    internal class CaCertificateOperationSource : IOperationSource<CaCertificateResource>
+    internal class CaCertificateOperationSource : Core.IOperationSource<CaCertificateResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.EventGrid
             _client = client;
         }
 
-        CaCertificateResource IOperationSource<CaCertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CaCertificateResource Core.IOperationSource<CaCertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CaCertificateData.DeserializeCaCertificateData(document.RootElement);
             return new CaCertificateResource(_client, data);
         }
 
-        async ValueTask<CaCertificateResource> IOperationSource<CaCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CaCertificateResource> Core.IOperationSource<CaCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CaCertificateData.DeserializeCaCertificateData(document.RootElement);

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskOutputTaskLevel. </summary>
         internal ConnectToSourceSqlServerTaskOutputTaskLevel()
         {
-            ValidationErrors = new ChangeTrackingList<ReportableException>();
+            ValidationErrors = new Core.ChangeTrackingList<ReportableException>();
             ResultType = "TaskLevelOutput";
         }
 

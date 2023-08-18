@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class CustomCopySetting : IUtf8JsonSerializable
+    public partial class CustomCopySetting : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Duration))
+            if (Core.Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<TimeSpan> duration = default;
+            Core.Optional<TimeSpan> duration = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new CustomCopySetting(objectType, Optional.ToNullable(duration));
+            return new CustomCopySetting(objectType, Core.Optional.ToNullable(duration));
         }
     }
 }

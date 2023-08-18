@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DeploymentManager
 {
-    internal class RolloutOperationSource : IOperationSource<RolloutResource>
+    internal class RolloutOperationSource : Core.IOperationSource<RolloutResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DeploymentManager
             _client = client;
         }
 
-        RolloutResource IOperationSource<RolloutResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        RolloutResource Core.IOperationSource<RolloutResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = RolloutData.DeserializeRolloutData(document.RootElement);
             return new RolloutResource(_client, data);
         }
 
-        async ValueTask<RolloutResource> IOperationSource<RolloutResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<RolloutResource> Core.IOperationSource<RolloutResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = RolloutData.DeserializeRolloutData(document.RootElement);

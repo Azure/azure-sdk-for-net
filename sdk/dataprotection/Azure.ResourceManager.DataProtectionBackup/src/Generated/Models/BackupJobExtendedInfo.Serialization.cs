@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, string>> additionalDetails = default;
-            Optional<string> backupInstanceState = default;
-            Optional<double> dataTransferredInBytes = default;
-            Optional<string> recoveryDestination = default;
-            Optional<RestoreJobRecoveryPointDetails> sourceRecoverPoint = default;
-            Optional<IReadOnlyList<BackupJobSubTask>> subTasks = default;
-            Optional<RestoreJobRecoveryPointDetails> targetRecoverPoint = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> additionalDetails = default;
+            Core.Optional<string> backupInstanceState = default;
+            Core.Optional<double> dataTransferredInBytes = default;
+            Core.Optional<string> recoveryDestination = default;
+            Core.Optional<RestoreJobRecoveryPointDetails> sourceRecoverPoint = default;
+            Core.Optional<IReadOnlyList<BackupJobSubTask>> subTasks = default;
+            Core.Optional<RestoreJobRecoveryPointDetails> targetRecoverPoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("additionalDetails"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new BackupJobExtendedInfo(Optional.ToDictionary(additionalDetails), backupInstanceState.Value, Optional.ToNullable(dataTransferredInBytes), recoveryDestination.Value, sourceRecoverPoint.Value, Optional.ToList(subTasks), targetRecoverPoint.Value);
+            return new BackupJobExtendedInfo(Core.Optional.ToDictionary(additionalDetails), backupInstanceState.Value, Core.Optional.ToNullable(dataTransferredInBytes), recoveryDestination.Value, sourceRecoverPoint.Value, Core.Optional.ToList(subTasks), targetRecoverPoint.Value);
         }
     }
 }

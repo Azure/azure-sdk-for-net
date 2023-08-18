@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <summary> Initializes a new instance of GuestConfigurationNavigation. </summary>
         public GuestConfigurationNavigation()
         {
-            ConfigurationParameters = new ChangeTrackingList<GuestConfigurationParameter>();
-            ConfigurationProtectedParameters = new ChangeTrackingList<GuestConfigurationParameter>();
+            ConfigurationParameters = new Core.ChangeTrackingList<GuestConfigurationParameter>();
+            ConfigurationProtectedParameters = new Core.ChangeTrackingList<GuestConfigurationParameter>();
         }
 
         /// <summary> Initializes a new instance of GuestConfigurationNavigation. </summary>

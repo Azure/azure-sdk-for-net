@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EdgeOrderProductBillingMeterDetails>> billingMeterDetails = default;
-            Optional<Uri> billingInfoUrl = default;
+            Core.Optional<IReadOnlyList<EdgeOrderProductBillingMeterDetails>> billingMeterDetails = default;
+            Core.Optional<Uri> billingInfoUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("billingMeterDetails"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     continue;
                 }
             }
-            return new EdgeOrderProductCostInformation(Optional.ToList(billingMeterDetails), billingInfoUrl.Value);
+            return new EdgeOrderProductCostInformation(Core.Optional.ToList(billingMeterDetails), billingInfoUrl.Value);
         }
     }
 }

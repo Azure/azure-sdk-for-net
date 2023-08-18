@@ -21,10 +21,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> latestSupportedKubernetesVersion = default;
-            Optional<string> latestStableKubernetesVersion = default;
-            Optional<string> lowestMinorKubernetesVersion = default;
-            Optional<string> latestPreviewKubernetesVersion = default;
+            Core.Optional<string> latestSupportedKubernetesVersion = default;
+            Core.Optional<string> latestStableKubernetesVersion = default;
+            Core.Optional<string> lowestMinorKubernetesVersion = default;
+            Core.Optional<string> latestPreviewKubernetesVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("latestSupportedKubernetesVersion"u8))

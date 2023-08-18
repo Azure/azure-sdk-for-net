@@ -19,12 +19,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 return null;
             }
-            Optional<bool> isHandwritten = default;
-            Optional<string> similarFontFamily = default;
-            Optional<DocumentFontStyle> fontStyle = default;
-            Optional<DocumentFontWeight> fontWeight = default;
-            Optional<string> color = default;
-            Optional<string> backgroundColor = default;
+            Core.Optional<bool> isHandwritten = default;
+            Core.Optional<string> similarFontFamily = default;
+            Core.Optional<DocumentFontStyle> fontStyle = default;
+            Core.Optional<DocumentFontWeight> fontWeight = default;
+            Core.Optional<string> color = default;
+            Core.Optional<string> backgroundColor = default;
             IReadOnlyList<DocumentSpan> spans = default;
             float confidence = default;
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentStyle(Optional.ToNullable(isHandwritten), similarFontFamily.Value, Optional.ToNullable(fontStyle), Optional.ToNullable(fontWeight), color.Value, backgroundColor.Value, spans, confidence);
+            return new DocumentStyle(Core.Optional.ToNullable(isHandwritten), similarFontFamily.Value, Core.Optional.ToNullable(fontStyle), Core.Optional.ToNullable(fontWeight), color.Value, backgroundColor.Value, spans, confidence);
         }
     }
 }

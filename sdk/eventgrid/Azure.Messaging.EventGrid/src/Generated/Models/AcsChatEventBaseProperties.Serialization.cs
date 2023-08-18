@@ -18,9 +18,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<CommunicationIdentifierModel> recipientCommunicationIdentifier = default;
-            Optional<string> transactionId = default;
-            Optional<string> threadId = default;
+            Core.Optional<CommunicationIdentifierModel> recipientCommunicationIdentifier = default;
+            Core.Optional<string> transactionId = default;
+            Core.Optional<string> threadId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recipientCommunicationIdentifier"u8))

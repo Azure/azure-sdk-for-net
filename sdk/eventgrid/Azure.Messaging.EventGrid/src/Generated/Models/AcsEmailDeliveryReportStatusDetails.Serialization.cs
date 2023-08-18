@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> statusMessage = default;
+            Core.Optional<string> statusMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("statusMessage"u8))

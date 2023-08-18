@@ -13,18 +13,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
-    public partial class DeviceUpdateAccountData : IUtf8JsonSerializable
+    public partial class DeviceUpdateAccountData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DeviceUpdate
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (Core.Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (Core.Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku.Value.ToString());
@@ -69,19 +69,19 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> hostName = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
-            Optional<IList<DeviceUpdatePrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<DeviceUpdateSku> sku = default;
-            Optional<IReadOnlyList<DeviceUpdateAccountLocationDetail>> locations = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ProvisioningState> provisioningState = default;
+            Core.Optional<string> hostName = default;
+            Core.Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Core.Optional<IList<DeviceUpdatePrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Core.Optional<DeviceUpdateSku> sku = default;
+            Core.Optional<IReadOnlyList<DeviceUpdateAccountLocationDetail>> locations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                     continue;
                 }
             }
-            return new DeviceUpdateAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), hostName.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToList(privateEndpointConnections), Optional.ToNullable(sku), Optional.ToList(locations));
+            return new DeviceUpdateAccountData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity, Core.Optional.ToNullable(provisioningState), hostName.Value, Core.Optional.ToNullable(publicNetworkAccess), Core.Optional.ToList(privateEndpointConnections), Core.Optional.ToNullable(sku), Core.Optional.ToList(locations));
         }
     }
 }

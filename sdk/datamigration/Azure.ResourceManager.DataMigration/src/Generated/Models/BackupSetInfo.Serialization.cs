@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> backupSetId = default;
-            Optional<string> firstLsn = default;
-            Optional<string> lastLsn = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<BackupType> backupType = default;
-            Optional<IReadOnlyList<BackupFileInfo>> listOfBackupFiles = default;
-            Optional<string> databaseName = default;
-            Optional<DateTimeOffset> backupStartDate = default;
-            Optional<DateTimeOffset> backupFinishedDate = default;
-            Optional<bool> isBackupRestored = default;
+            Core.Optional<string> backupSetId = default;
+            Core.Optional<string> firstLsn = default;
+            Core.Optional<string> lastLsn = default;
+            Core.Optional<DateTimeOffset> lastModifiedTime = default;
+            Core.Optional<BackupType> backupType = default;
+            Core.Optional<IReadOnlyList<BackupFileInfo>> listOfBackupFiles = default;
+            Core.Optional<string> databaseName = default;
+            Core.Optional<DateTimeOffset> backupStartDate = default;
+            Core.Optional<DateTimeOffset> backupFinishedDate = default;
+            Core.Optional<bool> isBackupRestored = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backupSetId"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new BackupSetInfo(backupSetId.Value, firstLsn.Value, lastLsn.Value, Optional.ToNullable(lastModifiedTime), Optional.ToNullable(backupType), Optional.ToList(listOfBackupFiles), databaseName.Value, Optional.ToNullable(backupStartDate), Optional.ToNullable(backupFinishedDate), Optional.ToNullable(isBackupRestored));
+            return new BackupSetInfo(backupSetId.Value, firstLsn.Value, lastLsn.Value, Core.Optional.ToNullable(lastModifiedTime), Core.Optional.ToNullable(backupType), Core.Optional.ToList(listOfBackupFiles), databaseName.Value, Core.Optional.ToNullable(backupStartDate), Core.Optional.ToNullable(backupFinishedDate), Core.Optional.ToNullable(isBackupRestored));
         }
     }
 }

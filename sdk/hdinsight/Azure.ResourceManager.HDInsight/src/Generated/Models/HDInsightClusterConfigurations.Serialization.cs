@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, IDictionary<string, string>>> configurations = default;
+            Core.Optional<IReadOnlyDictionary<string, IDictionary<string, string>>> configurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("configurations"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightClusterConfigurations(Optional.ToDictionary(configurations));
+            return new HDInsightClusterConfigurations(Core.Optional.ToDictionary(configurations));
         }
     }
 }

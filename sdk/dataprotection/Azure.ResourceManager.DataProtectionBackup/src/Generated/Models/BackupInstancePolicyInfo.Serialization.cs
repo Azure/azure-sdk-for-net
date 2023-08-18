@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class BackupInstancePolicyInfo : IUtf8JsonSerializable
+    public partial class BackupInstancePolicyInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("policyId"u8);
             writer.WriteStringValue(PolicyId);
-            if (Optional.IsDefined(PolicyParameters))
+            if (Core.Optional.IsDefined(PolicyParameters))
             {
                 writer.WritePropertyName("policyParameters"u8);
                 writer.WriteObjectValue(PolicyParameters);
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             ResourceIdentifier policyId = default;
-            Optional<string> policyVersion = default;
-            Optional<BackupInstancePolicySettings> policyParameters = default;
+            Core.Optional<string> policyVersion = default;
+            Core.Optional<BackupInstancePolicySettings> policyParameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyId"u8))

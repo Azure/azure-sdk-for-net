@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of FileList. </summary>
         internal FileList()
         {
-            Value = new ChangeTrackingList<ProjectFileData>();
+            Value = new Core.ChangeTrackingList<ProjectFileData>();
         }
 
         /// <summary> Initializes a new instance of FileList. </summary>

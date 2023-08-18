@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class ShareSubscriptionSynchronization : IUtf8JsonSerializable
+    public partial class ShareSubscriptionSynchronization : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("synchronizationId"u8);
@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 return null;
             }
-            Optional<int> durationMs = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> message = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> status = default;
+            Core.Optional<int> durationMs = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<string> message = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<string> status = default;
             Guid synchronizationId = default;
-            Optional<SynchronizationMode> synchronizationMode = default;
+            Core.Optional<SynchronizationMode> synchronizationMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("durationMs"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new ShareSubscriptionSynchronization(Optional.ToNullable(durationMs), Optional.ToNullable(endTime), message.Value, Optional.ToNullable(startTime), status.Value, synchronizationId, Optional.ToNullable(synchronizationMode));
+            return new ShareSubscriptionSynchronization(Core.Optional.ToNullable(durationMs), Core.Optional.ToNullable(endTime), message.Value, Core.Optional.ToNullable(startTime), status.Value, synchronizationId, Core.Optional.ToNullable(synchronizationMode));
         }
     }
 }

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<AzureLocation> regionName = default;
-            Optional<long> coresUsed = default;
-            Optional<long> coresAvailable = default;
+            Core.Optional<AzureLocation> regionName = default;
+            Core.Optional<long> coresUsed = default;
+            Core.Optional<long> coresAvailable = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("regionName"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new RegionalQuotaCapability(Optional.ToNullable(regionName), Optional.ToNullable(coresUsed), Optional.ToNullable(coresAvailable));
+            return new RegionalQuotaCapability(Core.Optional.ToNullable(regionName), Core.Optional.ToNullable(coresUsed), Core.Optional.ToNullable(coresAvailable));
         }
     }
 }

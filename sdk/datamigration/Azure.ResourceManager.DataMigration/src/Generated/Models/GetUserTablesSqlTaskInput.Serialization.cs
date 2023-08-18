@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class GetUserTablesSqlTaskInput : IUtf8JsonSerializable
+    public partial class GetUserTablesSqlTaskInput : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("connectionInfo"u8);
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(EncryptedKeyForSecureFields))
+            if (Core.Optional.IsDefined(EncryptedKeyForSecureFields))
             {
                 writer.WritePropertyName("encryptedKeyForSecureFields"u8);
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             SqlConnectionInfo connectionInfo = default;
             IList<string> selectedDatabases = default;
-            Optional<string> encryptedKeyForSecureFields = default;
+            Core.Optional<string> encryptedKeyForSecureFields = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionInfo"u8))

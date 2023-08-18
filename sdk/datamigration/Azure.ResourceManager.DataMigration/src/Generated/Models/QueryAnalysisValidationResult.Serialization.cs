@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<QueryExecutionResult> queryResults = default;
-            Optional<ValidationError> validationErrors = default;
+            Core.Optional<QueryExecutionResult> queryResults = default;
+            Core.Optional<ValidationError> validationErrors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queryResults"u8))

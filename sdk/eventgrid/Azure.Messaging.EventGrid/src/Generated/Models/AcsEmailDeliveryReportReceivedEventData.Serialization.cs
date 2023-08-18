@@ -21,12 +21,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> sender = default;
-            Optional<string> recipient = default;
-            Optional<string> messageId = default;
-            Optional<AcsEmailDeliveryReportStatus> status = default;
-            Optional<AcsEmailDeliveryReportStatusDetails> deliveryStatusDetails = default;
-            Optional<DateTimeOffset> deliveryAttemptTimeStamp = default;
+            Core.Optional<string> sender = default;
+            Core.Optional<string> recipient = default;
+            Core.Optional<string> messageId = default;
+            Core.Optional<AcsEmailDeliveryReportStatus> status = default;
+            Core.Optional<AcsEmailDeliveryReportStatusDetails> deliveryStatusDetails = default;
+            Core.Optional<DateTimeOffset> deliveryAttemptTimeStamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sender"u8))
@@ -72,7 +72,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsEmailDeliveryReportReceivedEventData(sender.Value, recipient.Value, messageId.Value, Optional.ToNullable(status), deliveryStatusDetails.Value, Optional.ToNullable(deliveryAttemptTimeStamp));
+            return new AcsEmailDeliveryReportReceivedEventData(sender.Value, recipient.Value, messageId.Value, Core.Optional.ToNullable(status), deliveryStatusDetails.Value, Core.Optional.ToNullable(deliveryAttemptTimeStamp));
         }
 
         internal partial class AcsEmailDeliveryReportReceivedEventDataConverter : JsonConverter<AcsEmailDeliveryReportReceivedEventData>

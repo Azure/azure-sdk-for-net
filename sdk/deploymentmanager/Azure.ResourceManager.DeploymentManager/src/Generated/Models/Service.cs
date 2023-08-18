@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             Argument.AssertNotNull(targetLocation, nameof(targetLocation));
             Argument.AssertNotNull(targetSubscriptionId, nameof(targetSubscriptionId));
 
-            ServiceUnits = new ChangeTrackingList<ServiceUnit>();
+            ServiceUnits = new Core.ChangeTrackingList<ServiceUnit>();
         }
 
         /// <summary> Initializes a new instance of Service. </summary>

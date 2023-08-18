@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.FrontDoor
             try
             {
                 var response = await _frontDoorRulesEngineRulesEnginesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rulesEngineName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FrontDoorArmOperation<FrontDoorRulesEngineResource>(new FrontDoorRulesEngineOperationSource(Client), _frontDoorRulesEngineRulesEnginesClientDiagnostics, Pipeline, _frontDoorRulesEngineRulesEnginesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rulesEngineName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new FrontDoorArmOperation<FrontDoorRulesEngineResource>(new FrontDoorRulesEngineOperationSource(Client), _frontDoorRulesEngineRulesEnginesClientDiagnostics, Pipeline, _frontDoorRulesEngineRulesEnginesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rulesEngineName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.FrontDoor
             try
             {
                 var response = _frontDoorRulesEngineRulesEnginesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rulesEngineName, data, cancellationToken);
-                var operation = new FrontDoorArmOperation<FrontDoorRulesEngineResource>(new FrontDoorRulesEngineOperationSource(Client), _frontDoorRulesEngineRulesEnginesClientDiagnostics, Pipeline, _frontDoorRulesEngineRulesEnginesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rulesEngineName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new FrontDoorArmOperation<FrontDoorRulesEngineResource>(new FrontDoorRulesEngineOperationSource(Client), _frontDoorRulesEngineRulesEnginesClientDiagnostics, Pipeline, _frontDoorRulesEngineRulesEnginesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rulesEngineName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRulesEngineRulesEnginesRestClient.CreateListByFrontDoorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRulesEngineRulesEnginesRestClient.CreateListByFrontDoorNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorRulesEngineResource(Client, FrontDoorRulesEngineData.DeserializeFrontDoorRulesEngineData(e)), _frontDoorRulesEngineRulesEnginesClientDiagnostics, Pipeline, "FrontDoorRulesEngineCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorRulesEngineResource(Client, FrontDoorRulesEngineData.DeserializeFrontDoorRulesEngineData(e)), _frontDoorRulesEngineRulesEnginesClientDiagnostics, Pipeline, "FrontDoorRulesEngineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRulesEngineRulesEnginesRestClient.CreateListByFrontDoorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRulesEngineRulesEnginesRestClient.CreateListByFrontDoorNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorRulesEngineResource(Client, FrontDoorRulesEngineData.DeserializeFrontDoorRulesEngineData(e)), _frontDoorRulesEngineRulesEnginesClientDiagnostics, Pipeline, "FrontDoorRulesEngineCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorRulesEngineResource(Client, FrontDoorRulesEngineData.DeserializeFrontDoorRulesEngineData(e)), _frontDoorRulesEngineRulesEnginesClientDiagnostics, Pipeline, "FrontDoorRulesEngineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

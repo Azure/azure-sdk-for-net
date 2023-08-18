@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabCustomImageVhd : IUtf8JsonSerializable
+    public partial class DevTestLabCustomImageVhd : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ImageName))
+            if (Core.Optional.IsDefined(ImageName))
             {
                 writer.WritePropertyName("imageName"u8);
                 writer.WriteStringValue(ImageName);
             }
-            if (Optional.IsDefined(IsSysPrepEnabled))
+            if (Core.Optional.IsDefined(IsSysPrepEnabled))
             {
                 writer.WritePropertyName("sysPrep"u8);
                 writer.WriteBooleanValue(IsSysPrepEnabled.Value);
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> imageName = default;
-            Optional<bool> sysPrep = default;
+            Core.Optional<string> imageName = default;
+            Core.Optional<bool> sysPrep = default;
             DevTestLabCustomImageOSType osType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new DevTestLabCustomImageVhd(imageName.Value, Optional.ToNullable(sysPrep), osType);
+            return new DevTestLabCustomImageVhd(imageName.Value, Core.Optional.ToNullable(sysPrep), osType);
         }
     }
 }

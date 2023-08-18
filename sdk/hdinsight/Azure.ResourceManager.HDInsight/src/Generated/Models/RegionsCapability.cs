@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of RegionsCapability. </summary>
         internal RegionsCapability()
         {
-            Available = new ChangeTrackingList<string>();
+            Available = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of RegionsCapability. </summary>

@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
-    internal partial class UnknownHealthCheckStepAttributes : IUtf8JsonSerializable
+    internal partial class UnknownHealthCheckStepAttributes : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(HealthCheckStepAttributesType);
-            if (Optional.IsDefined(WaitDuration))
+            if (Core.Optional.IsDefined(WaitDuration))
             {
                 writer.WritePropertyName("waitDuration"u8);
                 writer.WriteStringValue(WaitDuration.Value, "P");
             }
-            if (Optional.IsDefined(MaxElasticDuration))
+            if (Core.Optional.IsDefined(MaxElasticDuration))
             {
                 writer.WritePropertyName("maxElasticDuration"u8);
                 writer.WriteStringValue(MaxElasticDuration.Value, "P");
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 return null;
             }
             string type = "Unknown";
-            Optional<TimeSpan> waitDuration = default;
-            Optional<TimeSpan> maxElasticDuration = default;
+            Core.Optional<TimeSpan> waitDuration = default;
+            Core.Optional<TimeSpan> maxElasticDuration = default;
             TimeSpan healthyStateDuration = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     continue;
                 }
             }
-            return new UnknownHealthCheckStepAttributes(type, Optional.ToNullable(waitDuration), Optional.ToNullable(maxElasticDuration), healthyStateDuration);
+            return new UnknownHealthCheckStepAttributes(type, Core.Optional.ToNullable(waitDuration), Core.Optional.ToNullable(maxElasticDuration), healthyStateDuration);
         }
     }
 }

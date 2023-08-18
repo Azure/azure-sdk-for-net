@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ControllerConnectionDetails>> connectionDetailsList = default;
+            Core.Optional<IReadOnlyList<ControllerConnectionDetails>> connectionDetailsList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionDetailsList"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                     continue;
                 }
             }
-            return new ControllerConnectionDetailsList(Optional.ToList(connectionDetailsList));
+            return new ControllerConnectionDetailsList(Core.Optional.ToList(connectionDetailsList));
         }
     }
 }

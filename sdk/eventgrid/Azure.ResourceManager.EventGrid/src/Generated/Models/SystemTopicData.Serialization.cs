@@ -14,17 +14,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class SystemTopicData : IUtf8JsonSerializable
+    public partial class SystemTopicData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.EventGrid
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Source))
+            if (Core.Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Optional.IsDefined(TopicType))
+            if (Core.Optional.IsDefined(TopicType))
             {
                 writer.WritePropertyName("topicType"u8);
                 writer.WriteStringValue(TopicType);
@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.EventGrid
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EventGridResourceProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> source = default;
-            Optional<string> topicType = default;
-            Optional<Guid> metricResourceId = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<EventGridResourceProvisioningState> provisioningState = default;
+            Core.Optional<ResourceIdentifier> source = default;
+            Core.Optional<string> topicType = default;
+            Core.Optional<Guid> metricResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.EventGrid
                     continue;
                 }
             }
-            return new SystemTopicData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), source.Value, topicType.Value, Optional.ToNullable(metricResourceId));
+            return new SystemTopicData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity, Core.Optional.ToNullable(provisioningState), source.Value, topicType.Value, Core.Optional.ToNullable(metricResourceId));
         }
     }
 }

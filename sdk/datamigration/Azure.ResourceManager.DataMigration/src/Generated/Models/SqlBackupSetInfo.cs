@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of SqlBackupSetInfo. </summary>
         internal SqlBackupSetInfo()
         {
-            ListOfBackupFiles = new ChangeTrackingList<SqlBackupFileInfo>();
-            IgnoreReasons = new ChangeTrackingList<string>();
+            ListOfBackupFiles = new Core.ChangeTrackingList<SqlBackupFileInfo>();
+            IgnoreReasons = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SqlBackupSetInfo. </summary>

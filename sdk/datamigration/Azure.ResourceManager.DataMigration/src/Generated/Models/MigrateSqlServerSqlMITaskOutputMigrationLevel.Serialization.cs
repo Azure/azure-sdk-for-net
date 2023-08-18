@@ -20,22 +20,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<MigrationStatus> status = default;
-            Optional<MigrationState> state = default;
-            Optional<string> agentJobs = default;
-            Optional<string> logins = default;
-            Optional<string> message = default;
-            Optional<string> serverRoleResults = default;
-            Optional<IReadOnlyList<OrphanedUserInfo>> orphanedUsersInfo = default;
-            Optional<string> databases = default;
-            Optional<string> sourceServerVersion = default;
-            Optional<string> sourceServerBrandVersion = default;
-            Optional<string> targetServerVersion = default;
-            Optional<string> targetServerBrandVersion = default;
-            Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
-            Optional<string> id = default;
+            Core.Optional<DateTimeOffset> startedOn = default;
+            Core.Optional<DateTimeOffset> endedOn = default;
+            Core.Optional<MigrationStatus> status = default;
+            Core.Optional<MigrationState> state = default;
+            Core.Optional<string> agentJobs = default;
+            Core.Optional<string> logins = default;
+            Core.Optional<string> message = default;
+            Core.Optional<string> serverRoleResults = default;
+            Core.Optional<IReadOnlyList<OrphanedUserInfo>> orphanedUsersInfo = default;
+            Core.Optional<string> databases = default;
+            Core.Optional<string> sourceServerVersion = default;
+            Core.Optional<string> sourceServerBrandVersion = default;
+            Core.Optional<string> targetServerVersion = default;
+            Core.Optional<string> targetServerBrandVersion = default;
+            Core.Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
+            Core.Optional<string> id = default;
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateSqlServerSqlMITaskOutputMigrationLevel(id.Value, resultType, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), Optional.ToNullable(status), Optional.ToNullable(state), agentJobs.Value, logins.Value, message.Value, serverRoleResults.Value, Optional.ToList(orphanedUsersInfo), databases.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, targetServerVersion.Value, targetServerBrandVersion.Value, Optional.ToList(exceptionsAndWarnings));
+            return new MigrateSqlServerSqlMITaskOutputMigrationLevel(id.Value, resultType, Core.Optional.ToNullable(startedOn), Core.Optional.ToNullable(endedOn), Core.Optional.ToNullable(status), Core.Optional.ToNullable(state), agentJobs.Value, logins.Value, message.Value, serverRoleResults.Value, Core.Optional.ToList(orphanedUsersInfo), databases.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, targetServerVersion.Value, targetServerBrandVersion.Value, Core.Optional.ToList(exceptionsAndWarnings));
         }
     }
 }

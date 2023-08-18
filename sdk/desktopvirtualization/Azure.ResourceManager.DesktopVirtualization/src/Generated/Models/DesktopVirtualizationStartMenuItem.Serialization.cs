@@ -11,34 +11,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class DesktopVirtualizationStartMenuItem : IUtf8JsonSerializable
+    public partial class DesktopVirtualizationStartMenuItem : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AppAlias))
+            if (Core.Optional.IsDefined(AppAlias))
             {
                 writer.WritePropertyName("appAlias"u8);
                 writer.WriteStringValue(AppAlias);
             }
-            if (Optional.IsDefined(FilePath))
+            if (Core.Optional.IsDefined(FilePath))
             {
                 writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
             }
-            if (Optional.IsDefined(CommandLineArguments))
+            if (Core.Optional.IsDefined(CommandLineArguments))
             {
                 writer.WritePropertyName("commandLineArguments"u8);
                 writer.WriteStringValue(CommandLineArguments);
             }
-            if (Optional.IsDefined(IconPath))
+            if (Core.Optional.IsDefined(IconPath))
             {
                 writer.WritePropertyName("iconPath"u8);
                 writer.WriteStringValue(IconPath);
             }
-            if (Optional.IsDefined(IconIndex))
+            if (Core.Optional.IsDefined(IconIndex))
             {
                 writer.WritePropertyName("iconIndex"u8);
                 writer.WriteNumberValue(IconIndex.Value);
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> appAlias = default;
-            Optional<string> filePath = default;
-            Optional<string> commandLineArguments = default;
-            Optional<string> iconPath = default;
-            Optional<int> iconIndex = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> appAlias = default;
+            Core.Optional<string> filePath = default;
+            Core.Optional<string> commandLineArguments = default;
+            Core.Optional<string> iconPath = default;
+            Core.Optional<int> iconIndex = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     continue;
                 }
             }
-            return new DesktopVirtualizationStartMenuItem(id, name, type, systemData.Value, appAlias.Value, filePath.Value, commandLineArguments.Value, iconPath.Value, Optional.ToNullable(iconIndex));
+            return new DesktopVirtualizationStartMenuItem(id, name, type, systemData.Value, appAlias.Value, filePath.Value, commandLineArguments.Value, iconPath.Value, Core.Optional.ToNullable(iconIndex));
         }
     }
 }

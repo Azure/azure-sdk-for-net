@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <summary> Initializes a new instance of DynatraceSingleSignOnData. </summary>
         public DynatraceSingleSignOnData()
         {
-            AadDomains = new ChangeTrackingList<string>();
+            AadDomains = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DynatraceSingleSignOnData. </summary>

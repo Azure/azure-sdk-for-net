@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of SecretList. </summary>
         internal SecretList()
         {
-            Value = new ChangeTrackingList<DevTestLabSecretData>();
+            Value = new Core.ChangeTrackingList<DevTestLabSecretData>();
         }
 
         /// <summary> Initializes a new instance of SecretList. </summary>

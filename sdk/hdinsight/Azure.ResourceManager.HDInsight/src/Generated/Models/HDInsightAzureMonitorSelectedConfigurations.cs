@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of HDInsightAzureMonitorSelectedConfigurations. </summary>
         public HDInsightAzureMonitorSelectedConfigurations()
         {
-            GlobalConfigurations = new ChangeTrackingDictionary<string, string>();
-            TableList = new ChangeTrackingList<HDInsightAzureMonitorTableConfiguration>();
+            GlobalConfigurations = new Core.ChangeTrackingDictionary<string, string>();
+            TableList = new Core.ChangeTrackingList<HDInsightAzureMonitorTableConfiguration>();
         }
 
         /// <summary> Initializes a new instance of HDInsightAzureMonitorSelectedConfigurations. </summary>

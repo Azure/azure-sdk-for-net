@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 return null;
             }
-            Optional<string> targetIqn = default;
-            Optional<string> targetPortalHostname = default;
-            Optional<int> targetPortalPort = default;
-            Optional<ElasticSanProvisioningState> provisioningState = default;
-            Optional<ResourceOperationalStatus> status = default;
+            Core.Optional<string> targetIqn = default;
+            Core.Optional<string> targetPortalHostname = default;
+            Core.Optional<int> targetPortalPort = default;
+            Core.Optional<ElasticSanProvisioningState> provisioningState = default;
+            Core.Optional<ResourceOperationalStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetIqn"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     continue;
                 }
             }
-            return new IscsiTargetInfo(targetIqn.Value, targetPortalHostname.Value, Optional.ToNullable(targetPortalPort), Optional.ToNullable(provisioningState), Optional.ToNullable(status));
+            return new IscsiTargetInfo(targetIqn.Value, targetPortalHostname.Value, Core.Optional.ToNullable(targetPortalPort), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(status));
         }
     }
 }

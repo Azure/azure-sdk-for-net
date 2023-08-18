@@ -21,11 +21,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> serviceName = default;
-            Optional<string> serviceComputeType = default;
-            Optional<string> modelIds = default;
-            Optional<object> serviceTags = default;
-            Optional<object> serviceProperties = default;
+            Core.Optional<string> serviceName = default;
+            Core.Optional<string> serviceComputeType = default;
+            Core.Optional<string> modelIds = default;
+            Core.Optional<object> serviceTags = default;
+            Core.Optional<object> serviceProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceName"u8))

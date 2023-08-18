@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    internal partial class UnknownEventSubscriptionDestination : IUtf8JsonSerializable
+    internal partial class UnknownEventSubscriptionDestination : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("endpointType"u8);

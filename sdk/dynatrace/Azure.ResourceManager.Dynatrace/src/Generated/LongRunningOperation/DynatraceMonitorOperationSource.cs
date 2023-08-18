@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Dynatrace
 {
-    internal class DynatraceMonitorOperationSource : IOperationSource<DynatraceMonitorResource>
+    internal class DynatraceMonitorOperationSource : Core.IOperationSource<DynatraceMonitorResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Dynatrace
             _client = client;
         }
 
-        DynatraceMonitorResource IOperationSource<DynatraceMonitorResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DynatraceMonitorResource Core.IOperationSource<DynatraceMonitorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DynatraceMonitorData.DeserializeDynatraceMonitorData(document.RootElement);
             return new DynatraceMonitorResource(_client, data);
         }
 
-        async ValueTask<DynatraceMonitorResource> IOperationSource<DynatraceMonitorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DynatraceMonitorResource> Core.IOperationSource<DynatraceMonitorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DynatraceMonitorData.DeserializeDynatraceMonitorData(document.RootElement);

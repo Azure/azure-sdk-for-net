@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskProperties. </summary>
         public MigrateSqlServerSqlMISyncTaskProperties()
         {
-            Output = new ChangeTrackingList<MigrateSqlServerSqlMISyncTaskOutput>();
+            Output = new Core.ChangeTrackingList<MigrateSqlServerSqlMISyncTaskOutput>();
             TaskType = TaskType.MigrateSqlServerAzureSqlDBMISyncLRS;
         }
 

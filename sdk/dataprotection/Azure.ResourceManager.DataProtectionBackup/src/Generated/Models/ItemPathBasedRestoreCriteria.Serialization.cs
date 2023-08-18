@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class ItemPathBasedRestoreCriteria : IUtf8JsonSerializable
+    public partial class ItemPathBasedRestoreCriteria : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("itemPath"u8);
             writer.WriteStringValue(ItemPath);
             writer.WritePropertyName("isPathRelativeToBackupItem"u8);
             writer.WriteBooleanValue(IsPathRelativeToBackupItem);
-            if (Optional.IsCollectionDefined(SubItemPathPrefix))
+            if (Core.Optional.IsCollectionDefined(SubItemPathPrefix))
             {
                 writer.WritePropertyName("subItemPathPrefix"u8);
                 writer.WriteStartArray();

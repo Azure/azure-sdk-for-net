@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlDBSyncDatabaseInput : IUtf8JsonSerializable
+    public partial class MigrateSqlServerSqlDBSyncDatabaseInput : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(TargetDatabaseName))
+            if (Core.Optional.IsDefined(TargetDatabaseName))
             {
                 writer.WritePropertyName("targetDatabaseName"u8);
                 writer.WriteStringValue(TargetDatabaseName);
             }
-            if (Optional.IsDefined(SchemaName))
+            if (Core.Optional.IsDefined(SchemaName))
             {
                 writer.WritePropertyName("schemaName"u8);
                 writer.WriteStringValue(SchemaName);
             }
-            if (Optional.IsCollectionDefined(TableMap))
+            if (Core.Optional.IsCollectionDefined(TableMap))
             {
                 writer.WritePropertyName("tableMap"u8);
                 writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(MigrationSetting))
+            if (Core.Optional.IsCollectionDefined(MigrationSetting))
             {
                 writer.WritePropertyName("migrationSetting"u8);
                 writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(SourceSetting))
+            if (Core.Optional.IsCollectionDefined(SourceSetting))
             {
                 writer.WritePropertyName("sourceSetting"u8);
                 writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(TargetSetting))
+            if (Core.Optional.IsCollectionDefined(TargetSetting))
             {
                 writer.WritePropertyName("targetSetting"u8);
                 writer.WriteStartObject();
@@ -89,14 +89,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> targetDatabaseName = default;
-            Optional<string> schemaName = default;
-            Optional<IDictionary<string, string>> tableMap = default;
-            Optional<IDictionary<string, string>> migrationSetting = default;
-            Optional<IDictionary<string, string>> sourceSetting = default;
-            Optional<IDictionary<string, string>> targetSetting = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> targetDatabaseName = default;
+            Core.Optional<string> schemaName = default;
+            Core.Optional<IDictionary<string, string>> tableMap = default;
+            Core.Optional<IDictionary<string, string>> migrationSetting = default;
+            Core.Optional<IDictionary<string, string>> sourceSetting = default;
+            Core.Optional<IDictionary<string, string>> targetSetting = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateSqlServerSqlDBSyncDatabaseInput(id.Value, name.Value, targetDatabaseName.Value, schemaName.Value, Optional.ToDictionary(tableMap), Optional.ToDictionary(migrationSetting), Optional.ToDictionary(sourceSetting), Optional.ToDictionary(targetSetting));
+            return new MigrateSqlServerSqlDBSyncDatabaseInput(id.Value, name.Value, targetDatabaseName.Value, schemaName.Value, Core.Optional.ToDictionary(tableMap), Core.Optional.ToDictionary(migrationSetting), Core.Optional.ToDictionary(sourceSetting), Core.Optional.ToDictionary(targetSetting));
         }
     }
 }

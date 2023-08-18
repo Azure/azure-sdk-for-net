@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    public partial class MonitoringTagRulesProperties : IUtf8JsonSerializable
+    public partial class MonitoringTagRulesProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (Core.Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(LogRules))
+            if (Core.Optional.IsDefined(LogRules))
             {
                 writer.WritePropertyName("logRules"u8);
                 writer.WriteObjectValue(LogRules);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<LogRules> logRules = default;
+            Core.Optional<ProvisioningState> provisioningState = default;
+            Core.Optional<LogRules> logRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     continue;
                 }
             }
-            return new MonitoringTagRulesProperties(Optional.ToNullable(provisioningState), logRules.Value);
+            return new MonitoringTagRulesProperties(Core.Optional.ToNullable(provisioningState), logRules.Value);
         }
     }
 }

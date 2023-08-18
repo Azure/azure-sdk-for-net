@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of ClusterListResult. </summary>
         internal ClusterListResult()
         {
-            Value = new ChangeTrackingList<HDInsightClusterData>();
+            Value = new Core.ChangeTrackingList<HDInsightClusterData>();
         }
 
         /// <summary> Initializes a new instance of ClusterListResult. </summary>

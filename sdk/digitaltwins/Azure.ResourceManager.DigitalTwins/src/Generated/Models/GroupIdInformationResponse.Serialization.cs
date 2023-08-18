@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DigitalTwinsPrivateLinkResourceData>> value = default;
+            Core.Optional<IReadOnlyList<DigitalTwinsPrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     continue;
                 }
             }
-            return new GroupIdInformationResponse(Optional.ToList(value));
+            return new GroupIdInformationResponse(Core.Optional.ToList(value));
         }
     }
 }

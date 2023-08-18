@@ -21,13 +21,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<DateTimeOffset> scheduleDateTime = default;
-            Optional<string> accountName = default;
-            Optional<string> ruleName = default;
-            Optional<string> policyRunStatus = default;
-            Optional<string> policyRunStatusMessage = default;
-            Optional<string> policyRunId = default;
-            Optional<string> manifestBlobUrl = default;
+            Core.Optional<DateTimeOffset> scheduleDateTime = default;
+            Core.Optional<string> accountName = default;
+            Core.Optional<string> ruleName = default;
+            Core.Optional<string> policyRunStatus = default;
+            Core.Optional<string> policyRunStatusMessage = default;
+            Core.Optional<string> policyRunId = default;
+            Core.Optional<string> manifestBlobUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scheduleDateTime"u8))
@@ -70,7 +70,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new StorageBlobInventoryPolicyCompletedEventData(Optional.ToNullable(scheduleDateTime), accountName.Value, ruleName.Value, policyRunStatus.Value, policyRunStatusMessage.Value, policyRunId.Value, manifestBlobUrl.Value);
+            return new StorageBlobInventoryPolicyCompletedEventData(Core.Optional.ToNullable(scheduleDateTime), accountName.Value, ruleName.Value, policyRunStatus.Value, policyRunStatusMessage.Value, policyRunId.Value, manifestBlobUrl.Value);
         }
 
         internal partial class StorageBlobInventoryPolicyCompletedEventDataConverter : JsonConverter<StorageBlobInventoryPolicyCompletedEventData>

@@ -21,14 +21,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> api = default;
-            Optional<string> clientRequestId = default;
-            Optional<string> requestId = default;
-            Optional<string> url = default;
-            Optional<string> recursive = default;
-            Optional<string> sequencer = default;
-            Optional<string> identity = default;
-            Optional<object> storageDiagnostics = default;
+            Core.Optional<string> api = default;
+            Core.Optional<string> clientRequestId = default;
+            Core.Optional<string> requestId = default;
+            Core.Optional<string> url = default;
+            Core.Optional<string> recursive = default;
+            Core.Optional<string> sequencer = default;
+            Core.Optional<string> identity = default;
+            Core.Optional<object> storageDiagnostics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("api"u8))

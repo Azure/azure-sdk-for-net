@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Initializes a new instance of PrivateLinkData. </summary>
         public PrivateLinkData()
         {
-            RequiredMembers = new ChangeTrackingList<string>();
-            RequiredZoneNames = new ChangeTrackingList<string>();
+            RequiredMembers = new Core.ChangeTrackingList<string>();
+            RequiredZoneNames = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkData. </summary>

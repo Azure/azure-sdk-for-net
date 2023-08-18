@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ProjectFileProperties : IUtf8JsonSerializable
+    public partial class ProjectFileProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Extension))
+            if (Core.Optional.IsDefined(Extension))
             {
                 writer.WritePropertyName("extension"u8);
                 writer.WriteStringValue(Extension);
             }
-            if (Optional.IsDefined(FilePath))
+            if (Core.Optional.IsDefined(FilePath))
             {
                 writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
             }
-            if (Optional.IsDefined(MediaType))
+            if (Core.Optional.IsDefined(MediaType))
             {
                 writer.WritePropertyName("mediaType"u8);
                 writer.WriteStringValue(MediaType);
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> extension = default;
-            Optional<string> filePath = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<string> mediaType = default;
-            Optional<long> size = default;
+            Core.Optional<string> extension = default;
+            Core.Optional<string> filePath = default;
+            Core.Optional<DateTimeOffset> lastModified = default;
+            Core.Optional<string> mediaType = default;
+            Core.Optional<long> size = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extension"u8))
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ProjectFileProperties(extension.Value, filePath.Value, Optional.ToNullable(lastModified), mediaType.Value, Optional.ToNullable(size));
+            return new ProjectFileProperties(extension.Value, filePath.Value, Core.Optional.ToNullable(lastModified), mediaType.Value, Core.Optional.ToNullable(size));
         }
     }
 }

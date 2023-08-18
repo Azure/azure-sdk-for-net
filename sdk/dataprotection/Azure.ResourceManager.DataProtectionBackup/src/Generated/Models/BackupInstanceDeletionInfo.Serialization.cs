@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> deletionTime = default;
-            Optional<DateTimeOffset> billingEndDate = default;
-            Optional<DateTimeOffset> scheduledPurgeTime = default;
-            Optional<string> deleteActivityId = default;
+            Core.Optional<DateTimeOffset> deletionTime = default;
+            Core.Optional<DateTimeOffset> billingEndDate = default;
+            Core.Optional<DateTimeOffset> scheduledPurgeTime = default;
+            Core.Optional<string> deleteActivityId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deletionTime"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new BackupInstanceDeletionInfo(Optional.ToNullable(deletionTime), Optional.ToNullable(billingEndDate), Optional.ToNullable(scheduledPurgeTime), deleteActivityId.Value);
+            return new BackupInstanceDeletionInfo(Core.Optional.ToNullable(deletionTime), Core.Optional.ToNullable(billingEndDate), Core.Optional.ToNullable(scheduledPurgeTime), deleteActivityId.Value);
         }
     }
 }

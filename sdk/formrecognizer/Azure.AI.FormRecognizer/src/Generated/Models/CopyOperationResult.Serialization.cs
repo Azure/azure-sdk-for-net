@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.Models
             OperationStatus status = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
-            Optional<CopyResult> copyResult = default;
+            Core.Optional<CopyResult> copyResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))

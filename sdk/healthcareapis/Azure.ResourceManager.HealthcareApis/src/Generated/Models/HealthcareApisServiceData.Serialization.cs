@@ -14,29 +14,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    public partial class HealthcareApisServiceData : IUtf8JsonSerializable
+    public partial class HealthcareApisServiceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToSerialString());
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,16 +58,16 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 return null;
             }
-            Optional<HealthcareApisServiceProperties> properties = default;
+            Core.Optional<HealthcareApisServiceProperties> properties = default;
             HealthcareApisKind kind = default;
-            Optional<ETag> etag = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     continue;
                 }
             }
-            return new HealthcareApisServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, kind, Optional.ToNullable(etag), identity);
+            return new HealthcareApisServiceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, properties.Value, kind, Core.Optional.ToNullable(etag), identity);
         }
     }
 }

@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ValidateMigrationInputSqlServerSqlDBSyncTaskProperties : IUtf8JsonSerializable
+    public partial class ValidateMigrationInputSqlServerSqlDBSyncTaskProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Input))
+            if (Core.Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
             }
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
-            if (Optional.IsCollectionDefined(ClientData))
+            if (Core.Optional.IsCollectionDefined(ClientData))
             {
                 writer.WritePropertyName("clientData"u8);
                 writer.WriteStartObject();
@@ -43,13 +43,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<ValidateSyncMigrationInputSqlServerTaskInput> input = default;
-            Optional<IReadOnlyList<ValidateSyncMigrationInputSqlServerTaskOutput>> output = default;
+            Core.Optional<ValidateSyncMigrationInputSqlServerTaskInput> input = default;
+            Core.Optional<IReadOnlyList<ValidateSyncMigrationInputSqlServerTaskOutput>> output = default;
             TaskType taskType = default;
-            Optional<IReadOnlyList<ODataError>> errors = default;
-            Optional<TaskState> state = default;
-            Optional<IReadOnlyList<CommandProperties>> commands = default;
-            Optional<IDictionary<string, string>> clientData = default;
+            Core.Optional<IReadOnlyList<ODataError>> errors = default;
+            Core.Optional<TaskState> state = default;
+            Core.Optional<IReadOnlyList<CommandProperties>> commands = default;
+            Core.Optional<IDictionary<string, string>> clientData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("input"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ValidateMigrationInputSqlServerSqlDBSyncTaskProperties(taskType, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToList(commands), Optional.ToDictionary(clientData), input.Value, Optional.ToList(output));
+            return new ValidateMigrationInputSqlServerSqlDBSyncTaskProperties(taskType, Core.Optional.ToList(errors), Core.Optional.ToNullable(state), Core.Optional.ToList(commands), Core.Optional.ToDictionary(clientData), input.Value, Core.Optional.ToList(output));
         }
     }
 }

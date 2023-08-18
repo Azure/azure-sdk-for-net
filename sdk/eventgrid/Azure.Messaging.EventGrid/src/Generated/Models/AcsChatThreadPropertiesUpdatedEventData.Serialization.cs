@@ -22,13 +22,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<CommunicationIdentifierModel> editedByCommunicationIdentifier = default;
-            Optional<DateTimeOffset> editTime = default;
-            Optional<IReadOnlyDictionary<string, object>> properties = default;
-            Optional<DateTimeOffset> createTime = default;
-            Optional<long> version = default;
-            Optional<string> transactionId = default;
-            Optional<string> threadId = default;
+            Core.Optional<CommunicationIdentifierModel> editedByCommunicationIdentifier = default;
+            Core.Optional<DateTimeOffset> editTime = default;
+            Core.Optional<IReadOnlyDictionary<string, object>> properties = default;
+            Core.Optional<DateTimeOffset> createTime = default;
+            Core.Optional<long> version = default;
+            Core.Optional<string> transactionId = default;
+            Core.Optional<string> threadId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("editedByCommunicationIdentifier"u8))
@@ -99,7 +99,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsChatThreadPropertiesUpdatedEventData(transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), editedByCommunicationIdentifier.Value, Optional.ToNullable(editTime), Optional.ToDictionary(properties));
+            return new AcsChatThreadPropertiesUpdatedEventData(transactionId.Value, threadId.Value, Core.Optional.ToNullable(createTime), Core.Optional.ToNullable(version), editedByCommunicationIdentifier.Value, Core.Optional.ToNullable(editTime), Core.Optional.ToDictionary(properties));
         }
 
         internal partial class AcsChatThreadPropertiesUpdatedEventDataConverter : JsonConverter<AcsChatThreadPropertiesUpdatedEventData>

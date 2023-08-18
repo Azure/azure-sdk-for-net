@@ -19,8 +19,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 return null;
             }
             string code = default;
-            Optional<string> message = default;
-            Optional<InnerError> innererror = default;
+            Core.Optional<string> message = default;
+            Core.Optional<InnerError> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))

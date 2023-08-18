@@ -22,14 +22,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<CommunicationIdentifierModel> createdByCommunicationIdentifier = default;
-            Optional<IReadOnlyDictionary<string, object>> properties = default;
-            Optional<IReadOnlyList<AcsChatThreadParticipantProperties>> participants = default;
-            Optional<DateTimeOffset> createTime = default;
-            Optional<long> version = default;
-            Optional<CommunicationIdentifierModel> recipientCommunicationIdentifier = default;
-            Optional<string> transactionId = default;
-            Optional<string> threadId = default;
+            Core.Optional<CommunicationIdentifierModel> createdByCommunicationIdentifier = default;
+            Core.Optional<IReadOnlyDictionary<string, object>> properties = default;
+            Core.Optional<IReadOnlyList<AcsChatThreadParticipantProperties>> participants = default;
+            Core.Optional<DateTimeOffset> createTime = default;
+            Core.Optional<long> version = default;
+            Core.Optional<CommunicationIdentifierModel> recipientCommunicationIdentifier = default;
+            Core.Optional<string> transactionId = default;
+            Core.Optional<string> threadId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createdByCommunicationIdentifier"u8))
@@ -114,7 +114,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsChatThreadCreatedWithUserEventData(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), createdByCommunicationIdentifier.Value, Optional.ToDictionary(properties), Optional.ToList(participants));
+            return new AcsChatThreadCreatedWithUserEventData(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value, Core.Optional.ToNullable(createTime), Core.Optional.ToNullable(version), createdByCommunicationIdentifier.Value, Core.Optional.ToDictionary(properties), Core.Optional.ToList(participants));
         }
 
         internal partial class AcsChatThreadCreatedWithUserEventDataConverter : JsonConverter<AcsChatThreadCreatedWithUserEventData>

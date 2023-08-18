@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             HostPoolType = hostPoolType;
             LoadBalancerType = loadBalancerType;
-            ApplicationGroupReferences = new ChangeTrackingList<string>();
+            ApplicationGroupReferences = new Core.ChangeTrackingList<string>();
             PreferredAppGroupType = preferredAppGroupType;
         }
 

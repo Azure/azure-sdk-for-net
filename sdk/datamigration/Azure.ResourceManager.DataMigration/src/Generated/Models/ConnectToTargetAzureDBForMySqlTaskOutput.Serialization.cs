@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> serverVersion = default;
-            Optional<IReadOnlyList<string>> databases = default;
-            Optional<string> targetServerBrandVersion = default;
-            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> serverVersion = default;
+            Core.Optional<IReadOnlyList<string>> databases = default;
+            Core.Optional<string> targetServerBrandVersion = default;
+            Core.Optional<IReadOnlyList<ReportableException>> validationErrors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ConnectToTargetAzureDBForMySqlTaskOutput(id.Value, serverVersion.Value, Optional.ToList(databases), targetServerBrandVersion.Value, Optional.ToList(validationErrors));
+            return new ConnectToTargetAzureDBForMySqlTaskOutput(id.Value, serverVersion.Value, Core.Optional.ToList(databases), targetServerBrandVersion.Value, Core.Optional.ToList(validationErrors));
         }
     }
 }

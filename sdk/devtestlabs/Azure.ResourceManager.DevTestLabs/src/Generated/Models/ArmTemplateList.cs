@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of ArmTemplateList. </summary>
         internal ArmTemplateList()
         {
-            Value = new ChangeTrackingList<DevTestLabArmTemplateData>();
+            Value = new Core.ChangeTrackingList<DevTestLabArmTemplateData>();
         }
 
         /// <summary> Initializes a new instance of ArmTemplateList. </summary>

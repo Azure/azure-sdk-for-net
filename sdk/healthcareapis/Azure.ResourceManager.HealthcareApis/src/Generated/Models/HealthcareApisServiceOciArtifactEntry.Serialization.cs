@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class HealthcareApisServiceOciArtifactEntry : IUtf8JsonSerializable
+    public partial class HealthcareApisServiceOciArtifactEntry : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LoginServer))
+            if (Core.Optional.IsDefined(LoginServer))
             {
                 writer.WritePropertyName("loginServer"u8);
                 writer.WriteStringValue(LoginServer);
             }
-            if (Optional.IsDefined(ImageName))
+            if (Core.Optional.IsDefined(ImageName))
             {
                 writer.WritePropertyName("imageName"u8);
                 writer.WriteStringValue(ImageName);
             }
-            if (Optional.IsDefined(Digest))
+            if (Core.Optional.IsDefined(Digest))
             {
                 writer.WritePropertyName("digest"u8);
                 writer.WriteStringValue(Digest);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<string> loginServer = default;
-            Optional<string> imageName = default;
-            Optional<string> digest = default;
+            Core.Optional<string> loginServer = default;
+            Core.Optional<string> imageName = default;
+            Core.Optional<string> digest = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("loginServer"u8))

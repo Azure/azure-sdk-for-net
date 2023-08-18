@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DeviceUpdatePrivateEndpointConnectionData>> value = default;
+            Core.Optional<IReadOnlyList<DeviceUpdatePrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     continue;
                 }
             }
-            return new DeviceUpdatePrivateEndpointConnectionListResult(Optional.ToList(value));
+            return new DeviceUpdatePrivateEndpointConnectionListResult(Core.Optional.ToList(value));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of ProductFamilies. </summary>
         internal ProductFamilies()
         {
-            Value = new ChangeTrackingList<ProductFamily>();
+            Value = new Core.ChangeTrackingList<ProductFamily>();
         }
 
         /// <summary> Initializes a new instance of ProductFamilies. </summary>

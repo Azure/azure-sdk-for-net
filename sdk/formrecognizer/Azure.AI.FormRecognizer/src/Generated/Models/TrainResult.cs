@@ -24,8 +24,8 @@ namespace Azure.AI.FormRecognizer.Models
             Argument.AssertNotNull(trainingDocuments, nameof(trainingDocuments));
 
             TrainingDocuments = trainingDocuments.ToList();
-            Fields = new ChangeTrackingList<CustomFormModelField>();
-            Errors = new ChangeTrackingList<FormRecognizerError>();
+            Fields = new Core.ChangeTrackingList<CustomFormModelField>();
+            Errors = new Core.ChangeTrackingList<FormRecognizerError>();
         }
 
         /// <summary> Initializes a new instance of TrainResult. </summary>

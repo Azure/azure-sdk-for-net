@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <summary> Initializes a new instance of SessionHostData. </summary>
         public SessionHostData()
         {
-            SessionHostHealthCheckResults = new ChangeTrackingList<SessionHostHealthCheckReport>();
+            SessionHostHealthCheckResults = new Core.ChangeTrackingList<SessionHostHealthCheckReport>();
         }
 
         /// <summary> Initializes a new instance of SessionHostData. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <summary> Initializes a new instance of MonitoringTagRulesListResponse. </summary>
         internal MonitoringTagRulesListResponse()
         {
-            Value = new ChangeTrackingList<MonitoringTagRuleData>();
+            Value = new Core.ChangeTrackingList<MonitoringTagRuleData>();
         }
 
         /// <summary> Initializes a new instance of MonitoringTagRulesListResponse. </summary>

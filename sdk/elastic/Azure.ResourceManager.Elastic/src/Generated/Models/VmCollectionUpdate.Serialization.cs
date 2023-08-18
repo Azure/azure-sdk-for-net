@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    public partial class VmCollectionUpdate : IUtf8JsonSerializable
+    public partial class VmCollectionUpdate : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(VmResourceId))
+            if (Core.Optional.IsDefined(VmResourceId))
             {
                 writer.WritePropertyName("vmResourceId"u8);
                 writer.WriteStringValue(VmResourceId);
             }
-            if (Optional.IsDefined(OperationName))
+            if (Core.Optional.IsDefined(OperationName))
             {
                 writer.WritePropertyName("operationName"u8);
                 writer.WriteStringValue(OperationName.Value.ToString());

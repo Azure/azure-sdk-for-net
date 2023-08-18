@@ -20,7 +20,7 @@ namespace Azure.DigitalTwins.Core
                 return null;
             }
             IReadOnlyList<DigitalTwinsEventRoute> value = default;
-            Optional<string> nextLink = default;
+            Azure.Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))

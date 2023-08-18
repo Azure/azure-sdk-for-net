@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FrontDoorNetworkExperimentProfileData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<FrontDoorNetworkExperimentProfileData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new ProfileList(Optional.ToList(value), nextLink.Value);
+            return new ProfileList(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

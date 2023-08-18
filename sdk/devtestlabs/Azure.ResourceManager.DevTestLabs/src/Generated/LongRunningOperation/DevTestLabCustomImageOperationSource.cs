@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    internal class DevTestLabCustomImageOperationSource : IOperationSource<DevTestLabCustomImageResource>
+    internal class DevTestLabCustomImageOperationSource : Core.IOperationSource<DevTestLabCustomImageResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DevTestLabs
             _client = client;
         }
 
-        DevTestLabCustomImageResource IOperationSource<DevTestLabCustomImageResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DevTestLabCustomImageResource Core.IOperationSource<DevTestLabCustomImageResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DevTestLabCustomImageData.DeserializeDevTestLabCustomImageData(document.RootElement);
             return new DevTestLabCustomImageResource(_client, data);
         }
 
-        async ValueTask<DevTestLabCustomImageResource> IOperationSource<DevTestLabCustomImageResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DevTestLabCustomImageResource> Core.IOperationSource<DevTestLabCustomImageResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DevTestLabCustomImageData.DeserializeDevTestLabCustomImageData(document.RootElement);

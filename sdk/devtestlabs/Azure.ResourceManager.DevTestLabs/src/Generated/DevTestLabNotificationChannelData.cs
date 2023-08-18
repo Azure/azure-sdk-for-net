@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="location"> The location. </param>
         public DevTestLabNotificationChannelData(AzureLocation location) : base(location)
         {
-            Events = new ChangeTrackingList<DevTestLabNotificationChannelEvent>();
+            Events = new Core.ChangeTrackingList<DevTestLabNotificationChannelEvent>();
         }
 
         /// <summary> Initializes a new instance of DevTestLabNotificationChannelData. </summary>

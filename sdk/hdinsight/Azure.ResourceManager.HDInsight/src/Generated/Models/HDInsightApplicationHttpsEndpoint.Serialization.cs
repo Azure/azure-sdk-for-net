@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightApplicationHttpsEndpoint : IUtf8JsonSerializable
+    public partial class HDInsightApplicationHttpsEndpoint : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AccessModes))
+            if (Core.Optional.IsCollectionDefined(AccessModes))
             {
                 writer.WritePropertyName("accessModes"u8);
                 writer.WriteStartArray();
@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DestinationPort))
+            if (Core.Optional.IsDefined(DestinationPort))
             {
                 writer.WritePropertyName("destinationPort"u8);
                 writer.WriteNumberValue(DestinationPort.Value);
             }
-            if (Optional.IsDefined(PrivateIPAddress))
+            if (Core.Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());
             }
-            if (Optional.IsDefined(SubDomainSuffix))
+            if (Core.Optional.IsDefined(SubDomainSuffix))
             {
                 writer.WritePropertyName("subDomainSuffix"u8);
                 writer.WriteStringValue(SubDomainSuffix);
             }
-            if (Optional.IsDefined(DisableGatewayAuth))
+            if (Core.Optional.IsDefined(DisableGatewayAuth))
             {
                 writer.WritePropertyName("disableGatewayAuth"u8);
                 writer.WriteBooleanValue(DisableGatewayAuth.Value);
@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IList<string>> accessModes = default;
-            Optional<string> location = default;
-            Optional<int> destinationPort = default;
-            Optional<int> publicPort = default;
-            Optional<IPAddress> privateIPAddress = default;
-            Optional<string> subDomainSuffix = default;
-            Optional<bool> disableGatewayAuth = default;
+            Core.Optional<IList<string>> accessModes = default;
+            Core.Optional<string> location = default;
+            Core.Optional<int> destinationPort = default;
+            Core.Optional<int> publicPort = default;
+            Core.Optional<IPAddress> privateIPAddress = default;
+            Core.Optional<string> subDomainSuffix = default;
+            Core.Optional<bool> disableGatewayAuth = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accessModes"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightApplicationHttpsEndpoint(Optional.ToList(accessModes), location.Value, Optional.ToNullable(destinationPort), Optional.ToNullable(publicPort), privateIPAddress.Value, subDomainSuffix.Value, Optional.ToNullable(disableGatewayAuth));
+            return new HDInsightApplicationHttpsEndpoint(Core.Optional.ToList(accessModes), location.Value, Core.Optional.ToNullable(destinationPort), Core.Optional.ToNullable(publicPort), privateIPAddress.Value, subDomainSuffix.Value, Core.Optional.ToNullable(disableGatewayAuth));
         }
     }
 }

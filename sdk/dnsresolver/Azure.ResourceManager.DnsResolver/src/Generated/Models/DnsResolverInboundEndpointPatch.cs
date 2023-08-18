@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <summary> Initializes a new instance of DnsResolverInboundEndpointPatch. </summary>
         public DnsResolverInboundEndpointPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Tags for inbound endpoint. </summary>

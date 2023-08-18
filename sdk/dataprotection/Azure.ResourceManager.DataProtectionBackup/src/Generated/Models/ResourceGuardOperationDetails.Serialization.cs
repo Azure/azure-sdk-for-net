@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<string> vaultCriticalOperation = default;
-            Optional<ResourceType> requestResourceType = default;
+            Core.Optional<string> vaultCriticalOperation = default;
+            Core.Optional<ResourceType> requestResourceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vaultCriticalOperation"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new ResourceGuardOperationDetails(vaultCriticalOperation.Value, Optional.ToNullable(requestResourceType));
+            return new ResourceGuardOperationDetails(vaultCriticalOperation.Value, Core.Optional.ToNullable(requestResourceType));
         }
     }
 }

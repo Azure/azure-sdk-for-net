@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    public partial class DevTestLabArtifactData : IUtf8JsonSerializable
+    public partial class DevTestLabArtifactData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -43,20 +43,20 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<string> publisher = default;
-            Optional<string> filePath = default;
-            Optional<string> icon = default;
-            Optional<string> targetOSType = default;
-            Optional<BinaryData> parameters = default;
-            Optional<DateTimeOffset> createdDate = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> title = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> publisher = default;
+            Core.Optional<string> filePath = default;
+            Core.Optional<string> icon = default;
+            Core.Optional<string> targetOSType = default;
+            Core.Optional<BinaryData> parameters = default;
+            Core.Optional<DateTimeOffset> createdDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     continue;
                 }
             }
-            return new DevTestLabArtifactData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, title.Value, description.Value, publisher.Value, filePath.Value, icon.Value, targetOSType.Value, parameters.Value, Optional.ToNullable(createdDate));
+            return new DevTestLabArtifactData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, title.Value, description.Value, publisher.Value, filePath.Value, icon.Value, targetOSType.Value, parameters.Value, Core.Optional.ToNullable(createdDate));
         }
     }
 }

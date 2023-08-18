@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    public partial class CompanyInfo : IUtf8JsonSerializable
+    public partial class CompanyInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Domain))
+            if (Core.Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain);
             }
-            if (Optional.IsDefined(Business))
+            if (Core.Optional.IsDefined(Business))
             {
                 writer.WritePropertyName("business"u8);
                 writer.WriteStringValue(Business);
             }
-            if (Optional.IsDefined(EmployeesNumber))
+            if (Core.Optional.IsDefined(EmployeesNumber))
             {
                 writer.WritePropertyName("employeesNumber"u8);
                 writer.WriteStringValue(EmployeesNumber);
             }
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (Optional.IsDefined(Country))
+            if (Core.Optional.IsDefined(Country))
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<string> domain = default;
-            Optional<string> business = default;
-            Optional<string> employeesNumber = default;
-            Optional<string> state = default;
-            Optional<string> country = default;
+            Core.Optional<string> domain = default;
+            Core.Optional<string> business = default;
+            Core.Optional<string> employeesNumber = default;
+            Core.Optional<string> state = default;
+            Core.Optional<string> country = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domain"u8))

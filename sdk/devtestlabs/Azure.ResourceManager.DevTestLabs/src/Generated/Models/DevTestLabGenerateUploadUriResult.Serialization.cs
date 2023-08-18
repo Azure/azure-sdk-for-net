@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<Uri> uploadUri = default;
+            Core.Optional<Uri> uploadUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uploadUri"u8))

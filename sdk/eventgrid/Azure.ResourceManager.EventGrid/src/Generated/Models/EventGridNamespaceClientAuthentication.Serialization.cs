@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class EventGridNamespaceClientAuthentication : IUtf8JsonSerializable
+    public partial class EventGridNamespaceClientAuthentication : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CertificateThumbprint))
+            if (Core.Optional.IsDefined(CertificateThumbprint))
             {
                 writer.WritePropertyName("certificateThumbprint"u8);
                 writer.WriteObjectValue(CertificateThumbprint);
             }
-            if (Optional.IsDefined(CertificateSubject))
+            if (Core.Optional.IsDefined(CertificateSubject))
             {
                 writer.WritePropertyName("certificateSubject"u8);
                 writer.WriteObjectValue(CertificateSubject);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<ClientCertificateThumbprint> certificateThumbprint = default;
-            Optional<ClientCertificateSubjectDistinguishedName> certificateSubject = default;
+            Core.Optional<ClientCertificateThumbprint> certificateThumbprint = default;
+            Core.Optional<ClientCertificateSubjectDistinguishedName> certificateSubject = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateThumbprint"u8))

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class BackendPoolsSettings : IUtf8JsonSerializable
+    public partial class BackendPoolsSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnforceCertificateNameCheck))
+            if (Core.Optional.IsDefined(EnforceCertificateNameCheck))
             {
                 writer.WritePropertyName("enforceCertificateNameCheck"u8);
                 writer.WriteStringValue(EnforceCertificateNameCheck.Value.ToString());
             }
-            if (Optional.IsDefined(SendRecvTimeoutInSeconds))
+            if (Core.Optional.IsDefined(SendRecvTimeoutInSeconds))
             {
                 writer.WritePropertyName("sendRecvTimeoutSeconds"u8);
                 writer.WriteNumberValue(SendRecvTimeoutInSeconds.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<EnforceCertificateNameCheckEnabledState> enforceCertificateNameCheck = default;
-            Optional<int> sendRecvTimeoutSeconds = default;
+            Core.Optional<EnforceCertificateNameCheckEnabledState> enforceCertificateNameCheck = default;
+            Core.Optional<int> sendRecvTimeoutSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enforceCertificateNameCheck"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new BackendPoolsSettings(Optional.ToNullable(enforceCertificateNameCheck), Optional.ToNullable(sendRecvTimeoutSeconds));
+            return new BackendPoolsSettings(Core.Optional.ToNullable(enforceCertificateNameCheck), Core.Optional.ToNullable(sendRecvTimeoutSeconds));
         }
     }
 }

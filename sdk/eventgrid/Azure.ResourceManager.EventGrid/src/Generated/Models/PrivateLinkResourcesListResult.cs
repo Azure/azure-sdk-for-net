@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of PrivateLinkResourcesListResult. </summary>
         internal PrivateLinkResourcesListResult()
         {
-            Value = new ChangeTrackingList<EventGridPrivateLinkResourceData>();
+            Value = new Core.ChangeTrackingList<EventGridPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkResourcesListResult. </summary>

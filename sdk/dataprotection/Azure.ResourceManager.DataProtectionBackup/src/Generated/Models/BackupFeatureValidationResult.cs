@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of BackupFeatureValidationResult. </summary>
         internal BackupFeatureValidationResult()
         {
-            Features = new ChangeTrackingList<BackupSupportedFeature>();
+            Features = new Core.ChangeTrackingList<BackupSupportedFeature>();
             ObjectType = "FeatureValidationResponse";
         }
 

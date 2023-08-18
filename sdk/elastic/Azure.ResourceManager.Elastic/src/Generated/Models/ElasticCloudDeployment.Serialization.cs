@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    public partial class ElasticCloudDeployment : IUtf8JsonSerializable
+    public partial class ElasticCloudDeployment : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> deploymentId = default;
-            Optional<string> azureSubscriptionId = default;
-            Optional<string> elasticsearchRegion = default;
-            Optional<Uri> elasticsearchServiceUrl = default;
-            Optional<Uri> kibanaServiceUrl = default;
-            Optional<Uri> kibanaSsoUrl = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> deploymentId = default;
+            Core.Optional<string> azureSubscriptionId = default;
+            Core.Optional<string> elasticsearchRegion = default;
+            Core.Optional<Uri> elasticsearchServiceUrl = default;
+            Core.Optional<Uri> kibanaServiceUrl = default;
+            Core.Optional<Uri> kibanaSsoUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

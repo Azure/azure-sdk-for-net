@@ -21,15 +21,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> fileUrl = default;
-            Optional<string> fileType = default;
-            Optional<string> partitionId = default;
-            Optional<int> sizeInBytes = default;
-            Optional<int> eventCount = default;
-            Optional<int> firstSequenceNumber = default;
-            Optional<int> lastSequenceNumber = default;
-            Optional<DateTimeOffset> firstEnqueueTime = default;
-            Optional<DateTimeOffset> lastEnqueueTime = default;
+            Core.Optional<string> fileUrl = default;
+            Core.Optional<string> fileType = default;
+            Core.Optional<string> partitionId = default;
+            Core.Optional<int> sizeInBytes = default;
+            Core.Optional<int> eventCount = default;
+            Core.Optional<int> firstSequenceNumber = default;
+            Core.Optional<int> lastSequenceNumber = default;
+            Core.Optional<DateTimeOffset> firstEnqueueTime = default;
+            Core.Optional<DateTimeOffset> lastEnqueueTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileUrl"u8))
@@ -102,7 +102,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new EventHubCaptureFileCreatedEventData(fileUrl.Value, fileType.Value, partitionId.Value, Optional.ToNullable(sizeInBytes), Optional.ToNullable(eventCount), Optional.ToNullable(firstSequenceNumber), Optional.ToNullable(lastSequenceNumber), Optional.ToNullable(firstEnqueueTime), Optional.ToNullable(lastEnqueueTime));
+            return new EventHubCaptureFileCreatedEventData(fileUrl.Value, fileType.Value, partitionId.Value, Core.Optional.ToNullable(sizeInBytes), Core.Optional.ToNullable(eventCount), Core.Optional.ToNullable(firstSequenceNumber), Core.Optional.ToNullable(lastSequenceNumber), Core.Optional.ToNullable(firstEnqueueTime), Core.Optional.ToNullable(lastEnqueueTime));
         }
 
         internal partial class EventHubCaptureFileCreatedEventDataConverter : JsonConverter<EventHubCaptureFileCreatedEventData>

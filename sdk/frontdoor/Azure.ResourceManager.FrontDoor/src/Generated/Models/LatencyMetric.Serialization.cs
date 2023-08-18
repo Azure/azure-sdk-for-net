@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class LatencyMetric : IUtf8JsonSerializable
+    public partial class LatencyMetric : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<DateTimeOffset> endDateTimeUtc = default;
-            Optional<float> aValue = default;
-            Optional<float> bValue = default;
-            Optional<float> delta = default;
-            Optional<float> deltaPercent = default;
-            Optional<float> acLower95CI = default;
-            Optional<float> ahUpper95CI = default;
-            Optional<float> bcLower95CI = default;
-            Optional<float> bUpper95CI = default;
+            Core.Optional<string> name = default;
+            Core.Optional<DateTimeOffset> endDateTimeUtc = default;
+            Core.Optional<float> aValue = default;
+            Core.Optional<float> bValue = default;
+            Core.Optional<float> delta = default;
+            Core.Optional<float> deltaPercent = default;
+            Core.Optional<float> acLower95CI = default;
+            Core.Optional<float> ahUpper95CI = default;
+            Core.Optional<float> bcLower95CI = default;
+            Core.Optional<float> bUpper95CI = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new LatencyMetric(name.Value, Optional.ToNullable(endDateTimeUtc), Optional.ToNullable(aValue), Optional.ToNullable(bValue), Optional.ToNullable(delta), Optional.ToNullable(deltaPercent), Optional.ToNullable(acLower95CI), Optional.ToNullable(ahUpper95CI), Optional.ToNullable(bcLower95CI), Optional.ToNullable(bUpper95CI));
+            return new LatencyMetric(name.Value, Core.Optional.ToNullable(endDateTimeUtc), Core.Optional.ToNullable(aValue), Core.Optional.ToNullable(bValue), Core.Optional.ToNullable(delta), Core.Optional.ToNullable(deltaPercent), Core.Optional.ToNullable(acLower95CI), Core.Optional.ToNullable(ahUpper95CI), Core.Optional.ToNullable(bcLower95CI), Core.Optional.ToNullable(bUpper95CI));
         }
     }
 }

@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class MsixPackageDependencies : IUtf8JsonSerializable
+    public partial class MsixPackageDependencies : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DependencyName))
+            if (Core.Optional.IsDefined(DependencyName))
             {
                 writer.WritePropertyName("dependencyName"u8);
                 writer.WriteStringValue(DependencyName);
             }
-            if (Optional.IsDefined(Publisher))
+            if (Core.Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Optional.IsDefined(MinVersion))
+            if (Core.Optional.IsDefined(MinVersion))
             {
                 writer.WritePropertyName("minVersion"u8);
                 writer.WriteStringValue(MinVersion);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<string> dependencyName = default;
-            Optional<string> publisher = default;
-            Optional<string> minVersion = default;
+            Core.Optional<string> dependencyName = default;
+            Core.Optional<string> publisher = default;
+            Core.Optional<string> minVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dependencyName"u8))

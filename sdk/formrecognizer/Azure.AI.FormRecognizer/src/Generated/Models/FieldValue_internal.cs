@@ -19,10 +19,10 @@ namespace Azure.AI.FormRecognizer.Models
         internal FieldValue_internal(FieldValueType type)
         {
             Type = type;
-            ValueArray = new ChangeTrackingList<FieldValue_internal>();
-            ValueObject = new ChangeTrackingDictionary<string, FieldValue_internal>();
-            BoundingBox = new ChangeTrackingList<float>();
-            Elements = new ChangeTrackingList<string>();
+            ValueArray = new Core.ChangeTrackingList<FieldValue_internal>();
+            ValueObject = new Core.ChangeTrackingDictionary<string, FieldValue_internal>();
+            BoundingBox = new Core.ChangeTrackingList<float>();
+            Elements = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of FieldValue_internal. </summary>

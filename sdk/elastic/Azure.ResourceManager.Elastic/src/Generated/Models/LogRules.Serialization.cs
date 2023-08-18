@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    public partial class LogRules : IUtf8JsonSerializable
+    public partial class LogRules : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SendAadLogs))
+            if (Core.Optional.IsDefined(SendAadLogs))
             {
                 writer.WritePropertyName("sendAadLogs"u8);
                 writer.WriteBooleanValue(SendAadLogs.Value);
             }
-            if (Optional.IsDefined(SendSubscriptionLogs))
+            if (Core.Optional.IsDefined(SendSubscriptionLogs))
             {
                 writer.WritePropertyName("sendSubscriptionLogs"u8);
                 writer.WriteBooleanValue(SendSubscriptionLogs.Value);
             }
-            if (Optional.IsDefined(SendActivityLogs))
+            if (Core.Optional.IsDefined(SendActivityLogs))
             {
                 writer.WritePropertyName("sendActivityLogs"u8);
                 writer.WriteBooleanValue(SendActivityLogs.Value);
             }
-            if (Optional.IsCollectionDefined(FilteringTags))
+            if (Core.Optional.IsCollectionDefined(FilteringTags))
             {
                 writer.WritePropertyName("filteringTags"u8);
                 writer.WriteStartArray();
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<bool> sendAadLogs = default;
-            Optional<bool> sendSubscriptionLogs = default;
-            Optional<bool> sendActivityLogs = default;
-            Optional<IList<FilteringTag>> filteringTags = default;
+            Core.Optional<bool> sendAadLogs = default;
+            Core.Optional<bool> sendSubscriptionLogs = default;
+            Core.Optional<bool> sendActivityLogs = default;
+            Core.Optional<IList<FilteringTag>> filteringTags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sendAadLogs"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     continue;
                 }
             }
-            return new LogRules(Optional.ToNullable(sendAadLogs), Optional.ToNullable(sendSubscriptionLogs), Optional.ToNullable(sendActivityLogs), Optional.ToList(filteringTags));
+            return new LogRules(Core.Optional.ToNullable(sendAadLogs), Core.Optional.ToNullable(sendSubscriptionLogs), Core.Optional.ToNullable(sendActivityLogs), Core.Optional.ToList(filteringTags));
         }
     }
 }

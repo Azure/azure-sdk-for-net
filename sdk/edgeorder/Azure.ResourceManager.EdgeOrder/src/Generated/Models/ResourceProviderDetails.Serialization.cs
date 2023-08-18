@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<string> resourceProviderNamespace = default;
+            Core.Optional<string> resourceProviderNamespace = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceProviderNamespace"u8))

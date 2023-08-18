@@ -51,7 +51,7 @@ namespace Azure.DigitalTwins.Core
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Azure.Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
             foreach (var item in models)
             {
@@ -163,7 +163,7 @@ namespace Azure.DigitalTwins.Core
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/models", false);
-            if (dependenciesFor != null && Optional.IsCollectionDefined(dependenciesFor))
+            if (dependenciesFor != null && Azure.Core.Optional.IsCollectionDefined(dependenciesFor))
             {
                 foreach (var param in dependenciesFor)
                 {
@@ -356,7 +356,7 @@ namespace Azure.DigitalTwins.Core
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json-patch+json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Azure.Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
             foreach (var item in updateModel)
             {

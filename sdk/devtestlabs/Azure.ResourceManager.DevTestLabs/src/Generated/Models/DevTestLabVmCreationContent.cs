@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of DevTestLabVmCreationContent. </summary>
         public DevTestLabVmCreationContent()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            Artifacts = new ChangeTrackingList<DevTestLabArtifactInstallInfo>();
-            DataDiskParameters = new ChangeTrackingList<DevTestLabDataDiskProperties>();
-            ScheduleParameters = new ChangeTrackingList<DevTestLabScheduleCreationParameter>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Artifacts = new Core.ChangeTrackingList<DevTestLabArtifactInstallInfo>();
+            DataDiskParameters = new Core.ChangeTrackingList<DevTestLabDataDiskProperties>();
+            ScheduleParameters = new Core.ChangeTrackingList<DevTestLabScheduleCreationParameter>();
         }
 
         /// <summary> Initializes a new instance of DevTestLabVmCreationContent. </summary>

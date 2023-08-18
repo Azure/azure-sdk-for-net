@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> kubernetesVersion = default;
+            Core.Optional<string> kubernetesVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kubernetesVersion"u8))

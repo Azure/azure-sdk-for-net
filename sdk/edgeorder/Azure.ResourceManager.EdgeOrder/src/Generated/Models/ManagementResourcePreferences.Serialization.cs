@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    internal partial class ManagementResourcePreferences : IUtf8JsonSerializable
+    internal partial class ManagementResourcePreferences : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PreferredManagementResourceId))
+            if (Core.Optional.IsDefined(PreferredManagementResourceId))
             {
                 writer.WritePropertyName("preferredManagementResourceId"u8);
                 writer.WriteStringValue(PreferredManagementResourceId);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<string> preferredManagementResourceId = default;
+            Core.Optional<string> preferredManagementResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("preferredManagementResourceId"u8))

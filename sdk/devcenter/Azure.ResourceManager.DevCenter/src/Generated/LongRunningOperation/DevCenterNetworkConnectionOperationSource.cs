@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    internal class DevCenterNetworkConnectionOperationSource : IOperationSource<DevCenterNetworkConnectionResource>
+    internal class DevCenterNetworkConnectionOperationSource : Core.IOperationSource<DevCenterNetworkConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DevCenter
             _client = client;
         }
 
-        DevCenterNetworkConnectionResource IOperationSource<DevCenterNetworkConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DevCenterNetworkConnectionResource Core.IOperationSource<DevCenterNetworkConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DevCenterNetworkConnectionData.DeserializeDevCenterNetworkConnectionData(document.RootElement);
             return new DevCenterNetworkConnectionResource(_client, data);
         }
 
-        async ValueTask<DevCenterNetworkConnectionResource> IOperationSource<DevCenterNetworkConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DevCenterNetworkConnectionResource> Core.IOperationSource<DevCenterNetworkConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DevCenterNetworkConnectionData.DeserializeDevCenterNetworkConnectionData(document.RootElement);

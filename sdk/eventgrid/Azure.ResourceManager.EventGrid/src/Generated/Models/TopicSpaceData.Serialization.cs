@@ -13,19 +13,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class TopicSpaceData : IUtf8JsonSerializable
+    public partial class TopicSpaceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(TopicTemplates))
+            if (Core.Optional.IsCollectionDefined(TopicTemplates))
             {
                 writer.WritePropertyName("topicTemplates"u8);
                 writer.WriteStartArray();
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<IList<string>> topicTemplates = default;
-            Optional<TopicSpaceProvisioningState> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> description = default;
+            Core.Optional<IList<string>> topicTemplates = default;
+            Core.Optional<TopicSpaceProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.EventGrid
                     continue;
                 }
             }
-            return new TopicSpaceData(id, name, type, systemData.Value, description.Value, Optional.ToList(topicTemplates), Optional.ToNullable(provisioningState));
+            return new TopicSpaceData(id, name, type, systemData.Value, description.Value, Core.Optional.ToList(topicTemplates), Core.Optional.ToNullable(provisioningState));
         }
     }
 }

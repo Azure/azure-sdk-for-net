@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of DevCenterUserRoleAssignments. </summary>
         public DevCenterUserRoleAssignments()
         {
-            Roles = new ChangeTrackingDictionary<string, DevCenterEnvironmentRole>();
+            Roles = new Core.ChangeTrackingDictionary<string, DevCenterEnvironmentRole>();
         }
 
         /// <summary> Initializes a new instance of DevCenterUserRoleAssignments. </summary>

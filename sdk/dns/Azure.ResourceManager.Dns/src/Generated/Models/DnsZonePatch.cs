@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// <summary> Initializes a new instance of DnsZonePatch. </summary>
         public DnsZonePatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Resource tags. </summary>

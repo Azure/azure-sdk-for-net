@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <summary> Initializes a new instance of TimeSeriesDatabaseConnectionListResult. </summary>
         internal TimeSeriesDatabaseConnectionListResult()
         {
-            Value = new ChangeTrackingList<TimeSeriesDatabaseConnectionData>();
+            Value = new Core.ChangeTrackingList<TimeSeriesDatabaseConnectionData>();
         }
 
         /// <summary> Initializes a new instance of TimeSeriesDatabaseConnectionListResult. </summary>

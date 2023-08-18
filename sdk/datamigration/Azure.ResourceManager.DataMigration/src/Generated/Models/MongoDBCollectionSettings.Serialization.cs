@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MongoDBCollectionSettings : IUtf8JsonSerializable
+    public partial class MongoDBCollectionSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CanDelete))
+            if (Core.Optional.IsDefined(CanDelete))
             {
                 writer.WritePropertyName("canDelete"u8);
                 writer.WriteBooleanValue(CanDelete.Value);
             }
-            if (Optional.IsDefined(ShardKey))
+            if (Core.Optional.IsDefined(ShardKey))
             {
                 writer.WritePropertyName("shardKey"u8);
                 writer.WriteObjectValue(ShardKey);
             }
-            if (Optional.IsDefined(TargetRUs))
+            if (Core.Optional.IsDefined(TargetRUs))
             {
                 writer.WritePropertyName("targetRUs"u8);
                 writer.WriteNumberValue(TargetRUs.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<bool> canDelete = default;
-            Optional<MongoDBShardKeySetting> shardKey = default;
-            Optional<int> targetRUs = default;
+            Core.Optional<bool> canDelete = default;
+            Core.Optional<MongoDBShardKeySetting> shardKey = default;
+            Core.Optional<int> targetRUs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("canDelete"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MongoDBCollectionSettings(Optional.ToNullable(canDelete), shardKey.Value, Optional.ToNullable(targetRUs));
+            return new MongoDBCollectionSettings(Core.Optional.ToNullable(canDelete), shardKey.Value, Core.Optional.ToNullable(targetRUs));
         }
     }
 }

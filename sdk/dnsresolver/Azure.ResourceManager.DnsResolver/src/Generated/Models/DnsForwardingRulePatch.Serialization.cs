@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    public partial class DnsForwardingRulePatch : IUtf8JsonSerializable
+    public partial class DnsForwardingRulePatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TargetDnsServers))
+            if (Core.Optional.IsCollectionDefined(TargetDnsServers))
             {
                 writer.WritePropertyName("targetDnsServers"u8);
                 writer.WriteStartArray();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (Core.Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(DnsForwardingRuleState))
+            if (Core.Optional.IsDefined(DnsForwardingRuleState))
             {
                 writer.WritePropertyName("forwardingRuleState"u8);
                 writer.WriteStringValue(DnsForwardingRuleState.Value.ToString());

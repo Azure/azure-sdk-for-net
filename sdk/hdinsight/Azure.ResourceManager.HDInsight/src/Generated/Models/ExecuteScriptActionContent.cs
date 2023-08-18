@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="persistOnSuccess"> Gets or sets if the scripts needs to be persisted. </param>
         public ExecuteScriptActionContent(bool persistOnSuccess)
         {
-            ScriptActions = new ChangeTrackingList<RuntimeScriptAction>();
+            ScriptActions = new Core.ChangeTrackingList<RuntimeScriptAction>();
             PersistOnSuccess = persistOnSuccess;
         }
 

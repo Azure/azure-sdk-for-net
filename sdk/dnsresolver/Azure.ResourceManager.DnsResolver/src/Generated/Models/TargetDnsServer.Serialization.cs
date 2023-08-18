@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    public partial class TargetDnsServer : IUtf8JsonSerializable
+    public partial class TargetDnsServer : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("ipAddress"u8);
             writer.WriteStringValue(IPAddress.ToString());
-            if (Optional.IsDefined(Port))
+            if (Core.Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 return null;
             }
             IPAddress ipAddress = default;
-            Optional<int> port = default;
+            Core.Optional<int> port = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipAddress"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     continue;
                 }
             }
-            return new TargetDnsServer(ipAddress, Optional.ToNullable(port));
+            return new TargetDnsServer(ipAddress, Core.Optional.ToNullable(port));
         }
     }
 }

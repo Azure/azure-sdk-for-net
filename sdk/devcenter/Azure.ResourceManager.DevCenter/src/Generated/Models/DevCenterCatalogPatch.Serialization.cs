@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class DevCenterCatalogPatch : IUtf8JsonSerializable
+    public partial class DevCenterCatalogPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(GitHub))
+            if (Core.Optional.IsDefined(GitHub))
             {
                 writer.WritePropertyName("gitHub"u8);
                 writer.WriteObjectValue(GitHub);
             }
-            if (Optional.IsDefined(AdoGit))
+            if (Core.Optional.IsDefined(AdoGit))
             {
                 writer.WritePropertyName("adoGit"u8);
                 writer.WriteObjectValue(AdoGit);

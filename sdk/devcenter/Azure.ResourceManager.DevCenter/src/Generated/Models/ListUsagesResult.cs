@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of ListUsagesResult. </summary>
         internal ListUsagesResult()
         {
-            Value = new ChangeTrackingList<DevCenterUsage>();
+            Value = new Core.ChangeTrackingList<DevCenterUsage>();
         }
 
         /// <summary> Initializes a new instance of ListUsagesResult. </summary>

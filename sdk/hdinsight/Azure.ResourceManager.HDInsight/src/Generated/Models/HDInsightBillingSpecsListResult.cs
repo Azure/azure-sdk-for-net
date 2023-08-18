@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of HDInsightBillingSpecsListResult. </summary>
         internal HDInsightBillingSpecsListResult()
         {
-            VmSizes = new ChangeTrackingList<string>();
-            VmSizesWithEncryptionAtHost = new ChangeTrackingList<string>();
-            VmSizeFilters = new ChangeTrackingList<HDInsightVmSizeCompatibilityFilterV2>();
-            VmSizeProperties = new ChangeTrackingList<HDInsightVmSizeProperty>();
-            BillingResources = new ChangeTrackingList<HDInsightBillingResources>();
+            VmSizes = new Core.ChangeTrackingList<string>();
+            VmSizesWithEncryptionAtHost = new Core.ChangeTrackingList<string>();
+            VmSizeFilters = new Core.ChangeTrackingList<HDInsightVmSizeCompatibilityFilterV2>();
+            VmSizeProperties = new Core.ChangeTrackingList<HDInsightVmSizeProperty>();
+            BillingResources = new Core.ChangeTrackingList<HDInsightBillingResources>();
         }
 
         /// <summary> Initializes a new instance of HDInsightBillingSpecsListResult. </summary>

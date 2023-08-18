@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of BackupVaultResourceList. </summary>
         internal BackupVaultResourceList()
         {
-            Value = new ChangeTrackingList<DataProtectionBackupVaultData>();
+            Value = new Core.ChangeTrackingList<DataProtectionBackupVaultData>();
         }
 
         /// <summary> Initializes a new instance of BackupVaultResourceList. </summary>

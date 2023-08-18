@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<IReadOnlyList<ODataError>> details = default;
+            Core.Optional<string> code = default;
+            Core.Optional<string> message = default;
+            Core.Optional<IReadOnlyList<ODataError>> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ODataError(code.Value, message.Value, Optional.ToList(details));
+            return new ODataError(code.Value, message.Value, Core.Optional.ToList(details));
         }
     }
 }

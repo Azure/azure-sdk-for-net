@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of HealthcareApisResourceTags. </summary>
         public HealthcareApisResourceTags()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of HealthcareApisResourceTags. </summary>

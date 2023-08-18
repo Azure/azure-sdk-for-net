@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabApplicableSchedule : IUtf8JsonSerializable
+    public partial class DevTestLabApplicableSchedule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(LabVmsShutdown))
+            if (Core.Optional.IsDefined(LabVmsShutdown))
             {
                 writer.WritePropertyName("labVmsShutdown"u8);
                 writer.WriteObjectValue(LabVmsShutdown);
             }
-            if (Optional.IsDefined(LabVmsStartup))
+            if (Core.Optional.IsDefined(LabVmsStartup))
             {
                 writer.WritePropertyName("labVmsStartup"u8);
                 writer.WriteObjectValue(LabVmsStartup);
@@ -53,14 +53,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevTestLabScheduleData> labVmsShutdown = default;
-            Optional<DevTestLabScheduleData> labVmsStartup = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DevTestLabScheduleData> labVmsShutdown = default;
+            Core.Optional<DevTestLabScheduleData> labVmsStartup = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new DevTestLabApplicableSchedule(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, labVmsShutdown.Value, labVmsStartup.Value);
+            return new DevTestLabApplicableSchedule(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, labVmsShutdown.Value, labVmsStartup.Value);
         }
     }
 }

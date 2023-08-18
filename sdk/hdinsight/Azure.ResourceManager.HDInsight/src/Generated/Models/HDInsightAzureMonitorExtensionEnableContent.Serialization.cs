@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightAzureMonitorExtensionEnableContent : IUtf8JsonSerializable
+    public partial class HDInsightAzureMonitorExtensionEnableContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(WorkspaceId))
+            if (Core.Optional.IsDefined(WorkspaceId))
             {
                 writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId);
             }
-            if (Optional.IsDefined(PrimaryKey))
+            if (Core.Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (Optional.IsDefined(SelectedConfigurations))
+            if (Core.Optional.IsDefined(SelectedConfigurations))
             {
                 writer.WritePropertyName("selectedConfigurations"u8);
                 writer.WriteObjectValue(SelectedConfigurations);

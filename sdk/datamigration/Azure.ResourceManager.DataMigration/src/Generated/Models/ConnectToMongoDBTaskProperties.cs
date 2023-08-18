@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of ConnectToMongoDBTaskProperties. </summary>
         public ConnectToMongoDBTaskProperties()
         {
-            Output = new ChangeTrackingList<MongoDBClusterInfo>();
+            Output = new Core.ChangeTrackingList<MongoDBClusterInfo>();
             TaskType = TaskType.ConnectMongoDB;
         }
 

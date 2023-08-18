@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DynatraceOneAgentEnabledAppServiceInfo>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<DynatraceOneAgentEnabledAppServiceInfo>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     continue;
                 }
             }
-            return new AppServiceListResponse(Optional.ToList(value), nextLink.Value);
+            return new AppServiceListResponse(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

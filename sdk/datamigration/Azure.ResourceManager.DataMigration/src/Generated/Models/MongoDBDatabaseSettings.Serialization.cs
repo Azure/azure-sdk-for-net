@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MongoDBDatabaseSettings : IUtf8JsonSerializable
+    public partial class MongoDBDatabaseSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("collections"u8);
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
-            if (Optional.IsDefined(TargetRUs))
+            if (Core.Optional.IsDefined(TargetRUs))
             {
                 writer.WritePropertyName("targetRUs"u8);
                 writer.WriteNumberValue(TargetRUs.Value);
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             IDictionary<string, MongoDBCollectionSettings> collections = default;
-            Optional<int> targetRUs = default;
+            Core.Optional<int> targetRUs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("collections"u8))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MongoDBDatabaseSettings(collections, Optional.ToNullable(targetRUs));
+            return new MongoDBDatabaseSettings(collections, Core.Optional.ToNullable(targetRUs));
         }
     }
 }

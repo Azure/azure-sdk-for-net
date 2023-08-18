@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
-    public partial class DiagnosticStorageProperties : IUtf8JsonSerializable
+    public partial class DiagnosticStorageProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
-            if (Optional.IsDefined(ConnectionString))
+            if (Core.Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 return null;
             }
             AuthenticationType authenticationType = default;
-            Optional<string> connectionString = default;
+            Core.Optional<string> connectionString = default;
             string resourceId = default;
             foreach (var property in element.EnumerateObject())
             {

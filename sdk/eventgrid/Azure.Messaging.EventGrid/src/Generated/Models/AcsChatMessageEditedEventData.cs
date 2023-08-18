@@ -17,7 +17,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of AcsChatMessageEditedEventData. </summary>
         internal AcsChatMessageEditedEventData()
         {
-            Metadata = new ChangeTrackingDictionary<string, string>();
+            Metadata = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of AcsChatMessageEditedEventData. </summary>

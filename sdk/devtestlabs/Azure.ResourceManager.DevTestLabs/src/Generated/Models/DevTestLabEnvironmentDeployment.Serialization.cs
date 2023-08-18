@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabEnvironmentDeployment : IUtf8JsonSerializable
+    public partial class DevTestLabEnvironmentDeployment : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ArmTemplateId))
+            if (Core.Optional.IsDefined(ArmTemplateId))
             {
                 writer.WritePropertyName("armTemplateId"u8);
                 writer.WriteStringValue(ArmTemplateId);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (Core.Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> armTemplateId = default;
-            Optional<IList<DevTestLabArmTemplateParameter>> parameters = default;
+            Core.Optional<ResourceIdentifier> armTemplateId = default;
+            Core.Optional<IList<DevTestLabArmTemplateParameter>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("armTemplateId"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new DevTestLabEnvironmentDeployment(armTemplateId.Value, Optional.ToList(parameters));
+            return new DevTestLabEnvironmentDeployment(armTemplateId.Value, Core.Optional.ToList(parameters));
         }
     }
 }

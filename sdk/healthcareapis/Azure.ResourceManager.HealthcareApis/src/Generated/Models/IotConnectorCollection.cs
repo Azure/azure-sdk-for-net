@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of IotConnectorCollection. </summary>
         internal IotConnectorCollection()
         {
-            Value = new ChangeTrackingList<HealthcareApisIotConnectorData>();
+            Value = new Core.ChangeTrackingList<HealthcareApisIotConnectorData>();
         }
 
         /// <summary> Initializes a new instance of IotConnectorCollection. </summary>

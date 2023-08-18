@@ -16,7 +16,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of MediaJobOutputStateChangeEventData. </summary>
         internal MediaJobOutputStateChangeEventData()
         {
-            JobCorrelationData = new ChangeTrackingDictionary<string, string>();
+            JobCorrelationData = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of MediaJobOutputStateChangeEventData. </summary>

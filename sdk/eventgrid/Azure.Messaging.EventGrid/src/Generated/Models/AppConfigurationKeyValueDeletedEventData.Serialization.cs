@@ -21,10 +21,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> key = default;
-            Optional<string> label = default;
-            Optional<string> etag = default;
-            Optional<string> syncToken = default;
+            Core.Optional<string> key = default;
+            Core.Optional<string> label = default;
+            Core.Optional<string> etag = default;
+            Core.Optional<string> syncToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))

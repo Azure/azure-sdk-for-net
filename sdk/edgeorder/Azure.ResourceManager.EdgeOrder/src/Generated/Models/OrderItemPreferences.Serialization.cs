@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class OrderItemPreferences : IUtf8JsonSerializable
+    public partial class OrderItemPreferences : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(NotificationPreferences))
+            if (Core.Optional.IsCollectionDefined(NotificationPreferences))
             {
                 writer.WritePropertyName("notificationPreferences"u8);
                 writer.WriteStartArray();
@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TransportPreferences))
+            if (Core.Optional.IsDefined(TransportPreferences))
             {
                 writer.WritePropertyName("transportPreferences"u8);
                 writer.WriteObjectValue(TransportPreferences);
             }
-            if (Optional.IsDefined(EncryptionPreferences))
+            if (Core.Optional.IsDefined(EncryptionPreferences))
             {
                 writer.WritePropertyName("encryptionPreferences"u8);
                 writer.WriteObjectValue(EncryptionPreferences);
             }
-            if (Optional.IsDefined(ManagementResourcePreferences))
+            if (Core.Optional.IsDefined(ManagementResourcePreferences))
             {
                 writer.WritePropertyName("managementResourcePreferences"u8);
                 writer.WriteObjectValue(ManagementResourcePreferences);
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<IList<NotificationPreference>> notificationPreferences = default;
-            Optional<TransportPreferences> transportPreferences = default;
-            Optional<EncryptionPreferences> encryptionPreferences = default;
-            Optional<ManagementResourcePreferences> managementResourcePreferences = default;
+            Core.Optional<IList<NotificationPreference>> notificationPreferences = default;
+            Core.Optional<TransportPreferences> transportPreferences = default;
+            Core.Optional<EncryptionPreferences> encryptionPreferences = default;
+            Core.Optional<ManagementResourcePreferences> managementResourcePreferences = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("notificationPreferences"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     continue;
                 }
             }
-            return new OrderItemPreferences(Optional.ToList(notificationPreferences), transportPreferences.Value, encryptionPreferences.Value, managementResourcePreferences.Value);
+            return new OrderItemPreferences(Core.Optional.ToList(notificationPreferences), transportPreferences.Value, encryptionPreferences.Value, managementResourcePreferences.Value);
         }
     }
 }

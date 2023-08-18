@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<Uri> uri = default;
-            Optional<IReadOnlyDictionary<string, string>> headers = default;
+            Core.Optional<Uri> uri = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> headers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uri"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new FileStorageInfo(uri.Value, Optional.ToDictionary(headers));
+            return new FileStorageInfo(uri.Value, Core.Optional.ToDictionary(headers));
         }
     }
 }

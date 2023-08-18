@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class DynatraceSsoDetailsContent : IUtf8JsonSerializable
+    public partial class DynatraceSsoDetailsContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserPrincipal))
+            if (Core.Optional.IsDefined(UserPrincipal))
             {
                 writer.WritePropertyName("userPrincipal"u8);
                 writer.WriteStringValue(UserPrincipal);

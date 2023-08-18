@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> fileName = default;
-            Optional<BinaryData> parametersValueInfo = default;
+            Core.Optional<string> fileName = default;
+            Core.Optional<BinaryData> parametersValueInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileName"u8))

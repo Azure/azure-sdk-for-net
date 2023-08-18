@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <summary> Initializes a new instance of MonitoredResourceListResponse. </summary>
         internal MonitoredResourceListResponse()
         {
-            Value = new ChangeTrackingList<MonitoredResource>();
+            Value = new Core.ChangeTrackingList<MonitoredResource>();
         }
 
         /// <summary> Initializes a new instance of MonitoredResourceListResponse. </summary>

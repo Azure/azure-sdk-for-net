@@ -14,17 +14,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FluidRelay
 {
-    public partial class FluidRelayServerData : IUtf8JsonSerializable
+    public partial class FluidRelayServerData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.FluidRelay
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (Core.Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Encryption))
+            if (Core.Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsDefined(StorageSku))
+            if (Core.Optional.IsDefined(StorageSku))
             {
                 writer.WritePropertyName("storagesku"u8);
                 writer.WriteStringValue(StorageSku.Value.ToString());
@@ -64,18 +64,18 @@ namespace Azure.ResourceManager.FluidRelay
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> frsTenantId = default;
-            Optional<FluidRelayEndpoints> fluidRelayEndpoints = default;
-            Optional<FluidRelayProvisioningState> provisioningState = default;
-            Optional<Models.EncryptionProperties> encryption = default;
-            Optional<FluidRelayStorageSku> storagesku = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<Guid> frsTenantId = default;
+            Core.Optional<FluidRelayEndpoints> fluidRelayEndpoints = default;
+            Core.Optional<FluidRelayProvisioningState> provisioningState = default;
+            Core.Optional<Models.EncryptionProperties> encryption = default;
+            Core.Optional<FluidRelayStorageSku> storagesku = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.FluidRelay
                     continue;
                 }
             }
-            return new FluidRelayServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(frsTenantId), fluidRelayEndpoints.Value, Optional.ToNullable(provisioningState), encryption.Value, Optional.ToNullable(storagesku));
+            return new FluidRelayServerData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity, Core.Optional.ToNullable(frsTenantId), fluidRelayEndpoints.Value, Core.Optional.ToNullable(provisioningState), encryption.Value, Core.Optional.ToNullable(storagesku));
         }
     }
 }

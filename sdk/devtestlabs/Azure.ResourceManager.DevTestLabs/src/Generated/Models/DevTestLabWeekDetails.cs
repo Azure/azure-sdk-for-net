@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of DevTestLabWeekDetails. </summary>
         public DevTestLabWeekDetails()
         {
-            Weekdays = new ChangeTrackingList<string>();
+            Weekdays = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DevTestLabWeekDetails. </summary>

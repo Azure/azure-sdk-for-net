@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of HDInsightApplicationHttpsEndpoint. </summary>
         public HDInsightApplicationHttpsEndpoint()
         {
-            AccessModes = new ChangeTrackingList<string>();
+            AccessModes = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of HDInsightApplicationHttpsEndpoint. </summary>

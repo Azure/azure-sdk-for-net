@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of VirtualWorkspacePatch. </summary>
         public VirtualWorkspacePatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            ApplicationGroupReferences = new ChangeTrackingList<string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            ApplicationGroupReferences = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> tags to be updated. </summary>

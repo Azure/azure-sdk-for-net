@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<FrontDoorNameAvailabilityState> nameAvailability = default;
-            Optional<string> reason = default;
-            Optional<string> message = default;
+            Core.Optional<FrontDoorNameAvailabilityState> nameAvailability = default;
+            Core.Optional<string> reason = default;
+            Core.Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameAvailability"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new FrontDoorNameAvailabilityResult(Optional.ToNullable(nameAvailability), reason.Value, message.Value);
+            return new FrontDoorNameAvailabilityResult(Core.Optional.ToNullable(nameAvailability), reason.Value, message.Value);
         }
     }
 }

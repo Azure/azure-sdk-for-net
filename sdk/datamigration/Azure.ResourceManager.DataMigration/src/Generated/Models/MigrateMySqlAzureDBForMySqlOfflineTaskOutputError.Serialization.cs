@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<ReportableException> error = default;
-            Optional<string> id = default;
+            Core.Optional<ReportableException> error = default;
+            Core.Optional<string> id = default;
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {

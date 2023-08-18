@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             Code = code;
             Message = message;
-            Details = new ChangeTrackingList<Error>();
+            Details = new Core.ChangeTrackingList<Error>();
         }
 
         /// <summary> Initializes a new instance of Error. </summary>

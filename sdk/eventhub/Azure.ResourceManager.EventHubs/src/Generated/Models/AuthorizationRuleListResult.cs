@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of AuthorizationRuleListResult. </summary>
         internal AuthorizationRuleListResult()
         {
-            Value = new ChangeTrackingList<EventHubsAuthorizationRuleData>();
+            Value = new Core.ChangeTrackingList<EventHubsAuthorizationRuleData>();
         }
 
         /// <summary> Initializes a new instance of AuthorizationRuleListResult. </summary>

@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    public partial class DevCenterNetworkConnectionData : IUtf8JsonSerializable
+    public partial class DevCenterNetworkConnectionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,37 +33,37 @@ namespace Azure.ResourceManager.DevCenter
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SubnetId))
+            if (Core.Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Optional.IsDefined(DomainName))
+            if (Core.Optional.IsDefined(DomainName))
             {
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (Optional.IsDefined(OrganizationUnit))
+            if (Core.Optional.IsDefined(OrganizationUnit))
             {
                 writer.WritePropertyName("organizationUnit"u8);
                 writer.WriteStringValue(OrganizationUnit);
             }
-            if (Optional.IsDefined(DomainUsername))
+            if (Core.Optional.IsDefined(DomainUsername))
             {
                 writer.WritePropertyName("domainUsername"u8);
                 writer.WriteStringValue(DomainUsername);
             }
-            if (Optional.IsDefined(DomainPassword))
+            if (Core.Optional.IsDefined(DomainPassword))
             {
                 writer.WritePropertyName("domainPassword"u8);
                 writer.WriteStringValue(DomainPassword);
             }
-            if (Optional.IsDefined(NetworkingResourceGroupName))
+            if (Core.Optional.IsDefined(NetworkingResourceGroupName))
             {
                 writer.WritePropertyName("networkingResourceGroupName"u8);
                 writer.WriteStringValue(NetworkingResourceGroupName);
             }
-            if (Optional.IsDefined(DomainJoinType))
+            if (Core.Optional.IsDefined(DomainJoinType))
             {
                 writer.WritePropertyName("domainJoinType"u8);
                 writer.WriteStringValue(DomainJoinType.Value.ToString());
@@ -78,21 +78,21 @@ namespace Azure.ResourceManager.DevCenter
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<string> domainName = default;
-            Optional<string> organizationUnit = default;
-            Optional<string> domainUsername = default;
-            Optional<string> domainPassword = default;
-            Optional<DevCenterProvisioningState> provisioningState = default;
-            Optional<DevCenterHealthCheckStatus> healthCheckStatus = default;
-            Optional<string> networkingResourceGroupName = default;
-            Optional<DomainJoinType> domainJoinType = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ResourceIdentifier> subnetId = default;
+            Core.Optional<string> domainName = default;
+            Core.Optional<string> organizationUnit = default;
+            Core.Optional<string> domainUsername = default;
+            Core.Optional<string> domainPassword = default;
+            Core.Optional<DevCenterProvisioningState> provisioningState = default;
+            Core.Optional<DevCenterHealthCheckStatus> healthCheckStatus = default;
+            Core.Optional<string> networkingResourceGroupName = default;
+            Core.Optional<DomainJoinType> domainJoinType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DevCenter
                     continue;
                 }
             }
-            return new DevCenterNetworkConnectionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, subnetId.Value, domainName.Value, organizationUnit.Value, domainUsername.Value, domainPassword.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(healthCheckStatus), networkingResourceGroupName.Value, Optional.ToNullable(domainJoinType));
+            return new DevCenterNetworkConnectionData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, subnetId.Value, domainName.Value, organizationUnit.Value, domainUsername.Value, domainPassword.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(healthCheckStatus), networkingResourceGroupName.Value, Core.Optional.ToNullable(domainJoinType));
         }
     }
 }

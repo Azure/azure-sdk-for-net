@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class LatencyScorecard : IUtf8JsonSerializable
+    public partial class LatencyScorecard : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(LatencyMetrics))
+            if (Core.Optional.IsCollectionDefined(LatencyMetrics))
             {
                 writer.WritePropertyName("latencyMetrics"u8);
                 writer.WriteStartArray();
@@ -53,21 +53,21 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> id0 = default;
-            Optional<string> name0 = default;
-            Optional<string> description = default;
-            Optional<Uri> endpointA = default;
-            Optional<Uri> endpointB = default;
-            Optional<DateTimeOffset> startDateTimeUtc = default;
-            Optional<DateTimeOffset> endDateTimeUtc = default;
-            Optional<string> country = default;
-            Optional<IList<LatencyMetric>> latencyMetrics = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> id0 = default;
+            Core.Optional<string> name0 = default;
+            Core.Optional<string> description = default;
+            Core.Optional<Uri> endpointA = default;
+            Core.Optional<Uri> endpointB = default;
+            Core.Optional<DateTimeOffset> startDateTimeUtc = default;
+            Core.Optional<DateTimeOffset> endDateTimeUtc = default;
+            Core.Optional<string> country = default;
+            Core.Optional<IList<LatencyMetric>> latencyMetrics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new LatencyScorecard(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, id0.Value, name0.Value, description.Value, endpointA.Value, endpointB.Value, Optional.ToNullable(startDateTimeUtc), Optional.ToNullable(endDateTimeUtc), country.Value, Optional.ToList(latencyMetrics));
+            return new LatencyScorecard(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, id0.Value, name0.Value, description.Value, endpointA.Value, endpointB.Value, Core.Optional.ToNullable(startDateTimeUtc), Core.Optional.ToNullable(endDateTimeUtc), country.Value, Core.Optional.ToList(latencyMetrics));
         }
     }
 }

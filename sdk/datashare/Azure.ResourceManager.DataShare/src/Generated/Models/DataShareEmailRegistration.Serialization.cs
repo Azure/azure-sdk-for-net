@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class DataShareEmailRegistration : IUtf8JsonSerializable
+    public partial class DataShareEmailRegistration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ActivationCode))
+            if (Core.Optional.IsDefined(ActivationCode))
             {
                 writer.WritePropertyName("activationCode"u8);
                 writer.WriteStringValue(ActivationCode);
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 return null;
             }
-            Optional<string> activationCode = default;
-            Optional<DateTimeOffset> activationExpirationDate = default;
-            Optional<string> email = default;
-            Optional<DataShareEmailRegistrationStatus> registrationStatus = default;
-            Optional<Guid> tenantId = default;
+            Core.Optional<string> activationCode = default;
+            Core.Optional<DateTimeOffset> activationExpirationDate = default;
+            Core.Optional<string> email = default;
+            Core.Optional<DataShareEmailRegistrationStatus> registrationStatus = default;
+            Core.Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("activationCode"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new DataShareEmailRegistration(activationCode.Value, Optional.ToNullable(activationExpirationDate), email.Value, Optional.ToNullable(registrationStatus), Optional.ToNullable(tenantId));
+            return new DataShareEmailRegistration(activationCode.Value, Core.Optional.ToNullable(activationExpirationDate), email.Value, Core.Optional.ToNullable(registrationStatus), Core.Optional.ToNullable(tenantId));
         }
     }
 }

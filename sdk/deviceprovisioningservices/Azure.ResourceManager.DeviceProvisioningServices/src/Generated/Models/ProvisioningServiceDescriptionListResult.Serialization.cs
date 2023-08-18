@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DeviceProvisioningServiceData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<DeviceProvisioningServiceData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     continue;
                 }
             }
-            return new ProvisioningServiceDescriptionListResult(Optional.ToList(value), nextLink.Value);
+            return new ProvisioningServiceDescriptionListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

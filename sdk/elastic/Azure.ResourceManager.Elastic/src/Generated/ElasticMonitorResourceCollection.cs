@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Elastic
             try
             {
                 var response = await _elasticMonitorResourceMonitorsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticArmOperation<ElasticMonitorResource>(new ElasticMonitorResourceOperationSource(Client), _elasticMonitorResourceMonitorsClientDiagnostics, Pipeline, _elasticMonitorResourceMonitorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ElasticArmOperation<ElasticMonitorResource>(new ElasticMonitorResourceOperationSource(Client), _elasticMonitorResourceMonitorsClientDiagnostics, Pipeline, _elasticMonitorResourceMonitorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Elastic
             try
             {
                 var response = _elasticMonitorResourceMonitorsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data, cancellationToken);
-                var operation = new ElasticArmOperation<ElasticMonitorResource>(new ElasticMonitorResourceOperationSource(Client), _elasticMonitorResourceMonitorsClientDiagnostics, Pipeline, _elasticMonitorResourceMonitorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ElasticArmOperation<ElasticMonitorResource>(new ElasticMonitorResourceOperationSource(Client), _elasticMonitorResourceMonitorsClientDiagnostics, Pipeline, _elasticMonitorResourceMonitorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Elastic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticMonitorResourceMonitorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticMonitorResourceMonitorsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticMonitorResource(Client, ElasticMonitorResourceData.DeserializeElasticMonitorResourceData(e)), _elasticMonitorResourceMonitorsClientDiagnostics, Pipeline, "ElasticMonitorResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticMonitorResource(Client, ElasticMonitorResourceData.DeserializeElasticMonitorResourceData(e)), _elasticMonitorResourceMonitorsClientDiagnostics, Pipeline, "ElasticMonitorResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Elastic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticMonitorResourceMonitorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticMonitorResourceMonitorsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticMonitorResource(Client, ElasticMonitorResourceData.DeserializeElasticMonitorResourceData(e)), _elasticMonitorResourceMonitorsClientDiagnostics, Pipeline, "ElasticMonitorResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticMonitorResource(Client, ElasticMonitorResourceData.DeserializeElasticMonitorResourceData(e)), _elasticMonitorResourceMonitorsClientDiagnostics, Pipeline, "ElasticMonitorResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

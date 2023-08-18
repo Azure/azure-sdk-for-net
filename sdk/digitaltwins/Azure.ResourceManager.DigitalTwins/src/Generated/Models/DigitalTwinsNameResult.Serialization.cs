@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 return null;
             }
-            Optional<bool> nameAvailable = default;
-            Optional<string> message = default;
-            Optional<DigitalTwinsNameUnavailableReason?> reason = default;
+            Core.Optional<bool> nameAvailable = default;
+            Core.Optional<string> message = default;
+            Core.Optional<DigitalTwinsNameUnavailableReason?> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameAvailable"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     continue;
                 }
             }
-            return new DigitalTwinsNameResult(Optional.ToNullable(nameAvailable), message.Value, Optional.ToNullable(reason));
+            return new DigitalTwinsNameResult(Core.Optional.ToNullable(nameAvailable), message.Value, Core.Optional.ToNullable(reason));
         }
     }
 }

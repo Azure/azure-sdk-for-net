@@ -10,37 +10,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightStorageAccountInfo : IUtf8JsonSerializable
+    public partial class HDInsightStorageAccountInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(IsDefault))
+            if (Core.Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (Optional.IsDefined(Container))
+            if (Core.Optional.IsDefined(Container))
             {
                 writer.WritePropertyName("container"u8);
                 writer.WriteStringValue(Container);
             }
-            if (Optional.IsDefined(FileSystem))
+            if (Core.Optional.IsDefined(FileSystem))
             {
                 writer.WritePropertyName("fileSystem"u8);
                 writer.WriteStringValue(FileSystem);
             }
-            if (Optional.IsDefined(Key))
+            if (Core.Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (Optional.IsDefined(ResourceId))
+            if (Core.Optional.IsDefined(ResourceId))
             {
                 if (ResourceId != null)
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     writer.WriteNull("resourceId");
                 }
             }
-            if (Optional.IsDefined(MsiResourceId))
+            if (Core.Optional.IsDefined(MsiResourceId))
             {
                 if (MsiResourceId != null)
                 {
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.HDInsight.Models
                     writer.WriteNull("msiResourceId");
                 }
             }
-            if (Optional.IsDefined(SasKey))
+            if (Core.Optional.IsDefined(SasKey))
             {
                 writer.WritePropertyName("saskey"u8);
                 writer.WriteStringValue(SasKey);
             }
-            if (Optional.IsDefined(Fileshare))
+            if (Core.Optional.IsDefined(Fileshare))
             {
                 writer.WritePropertyName("fileshare"u8);
                 writer.WriteStringValue(Fileshare);
             }
-            if (Optional.IsDefined(EnableSecureChannel))
+            if (Core.Optional.IsDefined(EnableSecureChannel))
             {
                 writer.WritePropertyName("enableSecureChannel"u8);
                 writer.WriteBooleanValue(EnableSecureChannel.Value);
@@ -88,16 +88,16 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> isDefault = default;
-            Optional<string> container = default;
-            Optional<string> fileSystem = default;
-            Optional<string> key = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<ResourceIdentifier> msiResourceId = default;
-            Optional<string> saskey = default;
-            Optional<string> fileshare = default;
-            Optional<bool> enableSecureChannel = default;
+            Core.Optional<string> name = default;
+            Core.Optional<bool> isDefault = default;
+            Core.Optional<string> container = default;
+            Core.Optional<string> fileSystem = default;
+            Core.Optional<string> key = default;
+            Core.Optional<ResourceIdentifier> resourceId = default;
+            Core.Optional<ResourceIdentifier> msiResourceId = default;
+            Core.Optional<string> saskey = default;
+            Core.Optional<string> fileshare = default;
+            Core.Optional<bool> enableSecureChannel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightStorageAccountInfo(name.Value, Optional.ToNullable(isDefault), container.Value, fileSystem.Value, key.Value, resourceId.Value, msiResourceId.Value, saskey.Value, fileshare.Value, Optional.ToNullable(enableSecureChannel));
+            return new HDInsightStorageAccountInfo(name.Value, Core.Optional.ToNullable(isDefault), container.Value, fileSystem.Value, key.Value, resourceId.Value, msiResourceId.Value, saskey.Value, fileshare.Value, Core.Optional.ToNullable(enableSecureChannel));
         }
     }
 }

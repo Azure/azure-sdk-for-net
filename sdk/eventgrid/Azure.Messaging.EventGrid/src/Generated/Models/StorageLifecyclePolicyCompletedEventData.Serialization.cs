@@ -21,10 +21,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> scheduleTime = default;
-            Optional<StorageLifecyclePolicyActionSummaryDetail> deleteSummary = default;
-            Optional<StorageLifecyclePolicyActionSummaryDetail> tierToCoolSummary = default;
-            Optional<StorageLifecyclePolicyActionSummaryDetail> tierToArchiveSummary = default;
+            Core.Optional<string> scheduleTime = default;
+            Core.Optional<StorageLifecyclePolicyActionSummaryDetail> deleteSummary = default;
+            Core.Optional<StorageLifecyclePolicyActionSummaryDetail> tierToCoolSummary = default;
+            Core.Optional<StorageLifecyclePolicyActionSummaryDetail> tierToArchiveSummary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scheduleTime"u8))

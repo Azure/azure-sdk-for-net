@@ -20,9 +20,9 @@ namespace Azure.AI.FormRecognizer.Models
                 return null;
             }
             int page = default;
-            Optional<int?> clusterId = default;
-            Optional<IReadOnlyList<KeyValuePair>> keyValuePairs = default;
-            Optional<IReadOnlyList<DataTable>> tables = default;
+            Core.Optional<int?> clusterId = default;
+            Core.Optional<IReadOnlyList<KeyValuePair>> keyValuePairs = default;
+            Core.Optional<IReadOnlyList<DataTable>> tables = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("page"u8))
@@ -69,7 +69,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new PageResult(page, Optional.ToNullable(clusterId), Optional.ToList(keyValuePairs), Optional.ToList(tables));
+            return new PageResult(page, Core.Optional.ToNullable(clusterId), Core.Optional.ToList(keyValuePairs), Core.Optional.ToList(tables));
         }
     }
 }

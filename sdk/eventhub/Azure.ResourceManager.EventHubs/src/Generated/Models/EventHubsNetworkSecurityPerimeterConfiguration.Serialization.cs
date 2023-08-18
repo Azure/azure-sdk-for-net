@@ -12,12 +12,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EventHubsNetworkSecurityPerimeterConfiguration : IUtf8JsonSerializable
+    public partial class EventHubsNetworkSecurityPerimeterConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.EventHubs.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (Core.Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ProvisioningIssues))
+            if (Core.Optional.IsCollectionDefined(ProvisioningIssues))
             {
                 writer.WritePropertyName("provisioningIssues"u8);
                 writer.WriteStartArray();
@@ -57,17 +57,17 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EventHubsNetworkSecurityPerimeterConfigurationProvisioningState> provisioningState = default;
-            Optional<IList<EventHubsProvisioningIssue>> provisioningIssues = default;
-            Optional<EventHubsNetworkSecurityPerimeter> networkSecurityPerimeter = default;
-            Optional<EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation> resourceAssociation = default;
-            Optional<EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile> profile = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<EventHubsNetworkSecurityPerimeterConfigurationProvisioningState> provisioningState = default;
+            Core.Optional<IList<EventHubsProvisioningIssue>> provisioningIssues = default;
+            Core.Optional<EventHubsNetworkSecurityPerimeter> networkSecurityPerimeter = default;
+            Core.Optional<EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation> resourceAssociation = default;
+            Core.Optional<EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile> profile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new EventHubsNetworkSecurityPerimeterConfiguration(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToList(provisioningIssues), networkSecurityPerimeter.Value, resourceAssociation.Value, profile.Value);
+            return new EventHubsNetworkSecurityPerimeterConfiguration(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(provisioningIssues), networkSecurityPerimeter.Value, resourceAssociation.Value, profile.Value);
         }
     }
 }

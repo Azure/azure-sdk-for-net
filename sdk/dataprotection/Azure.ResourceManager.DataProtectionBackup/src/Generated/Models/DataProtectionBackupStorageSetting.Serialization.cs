@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionBackupStorageSetting : IUtf8JsonSerializable
+    public partial class DataProtectionBackupStorageSetting : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataStoreType))
+            if (Core.Optional.IsDefined(DataStoreType))
             {
                 writer.WritePropertyName("datastoreType"u8);
                 writer.WriteStringValue(DataStoreType.Value.ToString());
             }
-            if (Optional.IsDefined(StorageSettingType))
+            if (Core.Optional.IsDefined(StorageSettingType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(StorageSettingType.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<StorageSettingStoreType> datastoreType = default;
-            Optional<StorageSettingType> type = default;
+            Core.Optional<StorageSettingStoreType> datastoreType = default;
+            Core.Optional<StorageSettingType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("datastoreType"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new DataProtectionBackupStorageSetting(Optional.ToNullable(datastoreType), Optional.ToNullable(type));
+            return new DataProtectionBackupStorageSetting(Core.Optional.ToNullable(datastoreType), Core.Optional.ToNullable(type));
         }
     }
 }

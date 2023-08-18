@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    internal partial class LinuxOSInfo : IUtf8JsonSerializable
+    internal partial class LinuxOSInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinuxOSState))
+            if (Core.Optional.IsDefined(LinuxOSState))
             {
                 writer.WritePropertyName("linuxOsState"u8);
                 writer.WriteStringValue(LinuxOSState.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<DevTestLabLinuxOSState> linuxOSState = default;
+            Core.Optional<DevTestLabLinuxOSState> linuxOSState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linuxOsState"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new LinuxOSInfo(Optional.ToNullable(linuxOSState));
+            return new LinuxOSInfo(Core.Optional.ToNullable(linuxOSState));
         }
     }
 }

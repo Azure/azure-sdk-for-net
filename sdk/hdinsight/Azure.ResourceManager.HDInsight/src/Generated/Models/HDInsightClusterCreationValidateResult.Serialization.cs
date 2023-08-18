@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HDInsightClusterValidationErrorInfo>> validationErrors = default;
-            Optional<IReadOnlyList<HDInsightClusterValidationErrorInfo>> validationWarnings = default;
-            Optional<TimeSpan> estimatedCreationDuration = default;
-            Optional<IReadOnlyList<HDInsightClusterAaddsDetail>> aaddsResourcesDetails = default;
+            Core.Optional<IReadOnlyList<HDInsightClusterValidationErrorInfo>> validationErrors = default;
+            Core.Optional<IReadOnlyList<HDInsightClusterValidationErrorInfo>> validationWarnings = default;
+            Core.Optional<TimeSpan> estimatedCreationDuration = default;
+            Core.Optional<IReadOnlyList<HDInsightClusterAaddsDetail>> aaddsResourcesDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validationErrors"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightClusterCreationValidateResult(Optional.ToList(validationErrors), Optional.ToList(validationWarnings), Optional.ToNullable(estimatedCreationDuration), Optional.ToList(aaddsResourcesDetails));
+            return new HDInsightClusterCreationValidateResult(Core.Optional.ToList(validationErrors), Core.Optional.ToList(validationWarnings), Core.Optional.ToNullable(estimatedCreationDuration), Core.Optional.ToList(aaddsResourcesDetails));
         }
     }
 }

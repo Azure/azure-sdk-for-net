@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DigitalTwins
 {
-    internal class DigitalTwinsPrivateEndpointConnectionOperationSource : IOperationSource<DigitalTwinsPrivateEndpointConnectionResource>
+    internal class DigitalTwinsPrivateEndpointConnectionOperationSource : Core.IOperationSource<DigitalTwinsPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DigitalTwins
             _client = client;
         }
 
-        DigitalTwinsPrivateEndpointConnectionResource IOperationSource<DigitalTwinsPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DigitalTwinsPrivateEndpointConnectionResource Core.IOperationSource<DigitalTwinsPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DigitalTwinsPrivateEndpointConnectionData.DeserializeDigitalTwinsPrivateEndpointConnectionData(document.RootElement);
             return new DigitalTwinsPrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<DigitalTwinsPrivateEndpointConnectionResource> IOperationSource<DigitalTwinsPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DigitalTwinsPrivateEndpointConnectionResource> Core.IOperationSource<DigitalTwinsPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DigitalTwinsPrivateEndpointConnectionData.DeserializeDigitalTwinsPrivateEndpointConnectionData(document.RootElement);

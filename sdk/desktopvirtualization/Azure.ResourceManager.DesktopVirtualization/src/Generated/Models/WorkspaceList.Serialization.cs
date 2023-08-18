@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VirtualWorkspaceData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<VirtualWorkspaceData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     continue;
                 }
             }
-            return new WorkspaceList(Optional.ToList(value), nextLink.Value);
+            return new WorkspaceList(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

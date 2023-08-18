@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
-    public partial class ServiceUnitArtifacts : IUtf8JsonSerializable
+    public partial class ServiceUnitArtifacts : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TemplateUri))
+            if (Core.Optional.IsDefined(TemplateUri))
             {
                 writer.WritePropertyName("templateUri"u8);
                 writer.WriteStringValue(TemplateUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ParametersUri))
+            if (Core.Optional.IsDefined(ParametersUri))
             {
                 writer.WritePropertyName("parametersUri"u8);
                 writer.WriteStringValue(ParametersUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(TemplateArtifactSourceRelativePath))
+            if (Core.Optional.IsDefined(TemplateArtifactSourceRelativePath))
             {
                 writer.WritePropertyName("templateArtifactSourceRelativePath"u8);
                 writer.WriteStringValue(TemplateArtifactSourceRelativePath);
             }
-            if (Optional.IsDefined(ParametersArtifactSourceRelativePath))
+            if (Core.Optional.IsDefined(ParametersArtifactSourceRelativePath))
             {
                 writer.WritePropertyName("parametersArtifactSourceRelativePath"u8);
                 writer.WriteStringValue(ParametersArtifactSourceRelativePath);
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             {
                 return null;
             }
-            Optional<Uri> templateUri = default;
-            Optional<Uri> parametersUri = default;
-            Optional<string> templateArtifactSourceRelativePath = default;
-            Optional<string> parametersArtifactSourceRelativePath = default;
+            Core.Optional<Uri> templateUri = default;
+            Core.Optional<Uri> parametersUri = default;
+            Core.Optional<string> templateArtifactSourceRelativePath = default;
+            Core.Optional<string> parametersArtifactSourceRelativePath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("templateUri"u8))

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class EventGridInboundIPRule : IUtf8JsonSerializable
+    public partial class EventGridInboundIPRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPMask))
+            if (Core.Optional.IsDefined(IPMask))
             {
                 writer.WritePropertyName("ipMask"u8);
                 writer.WriteStringValue(IPMask);
             }
-            if (Optional.IsDefined(Action))
+            if (Core.Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> ipMask = default;
-            Optional<EventGridIPActionType> action = default;
+            Core.Optional<string> ipMask = default;
+            Core.Optional<EventGridIPActionType> action = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipMask"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new EventGridInboundIPRule(ipMask.Value, Optional.ToNullable(action));
+            return new EventGridInboundIPRule(ipMask.Value, Core.Optional.ToNullable(action));
         }
     }
 }

@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    public partial class DevTestLabPolicyData : IUtf8JsonSerializable
+    public partial class DevTestLabPolicyData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,32 +34,32 @@ namespace Azure.ResourceManager.DevTestLabs
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(FactName))
+            if (Core.Optional.IsDefined(FactName))
             {
                 writer.WritePropertyName("factName"u8);
                 writer.WriteStringValue(FactName.Value.ToString());
             }
-            if (Optional.IsDefined(FactData))
+            if (Core.Optional.IsDefined(FactData))
             {
                 writer.WritePropertyName("factData"u8);
                 writer.WriteStringValue(FactData);
             }
-            if (Optional.IsDefined(Threshold))
+            if (Core.Optional.IsDefined(Threshold))
             {
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteStringValue(Threshold);
             }
-            if (Optional.IsDefined(EvaluatorType))
+            if (Core.Optional.IsDefined(EvaluatorType))
             {
                 writer.WritePropertyName("evaluatorType"u8);
                 writer.WriteStringValue(EvaluatorType.Value.ToString());
@@ -74,21 +74,21 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<DevTestLabPolicyStatus> status = default;
-            Optional<DevTestLabPolicyFactName> factName = default;
-            Optional<string> factData = default;
-            Optional<string> threshold = default;
-            Optional<DevTestLabPolicyEvaluatorType> evaluatorType = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> description = default;
+            Core.Optional<DevTestLabPolicyStatus> status = default;
+            Core.Optional<DevTestLabPolicyFactName> factName = default;
+            Core.Optional<string> factData = default;
+            Core.Optional<string> threshold = default;
+            Core.Optional<DevTestLabPolicyEvaluatorType> evaluatorType = default;
+            Core.Optional<DateTimeOffset> createdDate = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<Guid> uniqueIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     continue;
                 }
             }
-            return new DevTestLabPolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, Optional.ToNullable(status), Optional.ToNullable(factName), factData.Value, threshold.Value, Optional.ToNullable(evaluatorType), Optional.ToNullable(createdDate), provisioningState.Value, Optional.ToNullable(uniqueIdentifier));
+            return new DevTestLabPolicyData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, description.Value, Core.Optional.ToNullable(status), Core.Optional.ToNullable(factName), factData.Value, threshold.Value, Core.Optional.ToNullable(evaluatorType), Core.Optional.ToNullable(createdDate), provisioningState.Value, Core.Optional.ToNullable(uniqueIdentifier));
         }
     }
 }

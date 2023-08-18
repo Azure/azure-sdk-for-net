@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of DevTestLabEvaluatePoliciesResult. </summary>
         internal DevTestLabEvaluatePoliciesResult()
         {
-            Results = new ChangeTrackingList<DevTestLabPolicySetResult>();
+            Results = new Core.ChangeTrackingList<DevTestLabPolicySetResult>();
         }
 
         /// <summary> Initializes a new instance of DevTestLabEvaluatePoliciesResult. </summary>

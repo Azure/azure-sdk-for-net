@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.HealthBot.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<HealthBotData>> value = default;
+            Core.Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<HealthBotData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                     continue;
                 }
             }
-            return new BotResponseList(nextLink.Value, Optional.ToList(value));
+            return new BotResponseList(nextLink.Value, Core.Optional.ToList(value));
         }
     }
 }

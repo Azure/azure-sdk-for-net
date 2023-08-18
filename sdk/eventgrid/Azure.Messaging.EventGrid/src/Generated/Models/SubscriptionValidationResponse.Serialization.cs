@@ -13,12 +13,12 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(SubscriptionValidationResponseConverter))]
-    public partial class SubscriptionValidationResponse : IUtf8JsonSerializable
+    public partial class SubscriptionValidationResponse : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ValidationResponse))
+            if (Core.Optional.IsDefined(ValidationResponse))
             {
                 writer.WritePropertyName("validationResponse"u8);
                 writer.WriteStringValue(ValidationResponse);
@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> validationResponse = default;
+            Core.Optional<string> validationResponse = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validationResponse"u8))

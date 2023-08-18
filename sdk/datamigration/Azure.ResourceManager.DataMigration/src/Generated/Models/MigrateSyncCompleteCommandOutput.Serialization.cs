@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<IReadOnlyList<ReportableException>> errors = default;
+            Core.Optional<string> id = default;
+            Core.Optional<IReadOnlyList<ReportableException>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateSyncCompleteCommandOutput(id.Value, Optional.ToList(errors));
+            return new MigrateSyncCompleteCommandOutput(id.Value, Core.Optional.ToList(errors));
         }
     }
 }

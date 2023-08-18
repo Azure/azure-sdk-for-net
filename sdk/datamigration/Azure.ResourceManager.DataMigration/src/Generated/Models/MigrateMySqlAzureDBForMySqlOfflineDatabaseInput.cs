@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlOfflineDatabaseInput. </summary>
         public MigrateMySqlAzureDBForMySqlOfflineDatabaseInput()
         {
-            TableMap = new ChangeTrackingDictionary<string, string>();
+            TableMap = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlOfflineDatabaseInput. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of NetworkConnectionListResult. </summary>
         internal NetworkConnectionListResult()
         {
-            Value = new ChangeTrackingList<DevCenterNetworkConnectionData>();
+            Value = new Core.ChangeTrackingList<DevCenterNetworkConnectionData>();
         }
 
         /// <summary> Initializes a new instance of NetworkConnectionListResult. </summary>

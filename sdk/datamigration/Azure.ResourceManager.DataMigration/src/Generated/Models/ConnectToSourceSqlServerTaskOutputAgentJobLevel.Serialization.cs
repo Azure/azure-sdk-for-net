@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> jobCategory = default;
-            Optional<bool> isEnabled = default;
-            Optional<string> jobOwner = default;
-            Optional<DateTimeOffset> lastExecutedOn = default;
-            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
-            Optional<MigrationEligibilityInfo> migrationEligibility = default;
-            Optional<string> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> jobCategory = default;
+            Core.Optional<bool> isEnabled = default;
+            Core.Optional<string> jobOwner = default;
+            Core.Optional<DateTimeOffset> lastExecutedOn = default;
+            Core.Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            Core.Optional<MigrationEligibilityInfo> migrationEligibility = default;
+            Core.Optional<string> id = default;
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ConnectToSourceSqlServerTaskOutputAgentJobLevel(id.Value, resultType, name.Value, jobCategory.Value, Optional.ToNullable(isEnabled), jobOwner.Value, Optional.ToNullable(lastExecutedOn), Optional.ToList(validationErrors), migrationEligibility.Value);
+            return new ConnectToSourceSqlServerTaskOutputAgentJobLevel(id.Value, resultType, name.Value, jobCategory.Value, Core.Optional.ToNullable(isEnabled), jobOwner.Value, Core.Optional.ToNullable(lastExecutedOn), Core.Optional.ToList(validationErrors), migrationEligibility.Value);
         }
     }
 }

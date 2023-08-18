@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<bool> nameAvailable = default;
-            Optional<NameCheckFailureReason> reason = default;
-            Optional<string> message = default;
+            Core.Optional<bool> nameAvailable = default;
+            Core.Optional<NameCheckFailureReason> reason = default;
+            Core.Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameAvailable"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new NameAvailabilityResponse(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value);
+            return new NameAvailabilityResponse(Core.Optional.ToNullable(nameAvailable), Core.Optional.ToNullable(reason), message.Value);
         }
     }
 }

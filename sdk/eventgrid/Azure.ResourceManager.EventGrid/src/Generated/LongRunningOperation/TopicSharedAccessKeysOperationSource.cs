@@ -14,15 +14,15 @@ using Azure.ResourceManager.EventGrid.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    internal class TopicSharedAccessKeysOperationSource : IOperationSource<TopicSharedAccessKeys>
+    internal class TopicSharedAccessKeysOperationSource : Core.IOperationSource<TopicSharedAccessKeys>
     {
-        TopicSharedAccessKeys IOperationSource<TopicSharedAccessKeys>.CreateResult(Response response, CancellationToken cancellationToken)
+        TopicSharedAccessKeys Core.IOperationSource<TopicSharedAccessKeys>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return TopicSharedAccessKeys.DeserializeTopicSharedAccessKeys(document.RootElement);
         }
 
-        async ValueTask<TopicSharedAccessKeys> IOperationSource<TopicSharedAccessKeys>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<TopicSharedAccessKeys> Core.IOperationSource<TopicSharedAccessKeys>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return TopicSharedAccessKeys.DeserializeTopicSharedAccessKeys(document.RootElement);

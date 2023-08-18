@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabSubnet : IUtf8JsonSerializable
+    public partial class DevTestLabSubnet : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (Core.Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(LabSubnetName))
+            if (Core.Optional.IsDefined(LabSubnetName))
             {
                 writer.WritePropertyName("labSubnetName"u8);
                 writer.WriteStringValue(LabSubnetName);
             }
-            if (Optional.IsDefined(AllowPublicIP))
+            if (Core.Optional.IsDefined(AllowPublicIP))
             {
                 writer.WritePropertyName("allowPublicIp"u8);
                 writer.WriteStringValue(AllowPublicIP.Value.ToString());
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> labSubnetName = default;
-            Optional<DevTestLabUsagePermissionType> allowPublicIP = default;
+            Core.Optional<ResourceIdentifier> resourceId = default;
+            Core.Optional<string> labSubnetName = default;
+            Core.Optional<DevTestLabUsagePermissionType> allowPublicIP = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new DevTestLabSubnet(resourceId.Value, labSubnetName.Value, Optional.ToNullable(allowPublicIP));
+            return new DevTestLabSubnet(resourceId.Value, labSubnetName.Value, Core.Optional.ToNullable(allowPublicIP));
         }
     }
 }

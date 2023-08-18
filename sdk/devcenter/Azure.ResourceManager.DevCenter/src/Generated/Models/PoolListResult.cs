@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of PoolListResult. </summary>
         internal PoolListResult()
         {
-            Value = new ChangeTrackingList<DevCenterPoolData>();
+            Value = new Core.ChangeTrackingList<DevCenterPoolData>();
         }
 
         /// <summary> Initializes a new instance of PoolListResult. </summary>

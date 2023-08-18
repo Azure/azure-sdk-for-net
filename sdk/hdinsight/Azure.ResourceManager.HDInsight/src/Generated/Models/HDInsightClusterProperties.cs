@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.HDInsight.Models
             Argument.AssertNotNull(clusterDefinition, nameof(clusterDefinition));
 
             ClusterDefinition = clusterDefinition;
-            Errors = new ChangeTrackingList<ResponseError>();
-            ConnectivityEndpoints = new ChangeTrackingList<ConnectivityEndpoint>();
-            PrivateLinkConfigurations = new ChangeTrackingList<HDInsightPrivateLinkConfiguration>();
-            PrivateEndpointConnections = new ChangeTrackingList<HDInsightPrivateEndpointConnectionData>();
+            Errors = new Core.ChangeTrackingList<ResponseError>();
+            ConnectivityEndpoints = new Core.ChangeTrackingList<ConnectivityEndpoint>();
+            PrivateLinkConfigurations = new Core.ChangeTrackingList<HDInsightPrivateLinkConfiguration>();
+            PrivateEndpointConnections = new Core.ChangeTrackingList<HDInsightPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of HDInsightClusterProperties. </summary>

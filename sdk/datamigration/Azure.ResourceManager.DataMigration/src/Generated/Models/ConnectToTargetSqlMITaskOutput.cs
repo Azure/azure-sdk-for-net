@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of ConnectToTargetSqlMITaskOutput. </summary>
         internal ConnectToTargetSqlMITaskOutput()
         {
-            Logins = new ChangeTrackingList<string>();
-            AgentJobs = new ChangeTrackingList<string>();
-            ValidationErrors = new ChangeTrackingList<ReportableException>();
+            Logins = new Core.ChangeTrackingList<string>();
+            AgentJobs = new Core.ChangeTrackingList<string>();
+            ValidationErrors = new Core.ChangeTrackingList<ReportableException>();
         }
 
         /// <summary> Initializes a new instance of ConnectToTargetSqlMITaskOutput. </summary>

@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class ConsumerSourceDataSet : IUtf8JsonSerializable
+    public partial class ConsumerSourceDataSet : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> dataSetId = default;
-            Optional<AzureLocation> dataSetLocation = default;
-            Optional<string> dataSetName = default;
-            Optional<string> dataSetPath = default;
-            Optional<ShareDataSetType> dataSetType = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<Guid> dataSetId = default;
+            Core.Optional<AzureLocation> dataSetLocation = default;
+            Core.Optional<string> dataSetName = default;
+            Core.Optional<string> dataSetPath = default;
+            Core.Optional<ShareDataSetType> dataSetType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new ConsumerSourceDataSet(id, name, type, systemData.Value, Optional.ToNullable(dataSetId), Optional.ToNullable(dataSetLocation), dataSetName.Value, dataSetPath.Value, Optional.ToNullable(dataSetType));
+            return new ConsumerSourceDataSet(id, name, type, systemData.Value, Core.Optional.ToNullable(dataSetId), Core.Optional.ToNullable(dataSetLocation), dataSetName.Value, dataSetPath.Value, Core.Optional.ToNullable(dataSetType));
         }
     }
 }

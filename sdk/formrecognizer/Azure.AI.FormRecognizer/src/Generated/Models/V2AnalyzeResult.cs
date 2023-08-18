@@ -22,10 +22,10 @@ namespace Azure.AI.FormRecognizer.Models
             Argument.AssertNotNull(version, nameof(version));
 
             Version = version;
-            ReadResults = new ChangeTrackingList<ReadResult>();
-            PageResults = new ChangeTrackingList<PageResult>();
-            DocumentResults = new ChangeTrackingList<DocumentResult>();
-            Errors = new ChangeTrackingList<FormRecognizerError>();
+            ReadResults = new Core.ChangeTrackingList<ReadResult>();
+            PageResults = new Core.ChangeTrackingList<PageResult>();
+            DocumentResults = new Core.ChangeTrackingList<DocumentResult>();
+            Errors = new Core.ChangeTrackingList<FormRecognizerError>();
         }
 
         /// <summary> Initializes a new instance of V2AnalyzeResult. </summary>

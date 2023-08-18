@@ -21,11 +21,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> firstTimestamp = default;
-            Optional<string> firstDuration = default;
-            Optional<string> secondTimestamp = default;
-            Optional<string> secondDuration = default;
-            Optional<string> timescale = default;
+            Core.Optional<string> firstTimestamp = default;
+            Core.Optional<string> firstDuration = default;
+            Core.Optional<string> secondTimestamp = default;
+            Core.Optional<string> secondDuration = default;
+            Core.Optional<string> timescale = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("firstTimestamp"u8))

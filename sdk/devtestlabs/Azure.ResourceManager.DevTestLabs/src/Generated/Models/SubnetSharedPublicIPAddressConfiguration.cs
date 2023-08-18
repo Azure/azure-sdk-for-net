@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of SubnetSharedPublicIPAddressConfiguration. </summary>
         public SubnetSharedPublicIPAddressConfiguration()
         {
-            AllowedPorts = new ChangeTrackingList<DevTestLabPort>();
+            AllowedPorts = new Core.ChangeTrackingList<DevTestLabPort>();
         }
 
         /// <summary> Initializes a new instance of SubnetSharedPublicIPAddressConfiguration. </summary>

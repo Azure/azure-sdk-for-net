@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class SessionHostAgentUpdatePatchProperties : IUtf8JsonSerializable
+    public partial class SessionHostAgentUpdatePatchProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(UpdateType))
+            if (Core.Optional.IsDefined(UpdateType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(UpdateType.Value.ToString());
             }
-            if (Optional.IsDefined(DoesUseSessionHostLocalTime))
+            if (Core.Optional.IsDefined(DoesUseSessionHostLocalTime))
             {
                 writer.WritePropertyName("useSessionHostLocalTime"u8);
                 writer.WriteBooleanValue(DoesUseSessionHostLocalTime.Value);
             }
-            if (Optional.IsDefined(MaintenanceWindowTimeZone))
+            if (Core.Optional.IsDefined(MaintenanceWindowTimeZone))
             {
                 writer.WritePropertyName("maintenanceWindowTimeZone"u8);
                 writer.WriteStringValue(MaintenanceWindowTimeZone);
             }
-            if (Optional.IsCollectionDefined(MaintenanceWindows))
+            if (Core.Optional.IsCollectionDefined(MaintenanceWindows))
             {
                 writer.WritePropertyName("maintenanceWindows"u8);
                 writer.WriteStartArray();
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<SessionHostComponentUpdateType> type = default;
-            Optional<bool> useSessionHostLocalTime = default;
-            Optional<string> maintenanceWindowTimeZone = default;
-            Optional<IList<MaintenanceWindowPatchProperties>> maintenanceWindows = default;
+            Core.Optional<SessionHostComponentUpdateType> type = default;
+            Core.Optional<bool> useSessionHostLocalTime = default;
+            Core.Optional<string> maintenanceWindowTimeZone = default;
+            Core.Optional<IList<MaintenanceWindowPatchProperties>> maintenanceWindows = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     continue;
                 }
             }
-            return new SessionHostAgentUpdatePatchProperties(Optional.ToNullable(type), Optional.ToNullable(useSessionHostLocalTime), maintenanceWindowTimeZone.Value, Optional.ToList(maintenanceWindows));
+            return new SessionHostAgentUpdatePatchProperties(Core.Optional.ToNullable(type), Core.Optional.ToNullable(useSessionHostLocalTime), maintenanceWindowTimeZone.Value, Core.Optional.ToList(maintenanceWindows));
         }
     }
 }

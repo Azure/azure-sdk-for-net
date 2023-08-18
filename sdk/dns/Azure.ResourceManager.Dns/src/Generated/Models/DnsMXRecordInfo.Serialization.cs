@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class DnsMXRecordInfo : IUtf8JsonSerializable
+    public partial class DnsMXRecordInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Preference))
+            if (Core.Optional.IsDefined(Preference))
             {
                 writer.WritePropertyName("preference"u8);
                 writer.WriteNumberValue(Preference.Value);
             }
-            if (Optional.IsDefined(Exchange))
+            if (Core.Optional.IsDefined(Exchange))
             {
                 writer.WritePropertyName("exchange"u8);
                 writer.WriteStringValue(Exchange);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            Optional<int> preference = default;
-            Optional<string> exchange = default;
+            Core.Optional<int> preference = default;
+            Core.Optional<string> exchange = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("preference"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Dns.Models
                     continue;
                 }
             }
-            return new DnsMXRecordInfo(Optional.ToNullable(preference), exchange.Value);
+            return new DnsMXRecordInfo(Core.Optional.ToNullable(preference), exchange.Value);
         }
     }
 }

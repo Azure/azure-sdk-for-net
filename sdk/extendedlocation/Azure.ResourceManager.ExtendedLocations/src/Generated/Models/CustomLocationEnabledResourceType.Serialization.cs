@@ -12,24 +12,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ExtendedLocations.Models
 {
-    public partial class CustomLocationEnabledResourceType : IUtf8JsonSerializable
+    public partial class CustomLocationEnabledResourceType : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClusterExtensionId))
+            if (Core.Optional.IsDefined(ClusterExtensionId))
             {
                 writer.WritePropertyName("clusterExtensionId"u8);
                 writer.WriteStringValue(ClusterExtensionId);
             }
-            if (Optional.IsDefined(ExtensionType))
+            if (Core.Optional.IsDefined(ExtensionType))
             {
                 writer.WritePropertyName("extensionType"u8);
                 writer.WriteStringValue(ExtensionType);
             }
-            if (Optional.IsCollectionDefined(TypesMetadata))
+            if (Core.Optional.IsCollectionDefined(TypesMetadata))
             {
                 writer.WritePropertyName("typesMetadata"u8);
                 writer.WriteStartArray();
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> clusterExtensionId = default;
-            Optional<string> extensionType = default;
-            Optional<IList<CustomLocationEnabledResourceTypeMetadata>> typesMetadata = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ResourceIdentifier> clusterExtensionId = default;
+            Core.Optional<string> extensionType = default;
+            Core.Optional<IList<CustomLocationEnabledResourceTypeMetadata>> typesMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                     continue;
                 }
             }
-            return new CustomLocationEnabledResourceType(id, name, type, systemData.Value, clusterExtensionId.Value, extensionType.Value, Optional.ToList(typesMetadata));
+            return new CustomLocationEnabledResourceType(id, name, type, systemData.Value, clusterExtensionId.Value, extensionType.Value, Core.Optional.ToList(typesMetadata));
         }
     }
 }

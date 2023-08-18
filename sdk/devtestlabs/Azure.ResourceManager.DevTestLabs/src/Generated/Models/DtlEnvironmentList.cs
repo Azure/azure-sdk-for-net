@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of DtlEnvironmentList. </summary>
         internal DtlEnvironmentList()
         {
-            Value = new ChangeTrackingList<DevTestLabEnvironmentData>();
+            Value = new Core.ChangeTrackingList<DevTestLabEnvironmentData>();
         }
 
         /// <summary> Initializes a new instance of DtlEnvironmentList. </summary>

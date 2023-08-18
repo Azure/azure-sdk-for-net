@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of EventHubsApplicationGroupListResult. </summary>
         internal EventHubsApplicationGroupListResult()
         {
-            Value = new ChangeTrackingList<EventHubsApplicationGroupData>();
+            Value = new Core.ChangeTrackingList<EventHubsApplicationGroupData>();
         }
 
         /// <summary> Initializes a new instance of EventHubsApplicationGroupListResult. </summary>

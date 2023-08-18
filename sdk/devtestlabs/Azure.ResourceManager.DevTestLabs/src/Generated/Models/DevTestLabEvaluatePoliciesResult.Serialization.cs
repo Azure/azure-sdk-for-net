@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DevTestLabPolicySetResult>> results = default;
+            Core.Optional<IReadOnlyList<DevTestLabPolicySetResult>> results = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new DevTestLabEvaluatePoliciesResult(Optional.ToList(results));
+            return new DevTestLabEvaluatePoliciesResult(Core.Optional.ToList(results));
         }
     }
 }

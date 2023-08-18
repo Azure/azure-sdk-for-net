@@ -10,71 +10,71 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class SqlConnectionInfo : IUtf8JsonSerializable
+    public partial class SqlConnectionInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dataSource"u8);
             writer.WriteStringValue(DataSource);
-            if (Optional.IsDefined(ServerName))
+            if (Core.Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (Optional.IsDefined(Port))
+            if (Core.Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Optional.IsDefined(ServerVersion))
+            if (Core.Optional.IsDefined(ServerVersion))
             {
                 writer.WritePropertyName("serverVersion"u8);
                 writer.WriteStringValue(ServerVersion);
             }
-            if (Optional.IsDefined(ServerBrandVersion))
+            if (Core.Optional.IsDefined(ServerBrandVersion))
             {
                 writer.WritePropertyName("serverBrandVersion"u8);
                 writer.WriteStringValue(ServerBrandVersion);
             }
-            if (Optional.IsDefined(ResourceId))
+            if (Core.Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(Authentication))
+            if (Core.Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteStringValue(Authentication.Value.ToString());
             }
-            if (Optional.IsDefined(EncryptConnection))
+            if (Core.Optional.IsDefined(EncryptConnection))
             {
                 writer.WritePropertyName("encryptConnection"u8);
                 writer.WriteBooleanValue(EncryptConnection.Value);
             }
-            if (Optional.IsDefined(AdditionalSettings))
+            if (Core.Optional.IsDefined(AdditionalSettings))
             {
                 writer.WritePropertyName("additionalSettings"u8);
                 writer.WriteStringValue(AdditionalSettings);
             }
-            if (Optional.IsDefined(TrustServerCertificate))
+            if (Core.Optional.IsDefined(TrustServerCertificate))
             {
                 writer.WritePropertyName("trustServerCertificate"u8);
                 writer.WriteBooleanValue(TrustServerCertificate.Value);
             }
-            if (Optional.IsDefined(Platform))
+            if (Core.Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
                 writer.WriteStringValue(Platform.Value.ToString());
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ConnectionInfoType);
-            if (Optional.IsDefined(UserName))
+            if (Core.Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Optional.IsDefined(Password))
+            if (Core.Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -89,19 +89,19 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             string dataSource = default;
-            Optional<string> serverName = default;
-            Optional<int> port = default;
-            Optional<string> serverVersion = default;
-            Optional<string> serverBrandVersion = default;
-            Optional<string> resourceId = default;
-            Optional<AuthenticationType> authentication = default;
-            Optional<bool> encryptConnection = default;
-            Optional<string> additionalSettings = default;
-            Optional<bool> trustServerCertificate = default;
-            Optional<SqlSourcePlatform> platform = default;
+            Core.Optional<string> serverName = default;
+            Core.Optional<int> port = default;
+            Core.Optional<string> serverVersion = default;
+            Core.Optional<string> serverBrandVersion = default;
+            Core.Optional<string> resourceId = default;
+            Core.Optional<AuthenticationType> authentication = default;
+            Core.Optional<bool> encryptConnection = default;
+            Core.Optional<string> additionalSettings = default;
+            Core.Optional<bool> trustServerCertificate = default;
+            Core.Optional<SqlSourcePlatform> platform = default;
             string type = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
+            Core.Optional<string> userName = default;
+            Core.Optional<string> password = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataSource"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new SqlConnectionInfo(type, userName.Value, password.Value, dataSource, serverName.Value, Optional.ToNullable(port), serverVersion.Value, serverBrandVersion.Value, resourceId.Value, Optional.ToNullable(authentication), Optional.ToNullable(encryptConnection), additionalSettings.Value, Optional.ToNullable(trustServerCertificate), Optional.ToNullable(platform));
+            return new SqlConnectionInfo(type, userName.Value, password.Value, dataSource, serverName.Value, Core.Optional.ToNullable(port), serverVersion.Value, serverBrandVersion.Value, resourceId.Value, Core.Optional.ToNullable(authentication), Core.Optional.ToNullable(encryptConnection), additionalSettings.Value, Core.Optional.ToNullable(trustServerCertificate), Core.Optional.ToNullable(platform));
         }
     }
 }

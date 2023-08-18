@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of DataProtectionUnlockDeleteContent. </summary>
         public DataProtectionUnlockDeleteContent()
         {
-            ResourceGuardOperationRequests = new ChangeTrackingList<string>();
+            ResourceGuardOperationRequests = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Gets the resource guard operation requests. </summary>

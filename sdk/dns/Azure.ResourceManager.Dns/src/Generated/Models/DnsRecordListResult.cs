@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// <summary> Initializes a new instance of DnsRecordListResult. </summary>
         internal DnsRecordListResult()
         {
-            Value = new ChangeTrackingList<DnsRecordData>();
+            Value = new Core.ChangeTrackingList<DnsRecordData>();
         }
 
         /// <summary> Initializes a new instance of DnsRecordListResult. </summary>

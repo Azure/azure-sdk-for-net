@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of ValidateMongoDBTaskProperties. </summary>
         public ValidateMongoDBTaskProperties()
         {
-            Output = new ChangeTrackingList<MongoDBMigrationProgress>();
+            Output = new Core.ChangeTrackingList<MongoDBMigrationProgress>();
             TaskType = TaskType.ValidateMongoDB;
         }
 

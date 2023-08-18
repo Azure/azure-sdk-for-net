@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of ProjectListResult. </summary>
         internal ProjectListResult()
         {
-            Value = new ChangeTrackingList<DevCenterProjectData>();
+            Value = new Core.ChangeTrackingList<DevCenterProjectData>();
         }
 
         /// <summary> Initializes a new instance of ProjectListResult. </summary>

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <summary> Initializes a new instance of ElasticSanVolumeGroupData. </summary>
         public ElasticSanVolumeGroupData()
         {
-            PrivateEndpointConnections = new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new Core.ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of ElasticSanVolumeGroupData. </summary>

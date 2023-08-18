@@ -15,17 +15,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    public partial class DnsZoneData : IUtf8JsonSerializable
+    public partial class DnsZoneData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.Dns
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ZoneType))
+            if (Core.Optional.IsDefined(ZoneType))
             {
                 writer.WritePropertyName("zoneType"u8);
                 writer.WriteStringValue(ZoneType.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(RegistrationVirtualNetworks))
+            if (Core.Optional.IsCollectionDefined(RegistrationVirtualNetworks))
             {
                 writer.WritePropertyName("registrationVirtualNetworks"u8);
                 writer.WriteStartArray();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Dns
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ResolutionVirtualNetworks))
+            if (Core.Optional.IsCollectionDefined(ResolutionVirtualNetworks))
             {
                 writer.WritePropertyName("resolutionVirtualNetworks"u8);
                 writer.WriteStartArray();
@@ -75,20 +75,20 @@ namespace Azure.ResourceManager.Dns
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<long> maxNumberOfRecordSets = default;
-            Optional<long?> maxNumberOfRecordsPerRecordSet = default;
-            Optional<long> numberOfRecordSets = default;
-            Optional<IReadOnlyList<string>> nameServers = default;
-            Optional<DnsZoneType> zoneType = default;
-            Optional<IList<WritableSubResource>> registrationVirtualNetworks = default;
-            Optional<IList<WritableSubResource>> resolutionVirtualNetworks = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<long> maxNumberOfRecordSets = default;
+            Core.Optional<long?> maxNumberOfRecordsPerRecordSet = default;
+            Core.Optional<long> numberOfRecordSets = default;
+            Core.Optional<IReadOnlyList<string>> nameServers = default;
+            Core.Optional<DnsZoneType> zoneType = default;
+            Core.Optional<IList<WritableSubResource>> registrationVirtualNetworks = default;
+            Core.Optional<IList<WritableSubResource>> resolutionVirtualNetworks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Dns
                     continue;
                 }
             }
-            return new DnsZoneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(maxNumberOfRecordSets), Optional.ToNullable(maxNumberOfRecordsPerRecordSet), Optional.ToNullable(numberOfRecordSets), Optional.ToList(nameServers), Optional.ToNullable(zoneType), Optional.ToList(registrationVirtualNetworks), Optional.ToList(resolutionVirtualNetworks));
+            return new DnsZoneData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(etag), Core.Optional.ToNullable(maxNumberOfRecordSets), Core.Optional.ToNullable(maxNumberOfRecordsPerRecordSet), Core.Optional.ToNullable(numberOfRecordSets), Core.Optional.ToList(nameServers), Core.Optional.ToNullable(zoneType), Core.Optional.ToList(registrationVirtualNetworks), Core.Optional.ToList(resolutionVirtualNetworks));
         }
     }
 }

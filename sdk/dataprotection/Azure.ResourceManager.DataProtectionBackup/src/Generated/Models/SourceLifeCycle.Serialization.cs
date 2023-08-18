@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class SourceLifeCycle : IUtf8JsonSerializable
+    public partial class SourceLifeCycle : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("deleteAfter"u8);
             writer.WriteObjectValue(DeleteAfter);
             writer.WritePropertyName("sourceDataStore"u8);
             writer.WriteObjectValue(SourceDataStore);
-            if (Optional.IsCollectionDefined(TargetDataStoreCopySettings))
+            if (Core.Optional.IsCollectionDefined(TargetDataStoreCopySettings))
             {
                 writer.WritePropertyName("targetDataStoreCopySettings"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             DataProtectionBackupDeleteSetting deleteAfter = default;
             DataStoreInfoBase sourceDataStore = default;
-            Optional<IList<TargetCopySetting>> targetDataStoreCopySettings = default;
+            Core.Optional<IList<TargetCopySetting>> targetDataStoreCopySettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deleteAfter"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new SourceLifeCycle(deleteAfter, sourceDataStore, Optional.ToList(targetDataStoreCopySettings));
+            return new SourceLifeCycle(deleteAfter, sourceDataStore, Core.Optional.ToList(targetDataStoreCopySettings));
         }
     }
 }

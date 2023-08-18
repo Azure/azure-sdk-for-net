@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             }
             string targetResourceGroup = default;
             DeploymentMode deploymentMode = default;
-            Optional<ServiceUnitArtifacts> artifacts = default;
+            Core.Optional<ServiceUnitArtifacts> artifacts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetResourceGroup"u8))

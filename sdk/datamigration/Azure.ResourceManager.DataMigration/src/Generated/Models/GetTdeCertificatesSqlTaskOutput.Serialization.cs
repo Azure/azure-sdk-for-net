@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> base64EncodedCertificates = default;
-            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            Core.Optional<string> base64EncodedCertificates = default;
+            Core.Optional<IReadOnlyList<ReportableException>> validationErrors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("base64EncodedCertificates"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new GetTdeCertificatesSqlTaskOutput(base64EncodedCertificates.Value, Optional.ToList(validationErrors));
+            return new GetTdeCertificatesSqlTaskOutput(base64EncodedCertificates.Value, Core.Optional.ToList(validationErrors));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Initializes a new instance of FrontDoorBackendPool. </summary>
         public FrontDoorBackendPool()
         {
-            Backends = new ChangeTrackingList<FrontDoorBackend>();
+            Backends = new Core.ChangeTrackingList<FrontDoorBackend>();
         }
 
         /// <summary> Initializes a new instance of FrontDoorBackendPool. </summary>

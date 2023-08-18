@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    public partial class ElasticSanData : IUtf8JsonSerializable
+    public partial class ElasticSanData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ElasticSan
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Optional.IsCollectionDefined(AvailabilityZones))
+            if (Core.Optional.IsCollectionDefined(AvailabilityZones))
             {
                 writer.WritePropertyName("availabilityZones"u8);
                 writer.WriteStartArray();
@@ -59,23 +59,23 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             ElasticSanSku sku = default;
-            Optional<IList<string>> availabilityZones = default;
-            Optional<ElasticSanProvisioningState> provisioningState = default;
+            Core.Optional<IList<string>> availabilityZones = default;
+            Core.Optional<ElasticSanProvisioningState> provisioningState = default;
             long baseSizeTiB = default;
             long extendedCapacitySizeTiB = default;
-            Optional<long> totalVolumeSizeGiB = default;
-            Optional<long> volumeGroupCount = default;
-            Optional<long> totalIops = default;
-            Optional<long> totalMbps = default;
-            Optional<long> totalSizeTiB = default;
-            Optional<IReadOnlyList<ElasticSanPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Core.Optional<long> totalVolumeSizeGiB = default;
+            Core.Optional<long> volumeGroupCount = default;
+            Core.Optional<long> totalIops = default;
+            Core.Optional<long> totalMbps = default;
+            Core.Optional<long> totalSizeTiB = default;
+            Core.Optional<IReadOnlyList<ElasticSanPrivateEndpointConnectionData>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ElasticSan
                     continue;
                 }
             }
-            return new ElasticSanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToList(availabilityZones), Optional.ToNullable(provisioningState), baseSizeTiB, extendedCapacitySizeTiB, Optional.ToNullable(totalVolumeSizeGiB), Optional.ToNullable(volumeGroupCount), Optional.ToNullable(totalIops), Optional.ToNullable(totalMbps), Optional.ToNullable(totalSizeTiB), Optional.ToList(privateEndpointConnections));
+            return new ElasticSanData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku, Core.Optional.ToList(availabilityZones), Core.Optional.ToNullable(provisioningState), baseSizeTiB, extendedCapacitySizeTiB, Core.Optional.ToNullable(totalVolumeSizeGiB), Core.Optional.ToNullable(volumeGroupCount), Core.Optional.ToNullable(totalIops), Core.Optional.ToNullable(totalMbps), Core.Optional.ToNullable(totalSizeTiB), Core.Optional.ToList(privateEndpointConnections));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <summary> Initializes a new instance of AppServiceListResponse. </summary>
         internal AppServiceListResponse()
         {
-            Value = new ChangeTrackingList<DynatraceOneAgentEnabledAppServiceInfo>();
+            Value = new Core.ChangeTrackingList<DynatraceOneAgentEnabledAppServiceInfo>();
         }
 
         /// <summary> Initializes a new instance of AppServiceListResponse. </summary>

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class BackupRestoreContent : IUtf8JsonSerializable
+    public partial class BackupRestoreContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("objectType"u8);
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteObjectValue(RestoreTargetInfo);
             writer.WritePropertyName("sourceDataStoreType"u8);
             writer.WriteStringValue(SourceDataStoreType.ToString());
-            if (Optional.IsDefined(SourceResourceId))
+            if (Core.Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);

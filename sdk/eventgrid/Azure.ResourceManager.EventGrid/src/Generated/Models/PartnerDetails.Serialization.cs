@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class PartnerDetails : IUtf8JsonSerializable
+    public partial class PartnerDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(LongDescription))
+            if (Core.Optional.IsDefined(LongDescription))
             {
                 writer.WritePropertyName("longDescription"u8);
                 writer.WriteStringValue(LongDescription);
             }
-            if (Optional.IsDefined(SetupUri))
+            if (Core.Optional.IsDefined(SetupUri))
             {
                 writer.WritePropertyName("setupUri"u8);
                 writer.WriteStringValue(SetupUri.AbsoluteUri);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> longDescription = default;
-            Optional<Uri> setupUri = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> longDescription = default;
+            Core.Optional<Uri> setupUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))

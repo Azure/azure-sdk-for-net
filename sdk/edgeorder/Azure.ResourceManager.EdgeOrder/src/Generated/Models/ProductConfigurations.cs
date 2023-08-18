@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of ProductConfigurations. </summary>
         internal ProductConfigurations()
         {
-            Value = new ChangeTrackingList<ProductConfiguration>();
+            Value = new Core.ChangeTrackingList<ProductConfiguration>();
         }
 
         /// <summary> Initializes a new instance of ProductConfigurations. </summary>

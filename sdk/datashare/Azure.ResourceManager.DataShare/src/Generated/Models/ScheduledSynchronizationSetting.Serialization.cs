@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class ScheduledSynchronizationSetting : IUtf8JsonSerializable
+    public partial class ScheduledSynchronizationSetting : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DataShareProvisioningState> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DateTimeOffset> createdAt = default;
+            Core.Optional<DataShareProvisioningState> provisioningState = default;
             DataShareSynchronizationRecurrenceInterval recurrenceInterval = default;
             DateTimeOffset synchronizationTime = default;
-            Optional<string> userName = default;
+            Core.Optional<string> userName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new ScheduledSynchronizationSetting(id, name, type, systemData.Value, kind, Optional.ToNullable(createdAt), Optional.ToNullable(provisioningState), recurrenceInterval, synchronizationTime, userName.Value);
+            return new ScheduledSynchronizationSetting(id, name, type, systemData.Value, kind, Core.Optional.ToNullable(createdAt), Core.Optional.ToNullable(provisioningState), recurrenceInterval, synchronizationTime, userName.Value);
         }
     }
 }

@@ -12,12 +12,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeploymentManager
 {
-    public partial class ServiceTopologyResourceData : IUtf8JsonSerializable
+    public partial class ServiceTopologyResourceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DeploymentManager
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ArtifactSourceId))
+            if (Core.Optional.IsDefined(ArtifactSourceId))
             {
                 writer.WritePropertyName("artifactSourceId"u8);
                 writer.WriteStringValue(ArtifactSourceId);
@@ -47,13 +47,13 @@ namespace Azure.ResourceManager.DeploymentManager
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> artifactSourceId = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> artifactSourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DeploymentManager
                     continue;
                 }
             }
-            return new ServiceTopologyResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, artifactSourceId.Value);
+            return new ServiceTopologyResourceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, artifactSourceId.Value);
         }
     }
 }

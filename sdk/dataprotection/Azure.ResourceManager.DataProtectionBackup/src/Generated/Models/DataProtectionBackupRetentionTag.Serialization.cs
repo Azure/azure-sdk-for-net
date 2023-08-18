@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionBackupRetentionTag : IUtf8JsonSerializable
+    public partial class DataProtectionBackupRetentionTag : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("tagName"u8);
@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
-            Optional<string> id = default;
+            Core.Optional<ETag> eTag = default;
+            Core.Optional<string> id = default;
             string tagName = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new DataProtectionBackupRetentionTag(Optional.ToNullable(eTag), id.Value, tagName);
+            return new DataProtectionBackupRetentionTag(Core.Optional.ToNullable(eTag), id.Value, tagName);
         }
     }
 }

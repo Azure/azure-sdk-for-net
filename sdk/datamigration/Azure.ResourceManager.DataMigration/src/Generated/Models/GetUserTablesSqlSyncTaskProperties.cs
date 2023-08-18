@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of GetUserTablesSqlSyncTaskProperties. </summary>
         public GetUserTablesSqlSyncTaskProperties()
         {
-            Output = new ChangeTrackingList<GetUserTablesSqlSyncTaskOutput>();
+            Output = new Core.ChangeTrackingList<GetUserTablesSqlSyncTaskOutput>();
             TaskType = TaskType.GetUserTablesAzureSqlDBSync;
         }
 

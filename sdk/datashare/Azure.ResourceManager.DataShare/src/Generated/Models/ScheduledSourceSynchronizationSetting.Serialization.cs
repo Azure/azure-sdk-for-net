@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataShare.Models
                 return null;
             }
             SourceShareSynchronizationSettingKind kind = default;
-            Optional<DataShareSynchronizationRecurrenceInterval> recurrenceInterval = default;
-            Optional<DateTimeOffset> synchronizationTime = default;
+            Core.Optional<DataShareSynchronizationRecurrenceInterval> recurrenceInterval = default;
+            Core.Optional<DateTimeOffset> synchronizationTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new ScheduledSourceSynchronizationSetting(kind, Optional.ToNullable(recurrenceInterval), Optional.ToNullable(synchronizationTime));
+            return new ScheduledSourceSynchronizationSetting(kind, Core.Optional.ToNullable(recurrenceInterval), Core.Optional.ToNullable(synchronizationTime));
         }
     }
 }

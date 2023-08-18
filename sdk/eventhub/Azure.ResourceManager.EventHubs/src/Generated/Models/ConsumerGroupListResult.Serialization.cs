@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EventHubsConsumerGroupData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<EventHubsConsumerGroupData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new ConsumerGroupListResult(Optional.ToList(value), nextLink.Value);
+            return new ConsumerGroupListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

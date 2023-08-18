@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of SshProfile. </summary>
         public SshProfile()
         {
-            PublicKeys = new ChangeTrackingList<HDInsightSshPublicKey>();
+            PublicKeys = new Core.ChangeTrackingList<HDInsightSshPublicKey>();
         }
 
         /// <summary> Initializes a new instance of SshProfile. </summary>

@@ -11,52 +11,52 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightClusterRole : IUtf8JsonSerializable
+    public partial class HDInsightClusterRole : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(MinInstanceCount))
+            if (Core.Optional.IsDefined(MinInstanceCount))
             {
                 writer.WritePropertyName("minInstanceCount"u8);
                 writer.WriteNumberValue(MinInstanceCount.Value);
             }
-            if (Optional.IsDefined(TargetInstanceCount))
+            if (Core.Optional.IsDefined(TargetInstanceCount))
             {
                 writer.WritePropertyName("targetInstanceCount"u8);
                 writer.WriteNumberValue(TargetInstanceCount.Value);
             }
-            if (Optional.IsDefined(VmGroupName))
+            if (Core.Optional.IsDefined(VmGroupName))
             {
                 writer.WritePropertyName("VMGroupName"u8);
                 writer.WriteStringValue(VmGroupName);
             }
-            if (Optional.IsDefined(AutoScaleConfiguration))
+            if (Core.Optional.IsDefined(AutoScaleConfiguration))
             {
                 writer.WritePropertyName("autoscale"u8);
                 writer.WriteObjectValue(AutoScaleConfiguration);
             }
-            if (Optional.IsDefined(HardwareProfile))
+            if (Core.Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile);
             }
-            if (Optional.IsDefined(OSProfile))
+            if (Core.Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
-            if (Optional.IsDefined(VirtualNetworkProfile))
+            if (Core.Optional.IsDefined(VirtualNetworkProfile))
             {
                 writer.WritePropertyName("virtualNetworkProfile"u8);
                 writer.WriteObjectValue(VirtualNetworkProfile);
             }
-            if (Optional.IsCollectionDefined(DataDisksGroups))
+            if (Core.Optional.IsCollectionDefined(DataDisksGroups))
             {
                 writer.WritePropertyName("dataDisksGroups"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ScriptActions))
+            if (Core.Optional.IsCollectionDefined(ScriptActions))
             {
                 writer.WritePropertyName("scriptActions"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EncryptDataDisks))
+            if (Core.Optional.IsDefined(EncryptDataDisks))
             {
                 writer.WritePropertyName("encryptDataDisks"u8);
                 writer.WriteBooleanValue(EncryptDataDisks.Value);
@@ -90,17 +90,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> minInstanceCount = default;
-            Optional<int> targetInstanceCount = default;
-            Optional<string> vmGroupName = default;
-            Optional<HDInsightAutoScaleConfiguration> autoScale = default;
-            Optional<HardwareProfile> hardwareProfile = default;
-            Optional<OSProfile> osProfile = default;
-            Optional<HDInsightVirtualNetworkProfile> virtualNetworkProfile = default;
-            Optional<IList<HDInsightClusterDataDiskGroup>> dataDisksGroups = default;
-            Optional<IList<ScriptAction>> scriptActions = default;
-            Optional<bool> encryptDataDisks = default;
+            Core.Optional<string> name = default;
+            Core.Optional<int> minInstanceCount = default;
+            Core.Optional<int> targetInstanceCount = default;
+            Core.Optional<string> vmGroupName = default;
+            Core.Optional<HDInsightAutoScaleConfiguration> autoScale = default;
+            Core.Optional<HardwareProfile> hardwareProfile = default;
+            Core.Optional<OSProfile> osProfile = default;
+            Core.Optional<HDInsightVirtualNetworkProfile> virtualNetworkProfile = default;
+            Core.Optional<IList<HDInsightClusterDataDiskGroup>> dataDisksGroups = default;
+            Core.Optional<IList<ScriptAction>> scriptActions = default;
+            Core.Optional<bool> encryptDataDisks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightClusterRole(name.Value, Optional.ToNullable(minInstanceCount), Optional.ToNullable(targetInstanceCount), vmGroupName.Value, autoScale.Value, hardwareProfile.Value, osProfile.Value, virtualNetworkProfile.Value, Optional.ToList(dataDisksGroups), Optional.ToList(scriptActions), Optional.ToNullable(encryptDataDisks));
+            return new HDInsightClusterRole(name.Value, Core.Optional.ToNullable(minInstanceCount), Core.Optional.ToNullable(targetInstanceCount), vmGroupName.Value, autoScale.Value, hardwareProfile.Value, osProfile.Value, virtualNetworkProfile.Value, Core.Optional.ToList(dataDisksGroups), Core.Optional.ToList(scriptActions), Core.Optional.ToNullable(encryptDataDisks));
         }
     }
 }

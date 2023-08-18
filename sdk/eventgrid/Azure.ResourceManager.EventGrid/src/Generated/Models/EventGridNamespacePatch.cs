@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of EventGridNamespacePatch. </summary>
         public EventGridNamespacePatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            InboundIPRules = new ChangeTrackingList<EventGridInboundIPRule>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            InboundIPRules = new Core.ChangeTrackingList<EventGridInboundIPRule>();
         }
 
         /// <summary> Tags of the namespace resource. </summary>

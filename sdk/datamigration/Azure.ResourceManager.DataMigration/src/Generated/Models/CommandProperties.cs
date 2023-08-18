@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of CommandProperties. </summary>
         protected CommandProperties()
         {
-            Errors = new ChangeTrackingList<ODataError>();
+            Errors = new Core.ChangeTrackingList<ODataError>();
         }
 
         /// <summary> Initializes a new instance of CommandProperties. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of GetTdeCertificatesSqlTaskOutput. </summary>
         internal GetTdeCertificatesSqlTaskOutput()
         {
-            ValidationErrors = new ChangeTrackingList<ReportableException>();
+            ValidationErrors = new Core.ChangeTrackingList<ReportableException>();
         }
 
         /// <summary> Initializes a new instance of GetTdeCertificatesSqlTaskOutput. </summary>

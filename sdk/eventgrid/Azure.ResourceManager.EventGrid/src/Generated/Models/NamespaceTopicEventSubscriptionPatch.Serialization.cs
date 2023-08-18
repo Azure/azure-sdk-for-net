@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class NamespaceTopicEventSubscriptionPatch : IUtf8JsonSerializable
+    public partial class NamespaceTopicEventSubscriptionPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DeliveryConfiguration))
+            if (Core.Optional.IsDefined(DeliveryConfiguration))
             {
                 writer.WritePropertyName("deliveryConfiguration"u8);
                 writer.WriteObjectValue(DeliveryConfiguration);
             }
-            if (Optional.IsDefined(EventDeliverySchema))
+            if (Core.Optional.IsDefined(EventDeliverySchema))
             {
                 writer.WritePropertyName("eventDeliverySchema"u8);
                 writer.WriteStringValue(EventDeliverySchema.Value.ToString());
             }
-            if (Optional.IsDefined(FiltersConfiguration))
+            if (Core.Optional.IsDefined(FiltersConfiguration))
             {
                 writer.WritePropertyName("filtersConfiguration"u8);
                 writer.WriteObjectValue(FiltersConfiguration);

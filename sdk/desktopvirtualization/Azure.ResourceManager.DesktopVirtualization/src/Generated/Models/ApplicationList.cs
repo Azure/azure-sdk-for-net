@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of ApplicationList. </summary>
         internal ApplicationList()
         {
-            Value = new ChangeTrackingList<VirtualApplicationData>();
+            Value = new Core.ChangeTrackingList<VirtualApplicationData>();
         }
 
         /// <summary> Initializes a new instance of ApplicationList. </summary>

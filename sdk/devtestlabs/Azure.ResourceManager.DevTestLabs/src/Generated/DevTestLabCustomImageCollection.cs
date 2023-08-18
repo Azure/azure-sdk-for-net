@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = await _devTestLabCustomImageCustomImagesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevTestLabsArmOperation<DevTestLabCustomImageResource>(new DevTestLabCustomImageOperationSource(Client), _devTestLabCustomImageCustomImagesClientDiagnostics, Pipeline, _devTestLabCustomImageCustomImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation<DevTestLabCustomImageResource>(new DevTestLabCustomImageOperationSource(Client), _devTestLabCustomImageCustomImagesClientDiagnostics, Pipeline, _devTestLabCustomImageCustomImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DevTestLabs
             try
             {
                 var response = _devTestLabCustomImageCustomImagesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var operation = new DevTestLabsArmOperation<DevTestLabCustomImageResource>(new DevTestLabCustomImageOperationSource(Client), _devTestLabCustomImageCustomImagesClientDiagnostics, Pipeline, _devTestLabCustomImageCustomImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DevTestLabsArmOperation<DevTestLabCustomImageResource>(new DevTestLabCustomImageOperationSource(Client), _devTestLabCustomImageCustomImagesClientDiagnostics, Pipeline, _devTestLabCustomImageCustomImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabCustomImageCustomImagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabCustomImageCustomImagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabCustomImageResource(Client, DevTestLabCustomImageData.DeserializeDevTestLabCustomImageData(e)), _devTestLabCustomImageCustomImagesClientDiagnostics, Pipeline, "DevTestLabCustomImageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabCustomImageResource(Client, DevTestLabCustomImageData.DeserializeDevTestLabCustomImageData(e)), _devTestLabCustomImageCustomImagesClientDiagnostics, Pipeline, "DevTestLabCustomImageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabCustomImageCustomImagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabCustomImageCustomImagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabCustomImageResource(Client, DevTestLabCustomImageData.DeserializeDevTestLabCustomImageData(e)), _devTestLabCustomImageCustomImagesClientDiagnostics, Pipeline, "DevTestLabCustomImageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabCustomImageResource(Client, DevTestLabCustomImageData.DeserializeDevTestLabCustomImageData(e)), _devTestLabCustomImageCustomImagesClientDiagnostics, Pipeline, "DevTestLabCustomImageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

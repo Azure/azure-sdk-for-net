@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <summary> Initializes a new instance of GuestConfigurationAssignmentReportDetails. </summary>
         internal GuestConfigurationAssignmentReportDetails()
         {
-            Resources = new ChangeTrackingList<AssignmentReportResourceInfo>();
+            Resources = new Core.ChangeTrackingList<AssignmentReportResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of GuestConfigurationAssignmentReportDetails. </summary>

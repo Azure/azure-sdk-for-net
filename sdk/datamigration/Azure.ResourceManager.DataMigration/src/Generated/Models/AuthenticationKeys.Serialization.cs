@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> authKey1 = default;
-            Optional<string> authKey2 = default;
+            Core.Optional<string> authKey1 = default;
+            Core.Optional<string> authKey2 = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authKey1"u8))

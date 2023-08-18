@@ -21,17 +21,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> tenantId = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> resourceGroup = default;
-            Optional<string> resourceProvider = default;
-            Optional<string> resourceUri = default;
-            Optional<string> operationName = default;
-            Optional<string> status = default;
-            Optional<JsonElement> authorization = default;
-            Optional<JsonElement> claims = default;
-            Optional<string> correlationId = default;
-            Optional<JsonElement> httpRequest = default;
+            Core.Optional<string> tenantId = default;
+            Core.Optional<string> subscriptionId = default;
+            Core.Optional<string> resourceGroup = default;
+            Core.Optional<string> resourceProvider = default;
+            Core.Optional<string> resourceUri = default;
+            Core.Optional<string> operationName = default;
+            Core.Optional<string> status = default;
+            Core.Optional<JsonElement> authorization = default;
+            Core.Optional<JsonElement> claims = default;
+            Core.Optional<string> correlationId = default;
+            Core.Optional<JsonElement> httpRequest = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))

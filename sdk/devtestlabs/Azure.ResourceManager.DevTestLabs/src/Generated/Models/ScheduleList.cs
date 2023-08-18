@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of ScheduleList. </summary>
         internal ScheduleList()
         {
-            Value = new ChangeTrackingList<DevTestLabScheduleData>();
+            Value = new Core.ChangeTrackingList<DevTestLabScheduleData>();
         }
 
         /// <summary> Initializes a new instance of ScheduleList. </summary>

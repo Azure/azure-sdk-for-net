@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <summary> Initializes a new instance of ProvisioningServiceDescriptionListResult. </summary>
         internal ProvisioningServiceDescriptionListResult()
         {
-            Value = new ChangeTrackingList<DeviceProvisioningServiceData>();
+            Value = new Core.ChangeTrackingList<DeviceProvisioningServiceData>();
         }
 
         /// <summary> Initializes a new instance of ProvisioningServiceDescriptionListResult. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> Initializes a new instance of ElasticSanSkuInformationList. </summary>
         internal ElasticSanSkuInformationList()
         {
-            Value = new ChangeTrackingList<ElasticSanSkuInformation>();
+            Value = new Core.ChangeTrackingList<ElasticSanSkuInformation>();
         }
 
         /// <summary> Initializes a new instance of ElasticSanSkuInformationList. </summary>

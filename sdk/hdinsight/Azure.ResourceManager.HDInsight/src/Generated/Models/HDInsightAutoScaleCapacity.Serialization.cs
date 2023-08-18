@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightAutoScaleCapacity : IUtf8JsonSerializable
+    public partial class HDInsightAutoScaleCapacity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinInstanceCount))
+            if (Core.Optional.IsDefined(MinInstanceCount))
             {
                 writer.WritePropertyName("minInstanceCount"u8);
                 writer.WriteNumberValue(MinInstanceCount.Value);
             }
-            if (Optional.IsDefined(MaxInstanceCount))
+            if (Core.Optional.IsDefined(MaxInstanceCount))
             {
                 writer.WritePropertyName("maxInstanceCount"u8);
                 writer.WriteNumberValue(MaxInstanceCount.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<int> minInstanceCount = default;
-            Optional<int> maxInstanceCount = default;
+            Core.Optional<int> minInstanceCount = default;
+            Core.Optional<int> maxInstanceCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minInstanceCount"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightAutoScaleCapacity(Optional.ToNullable(minInstanceCount), Optional.ToNullable(maxInstanceCount));
+            return new HDInsightAutoScaleCapacity(Core.Optional.ToNullable(minInstanceCount), Core.Optional.ToNullable(maxInstanceCount));
         }
     }
 }

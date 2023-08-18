@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.FluidRelay.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FluidRelayContainerData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<FluidRelayContainerData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                     continue;
                 }
             }
-            return new FluidRelayContainerList(Optional.ToList(value), nextLink.Value);
+            return new FluidRelayContainerList(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

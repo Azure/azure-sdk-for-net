@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HealthcareApisPrivateEndpointConnectionData>> value = default;
+            Core.Optional<IReadOnlyList<HealthcareApisPrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     continue;
                 }
             }
-            return new PrivateEndpointConnectionListResultDescription(Optional.ToList(value));
+            return new PrivateEndpointConnectionListResultDescription(Core.Optional.ToList(value));
         }
     }
 }

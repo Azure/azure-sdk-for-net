@@ -22,8 +22,8 @@ namespace Azure.AI.FormRecognizer.Models
             Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
-            BoundingBox = new ChangeTrackingList<float>();
-            Elements = new ChangeTrackingList<string>();
+            BoundingBox = new Core.ChangeTrackingList<float>();
+            Elements = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of KeyValueElement. </summary>

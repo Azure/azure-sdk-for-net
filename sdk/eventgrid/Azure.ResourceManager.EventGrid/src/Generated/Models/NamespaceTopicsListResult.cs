@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of NamespaceTopicsListResult. </summary>
         internal NamespaceTopicsListResult()
         {
-            Value = new ChangeTrackingList<NamespaceTopicData>();
+            Value = new Core.ChangeTrackingList<NamespaceTopicData>();
         }
 
         /// <summary> Initializes a new instance of NamespaceTopicsListResult. </summary>

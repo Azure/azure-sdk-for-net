@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> deploymentStatus = default;
-            Optional<int> artifactsApplied = default;
-            Optional<int> totalArtifacts = default;
+            Core.Optional<string> deploymentStatus = default;
+            Core.Optional<int> artifactsApplied = default;
+            Core.Optional<int> totalArtifacts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deploymentStatus"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new DevTestLabArtifactDeploymentStatus(deploymentStatus.Value, Optional.ToNullable(artifactsApplied), Optional.ToNullable(totalArtifacts));
+            return new DevTestLabArtifactDeploymentStatus(deploymentStatus.Value, Core.Optional.ToNullable(artifactsApplied), Core.Optional.ToNullable(totalArtifacts));
         }
     }
 }

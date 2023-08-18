@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    internal class ElasticSanPrivateEndpointConnectionOperationSource : IOperationSource<ElasticSanPrivateEndpointConnectionResource>
+    internal class ElasticSanPrivateEndpointConnectionOperationSource : Core.IOperationSource<ElasticSanPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ElasticSan
             _client = client;
         }
 
-        ElasticSanPrivateEndpointConnectionResource IOperationSource<ElasticSanPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ElasticSanPrivateEndpointConnectionResource Core.IOperationSource<ElasticSanPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ElasticSanPrivateEndpointConnectionData.DeserializeElasticSanPrivateEndpointConnectionData(document.RootElement);
             return new ElasticSanPrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<ElasticSanPrivateEndpointConnectionResource> IOperationSource<ElasticSanPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ElasticSanPrivateEndpointConnectionResource> Core.IOperationSource<ElasticSanPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ElasticSanPrivateEndpointConnectionData.DeserializeElasticSanPrivateEndpointConnectionData(document.RootElement);

@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 return null;
             }
             ElasticSanSkuName name = default;
-            Optional<ElasticSanSkuTier> tier = default;
-            Optional<string> resourceType = default;
-            Optional<IReadOnlyList<string>> locations = default;
-            Optional<IReadOnlyList<ElasticSanSkuLocationInfo>> locationInfo = default;
-            Optional<IReadOnlyList<ElasticSanSkuCapability>> capabilities = default;
+            Core.Optional<ElasticSanSkuTier> tier = default;
+            Core.Optional<string> resourceType = default;
+            Core.Optional<IReadOnlyList<string>> locations = default;
+            Core.Optional<IReadOnlyList<ElasticSanSkuLocationInfo>> locationInfo = default;
+            Core.Optional<IReadOnlyList<ElasticSanSkuCapability>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     continue;
                 }
             }
-            return new ElasticSanSkuInformation(name, Optional.ToNullable(tier), resourceType.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(capabilities));
+            return new ElasticSanSkuInformation(name, Core.Optional.ToNullable(tier), resourceType.Value, Core.Optional.ToList(locations), Core.Optional.ToList(locationInfo), Core.Optional.ToList(capabilities));
         }
     }
 }

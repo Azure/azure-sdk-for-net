@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of IntegrationRuntimeMonitoringData. </summary>
         internal IntegrationRuntimeMonitoringData()
         {
-            Nodes = new ChangeTrackingList<NodeMonitoringData>();
+            Nodes = new Core.ChangeTrackingList<NodeMonitoringData>();
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeMonitoringData. </summary>

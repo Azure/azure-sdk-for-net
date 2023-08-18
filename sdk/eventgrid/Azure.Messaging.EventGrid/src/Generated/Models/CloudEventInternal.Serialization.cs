@@ -10,45 +10,45 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Models
 {
-    internal partial class CloudEventInternal : IUtf8JsonSerializable
+    internal partial class CloudEventInternal : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("source"u8);
             writer.WriteStringValue(Source);
-            if (Optional.IsDefined(Data))
+            if (Core.Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 Data.WriteTo(writer);
             }
-            if (Optional.IsDefined(DataBase64))
+            if (Core.Optional.IsDefined(DataBase64))
             {
                 writer.WritePropertyName("data_base64"u8);
                 writer.WriteBase64StringValue(DataBase64, "D");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Time))
+            if (Core.Optional.IsDefined(Time))
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time.Value, "O");
             }
             writer.WritePropertyName("specversion"u8);
             writer.WriteStringValue(Specversion);
-            if (Optional.IsDefined(Dataschema))
+            if (Core.Optional.IsDefined(Dataschema))
             {
                 writer.WritePropertyName("dataschema"u8);
                 writer.WriteStringValue(Dataschema);
             }
-            if (Optional.IsDefined(Datacontenttype))
+            if (Core.Optional.IsDefined(Datacontenttype))
             {
                 writer.WritePropertyName("datacontenttype"u8);
                 writer.WriteStringValue(Datacontenttype);
             }
-            if (Optional.IsDefined(Subject))
+            if (Core.Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);

@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    public partial class ElasticSanVolumeDataSourceInfo : IUtf8JsonSerializable
+    public partial class ElasticSanVolumeDataSourceInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreateSource))
+            if (Core.Optional.IsDefined(CreateSource))
             {
                 writer.WritePropertyName("createSource"u8);
                 writer.WriteStringValue(CreateSource.Value.ToString());
             }
-            if (Optional.IsDefined(SourceUri))
+            if (Core.Optional.IsDefined(SourceUri))
             {
                 writer.WritePropertyName("sourceUri"u8);
                 writer.WriteStringValue(SourceUri.AbsoluteUri);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 return null;
             }
-            Optional<ElasticSanVolumeCreateOption> createSource = default;
-            Optional<Uri> sourceUri = default;
+            Core.Optional<ElasticSanVolumeCreateOption> createSource = default;
+            Core.Optional<Uri> sourceUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createSource"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     continue;
                 }
             }
-            return new ElasticSanVolumeDataSourceInfo(Optional.ToNullable(createSource), sourceUri.Value);
+            return new ElasticSanVolumeDataSourceInfo(Core.Optional.ToNullable(createSource), sourceUri.Value);
         }
     }
 }

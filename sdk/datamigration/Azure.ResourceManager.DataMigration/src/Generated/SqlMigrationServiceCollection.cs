@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = await _sqlMigrationServiceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, sqlMigrationServiceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataMigrationArmOperation<SqlMigrationServiceResource>(new SqlMigrationServiceOperationSource(Client), _sqlMigrationServiceClientDiagnostics, Pipeline, _sqlMigrationServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlMigrationServiceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataMigrationArmOperation<SqlMigrationServiceResource>(new SqlMigrationServiceOperationSource(Client), _sqlMigrationServiceClientDiagnostics, Pipeline, _sqlMigrationServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlMigrationServiceName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = _sqlMigrationServiceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, sqlMigrationServiceName, data, cancellationToken);
-                var operation = new DataMigrationArmOperation<SqlMigrationServiceResource>(new SqlMigrationServiceOperationSource(Client), _sqlMigrationServiceClientDiagnostics, Pipeline, _sqlMigrationServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlMigrationServiceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataMigrationArmOperation<SqlMigrationServiceResource>(new SqlMigrationServiceOperationSource(Client), _sqlMigrationServiceClientDiagnostics, Pipeline, _sqlMigrationServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlMigrationServiceName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlMigrationServiceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlMigrationServiceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlMigrationServiceResource(Client, SqlMigrationServiceData.DeserializeSqlMigrationServiceData(e)), _sqlMigrationServiceClientDiagnostics, Pipeline, "SqlMigrationServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlMigrationServiceResource(Client, SqlMigrationServiceData.DeserializeSqlMigrationServiceData(e)), _sqlMigrationServiceClientDiagnostics, Pipeline, "SqlMigrationServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlMigrationServiceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlMigrationServiceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlMigrationServiceResource(Client, SqlMigrationServiceData.DeserializeSqlMigrationServiceData(e)), _sqlMigrationServiceClientDiagnostics, Pipeline, "SqlMigrationServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlMigrationServiceResource(Client, SqlMigrationServiceData.DeserializeSqlMigrationServiceData(e)), _sqlMigrationServiceClientDiagnostics, Pipeline, "SqlMigrationServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

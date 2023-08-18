@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> errorMessage = default;
-            Optional<IReadOnlyList<SyncMigrationDatabaseErrorEvent>> events = default;
-            Optional<string> id = default;
+            Core.Optional<string> errorMessage = default;
+            Core.Optional<IReadOnlyList<SyncMigrationDatabaseErrorEvent>> events = default;
+            Core.Optional<string> id = default;
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError(id.Value, resultType, errorMessage.Value, Optional.ToList(events));
+            return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError(id.Value, resultType, errorMessage.Value, Core.Optional.ToList(events));
         }
     }
 }

@@ -12,22 +12,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightClusterDefinition : IUtf8JsonSerializable
+    public partial class HDInsightClusterDefinition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Blueprint))
+            if (Core.Optional.IsDefined(Blueprint))
             {
                 writer.WritePropertyName("blueprint"u8);
                 writer.WriteStringValue(Blueprint);
             }
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsCollectionDefined(ComponentVersion))
+            if (Core.Optional.IsCollectionDefined(ComponentVersion))
             {
                 writer.WritePropertyName("componentVersion"u8);
                 writer.WriteStartObject();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Configurations))
+            if (Core.Optional.IsDefined(Configurations))
             {
                 writer.WritePropertyName("configurations"u8);
 #if NET6_0_OR_GREATER
@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> blueprint = default;
-            Optional<string> kind = default;
-            Optional<IDictionary<string, string>> componentVersion = default;
-            Optional<BinaryData> configurations = default;
+            Core.Optional<string> blueprint = default;
+            Core.Optional<string> kind = default;
+            Core.Optional<IDictionary<string, string>> componentVersion = default;
+            Core.Optional<BinaryData> configurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blueprint"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightClusterDefinition(blueprint.Value, kind.Value, Optional.ToDictionary(componentVersion), configurations.Value);
+            return new HDInsightClusterDefinition(blueprint.Value, kind.Value, Core.Optional.ToDictionary(componentVersion), configurations.Value);
         }
     }
 }

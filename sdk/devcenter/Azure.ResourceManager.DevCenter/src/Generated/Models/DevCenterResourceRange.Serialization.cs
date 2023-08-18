@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<int> min = default;
-            Optional<int> max = default;
+            Core.Optional<int> min = default;
+            Core.Optional<int> max = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("min"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     continue;
                 }
             }
-            return new DevCenterResourceRange(Optional.ToNullable(min), Optional.ToNullable(max));
+            return new DevCenterResourceRange(Core.Optional.ToNullable(min), Core.Optional.ToNullable(max));
         }
     }
 }

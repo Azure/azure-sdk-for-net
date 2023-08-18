@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            Core.Optional<string> nextLink = default;
             IReadOnlyList<SynchronizationDetails> value = default;
             foreach (var property in element.EnumerateObject())
             {

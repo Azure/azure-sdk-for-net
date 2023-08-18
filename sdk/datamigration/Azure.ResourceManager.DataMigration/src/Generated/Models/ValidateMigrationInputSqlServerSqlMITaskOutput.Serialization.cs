@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<IReadOnlyList<ReportableException>> restoreDatabaseNameErrors = default;
-            Optional<IReadOnlyList<ReportableException>> backupFolderErrors = default;
-            Optional<IReadOnlyList<ReportableException>> backupShareCredentialsErrors = default;
-            Optional<IReadOnlyList<ReportableException>> backupStorageAccountErrors = default;
-            Optional<IReadOnlyList<ReportableException>> existingBackupErrors = default;
-            Optional<DatabaseBackupInfo> databaseBackupInfo = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<IReadOnlyList<ReportableException>> restoreDatabaseNameErrors = default;
+            Core.Optional<IReadOnlyList<ReportableException>> backupFolderErrors = default;
+            Core.Optional<IReadOnlyList<ReportableException>> backupShareCredentialsErrors = default;
+            Core.Optional<IReadOnlyList<ReportableException>> backupStorageAccountErrors = default;
+            Core.Optional<IReadOnlyList<ReportableException>> existingBackupErrors = default;
+            Core.Optional<DatabaseBackupInfo> databaseBackupInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ValidateMigrationInputSqlServerSqlMITaskOutput(id.Value, name.Value, Optional.ToList(restoreDatabaseNameErrors), Optional.ToList(backupFolderErrors), Optional.ToList(backupShareCredentialsErrors), Optional.ToList(backupStorageAccountErrors), Optional.ToList(existingBackupErrors), databaseBackupInfo.Value);
+            return new ValidateMigrationInputSqlServerSqlMITaskOutput(id.Value, name.Value, Core.Optional.ToList(restoreDatabaseNameErrors), Core.Optional.ToList(backupFolderErrors), Core.Optional.ToList(backupShareCredentialsErrors), Core.Optional.ToList(backupStorageAccountErrors), Core.Optional.ToList(existingBackupErrors), databaseBackupInfo.Value);
         }
     }
 }

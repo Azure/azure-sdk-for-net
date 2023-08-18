@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    public partial class ElasticProperties : IUtf8JsonSerializable
+    public partial class ElasticProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ElasticCloudUser))
+            if (Core.Optional.IsDefined(ElasticCloudUser))
             {
                 writer.WritePropertyName("elasticCloudUser"u8);
                 writer.WriteObjectValue(ElasticCloudUser);
             }
-            if (Optional.IsDefined(ElasticCloudDeployment))
+            if (Core.Optional.IsDefined(ElasticCloudDeployment))
             {
                 writer.WritePropertyName("elasticCloudDeployment"u8);
                 writer.WriteObjectValue(ElasticCloudDeployment);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<ElasticCloudUser> elasticCloudUser = default;
-            Optional<ElasticCloudDeployment> elasticCloudDeployment = default;
+            Core.Optional<ElasticCloudUser> elasticCloudUser = default;
+            Core.Optional<ElasticCloudDeployment> elasticCloudDeployment = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("elasticCloudUser"u8))

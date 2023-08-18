@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of LabList. </summary>
         internal LabList()
         {
-            Value = new ChangeTrackingList<DevTestLabData>();
+            Value = new Core.ChangeTrackingList<DevTestLabData>();
         }
 
         /// <summary> Initializes a new instance of LabList. </summary>

@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of EventHubsNspAccessRuleProperties. </summary>
         internal EventHubsNspAccessRuleProperties()
         {
-            AddressPrefixes = new ChangeTrackingList<string>();
-            Subscriptions = new ChangeTrackingList<SubResource>();
-            NetworkSecurityPerimeters = new ChangeTrackingList<EventHubsNetworkSecurityPerimeter>();
-            FullyQualifiedDomainNames = new ChangeTrackingList<string>();
+            AddressPrefixes = new Core.ChangeTrackingList<string>();
+            Subscriptions = new Core.ChangeTrackingList<SubResource>();
+            NetworkSecurityPerimeters = new Core.ChangeTrackingList<EventHubsNetworkSecurityPerimeter>();
+            FullyQualifiedDomainNames = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of EventHubsNspAccessRuleProperties. </summary>

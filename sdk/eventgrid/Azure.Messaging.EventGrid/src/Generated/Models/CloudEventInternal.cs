@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventGrid.Models
             Source = source;
             Type = type;
             Specversion = specversion;
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new Core.ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> An identifier for the event. The combination of id and source must be unique for each distinct event. </summary>

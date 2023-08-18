@@ -12,31 +12,31 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightIPConfiguration : IUtf8JsonSerializable
+    public partial class HDInsightIPConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsPrimary))
+            if (Core.Optional.IsDefined(IsPrimary))
             {
                 writer.WritePropertyName("primary"u8);
                 writer.WriteBooleanValue(IsPrimary.Value);
             }
-            if (Optional.IsDefined(PrivateIPAddress))
+            if (Core.Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());
             }
-            if (Optional.IsDefined(PrivateIPAllocationMethod))
+            if (Core.Optional.IsDefined(PrivateIPAllocationMethod))
             {
                 writer.WritePropertyName("privateIPAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToString());
             }
-            if (Optional.IsDefined(Subnet))
+            if (Core.Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 JsonSerializer.Serialize(writer, Subnet);
@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
+            Core.Optional<ResourceIdentifier> id = default;
             string name = default;
-            Optional<ResourceType> type = default;
-            Optional<HDInsightPrivateLinkConfigurationProvisioningState> provisioningState = default;
-            Optional<bool> primary = default;
-            Optional<IPAddress> privateIPAddress = default;
-            Optional<HDInsightPrivateIPAllocationMethod> privateIPAllocationMethod = default;
-            Optional<WritableSubResource> subnet = default;
+            Core.Optional<ResourceType> type = default;
+            Core.Optional<HDInsightPrivateLinkConfigurationProvisioningState> provisioningState = default;
+            Core.Optional<bool> primary = default;
+            Core.Optional<IPAddress> privateIPAddress = default;
+            Core.Optional<HDInsightPrivateIPAllocationMethod> privateIPAllocationMethod = default;
+            Core.Optional<WritableSubResource> subnet = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightIPConfiguration(id.Value, name, Optional.ToNullable(type), Optional.ToNullable(provisioningState), Optional.ToNullable(primary), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet);
+            return new HDInsightIPConfiguration(id.Value, name, Core.Optional.ToNullable(type), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(primary), privateIPAddress.Value, Core.Optional.ToNullable(privateIPAllocationMethod), subnet);
         }
     }
 }

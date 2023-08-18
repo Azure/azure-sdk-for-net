@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> isEnabled = default;
-            Optional<MigrationState> state = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<string> message = default;
-            Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
-            Optional<string> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<bool> isEnabled = default;
+            Core.Optional<MigrationState> state = default;
+            Core.Optional<DateTimeOffset> startedOn = default;
+            Core.Optional<DateTimeOffset> endedOn = default;
+            Core.Optional<string> message = default;
+            Core.Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
+            Core.Optional<string> id = default;
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateSqlServerSqlMITaskOutputAgentJobLevel(id.Value, resultType, name.Value, Optional.ToNullable(isEnabled), Optional.ToNullable(state), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), message.Value, Optional.ToList(exceptionsAndWarnings));
+            return new MigrateSqlServerSqlMITaskOutputAgentJobLevel(id.Value, resultType, name.Value, Core.Optional.ToNullable(isEnabled), Core.Optional.ToNullable(state), Core.Optional.ToNullable(startedOn), Core.Optional.ToNullable(endedOn), message.Value, Core.Optional.ToList(exceptionsAndWarnings));
         }
     }
 }

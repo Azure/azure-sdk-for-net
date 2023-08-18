@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightClusterUpdateGatewaySettingsContent : IUtf8JsonSerializable
+    public partial class HDInsightClusterUpdateGatewaySettingsContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsCredentialEnabled))
+            if (Core.Optional.IsDefined(IsCredentialEnabled))
             {
                 writer.WritePropertyName("restAuthCredential.isEnabled"u8);
                 writer.WriteBooleanValue(IsCredentialEnabled.Value);
             }
-            if (Optional.IsDefined(UserName))
+            if (Core.Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("restAuthCredential.username"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Optional.IsDefined(Password))
+            if (Core.Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("restAuthCredential.password"u8);
                 writer.WriteStringValue(Password);

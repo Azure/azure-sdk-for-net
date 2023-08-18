@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="location"> The location. </param>
         public FrontDoorTimeSeriesInfo(AzureLocation location) : base(location)
         {
-            TimeSeriesData = new ChangeTrackingList<FrontDoorTimeSeriesDataPoint>();
+            TimeSeriesData = new Core.ChangeTrackingList<FrontDoorTimeSeriesDataPoint>();
         }
 
         /// <summary> Initializes a new instance of FrontDoorTimeSeriesInfo. </summary>

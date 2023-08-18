@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             DeleteAfter = deleteAfter;
             SourceDataStore = sourceDataStore;
-            TargetDataStoreCopySettings = new ChangeTrackingList<TargetCopySetting>();
+            TargetDataStoreCopySettings = new Core.ChangeTrackingList<TargetCopySetting>();
         }
 
         /// <summary> Initializes a new instance of SourceLifeCycle. </summary>
