@@ -186,7 +186,7 @@ namespace Azure.Core.Tests.Public
             Assert.AreEqual(1, model.Value);
 
             ValidateSerialize("""{"id": "abc", "value": 1}""", model);
-            ValidatePatch(string.Empty, model);
+            ValidatePatch("{}", model);
 
             model.Value = 2;
 

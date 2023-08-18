@@ -3,13 +3,35 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core.Json;
 using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.PatchModels
 {
     public partial class RoundTripPatchModel : IModelJsonSerializable<RoundTripPatchModel>, IUtf8JsonSerializable
     {
+        private static RoundTripPatchModel Deserialize(JsonElement element)
+        {
+            string id = default;
+            int value = default;
+
+            foreach (JsonProperty property in element.EnumerateObject())
+            {
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
+
+                if (property.NameEquals("value"))
+                {
+                    value = property.Value.GetInt32();
+                    continue;
+                }
+            }
+
+            return new RoundTripPatchModel(id, value);
+        }
+
         RoundTripPatchModel IModelJsonSerializable<RoundTripPatchModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             PatchModelHelper.ValidateFormat(this, options.Format);
@@ -19,8 +41,8 @@ namespace Azure.Core.Tests.PatchModels
 
         private static RoundTripPatchModel Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            MutableJsonDocument mdoc = MutableJsonDocument.Parse(ref reader);
-            return new RoundTripPatchModel(mdoc.RootElement);
+            JsonElement element = JsonDocument.ParseValue(ref reader).RootElement;
+            return Deserialize(element);
         }
 
         RoundTripPatchModel IModelSerializable<RoundTripPatchModel>.Deserialize(BinaryData data, ModelSerializerOptions options)
@@ -32,8 +54,50 @@ namespace Azure.Core.Tests.PatchModels
 
         private static RoundTripPatchModel Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            MutableJsonDocument mdoc = MutableJsonDocument.Parse(data);
-            return new RoundTripPatchModel(mdoc.RootElement);
+            JsonElement element = JsonDocument.Parse(data).RootElement;
+            return Deserialize(element);
+        }
+
+        private void SerializeFull(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
+
+            writer.WritePropertyName("value");
+            if (Value is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                writer.WriteNumberValue(Value.Value);
+            }
+
+            writer.WriteEndObject();
+        }
+
+        private void SerializePatch(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+
+            // Id isn't modifiable.
+
+            if (_valuePatchFlag)
+            {
+                writer.WritePropertyName("value");
+                if (Value is null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    writer.WriteNumberValue(Value.Value);
+                }
+            }
+
+            writer.WriteEndObject();
         }
 
         void IModelJsonSerializable<RoundTripPatchModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
@@ -44,10 +108,10 @@ namespace Azure.Core.Tests.PatchModels
             {
                 case "J":
                 case "W":
-                    _element.WriteTo(writer, "J");
+                    SerializeFull(writer);
                     break;
                 case "P":
-                    _element.WriteTo(writer, "P");
+                    SerializePatch(writer);
                     break;
                 default:
                     // Exception was thrown by ValidateFormat.
