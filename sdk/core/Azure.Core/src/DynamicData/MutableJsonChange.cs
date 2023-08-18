@@ -49,14 +49,7 @@ namespace Azure.Core.Json
 
         public MutableJsonChangeKind ChangeKind { get; }
 
-        public JsonValueKind ValueKind
-        {
-            [RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
-            get
-            {
-                return GetSerializedValue().ValueKind;
-            }
-        }
+        public JsonValueKind ValueKind => GetSerializedValue().ValueKind;
 
         [RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
         internal JsonElement GetSerializedValue()
