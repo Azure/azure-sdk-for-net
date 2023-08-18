@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Avs
             Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
-            Hosts = new ChangeTrackingList<string>();
+            Hosts = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AvsPrivateCloudClusterData. </summary>

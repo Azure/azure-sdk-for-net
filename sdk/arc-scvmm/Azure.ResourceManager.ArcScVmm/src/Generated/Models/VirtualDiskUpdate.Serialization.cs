@@ -10,47 +10,47 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
-    public partial class VirtualDiskUpdate : IUtf8JsonSerializable
+    public partial class VirtualDiskUpdate : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DiskId))
+            if (Core.Optional.IsDefined(DiskId))
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (Optional.IsDefined(DiskSizeGB))
+            if (Core.Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (Optional.IsDefined(Bus))
+            if (Core.Optional.IsDefined(Bus))
             {
                 writer.WritePropertyName("bus"u8);
                 writer.WriteNumberValue(Bus.Value);
             }
-            if (Optional.IsDefined(Lun))
+            if (Core.Optional.IsDefined(Lun))
             {
                 writer.WritePropertyName("lun"u8);
                 writer.WriteNumberValue(Lun.Value);
             }
-            if (Optional.IsDefined(BusType))
+            if (Core.Optional.IsDefined(BusType))
             {
                 writer.WritePropertyName("busType"u8);
                 writer.WriteStringValue(BusType);
             }
-            if (Optional.IsDefined(VhdType))
+            if (Core.Optional.IsDefined(VhdType))
             {
                 writer.WritePropertyName("vhdType"u8);
                 writer.WriteStringValue(VhdType);
             }
-            if (Optional.IsDefined(StorageQoSPolicy))
+            if (Core.Optional.IsDefined(StorageQoSPolicy))
             {
                 writer.WritePropertyName("storageQoSPolicy"u8);
                 writer.WriteObjectValue(StorageQoSPolicy);

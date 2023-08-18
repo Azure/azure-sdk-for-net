@@ -11,29 +11,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleManagementPolicyExpirationRule : IUtf8JsonSerializable
+    public partial class RoleManagementPolicyExpirationRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsExpirationRequired))
+            if (Core.Optional.IsDefined(IsExpirationRequired))
             {
                 writer.WritePropertyName("isExpirationRequired"u8);
                 writer.WriteBooleanValue(IsExpirationRequired.Value);
             }
-            if (Optional.IsDefined(MaximumDuration))
+            if (Core.Optional.IsDefined(MaximumDuration))
             {
                 writer.WritePropertyName("maximumDuration"u8);
                 writer.WriteStringValue(MaximumDuration.Value, "P");
             }
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
-            if (Optional.IsDefined(Target))
+            if (Core.Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<bool> isExpirationRequired = default;
-            Optional<TimeSpan> maximumDuration = default;
-            Optional<string> id = default;
+            Core.Optional<bool> isExpirationRequired = default;
+            Core.Optional<TimeSpan> maximumDuration = default;
+            Core.Optional<string> id = default;
             RoleManagementPolicyRuleType ruleType = default;
-            Optional<RoleManagementPolicyRuleTarget> target = default;
+            Core.Optional<RoleManagementPolicyRuleTarget> target = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isExpirationRequired"u8))
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new RoleManagementPolicyExpirationRule(id.Value, ruleType, target.Value, Optional.ToNullable(isExpirationRequired), Optional.ToNullable(maximumDuration));
+            return new RoleManagementPolicyExpirationRule(id.Value, ruleType, target.Value, Core.Optional.ToNullable(isExpirationRequired), Core.Optional.ToNullable(maximumDuration));
         }
     }
 }

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ArcScVmm
 {
-    internal class ScVmmAvailabilitySetOperationSource : IOperationSource<ScVmmAvailabilitySetResource>
+    internal class ScVmmAvailabilitySetOperationSource : Core.IOperationSource<ScVmmAvailabilitySetResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ArcScVmm
             _client = client;
         }
 
-        ScVmmAvailabilitySetResource IOperationSource<ScVmmAvailabilitySetResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ScVmmAvailabilitySetResource Core.IOperationSource<ScVmmAvailabilitySetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ScVmmAvailabilitySetData.DeserializeScVmmAvailabilitySetData(document.RootElement);
             return new ScVmmAvailabilitySetResource(_client, data);
         }
 
-        async ValueTask<ScVmmAvailabilitySetResource> IOperationSource<ScVmmAvailabilitySetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ScVmmAvailabilitySetResource> Core.IOperationSource<ScVmmAvailabilitySetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ScVmmAvailabilitySetData.DeserializeScVmmAvailabilitySetData(document.RootElement);

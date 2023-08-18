@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ApiRevisionListResult. </summary>
         internal ApiRevisionListResult()
         {
-            Value = new ChangeTrackingList<ApiRevisionContract>();
+            Value = new Core.ChangeTrackingList<ApiRevisionContract>();
         }
 
         /// <summary> Initializes a new instance of ApiRevisionListResult. </summary>

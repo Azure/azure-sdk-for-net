@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of CustomDomainResourceList. </summary>
         internal CustomDomainResourceList()
         {
-            Value = new ChangeTrackingList<AppPlatformCustomDomainData>();
+            Value = new Core.ChangeTrackingList<AppPlatformCustomDomainData>();
         }
 
         /// <summary> Initializes a new instance of CustomDomainResourceList. </summary>

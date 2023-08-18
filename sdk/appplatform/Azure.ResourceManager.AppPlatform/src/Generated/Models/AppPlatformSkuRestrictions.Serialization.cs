@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformSkuRestrictionsType> type = default;
-            Optional<IReadOnlyList<string>> values = default;
-            Optional<AppPlatformSkuRestrictionInfo> restrictionInfo = default;
-            Optional<AppPlatformSkuRestrictionsReasonCode> reasonCode = default;
+            Core.Optional<AppPlatformSkuRestrictionsType> type = default;
+            Core.Optional<IReadOnlyList<string>> values = default;
+            Core.Optional<AppPlatformSkuRestrictionInfo> restrictionInfo = default;
+            Core.Optional<AppPlatformSkuRestrictionsReasonCode> reasonCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformSkuRestrictions(Optional.ToNullable(type), Optional.ToList(values), restrictionInfo.Value, Optional.ToNullable(reasonCode));
+            return new AppPlatformSkuRestrictions(Core.Optional.ToNullable(type), Core.Optional.ToList(values), restrictionInfo.Value, Core.Optional.ToNullable(reasonCode));
         }
     }
 }

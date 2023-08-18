@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RoleDefinitionPermission>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<RoleDefinitionPermission>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new RoleDefinitionPermissionListResult(Optional.ToList(value), nextLink.Value);
+            return new RoleDefinitionPermissionListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

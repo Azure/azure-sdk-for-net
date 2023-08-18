@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class VirtualNetworkConfiguration : IUtf8JsonSerializable
+    public partial class VirtualNetworkConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SubnetResourceId))
+            if (Core.Optional.IsDefined(SubnetResourceId))
             {
                 writer.WritePropertyName("subnetResourceId"u8);
                 writer.WriteStringValue(SubnetResourceId);
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<Guid> vnetid = default;
-            Optional<string> subnetname = default;
-            Optional<ResourceIdentifier> subnetResourceId = default;
+            Core.Optional<Guid> vnetid = default;
+            Core.Optional<string> subnetname = default;
+            Core.Optional<ResourceIdentifier> subnetResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vnetid"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new VirtualNetworkConfiguration(Optional.ToNullable(vnetid), subnetname.Value, subnetResourceId.Value);
+            return new VirtualNetworkConfiguration(Core.Optional.ToNullable(vnetid), subnetname.Value, subnetResourceId.Value);
         }
     }
 }

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class OAuth2AuthenticationSettingsContract : IUtf8JsonSerializable
+    public partial class OAuth2AuthenticationSettingsContract : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AuthorizationServerId))
+            if (Core.Optional.IsDefined(AuthorizationServerId))
             {
                 writer.WritePropertyName("authorizationServerId"u8);
                 writer.WriteStringValue(AuthorizationServerId);
             }
-            if (Optional.IsDefined(Scope))
+            if (Core.Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> authorizationServerId = default;
-            Optional<string> scope = default;
+            Core.Optional<string> authorizationServerId = default;
+            Core.Optional<string> scope = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authorizationServerId"u8))

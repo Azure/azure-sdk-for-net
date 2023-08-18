@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    public partial class FrontDoorSecretData : IUtf8JsonSerializable
+    public partial class FrontDoorSecretData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteObjectValue(Properties);
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<FrontDoorProvisioningState> provisioningState = default;
-            Optional<FrontDoorDeploymentStatus> deploymentStatus = default;
-            Optional<string> profileName = default;
-            Optional<FrontDoorSecretProperties> parameters = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<FrontDoorProvisioningState> provisioningState = default;
+            Core.Optional<FrontDoorDeploymentStatus> deploymentStatus = default;
+            Core.Optional<string> profileName = default;
+            Core.Optional<FrontDoorSecretProperties> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new FrontDoorSecretData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), profileName.Value, parameters.Value);
+            return new FrontDoorSecretData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(deploymentStatus), profileName.Value, parameters.Value);
         }
     }
 }

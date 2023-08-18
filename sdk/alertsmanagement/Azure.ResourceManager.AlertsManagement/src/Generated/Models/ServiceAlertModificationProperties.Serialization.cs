@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class ServiceAlertModificationProperties : IUtf8JsonSerializable
+    public partial class ServiceAlertModificationProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Modifications))
+            if (Core.Optional.IsCollectionDefined(Modifications))
             {
                 writer.WritePropertyName("modifications"u8);
                 writer.WriteStartArray();
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Optional<Guid> alertId = default;
-            Optional<IList<ServiceAlertModificationItemInfo>> modifications = default;
+            Core.Optional<Guid> alertId = default;
+            Core.Optional<IList<ServiceAlertModificationItemInfo>> modifications = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alertId"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     continue;
                 }
             }
-            return new ServiceAlertModificationProperties(Optional.ToNullable(alertId), Optional.ToList(modifications));
+            return new ServiceAlertModificationProperties(Core.Optional.ToNullable(alertId), Core.Optional.ToList(modifications));
         }
     }
 }

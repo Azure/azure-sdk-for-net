@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    public partial class CommitmentPlanAccountAssociationData : IUtf8JsonSerializable
+    public partial class CommitmentPlanAccountAssociationData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AccountId))
+            if (Core.Optional.IsDefined(AccountId))
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            Core.Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> accountId = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> accountId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     continue;
                 }
             }
-            return new CommitmentPlanAccountAssociationData(id, name, type, systemData.Value, Optional.ToNullable(etag), accountId.Value);
+            return new CommitmentPlanAccountAssociationData(id, name, type, systemData.Value, Core.Optional.ToNullable(etag), accountId.Value);
         }
     }
 }

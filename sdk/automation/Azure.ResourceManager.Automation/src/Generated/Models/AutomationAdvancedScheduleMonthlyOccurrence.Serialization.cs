@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationAdvancedScheduleMonthlyOccurrence : IUtf8JsonSerializable
+    public partial class AutomationAdvancedScheduleMonthlyOccurrence : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Occurrence))
+            if (Core.Optional.IsDefined(Occurrence))
             {
                 writer.WritePropertyName("occurrence"u8);
                 writer.WriteNumberValue(Occurrence.Value);
             }
-            if (Optional.IsDefined(Day))
+            if (Core.Optional.IsDefined(Day))
             {
                 writer.WritePropertyName("day"u8);
                 writer.WriteStringValue(Day.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<int> occurrence = default;
-            Optional<AutomationDayOfWeek> day = default;
+            Core.Optional<int> occurrence = default;
+            Core.Optional<AutomationDayOfWeek> day = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("occurrence"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new AutomationAdvancedScheduleMonthlyOccurrence(Optional.ToNullable(occurrence), Optional.ToNullable(day));
+            return new AutomationAdvancedScheduleMonthlyOccurrence(Core.Optional.ToNullable(occurrence), Core.Optional.ToNullable(day));
         }
     }
 }

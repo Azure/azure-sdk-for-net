@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> dateTime = default;
-            Optional<float> value = default;
+            Core.Optional<DateTimeOffset> dateTime = default;
+            Core.Optional<float> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dateTime"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems(Optional.ToNullable(dateTime), Optional.ToNullable(value));
+            return new Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems(Core.Optional.ToNullable(dateTime), Core.Optional.ToNullable(value));
         }
     }
 }

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<string> domainName = default;
-            Optional<string> description = default;
-            Optional<IReadOnlyList<BatchEndpointDetail>> endpointDetails = default;
+            Core.Optional<string> domainName = default;
+            Core.Optional<string> description = default;
+            Core.Optional<IReadOnlyList<BatchEndpointDetail>> endpointDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainName"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new BatchAccountEndpointDependency(domainName.Value, description.Value, Optional.ToList(endpointDetails));
+            return new BatchAccountEndpointDependency(domainName.Value, description.Value, Core.Optional.ToList(endpointDetails));
         }
     }
 }

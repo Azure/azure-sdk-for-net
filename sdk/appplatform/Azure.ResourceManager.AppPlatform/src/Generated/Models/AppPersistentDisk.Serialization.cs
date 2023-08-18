@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPersistentDisk : IUtf8JsonSerializable
+    public partial class AppPersistentDisk : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SizeInGB))
+            if (Core.Optional.IsDefined(SizeInGB))
             {
                 writer.WritePropertyName("sizeInGB"u8);
                 writer.WriteNumberValue(SizeInGB.Value);
             }
-            if (Optional.IsDefined(MountPath))
+            if (Core.Optional.IsDefined(MountPath))
             {
                 writer.WritePropertyName("mountPath"u8);
                 writer.WriteStringValue(MountPath);
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<int> sizeInGB = default;
-            Optional<int> usedInGB = default;
-            Optional<string> mountPath = default;
+            Core.Optional<int> sizeInGB = default;
+            Core.Optional<int> usedInGB = default;
+            Core.Optional<string> mountPath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sizeInGB"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPersistentDisk(Optional.ToNullable(sizeInGB), Optional.ToNullable(usedInGB), mountPath.Value);
+            return new AppPersistentDisk(Core.Optional.ToNullable(sizeInGB), Core.Optional.ToNullable(usedInGB), mountPath.Value);
         }
     }
 }

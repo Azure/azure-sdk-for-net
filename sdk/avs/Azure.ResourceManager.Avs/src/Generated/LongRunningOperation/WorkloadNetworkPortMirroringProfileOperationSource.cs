@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
-    internal class WorkloadNetworkPortMirroringProfileOperationSource : IOperationSource<WorkloadNetworkPortMirroringProfileResource>
+    internal class WorkloadNetworkPortMirroringProfileOperationSource : Core.IOperationSource<WorkloadNetworkPortMirroringProfileResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Avs
             _client = client;
         }
 
-        WorkloadNetworkPortMirroringProfileResource IOperationSource<WorkloadNetworkPortMirroringProfileResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        WorkloadNetworkPortMirroringProfileResource Core.IOperationSource<WorkloadNetworkPortMirroringProfileResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = WorkloadNetworkPortMirroringProfileData.DeserializeWorkloadNetworkPortMirroringProfileData(document.RootElement);
             return new WorkloadNetworkPortMirroringProfileResource(_client, data);
         }
 
-        async ValueTask<WorkloadNetworkPortMirroringProfileResource> IOperationSource<WorkloadNetworkPortMirroringProfileResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<WorkloadNetworkPortMirroringProfileResource> Core.IOperationSource<WorkloadNetworkPortMirroringProfileResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = WorkloadNetworkPortMirroringProfileData.DeserializeWorkloadNetworkPortMirroringProfileData(document.RootElement);

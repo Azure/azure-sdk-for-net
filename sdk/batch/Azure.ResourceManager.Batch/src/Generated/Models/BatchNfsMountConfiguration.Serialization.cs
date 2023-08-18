@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchNfsMountConfiguration : IUtf8JsonSerializable
+    public partial class BatchNfsMountConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
             writer.WriteStringValue(Source);
             writer.WritePropertyName("relativeMountPath"u8);
             writer.WriteStringValue(RelativeMountPath);
-            if (Optional.IsDefined(MountOptions))
+            if (Core.Optional.IsDefined(MountOptions))
             {
                 writer.WritePropertyName("mountOptions"u8);
                 writer.WriteStringValue(MountOptions);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
             string source = default;
             string relativeMountPath = default;
-            Optional<string> mountOptions = default;
+            Core.Optional<string> mountOptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"u8))

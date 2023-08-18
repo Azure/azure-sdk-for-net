@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<string> path = default;
-            Optional<string> method = default;
+            Core.Optional<string> path = default;
+            Core.Optional<string> method = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"u8))

@@ -14,24 +14,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class UserContractData : IUtf8JsonSerializable
+    public partial class UserContractData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(Note))
+            if (Core.Optional.IsDefined(Note))
             {
                 writer.WritePropertyName("note"u8);
                 writer.WriteStringValue(Note);
             }
-            if (Optional.IsCollectionDefined(Identities))
+            if (Core.Optional.IsCollectionDefined(Identities))
             {
                 writer.WritePropertyName("identities"u8);
                 writer.WriteStartArray();
@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FirstName))
+            if (Core.Optional.IsDefined(FirstName))
             {
                 writer.WritePropertyName("firstName"u8);
                 writer.WriteStringValue(FirstName);
             }
-            if (Optional.IsDefined(LastName))
+            if (Core.Optional.IsDefined(LastName))
             {
                 writer.WritePropertyName("lastName"u8);
                 writer.WriteStringValue(LastName);
             }
-            if (Optional.IsDefined(Email))
+            if (Core.Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (Optional.IsDefined(RegistriesOn))
+            if (Core.Optional.IsDefined(RegistriesOn))
             {
                 writer.WritePropertyName("registrationDate"u8);
                 writer.WriteStringValue(RegistriesOn.Value, "O");
@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ApiManagementUserState> state = default;
-            Optional<string> note = default;
-            Optional<IList<UserIdentityContract>> identities = default;
-            Optional<string> firstName = default;
-            Optional<string> lastName = default;
-            Optional<string> email = default;
-            Optional<DateTimeOffset> registrationDate = default;
-            Optional<IReadOnlyList<GroupContractProperties>> groups = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ApiManagementUserState> state = default;
+            Core.Optional<string> note = default;
+            Core.Optional<IList<UserIdentityContract>> identities = default;
+            Core.Optional<string> firstName = default;
+            Core.Optional<string> lastName = default;
+            Core.Optional<string> email = default;
+            Core.Optional<DateTimeOffset> registrationDate = default;
+            Core.Optional<IReadOnlyList<GroupContractProperties>> groups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new UserContractData(id, name, type, systemData.Value, Optional.ToNullable(state), note.Value, Optional.ToList(identities), firstName.Value, lastName.Value, email.Value, Optional.ToNullable(registrationDate), Optional.ToList(groups));
+            return new UserContractData(id, name, type, systemData.Value, Core.Optional.ToNullable(state), note.Value, Core.Optional.ToList(identities), firstName.Value, lastName.Value, email.Value, Core.Optional.ToNullable(registrationDate), Core.Optional.ToList(groups));
         }
     }
 }

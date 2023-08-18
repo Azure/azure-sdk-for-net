@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <summary> Initializes a new instance of StorageProfileUpdate. </summary>
         public StorageProfileUpdate()
         {
-            Disks = new ChangeTrackingList<VirtualDiskUpdate>();
+            Disks = new Core.ChangeTrackingList<VirtualDiskUpdate>();
         }
 
         /// <summary> Gets or sets the list of virtual disks associated with the virtual machine. </summary>

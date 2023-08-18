@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of OperationListResult. </summary>
         internal OperationListResult()
         {
-            Value = new ChangeTrackingList<ApiOperationData>();
+            Value = new Core.ChangeTrackingList<ApiOperationData>();
         }
 
         /// <summary> Initializes a new instance of OperationListResult. </summary>

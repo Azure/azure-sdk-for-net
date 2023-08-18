@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of CommonClusterProperties. </summary>
         public CommonClusterProperties()
         {
-            Hosts = new ChangeTrackingList<string>();
+            Hosts = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of CommonClusterProperties. </summary>

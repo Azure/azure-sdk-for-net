@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    public partial class ReportProperties : IUtf8JsonSerializable
+    public partial class ReportProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(OfferGuid))
+            if (Core.Optional.IsDefined(OfferGuid))
             {
                 writer.WritePropertyName("offerGuid"u8);
                 writer.WriteStringValue(OfferGuid);
@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<ReportStatus> status = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> reportName = default;
-            Optional<string> offerGuid = default;
+            Core.Optional<string> id = default;
+            Core.Optional<ReportStatus> status = default;
+            Core.Optional<Guid> tenantId = default;
+            Core.Optional<string> reportName = default;
+            Core.Optional<string> offerGuid = default;
             string timeZone = default;
             DateTimeOffset triggerTime = default;
-            Optional<DateTimeOffset> nextTriggerTime = default;
-            Optional<DateTimeOffset> lastTriggerTime = default;
-            Optional<IReadOnlyList<string>> subscriptions = default;
+            Core.Optional<DateTimeOffset> nextTriggerTime = default;
+            Core.Optional<DateTimeOffset> lastTriggerTime = default;
+            Core.Optional<IReadOnlyList<string>> subscriptions = default;
             IList<ResourceMetadata> resources = default;
-            Optional<ReportComplianceStatus> complianceStatus = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Core.Optional<ReportComplianceStatus> complianceStatus = default;
+            Core.Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     continue;
                 }
             }
-            return new ReportProperties(id.Value, Optional.ToNullable(status), Optional.ToNullable(tenantId), reportName.Value, offerGuid.Value, timeZone, triggerTime, Optional.ToNullable(nextTriggerTime), Optional.ToNullable(lastTriggerTime), Optional.ToList(subscriptions), resources, complianceStatus.Value, Optional.ToNullable(provisioningState));
+            return new ReportProperties(id.Value, Core.Optional.ToNullable(status), Core.Optional.ToNullable(tenantId), reportName.Value, offerGuid.Value, timeZone, triggerTime, Core.Optional.ToNullable(nextTriggerTime), Core.Optional.ToNullable(lastTriggerTime), Core.Optional.ToList(subscriptions), resources, complianceStatus.Value, Core.Optional.ToNullable(provisioningState));
         }
     }
 }

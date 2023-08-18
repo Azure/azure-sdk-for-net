@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> value = default;
-            Optional<string> unit = default;
-            Optional<string> meterId = default;
-            Optional<string> meterRateFrequency = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> value = default;
+            Core.Optional<string> unit = default;
+            Core.Optional<string> meterId = default;
+            Core.Optional<string> meterRateFrequency = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Name"u8))

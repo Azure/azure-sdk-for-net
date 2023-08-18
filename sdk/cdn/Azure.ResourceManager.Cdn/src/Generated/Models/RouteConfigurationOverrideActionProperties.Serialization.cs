@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class RouteConfigurationOverrideActionProperties : IUtf8JsonSerializable
+    public partial class RouteConfigurationOverrideActionProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("typeName"u8);
             writer.WriteStringValue(ActionType.ToString());
-            if (Optional.IsDefined(OriginGroupOverride))
+            if (Core.Optional.IsDefined(OriginGroupOverride))
             {
                 if (OriginGroupOverride != null)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("originGroupOverride");
                 }
             }
-            if (Optional.IsDefined(CacheConfiguration))
+            if (Core.Optional.IsDefined(CacheConfiguration))
             {
                 writer.WritePropertyName("cacheConfiguration"u8);
                 writer.WriteObjectValue(CacheConfiguration);
@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             RouteConfigurationOverrideActionType typeName = default;
-            Optional<OriginGroupOverride> originGroupOverride = default;
-            Optional<CacheConfiguration> cacheConfiguration = default;
+            Core.Optional<OriginGroupOverride> originGroupOverride = default;
+            Core.Optional<CacheConfiguration> cacheConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("typeName"u8))

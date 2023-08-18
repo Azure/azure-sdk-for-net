@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformBuildServiceResourceRequirements : IUtf8JsonSerializable
+    public partial class AppPlatformBuildServiceResourceRequirements : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> cpu = default;
-            Optional<string> memory = default;
+            Core.Optional<string> cpu = default;
+            Core.Optional<string> memory = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cpu"u8))

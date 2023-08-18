@@ -51,7 +51,7 @@ namespace Azure.Communication.CallAutomation
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(playRequest);
             request.Content = content;
             return message;
@@ -185,7 +185,7 @@ namespace Azure.Communication.CallAutomation
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(recognizeRequest);
             request.Content = content;
             return message;
@@ -259,7 +259,7 @@ namespace Azure.Communication.CallAutomation
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(continuousDtmfRecognitionRequest);
             request.Content = content;
             return message;
@@ -333,7 +333,7 @@ namespace Azure.Communication.CallAutomation
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(continuousDtmfRecognitionRequest);
             request.Content = content;
             return message;
@@ -407,7 +407,7 @@ namespace Azure.Communication.CallAutomation
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(sendDtmfRequest);
             request.Content = content;
             return message;

@@ -13,23 +13,23 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CustomerCertificateProperties : IUtf8JsonSerializable
+    public partial class CustomerCertificateProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("secretSource"u8);
-            JsonSerializer.Serialize(writer, SecretSource); if (Optional.IsDefined(SecretVersion))
+            JsonSerializer.Serialize(writer, SecretSource); if (Core.Optional.IsDefined(SecretVersion))
             {
                 writer.WritePropertyName("secretVersion"u8);
                 writer.WriteStringValue(SecretVersion);
             }
-            if (Optional.IsDefined(UseLatestVersion))
+            if (Core.Optional.IsDefined(UseLatestVersion))
             {
                 writer.WritePropertyName("useLatestVersion"u8);
                 writer.WriteBooleanValue(UseLatestVersion.Value);
             }
-            if (Optional.IsCollectionDefined(SubjectAlternativeNames))
+            if (Core.Optional.IsCollectionDefined(SubjectAlternativeNames))
             {
                 writer.WritePropertyName("subjectAlternativeNames"u8);
                 writer.WriteStartArray();
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             WritableSubResource secretSource = default;
-            Optional<string> secretVersion = default;
-            Optional<bool> useLatestVersion = default;
-            Optional<string> subject = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<string> certificateAuthority = default;
-            Optional<IList<string>> subjectAlternativeNames = default;
-            Optional<string> thumbprint = default;
+            Core.Optional<string> secretVersion = default;
+            Core.Optional<bool> useLatestVersion = default;
+            Core.Optional<string> subject = default;
+            Core.Optional<DateTimeOffset> expirationDate = default;
+            Core.Optional<string> certificateAuthority = default;
+            Core.Optional<IList<string>> subjectAlternativeNames = default;
+            Core.Optional<string> thumbprint = default;
             SecretType type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new CustomerCertificateProperties(type, secretSource, secretVersion.Value, Optional.ToNullable(useLatestVersion), subject.Value, Optional.ToNullable(expirationDate), certificateAuthority.Value, Optional.ToList(subjectAlternativeNames), thumbprint.Value);
+            return new CustomerCertificateProperties(type, secretSource, secretVersion.Value, Core.Optional.ToNullable(useLatestVersion), subject.Value, Core.Optional.ToNullable(expirationDate), certificateAuthority.Value, Core.Optional.ToList(subjectAlternativeNames), thumbprint.Value);
         }
     }
 }

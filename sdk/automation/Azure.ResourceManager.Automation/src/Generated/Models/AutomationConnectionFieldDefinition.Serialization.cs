@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationConnectionFieldDefinition : IUtf8JsonSerializable
+    public partial class AutomationConnectionFieldDefinition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEncrypted))
+            if (Core.Optional.IsDefined(IsEncrypted))
             {
                 writer.WritePropertyName("isEncrypted"u8);
                 writer.WriteBooleanValue(IsEncrypted.Value);
             }
-            if (Optional.IsDefined(IsOptional))
+            if (Core.Optional.IsDefined(IsOptional))
             {
                 writer.WritePropertyName("isOptional"u8);
                 writer.WriteBooleanValue(IsOptional.Value);
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<bool> isEncrypted = default;
-            Optional<bool> isOptional = default;
+            Core.Optional<bool> isEncrypted = default;
+            Core.Optional<bool> isOptional = default;
             string type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new AutomationConnectionFieldDefinition(Optional.ToNullable(isEncrypted), Optional.ToNullable(isOptional), type);
+            return new AutomationConnectionFieldDefinition(Core.Optional.ToNullable(isEncrypted), Core.Optional.ToNullable(isOptional), type);
         }
     }
 }

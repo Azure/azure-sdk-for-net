@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of NotificationListResult. </summary>
         internal NotificationListResult()
         {
-            Value = new ChangeTrackingList<ApiManagementNotificationData>();
+            Value = new Core.ChangeTrackingList<ApiManagementNotificationData>();
         }
 
         /// <summary> Initializes a new instance of NotificationListResult. </summary>

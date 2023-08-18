@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApiManagementGroupData>> value = default;
-            Optional<long> count = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<ApiManagementGroupData>> value = default;
+            Core.Optional<long> count = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new GroupListResult(Optional.ToList(value), Optional.ToNullable(count), nextLink.Value);
+            return new GroupListResult(Core.Optional.ToList(value), Core.Optional.ToNullable(count), nextLink.Value);
         }
     }
 }

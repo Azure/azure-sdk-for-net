@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class SpeechOptionsInternal : IUtf8JsonSerializable
+    internal partial class SpeechOptionsInternal : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EndSilenceTimeoutInMs))
+            if (Core.Optional.IsDefined(EndSilenceTimeoutInMs))
             {
                 writer.WritePropertyName("endSilenceTimeoutInMs"u8);
                 writer.WriteNumberValue(EndSilenceTimeoutInMs.Value);

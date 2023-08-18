@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Initializes a new instance of ConnectionSettingResponseList. </summary>
         internal ConnectionSettingResponseList()
         {
-            Value = new ChangeTrackingList<BotConnectionSettingData>();
+            Value = new Core.ChangeTrackingList<BotConnectionSettingData>();
         }
 
         /// <summary> Initializes a new instance of ConnectionSettingResponseList. </summary>

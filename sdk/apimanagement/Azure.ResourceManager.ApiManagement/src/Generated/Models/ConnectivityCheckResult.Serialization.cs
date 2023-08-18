@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConnectivityHop>> hops = default;
-            Optional<ConnectionStatus> connectionStatus = default;
-            Optional<long> avgLatencyInMs = default;
-            Optional<long> minLatencyInMs = default;
-            Optional<long> maxLatencyInMs = default;
-            Optional<long> probesSent = default;
-            Optional<long> probesFailed = default;
+            Core.Optional<IReadOnlyList<ConnectivityHop>> hops = default;
+            Core.Optional<ConnectionStatus> connectionStatus = default;
+            Core.Optional<long> avgLatencyInMs = default;
+            Core.Optional<long> minLatencyInMs = default;
+            Core.Optional<long> maxLatencyInMs = default;
+            Core.Optional<long> probesSent = default;
+            Core.Optional<long> probesFailed = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hops"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ConnectivityCheckResult(Optional.ToList(hops), Optional.ToNullable(connectionStatus), Optional.ToNullable(avgLatencyInMs), Optional.ToNullable(minLatencyInMs), Optional.ToNullable(maxLatencyInMs), Optional.ToNullable(probesSent), Optional.ToNullable(probesFailed));
+            return new ConnectivityCheckResult(Core.Optional.ToList(hops), Core.Optional.ToNullable(connectionStatus), Core.Optional.ToNullable(avgLatencyInMs), Core.Optional.ToNullable(minLatencyInMs), Core.Optional.ToNullable(maxLatencyInMs), Core.Optional.ToNullable(probesSent), Core.Optional.ToNullable(probesFailed));
         }
     }
 }

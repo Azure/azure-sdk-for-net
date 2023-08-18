@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    public partial class HciClusterData : IUtf8JsonSerializable
+    public partial class HciClusterData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,37 +34,37 @@ namespace Azure.ResourceManager.Hci
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CloudManagementEndpoint))
+            if (Core.Optional.IsDefined(CloudManagementEndpoint))
             {
                 writer.WritePropertyName("cloudManagementEndpoint"u8);
                 writer.WriteStringValue(CloudManagementEndpoint);
             }
-            if (Optional.IsDefined(AadClientId))
+            if (Core.Optional.IsDefined(AadClientId))
             {
                 writer.WritePropertyName("aadClientId"u8);
                 writer.WriteStringValue(AadClientId.Value);
             }
-            if (Optional.IsDefined(AadTenantId))
+            if (Core.Optional.IsDefined(AadTenantId))
             {
                 writer.WritePropertyName("aadTenantId"u8);
                 writer.WriteStringValue(AadTenantId.Value);
             }
-            if (Optional.IsDefined(AadApplicationObjectId))
+            if (Core.Optional.IsDefined(AadApplicationObjectId))
             {
                 writer.WritePropertyName("aadApplicationObjectId"u8);
                 writer.WriteStringValue(AadApplicationObjectId.Value);
             }
-            if (Optional.IsDefined(AadServicePrincipalObjectId))
+            if (Core.Optional.IsDefined(AadServicePrincipalObjectId))
             {
                 writer.WritePropertyName("aadServicePrincipalObjectId"u8);
                 writer.WriteStringValue(AadServicePrincipalObjectId.Value);
             }
-            if (Optional.IsDefined(SoftwareAssuranceProperties))
+            if (Core.Optional.IsDefined(SoftwareAssuranceProperties))
             {
                 writer.WritePropertyName("softwareAssuranceProperties"u8);
                 writer.WriteObjectValue(SoftwareAssuranceProperties);
             }
-            if (Optional.IsDefined(DesiredProperties))
+            if (Core.Optional.IsDefined(DesiredProperties))
             {
                 writer.WritePropertyName("desiredProperties"u8);
                 writer.WriteObjectValue(DesiredProperties);
@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.Hci
             writer.WriteEndObject();
             writer.WritePropertyName("identity"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TypeIdentityType))
+            if (Core.Optional.IsDefined(TypeIdentityType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TypeIdentityType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(UserAssignedIdentities))
+            if (Core.Optional.IsCollectionDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartObject();
@@ -98,34 +98,34 @@ namespace Azure.ResourceManager.Hci
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HciProvisioningState> provisioningState = default;
-            Optional<HciClusterStatus> status = default;
-            Optional<Guid> cloudId = default;
-            Optional<string> cloudManagementEndpoint = default;
-            Optional<Guid> aadClientId = default;
-            Optional<Guid> aadTenantId = default;
-            Optional<Guid> aadApplicationObjectId = default;
-            Optional<Guid> aadServicePrincipalObjectId = default;
-            Optional<SoftwareAssuranceProperties> softwareAssuranceProperties = default;
-            Optional<HciClusterDesiredProperties> desiredProperties = default;
-            Optional<HciClusterReportedProperties> reportedProperties = default;
-            Optional<float> trialDaysRemaining = default;
-            Optional<string> billingModel = default;
-            Optional<DateTimeOffset> registrationTimestamp = default;
-            Optional<DateTimeOffset> lastSyncTimestamp = default;
-            Optional<DateTimeOffset> lastBillingTimestamp = default;
-            Optional<string> serviceEndpoint = default;
-            Optional<string> resourceProviderObjectId = default;
-            Optional<Guid> principalId = default;
-            Optional<Guid> tenantId = default;
-            Optional<HciManagedServiceIdentityType> type0 = default;
-            Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<HciProvisioningState> provisioningState = default;
+            Core.Optional<HciClusterStatus> status = default;
+            Core.Optional<Guid> cloudId = default;
+            Core.Optional<string> cloudManagementEndpoint = default;
+            Core.Optional<Guid> aadClientId = default;
+            Core.Optional<Guid> aadTenantId = default;
+            Core.Optional<Guid> aadApplicationObjectId = default;
+            Core.Optional<Guid> aadServicePrincipalObjectId = default;
+            Core.Optional<SoftwareAssuranceProperties> softwareAssuranceProperties = default;
+            Core.Optional<HciClusterDesiredProperties> desiredProperties = default;
+            Core.Optional<HciClusterReportedProperties> reportedProperties = default;
+            Core.Optional<float> trialDaysRemaining = default;
+            Core.Optional<string> billingModel = default;
+            Core.Optional<DateTimeOffset> registrationTimestamp = default;
+            Core.Optional<DateTimeOffset> lastSyncTimestamp = default;
+            Core.Optional<DateTimeOffset> lastBillingTimestamp = default;
+            Core.Optional<string> serviceEndpoint = default;
+            Core.Optional<string> resourceProviderObjectId = default;
+            Core.Optional<Guid> principalId = default;
+            Core.Optional<Guid> tenantId = default;
+            Core.Optional<HciManagedServiceIdentityType> type0 = default;
+            Core.Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Hci
                     continue;
                 }
             }
-            return new HciClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(cloudId), cloudManagementEndpoint.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), Optional.ToNullable(aadApplicationObjectId), Optional.ToNullable(aadServicePrincipalObjectId), softwareAssuranceProperties.Value, desiredProperties.Value, reportedProperties.Value, Optional.ToNullable(trialDaysRemaining), billingModel.Value, Optional.ToNullable(registrationTimestamp), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastBillingTimestamp), serviceEndpoint.Value, resourceProviderObjectId.Value, Optional.ToNullable(principalId), Optional.ToNullable(tenantId), Optional.ToNullable(type0), Optional.ToDictionary(userAssignedIdentities));
+            return new HciClusterData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(status), Core.Optional.ToNullable(cloudId), cloudManagementEndpoint.Value, Core.Optional.ToNullable(aadClientId), Core.Optional.ToNullable(aadTenantId), Core.Optional.ToNullable(aadApplicationObjectId), Core.Optional.ToNullable(aadServicePrincipalObjectId), softwareAssuranceProperties.Value, desiredProperties.Value, reportedProperties.Value, Core.Optional.ToNullable(trialDaysRemaining), billingModel.Value, Core.Optional.ToNullable(registrationTimestamp), Core.Optional.ToNullable(lastSyncTimestamp), Core.Optional.ToNullable(lastBillingTimestamp), serviceEndpoint.Value, resourceProviderObjectId.Value, Core.Optional.ToNullable(principalId), Core.Optional.ToNullable(tenantId), Core.Optional.ToNullable(type0), Core.Optional.ToDictionary(userAssignedIdentities));
         }
     }
 }

@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class FacebookPage : IUtf8JsonSerializable
+    public partial class FacebookPage : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(AccessToken))
+            if (Core.Optional.IsDefined(AccessToken))
             {
                 writer.WritePropertyName("accessToken"u8);
                 writer.WriteStringValue(AccessToken);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             string id = default;
-            Optional<string> accessToken = default;
+            Core.Optional<string> accessToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

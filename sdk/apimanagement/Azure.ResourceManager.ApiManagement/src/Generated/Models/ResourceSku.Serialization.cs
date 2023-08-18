@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<ApiManagementServiceSkuType> name = default;
+            Core.Optional<ApiManagementServiceSkuType> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ResourceSku(Optional.ToNullable(name));
+            return new ResourceSku(Core.Optional.ToNullable(name));
         }
     }
 }

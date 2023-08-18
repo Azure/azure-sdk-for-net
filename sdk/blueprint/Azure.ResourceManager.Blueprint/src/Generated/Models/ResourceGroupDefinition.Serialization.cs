@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
-    public partial class ResourceGroupDefinition : IUtf8JsonSerializable
+    public partial class ResourceGroupDefinition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (Core.Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -49,17 +49,17 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
             writer.WritePropertyName("metadata"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(StrongType))
+            if (Core.Optional.IsDefined(StrongType))
             {
                 writer.WritePropertyName("strongType"u8);
                 writer.WriteStringValue(StrongType);
@@ -74,13 +74,13 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
-            Optional<IList<string>> dependsOn = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> strongType = default;
+            Core.Optional<string> name = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<IList<string>> dependsOn = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> strongType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     continue;
                 }
             }
-            return new ResourceGroupDefinition(name.Value, Optional.ToNullable(location), Optional.ToList(dependsOn), Optional.ToDictionary(tags), displayName.Value, description.Value, strongType.Value);
+            return new ResourceGroupDefinition(name.Value, Core.Optional.ToNullable(location), Core.Optional.ToList(dependsOn), Core.Optional.ToDictionary(tags), displayName.Value, description.Value, strongType.Value);
         }
     }
 }

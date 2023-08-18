@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<DscNodeCountProperties> properties = default;
+            Core.Optional<string> name = default;
+            Core.Optional<DscNodeCountProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

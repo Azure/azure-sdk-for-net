@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContinentsResponseContinentsItem>> continents = default;
-            Optional<IReadOnlyList<ContinentsResponseCountryOrRegionsItem>> countryOrRegions = default;
+            Core.Optional<IReadOnlyList<ContinentsResponseContinentsItem>> continents = default;
+            Core.Optional<IReadOnlyList<ContinentsResponseCountryOrRegionsItem>> countryOrRegions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("continents"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new ContinentsResponse(Optional.ToList(continents), Optional.ToList(countryOrRegions));
+            return new ContinentsResponse(Core.Optional.ToList(continents), Core.Optional.ToList(countryOrRegions));
         }
     }
 }

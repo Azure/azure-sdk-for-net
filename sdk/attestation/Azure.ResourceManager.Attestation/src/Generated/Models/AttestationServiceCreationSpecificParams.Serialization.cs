@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    public partial class AttestationServiceCreationSpecificParams : IUtf8JsonSerializable
+    public partial class AttestationServiceCreationSpecificParams : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (Core.Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(PolicySigningCertificates))
+            if (Core.Optional.IsDefined(PolicySigningCertificates))
             {
                 writer.WritePropertyName("policySigningCertificates"u8);
                 writer.WriteObjectValue(PolicySigningCertificates);

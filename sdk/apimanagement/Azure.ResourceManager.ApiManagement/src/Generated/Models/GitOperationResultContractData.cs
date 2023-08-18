@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of GitOperationResultContractData. </summary>
         public GitOperationResultContractData()
         {
-            ActionLog = new ChangeTrackingList<OperationResultLogItemContract>();
+            ActionLog = new Core.ChangeTrackingList<OperationResultLogItemContract>();
         }
 
         /// <summary> Initializes a new instance of GitOperationResultContractData. </summary>

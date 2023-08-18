@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleManagementApprovalSettings : IUtf8JsonSerializable
+    public partial class RoleManagementApprovalSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsApprovalRequired))
+            if (Core.Optional.IsDefined(IsApprovalRequired))
             {
                 writer.WritePropertyName("isApprovalRequired"u8);
                 writer.WriteBooleanValue(IsApprovalRequired.Value);
             }
-            if (Optional.IsDefined(IsApprovalRequiredForExtension))
+            if (Core.Optional.IsDefined(IsApprovalRequiredForExtension))
             {
                 writer.WritePropertyName("isApprovalRequiredForExtension"u8);
                 writer.WriteBooleanValue(IsApprovalRequiredForExtension.Value);
             }
-            if (Optional.IsDefined(IsRequestorJustificationRequired))
+            if (Core.Optional.IsDefined(IsRequestorJustificationRequired))
             {
                 writer.WritePropertyName("isRequestorJustificationRequired"u8);
                 writer.WriteBooleanValue(IsRequestorJustificationRequired.Value);
             }
-            if (Optional.IsDefined(ApprovalMode))
+            if (Core.Optional.IsDefined(ApprovalMode))
             {
                 writer.WritePropertyName("approvalMode"u8);
                 writer.WriteStringValue(ApprovalMode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ApprovalStages))
+            if (Core.Optional.IsCollectionDefined(ApprovalStages))
             {
                 writer.WritePropertyName("approvalStages"u8);
                 writer.WriteStartArray();
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<bool> isApprovalRequired = default;
-            Optional<bool> isApprovalRequiredForExtension = default;
-            Optional<bool> isRequestorJustificationRequired = default;
-            Optional<RoleManagementApprovalMode> approvalMode = default;
-            Optional<IList<RoleManagementApprovalStage>> approvalStages = default;
+            Core.Optional<bool> isApprovalRequired = default;
+            Core.Optional<bool> isApprovalRequiredForExtension = default;
+            Core.Optional<bool> isRequestorJustificationRequired = default;
+            Core.Optional<RoleManagementApprovalMode> approvalMode = default;
+            Core.Optional<IList<RoleManagementApprovalStage>> approvalStages = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isApprovalRequired"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new RoleManagementApprovalSettings(Optional.ToNullable(isApprovalRequired), Optional.ToNullable(isApprovalRequiredForExtension), Optional.ToNullable(isRequestorJustificationRequired), Optional.ToNullable(approvalMode), Optional.ToList(approvalStages));
+            return new RoleManagementApprovalSettings(Core.Optional.ToNullable(isApprovalRequired), Core.Optional.ToNullable(isApprovalRequiredForExtension), Core.Optional.ToNullable(isRequestorJustificationRequired), Core.Optional.ToNullable(approvalMode), Core.Optional.ToList(approvalStages));
         }
     }
 }

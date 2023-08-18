@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Initializes a new instance of WorkItemCreateConfiguration. </summary>
         public WorkItemCreateConfiguration()
         {
-            WorkItemProperties = new ChangeTrackingDictionary<string, string>();
+            WorkItemProperties = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Unique connector id. </summary>

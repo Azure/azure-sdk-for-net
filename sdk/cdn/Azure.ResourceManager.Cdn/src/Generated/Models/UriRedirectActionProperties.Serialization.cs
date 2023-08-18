@@ -10,36 +10,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class UriRedirectActionProperties : IUtf8JsonSerializable
+    public partial class UriRedirectActionProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("typeName"u8);
             writer.WriteStringValue(ActionType.ToString());
             writer.WritePropertyName("redirectType"u8);
             writer.WriteStringValue(RedirectType.ToString());
-            if (Optional.IsDefined(DestinationProtocol))
+            if (Core.Optional.IsDefined(DestinationProtocol))
             {
                 writer.WritePropertyName("destinationProtocol"u8);
                 writer.WriteStringValue(DestinationProtocol.Value.ToString());
             }
-            if (Optional.IsDefined(CustomPath))
+            if (Core.Optional.IsDefined(CustomPath))
             {
                 writer.WritePropertyName("customPath"u8);
                 writer.WriteStringValue(CustomPath);
             }
-            if (Optional.IsDefined(CustomHostname))
+            if (Core.Optional.IsDefined(CustomHostname))
             {
                 writer.WritePropertyName("customHostname"u8);
                 writer.WriteStringValue(CustomHostname);
             }
-            if (Optional.IsDefined(CustomQueryString))
+            if (Core.Optional.IsDefined(CustomQueryString))
             {
                 writer.WritePropertyName("customQueryString"u8);
                 writer.WriteStringValue(CustomQueryString);
             }
-            if (Optional.IsDefined(CustomFragment))
+            if (Core.Optional.IsDefined(CustomFragment))
             {
                 writer.WritePropertyName("customFragment"u8);
                 writer.WriteStringValue(CustomFragment);
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             UriRedirectActionType typeName = default;
             RedirectType redirectType = default;
-            Optional<DestinationProtocol> destinationProtocol = default;
-            Optional<string> customPath = default;
-            Optional<string> customHostname = default;
-            Optional<string> customQueryString = default;
-            Optional<string> customFragment = default;
+            Core.Optional<DestinationProtocol> destinationProtocol = default;
+            Core.Optional<string> customPath = default;
+            Core.Optional<string> customHostname = default;
+            Core.Optional<string> customQueryString = default;
+            Core.Optional<string> customFragment = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("typeName"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new UriRedirectActionProperties(typeName, redirectType, Optional.ToNullable(destinationProtocol), customPath.Value, customHostname.Value, customQueryString.Value, customFragment.Value);
+            return new UriRedirectActionProperties(typeName, redirectType, Core.Optional.ToNullable(destinationProtocol), customPath.Value, customHostname.Value, customQueryString.Value, customFragment.Value);
         }
     }
 }

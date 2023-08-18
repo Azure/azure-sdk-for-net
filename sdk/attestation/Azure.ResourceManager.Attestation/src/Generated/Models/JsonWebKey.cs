@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Attestation.Models
             Argument.AssertNotNull(kty, nameof(kty));
 
             Kty = kty;
-            X5C = new ChangeTrackingList<string>();
+            X5C = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary>

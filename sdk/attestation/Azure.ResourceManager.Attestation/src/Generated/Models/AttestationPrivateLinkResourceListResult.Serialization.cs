@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Attestation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AttestationPrivateLinkResource>> value = default;
+            Core.Optional<IReadOnlyList<AttestationPrivateLinkResource>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     continue;
                 }
             }
-            return new AttestationPrivateLinkResourceListResult(Optional.ToList(value));
+            return new AttestationPrivateLinkResourceListResult(Core.Optional.ToList(value));
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class ExtensionUpgradeContent : IUtf8JsonSerializable
+    public partial class ExtensionUpgradeContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetVersion))
+            if (Core.Optional.IsDefined(TargetVersion))
             {
                 writer.WritePropertyName("targetVersion"u8);
                 writer.WriteStringValue(TargetVersion);

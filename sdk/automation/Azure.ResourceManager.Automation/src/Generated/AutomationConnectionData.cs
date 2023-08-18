@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automation
         /// <summary> Initializes a new instance of AutomationConnectionData. </summary>
         public AutomationConnectionData()
         {
-            FieldDefinitionValues = new ChangeTrackingDictionary<string, string>();
+            FieldDefinitionValues = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of AutomationConnectionData. </summary>

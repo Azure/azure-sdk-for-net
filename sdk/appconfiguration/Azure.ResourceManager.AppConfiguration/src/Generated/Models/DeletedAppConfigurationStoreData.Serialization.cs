@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.AppConfiguration
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> configurationStoreId = default;
-            Optional<AzureLocation> location = default;
-            Optional<DateTimeOffset> deletionDate = default;
-            Optional<DateTimeOffset> scheduledPurgeDate = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<bool> purgeProtectionEnabled = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ResourceIdentifier> configurationStoreId = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<DateTimeOffset> deletionDate = default;
+            Core.Optional<DateTimeOffset> scheduledPurgeDate = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Core.Optional<bool> purgeProtectionEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     continue;
                 }
             }
-            return new DeletedAppConfigurationStoreData(id, name, type, systemData.Value, configurationStoreId.Value, Optional.ToNullable(location), Optional.ToNullable(deletionDate), Optional.ToNullable(scheduledPurgeDate), Optional.ToDictionary(tags), Optional.ToNullable(purgeProtectionEnabled));
+            return new DeletedAppConfigurationStoreData(id, name, type, systemData.Value, configurationStoreId.Value, Core.Optional.ToNullable(location), Core.Optional.ToNullable(deletionDate), Core.Optional.ToNullable(scheduledPurgeDate), Core.Optional.ToDictionary(tags), Core.Optional.ToNullable(purgeProtectionEnabled));
         }
     }
 }

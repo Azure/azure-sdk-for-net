@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
-    public partial class AssignmentLockSettings : IUtf8JsonSerializable
+    public partial class AssignmentLockSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Mode))
+            if (Core.Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ExcludedPrincipals))
+            if (Core.Optional.IsCollectionDefined(ExcludedPrincipals))
             {
                 writer.WritePropertyName("excludedPrincipals"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExcludedActions))
+            if (Core.Optional.IsCollectionDefined(ExcludedActions))
             {
                 writer.WritePropertyName("excludedActions"u8);
                 writer.WriteStartArray();
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 return null;
             }
-            Optional<AssignmentLockMode> mode = default;
-            Optional<IList<string>> excludedPrincipals = default;
-            Optional<IList<string>> excludedActions = default;
+            Core.Optional<AssignmentLockMode> mode = default;
+            Core.Optional<IList<string>> excludedPrincipals = default;
+            Core.Optional<IList<string>> excludedActions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mode"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     continue;
                 }
             }
-            return new AssignmentLockSettings(Optional.ToNullable(mode), Optional.ToList(excludedPrincipals), Optional.ToList(excludedActions));
+            return new AssignmentLockSettings(Core.Optional.ToNullable(mode), Core.Optional.ToList(excludedPrincipals), Core.Optional.ToList(excludedActions));
         }
     }
 }

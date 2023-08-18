@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            Optional<string> billingFrequency = default;
-            Optional<string> productTypeId = default;
-            Optional<long> quantity = default;
-            Optional<string> skuId = default;
-            Optional<TimeSpan> termDuration = default;
+            Core.Optional<string> billingFrequency = default;
+            Core.Optional<string> productTypeId = default;
+            Core.Optional<long> quantity = default;
+            Core.Optional<string> skuId = default;
+            Core.Optional<TimeSpan> termDuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("billingFrequency"u8))
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Billing.Models
                     continue;
                 }
             }
-            return new SubscriptionRenewalTermDetails(billingFrequency.Value, productTypeId.Value, Optional.ToNullable(quantity), skuId.Value, Optional.ToNullable(termDuration));
+            return new SubscriptionRenewalTermDetails(billingFrequency.Value, productTypeId.Value, Core.Optional.ToNullable(quantity), skuId.Value, Core.Optional.ToNullable(termDuration));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of ResourceSkuList. </summary>
         internal ResourceSkuList()
         {
-            Value = new ChangeTrackingList<AvailableAppPlatformSku>();
+            Value = new Core.ChangeTrackingList<AvailableAppPlatformSku>();
         }
 
         /// <summary> Initializes a new instance of ResourceSkuList. </summary>

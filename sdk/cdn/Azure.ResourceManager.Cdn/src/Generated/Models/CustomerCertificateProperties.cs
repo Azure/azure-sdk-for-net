@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Argument.AssertNotNull(secretSource, nameof(secretSource));
 
             SecretSource = secretSource;
-            SubjectAlternativeNames = new ChangeTrackingList<string>();
+            SubjectAlternativeNames = new Core.ChangeTrackingList<string>();
             SecretType = SecretType.CustomerCertificate;
         }
 

@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationTargetProperties. </summary>
         public SoftwareUpdateConfigurationTargetProperties()
         {
-            AzureQueries = new ChangeTrackingList<AzureQueryProperties>();
-            NonAzureQueries = new ChangeTrackingList<NonAzureQueryProperties>();
+            AzureQueries = new Core.ChangeTrackingList<AzureQueryProperties>();
+            NonAzureQueries = new Core.ChangeTrackingList<NonAzureQueryProperties>();
         }
 
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationTargetProperties. </summary>

@@ -11,14 +11,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementPortalSignInSettingData : IUtf8JsonSerializable
+    public partial class ApiManagementPortalSignInSettingData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsRedirectEnabled))
+            if (Core.Optional.IsDefined(IsRedirectEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsRedirectEnabled.Value);
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> enabled = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new ApiManagementPortalSignInSettingData(id, name, type, systemData.Value, Optional.ToNullable(enabled));
+            return new ApiManagementPortalSignInSettingData(id, name, type, systemData.Value, Core.Optional.ToNullable(enabled));
         }
     }
 }

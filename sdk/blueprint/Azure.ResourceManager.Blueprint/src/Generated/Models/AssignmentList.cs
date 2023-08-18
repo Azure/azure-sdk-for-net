@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// <summary> Initializes a new instance of AssignmentList. </summary>
         internal AssignmentList()
         {
-            Value = new ChangeTrackingList<AssignmentData>();
+            Value = new Core.ChangeTrackingList<AssignmentData>();
         }
 
         /// <summary> Initializes a new instance of AssignmentList. </summary>

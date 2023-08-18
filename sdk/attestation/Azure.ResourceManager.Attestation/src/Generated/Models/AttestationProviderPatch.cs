@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <summary> Initializes a new instance of AttestationProviderPatch. </summary>
         public AttestationProviderPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The tags that will be assigned to the attestation provider. </summary>

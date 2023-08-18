@@ -12,22 +12,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformBindingProperties : IUtf8JsonSerializable
+    public partial class AppPlatformBindingProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (Core.Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(Key))
+            if (Core.Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (Optional.IsCollectionDefined(BindingParameters))
+            if (Core.Optional.IsCollectionDefined(BindingParameters))
             {
                 writer.WritePropertyName("bindingParameters"u8);
                 writer.WriteStartObject();
@@ -56,14 +56,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> resourceName = default;
-            Optional<string> resourceType = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> key = default;
-            Optional<IDictionary<string, BinaryData>> bindingParameters = default;
-            Optional<string> generatedProperties = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> updatedAt = default;
+            Core.Optional<string> resourceName = default;
+            Core.Optional<string> resourceType = default;
+            Core.Optional<ResourceIdentifier> resourceId = default;
+            Core.Optional<string> key = default;
+            Core.Optional<IDictionary<string, BinaryData>> bindingParameters = default;
+            Core.Optional<string> generatedProperties = default;
+            Core.Optional<DateTimeOffset> createdAt = default;
+            Core.Optional<DateTimeOffset> updatedAt = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceName"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformBindingProperties(resourceName.Value, resourceType.Value, resourceId.Value, key.Value, Optional.ToDictionary(bindingParameters), generatedProperties.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt));
+            return new AppPlatformBindingProperties(resourceName.Value, resourceType.Value, resourceId.Value, key.Value, Core.Optional.ToDictionary(bindingParameters), generatedProperties.Value, Core.Optional.ToNullable(createdAt), Core.Optional.ToNullable(updatedAt));
         }
     }
 }

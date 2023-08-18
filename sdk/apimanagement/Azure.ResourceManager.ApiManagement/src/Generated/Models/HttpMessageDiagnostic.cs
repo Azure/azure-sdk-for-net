@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of HttpMessageDiagnostic. </summary>
         public HttpMessageDiagnostic()
         {
-            Headers = new ChangeTrackingList<string>();
+            Headers = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of HttpMessageDiagnostic. </summary>

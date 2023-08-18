@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class RequestContract : IUtf8JsonSerializable
+    public partial class RequestContract : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(QueryParameters))
+            if (Core.Optional.IsCollectionDefined(QueryParameters))
             {
                 writer.WritePropertyName("queryParameters"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Headers))
+            if (Core.Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Representations))
+            if (Core.Optional.IsCollectionDefined(Representations))
             {
                 writer.WritePropertyName("representations"u8);
                 writer.WriteStartArray();
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<IList<ParameterContract>> queryParameters = default;
-            Optional<IList<ParameterContract>> headers = default;
-            Optional<IList<RepresentationContract>> representations = default;
+            Core.Optional<string> description = default;
+            Core.Optional<IList<ParameterContract>> queryParameters = default;
+            Core.Optional<IList<ParameterContract>> headers = default;
+            Core.Optional<IList<RepresentationContract>> representations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new RequestContract(description.Value, Optional.ToList(queryParameters), Optional.ToList(headers), Optional.ToList(representations));
+            return new RequestContract(description.Value, Core.Optional.ToList(queryParameters), Core.Optional.ToList(headers), Core.Optional.ToList(representations));
         }
     }
 }

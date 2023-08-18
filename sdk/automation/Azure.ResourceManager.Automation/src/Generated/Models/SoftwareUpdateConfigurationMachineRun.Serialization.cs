@@ -19,24 +19,24 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<ResourceIdentifier> targetComputer = default;
-            Optional<string> targetComputerType = default;
-            Optional<SoftwareUpdateConfigurationNavigation> softwareUpdateConfiguration = default;
-            Optional<string> status = default;
-            Optional<string> osType = default;
-            Optional<Guid> correlationId = default;
-            Optional<Guid> sourceComputerId = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
-            Optional<TimeSpan> configuredDuration = default;
-            Optional<JobNavigation> job = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<string> createdBy = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> lastModifiedBy = default;
-            Optional<AutomationResponseError> error = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<ResourceIdentifier> targetComputer = default;
+            Core.Optional<string> targetComputerType = default;
+            Core.Optional<SoftwareUpdateConfigurationNavigation> softwareUpdateConfiguration = default;
+            Core.Optional<string> status = default;
+            Core.Optional<string> osType = default;
+            Core.Optional<Guid> correlationId = default;
+            Core.Optional<Guid> sourceComputerId = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset?> endTime = default;
+            Core.Optional<TimeSpan> configuredDuration = default;
+            Core.Optional<JobNavigation> job = default;
+            Core.Optional<DateTimeOffset> creationTime = default;
+            Core.Optional<string> createdBy = default;
+            Core.Optional<DateTimeOffset> lastModifiedTime = default;
+            Core.Optional<string> lastModifiedBy = default;
+            Core.Optional<AutomationResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new SoftwareUpdateConfigurationMachineRun(name.Value, id.Value, targetComputer.Value, targetComputerType.Value, softwareUpdateConfiguration.Value, status.Value, osType.Value, Optional.ToNullable(correlationId), Optional.ToNullable(sourceComputerId), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(configuredDuration), job.Value, Optional.ToNullable(creationTime), createdBy.Value, Optional.ToNullable(lastModifiedTime), lastModifiedBy.Value, error.Value);
+            return new SoftwareUpdateConfigurationMachineRun(name.Value, id.Value, targetComputer.Value, targetComputerType.Value, softwareUpdateConfiguration.Value, status.Value, osType.Value, Core.Optional.ToNullable(correlationId), Core.Optional.ToNullable(sourceComputerId), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToNullable(configuredDuration), job.Value, Core.Optional.ToNullable(creationTime), createdBy.Value, Core.Optional.ToNullable(lastModifiedTime), lastModifiedBy.Value, error.Value);
         }
     }
 }

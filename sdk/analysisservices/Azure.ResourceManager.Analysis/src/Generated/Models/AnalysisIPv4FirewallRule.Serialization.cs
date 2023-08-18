@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    public partial class AnalysisIPv4FirewallRule : IUtf8JsonSerializable
+    public partial class AnalysisIPv4FirewallRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FirewallRuleName))
+            if (Core.Optional.IsDefined(FirewallRuleName))
             {
                 writer.WritePropertyName("firewallRuleName"u8);
                 writer.WriteStringValue(FirewallRuleName);
             }
-            if (Optional.IsDefined(RangeStart))
+            if (Core.Optional.IsDefined(RangeStart))
             {
                 writer.WritePropertyName("rangeStart"u8);
                 writer.WriteStringValue(RangeStart);
             }
-            if (Optional.IsDefined(RangeEnd))
+            if (Core.Optional.IsDefined(RangeEnd))
             {
                 writer.WritePropertyName("rangeEnd"u8);
                 writer.WriteStringValue(RangeEnd);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Analysis.Models
             {
                 return null;
             }
-            Optional<string> firewallRuleName = default;
-            Optional<string> rangeStart = default;
-            Optional<string> rangeEnd = default;
+            Core.Optional<string> firewallRuleName = default;
+            Core.Optional<string> rangeStart = default;
+            Core.Optional<string> rangeEnd = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("firewallRuleName"u8))

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <summary> Initializes a new instance of SavingsPlanModelList. </summary>
         internal SavingsPlanModelList()
         {
-            Value = new ChangeTrackingList<BillingBenefitsSavingsPlanData>();
+            Value = new Core.ChangeTrackingList<BillingBenefitsSavingsPlanData>();
         }
 
         /// <summary> Initializes a new instance of SavingsPlanModelList. </summary>

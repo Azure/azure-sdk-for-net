@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<float> countOfDowngrades = default;
-            Optional<float> countOfUpgradesAfterDowngrades = default;
-            Optional<DateTimeOffset> lastChangeDate = default;
+            Core.Optional<float> countOfDowngrades = default;
+            Core.Optional<float> countOfUpgradesAfterDowngrades = default;
+            Core.Optional<DateTimeOffset> lastChangeDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("countOfDowngrades"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new CognitiveServicesSkuChangeInfo(Optional.ToNullable(countOfDowngrades), Optional.ToNullable(countOfUpgradesAfterDowngrades), Optional.ToNullable(lastChangeDate));
+            return new CognitiveServicesSkuChangeInfo(Core.Optional.ToNullable(countOfDowngrades), Core.Optional.ToNullable(countOfUpgradesAfterDowngrades), Core.Optional.ToNullable(lastChangeDate));
         }
     }
 }

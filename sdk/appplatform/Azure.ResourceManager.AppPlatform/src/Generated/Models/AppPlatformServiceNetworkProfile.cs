@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformServiceNetworkProfile. </summary>
         public AppPlatformServiceNetworkProfile()
         {
-            RequiredTraffics = new ChangeTrackingList<AppPlatformServiceRequiredTraffic>();
+            RequiredTraffics = new Core.ChangeTrackingList<AppPlatformServiceRequiredTraffic>();
         }
 
         /// <summary> Initializes a new instance of AppPlatformServiceNetworkProfile. </summary>

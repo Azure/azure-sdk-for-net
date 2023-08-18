@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CdnWebApplicationFirewallPolicyData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<CdnWebApplicationFirewallPolicyData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new CdnWebApplicationFirewallPolicyList(Optional.ToList(value), nextLink.Value);
+            return new CdnWebApplicationFirewallPolicyList(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomationAccountStatistics>> value = default;
+            Core.Optional<IReadOnlyList<AutomationAccountStatistics>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new AutomationAccountStatisticsListResult(Optional.ToList(value));
+            return new AutomationAccountStatisticsListResult(Core.Optional.ToList(value));
         }
     }
 }

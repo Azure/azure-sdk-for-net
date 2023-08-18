@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationPrivateLinkResource : IUtf8JsonSerializable
+    public partial class AutomationPrivateLinkResource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.Automation.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> groupId = default;
-            Optional<IReadOnlyList<string>> requiredMembers = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> groupId = default;
+            Core.Optional<IReadOnlyList<string>> requiredMembers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new AutomationPrivateLinkResource(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers));
+            return new AutomationPrivateLinkResource(id, name, type, systemData.Value, groupId.Value, Core.Optional.ToList(requiredMembers));
         }
     }
 }

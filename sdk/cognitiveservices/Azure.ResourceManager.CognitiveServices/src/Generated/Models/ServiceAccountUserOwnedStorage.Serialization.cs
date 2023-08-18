@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class ServiceAccountUserOwnedStorage : IUtf8JsonSerializable
+    public partial class ServiceAccountUserOwnedStorage : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (Core.Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(IdentityClientId))
+            if (Core.Optional.IsDefined(IdentityClientId))
             {
                 writer.WritePropertyName("identityClientId"u8);
                 writer.WriteStringValue(IdentityClientId.Value);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<Guid> identityClientId = default;
+            Core.Optional<ResourceIdentifier> resourceId = default;
+            Core.Optional<Guid> identityClientId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new ServiceAccountUserOwnedStorage(resourceId.Value, Optional.ToNullable(identityClientId));
+            return new ServiceAccountUserOwnedStorage(resourceId.Value, Core.Optional.ToNullable(identityClientId));
         }
     }
 }

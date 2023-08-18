@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> metric = default;
-            Optional<MetricsResponseSeriesItemUnit> unit = default;
-            Optional<IReadOnlyList<MetricsResponseSeriesPropertiesItemsItem>> groups = default;
-            Optional<IReadOnlyList<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems>> data = default;
+            Core.Optional<string> metric = default;
+            Core.Optional<MetricsResponseSeriesItemUnit> unit = default;
+            Core.Optional<IReadOnlyList<MetricsResponseSeriesPropertiesItemsItem>> groups = default;
+            Core.Optional<IReadOnlyList<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems>> data = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metric"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new MetricsResponseSeriesItem(metric.Value, Optional.ToNullable(unit), Optional.ToList(groups), Optional.ToList(data));
+            return new MetricsResponseSeriesItem(metric.Value, Core.Optional.ToNullable(unit), Core.Optional.ToList(groups), Core.Optional.ToList(data));
         }
     }
 }

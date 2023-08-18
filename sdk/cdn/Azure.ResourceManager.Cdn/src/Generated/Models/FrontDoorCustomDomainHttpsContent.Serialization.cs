@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class FrontDoorCustomDomainHttpsContent : IUtf8JsonSerializable
+    public partial class FrontDoorCustomDomainHttpsContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("certificateType"u8);
             writer.WriteStringValue(CertificateType.ToString());
-            if (Optional.IsDefined(MinimumTlsVersion))
+            if (Core.Optional.IsDefined(MinimumTlsVersion))
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Secret))
+            if (Core.Optional.IsDefined(Secret))
             {
                 if (Secret != null)
                 {
@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             FrontDoorCertificateType certificateType = default;
-            Optional<FrontDoorMinimumTlsVersion> minimumTlsVersion = default;
-            Optional<FrontDoorCustomDomainHttpsContentSecret> secret = default;
+            Core.Optional<FrontDoorMinimumTlsVersion> minimumTlsVersion = default;
+            Core.Optional<FrontDoorCustomDomainHttpsContentSecret> secret = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateType"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new FrontDoorCustomDomainHttpsContent(certificateType, Optional.ToNullable(minimumTlsVersion), secret.Value);
+            return new FrontDoorCustomDomainHttpsContent(certificateType, Core.Optional.ToNullable(minimumTlsVersion), secret.Value);
         }
     }
 }

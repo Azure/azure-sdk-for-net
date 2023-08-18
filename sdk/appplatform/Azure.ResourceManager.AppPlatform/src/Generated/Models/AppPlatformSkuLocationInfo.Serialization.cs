@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<IReadOnlyList<string>> zones = default;
-            Optional<IReadOnlyList<AppPlatformSkuZoneDetails>> zoneDetails = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<IReadOnlyList<string>> zones = default;
+            Core.Optional<IReadOnlyList<AppPlatformSkuZoneDetails>> zoneDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformSkuLocationInfo(Optional.ToNullable(location), Optional.ToList(zones), Optional.ToList(zoneDetails));
+            return new AppPlatformSkuLocationInfo(Core.Optional.ToNullable(location), Core.Optional.ToList(zones), Core.Optional.ToList(zoneDetails));
         }
     }
 }

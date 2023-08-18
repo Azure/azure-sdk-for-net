@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             ResourceId = resourceId;
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ResourceMetadata. </summary>

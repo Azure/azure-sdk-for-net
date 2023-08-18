@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> category = default;
-            Optional<IReadOnlyList<EndpointDependency>> endpoints = default;
+            Core.Optional<string> category = default;
+            Core.Optional<IReadOnlyList<EndpointDependency>> endpoints = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("category"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new OutboundEnvironmentEndpoint(category.Value, Optional.ToList(endpoints));
+            return new OutboundEnvironmentEndpoint(category.Value, Core.Optional.ToList(endpoints));
         }
     }
 }

@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of RequestContract. </summary>
         public RequestContract()
         {
-            QueryParameters = new ChangeTrackingList<ParameterContract>();
-            Headers = new ChangeTrackingList<ParameterContract>();
-            Representations = new ChangeTrackingList<RepresentationContract>();
+            QueryParameters = new Core.ChangeTrackingList<ParameterContract>();
+            Headers = new Core.ChangeTrackingList<ParameterContract>();
+            Representations = new Core.ChangeTrackingList<RepresentationContract>();
         }
 
         /// <summary> Initializes a new instance of RequestContract. </summary>

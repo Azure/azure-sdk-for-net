@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of ResourcesResponse. </summary>
         internal ResourcesResponse()
         {
-            Endpoints = new ChangeTrackingList<ResourcesResponseEndpointsItem>();
-            CustomDomains = new ChangeTrackingList<ResourcesResponseCustomDomainsItem>();
+            Endpoints = new Core.ChangeTrackingList<ResourcesResponseEndpointsItem>();
+            CustomDomains = new Core.ChangeTrackingList<ResourcesResponseCustomDomainsItem>();
         }
 
         /// <summary> Initializes a new instance of ResourcesResponse. </summary>

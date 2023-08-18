@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformCustomContainerUserSourceInfo : IUtf8JsonSerializable
+    public partial class AppPlatformCustomContainerUserSourceInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomContainer))
+            if (Core.Optional.IsDefined(CustomContainer))
             {
                 writer.WritePropertyName("customContainer"u8);
                 writer.WriteObjectValue(CustomContainer);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UserSourceInfoType);
-            if (Optional.IsDefined(Version))
+            if (Core.Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformCustomContainer> customContainer = default;
+            Core.Optional<AppPlatformCustomContainer> customContainer = default;
             string type = default;
-            Optional<string> version = default;
+            Core.Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customContainer"u8))

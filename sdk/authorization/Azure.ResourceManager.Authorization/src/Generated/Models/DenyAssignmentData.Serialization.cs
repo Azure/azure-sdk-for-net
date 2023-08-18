@@ -24,15 +24,15 @@ namespace Azure.ResourceManager.Authorization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> denyAssignmentName = default;
-            Optional<string> description = default;
-            Optional<IReadOnlyList<DenyAssignmentPermission>> permissions = default;
-            Optional<string> scope = default;
-            Optional<bool> doNotApplyToChildScopes = default;
-            Optional<IReadOnlyList<RoleManagementPrincipal>> principals = default;
-            Optional<IReadOnlyList<RoleManagementPrincipal>> excludePrincipals = default;
-            Optional<bool> isSystemProtected = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> denyAssignmentName = default;
+            Core.Optional<string> description = default;
+            Core.Optional<IReadOnlyList<DenyAssignmentPermission>> permissions = default;
+            Core.Optional<string> scope = default;
+            Core.Optional<bool> doNotApplyToChildScopes = default;
+            Core.Optional<IReadOnlyList<RoleManagementPrincipal>> principals = default;
+            Core.Optional<IReadOnlyList<RoleManagementPrincipal>> excludePrincipals = default;
+            Core.Optional<bool> isSystemProtected = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Authorization
                     continue;
                 }
             }
-            return new DenyAssignmentData(id, name, type, systemData.Value, denyAssignmentName.Value, description.Value, Optional.ToList(permissions), scope.Value, Optional.ToNullable(doNotApplyToChildScopes), Optional.ToList(principals), Optional.ToList(excludePrincipals), Optional.ToNullable(isSystemProtected));
+            return new DenyAssignmentData(id, name, type, systemData.Value, denyAssignmentName.Value, description.Value, Core.Optional.ToList(permissions), scope.Value, Core.Optional.ToNullable(doNotApplyToChildScopes), Core.Optional.ToList(principals), Core.Optional.ToList(excludePrincipals), Core.Optional.ToNullable(isSystemProtected));
         }
     }
 }

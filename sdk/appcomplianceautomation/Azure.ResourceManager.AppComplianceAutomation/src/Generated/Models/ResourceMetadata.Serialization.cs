@@ -11,29 +11,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    public partial class ResourceMetadata : IUtf8JsonSerializable
+    public partial class ResourceMetadata : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
-            if (Optional.IsDefined(ResourceType))
+            if (Core.Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (Optional.IsDefined(ResourceKind))
+            if (Core.Optional.IsDefined(ResourceKind))
             {
                 writer.WritePropertyName("resourceKind"u8);
                 writer.WriteStringValue(ResourceKind);
             }
-            if (Optional.IsDefined(ResourceName))
+            if (Core.Optional.IsDefined(ResourceName))
             {
                 writer.WritePropertyName("resourceName"u8);
                 writer.WriteStringValue(ResourceName);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 return null;
             }
             string resourceId = default;
-            Optional<string> resourceType = default;
-            Optional<string> resourceKind = default;
-            Optional<string> resourceName = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<string> resourceType = default;
+            Core.Optional<string> resourceKind = default;
+            Core.Optional<string> resourceName = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     continue;
                 }
             }
-            return new ResourceMetadata(resourceId, resourceType.Value, resourceKind.Value, resourceName.Value, Optional.ToDictionary(tags));
+            return new ResourceMetadata(resourceId, resourceType.Value, resourceKind.Value, resourceName.Value, Core.Optional.ToDictionary(tags));
         }
     }
 }

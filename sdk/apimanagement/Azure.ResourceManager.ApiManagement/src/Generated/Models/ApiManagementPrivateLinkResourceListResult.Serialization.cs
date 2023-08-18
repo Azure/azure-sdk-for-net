@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApiManagementPrivateLinkResourceData>> value = default;
+            Core.Optional<IReadOnlyList<ApiManagementPrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ApiManagementPrivateLinkResourceListResult(Optional.ToList(value));
+            return new ApiManagementPrivateLinkResourceListResult(Core.Optional.ToList(value));
         }
     }
 }

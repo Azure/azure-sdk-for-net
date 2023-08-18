@@ -14,13 +14,13 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ArcScVmm
 {
-    public partial class ScVmmCloudData : IUtf8JsonSerializable
+    public partial class ScVmmCloudData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            JsonSerializer.Serialize(writer, ExtendedLocation); if (Optional.IsCollectionDefined(Tags))
+            JsonSerializer.Serialize(writer, ExtendedLocation); if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -35,17 +35,17 @@ namespace Azure.ResourceManager.ArcScVmm
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(InventoryItemId))
+            if (Core.Optional.IsDefined(InventoryItemId))
             {
                 writer.WritePropertyName("inventoryItemId"u8);
                 writer.WriteStringValue(InventoryItemId);
             }
-            if (Optional.IsDefined(Uuid))
+            if (Core.Optional.IsDefined(Uuid))
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
-            if (Optional.IsDefined(VmmServerId))
+            if (Core.Optional.IsDefined(VmmServerId))
             {
                 writer.WritePropertyName("vmmServerId"u8);
                 writer.WriteStringValue(VmmServerId);
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.ArcScVmm
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> inventoryItemId = default;
-            Optional<string> uuid = default;
-            Optional<string> vmmServerId = default;
-            Optional<string> cloudName = default;
-            Optional<CloudCapacity> cloudCapacity = default;
-            Optional<IReadOnlyList<StorageQoSPolicy>> storageQoSPolicies = default;
-            Optional<string> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> inventoryItemId = default;
+            Core.Optional<string> uuid = default;
+            Core.Optional<string> vmmServerId = default;
+            Core.Optional<string> cloudName = default;
+            Core.Optional<CloudCapacity> cloudCapacity = default;
+            Core.Optional<IReadOnlyList<StorageQoSPolicy>> storageQoSPolicies = default;
+            Core.Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ArcScVmm
                     continue;
                 }
             }
-            return new ScVmmCloudData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, inventoryItemId.Value, uuid.Value, vmmServerId.Value, cloudName.Value, cloudCapacity.Value, Optional.ToList(storageQoSPolicies), provisioningState.Value);
+            return new ScVmmCloudData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, extendedLocation, inventoryItemId.Value, uuid.Value, vmmServerId.Value, cloudName.Value, cloudCapacity.Value, Core.Optional.ToList(storageQoSPolicies), provisioningState.Value);
         }
     }
 }

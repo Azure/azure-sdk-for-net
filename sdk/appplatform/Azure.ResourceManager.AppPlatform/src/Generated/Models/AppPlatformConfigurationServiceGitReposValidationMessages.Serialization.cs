@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<string>> messages = default;
+            Core.Optional<string> name = default;
+            Core.Optional<IReadOnlyList<string>> messages = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformConfigurationServiceGitReposValidationMessages(name.Value, Optional.ToList(messages));
+            return new AppPlatformConfigurationServiceGitReposValidationMessages(name.Value, Core.Optional.ToList(messages));
         }
     }
 }

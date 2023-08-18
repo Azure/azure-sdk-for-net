@@ -18,19 +18,19 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<string> categoryName = default;
-            Optional<string> controlId = default;
-            Optional<string> controlName = default;
-            Optional<ControlType> controlType = default;
-            Optional<ComplianceState> complianceState = default;
-            Optional<string> policyId = default;
-            Optional<string> policyDisplayName = default;
-            Optional<string> policyDescription = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> resourceGroup = default;
-            Optional<string> resourceType = default;
-            Optional<string> resourceId = default;
-            Optional<string> statusChangeDate = default;
+            Core.Optional<string> categoryName = default;
+            Core.Optional<string> controlId = default;
+            Core.Optional<string> controlName = default;
+            Core.Optional<ControlType> controlType = default;
+            Core.Optional<ComplianceState> complianceState = default;
+            Core.Optional<string> policyId = default;
+            Core.Optional<string> policyDisplayName = default;
+            Core.Optional<string> policyDescription = default;
+            Core.Optional<string> subscriptionId = default;
+            Core.Optional<string> resourceGroup = default;
+            Core.Optional<string> resourceType = default;
+            Core.Optional<string> resourceId = default;
+            Core.Optional<string> statusChangeDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("categoryName"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     continue;
                 }
             }
-            return new ComplianceReportItem(categoryName.Value, controlId.Value, controlName.Value, Optional.ToNullable(controlType), Optional.ToNullable(complianceState), policyId.Value, policyDisplayName.Value, policyDescription.Value, subscriptionId.Value, resourceGroup.Value, resourceType.Value, resourceId.Value, statusChangeDate.Value);
+            return new ComplianceReportItem(categoryName.Value, controlId.Value, controlName.Value, Core.Optional.ToNullable(controlType), Core.Optional.ToNullable(complianceState), policyId.Value, policyDisplayName.Value, policyDescription.Value, subscriptionId.Value, resourceGroup.Value, resourceType.Value, resourceId.Value, statusChangeDate.Value);
         }
     }
 }

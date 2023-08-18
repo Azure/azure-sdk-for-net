@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ArcScVmm
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
             ExtendedLocation = extendedLocation;
-            StorageQoSPolicies = new ChangeTrackingList<StorageQoSPolicy>();
+            StorageQoSPolicies = new Core.ChangeTrackingList<StorageQoSPolicy>();
         }
 
         /// <summary> Initializes a new instance of ScVmmCloudData. </summary>

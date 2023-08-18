@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Cdn.Models
             Granularity = granularity;
             CustomDomains = customDomains.ToList();
             Protocols = protocols.ToList();
-            GroupBy = new ChangeTrackingList<LogMetricsGroupBy>();
-            Continents = new ChangeTrackingList<string>();
-            CountryOrRegions = new ChangeTrackingList<string>();
+            GroupBy = new Core.ChangeTrackingList<LogMetricsGroupBy>();
+            Continents = new Core.ChangeTrackingList<string>();
+            CountryOrRegions = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> The ArrayOfLogMetric to use. </summary>

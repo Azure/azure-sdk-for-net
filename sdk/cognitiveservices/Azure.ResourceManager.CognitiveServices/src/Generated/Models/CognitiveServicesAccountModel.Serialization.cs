@@ -12,22 +12,22 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CognitiveServicesAccountModel : IUtf8JsonSerializable
+    public partial class CognitiveServicesAccountModel : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BaseModel))
+            if (Core.Optional.IsDefined(BaseModel))
             {
                 writer.WritePropertyName("baseModel"u8);
                 writer.WriteObjectValue(BaseModel);
             }
-            if (Optional.IsDefined(IsDefaultVersion))
+            if (Core.Optional.IsDefined(IsDefaultVersion))
             {
                 writer.WritePropertyName("isDefaultVersion"u8);
                 writer.WriteBooleanValue(IsDefaultVersion.Value);
             }
-            if (Optional.IsCollectionDefined(Skus))
+            if (Core.Optional.IsCollectionDefined(Skus))
             {
                 writer.WritePropertyName("skus"u8);
                 writer.WriteStartArray();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MaxCapacity))
+            if (Core.Optional.IsDefined(MaxCapacity))
             {
                 writer.WritePropertyName("maxCapacity"u8);
                 writer.WriteNumberValue(MaxCapacity.Value);
             }
-            if (Optional.IsCollectionDefined(Capabilities))
+            if (Core.Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartObject();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(FinetuneCapabilities))
+            if (Core.Optional.IsCollectionDefined(FinetuneCapabilities))
             {
                 writer.WritePropertyName("finetuneCapabilities"u8);
                 writer.WriteStartObject();
@@ -64,32 +64,32 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Deprecation))
+            if (Core.Optional.IsDefined(Deprecation))
             {
                 writer.WritePropertyName("deprecation"u8);
                 writer.WriteObjectValue(Deprecation);
             }
-            if (Optional.IsDefined(LifecycleStatus))
+            if (Core.Optional.IsDefined(LifecycleStatus))
             {
                 writer.WritePropertyName("lifecycleStatus"u8);
                 writer.WriteStringValue(LifecycleStatus.Value.ToString());
             }
-            if (Optional.IsDefined(Format))
+            if (Core.Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format);
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Version))
+            if (Core.Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(Source))
+            if (Core.Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
@@ -103,20 +103,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<CognitiveServicesAccountDeploymentModel> baseModel = default;
-            Optional<bool> isDefaultVersion = default;
-            Optional<IList<CognitiveServicesModelSku>> skus = default;
-            Optional<int> maxCapacity = default;
-            Optional<IDictionary<string, string>> capabilities = default;
-            Optional<IDictionary<string, string>> finetuneCapabilities = default;
-            Optional<ServiceAccountModelDeprecationInfo> deprecation = default;
-            Optional<ModelLifecycleStatus> lifecycleStatus = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> format = default;
-            Optional<string> name = default;
-            Optional<string> version = default;
-            Optional<string> source = default;
-            Optional<ServiceAccountCallRateLimit> callRateLimit = default;
+            Core.Optional<CognitiveServicesAccountDeploymentModel> baseModel = default;
+            Core.Optional<bool> isDefaultVersion = default;
+            Core.Optional<IList<CognitiveServicesModelSku>> skus = default;
+            Core.Optional<int> maxCapacity = default;
+            Core.Optional<IDictionary<string, string>> capabilities = default;
+            Core.Optional<IDictionary<string, string>> finetuneCapabilities = default;
+            Core.Optional<ServiceAccountModelDeprecationInfo> deprecation = default;
+            Core.Optional<ModelLifecycleStatus> lifecycleStatus = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> format = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> version = default;
+            Core.Optional<string> source = default;
+            Core.Optional<ServiceAccountCallRateLimit> callRateLimit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("baseModel"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new CognitiveServicesAccountModel(format.Value, name.Value, version.Value, source.Value, callRateLimit.Value, baseModel.Value, Optional.ToNullable(isDefaultVersion), Optional.ToList(skus), Optional.ToNullable(maxCapacity), Optional.ToDictionary(capabilities), Optional.ToDictionary(finetuneCapabilities), deprecation.Value, Optional.ToNullable(lifecycleStatus), systemData);
+            return new CognitiveServicesAccountModel(format.Value, name.Value, version.Value, source.Value, callRateLimit.Value, baseModel.Value, Core.Optional.ToNullable(isDefaultVersion), Core.Optional.ToList(skus), Core.Optional.ToNullable(maxCapacity), Core.Optional.ToDictionary(capabilities), Core.Optional.ToDictionary(finetuneCapabilities), deprecation.Value, Core.Optional.ToNullable(lifecycleStatus), systemData);
         }
     }
 }

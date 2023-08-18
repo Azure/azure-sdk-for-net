@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformMonitoringSettingProperties : IUtf8JsonSerializable
+    public partial class AppPlatformMonitoringSettingProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Error))
+            if (Core.Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            if (Optional.IsDefined(IsTraceEnabled))
+            if (Core.Optional.IsDefined(IsTraceEnabled))
             {
                 writer.WritePropertyName("traceEnabled"u8);
                 writer.WriteBooleanValue(IsTraceEnabled.Value);
             }
-            if (Optional.IsDefined(AppInsightsInstrumentationKey))
+            if (Core.Optional.IsDefined(AppInsightsInstrumentationKey))
             {
                 writer.WritePropertyName("appInsightsInstrumentationKey"u8);
                 writer.WriteStringValue(AppInsightsInstrumentationKey);
             }
-            if (Optional.IsDefined(AppInsightsSamplingRate))
+            if (Core.Optional.IsDefined(AppInsightsSamplingRate))
             {
                 writer.WritePropertyName("appInsightsSamplingRate"u8);
                 writer.WriteNumberValue(AppInsightsSamplingRate.Value);
             }
-            if (Optional.IsDefined(AppInsightsAgentVersions))
+            if (Core.Optional.IsDefined(AppInsightsAgentVersions))
             {
                 writer.WritePropertyName("appInsightsAgentVersions"u8);
                 writer.WriteObjectValue(AppInsightsAgentVersions);
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformMonitoringSettingState> provisioningState = default;
-            Optional<AppPlatformErrorInfo> error = default;
-            Optional<bool> traceEnabled = default;
-            Optional<string> appInsightsInstrumentationKey = default;
-            Optional<double> appInsightsSamplingRate = default;
-            Optional<ApplicationInsightsAgentVersions> appInsightsAgentVersions = default;
+            Core.Optional<AppPlatformMonitoringSettingState> provisioningState = default;
+            Core.Optional<AppPlatformErrorInfo> error = default;
+            Core.Optional<bool> traceEnabled = default;
+            Core.Optional<string> appInsightsInstrumentationKey = default;
+            Core.Optional<double> appInsightsSamplingRate = default;
+            Core.Optional<ApplicationInsightsAgentVersions> appInsightsAgentVersions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformMonitoringSettingProperties(Optional.ToNullable(provisioningState), error.Value, Optional.ToNullable(traceEnabled), appInsightsInstrumentationKey.Value, Optional.ToNullable(appInsightsSamplingRate), appInsightsAgentVersions.Value);
+            return new AppPlatformMonitoringSettingProperties(Core.Optional.ToNullable(provisioningState), error.Value, Core.Optional.ToNullable(traceEnabled), appInsightsInstrumentationKey.Value, Core.Optional.ToNullable(appInsightsSamplingRate), appInsightsAgentVersions.Value);
         }
     }
 }

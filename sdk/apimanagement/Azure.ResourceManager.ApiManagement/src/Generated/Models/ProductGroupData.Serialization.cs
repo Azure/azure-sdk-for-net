@@ -11,29 +11,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ProductGroupData : IUtf8JsonSerializable
+    public partial class ProductGroupData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(GroupType))
+            if (Core.Optional.IsDefined(GroupType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(GroupType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(ExternalId))
+            if (Core.Optional.IsDefined(ExternalId))
             {
                 writer.WritePropertyName("externalId"u8);
                 writer.WriteStringValue(ExternalId);
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<bool> builtIn = default;
-            Optional<ApiManagementGroupType> type0 = default;
-            Optional<string> externalId = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> description = default;
+            Core.Optional<bool> builtIn = default;
+            Core.Optional<ApiManagementGroupType> type0 = default;
+            Core.Optional<string> externalId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ProductGroupData(id, name, type, systemData.Value, displayName.Value, description.Value, Optional.ToNullable(builtIn), Optional.ToNullable(type0), externalId.Value);
+            return new ProductGroupData(id, name, type, systemData.Value, displayName.Value, description.Value, Core.Optional.ToNullable(builtIn), Core.Optional.ToNullable(type0), externalId.Value);
         }
     }
 }

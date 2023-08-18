@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of ResponseBasedOriginErrorDetectionSettings. </summary>
         public ResponseBasedOriginErrorDetectionSettings()
         {
-            HttpErrorRanges = new ChangeTrackingList<HttpErrorRange>();
+            HttpErrorRanges = new Core.ChangeTrackingList<HttpErrorRange>();
         }
 
         /// <summary> Initializes a new instance of ResponseBasedOriginErrorDetectionSettings. </summary>

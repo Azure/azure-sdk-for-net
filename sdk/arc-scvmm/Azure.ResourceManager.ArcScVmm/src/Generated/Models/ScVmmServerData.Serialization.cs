@@ -14,13 +14,13 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ArcScVmm
 {
-    public partial class ScVmmServerData : IUtf8JsonSerializable
+    public partial class ScVmmServerData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            JsonSerializer.Serialize(writer, ExtendedLocation); if (Optional.IsCollectionDefined(Tags))
+            JsonSerializer.Serialize(writer, ExtendedLocation); if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.ArcScVmm
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Credentials))
+            if (Core.Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
             writer.WritePropertyName("fqdn"u8);
             writer.WriteStringValue(Fqdn);
-            if (Optional.IsDefined(Port))
+            if (Core.Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
@@ -58,20 +58,20 @@ namespace Azure.ResourceManager.ArcScVmm
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<VmmServerPropertiesCredentials> credentials = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<VmmServerPropertiesCredentials> credentials = default;
             string fqdn = default;
-            Optional<int> port = default;
-            Optional<string> connectionStatus = default;
-            Optional<string> errorMessage = default;
-            Optional<string> uuid = default;
-            Optional<string> version = default;
-            Optional<string> provisioningState = default;
+            Core.Optional<int> port = default;
+            Core.Optional<string> connectionStatus = default;
+            Core.Optional<string> errorMessage = default;
+            Core.Optional<string> uuid = default;
+            Core.Optional<string> version = default;
+            Core.Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ArcScVmm
                     continue;
                 }
             }
-            return new ScVmmServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, credentials.Value, fqdn, Optional.ToNullable(port), connectionStatus.Value, errorMessage.Value, uuid.Value, version.Value, provisioningState.Value);
+            return new ScVmmServerData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, extendedLocation, credentials.Value, fqdn, Core.Optional.ToNullable(port), connectionStatus.Value, errorMessage.Value, uuid.Value, version.Value, provisioningState.Value);
         }
     }
 }

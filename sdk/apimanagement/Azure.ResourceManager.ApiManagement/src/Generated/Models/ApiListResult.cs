@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ApiListResult. </summary>
         internal ApiListResult()
         {
-            Value = new ChangeTrackingList<ApiData>();
+            Value = new Core.ChangeTrackingList<ApiData>();
         }
 
         /// <summary> Initializes a new instance of ApiListResult. </summary>

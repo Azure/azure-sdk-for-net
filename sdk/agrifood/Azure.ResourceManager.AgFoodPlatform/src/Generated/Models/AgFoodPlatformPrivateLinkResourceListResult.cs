@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         /// <summary> Initializes a new instance of AgFoodPlatformPrivateLinkResourceListResult. </summary>
         internal AgFoodPlatformPrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<AgFoodPlatformPrivateLinkResourceData>();
+            Value = new Core.ChangeTrackingList<AgFoodPlatformPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of AgFoodPlatformPrivateLinkResourceListResult. </summary>

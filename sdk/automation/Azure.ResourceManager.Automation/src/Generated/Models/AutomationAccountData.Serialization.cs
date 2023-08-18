@@ -15,22 +15,22 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    public partial class AutomationAccountData : IUtf8JsonSerializable
+    public partial class AutomationAccountData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -45,27 +45,27 @@ namespace Azure.ResourceManager.Automation
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(LastModifiedBy))
+            if (Core.Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
                 writer.WriteStringValue(LastModifiedBy);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Encryption))
+            if (Core.Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (Core.Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -75,17 +75,17 @@ namespace Azure.ResourceManager.Automation
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsPublicNetworkAccessAllowed))
+            if (Core.Optional.IsDefined(IsPublicNetworkAccessAllowed))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteBooleanValue(IsPublicNetworkAccessAllowed.Value);
             }
-            if (Optional.IsDefined(IsLocalAuthDisabled))
+            if (Core.Optional.IsDefined(IsLocalAuthDisabled))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
             }
-            if (Optional.IsDefined(AutomationHybridServiceUri))
+            if (Core.Optional.IsDefined(AutomationHybridServiceUri))
             {
                 writer.WritePropertyName("automationHybridServiceUrl"u8);
                 writer.WriteStringValue(AutomationHybridServiceUri.AbsoluteUri);
@@ -100,25 +100,25 @@ namespace Azure.ResourceManager.Automation
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AutomationSku> sku = default;
-            Optional<string> lastModifiedBy = default;
-            Optional<AutomationAccountState> state = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> description = default;
-            Optional<AutomationEncryptionProperties> encryption = default;
-            Optional<IList<AutomationPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<bool> publicNetworkAccess = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<Uri> automationHybridServiceUrl = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<AutomationSku> sku = default;
+            Core.Optional<string> lastModifiedBy = default;
+            Core.Optional<AutomationAccountState> state = default;
+            Core.Optional<DateTimeOffset> creationTime = default;
+            Core.Optional<DateTimeOffset> lastModifiedTime = default;
+            Core.Optional<string> description = default;
+            Core.Optional<AutomationEncryptionProperties> encryption = default;
+            Core.Optional<IList<AutomationPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Core.Optional<bool> publicNetworkAccess = default;
+            Core.Optional<bool> disableLocalAuth = default;
+            Core.Optional<Uri> automationHybridServiceUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Automation
                     continue;
                 }
             }
-            return new AutomationAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), identity, sku.Value, lastModifiedBy.Value, Optional.ToNullable(state), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(disableLocalAuth), automationHybridServiceUrl.Value);
+            return new AutomationAccountData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(etag), identity, sku.Value, lastModifiedBy.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(lastModifiedTime), description.Value, encryption.Value, Core.Optional.ToList(privateEndpointConnections), Core.Optional.ToNullable(publicNetworkAccess), Core.Optional.ToNullable(disableLocalAuth), automationHybridServiceUrl.Value);
         }
     }
 }

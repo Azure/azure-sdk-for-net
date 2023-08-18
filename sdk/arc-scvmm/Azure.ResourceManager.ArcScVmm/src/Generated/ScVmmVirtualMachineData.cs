@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.ArcScVmm
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
             ExtendedLocation = extendedLocation;
-            Checkpoints = new ChangeTrackingList<Checkpoint>();
-            AvailabilitySets = new ChangeTrackingList<AvailabilitySetListItem>();
+            Checkpoints = new Core.ChangeTrackingList<Checkpoint>();
+            AvailabilitySets = new Core.ChangeTrackingList<AvailabilitySetListItem>();
         }
 
         /// <summary> Initializes a new instance of ScVmmVirtualMachineData. </summary>

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    internal partial class BodyDiagnosticSettings : IUtf8JsonSerializable
+    internal partial class BodyDiagnosticSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Bytes))
+            if (Core.Optional.IsDefined(Bytes))
             {
                 writer.WritePropertyName("bytes"u8);
                 writer.WriteNumberValue(Bytes.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<int> bytes = default;
+            Core.Optional<int> bytes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bytes"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new BodyDiagnosticSettings(Optional.ToNullable(bytes));
+            return new BodyDiagnosticSettings(Core.Optional.ToNullable(bytes));
         }
     }
 }

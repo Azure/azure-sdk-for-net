@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of BillingSubscriptionAliasListResult. </summary>
         internal BillingSubscriptionAliasListResult()
         {
-            Value = new ChangeTrackingList<BillingSubscriptionAliasData>();
+            Value = new Core.ChangeTrackingList<BillingSubscriptionAliasData>();
         }
 
         /// <summary> Initializes a new instance of BillingSubscriptionAliasListResult. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of AvsSubscriptionQuotaAvailabilityResult. </summary>
         internal AvsSubscriptionQuotaAvailabilityResult()
         {
-            HostsRemaining = new ChangeTrackingDictionary<string, int>();
+            HostsRemaining = new Core.ChangeTrackingDictionary<string, int>();
         }
 
         /// <summary> Initializes a new instance of AvsSubscriptionQuotaAvailabilityResult. </summary>

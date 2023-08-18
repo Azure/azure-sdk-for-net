@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> clientSecret = default;
-            Optional<string> resourceOwnerUsername = default;
-            Optional<string> resourceOwnerPassword = default;
+            Core.Optional<string> clientSecret = default;
+            Core.Optional<string> resourceOwnerUsername = default;
+            Core.Optional<string> resourceOwnerPassword = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientSecret"u8))

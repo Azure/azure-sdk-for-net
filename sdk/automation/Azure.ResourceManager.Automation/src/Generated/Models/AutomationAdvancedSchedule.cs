@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of AutomationAdvancedSchedule. </summary>
         public AutomationAdvancedSchedule()
         {
-            WeekDays = new ChangeTrackingList<string>();
-            MonthDays = new ChangeTrackingList<int>();
-            MonthlyOccurrences = new ChangeTrackingList<AutomationAdvancedScheduleMonthlyOccurrence>();
+            WeekDays = new Core.ChangeTrackingList<string>();
+            MonthDays = new Core.ChangeTrackingList<int>();
+            MonthlyOccurrences = new Core.ChangeTrackingList<AutomationAdvancedScheduleMonthlyOccurrence>();
         }
 
         /// <summary> Initializes a new instance of AutomationAdvancedSchedule. </summary>

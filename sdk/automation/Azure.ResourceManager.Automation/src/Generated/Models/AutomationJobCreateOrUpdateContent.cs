@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of AutomationJobCreateOrUpdateContent. </summary>
         public AutomationJobCreateOrUpdateContent()
         {
-            Parameters = new ChangeTrackingDictionary<string, string>();
+            Parameters = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Gets or sets the runbook. </summary>

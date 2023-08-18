@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Initializes a new instance of WorkloadNetworkSegmentData. </summary>
         public WorkloadNetworkSegmentData()
         {
-            PortVif = new ChangeTrackingList<WorkloadNetworkSegmentPortVif>();
+            PortVif = new Core.ChangeTrackingList<WorkloadNetworkSegmentPortVif>();
         }
 
         /// <summary> Initializes a new instance of WorkloadNetworkSegmentData. </summary>

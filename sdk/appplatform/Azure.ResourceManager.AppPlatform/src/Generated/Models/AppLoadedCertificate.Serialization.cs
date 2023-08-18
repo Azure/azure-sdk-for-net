@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppLoadedCertificate : IUtf8JsonSerializable
+    public partial class AppLoadedCertificate : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
-            if (Optional.IsDefined(LoadTrustStore))
+            if (Core.Optional.IsDefined(LoadTrustStore))
             {
                 writer.WritePropertyName("loadTrustStore"u8);
                 writer.WriteBooleanValue(LoadTrustStore.Value);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 return null;
             }
             ResourceIdentifier resourceId = default;
-            Optional<bool> loadTrustStore = default;
+            Core.Optional<bool> loadTrustStore = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppLoadedCertificate(resourceId, Optional.ToNullable(loadTrustStore));
+            return new AppLoadedCertificate(resourceId, Core.Optional.ToNullable(loadTrustStore));
         }
     }
 }

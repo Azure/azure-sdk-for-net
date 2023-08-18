@@ -14,14 +14,14 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    public partial class CdnOriginGroupData : IUtf8JsonSerializable
+    public partial class CdnOriginGroupData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(HealthProbeSettings))
+            if (Core.Optional.IsDefined(HealthProbeSettings))
             {
                 if (HealthProbeSettings != null)
                 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("healthProbeSettings");
                 }
             }
-            if (Optional.IsCollectionDefined(Origins))
+            if (Core.Optional.IsCollectionDefined(Origins))
             {
                 writer.WritePropertyName("origins"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Cdn
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes))
+            if (Core.Optional.IsDefined(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes))
             {
                 if (TrafficRestorationTimeToHealedOrNewEndpointsInMinutes != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
                 }
             }
-            if (Optional.IsDefined(ResponseBasedOriginErrorDetectionSettings))
+            if (Core.Optional.IsDefined(ResponseBasedOriginErrorDetectionSettings))
             {
                 if (ResponseBasedOriginErrorDetectionSettings != null)
                 {
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HealthProbeSettings> healthProbeSettings = default;
-            Optional<IList<WritableSubResource>> origins = default;
-            Optional<int?> trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
-            Optional<ResponseBasedOriginErrorDetectionSettings> responseBasedOriginErrorDetectionSettings = default;
-            Optional<OriginGroupResourceState> resourceState = default;
-            Optional<OriginGroupProvisioningState> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<HealthProbeSettings> healthProbeSettings = default;
+            Core.Optional<IList<WritableSubResource>> origins = default;
+            Core.Optional<int?> trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
+            Core.Optional<ResponseBasedOriginErrorDetectionSettings> responseBasedOriginErrorDetectionSettings = default;
+            Core.Optional<OriginGroupResourceState> resourceState = default;
+            Core.Optional<OriginGroupProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new CdnOriginGroupData(id, name, type, systemData.Value, healthProbeSettings.Value, Optional.ToList(origins), Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes), responseBasedOriginErrorDetectionSettings.Value, Optional.ToNullable(resourceState), Optional.ToNullable(provisioningState));
+            return new CdnOriginGroupData(id, name, type, systemData.Value, healthProbeSettings.Value, Core.Optional.ToList(origins), Core.Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes), responseBasedOriginErrorDetectionSettings.Value, Core.Optional.ToNullable(resourceState), Core.Optional.ToNullable(provisioningState));
         }
     }
 }

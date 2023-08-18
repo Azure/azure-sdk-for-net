@@ -10,33 +10,33 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchBlobFileSystemConfiguration : IUtf8JsonSerializable
+    public partial class BatchBlobFileSystemConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("accountName"u8);
             writer.WriteStringValue(AccountName);
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
-            if (Optional.IsDefined(AccountKey))
+            if (Core.Optional.IsDefined(AccountKey))
             {
                 writer.WritePropertyName("accountKey"u8);
                 writer.WriteStringValue(AccountKey);
             }
-            if (Optional.IsDefined(SasKey))
+            if (Core.Optional.IsDefined(SasKey))
             {
                 writer.WritePropertyName("sasKey"u8);
                 writer.WriteStringValue(SasKey);
             }
-            if (Optional.IsDefined(BlobfuseOptions))
+            if (Core.Optional.IsDefined(BlobfuseOptions))
             {
                 writer.WritePropertyName("blobfuseOptions"u8);
                 writer.WriteStringValue(BlobfuseOptions);
             }
             writer.WritePropertyName("relativeMountPath"u8);
             writer.WriteStringValue(RelativeMountPath);
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identityReference"u8);
                 writer.WriteObjectValue(Identity);
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.Batch.Models
             }
             string accountName = default;
             string containerName = default;
-            Optional<string> accountKey = default;
-            Optional<string> sasKey = default;
-            Optional<string> blobfuseOptions = default;
+            Core.Optional<string> accountKey = default;
+            Core.Optional<string> sasKey = default;
+            Core.Optional<string> blobfuseOptions = default;
             string relativeMountPath = default;
-            Optional<ComputeNodeIdentityReference> identityReference = default;
+            Core.Optional<ComputeNodeIdentityReference> identityReference = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountName"u8))

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of FrontDoorOriginGroupListResult. </summary>
         internal FrontDoorOriginGroupListResult()
         {
-            Value = new ChangeTrackingList<FrontDoorOriginGroupData>();
+            Value = new Core.ChangeTrackingList<FrontDoorOriginGroupData>();
         }
 
         /// <summary> Initializes a new instance of FrontDoorOriginGroupListResult. </summary>

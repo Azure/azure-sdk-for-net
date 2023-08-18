@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class HciSkuMappings : IUtf8JsonSerializable
+    public partial class HciSkuMappings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CatalogPlanId))
+            if (Core.Optional.IsDefined(CatalogPlanId))
             {
                 writer.WritePropertyName("catalogPlanId"u8);
                 writer.WriteStringValue(CatalogPlanId);
             }
-            if (Optional.IsDefined(MarketplaceSkuId))
+            if (Core.Optional.IsDefined(MarketplaceSkuId))
             {
                 writer.WritePropertyName("marketplaceSkuId"u8);
                 writer.WriteStringValue(MarketplaceSkuId);
             }
-            if (Optional.IsCollectionDefined(MarketplaceSkuVersions))
+            if (Core.Optional.IsCollectionDefined(MarketplaceSkuVersions))
             {
                 writer.WritePropertyName("marketplaceSkuVersions"u8);
                 writer.WriteStartArray();
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> catalogPlanId = default;
-            Optional<string> marketplaceSkuId = default;
-            Optional<IList<string>> marketplaceSkuVersions = default;
+            Core.Optional<string> catalogPlanId = default;
+            Core.Optional<string> marketplaceSkuId = default;
+            Core.Optional<IList<string>> marketplaceSkuVersions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("catalogPlanId"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new HciSkuMappings(catalogPlanId.Value, marketplaceSkuId.Value, Optional.ToList(marketplaceSkuVersions));
+            return new HciSkuMappings(catalogPlanId.Value, marketplaceSkuId.Value, Core.Optional.ToList(marketplaceSkuVersions));
         }
     }
 }

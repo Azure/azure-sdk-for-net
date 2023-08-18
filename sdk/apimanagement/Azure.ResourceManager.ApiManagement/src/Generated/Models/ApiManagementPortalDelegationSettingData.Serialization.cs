@@ -13,29 +13,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementPortalDelegationSettingData : IUtf8JsonSerializable
+    public partial class ApiManagementPortalDelegationSettingData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Uri))
+            if (Core.Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ValidationKey))
+            if (Core.Optional.IsDefined(ValidationKey))
             {
                 writer.WritePropertyName("validationKey"u8);
                 writer.WriteStringValue(ValidationKey);
             }
-            if (Optional.IsDefined(Subscriptions))
+            if (Core.Optional.IsDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteObjectValue(Subscriptions);
             }
-            if (Optional.IsDefined(UserRegistration))
+            if (Core.Optional.IsDefined(UserRegistration))
             {
                 writer.WritePropertyName("userRegistration"u8);
                 writer.WriteObjectValue(UserRegistration);
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> uri = default;
-            Optional<string> validationKey = default;
-            Optional<SubscriptionDelegationSettingProperties> subscriptions = default;
-            Optional<RegistrationDelegationSettingProperties> userRegistration = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<Uri> uri = default;
+            Core.Optional<string> validationKey = default;
+            Core.Optional<SubscriptionDelegationSettingProperties> subscriptions = default;
+            Core.Optional<RegistrationDelegationSettingProperties> userRegistration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

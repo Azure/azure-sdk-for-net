@@ -20,26 +20,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<Uri> serviceUri = default;
-            Optional<string> path = default;
-            Optional<IReadOnlyList<ApiOperationInvokableProtocol>> protocols = default;
-            Optional<string> description = default;
-            Optional<AuthenticationSettingsContract> authenticationSettings = default;
-            Optional<SubscriptionKeyParameterNamesContract> subscriptionKeyParameterNames = default;
-            Optional<ApiType> type = default;
-            Optional<string> apiRevision = default;
-            Optional<string> apiVersion = default;
-            Optional<bool> isCurrent = default;
-            Optional<bool> isOnline = default;
-            Optional<string> apiRevisionDescription = default;
-            Optional<string> apiVersionDescription = default;
-            Optional<ResourceIdentifier> apiVersionSetId = default;
-            Optional<bool> subscriptionRequired = default;
-            Optional<Uri> termsOfServiceUri = default;
-            Optional<ApiContactInformation> contact = default;
-            Optional<ApiLicenseInformation> license = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<Uri> serviceUri = default;
+            Core.Optional<string> path = default;
+            Core.Optional<IReadOnlyList<ApiOperationInvokableProtocol>> protocols = default;
+            Core.Optional<string> description = default;
+            Core.Optional<AuthenticationSettingsContract> authenticationSettings = default;
+            Core.Optional<SubscriptionKeyParameterNamesContract> subscriptionKeyParameterNames = default;
+            Core.Optional<ApiType> type = default;
+            Core.Optional<string> apiRevision = default;
+            Core.Optional<string> apiVersion = default;
+            Core.Optional<bool> isCurrent = default;
+            Core.Optional<bool> isOnline = default;
+            Core.Optional<string> apiRevisionDescription = default;
+            Core.Optional<string> apiVersionDescription = default;
+            Core.Optional<ResourceIdentifier> apiVersionSetId = default;
+            Core.Optional<bool> subscriptionRequired = default;
+            Core.Optional<Uri> termsOfServiceUri = default;
+            Core.Optional<ApiContactInformation> contact = default;
+            Core.Optional<ApiLicenseInformation> license = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new AssociatedApiProperties(description.Value, authenticationSettings.Value, subscriptionKeyParameterNames.Value, Optional.ToNullable(type), apiRevision.Value, apiVersion.Value, Optional.ToNullable(isCurrent), Optional.ToNullable(isOnline), apiRevisionDescription.Value, apiVersionDescription.Value, apiVersionSetId.Value, Optional.ToNullable(subscriptionRequired), termsOfServiceUri.Value, contact.Value, license.Value, id.Value, name.Value, serviceUri.Value, path.Value, Optional.ToList(protocols));
+            return new AssociatedApiProperties(description.Value, authenticationSettings.Value, subscriptionKeyParameterNames.Value, Core.Optional.ToNullable(type), apiRevision.Value, apiVersion.Value, Core.Optional.ToNullable(isCurrent), Core.Optional.ToNullable(isOnline), apiRevisionDescription.Value, apiVersionDescription.Value, apiVersionSetId.Value, Core.Optional.ToNullable(subscriptionRequired), termsOfServiceUri.Value, contact.Value, license.Value, id.Value, name.Value, serviceUri.Value, path.Value, Core.Optional.ToList(protocols));
         }
     }
 }

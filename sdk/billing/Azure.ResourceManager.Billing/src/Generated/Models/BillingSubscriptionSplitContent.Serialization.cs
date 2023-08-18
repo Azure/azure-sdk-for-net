@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    public partial class BillingSubscriptionSplitContent : IUtf8JsonSerializable
+    public partial class BillingSubscriptionSplitContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BillingFrequency))
+            if (Core.Optional.IsDefined(BillingFrequency))
             {
                 writer.WritePropertyName("billingFrequency"u8);
                 writer.WriteStringValue(BillingFrequency);
             }
-            if (Optional.IsDefined(Quantity))
+            if (Core.Optional.IsDefined(Quantity))
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (Optional.IsDefined(TargetProductTypeId))
+            if (Core.Optional.IsDefined(TargetProductTypeId))
             {
                 writer.WritePropertyName("targetProductTypeId"u8);
                 writer.WriteStringValue(TargetProductTypeId);
             }
-            if (Optional.IsDefined(TargetSkuId))
+            if (Core.Optional.IsDefined(TargetSkuId))
             {
                 writer.WritePropertyName("targetSkuId"u8);
                 writer.WriteStringValue(TargetSkuId);
             }
-            if (Optional.IsDefined(TermDuration))
+            if (Core.Optional.IsDefined(TermDuration))
             {
                 writer.WritePropertyName("termDuration"u8);
                 writer.WriteStringValue(TermDuration.Value, "P");

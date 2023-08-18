@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of OpenIdConnectProviderListResult. </summary>
         internal OpenIdConnectProviderListResult()
         {
-            Value = new ChangeTrackingList<ApiManagementOpenIdConnectProviderData>();
+            Value = new Core.ChangeTrackingList<ApiManagementOpenIdConnectProviderData>();
         }
 
         /// <summary> Initializes a new instance of OpenIdConnectProviderListResult. </summary>

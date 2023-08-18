@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<int> callsCount = default;
-            Optional<double> kbTransferred = default;
+            Core.Optional<int> callsCount = default;
+            Core.Optional<double> kbTransferred = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callsCount"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new QuotaCounterValueContractProperties(Optional.ToNullable(callsCount), Optional.ToNullable(kbTransferred));
+            return new QuotaCounterValueContractProperties(Core.Optional.ToNullable(callsCount), Core.Optional.ToNullable(kbTransferred));
         }
     }
 }

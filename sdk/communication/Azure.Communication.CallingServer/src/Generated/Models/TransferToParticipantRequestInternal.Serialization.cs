@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class TransferToParticipantRequestInternal : IUtf8JsonSerializable
+    internal partial class TransferToParticipantRequestInternal : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("targetParticipant"u8);
             writer.WriteObjectValue(TargetParticipant);
-            if (Optional.IsDefined(TransfereeCallerId))
+            if (Core.Optional.IsDefined(TransfereeCallerId))
             {
                 writer.WritePropertyName("transfereeCallerId"u8);
                 writer.WriteObjectValue(TransfereeCallerId);
             }
-            if (Optional.IsDefined(UserToUserInformation))
+            if (Core.Optional.IsDefined(UserToUserInformation))
             {
                 writer.WritePropertyName("userToUserInformation"u8);
                 writer.WriteStringValue(UserToUserInformation);
             }
-            if (Optional.IsDefined(OperationContext))
+            if (Core.Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);

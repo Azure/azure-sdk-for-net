@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationCertificateCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class AutomationCertificateCreateOrUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             writer.WritePropertyName("base64Value"u8);
             writer.WriteStringValue(Base64Value);
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ThumbprintString))
+            if (Core.Optional.IsDefined(ThumbprintString))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);
             }
-            if (Optional.IsDefined(IsExportable))
+            if (Core.Optional.IsDefined(IsExportable))
             {
                 writer.WritePropertyName("isExportable"u8);
                 writer.WriteBooleanValue(IsExportable.Value);

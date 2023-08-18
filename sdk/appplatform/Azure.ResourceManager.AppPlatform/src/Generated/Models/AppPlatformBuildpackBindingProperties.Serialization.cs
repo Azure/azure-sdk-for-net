@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformBuildpackBindingProperties : IUtf8JsonSerializable
+    public partial class AppPlatformBuildpackBindingProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BindingType))
+            if (Core.Optional.IsDefined(BindingType))
             {
                 writer.WritePropertyName("bindingType"u8);
                 writer.WriteStringValue(BindingType.Value.ToString());
             }
-            if (Optional.IsDefined(LaunchProperties))
+            if (Core.Optional.IsDefined(LaunchProperties))
             {
                 writer.WritePropertyName("launchProperties"u8);
                 writer.WriteObjectValue(LaunchProperties);
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<BuildpackBindingType> bindingType = default;
-            Optional<BuildpackBindingProvisioningState> provisioningState = default;
-            Optional<BuildpackBindingLaunchProperties> launchProperties = default;
+            Core.Optional<BuildpackBindingType> bindingType = default;
+            Core.Optional<BuildpackBindingProvisioningState> provisioningState = default;
+            Core.Optional<BuildpackBindingLaunchProperties> launchProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bindingType"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformBuildpackBindingProperties(Optional.ToNullable(bindingType), Optional.ToNullable(provisioningState), launchProperties.Value);
+            return new AppPlatformBuildpackBindingProperties(Core.Optional.ToNullable(bindingType), Core.Optional.ToNullable(provisioningState), launchProperties.Value);
         }
     }
 }

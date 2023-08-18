@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Initializes a new instance of AuthorizationProviderResourceType. </summary>
         internal AuthorizationProviderResourceType()
         {
-            Operations = new ChangeTrackingList<AuthorizationProviderOperationInfo>();
+            Operations = new Core.ChangeTrackingList<AuthorizationProviderOperationInfo>();
         }
 
         /// <summary> Initializes a new instance of AuthorizationProviderResourceType. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ApiVersionSetListResult. </summary>
         internal ApiVersionSetListResult()
         {
-            Value = new ChangeTrackingList<ApiVersionSetData>();
+            Value = new Core.ChangeTrackingList<ApiVersionSetData>();
         }
 
         /// <summary> Initializes a new instance of ApiVersionSetListResult. </summary>

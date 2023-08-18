@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Initializes a new instance of RoleDefinitionListResult. </summary>
         internal RoleDefinitionListResult()
         {
-            Value = new ChangeTrackingList<AuthorizationRoleDefinitionData>();
+            Value = new Core.ChangeTrackingList<AuthorizationRoleDefinitionData>();
         }
 
         /// <summary> Initializes a new instance of RoleDefinitionListResult. </summary>

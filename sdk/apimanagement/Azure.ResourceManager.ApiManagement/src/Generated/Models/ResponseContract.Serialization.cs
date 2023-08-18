@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ResponseContract : IUtf8JsonSerializable
+    public partial class ResponseContract : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("statusCode"u8);
             writer.WriteNumberValue(StatusCode);
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Representations))
+            if (Core.Optional.IsCollectionDefined(Representations))
             {
                 writer.WritePropertyName("representations"u8);
                 writer.WriteStartArray();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Headers))
+            if (Core.Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             int statusCode = default;
-            Optional<string> description = default;
-            Optional<IList<RepresentationContract>> representations = default;
-            Optional<IList<ParameterContract>> headers = default;
+            Core.Optional<string> description = default;
+            Core.Optional<IList<RepresentationContract>> representations = default;
+            Core.Optional<IList<ParameterContract>> headers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("statusCode"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ResponseContract(statusCode, description.Value, Optional.ToList(representations), Optional.ToList(headers));
+            return new ResponseContract(statusCode, description.Value, Core.Optional.ToList(representations), Core.Optional.ToList(headers));
         }
     }
 }

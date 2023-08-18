@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<SavingsPlanSummaryCount> value = default;
+            Core.Optional<string> name = default;
+            Core.Optional<SavingsPlanSummaryCount> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

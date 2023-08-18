@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<Uri> helpUrl = default;
-            Optional<string> @default = default;
-            Optional<ServiceProviderParameterMetadata> metadata = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> type = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> description = default;
+            Core.Optional<Uri> helpUrl = default;
+            Core.Optional<string> @default = default;
+            Core.Optional<ServiceProviderParameterMetadata> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

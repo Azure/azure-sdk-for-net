@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class RecognizeOptionsInternal : IUtf8JsonSerializable
+    internal partial class RecognizeOptionsInternal : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(InterruptPrompt))
+            if (Core.Optional.IsDefined(InterruptPrompt))
             {
                 writer.WritePropertyName("interruptPrompt"u8);
                 writer.WriteBooleanValue(InterruptPrompt.Value);
             }
-            if (Optional.IsDefined(InitialSilenceTimeoutInSeconds))
+            if (Core.Optional.IsDefined(InitialSilenceTimeoutInSeconds))
             {
                 writer.WritePropertyName("initialSilenceTimeoutInSeconds"u8);
                 writer.WriteNumberValue(InitialSilenceTimeoutInSeconds.Value);
             }
             writer.WritePropertyName("targetParticipant"u8);
             writer.WriteObjectValue(TargetParticipant);
-            if (Optional.IsDefined(DtmfOptions))
+            if (Core.Optional.IsDefined(DtmfOptions))
             {
                 writer.WritePropertyName("dtmfOptions"u8);
                 writer.WriteObjectValue(DtmfOptions);

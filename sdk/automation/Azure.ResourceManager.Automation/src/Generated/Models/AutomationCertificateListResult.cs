@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of AutomationCertificateListResult. </summary>
         internal AutomationCertificateListResult()
         {
-            Value = new ChangeTrackingList<AutomationCertificateData>();
+            Value = new Core.ChangeTrackingList<AutomationCertificateData>();
         }
 
         /// <summary> Initializes a new instance of AutomationCertificateListResult. </summary>

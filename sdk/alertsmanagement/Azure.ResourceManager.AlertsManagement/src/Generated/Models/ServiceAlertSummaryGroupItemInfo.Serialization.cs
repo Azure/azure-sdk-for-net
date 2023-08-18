@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class ServiceAlertSummaryGroupItemInfo : IUtf8JsonSerializable
+    public partial class ServiceAlertSummaryGroupItemInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Count))
+            if (Core.Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(GroupedBy))
+            if (Core.Optional.IsDefined(GroupedBy))
             {
                 writer.WritePropertyName("groupedby"u8);
                 writer.WriteStringValue(GroupedBy);
             }
-            if (Optional.IsCollectionDefined(Values))
+            if (Core.Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<long> count = default;
-            Optional<string> groupedby = default;
-            Optional<IList<ServiceAlertSummaryGroupItemInfo>> values = default;
+            Core.Optional<string> name = default;
+            Core.Optional<long> count = default;
+            Core.Optional<string> groupedby = default;
+            Core.Optional<IList<ServiceAlertSummaryGroupItemInfo>> values = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     continue;
                 }
             }
-            return new ServiceAlertSummaryGroupItemInfo(name.Value, Optional.ToNullable(count), groupedby.Value, Optional.ToList(values));
+            return new ServiceAlertSummaryGroupItemInfo(name.Value, Core.Optional.ToNullable(count), groupedby.Value, Core.Optional.ToList(values));
         }
     }
 }

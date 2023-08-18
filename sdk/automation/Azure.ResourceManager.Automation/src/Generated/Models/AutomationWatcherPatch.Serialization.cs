@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationWatcherPatch : IUtf8JsonSerializable
+    public partial class AutomationWatcherPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExecutionFrequencyInSeconds))
+            if (Core.Optional.IsDefined(ExecutionFrequencyInSeconds))
             {
                 writer.WritePropertyName("executionFrequencyInSeconds"u8);
                 writer.WriteNumberValue(ExecutionFrequencyInSeconds.Value);

@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class ScriptPackageData : IUtf8JsonSerializable
+    public partial class ScriptPackageData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> version = default;
-            Optional<string> company = default;
-            Optional<Uri> uri = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> version = default;
+            Core.Optional<string> company = default;
+            Core.Optional<Uri> uri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

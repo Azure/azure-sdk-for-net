@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of ScriptCmdletsList. </summary>
         internal ScriptCmdletsList()
         {
-            Value = new ChangeTrackingList<ScriptCmdletData>();
+            Value = new Core.ChangeTrackingList<ScriptCmdletData>();
         }
 
         /// <summary> Initializes a new instance of ScriptCmdletsList. </summary>

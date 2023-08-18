@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationJobScheduleCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class AutomationJobScheduleCreateOrUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteObjectValue(Schedule);
             writer.WritePropertyName("runbook"u8);
             writer.WriteObjectValue(Runbook);
-            if (Optional.IsDefined(RunOn))
+            if (Core.Optional.IsDefined(RunOn))
             {
                 writer.WritePropertyName("runOn"u8);
                 writer.WriteStringValue(RunOn);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (Core.Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();

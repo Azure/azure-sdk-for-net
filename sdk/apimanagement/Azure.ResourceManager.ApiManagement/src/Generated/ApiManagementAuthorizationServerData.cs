@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of ApiManagementAuthorizationServerData. </summary>
         public ApiManagementAuthorizationServerData()
         {
-            AuthorizationMethods = new ChangeTrackingList<AuthorizationMethod>();
-            ClientAuthenticationMethods = new ChangeTrackingList<ClientAuthenticationMethod>();
-            TokenBodyParameters = new ChangeTrackingList<TokenBodyParameterContract>();
-            BearerTokenSendingMethods = new ChangeTrackingList<BearerTokenSendingMethod>();
-            GrantTypes = new ChangeTrackingList<GrantType>();
+            AuthorizationMethods = new Core.ChangeTrackingList<AuthorizationMethod>();
+            ClientAuthenticationMethods = new Core.ChangeTrackingList<ClientAuthenticationMethod>();
+            TokenBodyParameters = new Core.ChangeTrackingList<TokenBodyParameterContract>();
+            BearerTokenSendingMethods = new Core.ChangeTrackingList<BearerTokenSendingMethod>();
+            GrantTypes = new Core.ChangeTrackingList<GrantType>();
         }
 
         /// <summary> Initializes a new instance of ApiManagementAuthorizationServerData. </summary>

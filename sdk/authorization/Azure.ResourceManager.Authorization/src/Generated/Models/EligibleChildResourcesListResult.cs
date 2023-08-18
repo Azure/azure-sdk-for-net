@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Initializes a new instance of EligibleChildResourcesListResult. </summary>
         internal EligibleChildResourcesListResult()
         {
-            Value = new ChangeTrackingList<EligibleChildResource>();
+            Value = new Core.ChangeTrackingList<EligibleChildResource>();
         }
 
         /// <summary> Initializes a new instance of EligibleChildResourcesListResult. </summary>

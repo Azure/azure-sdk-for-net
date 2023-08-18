@@ -12,34 +12,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiTagDescriptionData : IUtf8JsonSerializable
+    public partial class ApiTagDescriptionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ExternalDocsUri))
+            if (Core.Optional.IsDefined(ExternalDocsUri))
             {
                 writer.WritePropertyName("externalDocsUrl"u8);
                 writer.WriteStringValue(ExternalDocsUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ExternalDocsDescription))
+            if (Core.Optional.IsDefined(ExternalDocsDescription))
             {
                 writer.WritePropertyName("externalDocsDescription"u8);
                 writer.WriteStringValue(ExternalDocsDescription);
             }
-            if (Optional.IsDefined(TagId))
+            if (Core.Optional.IsDefined(TagId))
             {
                 writer.WritePropertyName("tagId"u8);
                 writer.WriteStringValue(TagId);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<Uri> externalDocsUri = default;
-            Optional<string> externalDocsDescription = default;
-            Optional<string> tagId = default;
-            Optional<string> displayName = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> description = default;
+            Core.Optional<Uri> externalDocsUri = default;
+            Core.Optional<string> externalDocsDescription = default;
+            Core.Optional<string> tagId = default;
+            Core.Optional<string> displayName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ResourceIdentifier>> deployments = default;
+            Core.Optional<IReadOnlyList<ResourceIdentifier>> deployments = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deployments"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new DeploymentList(Optional.ToList(deployments));
+            return new DeploymentList(Core.Optional.ToList(deployments));
         }
     }
 }

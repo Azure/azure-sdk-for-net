@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ApiManagementNamedValueCreateOrUpdateContent. </summary>
         public ApiManagementNamedValueCreateOrUpdateContent()
         {
-            Tags = new ChangeTrackingList<string>();
+            Tags = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ApiManagementNamedValueCreateOrUpdateContent. </summary>

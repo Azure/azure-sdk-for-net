@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> Initializes a new instance of AppConfigurationPrivateEndpointConnectionListResult. </summary>
         internal AppConfigurationPrivateEndpointConnectionListResult()
         {
-            Value = new ChangeTrackingList<AppConfigurationPrivateEndpointConnectionData>();
+            Value = new Core.ChangeTrackingList<AppConfigurationPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of AppConfigurationPrivateEndpointConnectionListResult. </summary>

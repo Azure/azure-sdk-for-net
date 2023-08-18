@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformConfigurationServiceGitValidateResult. </summary>
         internal AppPlatformConfigurationServiceGitValidateResult()
         {
-            GitReposValidationResult = new ChangeTrackingList<AppPlatformConfigurationServiceGitReposValidationMessages>();
+            GitReposValidationResult = new Core.ChangeTrackingList<AppPlatformConfigurationServiceGitReposValidationMessages>();
         }
 
         /// <summary> Initializes a new instance of AppPlatformConfigurationServiceGitValidateResult. </summary>

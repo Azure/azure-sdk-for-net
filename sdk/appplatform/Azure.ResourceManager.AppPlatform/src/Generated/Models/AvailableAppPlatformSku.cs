@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AvailableAppPlatformSku. </summary>
         internal AvailableAppPlatformSku()
         {
-            Locations = new ChangeTrackingList<AzureLocation>();
-            LocationInfo = new ChangeTrackingList<AppPlatformSkuLocationInfo>();
-            Restrictions = new ChangeTrackingList<AppPlatformSkuRestrictions>();
+            Locations = new Core.ChangeTrackingList<AzureLocation>();
+            LocationInfo = new Core.ChangeTrackingList<AppPlatformSkuLocationInfo>();
+            Restrictions = new Core.ChangeTrackingList<AppPlatformSkuRestrictions>();
         }
 
         /// <summary> Initializes a new instance of AvailableAppPlatformSku. </summary>

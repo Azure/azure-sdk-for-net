@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of HcxEnterpriseSiteList. </summary>
         internal HcxEnterpriseSiteList()
         {
-            Value = new ChangeTrackingList<HcxEnterpriseSiteData>();
+            Value = new Core.ChangeTrackingList<HcxEnterpriseSiteData>();
         }
 
         /// <summary> Initializes a new instance of HcxEnterpriseSiteList. </summary>

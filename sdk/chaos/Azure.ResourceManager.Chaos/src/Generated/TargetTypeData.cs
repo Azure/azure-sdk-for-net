@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Chaos
         /// <summary> Initializes a new instance of TargetTypeData. </summary>
         public TargetTypeData()
         {
-            ResourceTypes = new ChangeTrackingList<string>();
+            ResourceTypes = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of TargetTypeData. </summary>

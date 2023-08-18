@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> apiId = default;
-            Optional<string> apiRevision = default;
-            Optional<DateTimeOffset> createdDateTime = default;
-            Optional<DateTimeOffset> updatedDateTime = default;
-            Optional<string> description = default;
-            Optional<string> privateUri = default;
-            Optional<bool> isOnline = default;
-            Optional<bool> isCurrent = default;
+            Core.Optional<string> apiId = default;
+            Core.Optional<string> apiRevision = default;
+            Core.Optional<DateTimeOffset> createdDateTime = default;
+            Core.Optional<DateTimeOffset> updatedDateTime = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> privateUri = default;
+            Core.Optional<bool> isOnline = default;
+            Core.Optional<bool> isCurrent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("apiId"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ApiRevisionContract(apiId.Value, apiRevision.Value, Optional.ToNullable(createdDateTime), Optional.ToNullable(updatedDateTime), description.Value, privateUri.Value, Optional.ToNullable(isOnline), Optional.ToNullable(isCurrent));
+            return new ApiRevisionContract(apiId.Value, apiRevision.Value, Core.Optional.ToNullable(createdDateTime), Core.Optional.ToNullable(updatedDateTime), description.Value, privateUri.Value, Core.Optional.ToNullable(isOnline), Core.Optional.ToNullable(isCurrent));
         }
     }
 }

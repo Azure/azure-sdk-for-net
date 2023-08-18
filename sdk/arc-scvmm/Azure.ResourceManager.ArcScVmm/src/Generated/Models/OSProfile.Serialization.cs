@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
-    public partial class OSProfile : IUtf8JsonSerializable
+    public partial class OSProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AdminPassword))
+            if (Core.Optional.IsDefined(AdminPassword))
             {
                 writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
-            if (Optional.IsDefined(ComputerName))
+            if (Core.Optional.IsDefined(ComputerName))
             {
                 writer.WritePropertyName("computerName"u8);
                 writer.WriteStringValue(ComputerName);
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<string> adminPassword = default;
-            Optional<string> computerName = default;
-            Optional<OSType> osType = default;
-            Optional<string> osName = default;
+            Core.Optional<string> adminPassword = default;
+            Core.Optional<string> computerName = default;
+            Core.Optional<OSType> osType = default;
+            Core.Optional<string> osName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("adminPassword"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     continue;
                 }
             }
-            return new OSProfile(adminPassword.Value, computerName.Value, Optional.ToNullable(osType), osName.Value);
+            return new OSProfile(adminPassword.Value, computerName.Value, Core.Optional.ToNullable(osType), osName.Value);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of TenantSettingsListResult. </summary>
         internal TenantSettingsListResult()
         {
-            Value = new ChangeTrackingList<ApiManagementTenantSettingData>();
+            Value = new Core.ChangeTrackingList<ApiManagementTenantSettingData>();
         }
 
         /// <summary> Initializes a new instance of TenantSettingsListResult. </summary>

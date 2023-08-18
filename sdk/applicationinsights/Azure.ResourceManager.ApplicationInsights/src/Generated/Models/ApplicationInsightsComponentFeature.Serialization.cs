@@ -19,15 +19,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> featureName = default;
-            Optional<string> meterId = default;
-            Optional<string> meterRateFrequency = default;
-            Optional<string> resouceId = default;
-            Optional<bool> isHidden = default;
-            Optional<IReadOnlyList<ApplicationInsightsComponentFeatureCapability>> capabilities = default;
-            Optional<string> title = default;
-            Optional<bool> isMainFeature = default;
-            Optional<string> supportedAddonFeatures = default;
+            Core.Optional<string> featureName = default;
+            Core.Optional<string> meterId = default;
+            Core.Optional<string> meterRateFrequency = default;
+            Core.Optional<string> resouceId = default;
+            Core.Optional<bool> isHidden = default;
+            Core.Optional<IReadOnlyList<ApplicationInsightsComponentFeatureCapability>> capabilities = default;
+            Core.Optional<string> title = default;
+            Core.Optional<bool> isMainFeature = default;
+            Core.Optional<string> supportedAddonFeatures = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("FeatureName"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     continue;
                 }
             }
-            return new ApplicationInsightsComponentFeature(featureName.Value, meterId.Value, meterRateFrequency.Value, resouceId.Value, Optional.ToNullable(isHidden), Optional.ToList(capabilities), title.Value, Optional.ToNullable(isMainFeature), supportedAddonFeatures.Value);
+            return new ApplicationInsightsComponentFeature(featureName.Value, meterId.Value, meterRateFrequency.Value, resouceId.Value, Core.Optional.ToNullable(isHidden), Core.Optional.ToList(capabilities), title.Value, Core.Optional.ToNullable(isMainFeature), supportedAddonFeatures.Value);
         }
     }
 }

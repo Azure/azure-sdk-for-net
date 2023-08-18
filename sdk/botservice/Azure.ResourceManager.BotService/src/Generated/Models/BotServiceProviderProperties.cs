@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Initializes a new instance of BotServiceProviderProperties. </summary>
         internal BotServiceProviderProperties()
         {
-            Parameters = new ChangeTrackingList<BotServiceProviderParameter>();
+            Parameters = new Core.ChangeTrackingList<BotServiceProviderParameter>();
         }
 
         /// <summary> Initializes a new instance of BotServiceProviderProperties. </summary>

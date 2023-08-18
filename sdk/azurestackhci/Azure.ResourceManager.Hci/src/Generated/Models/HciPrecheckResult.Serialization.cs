@@ -11,67 +11,67 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class HciPrecheckResult : IUtf8JsonSerializable
+    public partial class HciPrecheckResult : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Tags))
+            if (Core.Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteObjectValue(Tags);
             }
-            if (Optional.IsDefined(Title))
+            if (Core.Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Severity))
+            if (Core.Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Remediation))
+            if (Core.Optional.IsDefined(Remediation))
             {
                 writer.WritePropertyName("remediation"u8);
                 writer.WriteStringValue(Remediation);
             }
-            if (Optional.IsDefined(TargetResourceId))
+            if (Core.Optional.IsDefined(TargetResourceId))
             {
                 writer.WritePropertyName("targetResourceID"u8);
                 writer.WriteStringValue(TargetResourceId);
             }
-            if (Optional.IsDefined(TargetResourceName))
+            if (Core.Optional.IsDefined(TargetResourceName))
             {
                 writer.WritePropertyName("targetResourceName"u8);
                 writer.WriteStringValue(TargetResourceName);
             }
-            if (Optional.IsDefined(Timestamp))
+            if (Core.Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (Optional.IsDefined(AdditionalData))
+            if (Core.Optional.IsDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStringValue(AdditionalData);
             }
-            if (Optional.IsDefined(HealthCheckSource))
+            if (Core.Optional.IsDefined(HealthCheckSource))
             {
                 writer.WritePropertyName("healthCheckSource"u8);
                 writer.WriteStringValue(HealthCheckSource);
@@ -85,18 +85,18 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<HciPrecheckResultTags> tags = default;
-            Optional<string> title = default;
-            Optional<HciClusterStatus> status = default;
-            Optional<UpdateSeverity> severity = default;
-            Optional<string> description = default;
-            Optional<string> remediation = default;
-            Optional<string> targetResourceId = default;
-            Optional<string> targetResourceName = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> additionalData = default;
-            Optional<string> healthCheckSource = default;
+            Core.Optional<string> name = default;
+            Core.Optional<HciPrecheckResultTags> tags = default;
+            Core.Optional<string> title = default;
+            Core.Optional<HciClusterStatus> status = default;
+            Core.Optional<UpdateSeverity> severity = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> remediation = default;
+            Core.Optional<string> targetResourceId = default;
+            Core.Optional<string> targetResourceName = default;
+            Core.Optional<DateTimeOffset> timestamp = default;
+            Core.Optional<string> additionalData = default;
+            Core.Optional<string> healthCheckSource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new HciPrecheckResult(name.Value, tags.Value, title.Value, Optional.ToNullable(status), Optional.ToNullable(severity), description.Value, remediation.Value, targetResourceId.Value, targetResourceName.Value, Optional.ToNullable(timestamp), additionalData.Value, healthCheckSource.Value);
+            return new HciPrecheckResult(name.Value, tags.Value, title.Value, Core.Optional.ToNullable(status), Core.Optional.ToNullable(severity), description.Value, remediation.Value, targetResourceId.Value, targetResourceName.Value, Core.Optional.ToNullable(timestamp), additionalData.Value, healthCheckSource.Value);
         }
     }
 }

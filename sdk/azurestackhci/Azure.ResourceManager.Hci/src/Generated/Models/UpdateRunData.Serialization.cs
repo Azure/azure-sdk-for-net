@@ -14,76 +14,76 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    public partial class UpdateRunData : IUtf8JsonSerializable
+    public partial class UpdateRunData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TimeStarted))
+            if (Core.Optional.IsDefined(TimeStarted))
             {
                 writer.WritePropertyName("timeStarted"u8);
                 writer.WriteStringValue(TimeStarted.Value, "O");
             }
-            if (Optional.IsDefined(LastUpdatedOn))
+            if (Core.Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (Optional.IsDefined(Duration))
+            if (Core.Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration);
             }
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             writer.WritePropertyName("progress"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(NamePropertiesProgressName))
+            if (Core.Optional.IsDefined(NamePropertiesProgressName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(NamePropertiesProgressName);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ErrorMessage))
+            if (Core.Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(StartTimeUtc))
+            if (Core.Optional.IsDefined(StartTimeUtc))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
                 writer.WriteStringValue(StartTimeUtc.Value, "O");
             }
-            if (Optional.IsDefined(EndTimeUtc))
+            if (Core.Optional.IsDefined(EndTimeUtc))
             {
                 writer.WritePropertyName("endTimeUtc"u8);
                 writer.WriteStringValue(EndTimeUtc.Value, "O");
             }
-            if (Optional.IsDefined(LastUpdatedTimeUtc))
+            if (Core.Optional.IsDefined(LastUpdatedTimeUtc))
             {
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(LastUpdatedTimeUtc.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Steps))
+            if (Core.Optional.IsCollectionDefined(Steps))
             {
                 writer.WritePropertyName("steps"u8);
                 writer.WriteStartArray();
@@ -104,24 +104,24 @@ namespace Azure.ResourceManager.Hci
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            Core.Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HciProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> timeStarted = default;
-            Optional<DateTimeOffset> lastUpdatedTime = default;
-            Optional<string> duration = default;
-            Optional<UpdateRunPropertiesState> state = default;
-            Optional<string> name0 = default;
-            Optional<string> description = default;
-            Optional<string> errorMessage = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> startTimeUtc = default;
-            Optional<DateTimeOffset> endTimeUtc = default;
-            Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
-            Optional<IList<HciUpdateStep>> steps = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<HciProvisioningState> provisioningState = default;
+            Core.Optional<DateTimeOffset> timeStarted = default;
+            Core.Optional<DateTimeOffset> lastUpdatedTime = default;
+            Core.Optional<string> duration = default;
+            Core.Optional<UpdateRunPropertiesState> state = default;
+            Core.Optional<string> name0 = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> errorMessage = default;
+            Core.Optional<string> status = default;
+            Core.Optional<DateTimeOffset> startTimeUtc = default;
+            Core.Optional<DateTimeOffset> endTimeUtc = default;
+            Core.Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
+            Core.Optional<IList<HciUpdateStep>> steps = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Hci
                     continue;
                 }
             }
-            return new UpdateRunData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), Optional.ToNullable(timeStarted), Optional.ToNullable(lastUpdatedTime), duration.Value, Optional.ToNullable(state), name0.Value, description.Value, errorMessage.Value, status.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), Optional.ToList(steps));
+            return new UpdateRunData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(timeStarted), Core.Optional.ToNullable(lastUpdatedTime), duration.Value, Core.Optional.ToNullable(state), name0.Value, description.Value, errorMessage.Value, status.Value, Core.Optional.ToNullable(startTimeUtc), Core.Optional.ToNullable(endTimeUtc), Core.Optional.ToNullable(lastUpdatedTimeUtc), Core.Optional.ToList(steps));
         }
     }
 }

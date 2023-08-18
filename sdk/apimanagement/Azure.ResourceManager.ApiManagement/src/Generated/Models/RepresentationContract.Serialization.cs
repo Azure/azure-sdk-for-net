@@ -11,24 +11,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class RepresentationContract : IUtf8JsonSerializable
+    public partial class RepresentationContract : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("contentType"u8);
             writer.WriteStringValue(ContentType);
-            if (Optional.IsDefined(SchemaId))
+            if (Core.Optional.IsDefined(SchemaId))
             {
                 writer.WritePropertyName("schemaId"u8);
                 writer.WriteStringValue(SchemaId);
             }
-            if (Optional.IsDefined(TypeName))
+            if (Core.Optional.IsDefined(TypeName))
             {
                 writer.WritePropertyName("typeName"u8);
                 writer.WriteStringValue(TypeName);
             }
-            if (Optional.IsCollectionDefined(FormParameters))
+            if (Core.Optional.IsCollectionDefined(FormParameters))
             {
                 writer.WritePropertyName("formParameters"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Examples))
+            if (Core.Optional.IsCollectionDefined(Examples))
             {
                 writer.WritePropertyName("examples"u8);
                 writer.WriteStartObject();
@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             string contentType = default;
-            Optional<string> schemaId = default;
-            Optional<string> typeName = default;
-            Optional<IList<ParameterContract>> formParameters = default;
-            Optional<IDictionary<string, ParameterExampleContract>> examples = default;
+            Core.Optional<string> schemaId = default;
+            Core.Optional<string> typeName = default;
+            Core.Optional<IList<ParameterContract>> formParameters = default;
+            Core.Optional<IDictionary<string, ParameterExampleContract>> examples = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contentType"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new RepresentationContract(contentType, schemaId.Value, typeName.Value, Optional.ToList(formParameters), Optional.ToDictionary(examples));
+            return new RepresentationContract(contentType, schemaId.Value, typeName.Value, Core.Optional.ToList(formParameters), Core.Optional.ToDictionary(examples));
         }
     }
 }

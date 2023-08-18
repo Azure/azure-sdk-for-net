@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Initializes a new instance of ChannelResponseList. </summary>
         internal ChannelResponseList()
         {
-            Value = new ChangeTrackingList<BotChannelData>();
+            Value = new Core.ChangeTrackingList<BotChannelData>();
         }
 
         /// <summary> Initializes a new instance of ChannelResponseList. </summary>

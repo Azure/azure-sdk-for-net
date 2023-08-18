@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci
 {
-    internal class ArcExtensionOperationSource : IOperationSource<ArcExtensionResource>
+    internal class ArcExtensionOperationSource : Core.IOperationSource<ArcExtensionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Hci
             _client = client;
         }
 
-        ArcExtensionResource IOperationSource<ArcExtensionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ArcExtensionResource Core.IOperationSource<ArcExtensionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ArcExtensionData.DeserializeArcExtensionData(document.RootElement);
             return new ArcExtensionResource(_client, data);
         }
 
-        async ValueTask<ArcExtensionResource> IOperationSource<ArcExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ArcExtensionResource> Core.IOperationSource<ArcExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ArcExtensionData.DeserializeArcExtensionData(document.RootElement);

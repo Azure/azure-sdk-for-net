@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<CommitmentPlanAccountAssociationData>> value = default;
+            Core.Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<CommitmentPlanAccountAssociationData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new CommitmentPlanAccountAssociationListResult(nextLink.Value, Optional.ToList(value));
+            return new CommitmentPlanAccountAssociationListResult(nextLink.Value, Core.Optional.ToList(value));
         }
     }
 }

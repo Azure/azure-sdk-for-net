@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.BotService.Models
 
             SiteName = siteName;
             IsEnabled = isEnabled;
-            TrustedOrigins = new ChangeTrackingList<string>();
+            TrustedOrigins = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of BotChannelSite. </summary>

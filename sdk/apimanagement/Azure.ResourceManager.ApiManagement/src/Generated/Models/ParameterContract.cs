@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
             Name = name;
             ParameterContractType = parameterContractType;
-            Values = new ChangeTrackingList<string>();
-            Examples = new ChangeTrackingDictionary<string, ParameterExampleContract>();
+            Values = new Core.ChangeTrackingList<string>();
+            Examples = new Core.ChangeTrackingDictionary<string, ParameterExampleContract>();
         }
 
         /// <summary> Initializes a new instance of ParameterContract. </summary>

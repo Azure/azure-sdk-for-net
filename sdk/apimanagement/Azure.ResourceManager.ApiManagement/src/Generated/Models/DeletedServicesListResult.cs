@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of DeletedServicesListResult. </summary>
         internal DeletedServicesListResult()
         {
-            Value = new ChangeTrackingList<ApiManagementDeletedServiceData>();
+            Value = new Core.ChangeTrackingList<ApiManagementDeletedServiceData>();
         }
 
         /// <summary> Initializes a new instance of DeletedServicesListResult. </summary>

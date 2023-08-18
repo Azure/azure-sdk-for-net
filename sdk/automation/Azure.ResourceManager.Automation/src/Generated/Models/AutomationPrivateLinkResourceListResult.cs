@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of AutomationPrivateLinkResourceListResult. </summary>
         internal AutomationPrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<AutomationPrivateLinkResource>();
+            Value = new Core.ChangeTrackingList<AutomationPrivateLinkResource>();
         }
 
         /// <summary> Initializes a new instance of AutomationPrivateLinkResourceListResult. </summary>

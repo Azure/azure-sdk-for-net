@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    internal partial class SupportedBuildpackResourceProperties : IUtf8JsonSerializable
+    internal partial class SupportedBuildpackResourceProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BuildpackId))
+            if (Core.Optional.IsDefined(BuildpackId))
             {
                 writer.WritePropertyName("buildpackId"u8);
                 writer.WriteStringValue(BuildpackId);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> buildpackId = default;
+            Core.Optional<string> buildpackId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("buildpackId"u8))

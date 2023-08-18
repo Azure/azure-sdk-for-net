@@ -14,24 +14,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
-    public partial class AppConfigurationKeyValueData : IUtf8JsonSerializable
+    public partial class AppConfigurationKeyValueData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
+            if (Core.Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(ContentType))
+            if (Core.Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -55,15 +55,15 @@ namespace Azure.ResourceManager.AppConfiguration
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> key = default;
-            Optional<string> label = default;
-            Optional<string> value = default;
-            Optional<string> contentType = default;
-            Optional<ETag> eTag = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<bool> locked = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> key = default;
+            Core.Optional<string> label = default;
+            Core.Optional<string> value = default;
+            Core.Optional<string> contentType = default;
+            Core.Optional<ETag> eTag = default;
+            Core.Optional<DateTimeOffset> lastModified = default;
+            Core.Optional<bool> locked = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     continue;
                 }
             }
-            return new AppConfigurationKeyValueData(id, name, type, systemData.Value, key.Value, label.Value, value.Value, contentType.Value, Optional.ToNullable(eTag), Optional.ToNullable(lastModified), Optional.ToNullable(locked), Optional.ToDictionary(tags));
+            return new AppConfigurationKeyValueData(id, name, type, systemData.Value, key.Value, label.Value, value.Value, contentType.Value, Core.Optional.ToNullable(eTag), Core.Optional.ToNullable(lastModified), Core.Optional.ToNullable(locked), Core.Optional.ToDictionary(tags));
         }
     }
 }

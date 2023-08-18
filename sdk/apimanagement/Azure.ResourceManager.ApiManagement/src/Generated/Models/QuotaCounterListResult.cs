@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of QuotaCounterListResult. </summary>
         internal QuotaCounterListResult()
         {
-            Value = new ChangeTrackingList<QuotaCounterContract>();
+            Value = new Core.ChangeTrackingList<QuotaCounterContract>();
         }
 
         /// <summary> Initializes a new instance of QuotaCounterListResult. </summary>

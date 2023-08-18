@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ApiManagementServicePatch. </summary>
         public ApiManagementServicePatch()
         {
-            Zones = new ChangeTrackingList<string>();
-            HostnameConfigurations = new ChangeTrackingList<HostnameConfiguration>();
-            PublicIPAddresses = new ChangeTrackingList<IPAddress>();
-            PrivateIPAddresses = new ChangeTrackingList<IPAddress>();
-            AdditionalLocations = new ChangeTrackingList<AdditionalLocation>();
-            CustomProperties = new ChangeTrackingDictionary<string, string>();
-            Certificates = new ChangeTrackingList<CertificateConfiguration>();
-            PrivateEndpointConnections = new ChangeTrackingList<RemotePrivateEndpointConnectionWrapper>();
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Zones = new Core.ChangeTrackingList<string>();
+            HostnameConfigurations = new Core.ChangeTrackingList<HostnameConfiguration>();
+            PublicIPAddresses = new Core.ChangeTrackingList<IPAddress>();
+            PrivateIPAddresses = new Core.ChangeTrackingList<IPAddress>();
+            AdditionalLocations = new Core.ChangeTrackingList<AdditionalLocation>();
+            CustomProperties = new Core.ChangeTrackingDictionary<string, string>();
+            Certificates = new Core.ChangeTrackingList<CertificateConfiguration>();
+            PrivateEndpointConnections = new Core.ChangeTrackingList<RemotePrivateEndpointConnectionWrapper>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ApiManagementServicePatch. </summary>

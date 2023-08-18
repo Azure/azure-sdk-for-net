@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.Communication
 {
-    internal partial class CommunicationIdentifierModel : IUtf8JsonSerializable
+    internal partial class CommunicationIdentifierModel : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsDefined(RawId))
+            if (Core.Optional.IsDefined(RawId))
             {
                 writer.WritePropertyName("rawId"u8);
                 writer.WriteStringValue(RawId);
             }
-            if (Optional.IsDefined(CommunicationUser))
+            if (Core.Optional.IsDefined(CommunicationUser))
             {
                 writer.WritePropertyName("communicationUser"u8);
                 writer.WriteObjectValue(CommunicationUser);
             }
-            if (Optional.IsDefined(PhoneNumber))
+            if (Core.Optional.IsDefined(PhoneNumber))
             {
                 writer.WritePropertyName("phoneNumber"u8);
                 writer.WriteObjectValue(PhoneNumber);
             }
-            if (Optional.IsDefined(MicrosoftTeamsUser))
+            if (Core.Optional.IsDefined(MicrosoftTeamsUser))
             {
                 writer.WritePropertyName("microsoftTeamsUser"u8);
                 writer.WriteObjectValue(MicrosoftTeamsUser);
@@ -49,11 +49,11 @@ namespace Azure.Communication
             {
                 return null;
             }
-            Optional<CommunicationIdentifierModelKind> kind = default;
-            Optional<string> rawId = default;
-            Optional<CommunicationUserIdentifierModel> communicationUser = default;
-            Optional<PhoneNumberIdentifierModel> phoneNumber = default;
-            Optional<MicrosoftTeamsUserIdentifierModel> microsoftTeamsUser = default;
+            Core.Optional<CommunicationIdentifierModelKind> kind = default;
+            Core.Optional<string> rawId = default;
+            Core.Optional<CommunicationUserIdentifierModel> communicationUser = default;
+            Core.Optional<PhoneNumberIdentifierModel> phoneNumber = default;
+            Core.Optional<MicrosoftTeamsUserIdentifierModel> microsoftTeamsUser = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -98,7 +98,7 @@ namespace Azure.Communication
                     continue;
                 }
             }
-            return new CommunicationIdentifierModel(Optional.ToNullable(kind), rawId.Value, communicationUser.Value, phoneNumber.Value, microsoftTeamsUser.Value);
+            return new CommunicationIdentifierModel(Core.Optional.ToNullable(kind), rawId.Value, communicationUser.Value, phoneNumber.Value, microsoftTeamsUser.Value);
         }
     }
 }

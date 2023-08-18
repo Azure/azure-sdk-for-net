@@ -13,29 +13,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class WorkloadNetworkSegmentData : IUtf8JsonSerializable
+    public partial class WorkloadNetworkSegmentData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(ConnectedGateway))
+            if (Core.Optional.IsDefined(ConnectedGateway))
             {
                 writer.WritePropertyName("connectedGateway"u8);
                 writer.WriteStringValue(ConnectedGateway);
             }
-            if (Optional.IsDefined(Subnet))
+            if (Core.Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteObjectValue(Subnet);
             }
-            if (Optional.IsDefined(Revision))
+            if (Core.Optional.IsDefined(Revision))
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);
@@ -53,14 +53,14 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> connectedGateway = default;
-            Optional<WorkloadNetworkSegmentSubnet> subnet = default;
-            Optional<IReadOnlyList<WorkloadNetworkSegmentPortVif>> portVif = default;
-            Optional<WorkloadNetworkSegmentStatus> status = default;
-            Optional<WorkloadNetworkSegmentProvisioningState> provisioningState = default;
-            Optional<long> revision = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> connectedGateway = default;
+            Core.Optional<WorkloadNetworkSegmentSubnet> subnet = default;
+            Core.Optional<IReadOnlyList<WorkloadNetworkSegmentPortVif>> portVif = default;
+            Core.Optional<WorkloadNetworkSegmentStatus> status = default;
+            Core.Optional<WorkloadNetworkSegmentProvisioningState> provisioningState = default;
+            Core.Optional<long> revision = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Avs
                     continue;
                 }
             }
-            return new WorkloadNetworkSegmentData(id, name, type, systemData.Value, displayName.Value, connectedGateway.Value, subnet.Value, Optional.ToList(portVif), Optional.ToNullable(status), Optional.ToNullable(provisioningState), Optional.ToNullable(revision));
+            return new WorkloadNetworkSegmentData(id, name, type, systemData.Value, displayName.Value, connectedGateway.Value, subnet.Value, Core.Optional.ToList(portVif), Core.Optional.ToNullable(status), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(revision));
         }
     }
 }

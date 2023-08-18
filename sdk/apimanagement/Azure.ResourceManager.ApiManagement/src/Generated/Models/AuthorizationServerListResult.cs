@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of AuthorizationServerListResult. </summary>
         internal AuthorizationServerListResult()
         {
-            Value = new ChangeTrackingList<ApiManagementAuthorizationServerData>();
+            Value = new Core.ChangeTrackingList<ApiManagementAuthorizationServerData>();
         }
 
         /// <summary> Initializes a new instance of AuthorizationServerListResult. </summary>

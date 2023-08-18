@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> sourceControlSyncJobId = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<SourceControlProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset?> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
-            Optional<SourceControlSyncType> syncType = default;
-            Optional<string> exception = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> sourceControlSyncJobId = default;
+            Core.Optional<DateTimeOffset> creationTime = default;
+            Core.Optional<SourceControlProvisioningState> provisioningState = default;
+            Core.Optional<DateTimeOffset?> startTime = default;
+            Core.Optional<DateTimeOffset?> endTime = default;
+            Core.Optional<SourceControlSyncType> syncType = default;
+            Core.Optional<string> exception = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new SourceControlSyncJobResult(id.Value, sourceControlSyncJobId.Value, Optional.ToNullable(creationTime), Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(syncType), exception.Value);
+            return new SourceControlSyncJobResult(id.Value, sourceControlSyncJobId.Value, Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToNullable(syncType), exception.Value);
         }
     }
 }

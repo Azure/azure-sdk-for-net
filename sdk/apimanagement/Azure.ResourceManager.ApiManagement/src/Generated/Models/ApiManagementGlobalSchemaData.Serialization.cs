@@ -13,24 +13,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementGlobalSchemaData : IUtf8JsonSerializable
+    public partial class ApiManagementGlobalSchemaData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SchemaType))
+            if (Core.Optional.IsDefined(SchemaType))
             {
                 writer.WritePropertyName("schemaType"u8);
                 writer.WriteStringValue(SchemaType.Value.ToString());
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Value))
+            if (Core.Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Value.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(Document))
+            if (Core.Optional.IsDefined(Document))
             {
                 writer.WritePropertyName("document"u8);
 #if NET6_0_OR_GREATER
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ApiSchemaType> schemaType = default;
-            Optional<string> description = default;
-            Optional<BinaryData> value = default;
-            Optional<BinaryData> document = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ApiSchemaType> schemaType = default;
+            Core.Optional<string> description = default;
+            Core.Optional<BinaryData> value = default;
+            Core.Optional<BinaryData> document = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new ApiManagementGlobalSchemaData(id, name, type, systemData.Value, Optional.ToNullable(schemaType), description.Value, value.Value, document.Value);
+            return new ApiManagementGlobalSchemaData(id, name, type, systemData.Value, Core.Optional.ToNullable(schemaType), description.Value, value.Value, document.Value);
         }
     }
 }

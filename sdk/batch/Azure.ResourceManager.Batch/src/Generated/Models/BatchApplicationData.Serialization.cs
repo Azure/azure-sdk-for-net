@@ -12,24 +12,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Batch
 {
-    public partial class BatchApplicationData : IUtf8JsonSerializable
+    public partial class BatchApplicationData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(AllowUpdates))
+            if (Core.Optional.IsDefined(AllowUpdates))
             {
                 writer.WritePropertyName("allowUpdates"u8);
                 writer.WriteBooleanValue(AllowUpdates.Value);
             }
-            if (Optional.IsDefined(DefaultVersion))
+            if (Core.Optional.IsDefined(DefaultVersion))
             {
                 writer.WritePropertyName("defaultVersion"u8);
                 writer.WriteStringValue(DefaultVersion);
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.Batch
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            Core.Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<bool> allowUpdates = default;
-            Optional<string> defaultVersion = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<bool> allowUpdates = default;
+            Core.Optional<string> defaultVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Batch
                     continue;
                 }
             }
-            return new BatchApplicationData(id, name, type, systemData.Value, displayName.Value, Optional.ToNullable(allowUpdates), defaultVersion.Value, Optional.ToNullable(etag));
+            return new BatchApplicationData(id, name, type, systemData.Value, displayName.Value, Core.Optional.ToNullable(allowUpdates), defaultVersion.Value, Core.Optional.ToNullable(etag));
         }
     }
 }

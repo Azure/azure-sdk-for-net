@@ -390,7 +390,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPrescriptionsByPartyIdRequest(partyId, prescriptionMapIds, types, productCodes, productNames, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPrescriptionsByPartyIdNextPageRequest(nextLink, partyId, prescriptionMapIds, types, productCodes, productNames, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Prescriptions.GetPrescriptionsByPartyId", "value", "nextLink", context);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Prescriptions.GetPrescriptionsByPartyId", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -437,7 +437,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPrescriptionsByPartyIdRequest(partyId, prescriptionMapIds, types, productCodes, productNames, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPrescriptionsByPartyIdNextPageRequest(nextLink, partyId, prescriptionMapIds, types, productCodes, productNames, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Prescriptions.GetPrescriptionsByPartyId", "value", "nextLink", context);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Prescriptions.GetPrescriptionsByPartyId", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -479,7 +479,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPrescriptionsRequest(prescriptionMapIds, types, productCodes, productNames, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPrescriptionsNextPageRequest(nextLink, prescriptionMapIds, types, productCodes, productNames, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Prescriptions.GetPrescriptions", "value", "nextLink", context);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Prescriptions.GetPrescriptions", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -521,7 +521,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPrescriptionsRequest(prescriptionMapIds, types, productCodes, productNames, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPrescriptionsNextPageRequest(nextLink, prescriptionMapIds, types, productCodes, productNames, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Prescriptions.GetPrescriptions", "value", "nextLink", context);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Prescriptions.GetPrescriptions", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -555,7 +555,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, partyId, prescriptionId, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "Prescriptions.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await Core.ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "Prescriptions.CreateCascadeDeleteJob", Core.OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -595,7 +595,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, partyId, prescriptionId, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "Prescriptions.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil);
+                return Core.ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "Prescriptions.CreateCascadeDeleteJob", Core.OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -614,63 +614,63 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendPath("/parties/", false);
             uri.AppendPath(partyId, true);
             uri.AppendPath("/prescriptions", false);
-            if (prescriptionMapIds != null && Optional.IsCollectionDefined(prescriptionMapIds))
+            if (prescriptionMapIds != null && Core.Optional.IsCollectionDefined(prescriptionMapIds))
             {
                 foreach (var param in prescriptionMapIds)
                 {
                     uri.AppendQuery("prescriptionMapIds", param, true);
                 }
             }
-            if (types != null && Optional.IsCollectionDefined(types))
+            if (types != null && Core.Optional.IsCollectionDefined(types))
             {
                 foreach (var param in types)
                 {
                     uri.AppendQuery("types", param, true);
                 }
             }
-            if (productCodes != null && Optional.IsCollectionDefined(productCodes))
+            if (productCodes != null && Core.Optional.IsCollectionDefined(productCodes))
             {
                 foreach (var param in productCodes)
                 {
                     uri.AppendQuery("productCodes", param, true);
                 }
             }
-            if (productNames != null && Optional.IsCollectionDefined(productNames))
+            if (productNames != null && Core.Optional.IsCollectionDefined(productNames))
             {
                 foreach (var param in productNames)
                 {
                     uri.AppendQuery("productNames", param, true);
                 }
             }
-            if (sources != null && Optional.IsCollectionDefined(sources))
+            if (sources != null && Core.Optional.IsCollectionDefined(sources))
             {
                 foreach (var param in sources)
                 {
                     uri.AppendQuery("sources", param, true);
                 }
             }
-            if (ids != null && Optional.IsCollectionDefined(ids))
+            if (ids != null && Core.Optional.IsCollectionDefined(ids))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null && Optional.IsCollectionDefined(names))
+            if (names != null && Core.Optional.IsCollectionDefined(names))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            if (propertyFilters != null && Core.Optional.IsCollectionDefined(propertyFilters))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            if (statuses != null && Core.Optional.IsCollectionDefined(statuses))
             {
                 foreach (var param in statuses)
                 {
@@ -768,63 +768,63 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/prescriptions", false);
-            if (prescriptionMapIds != null && Optional.IsCollectionDefined(prescriptionMapIds))
+            if (prescriptionMapIds != null && Core.Optional.IsCollectionDefined(prescriptionMapIds))
             {
                 foreach (var param in prescriptionMapIds)
                 {
                     uri.AppendQuery("prescriptionMapIds", param, true);
                 }
             }
-            if (types != null && Optional.IsCollectionDefined(types))
+            if (types != null && Core.Optional.IsCollectionDefined(types))
             {
                 foreach (var param in types)
                 {
                     uri.AppendQuery("types", param, true);
                 }
             }
-            if (productCodes != null && Optional.IsCollectionDefined(productCodes))
+            if (productCodes != null && Core.Optional.IsCollectionDefined(productCodes))
             {
                 foreach (var param in productCodes)
                 {
                     uri.AppendQuery("productCodes", param, true);
                 }
             }
-            if (productNames != null && Optional.IsCollectionDefined(productNames))
+            if (productNames != null && Core.Optional.IsCollectionDefined(productNames))
             {
                 foreach (var param in productNames)
                 {
                     uri.AppendQuery("productNames", param, true);
                 }
             }
-            if (sources != null && Optional.IsCollectionDefined(sources))
+            if (sources != null && Core.Optional.IsCollectionDefined(sources))
             {
                 foreach (var param in sources)
                 {
                     uri.AppendQuery("sources", param, true);
                 }
             }
-            if (ids != null && Optional.IsCollectionDefined(ids))
+            if (ids != null && Core.Optional.IsCollectionDefined(ids))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null && Optional.IsCollectionDefined(names))
+            if (names != null && Core.Optional.IsCollectionDefined(names))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            if (propertyFilters != null && Core.Optional.IsCollectionDefined(propertyFilters))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            if (statuses != null && Core.Optional.IsCollectionDefined(statuses))
             {
                 foreach (var param in statuses)
                 {

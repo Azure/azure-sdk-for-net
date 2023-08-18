@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of CloudLinkList. </summary>
         internal CloudLinkList()
         {
-            Value = new ChangeTrackingList<AvsCloudLinkData>();
+            Value = new Core.ChangeTrackingList<AvsCloudLinkData>();
         }
 
         /// <summary> Initializes a new instance of CloudLinkList. </summary>

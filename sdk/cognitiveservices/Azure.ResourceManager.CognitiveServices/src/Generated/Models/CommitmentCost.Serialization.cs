@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<string> commitmentMeterId = default;
-            Optional<string> overageMeterId = default;
+            Core.Optional<string> commitmentMeterId = default;
+            Core.Optional<string> overageMeterId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("commitmentMeterId"u8))

@@ -12,39 +12,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class PortalSettingsContractData : IUtf8JsonSerializable
+    public partial class PortalSettingsContractData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Uri))
+            if (Core.Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ValidationKey))
+            if (Core.Optional.IsDefined(ValidationKey))
             {
                 writer.WritePropertyName("validationKey"u8);
                 writer.WriteStringValue(ValidationKey);
             }
-            if (Optional.IsDefined(IsSubscriptions))
+            if (Core.Optional.IsDefined(IsSubscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteObjectValue(IsSubscriptions);
             }
-            if (Optional.IsDefined(IsUserRegistration))
+            if (Core.Optional.IsDefined(IsUserRegistration))
             {
                 writer.WritePropertyName("userRegistration"u8);
                 writer.WriteObjectValue(IsUserRegistration);
             }
-            if (Optional.IsDefined(IsRedirectEnabled))
+            if (Core.Optional.IsDefined(IsRedirectEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsRedirectEnabled.Value);
             }
-            if (Optional.IsDefined(TermsOfService))
+            if (Core.Optional.IsDefined(TermsOfService))
             {
                 writer.WritePropertyName("termsOfService"u8);
                 writer.WriteObjectValue(TermsOfService);
@@ -62,13 +62,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> uri = default;
-            Optional<string> validationKey = default;
-            Optional<SubscriptionDelegationSettingProperties> subscriptions = default;
-            Optional<RegistrationDelegationSettingProperties> userRegistration = default;
-            Optional<bool> enabled = default;
-            Optional<TermsOfServiceProperties> termsOfService = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<Uri> uri = default;
+            Core.Optional<string> validationKey = default;
+            Core.Optional<SubscriptionDelegationSettingProperties> subscriptions = default;
+            Core.Optional<RegistrationDelegationSettingProperties> userRegistration = default;
+            Core.Optional<bool> enabled = default;
+            Core.Optional<TermsOfServiceProperties> termsOfService = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new PortalSettingsContractData(id, name, type, systemData.Value, uri.Value, validationKey.Value, subscriptions.Value, userRegistration.Value, Optional.ToNullable(enabled), termsOfService.Value);
+            return new PortalSettingsContractData(id, name, type, systemData.Value, uri.Value, validationKey.Value, subscriptions.Value, userRegistration.Value, Core.Optional.ToNullable(enabled), termsOfService.Value);
         }
     }
 }

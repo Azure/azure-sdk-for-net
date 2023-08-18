@@ -18,10 +18,10 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<string> dialogId = default;
-            Optional<DialogOptionsInternal> dialogOptions = default;
-            Optional<DialogInputType> dialogInputType = default;
-            Optional<string> operationContext = default;
+            Core.Optional<string> dialogId = default;
+            Core.Optional<DialogOptionsInternal> dialogOptions = default;
+            Core.Optional<DialogInputType> dialogInputType = default;
+            Core.Optional<string> operationContext = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dialogId"u8))
@@ -53,7 +53,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new DialogStateResponseInternal(dialogId.Value, dialogOptions.Value, Optional.ToNullable(dialogInputType), operationContext.Value);
+            return new DialogStateResponseInternal(dialogId.Value, dialogOptions.Value, Core.Optional.ToNullable(dialogInputType), operationContext.Value);
         }
     }
 }

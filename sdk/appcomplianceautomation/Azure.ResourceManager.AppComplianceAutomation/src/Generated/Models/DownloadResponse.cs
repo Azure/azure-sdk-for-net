@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <summary> Initializes a new instance of DownloadResponse. </summary>
         internal DownloadResponse()
         {
-            ResourceList = new ChangeTrackingList<ResourceItem>();
-            ComplianceReport = new ChangeTrackingList<ComplianceReportItem>();
+            ResourceList = new Core.ChangeTrackingList<ResourceItem>();
+            ComplianceReport = new Core.ChangeTrackingList<ComplianceReportItem>();
         }
 
         /// <summary> Initializes a new instance of DownloadResponse. </summary>

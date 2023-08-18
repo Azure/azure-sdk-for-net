@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Initializes a new instance of SmartGroupModificationProperties. </summary>
         public SmartGroupModificationProperties()
         {
-            Modifications = new ChangeTrackingList<SmartGroupModificationItemInfo>();
+            Modifications = new Core.ChangeTrackingList<SmartGroupModificationItemInfo>();
         }
 
         /// <summary> Initializes a new instance of SmartGroupModificationProperties. </summary>

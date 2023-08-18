@@ -10,29 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class SourceUploadedUserSourceInfo : IUtf8JsonSerializable
+    public partial class SourceUploadedUserSourceInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ArtifactSelector))
+            if (Core.Optional.IsDefined(ArtifactSelector))
             {
                 writer.WritePropertyName("artifactSelector"u8);
                 writer.WriteStringValue(ArtifactSelector);
             }
-            if (Optional.IsDefined(RuntimeVersion))
+            if (Core.Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
-            if (Optional.IsDefined(RelativePath))
+            if (Core.Optional.IsDefined(RelativePath))
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UserSourceInfoType);
-            if (Optional.IsDefined(Version))
+            if (Core.Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> artifactSelector = default;
-            Optional<string> runtimeVersion = default;
-            Optional<string> relativePath = default;
+            Core.Optional<string> artifactSelector = default;
+            Core.Optional<string> runtimeVersion = default;
+            Core.Optional<string> relativePath = default;
             string type = default;
-            Optional<string> version = default;
+            Core.Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("artifactSelector"u8))

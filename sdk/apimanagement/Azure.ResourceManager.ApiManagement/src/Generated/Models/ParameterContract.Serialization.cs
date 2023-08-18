@@ -11,31 +11,31 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ParameterContract : IUtf8JsonSerializable
+    public partial class ParameterContract : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ParameterContractType);
-            if (Optional.IsDefined(DefaultValue))
+            if (Core.Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
             }
-            if (Optional.IsDefined(IsRequired))
+            if (Core.Optional.IsDefined(IsRequired))
             {
                 writer.WritePropertyName("required"u8);
                 writer.WriteBooleanValue(IsRequired.Value);
             }
-            if (Optional.IsCollectionDefined(Values))
+            if (Core.Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SchemaId))
+            if (Core.Optional.IsDefined(SchemaId))
             {
                 writer.WritePropertyName("schemaId"u8);
                 writer.WriteStringValue(SchemaId);
             }
-            if (Optional.IsDefined(TypeName))
+            if (Core.Optional.IsDefined(TypeName))
             {
                 writer.WritePropertyName("typeName"u8);
                 writer.WriteStringValue(TypeName);
             }
-            if (Optional.IsCollectionDefined(Examples))
+            if (Core.Optional.IsCollectionDefined(Examples))
             {
                 writer.WritePropertyName("examples"u8);
                 writer.WriteStartObject();
@@ -76,14 +76,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             string name = default;
-            Optional<string> description = default;
+            Core.Optional<string> description = default;
             string type = default;
-            Optional<string> defaultValue = default;
-            Optional<bool> required = default;
-            Optional<IList<string>> values = default;
-            Optional<string> schemaId = default;
-            Optional<string> typeName = default;
-            Optional<IDictionary<string, ParameterExampleContract>> examples = default;
+            Core.Optional<string> defaultValue = default;
+            Core.Optional<bool> required = default;
+            Core.Optional<IList<string>> values = default;
+            Core.Optional<string> schemaId = default;
+            Core.Optional<string> typeName = default;
+            Core.Optional<IDictionary<string, ParameterExampleContract>> examples = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ParameterContract(name, description.Value, type, defaultValue.Value, Optional.ToNullable(required), Optional.ToList(values), schemaId.Value, typeName.Value, Optional.ToDictionary(examples));
+            return new ParameterContract(name, description.Value, type, defaultValue.Value, Core.Optional.ToNullable(required), Core.Optional.ToList(values), schemaId.Value, typeName.Value, Core.Optional.ToDictionary(examples));
         }
     }
 }

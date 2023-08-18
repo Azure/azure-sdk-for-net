@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> counterProperty = default;
-            Optional<long> counterValue = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
-            Optional<string> id = default;
+            Core.Optional<string> counterProperty = default;
+            Core.Optional<long> counterValue = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset?> endTime = default;
+            Core.Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("counterProperty"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new AutomationAccountStatistics(counterProperty.Value, Optional.ToNullable(counterValue), Optional.ToNullable(startTime), Optional.ToNullable(endTime), id.Value);
+            return new AutomationAccountStatistics(counterProperty.Value, Core.Optional.ToNullable(counterValue), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), id.Value);
         }
     }
 }

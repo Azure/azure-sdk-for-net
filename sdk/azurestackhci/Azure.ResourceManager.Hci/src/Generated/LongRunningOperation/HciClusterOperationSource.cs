@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci
 {
-    internal class HciClusterOperationSource : IOperationSource<HciClusterResource>
+    internal class HciClusterOperationSource : Core.IOperationSource<HciClusterResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Hci
             _client = client;
         }
 
-        HciClusterResource IOperationSource<HciClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        HciClusterResource Core.IOperationSource<HciClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = HciClusterData.DeserializeHciClusterData(document.RootElement);
             return new HciClusterResource(_client, data);
         }
 
-        async ValueTask<HciClusterResource> IOperationSource<HciClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HciClusterResource> Core.IOperationSource<HciClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = HciClusterData.DeserializeHciClusterData(document.RootElement);

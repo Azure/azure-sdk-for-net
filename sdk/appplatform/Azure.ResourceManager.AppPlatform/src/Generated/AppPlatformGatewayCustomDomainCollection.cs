@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _appPlatformGatewayCustomDomainGatewayCustomDomainsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppPlatformGatewayCustomDomainResource>(new AppPlatformGatewayCustomDomainOperationSource(Client), _appPlatformGatewayCustomDomainGatewayCustomDomainsClientDiagnostics, Pipeline, _appPlatformGatewayCustomDomainGatewayCustomDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppPlatformArmOperation<AppPlatformGatewayCustomDomainResource>(new AppPlatformGatewayCustomDomainOperationSource(Client), _appPlatformGatewayCustomDomainGatewayCustomDomainsClientDiagnostics, Pipeline, _appPlatformGatewayCustomDomainGatewayCustomDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _appPlatformGatewayCustomDomainGatewayCustomDomainsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppPlatformGatewayCustomDomainResource>(new AppPlatformGatewayCustomDomainOperationSource(Client), _appPlatformGatewayCustomDomainGatewayCustomDomainsClientDiagnostics, Pipeline, _appPlatformGatewayCustomDomainGatewayCustomDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppPlatformArmOperation<AppPlatformGatewayCustomDomainResource>(new AppPlatformGatewayCustomDomainOperationSource(Client), _appPlatformGatewayCustomDomainGatewayCustomDomainsClientDiagnostics, Pipeline, _appPlatformGatewayCustomDomainGatewayCustomDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformGatewayCustomDomainGatewayCustomDomainsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformGatewayCustomDomainGatewayCustomDomainsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformGatewayCustomDomainResource(Client, AppPlatformGatewayCustomDomainData.DeserializeAppPlatformGatewayCustomDomainData(e)), _appPlatformGatewayCustomDomainGatewayCustomDomainsClientDiagnostics, Pipeline, "AppPlatformGatewayCustomDomainCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformGatewayCustomDomainResource(Client, AppPlatformGatewayCustomDomainData.DeserializeAppPlatformGatewayCustomDomainData(e)), _appPlatformGatewayCustomDomainGatewayCustomDomainsClientDiagnostics, Pipeline, "AppPlatformGatewayCustomDomainCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformGatewayCustomDomainGatewayCustomDomainsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformGatewayCustomDomainGatewayCustomDomainsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformGatewayCustomDomainResource(Client, AppPlatformGatewayCustomDomainData.DeserializeAppPlatformGatewayCustomDomainData(e)), _appPlatformGatewayCustomDomainGatewayCustomDomainsClientDiagnostics, Pipeline, "AppPlatformGatewayCustomDomainCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformGatewayCustomDomainResource(Client, AppPlatformGatewayCustomDomainData.DeserializeAppPlatformGatewayCustomDomainData(e)), _appPlatformGatewayCustomDomainGatewayCustomDomainsClientDiagnostics, Pipeline, "AppPlatformGatewayCustomDomainCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

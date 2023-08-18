@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchCifsMountConfiguration : IUtf8JsonSerializable
+    public partial class BatchCifsMountConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("userName"u8);
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStringValue(Source);
             writer.WritePropertyName("relativeMountPath"u8);
             writer.WriteStringValue(RelativeMountPath);
-            if (Optional.IsDefined(MountOptions))
+            if (Core.Optional.IsDefined(MountOptions))
             {
                 writer.WritePropertyName("mountOptions"u8);
                 writer.WriteStringValue(MountOptions);
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Batch.Models
             string userName = default;
             string source = default;
             string relativeMountPath = default;
-            Optional<string> mountOptions = default;
+            Core.Optional<string> mountOptions = default;
             string password = default;
             foreach (var property in element.EnumerateObject())
             {

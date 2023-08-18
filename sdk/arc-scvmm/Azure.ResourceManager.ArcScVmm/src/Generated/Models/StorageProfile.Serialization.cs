@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
-    internal partial class StorageProfile : IUtf8JsonSerializable
+    internal partial class StorageProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Disks))
+            if (Core.Optional.IsCollectionDefined(Disks))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<IList<VirtualDisk>> disks = default;
+            Core.Optional<IList<VirtualDisk>> disks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("disks"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     continue;
                 }
             }
-            return new StorageProfile(Optional.ToList(disks));
+            return new StorageProfile(Core.Optional.ToList(disks));
         }
     }
 }

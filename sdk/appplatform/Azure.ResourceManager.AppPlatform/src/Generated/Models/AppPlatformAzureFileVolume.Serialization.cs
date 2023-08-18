@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformAzureFileVolume : IUtf8JsonSerializable
+    public partial class AppPlatformAzureFileVolume : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("shareName"u8);
@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStringValue(UnderlyingResourceType.ToString());
             writer.WritePropertyName("mountPath"u8);
             writer.WriteStringValue(MountPath);
-            if (Optional.IsDefined(IsReadOnly))
+            if (Core.Optional.IsDefined(IsReadOnly))
             {
                 writer.WritePropertyName("readOnly"u8);
                 writer.WriteBooleanValue(IsReadOnly.Value);
             }
-            if (Optional.IsCollectionDefined(MountOptions))
+            if (Core.Optional.IsCollectionDefined(MountOptions))
             {
                 writer.WritePropertyName("mountOptions"u8);
                 writer.WriteStartArray();
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             string shareName = default;
             UnderlyingResourceType type = default;
             string mountPath = default;
-            Optional<bool> readOnly = default;
-            Optional<IList<string>> mountOptions = default;
+            Core.Optional<bool> readOnly = default;
+            Core.Optional<IList<string>> mountOptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("shareName"u8))
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformAzureFileVolume(type, mountPath, Optional.ToNullable(readOnly), Optional.ToList(mountOptions), shareName);
+            return new AppPlatformAzureFileVolume(type, mountPath, Core.Optional.ToNullable(readOnly), Core.Optional.ToList(mountOptions), shareName);
         }
     }
 }

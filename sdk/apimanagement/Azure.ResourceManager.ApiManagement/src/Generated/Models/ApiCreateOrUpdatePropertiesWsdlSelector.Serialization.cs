@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiCreateOrUpdatePropertiesWsdlSelector : IUtf8JsonSerializable
+    public partial class ApiCreateOrUpdatePropertiesWsdlSelector : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(WsdlServiceName))
+            if (Core.Optional.IsDefined(WsdlServiceName))
             {
                 writer.WritePropertyName("wsdlServiceName"u8);
                 writer.WriteStringValue(WsdlServiceName);
             }
-            if (Optional.IsDefined(WsdlEndpointName))
+            if (Core.Optional.IsDefined(WsdlEndpointName))
             {
                 writer.WritePropertyName("wsdlEndpointName"u8);
                 writer.WriteStringValue(WsdlEndpointName);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> wsdlServiceName = default;
-            Optional<string> wsdlEndpointName = default;
+            Core.Optional<string> wsdlServiceName = default;
+            Core.Optional<string> wsdlEndpointName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("wsdlServiceName"u8))

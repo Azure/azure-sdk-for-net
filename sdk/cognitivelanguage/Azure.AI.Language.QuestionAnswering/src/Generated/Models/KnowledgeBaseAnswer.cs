@@ -16,8 +16,8 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <summary> Initializes a new instance of KnowledgeBaseAnswer. </summary>
         internal KnowledgeBaseAnswer()
         {
-            Questions = new ChangeTrackingList<string>();
-            Metadata = new ChangeTrackingDictionary<string, string>();
+            Questions = new Core.ChangeTrackingList<string>();
+            Metadata = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of KnowledgeBaseAnswer. </summary>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BotServicePrivateEndpointConnectionData>> value = default;
+            Core.Optional<IReadOnlyList<BotServicePrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new BotServicePrivateEndpointConnectionListResult(Optional.ToList(value));
+            return new BotServicePrivateEndpointConnectionListResult(Core.Optional.ToList(value));
         }
     }
 }

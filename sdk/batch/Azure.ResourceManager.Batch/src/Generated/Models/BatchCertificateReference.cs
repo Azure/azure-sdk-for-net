@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Batch.Models
             Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
-            Visibility = new ChangeTrackingList<BatchCertificateVisibility>();
+            Visibility = new Core.ChangeTrackingList<BatchCertificateVisibility>();
         }
 
         /// <summary> Initializes a new instance of BatchCertificateReference. </summary>

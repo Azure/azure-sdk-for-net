@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
-    internal class AvsPrivateCloudDatastoreOperationSource : IOperationSource<AvsPrivateCloudDatastoreResource>
+    internal class AvsPrivateCloudDatastoreOperationSource : Core.IOperationSource<AvsPrivateCloudDatastoreResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Avs
             _client = client;
         }
 
-        AvsPrivateCloudDatastoreResource IOperationSource<AvsPrivateCloudDatastoreResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        AvsPrivateCloudDatastoreResource Core.IOperationSource<AvsPrivateCloudDatastoreResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AvsPrivateCloudDatastoreData.DeserializeAvsPrivateCloudDatastoreData(document.RootElement);
             return new AvsPrivateCloudDatastoreResource(_client, data);
         }
 
-        async ValueTask<AvsPrivateCloudDatastoreResource> IOperationSource<AvsPrivateCloudDatastoreResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AvsPrivateCloudDatastoreResource> Core.IOperationSource<AvsPrivateCloudDatastoreResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AvsPrivateCloudDatastoreData.DeserializeAvsPrivateCloudDatastoreData(document.RootElement);

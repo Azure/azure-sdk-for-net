@@ -18,7 +18,7 @@ namespace Azure.Security.Attestation
             {
                 return null;
             }
-            Optional<string> data = default;
+            Core.Optional<string> data = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("data"u8))

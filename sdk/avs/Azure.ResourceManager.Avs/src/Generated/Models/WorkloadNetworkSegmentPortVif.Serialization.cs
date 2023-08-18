@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<string> portName = default;
+            Core.Optional<string> portName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("portName"u8))

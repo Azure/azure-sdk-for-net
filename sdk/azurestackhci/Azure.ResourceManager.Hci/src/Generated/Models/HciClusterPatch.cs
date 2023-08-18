@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of HciClusterPatch. </summary>
         public HciClusterPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            UserAssignedIdentities = new Core.ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
         /// <summary> Resource tags. </summary>

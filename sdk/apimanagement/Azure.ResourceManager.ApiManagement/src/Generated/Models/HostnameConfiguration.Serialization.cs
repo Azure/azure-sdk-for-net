@@ -11,56 +11,56 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class HostnameConfiguration : IUtf8JsonSerializable
+    public partial class HostnameConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(HostnameType.ToString());
             writer.WritePropertyName("hostName"u8);
             writer.WriteStringValue(HostName);
-            if (Optional.IsDefined(KeyVaultSecretUri))
+            if (Core.Optional.IsDefined(KeyVaultSecretUri))
             {
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultSecretUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(IdentityClientId))
+            if (Core.Optional.IsDefined(IdentityClientId))
             {
                 writer.WritePropertyName("identityClientId"u8);
                 writer.WriteStringValue(IdentityClientId);
             }
-            if (Optional.IsDefined(EncodedCertificate))
+            if (Core.Optional.IsDefined(EncodedCertificate))
             {
                 writer.WritePropertyName("encodedCertificate"u8);
                 writer.WriteStringValue(EncodedCertificate);
             }
-            if (Optional.IsDefined(CertificatePassword))
+            if (Core.Optional.IsDefined(CertificatePassword))
             {
                 writer.WritePropertyName("certificatePassword"u8);
                 writer.WriteStringValue(CertificatePassword);
             }
-            if (Optional.IsDefined(IsDefaultSslBindingEnabled))
+            if (Core.Optional.IsDefined(IsDefaultSslBindingEnabled))
             {
                 writer.WritePropertyName("defaultSslBinding"u8);
                 writer.WriteBooleanValue(IsDefaultSslBindingEnabled.Value);
             }
-            if (Optional.IsDefined(IsClientCertificateNegotiationEnabled))
+            if (Core.Optional.IsDefined(IsClientCertificateNegotiationEnabled))
             {
                 writer.WritePropertyName("negotiateClientCertificate"u8);
                 writer.WriteBooleanValue(IsClientCertificateNegotiationEnabled.Value);
             }
-            if (Optional.IsDefined(Certificate))
+            if (Core.Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteObjectValue(Certificate);
             }
-            if (Optional.IsDefined(CertificateSource))
+            if (Core.Optional.IsDefined(CertificateSource))
             {
                 writer.WritePropertyName("certificateSource"u8);
                 writer.WriteStringValue(CertificateSource.Value.ToString());
             }
-            if (Optional.IsDefined(CertificateStatus))
+            if (Core.Optional.IsDefined(CertificateStatus))
             {
                 writer.WritePropertyName("certificateStatus"u8);
                 writer.WriteStringValue(CertificateStatus.Value.ToString());
@@ -76,15 +76,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             HostnameType type = default;
             string hostName = default;
-            Optional<Uri> keyVaultId = default;
-            Optional<string> identityClientId = default;
-            Optional<string> encodedCertificate = default;
-            Optional<string> certificatePassword = default;
-            Optional<bool> defaultSslBinding = default;
-            Optional<bool> negotiateClientCertificate = default;
-            Optional<CertificateInformation> certificate = default;
-            Optional<CertificateSource> certificateSource = default;
-            Optional<CertificateStatus> certificateStatus = default;
+            Core.Optional<Uri> keyVaultId = default;
+            Core.Optional<string> identityClientId = default;
+            Core.Optional<string> encodedCertificate = default;
+            Core.Optional<string> certificatePassword = default;
+            Core.Optional<bool> defaultSslBinding = default;
+            Core.Optional<bool> negotiateClientCertificate = default;
+            Core.Optional<CertificateInformation> certificate = default;
+            Core.Optional<CertificateSource> certificateSource = default;
+            Core.Optional<CertificateStatus> certificateStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new HostnameConfiguration(type, hostName, keyVaultId.Value, identityClientId.Value, encodedCertificate.Value, certificatePassword.Value, Optional.ToNullable(defaultSslBinding), Optional.ToNullable(negotiateClientCertificate), certificate.Value, Optional.ToNullable(certificateSource), Optional.ToNullable(certificateStatus));
+            return new HostnameConfiguration(type, hostName, keyVaultId.Value, identityClientId.Value, encodedCertificate.Value, certificatePassword.Value, Core.Optional.ToNullable(defaultSslBinding), Core.Optional.ToNullable(negotiateClientCertificate), certificate.Value, Core.Optional.ToNullable(certificateSource), Core.Optional.ToNullable(certificateStatus));
         }
     }
 }

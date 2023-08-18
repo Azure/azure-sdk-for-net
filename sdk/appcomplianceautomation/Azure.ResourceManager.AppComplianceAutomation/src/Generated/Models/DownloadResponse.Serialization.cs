@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ResourceItem>> resourceList = default;
-            Optional<IReadOnlyList<ComplianceReportItem>> complianceReport = default;
-            Optional<DownloadResponseCompliancePdfReport> compliancePdfReport = default;
-            Optional<DownloadResponseComplianceDetailedPdfReport> complianceDetailedPdfReport = default;
+            Core.Optional<IReadOnlyList<ResourceItem>> resourceList = default;
+            Core.Optional<IReadOnlyList<ComplianceReportItem>> complianceReport = default;
+            Core.Optional<DownloadResponseCompliancePdfReport> compliancePdfReport = default;
+            Core.Optional<DownloadResponseComplianceDetailedPdfReport> complianceDetailedPdfReport = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceList"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     continue;
                 }
             }
-            return new DownloadResponse(Optional.ToList(resourceList), Optional.ToList(complianceReport), compliancePdfReport.Value, complianceDetailedPdfReport.Value);
+            return new DownloadResponse(Core.Optional.ToList(resourceList), Core.Optional.ToList(complianceReport), compliancePdfReport.Value, complianceDetailedPdfReport.Value);
         }
     }
 }

@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class ServiceAlertSummaryGroup : IUtf8JsonSerializable
+    public partial class ServiceAlertSummaryGroup : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Total))
+            if (Core.Optional.IsDefined(Total))
             {
                 writer.WritePropertyName("total"u8);
                 writer.WriteNumberValue(Total.Value);
             }
-            if (Optional.IsDefined(SmartGroupsCount))
+            if (Core.Optional.IsDefined(SmartGroupsCount))
             {
                 writer.WritePropertyName("smartGroupsCount"u8);
                 writer.WriteNumberValue(SmartGroupsCount.Value);
             }
-            if (Optional.IsDefined(GroupedBy))
+            if (Core.Optional.IsDefined(GroupedBy))
             {
                 writer.WritePropertyName("groupedby"u8);
                 writer.WriteStringValue(GroupedBy);
             }
-            if (Optional.IsCollectionDefined(Values))
+            if (Core.Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Optional<long> total = default;
-            Optional<long> smartGroupsCount = default;
-            Optional<string> groupedby = default;
-            Optional<IList<ServiceAlertSummaryGroupItemInfo>> values = default;
+            Core.Optional<long> total = default;
+            Core.Optional<long> smartGroupsCount = default;
+            Core.Optional<string> groupedby = default;
+            Core.Optional<IList<ServiceAlertSummaryGroupItemInfo>> values = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("total"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     continue;
                 }
             }
-            return new ServiceAlertSummaryGroup(Optional.ToNullable(total), Optional.ToNullable(smartGroupsCount), groupedby.Value, Optional.ToList(values));
+            return new ServiceAlertSummaryGroup(Core.Optional.ToNullable(total), Core.Optional.ToNullable(smartGroupsCount), groupedby.Value, Core.Optional.ToList(values));
         }
     }
 }

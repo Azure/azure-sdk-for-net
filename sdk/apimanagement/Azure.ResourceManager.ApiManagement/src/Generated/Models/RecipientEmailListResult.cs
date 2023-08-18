@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of RecipientEmailListResult. </summary>
         internal RecipientEmailListResult()
         {
-            Value = new ChangeTrackingList<RecipientEmailContract>();
+            Value = new Core.ChangeTrackingList<RecipientEmailContract>();
         }
 
         /// <summary> Initializes a new instance of RecipientEmailListResult. </summary>

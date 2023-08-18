@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationAdvancedSchedule : IUtf8JsonSerializable
+    public partial class AutomationAdvancedSchedule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(WeekDays))
+            if (Core.Optional.IsCollectionDefined(WeekDays))
             {
                 writer.WritePropertyName("weekDays"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MonthDays))
+            if (Core.Optional.IsCollectionDefined(MonthDays))
             {
                 writer.WritePropertyName("monthDays"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MonthlyOccurrences))
+            if (Core.Optional.IsCollectionDefined(MonthlyOccurrences))
             {
                 writer.WritePropertyName("monthlyOccurrences"u8);
                 writer.WriteStartArray();
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IList<string>> weekDays = default;
-            Optional<IList<int>> monthDays = default;
-            Optional<IList<AutomationAdvancedScheduleMonthlyOccurrence>> monthlyOccurrences = default;
+            Core.Optional<IList<string>> weekDays = default;
+            Core.Optional<IList<int>> monthDays = default;
+            Core.Optional<IList<AutomationAdvancedScheduleMonthlyOccurrence>> monthlyOccurrences = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("weekDays"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new AutomationAdvancedSchedule(Optional.ToList(weekDays), Optional.ToList(monthDays), Optional.ToList(monthlyOccurrences));
+            return new AutomationAdvancedSchedule(Core.Optional.ToList(weekDays), Core.Optional.ToList(monthDays), Core.Optional.ToList(monthlyOccurrences));
         }
     }
 }

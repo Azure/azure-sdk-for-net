@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> endpointId = default;
-            Optional<bool> history = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> endpointId = default;
+            Core.Optional<bool> history = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new ResourcesResponseEndpointsPropertiesItemsItem(id.Value, name.Value, endpointId.Value, Optional.ToNullable(history));
+            return new ResourcesResponseEndpointsPropertiesItemsItem(id.Value, name.Value, endpointId.Value, Core.Optional.ToNullable(history));
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of WorkloadNetworkDhcpEntity. </summary>
         protected WorkloadNetworkDhcpEntity()
         {
-            Segments = new ChangeTrackingList<string>();
+            Segments = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of WorkloadNetworkDhcpEntity. </summary>

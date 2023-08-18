@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class AuthenticationSettingsContract : IUtf8JsonSerializable
+    public partial class AuthenticationSettingsContract : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(OAuth2))
+            if (Core.Optional.IsDefined(OAuth2))
             {
                 writer.WritePropertyName("oAuth2"u8);
                 writer.WriteObjectValue(OAuth2);
             }
-            if (Optional.IsDefined(OpenId))
+            if (Core.Optional.IsDefined(OpenId))
             {
                 writer.WritePropertyName("openid"u8);
                 writer.WriteObjectValue(OpenId);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<OAuth2AuthenticationSettingsContract> oAuth2 = default;
-            Optional<OpenIdAuthenticationSettingsContract> openid = default;
+            Core.Optional<OAuth2AuthenticationSettingsContract> oAuth2 = default;
+            Core.Optional<OpenIdAuthenticationSettingsContract> openid = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("oAuth2"u8))

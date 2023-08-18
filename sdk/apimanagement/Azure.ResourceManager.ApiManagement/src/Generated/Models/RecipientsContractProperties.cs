@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of RecipientsContractProperties. </summary>
         public RecipientsContractProperties()
         {
-            Emails = new ChangeTrackingList<string>();
-            Users = new ChangeTrackingList<string>();
+            Emails = new Core.ChangeTrackingList<string>();
+            Users = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of RecipientsContractProperties. </summary>

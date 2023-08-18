@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    public partial class AttestationProviderCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class AttestationProviderCreateOrUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();

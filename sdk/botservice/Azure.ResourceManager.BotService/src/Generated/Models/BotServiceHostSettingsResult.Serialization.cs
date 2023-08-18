@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<Uri> oAuthUrl = default;
-            Optional<Uri> toBotFromChannelOpenIdMetadataUrl = default;
-            Optional<string> toBotFromChannelTokenIssuer = default;
-            Optional<Uri> toBotFromEmulatorOpenIdMetadataUrl = default;
-            Optional<Uri> toChannelFromBotLoginUrl = default;
-            Optional<string> toChannelFromBotOAuthScope = default;
-            Optional<bool> validateAuthority = default;
-            Optional<string> botOpenIdMetadata = default;
+            Core.Optional<Uri> oAuthUrl = default;
+            Core.Optional<Uri> toBotFromChannelOpenIdMetadataUrl = default;
+            Core.Optional<string> toBotFromChannelTokenIssuer = default;
+            Core.Optional<Uri> toBotFromEmulatorOpenIdMetadataUrl = default;
+            Core.Optional<Uri> toChannelFromBotLoginUrl = default;
+            Core.Optional<string> toChannelFromBotOAuthScope = default;
+            Core.Optional<bool> validateAuthority = default;
+            Core.Optional<string> botOpenIdMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("OAuthUrl"u8))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new BotServiceHostSettingsResult(oAuthUrl.Value, toBotFromChannelOpenIdMetadataUrl.Value, toBotFromChannelTokenIssuer.Value, toBotFromEmulatorOpenIdMetadataUrl.Value, toChannelFromBotLoginUrl.Value, toChannelFromBotOAuthScope.Value, Optional.ToNullable(validateAuthority), botOpenIdMetadata.Value);
+            return new BotServiceHostSettingsResult(oAuthUrl.Value, toBotFromChannelOpenIdMetadataUrl.Value, toBotFromChannelTokenIssuer.Value, toBotFromEmulatorOpenIdMetadataUrl.Value, toChannelFromBotLoginUrl.Value, toChannelFromBotOAuthScope.Value, Core.Optional.ToNullable(validateAuthority), botOpenIdMetadata.Value);
         }
     }
 }

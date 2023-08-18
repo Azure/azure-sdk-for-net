@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of WorkloadNetworkPublicIPsList. </summary>
         internal WorkloadNetworkPublicIPsList()
         {
-            Value = new ChangeTrackingList<WorkloadNetworkPublicIPData>();
+            Value = new Core.ChangeTrackingList<WorkloadNetworkPublicIPData>();
         }
 
         /// <summary> Initializes a new instance of WorkloadNetworkPublicIPsList. </summary>

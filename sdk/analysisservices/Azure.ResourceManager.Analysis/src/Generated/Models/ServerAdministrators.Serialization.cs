@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    internal partial class ServerAdministrators : IUtf8JsonSerializable
+    internal partial class ServerAdministrators : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AsAdministratorIdentities))
+            if (Core.Optional.IsCollectionDefined(AsAdministratorIdentities))
             {
                 writer.WritePropertyName("members"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Analysis.Models
             {
                 return null;
             }
-            Optional<IList<string>> members = default;
+            Core.Optional<IList<string>> members = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("members"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Analysis.Models
                     continue;
                 }
             }
-            return new ServerAdministrators(Optional.ToList(members));
+            return new ServerAdministrators(Core.Optional.ToList(members));
         }
     }
 }

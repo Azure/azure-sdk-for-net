@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformGatewayCorsProperties. </summary>
         public AppPlatformGatewayCorsProperties()
         {
-            AllowedOrigins = new ChangeTrackingList<string>();
-            AllowedMethods = new ChangeTrackingList<string>();
-            AllowedHeaders = new ChangeTrackingList<string>();
-            ExposedHeaders = new ChangeTrackingList<string>();
+            AllowedOrigins = new Core.ChangeTrackingList<string>();
+            AllowedMethods = new Core.ChangeTrackingList<string>();
+            AllowedHeaders = new Core.ChangeTrackingList<string>();
+            ExposedHeaders = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AppPlatformGatewayCorsProperties. </summary>

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Advisor
         /// <summary> Initializes a new instance of MetadataEntityData. </summary>
         internal MetadataEntityData()
         {
-            DependsOn = new ChangeTrackingList<string>();
-            ApplicableScenarios = new ChangeTrackingList<Scenario>();
-            SupportedValues = new ChangeTrackingList<MetadataSupportedValueDetail>();
+            DependsOn = new Core.ChangeTrackingList<string>();
+            ApplicableScenarios = new Core.ChangeTrackingList<Scenario>();
+            SupportedValues = new Core.ChangeTrackingList<MetadataSupportedValueDetail>();
         }
 
         /// <summary> Initializes a new instance of MetadataEntityData. </summary>

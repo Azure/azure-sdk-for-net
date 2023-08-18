@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<Guid> aadClientId = default;
-            Optional<Guid> aadTenantId = default;
-            Optional<Guid> aadServicePrincipalObjectId = default;
-            Optional<Guid> aadApplicationObjectId = default;
+            Core.Optional<Guid> aadClientId = default;
+            Core.Optional<Guid> aadTenantId = default;
+            Core.Optional<Guid> aadServicePrincipalObjectId = default;
+            Core.Optional<Guid> aadApplicationObjectId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new HciClusterIdentityResult(Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), Optional.ToNullable(aadServicePrincipalObjectId), Optional.ToNullable(aadApplicationObjectId));
+            return new HciClusterIdentityResult(Core.Optional.ToNullable(aadClientId), Core.Optional.ToNullable(aadTenantId), Core.Optional.ToNullable(aadServicePrincipalObjectId), Core.Optional.ToNullable(aadApplicationObjectId));
         }
     }
 }

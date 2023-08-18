@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchUserIdentity : IUtf8JsonSerializable
+    public partial class BatchUserIdentity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserName))
+            if (Core.Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Optional.IsDefined(AutoUser))
+            if (Core.Optional.IsDefined(AutoUser))
             {
                 writer.WritePropertyName("autoUser"u8);
                 writer.WriteObjectValue(AutoUser);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<string> userName = default;
-            Optional<BatchAutoUserSpecification> autoUser = default;
+            Core.Optional<string> userName = default;
+            Core.Optional<BatchAutoUserSpecification> autoUser = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userName"u8))

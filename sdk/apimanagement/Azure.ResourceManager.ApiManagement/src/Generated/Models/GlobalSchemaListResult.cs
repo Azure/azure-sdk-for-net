@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of GlobalSchemaListResult. </summary>
         internal GlobalSchemaListResult()
         {
-            Value = new ChangeTrackingList<ApiManagementGlobalSchemaData>();
+            Value = new Core.ChangeTrackingList<ApiManagementGlobalSchemaData>();
         }
 
         /// <summary> Initializes a new instance of GlobalSchemaListResult. </summary>

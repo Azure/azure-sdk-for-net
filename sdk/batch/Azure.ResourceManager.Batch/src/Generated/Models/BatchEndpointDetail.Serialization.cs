@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<int> port = default;
+            Core.Optional<int> port = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("port"u8))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new BatchEndpointDetail(Optional.ToNullable(port));
+            return new BatchEndpointDetail(Core.Optional.ToNullable(port));
         }
     }
 }

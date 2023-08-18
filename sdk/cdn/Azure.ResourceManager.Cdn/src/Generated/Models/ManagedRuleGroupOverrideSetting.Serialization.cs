@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class ManagedRuleGroupOverrideSetting : IUtf8JsonSerializable
+    public partial class ManagedRuleGroupOverrideSetting : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("ruleGroupName"u8);
             writer.WriteStringValue(RuleGroupName);
-            if (Optional.IsCollectionDefined(Rules))
+            if (Core.Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             string ruleGroupName = default;
-            Optional<IList<ManagedRuleOverrideSetting>> rules = default;
+            Core.Optional<IList<ManagedRuleOverrideSetting>> rules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleGroupName"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new ManagedRuleGroupOverrideSetting(ruleGroupName, Optional.ToList(rules));
+            return new ManagedRuleGroupOverrideSetting(ruleGroupName, Core.Optional.ToList(rules));
         }
     }
 }

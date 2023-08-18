@@ -13,54 +13,54 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    public partial class AutomationSourceControlData : IUtf8JsonSerializable
+    public partial class AutomationSourceControlData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RepoUri))
+            if (Core.Optional.IsDefined(RepoUri))
             {
                 writer.WritePropertyName("repoUrl"u8);
                 writer.WriteStringValue(RepoUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Branch))
+            if (Core.Optional.IsDefined(Branch))
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (Optional.IsDefined(FolderPath))
+            if (Core.Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
-            if (Optional.IsDefined(IsAutoSyncEnabled))
+            if (Core.Optional.IsDefined(IsAutoSyncEnabled))
             {
                 writer.WritePropertyName("autoSync"u8);
                 writer.WriteBooleanValue(IsAutoSyncEnabled.Value);
             }
-            if (Optional.IsDefined(IsAutoPublishRunbookEnabled))
+            if (Core.Optional.IsDefined(IsAutoPublishRunbookEnabled))
             {
                 writer.WritePropertyName("publishRunbook"u8);
                 writer.WriteBooleanValue(IsAutoPublishRunbookEnabled.Value);
             }
-            if (Optional.IsDefined(SourceType))
+            if (Core.Optional.IsDefined(SourceType))
             {
                 writer.WritePropertyName("sourceType"u8);
                 writer.WriteStringValue(SourceType.Value.ToString());
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (Core.Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(LastModifiedOn))
+            if (Core.Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
@@ -78,16 +78,16 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> repoUrl = default;
-            Optional<string> branch = default;
-            Optional<string> folderPath = default;
-            Optional<bool> autoSync = default;
-            Optional<bool> publishRunbook = default;
-            Optional<SourceControlSourceType> sourceType = default;
-            Optional<string> description = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<Uri> repoUrl = default;
+            Core.Optional<string> branch = default;
+            Core.Optional<string> folderPath = default;
+            Core.Optional<bool> autoSync = default;
+            Core.Optional<bool> publishRunbook = default;
+            Core.Optional<SourceControlSourceType> sourceType = default;
+            Core.Optional<string> description = default;
+            Core.Optional<DateTimeOffset> creationTime = default;
+            Core.Optional<DateTimeOffset> lastModifiedTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Automation
                     continue;
                 }
             }
-            return new AutomationSourceControlData(id, name, type, systemData.Value, repoUrl.Value, branch.Value, folderPath.Value, Optional.ToNullable(autoSync), Optional.ToNullable(publishRunbook), Optional.ToNullable(sourceType), description.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime));
+            return new AutomationSourceControlData(id, name, type, systemData.Value, repoUrl.Value, branch.Value, folderPath.Value, Core.Optional.ToNullable(autoSync), Core.Optional.ToNullable(publishRunbook), Core.Optional.ToNullable(sourceType), description.Value, Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(lastModifiedTime));
         }
     }
 }

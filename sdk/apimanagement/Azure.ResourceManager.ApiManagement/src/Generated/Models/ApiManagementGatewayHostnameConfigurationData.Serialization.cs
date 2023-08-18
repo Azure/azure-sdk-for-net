@@ -11,39 +11,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementGatewayHostnameConfigurationData : IUtf8JsonSerializable
+    public partial class ApiManagementGatewayHostnameConfigurationData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Hostname))
+            if (Core.Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (Optional.IsDefined(CertificateId))
+            if (Core.Optional.IsDefined(CertificateId))
             {
                 writer.WritePropertyName("certificateId"u8);
                 writer.WriteStringValue(CertificateId);
             }
-            if (Optional.IsDefined(IsClientCertificateRequired))
+            if (Core.Optional.IsDefined(IsClientCertificateRequired))
             {
                 writer.WritePropertyName("negotiateClientCertificate"u8);
                 writer.WriteBooleanValue(IsClientCertificateRequired.Value);
             }
-            if (Optional.IsDefined(IsTls1_0Enabled))
+            if (Core.Optional.IsDefined(IsTls1_0Enabled))
             {
                 writer.WritePropertyName("tls10Enabled"u8);
                 writer.WriteBooleanValue(IsTls1_0Enabled.Value);
             }
-            if (Optional.IsDefined(IsTls1_1Enabled))
+            if (Core.Optional.IsDefined(IsTls1_1Enabled))
             {
                 writer.WritePropertyName("tls11Enabled"u8);
                 writer.WriteBooleanValue(IsTls1_1Enabled.Value);
             }
-            if (Optional.IsDefined(IsHttp2_0Enabled))
+            if (Core.Optional.IsDefined(IsHttp2_0Enabled))
             {
                 writer.WritePropertyName("http2Enabled"u8);
                 writer.WriteBooleanValue(IsHttp2_0Enabled.Value);
@@ -61,13 +61,13 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> hostname = default;
-            Optional<string> certificateId = default;
-            Optional<bool> negotiateClientCertificate = default;
-            Optional<bool> tls10Enabled = default;
-            Optional<bool> tls11Enabled = default;
-            Optional<bool> http2Enabled = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> hostname = default;
+            Core.Optional<string> certificateId = default;
+            Core.Optional<bool> negotiateClientCertificate = default;
+            Core.Optional<bool> tls10Enabled = default;
+            Core.Optional<bool> tls11Enabled = default;
+            Core.Optional<bool> http2Enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new ApiManagementGatewayHostnameConfigurationData(id, name, type, systemData.Value, hostname.Value, certificateId.Value, Optional.ToNullable(negotiateClientCertificate), Optional.ToNullable(tls10Enabled), Optional.ToNullable(tls11Enabled), Optional.ToNullable(http2Enabled));
+            return new ApiManagementGatewayHostnameConfigurationData(id, name, type, systemData.Value, hostname.Value, certificateId.Value, Core.Optional.ToNullable(negotiateClientCertificate), Core.Optional.ToNullable(tls10Enabled), Core.Optional.ToNullable(tls11Enabled), Core.Optional.ToNullable(http2Enabled));
         }
     }
 }

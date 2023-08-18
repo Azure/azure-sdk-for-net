@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Initializes a new instance of WorkbookTemplateLocalizedGallery. </summary>
         public WorkbookTemplateLocalizedGallery()
         {
-            Galleries = new ChangeTrackingList<WorkbookTemplateGallery>();
+            Galleries = new Core.ChangeTrackingList<WorkbookTemplateGallery>();
         }
 
         /// <summary> Initializes a new instance of WorkbookTemplateLocalizedGallery. </summary>

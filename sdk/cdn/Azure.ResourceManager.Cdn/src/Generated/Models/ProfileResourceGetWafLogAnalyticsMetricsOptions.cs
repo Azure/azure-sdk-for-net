@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.Cdn.Models
             DateTimeBegin = dateTimeBegin;
             DateTimeEnd = dateTimeEnd;
             Granularity = granularity;
-            Actions = new ChangeTrackingList<WafAction>();
-            GroupBy = new ChangeTrackingList<WafRankingGroupBy>();
-            RuleTypes = new ChangeTrackingList<WafRuleType>();
+            Actions = new Core.ChangeTrackingList<WafAction>();
+            GroupBy = new Core.ChangeTrackingList<WafRankingGroupBy>();
+            RuleTypes = new Core.ChangeTrackingList<WafRuleType>();
         }
 
         /// <summary> The ArrayOfWafMetric to use. </summary>

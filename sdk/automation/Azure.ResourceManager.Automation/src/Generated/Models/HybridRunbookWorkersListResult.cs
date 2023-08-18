@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of HybridRunbookWorkersListResult. </summary>
         internal HybridRunbookWorkersListResult()
         {
-            Value = new ChangeTrackingList<HybridRunbookWorkerData>();
+            Value = new Core.ChangeTrackingList<HybridRunbookWorkerData>();
         }
 
         /// <summary> Initializes a new instance of HybridRunbookWorkersListResult. </summary>

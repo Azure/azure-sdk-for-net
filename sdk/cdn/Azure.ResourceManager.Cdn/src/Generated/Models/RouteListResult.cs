@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of RouteListResult. </summary>
         internal RouteListResult()
         {
-            Value = new ChangeTrackingList<FrontDoorRouteData>();
+            Value = new Core.ChangeTrackingList<FrontDoorRouteData>();
         }
 
         /// <summary> Initializes a new instance of RouteListResult. </summary>

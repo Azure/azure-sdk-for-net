@@ -11,21 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CustomRuleMatchCondition : IUtf8JsonSerializable
+    public partial class CustomRuleMatchCondition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("matchVariable"u8);
             writer.WriteStringValue(MatchVariable.ToString());
-            if (Optional.IsDefined(Selector))
+            if (Core.Optional.IsDefined(Selector))
             {
                 writer.WritePropertyName("selector"u8);
                 writer.WriteStringValue(Selector);
             }
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(MatchOperator.ToString());
-            if (Optional.IsDefined(NegateCondition))
+            if (Core.Optional.IsDefined(NegateCondition))
             {
                 writer.WritePropertyName("negateCondition"u8);
                 writer.WriteBooleanValue(NegateCondition.Value);
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Transforms))
+            if (Core.Optional.IsCollectionDefined(Transforms))
             {
                 writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();
@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             WafMatchVariable matchVariable = default;
-            Optional<string> selector = default;
+            Core.Optional<string> selector = default;
             MatchOperator @operator = default;
-            Optional<bool> negateCondition = default;
+            Core.Optional<bool> negateCondition = default;
             IList<string> matchValue = default;
-            Optional<IList<TransformType>> transforms = default;
+            Core.Optional<IList<TransformType>> transforms = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("matchVariable"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new CustomRuleMatchCondition(matchVariable, selector.Value, @operator, Optional.ToNullable(negateCondition), matchValue, Optional.ToList(transforms));
+            return new CustomRuleMatchCondition(matchVariable, selector.Value, @operator, Core.Optional.ToNullable(negateCondition), matchValue, Core.Optional.ToList(transforms));
         }
     }
 }

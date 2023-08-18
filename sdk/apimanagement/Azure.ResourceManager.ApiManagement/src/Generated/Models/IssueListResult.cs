@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of IssueListResult. </summary>
         internal IssueListResult()
         {
-            Value = new ChangeTrackingList<IssueContractData>();
+            Value = new Core.ChangeTrackingList<IssueContractData>();
         }
 
         /// <summary> Initializes a new instance of IssueListResult. </summary>

@@ -14,69 +14,69 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    public partial class BillingSubscriptionData : IUtf8JsonSerializable
+    public partial class BillingSubscriptionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AutoRenew))
+            if (Core.Optional.IsDefined(AutoRenew))
             {
                 writer.WritePropertyName("autoRenew"u8);
                 writer.WriteStringValue(AutoRenew.Value.ToString());
             }
-            if (Optional.IsDefined(BeneficiaryTenantId))
+            if (Core.Optional.IsDefined(BeneficiaryTenantId))
             {
                 writer.WritePropertyName("beneficiaryTenantId"u8);
                 writer.WriteStringValue(BeneficiaryTenantId);
             }
-            if (Optional.IsDefined(BillingFrequency))
+            if (Core.Optional.IsDefined(BillingFrequency))
             {
                 writer.WritePropertyName("billingFrequency"u8);
                 writer.WriteStringValue(BillingFrequency);
             }
-            if (Optional.IsDefined(BillingProfileId))
+            if (Core.Optional.IsDefined(BillingProfileId))
             {
                 writer.WritePropertyName("billingProfileId"u8);
                 writer.WriteStringValue(BillingProfileId);
             }
-            if (Optional.IsDefined(ConsumptionCostCenter))
+            if (Core.Optional.IsDefined(ConsumptionCostCenter))
             {
                 writer.WritePropertyName("consumptionCostCenter"u8);
                 writer.WriteStringValue(ConsumptionCostCenter);
             }
-            if (Optional.IsDefined(CustomerId))
+            if (Core.Optional.IsDefined(CustomerId))
             {
                 writer.WritePropertyName("customerId"u8);
                 writer.WriteStringValue(CustomerId);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(InvoiceSectionId))
+            if (Core.Optional.IsDefined(InvoiceSectionId))
             {
                 writer.WritePropertyName("invoiceSectionId"u8);
                 writer.WriteStringValue(InvoiceSectionId);
             }
-            if (Optional.IsDefined(ProductTypeId))
+            if (Core.Optional.IsDefined(ProductTypeId))
             {
                 writer.WritePropertyName("productTypeId"u8);
                 writer.WriteStringValue(ProductTypeId);
             }
-            if (Optional.IsDefined(Quantity))
+            if (Core.Optional.IsDefined(Quantity))
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (Optional.IsDefined(SkuId))
+            if (Core.Optional.IsDefined(SkuId))
             {
                 writer.WritePropertyName("skuId"u8);
                 writer.WriteStringValue(SkuId);
             }
-            if (Optional.IsDefined(TermDuration))
+            if (Core.Optional.IsDefined(TermDuration))
             {
                 writer.WritePropertyName("termDuration"u8);
                 writer.WriteStringValue(TermDuration.Value, "P");
@@ -97,44 +97,44 @@ namespace Azure.ResourceManager.Billing
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<BillingSubscriptionAutoRenewState> autoRenew = default;
-            Optional<string> beneficiaryTenantId = default;
-            Optional<string> billingFrequency = default;
-            Optional<ResourceIdentifier> billingProfileId = default;
-            Optional<IReadOnlyDictionary<string, string>> billingPolicies = default;
-            Optional<string> billingProfileDisplayName = default;
-            Optional<string> billingProfileName = default;
-            Optional<string> consumptionCostCenter = default;
-            Optional<string> customerId = default;
-            Optional<string> customerDisplayName = default;
-            Optional<string> displayName = default;
-            Optional<string> enrollmentAccountId = default;
-            Optional<string> enrollmentAccountDisplayName = default;
-            Optional<ResourceIdentifier> invoiceSectionId = default;
-            Optional<string> invoiceSectionDisplayName = default;
-            Optional<string> invoiceSectionName = default;
-            Optional<BillingAmount> lastMonthCharges = default;
-            Optional<BillingAmount> monthToDateCharges = default;
-            Optional<NextBillingCycleDetails> nextBillingCycleDetails = default;
-            Optional<string> offerId = default;
-            Optional<string> productCategory = default;
-            Optional<string> productType = default;
-            Optional<string> productTypeId = default;
-            Optional<DateTimeOffset> purchaseDate = default;
-            Optional<long> quantity = default;
-            Optional<CreatedSubscriptionReseller> reseller = default;
-            Optional<SubscriptionRenewalTermDetails> renewalTermDetails = default;
-            Optional<string> skuDescription = default;
-            Optional<string> skuId = default;
-            Optional<BillingSubscriptionStatus> status = default;
-            Optional<string> subscriptionId = default;
-            Optional<IReadOnlyList<string>> suspensionReasons = default;
-            Optional<TimeSpan> termDuration = default;
-            Optional<DateTimeOffset> termStartDate = default;
-            Optional<DateTimeOffset> termEndDate = default;
-            Optional<SubscriptionEnrollmentAccountStatus> subscriptionEnrollmentAccountStatus = default;
-            Optional<DateTimeOffset> enrollmentAccountStartDate = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<BillingSubscriptionAutoRenewState> autoRenew = default;
+            Core.Optional<string> beneficiaryTenantId = default;
+            Core.Optional<string> billingFrequency = default;
+            Core.Optional<ResourceIdentifier> billingProfileId = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> billingPolicies = default;
+            Core.Optional<string> billingProfileDisplayName = default;
+            Core.Optional<string> billingProfileName = default;
+            Core.Optional<string> consumptionCostCenter = default;
+            Core.Optional<string> customerId = default;
+            Core.Optional<string> customerDisplayName = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> enrollmentAccountId = default;
+            Core.Optional<string> enrollmentAccountDisplayName = default;
+            Core.Optional<ResourceIdentifier> invoiceSectionId = default;
+            Core.Optional<string> invoiceSectionDisplayName = default;
+            Core.Optional<string> invoiceSectionName = default;
+            Core.Optional<BillingAmount> lastMonthCharges = default;
+            Core.Optional<BillingAmount> monthToDateCharges = default;
+            Core.Optional<NextBillingCycleDetails> nextBillingCycleDetails = default;
+            Core.Optional<string> offerId = default;
+            Core.Optional<string> productCategory = default;
+            Core.Optional<string> productType = default;
+            Core.Optional<string> productTypeId = default;
+            Core.Optional<DateTimeOffset> purchaseDate = default;
+            Core.Optional<long> quantity = default;
+            Core.Optional<CreatedSubscriptionReseller> reseller = default;
+            Core.Optional<SubscriptionRenewalTermDetails> renewalTermDetails = default;
+            Core.Optional<string> skuDescription = default;
+            Core.Optional<string> skuId = default;
+            Core.Optional<BillingSubscriptionStatus> status = default;
+            Core.Optional<string> subscriptionId = default;
+            Core.Optional<IReadOnlyList<string>> suspensionReasons = default;
+            Core.Optional<TimeSpan> termDuration = default;
+            Core.Optional<DateTimeOffset> termStartDate = default;
+            Core.Optional<DateTimeOffset> termEndDate = default;
+            Core.Optional<SubscriptionEnrollmentAccountStatus> subscriptionEnrollmentAccountStatus = default;
+            Core.Optional<DateTimeOffset> enrollmentAccountStartDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Billing
                     continue;
                 }
             }
-            return new BillingSubscriptionData(id, name, type, systemData.Value, Optional.ToNullable(autoRenew), beneficiaryTenantId.Value, billingFrequency.Value, billingProfileId.Value, Optional.ToDictionary(billingPolicies), billingProfileDisplayName.Value, billingProfileName.Value, consumptionCostCenter.Value, customerId.Value, customerDisplayName.Value, displayName.Value, enrollmentAccountId.Value, enrollmentAccountDisplayName.Value, invoiceSectionId.Value, invoiceSectionDisplayName.Value, invoiceSectionName.Value, lastMonthCharges.Value, monthToDateCharges.Value, nextBillingCycleDetails.Value, offerId.Value, productCategory.Value, productType.Value, productTypeId.Value, Optional.ToNullable(purchaseDate), Optional.ToNullable(quantity), reseller.Value, renewalTermDetails.Value, skuDescription.Value, skuId.Value, Optional.ToNullable(status), subscriptionId.Value, Optional.ToList(suspensionReasons), Optional.ToNullable(termDuration), Optional.ToNullable(termStartDate), Optional.ToNullable(termEndDate), Optional.ToNullable(subscriptionEnrollmentAccountStatus), Optional.ToNullable(enrollmentAccountStartDate));
+            return new BillingSubscriptionData(id, name, type, systemData.Value, Core.Optional.ToNullable(autoRenew), beneficiaryTenantId.Value, billingFrequency.Value, billingProfileId.Value, Core.Optional.ToDictionary(billingPolicies), billingProfileDisplayName.Value, billingProfileName.Value, consumptionCostCenter.Value, customerId.Value, customerDisplayName.Value, displayName.Value, enrollmentAccountId.Value, enrollmentAccountDisplayName.Value, invoiceSectionId.Value, invoiceSectionDisplayName.Value, invoiceSectionName.Value, lastMonthCharges.Value, monthToDateCharges.Value, nextBillingCycleDetails.Value, offerId.Value, productCategory.Value, productType.Value, productTypeId.Value, Core.Optional.ToNullable(purchaseDate), Core.Optional.ToNullable(quantity), reseller.Value, renewalTermDetails.Value, skuDescription.Value, skuId.Value, Core.Optional.ToNullable(status), subscriptionId.Value, Core.Optional.ToList(suspensionReasons), Core.Optional.ToNullable(termDuration), Core.Optional.ToNullable(termStartDate), Core.Optional.ToNullable(termEndDate), Core.Optional.ToNullable(subscriptionEnrollmentAccountStatus), Core.Optional.ToNullable(enrollmentAccountStartDate));
         }
     }
 }

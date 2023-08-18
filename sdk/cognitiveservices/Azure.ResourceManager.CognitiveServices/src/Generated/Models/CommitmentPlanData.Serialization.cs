@@ -14,22 +14,22 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    public partial class CommitmentPlanData : IUtf8JsonSerializable
+    public partial class CommitmentPlanData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -59,16 +59,16 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<string> kind = default;
-            Optional<CognitiveServicesSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<AzureLocation> location = default;
-            Optional<CommitmentPlanProperties> properties = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<string> kind = default;
+            Core.Optional<CognitiveServicesSku> sku = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<CommitmentPlanProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     continue;
                 }
             }
-            return new CommitmentPlanData(id, name, type, systemData.Value, Optional.ToNullable(etag), kind.Value, sku.Value, Optional.ToDictionary(tags), Optional.ToNullable(location), properties.Value);
+            return new CommitmentPlanData(id, name, type, systemData.Value, Core.Optional.ToNullable(etag), kind.Value, sku.Value, Core.Optional.ToDictionary(tags), Core.Optional.ToNullable(location), properties.Value);
         }
     }
 }

@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<bool> supportExportData = default;
-            Optional<string> burstThrottlePolicy = default;
-            Optional<string> metadataClass = default;
-            Optional<bool> liveStreamMetrics = default;
-            Optional<bool> applicationMap = default;
-            Optional<bool> workItemIntegration = default;
-            Optional<bool> powerBIIntegration = default;
-            Optional<bool> openSchema = default;
-            Optional<bool> proactiveDetection = default;
-            Optional<bool> analyticsIntegration = default;
-            Optional<bool> multipleStepWebTest = default;
-            Optional<string> apiAccessLevel = default;
-            Optional<string> trackingType = default;
-            Optional<float> dailyCap = default;
-            Optional<float> dailyCapResetTime = default;
-            Optional<float> throttleRate = default;
+            Core.Optional<bool> supportExportData = default;
+            Core.Optional<string> burstThrottlePolicy = default;
+            Core.Optional<string> metadataClass = default;
+            Core.Optional<bool> liveStreamMetrics = default;
+            Core.Optional<bool> applicationMap = default;
+            Core.Optional<bool> workItemIntegration = default;
+            Core.Optional<bool> powerBIIntegration = default;
+            Core.Optional<bool> openSchema = default;
+            Core.Optional<bool> proactiveDetection = default;
+            Core.Optional<bool> analyticsIntegration = default;
+            Core.Optional<bool> multipleStepWebTest = default;
+            Core.Optional<string> apiAccessLevel = default;
+            Core.Optional<string> trackingType = default;
+            Core.Optional<float> dailyCap = default;
+            Core.Optional<float> dailyCapResetTime = default;
+            Core.Optional<float> throttleRate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("SupportExportData"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     continue;
                 }
             }
-            return new ApplicationInsightsComponentFeatureCapabilities(Optional.ToNullable(supportExportData), burstThrottlePolicy.Value, metadataClass.Value, Optional.ToNullable(liveStreamMetrics), Optional.ToNullable(applicationMap), Optional.ToNullable(workItemIntegration), Optional.ToNullable(powerBIIntegration), Optional.ToNullable(openSchema), Optional.ToNullable(proactiveDetection), Optional.ToNullable(analyticsIntegration), Optional.ToNullable(multipleStepWebTest), apiAccessLevel.Value, trackingType.Value, Optional.ToNullable(dailyCap), Optional.ToNullable(dailyCapResetTime), Optional.ToNullable(throttleRate));
+            return new ApplicationInsightsComponentFeatureCapabilities(Core.Optional.ToNullable(supportExportData), burstThrottlePolicy.Value, metadataClass.Value, Core.Optional.ToNullable(liveStreamMetrics), Core.Optional.ToNullable(applicationMap), Core.Optional.ToNullable(workItemIntegration), Core.Optional.ToNullable(powerBIIntegration), Core.Optional.ToNullable(openSchema), Core.Optional.ToNullable(proactiveDetection), Core.Optional.ToNullable(analyticsIntegration), Core.Optional.ToNullable(multipleStepWebTest), apiAccessLevel.Value, trackingType.Value, Core.Optional.ToNullable(dailyCap), Core.Optional.ToNullable(dailyCapResetTime), Core.Optional.ToNullable(throttleRate));
         }
     }
 }

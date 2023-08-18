@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
-    public partial class KnowledgeBaseAnswerContext : IUtf8JsonSerializable
+    public partial class KnowledgeBaseAnswerContext : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("previousQnaId"u8);
             writer.WriteNumberValue(PreviousQnaId);
-            if (Optional.IsDefined(PreviousQuestion))
+            if (Core.Optional.IsDefined(PreviousQuestion))
             {
                 writer.WritePropertyName("previousUserQuery"u8);
                 writer.WriteStringValue(PreviousQuestion);

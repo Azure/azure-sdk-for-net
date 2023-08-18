@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Initializes a new instance of HciSkuData. </summary>
         public HciSkuData()
         {
-            SkuMappings = new ChangeTrackingList<HciSkuMappings>();
+            SkuMappings = new Core.ChangeTrackingList<HciSkuMappings>();
         }
 
         /// <summary> Initializes a new instance of HciSkuData. </summary>

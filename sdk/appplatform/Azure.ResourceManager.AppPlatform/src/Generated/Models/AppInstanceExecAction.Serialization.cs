@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppInstanceExecAction : IUtf8JsonSerializable
+    public partial class AppInstanceExecAction : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Command))
+            if (Core.Optional.IsCollectionDefined(Command))
             {
                 writer.WritePropertyName("command"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IList<string>> command = default;
+            Core.Optional<IList<string>> command = default;
             ProbeActionType type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppInstanceExecAction(type, Optional.ToList(command));
+            return new AppInstanceExecAction(type, Core.Optional.ToList(command));
         }
     }
 }

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Automation.Models
         public SoftwareUpdateConfigurationSpecificProperties(SoftwareUpdateConfigurationOperatingSystemType operatingSystem)
         {
             OperatingSystem = operatingSystem;
-            AzureVirtualMachines = new ChangeTrackingList<string>();
-            NonAzureComputerNames = new ChangeTrackingList<string>();
+            AzureVirtualMachines = new Core.ChangeTrackingList<string>();
+            NonAzureComputerNames = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationSpecificProperties. </summary>

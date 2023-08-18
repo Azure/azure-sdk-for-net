@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         /// <summary> Initializes a new instance of DetailedInformation. </summary>
         internal DetailedInformation()
         {
-            CustomParameters = new ChangeTrackingList<string>();
-            PlatformParameters = new ChangeTrackingList<string>();
-            ApiInputParameters = new ChangeTrackingList<string>();
+            CustomParameters = new Core.ChangeTrackingList<string>();
+            PlatformParameters = new Core.ChangeTrackingList<string>();
+            ApiInputParameters = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DetailedInformation. </summary>

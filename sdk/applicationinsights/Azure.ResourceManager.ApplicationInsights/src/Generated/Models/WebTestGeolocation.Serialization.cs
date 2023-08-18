@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class WebTestGeolocation : IUtf8JsonSerializable
+    public partial class WebTestGeolocation : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("Id"u8);
                 writer.WriteStringValue(Location.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<AzureLocation> id = default;
+            Core.Optional<AzureLocation> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Id"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     continue;
                 }
             }
-            return new WebTestGeolocation(Optional.ToNullable(id));
+            return new WebTestGeolocation(Core.Optional.ToNullable(id));
         }
     }
 }

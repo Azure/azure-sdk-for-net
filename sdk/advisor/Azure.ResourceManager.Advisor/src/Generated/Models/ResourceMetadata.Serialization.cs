@@ -12,22 +12,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Advisor.Models
 {
-    public partial class ResourceMetadata : IUtf8JsonSerializable
+    public partial class ResourceMetadata : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (Core.Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(Source))
+            if (Core.Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Optional.IsCollectionDefined(Action))
+            if (Core.Optional.IsCollectionDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStartObject();
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Singular))
+            if (Core.Optional.IsDefined(Singular))
             {
                 writer.WritePropertyName("singular"u8);
                 writer.WriteStringValue(Singular);
             }
-            if (Optional.IsDefined(Plural))
+            if (Core.Optional.IsDefined(Plural))
             {
                 writer.WritePropertyName("plural"u8);
                 writer.WriteStringValue(Plural);
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.Advisor.Models
             {
                 return null;
             }
-            Optional<string> resourceId = default;
-            Optional<string> source = default;
-            Optional<IDictionary<string, BinaryData>> action = default;
-            Optional<string> singular = default;
-            Optional<string> plural = default;
+            Core.Optional<string> resourceId = default;
+            Core.Optional<string> source = default;
+            Core.Optional<IDictionary<string, BinaryData>> action = default;
+            Core.Optional<string> singular = default;
+            Core.Optional<string> plural = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Advisor.Models
                     continue;
                 }
             }
-            return new ResourceMetadata(resourceId.Value, source.Value, Optional.ToDictionary(action), singular.Value, plural.Value);
+            return new ResourceMetadata(resourceId.Value, source.Value, Core.Optional.ToDictionary(action), singular.Value, plural.Value);
         }
     }
 }

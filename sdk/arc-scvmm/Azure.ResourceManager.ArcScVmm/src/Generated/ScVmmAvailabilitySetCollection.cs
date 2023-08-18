@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ArcScVmm
             try
             {
                 var response = await _scVmmAvailabilitySetAvailabilitySetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, availabilitySetName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ArcScVmmArmOperation<ScVmmAvailabilitySetResource>(new ScVmmAvailabilitySetOperationSource(Client), _scVmmAvailabilitySetAvailabilitySetsClientDiagnostics, Pipeline, _scVmmAvailabilitySetAvailabilitySetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, availabilitySetName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ArcScVmmArmOperation<ScVmmAvailabilitySetResource>(new ScVmmAvailabilitySetOperationSource(Client), _scVmmAvailabilitySetAvailabilitySetsClientDiagnostics, Pipeline, _scVmmAvailabilitySetAvailabilitySetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, availabilitySetName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ArcScVmm
             try
             {
                 var response = _scVmmAvailabilitySetAvailabilitySetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, availabilitySetName, data, cancellationToken);
-                var operation = new ArcScVmmArmOperation<ScVmmAvailabilitySetResource>(new ScVmmAvailabilitySetOperationSource(Client), _scVmmAvailabilitySetAvailabilitySetsClientDiagnostics, Pipeline, _scVmmAvailabilitySetAvailabilitySetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, availabilitySetName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ArcScVmmArmOperation<ScVmmAvailabilitySetResource>(new ScVmmAvailabilitySetOperationSource(Client), _scVmmAvailabilitySetAvailabilitySetsClientDiagnostics, Pipeline, _scVmmAvailabilitySetAvailabilitySetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, availabilitySetName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ArcScVmm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scVmmAvailabilitySetAvailabilitySetsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scVmmAvailabilitySetAvailabilitySetsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmAvailabilitySetResource(Client, ScVmmAvailabilitySetData.DeserializeScVmmAvailabilitySetData(e)), _scVmmAvailabilitySetAvailabilitySetsClientDiagnostics, Pipeline, "ScVmmAvailabilitySetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmAvailabilitySetResource(Client, ScVmmAvailabilitySetData.DeserializeScVmmAvailabilitySetData(e)), _scVmmAvailabilitySetAvailabilitySetsClientDiagnostics, Pipeline, "ScVmmAvailabilitySetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ArcScVmm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scVmmAvailabilitySetAvailabilitySetsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scVmmAvailabilitySetAvailabilitySetsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmAvailabilitySetResource(Client, ScVmmAvailabilitySetData.DeserializeScVmmAvailabilitySetData(e)), _scVmmAvailabilitySetAvailabilitySetsClientDiagnostics, Pipeline, "ScVmmAvailabilitySetCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmAvailabilitySetResource(Client, ScVmmAvailabilitySetData.DeserializeScVmmAvailabilitySetData(e)), _scVmmAvailabilitySetAvailabilitySetsClientDiagnostics, Pipeline, "ScVmmAvailabilitySetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

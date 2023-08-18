@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Initializes a new instance of WorkbookTemplatesListResult. </summary>
         internal WorkbookTemplatesListResult()
         {
-            Value = new ChangeTrackingList<WorkbookTemplateData>();
+            Value = new Core.ChangeTrackingList<WorkbookTemplateData>();
         }
 
         /// <summary> Initializes a new instance of WorkbookTemplatesListResult. </summary>

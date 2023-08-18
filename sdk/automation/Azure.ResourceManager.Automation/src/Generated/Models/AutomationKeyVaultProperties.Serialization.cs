@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationKeyVaultProperties : IUtf8JsonSerializable
+    public partial class AutomationKeyVaultProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyvaultUri))
+            if (Core.Optional.IsDefined(KeyvaultUri))
             {
                 writer.WritePropertyName("keyvaultUri"u8);
                 writer.WriteStringValue(KeyvaultUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(KeyName))
+            if (Core.Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (Optional.IsDefined(KeyVersion))
+            if (Core.Optional.IsDefined(KeyVersion))
             {
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<Uri> keyvaultUri = default;
-            Optional<string> keyName = default;
-            Optional<string> keyVersion = default;
+            Core.Optional<Uri> keyvaultUri = default;
+            Core.Optional<string> keyName = default;
+            Core.Optional<string> keyVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyvaultUri"u8))

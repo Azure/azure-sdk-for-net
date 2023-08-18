@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="location"> The location. </param>
         public AutomationWatcherData(AzureLocation location) : base(location)
         {
-            ScriptParameters = new ChangeTrackingDictionary<string, string>();
+            ScriptParameters = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of AutomationWatcherData. </summary>

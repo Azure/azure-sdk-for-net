@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ApiManagementUserPatch. </summary>
         public ApiManagementUserPatch()
         {
-            Identities = new ChangeTrackingList<UserIdentityContract>();
+            Identities = new Core.ChangeTrackingList<UserIdentityContract>();
         }
 
         /// <summary> Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active. </summary>

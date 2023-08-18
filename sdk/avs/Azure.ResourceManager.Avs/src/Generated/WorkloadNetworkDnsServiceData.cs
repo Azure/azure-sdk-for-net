@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Initializes a new instance of WorkloadNetworkDnsServiceData. </summary>
         public WorkloadNetworkDnsServiceData()
         {
-            FqdnZones = new ChangeTrackingList<string>();
+            FqdnZones = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of WorkloadNetworkDnsServiceData. </summary>

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<bool> isValid = default;
-            Optional<string> errorCode = default;
-            Optional<string> message = default;
+            Core.Optional<bool> isValid = default;
+            Core.Optional<string> errorCode = default;
+            Core.Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isValid"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new ValidateProbeResult(Optional.ToNullable(isValid), errorCode.Value, message.Value);
+            return new ValidateProbeResult(Core.Optional.ToNullable(isValid), errorCode.Value, message.Value);
         }
     }
 }

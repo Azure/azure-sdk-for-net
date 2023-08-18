@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ArcScVmm
             try
             {
                 var response = await _scVmmServerVmmServersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force, cancellationToken).ConfigureAwait(false);
-                var operation = new ArcScVmmArmOperation(_scVmmServerVmmServersClientDiagnostics, Pipeline, _scVmmServerVmmServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ArcScVmmArmOperation(_scVmmServerVmmServersClientDiagnostics, Pipeline, _scVmmServerVmmServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ArcScVmm
             try
             {
                 var response = _scVmmServerVmmServersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force, cancellationToken);
-                var operation = new ArcScVmmArmOperation(_scVmmServerVmmServersClientDiagnostics, Pipeline, _scVmmServerVmmServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ArcScVmmArmOperation(_scVmmServerVmmServersClientDiagnostics, Pipeline, _scVmmServerVmmServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.ArcScVmm
             try
             {
                 var response = await _scVmmServerVmmServersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ArcScVmmArmOperation<ScVmmServerResource>(new ScVmmServerOperationSource(Client), _scVmmServerVmmServersClientDiagnostics, Pipeline, _scVmmServerVmmServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ArcScVmmArmOperation<ScVmmServerResource>(new ScVmmServerOperationSource(Client), _scVmmServerVmmServersClientDiagnostics, Pipeline, _scVmmServerVmmServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ArcScVmm
             try
             {
                 var response = _scVmmServerVmmServersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new ArcScVmmArmOperation<ScVmmServerResource>(new ScVmmServerOperationSource(Client), _scVmmServerVmmServersClientDiagnostics, Pipeline, _scVmmServerVmmServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ArcScVmmArmOperation<ScVmmServerResource>(new ScVmmServerOperationSource(Client), _scVmmServerVmmServersClientDiagnostics, Pipeline, _scVmmServerVmmServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

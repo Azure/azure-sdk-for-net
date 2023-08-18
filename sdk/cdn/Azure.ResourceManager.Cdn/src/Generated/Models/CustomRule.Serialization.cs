@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CustomRule : IUtf8JsonSerializable
+    public partial class CustomRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(EnabledState))
+            if (Core.Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             string name = default;
-            Optional<CustomRuleEnabledState> enabledState = default;
+            Core.Optional<CustomRuleEnabledState> enabledState = default;
             int priority = default;
             IList<CustomRuleMatchCondition> matchConditions = default;
             OverrideActionType action = default;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new CustomRule(name, Optional.ToNullable(enabledState), priority, matchConditions, action);
+            return new CustomRule(name, Core.Optional.ToNullable(enabledState), priority, matchConditions, action);
         }
     }
 }

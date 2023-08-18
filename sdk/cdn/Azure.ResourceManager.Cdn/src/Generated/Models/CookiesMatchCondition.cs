@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             ConditionType = conditionType;
             CookiesOperator = cookiesOperator;
-            MatchValues = new ChangeTrackingList<string>();
-            Transforms = new ChangeTrackingList<PreTransformCategory>();
+            MatchValues = new Core.ChangeTrackingList<string>();
+            Transforms = new Core.ChangeTrackingList<PreTransformCategory>();
         }
 
         /// <summary> Initializes a new instance of CookiesMatchCondition. </summary>

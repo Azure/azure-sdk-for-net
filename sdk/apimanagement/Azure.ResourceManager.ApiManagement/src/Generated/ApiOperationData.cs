@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of ApiOperationData. </summary>
         public ApiOperationData()
         {
-            TemplateParameters = new ChangeTrackingList<ParameterContract>();
-            Responses = new ChangeTrackingList<ResponseContract>();
+            TemplateParameters = new Core.ChangeTrackingList<ParameterContract>();
+            Responses = new Core.ChangeTrackingList<ResponseContract>();
         }
 
         /// <summary> Initializes a new instance of ApiOperationData. </summary>

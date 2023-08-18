@@ -12,34 +12,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class WorkloadNetworkPortMirroringProfileData : IUtf8JsonSerializable
+    public partial class WorkloadNetworkPortMirroringProfileData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Direction))
+            if (Core.Optional.IsDefined(Direction))
             {
                 writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction.Value.ToString());
             }
-            if (Optional.IsDefined(Source))
+            if (Core.Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Optional.IsDefined(Destination))
+            if (Core.Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteStringValue(Destination);
             }
-            if (Optional.IsDefined(Revision))
+            if (Core.Optional.IsDefined(Revision))
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);
@@ -57,14 +57,14 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<PortMirroringProfileDirection> direction = default;
-            Optional<string> source = default;
-            Optional<string> destination = default;
-            Optional<PortMirroringProfileStatus> status = default;
-            Optional<WorkloadNetworkPortMirroringProfileProvisioningState> provisioningState = default;
-            Optional<long> revision = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<PortMirroringProfileDirection> direction = default;
+            Core.Optional<string> source = default;
+            Core.Optional<string> destination = default;
+            Core.Optional<PortMirroringProfileStatus> status = default;
+            Core.Optional<WorkloadNetworkPortMirroringProfileProvisioningState> provisioningState = default;
+            Core.Optional<long> revision = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Avs
                     continue;
                 }
             }
-            return new WorkloadNetworkPortMirroringProfileData(id, name, type, systemData.Value, displayName.Value, Optional.ToNullable(direction), source.Value, destination.Value, Optional.ToNullable(status), Optional.ToNullable(provisioningState), Optional.ToNullable(revision));
+            return new WorkloadNetworkPortMirroringProfileData(id, name, type, systemData.Value, displayName.Value, Core.Optional.ToNullable(direction), source.Value, destination.Value, Core.Optional.ToNullable(status), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(revision));
         }
     }
 }

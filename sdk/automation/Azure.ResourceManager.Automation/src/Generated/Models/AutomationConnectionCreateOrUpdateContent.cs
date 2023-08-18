@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Automation.Models
 
             Name = name;
             ConnectionType = connectionType;
-            FieldDefinitionValues = new ChangeTrackingDictionary<string, string>();
+            FieldDefinitionValues = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Gets or sets the name of the connection. </summary>

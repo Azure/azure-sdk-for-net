@@ -14,13 +14,13 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ArcScVmm
 {
-    public partial class ScVmmVirtualMachineData : IUtf8JsonSerializable
+    public partial class ScVmmVirtualMachineData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            JsonSerializer.Serialize(writer, ExtendedLocation); if (Optional.IsCollectionDefined(Tags))
+            JsonSerializer.Serialize(writer, ExtendedLocation); if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -35,32 +35,32 @@ namespace Azure.ResourceManager.ArcScVmm
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(InventoryItemId))
+            if (Core.Optional.IsDefined(InventoryItemId))
             {
                 writer.WritePropertyName("inventoryItemId"u8);
                 writer.WriteStringValue(InventoryItemId);
             }
-            if (Optional.IsDefined(VmmServerId))
+            if (Core.Optional.IsDefined(VmmServerId))
             {
                 writer.WritePropertyName("vmmServerId"u8);
                 writer.WriteStringValue(VmmServerId);
             }
-            if (Optional.IsDefined(CloudId))
+            if (Core.Optional.IsDefined(CloudId))
             {
                 writer.WritePropertyName("cloudId"u8);
                 writer.WriteStringValue(CloudId);
             }
-            if (Optional.IsDefined(TemplateId))
+            if (Core.Optional.IsDefined(TemplateId))
             {
                 writer.WritePropertyName("templateId"u8);
                 writer.WriteStringValue(TemplateId);
             }
-            if (Optional.IsDefined(CheckpointType))
+            if (Core.Optional.IsDefined(CheckpointType))
             {
                 writer.WritePropertyName("checkpointType"u8);
                 writer.WriteStringValue(CheckpointType);
             }
-            if (Optional.IsCollectionDefined(Checkpoints))
+            if (Core.Optional.IsCollectionDefined(Checkpoints))
             {
                 writer.WritePropertyName("checkpoints"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ArcScVmm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AvailabilitySets))
+            if (Core.Optional.IsCollectionDefined(AvailabilitySets))
             {
                 writer.WritePropertyName("availabilitySets"u8);
                 writer.WriteStartArray();
@@ -80,37 +80,37 @@ namespace Azure.ResourceManager.ArcScVmm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OSProfile))
+            if (Core.Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
-            if (Optional.IsDefined(HardwareProfile))
+            if (Core.Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile);
             }
-            if (Optional.IsDefined(NetworkProfile))
+            if (Core.Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (Optional.IsDefined(StorageProfile))
+            if (Core.Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (Optional.IsDefined(VmName))
+            if (Core.Optional.IsDefined(VmName))
             {
                 writer.WritePropertyName("vmName"u8);
                 writer.WriteStringValue(VmName);
             }
-            if (Optional.IsDefined(Uuid))
+            if (Core.Optional.IsDefined(Uuid))
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
-            if (Optional.IsDefined(Generation))
+            if (Core.Optional.IsDefined(Generation))
             {
                 writer.WritePropertyName("generation"u8);
                 writer.WriteNumberValue(Generation.Value);
@@ -126,28 +126,28 @@ namespace Azure.ResourceManager.ArcScVmm
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> inventoryItemId = default;
-            Optional<string> vmmServerId = default;
-            Optional<string> cloudId = default;
-            Optional<string> templateId = default;
-            Optional<string> checkpointType = default;
-            Optional<IList<Checkpoint>> checkpoints = default;
-            Optional<IList<AvailabilitySetListItem>> availabilitySets = default;
-            Optional<OSProfile> osProfile = default;
-            Optional<HardwareProfile> hardwareProfile = default;
-            Optional<NetworkProfile> networkProfile = default;
-            Optional<StorageProfile> storageProfile = default;
-            Optional<string> vmName = default;
-            Optional<string> uuid = default;
-            Optional<int> generation = default;
-            Optional<string> powerState = default;
-            Optional<string> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> inventoryItemId = default;
+            Core.Optional<string> vmmServerId = default;
+            Core.Optional<string> cloudId = default;
+            Core.Optional<string> templateId = default;
+            Core.Optional<string> checkpointType = default;
+            Core.Optional<IList<Checkpoint>> checkpoints = default;
+            Core.Optional<IList<AvailabilitySetListItem>> availabilitySets = default;
+            Core.Optional<OSProfile> osProfile = default;
+            Core.Optional<HardwareProfile> hardwareProfile = default;
+            Core.Optional<NetworkProfile> networkProfile = default;
+            Core.Optional<StorageProfile> storageProfile = default;
+            Core.Optional<string> vmName = default;
+            Core.Optional<string> uuid = default;
+            Core.Optional<int> generation = default;
+            Core.Optional<string> powerState = default;
+            Core.Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ArcScVmm
                     continue;
                 }
             }
-            return new ScVmmVirtualMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, inventoryItemId.Value, vmmServerId.Value, cloudId.Value, templateId.Value, checkpointType.Value, Optional.ToList(checkpoints), Optional.ToList(availabilitySets), osProfile.Value, hardwareProfile.Value, networkProfile.Value, storageProfile.Value, vmName.Value, uuid.Value, Optional.ToNullable(generation), powerState.Value, provisioningState.Value);
+            return new ScVmmVirtualMachineData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, extendedLocation, inventoryItemId.Value, vmmServerId.Value, cloudId.Value, templateId.Value, checkpointType.Value, Core.Optional.ToList(checkpoints), Core.Optional.ToList(availabilitySets), osProfile.Value, hardwareProfile.Value, networkProfile.Value, storageProfile.Value, vmName.Value, uuid.Value, Core.Optional.ToNullable(generation), powerState.Value, provisioningState.Value);
         }
     }
 }

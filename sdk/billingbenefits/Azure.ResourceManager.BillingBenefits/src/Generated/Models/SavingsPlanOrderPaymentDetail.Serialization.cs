@@ -11,37 +11,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    public partial class SavingsPlanOrderPaymentDetail : IUtf8JsonSerializable
+    public partial class SavingsPlanOrderPaymentDetail : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DueOn))
+            if (Core.Optional.IsDefined(DueOn))
             {
                 writer.WritePropertyName("dueDate"u8);
                 writer.WriteStringValue(DueOn.Value, "D");
             }
-            if (Optional.IsDefined(PayOn))
+            if (Core.Optional.IsDefined(PayOn))
             {
                 writer.WritePropertyName("paymentDate"u8);
                 writer.WriteStringValue(PayOn.Value, "D");
             }
-            if (Optional.IsDefined(PricingCurrencyTotal))
+            if (Core.Optional.IsDefined(PricingCurrencyTotal))
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
                 writer.WriteObjectValue(PricingCurrencyTotal);
             }
-            if (Optional.IsDefined(BillingCurrencyTotal))
+            if (Core.Optional.IsDefined(BillingCurrencyTotal))
             {
                 writer.WritePropertyName("billingCurrencyTotal"u8);
                 writer.WriteObjectValue(BillingCurrencyTotal);
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(BillingAccount))
+            if (Core.Optional.IsDefined(BillingAccount))
             {
                 writer.WritePropertyName("billingAccount"u8);
                 writer.WriteStringValue(BillingAccount);
@@ -55,13 +55,13 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> dueDate = default;
-            Optional<DateTimeOffset> paymentDate = default;
-            Optional<BillingBenefitsPrice> pricingCurrencyTotal = default;
-            Optional<BillingBenefitsPrice> billingCurrencyTotal = default;
-            Optional<BillingBenefitsPaymentStatus> status = default;
-            Optional<BillingBenefitsExtendedStatusInfo> extendedStatusInfo = default;
-            Optional<string> billingAccount = default;
+            Core.Optional<DateTimeOffset> dueDate = default;
+            Core.Optional<DateTimeOffset> paymentDate = default;
+            Core.Optional<BillingBenefitsPrice> pricingCurrencyTotal = default;
+            Core.Optional<BillingBenefitsPrice> billingCurrencyTotal = default;
+            Core.Optional<BillingBenefitsPaymentStatus> status = default;
+            Core.Optional<BillingBenefitsExtendedStatusInfo> extendedStatusInfo = default;
+            Core.Optional<string> billingAccount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dueDate"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     continue;
                 }
             }
-            return new SavingsPlanOrderPaymentDetail(Optional.ToNullable(dueDate), Optional.ToNullable(paymentDate), pricingCurrencyTotal.Value, billingCurrencyTotal.Value, Optional.ToNullable(status), extendedStatusInfo.Value, billingAccount.Value);
+            return new SavingsPlanOrderPaymentDetail(Core.Optional.ToNullable(dueDate), Core.Optional.ToNullable(paymentDate), pricingCurrencyTotal.Value, billingCurrencyTotal.Value, Core.Optional.ToNullable(status), extendedStatusInfo.Value, billingAccount.Value);
         }
     }
 }

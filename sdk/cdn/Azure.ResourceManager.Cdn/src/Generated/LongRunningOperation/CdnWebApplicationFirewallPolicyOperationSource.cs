@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class CdnWebApplicationFirewallPolicyOperationSource : IOperationSource<CdnWebApplicationFirewallPolicyResource>
+    internal class CdnWebApplicationFirewallPolicyOperationSource : Core.IOperationSource<CdnWebApplicationFirewallPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Cdn
             _client = client;
         }
 
-        CdnWebApplicationFirewallPolicyResource IOperationSource<CdnWebApplicationFirewallPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CdnWebApplicationFirewallPolicyResource Core.IOperationSource<CdnWebApplicationFirewallPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CdnWebApplicationFirewallPolicyData.DeserializeCdnWebApplicationFirewallPolicyData(document.RootElement);
             return new CdnWebApplicationFirewallPolicyResource(_client, data);
         }
 
-        async ValueTask<CdnWebApplicationFirewallPolicyResource> IOperationSource<CdnWebApplicationFirewallPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CdnWebApplicationFirewallPolicyResource> Core.IOperationSource<CdnWebApplicationFirewallPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CdnWebApplicationFirewallPolicyData.DeserializeCdnWebApplicationFirewallPolicyData(document.RootElement);

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of WorkloadNetworkVirtualMachinesList. </summary>
         internal WorkloadNetworkVirtualMachinesList()
         {
-            Value = new ChangeTrackingList<WorkloadNetworkVirtualMachineData>();
+            Value = new Core.ChangeTrackingList<WorkloadNetworkVirtualMachineData>();
         }
 
         /// <summary> Initializes a new instance of WorkloadNetworkVirtualMachinesList. </summary>

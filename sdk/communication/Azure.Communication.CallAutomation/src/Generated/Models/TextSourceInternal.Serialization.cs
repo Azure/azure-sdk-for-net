@@ -10,29 +10,29 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class TextSourceInternal : IUtf8JsonSerializable
+    internal partial class TextSourceInternal : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (Optional.IsDefined(SourceLocale))
+            if (Core.Optional.IsDefined(SourceLocale))
             {
                 writer.WritePropertyName("sourceLocale"u8);
                 writer.WriteStringValue(SourceLocale);
             }
-            if (Optional.IsDefined(VoiceGender))
+            if (Core.Optional.IsDefined(VoiceGender))
             {
                 writer.WritePropertyName("voiceGender"u8);
                 writer.WriteStringValue(VoiceGender.Value.ToString());
             }
-            if (Optional.IsDefined(VoiceName))
+            if (Core.Optional.IsDefined(VoiceName))
             {
                 writer.WritePropertyName("voiceName"u8);
                 writer.WriteStringValue(VoiceName);
             }
-            if (Optional.IsDefined(CustomVoiceEndpointId))
+            if (Core.Optional.IsDefined(CustomVoiceEndpointId))
             {
                 writer.WritePropertyName("customVoiceEndpointId"u8);
                 writer.WriteStringValue(CustomVoiceEndpointId);

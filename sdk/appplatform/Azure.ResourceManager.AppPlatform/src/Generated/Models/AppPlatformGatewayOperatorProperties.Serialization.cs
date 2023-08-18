@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformGatewayOperatorResourceRequirements> resourceRequests = default;
-            Optional<IReadOnlyList<AppPlatformGatewayInstance>> instances = default;
+            Core.Optional<AppPlatformGatewayOperatorResourceRequirements> resourceRequests = default;
+            Core.Optional<IReadOnlyList<AppPlatformGatewayInstance>> instances = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceRequests"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformGatewayOperatorProperties(resourceRequests.Value, Optional.ToList(instances));
+            return new AppPlatformGatewayOperatorProperties(resourceRequests.Value, Core.Optional.ToList(instances));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of PlacementPoliciesList. </summary>
         internal PlacementPoliciesList()
         {
-            Value = new ChangeTrackingList<PlacementPolicyData>();
+            Value = new Core.ChangeTrackingList<PlacementPolicyData>();
         }
 
         /// <summary> Initializes a new instance of PlacementPoliciesList. </summary>

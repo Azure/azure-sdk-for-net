@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of GatewayApiData. </summary>
         public GatewayApiData()
         {
-            Protocols = new ChangeTrackingList<ApiOperationInvokableProtocol>();
+            Protocols = new Core.ChangeTrackingList<ApiOperationInvokableProtocol>();
         }
 
         /// <summary> Initializes a new instance of GatewayApiData. </summary>

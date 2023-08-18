@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of SubscriptionListResult. </summary>
         internal SubscriptionListResult()
         {
-            Value = new ChangeTrackingList<SubscriptionContractData>();
+            Value = new Core.ChangeTrackingList<SubscriptionContractData>();
         }
 
         /// <summary> Initializes a new instance of SubscriptionListResult. </summary>

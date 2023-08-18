@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automation
         /// <summary> Initializes a new instance of AutomationPrivateEndpointConnectionData. </summary>
         public AutomationPrivateEndpointConnectionData()
         {
-            GroupIds = new ChangeTrackingList<string>();
+            GroupIds = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AutomationPrivateEndpointConnectionData. </summary>

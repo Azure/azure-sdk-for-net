@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class HttpErrorRange : IUtf8JsonSerializable
+    public partial class HttpErrorRange : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Begin))
+            if (Core.Optional.IsDefined(Begin))
             {
                 writer.WritePropertyName("begin"u8);
                 writer.WriteNumberValue(Begin.Value);
             }
-            if (Optional.IsDefined(End))
+            if (Core.Optional.IsDefined(End))
             {
                 writer.WritePropertyName("end"u8);
                 writer.WriteNumberValue(End.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<int> begin = default;
-            Optional<int> end = default;
+            Core.Optional<int> begin = default;
+            Core.Optional<int> end = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("begin"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new HttpErrorRange(Optional.ToNullable(begin), Optional.ToNullable(end));
+            return new HttpErrorRange(Core.Optional.ToNullable(begin), Core.Optional.ToNullable(end));
         }
     }
 }

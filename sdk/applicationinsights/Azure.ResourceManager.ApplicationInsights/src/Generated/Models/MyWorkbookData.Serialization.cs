@@ -14,42 +14,42 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
-    public partial class MyWorkbookData : IUtf8JsonSerializable
+    public partial class MyWorkbookData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ResourceType))
+            if (Core.Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ETag))
+            if (Core.Optional.IsCollectionDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStartObject();
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(SerializedData))
+            if (Core.Optional.IsDefined(SerializedData))
             {
                 if (SerializedData != null)
                 {
@@ -90,22 +90,22 @@ namespace Azure.ResourceManager.ApplicationInsights
                     writer.WriteNull("serializedData");
                 }
             }
-            if (Optional.IsDefined(Version))
+            if (Core.Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(Category))
+            if (Core.Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Optional.IsDefined(SourceId))
+            if (Core.Optional.IsDefined(SourceId))
             {
                 writer.WritePropertyName("sourceId"u8);
                 writer.WriteStringValue(SourceId);
             }
-            if (Optional.IsDefined(StorageUri))
+            if (Core.Optional.IsDefined(StorageUri))
             {
                 if (StorageUri != null)
                 {
@@ -127,23 +127,23 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 return null;
             }
-            Optional<ApplicationInsightsKind> kind = default;
-            Optional<SystemData> systemData = default;
-            Optional<MyWorkbookManagedIdentity> identity = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IDictionary<string, string>> etag = default;
-            Optional<string> displayName = default;
-            Optional<string> serializedData = default;
-            Optional<string> version = default;
-            Optional<string> timeModified = default;
-            Optional<string> category = default;
-            Optional<string> userId = default;
-            Optional<string> sourceId = default;
-            Optional<Uri> storageUri = default;
+            Core.Optional<ApplicationInsightsKind> kind = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<MyWorkbookManagedIdentity> identity = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> type = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> etag = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> serializedData = default;
+            Core.Optional<string> version = default;
+            Core.Optional<string> timeModified = default;
+            Core.Optional<string> category = default;
+            Core.Optional<string> userId = default;
+            Core.Optional<string> sourceId = default;
+            Core.Optional<Uri> storageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                     continue;
                 }
             }
-            return new MyWorkbookData(identity.Value, id.Value, name.Value, type.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToDictionary(etag), Optional.ToNullable(kind), systemData, displayName.Value, serializedData.Value, version.Value, timeModified.Value, category.Value, userId.Value, sourceId.Value, storageUri.Value);
+            return new MyWorkbookData(identity.Value, id.Value, name.Value, type.Value, Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags), Core.Optional.ToDictionary(etag), Core.Optional.ToNullable(kind), systemData, displayName.Value, serializedData.Value, version.Value, timeModified.Value, category.Value, userId.Value, sourceId.Value, storageUri.Value);
         }
     }
 }

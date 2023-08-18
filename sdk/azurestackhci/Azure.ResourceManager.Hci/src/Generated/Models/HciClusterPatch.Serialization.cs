@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class HciClusterPatch : IUtf8JsonSerializable
+    public partial class HciClusterPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.Hci.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CloudManagementEndpoint))
+            if (Core.Optional.IsDefined(CloudManagementEndpoint))
             {
                 writer.WritePropertyName("cloudManagementEndpoint"u8);
                 writer.WriteStringValue(CloudManagementEndpoint);
             }
-            if (Optional.IsDefined(AadClientId))
+            if (Core.Optional.IsDefined(AadClientId))
             {
                 writer.WritePropertyName("aadClientId"u8);
                 writer.WriteStringValue(AadClientId.Value);
             }
-            if (Optional.IsDefined(AadTenantId))
+            if (Core.Optional.IsDefined(AadTenantId))
             {
                 writer.WritePropertyName("aadTenantId"u8);
                 writer.WriteStringValue(AadTenantId.Value);
             }
-            if (Optional.IsDefined(DesiredProperties))
+            if (Core.Optional.IsDefined(DesiredProperties))
             {
                 writer.WritePropertyName("desiredProperties"u8);
                 writer.WriteObjectValue(DesiredProperties);
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WriteEndObject();
             writer.WritePropertyName("identity"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ManagedServiceIdentityType))
+            if (Core.Optional.IsDefined(ManagedServiceIdentityType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ManagedServiceIdentityType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(UserAssignedIdentities))
+            if (Core.Optional.IsCollectionDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartObject();

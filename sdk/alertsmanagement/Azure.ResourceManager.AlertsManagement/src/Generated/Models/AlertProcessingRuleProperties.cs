@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             Argument.AssertNotNull(actions, nameof(actions));
 
             Scopes = scopes.ToList();
-            Conditions = new ChangeTrackingList<AlertProcessingRuleCondition>();
+            Conditions = new Core.ChangeTrackingList<AlertProcessingRuleCondition>();
             Actions = actions.ToList();
         }
 

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of ClusterList. </summary>
         internal ClusterList()
         {
-            Value = new ChangeTrackingList<AvsPrivateCloudClusterData>();
+            Value = new Core.ChangeTrackingList<AvsPrivateCloudClusterData>();
         }
 
         /// <summary> Initializes a new instance of ClusterList. </summary>

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automation
         /// <summary> Initializes a new instance of AutomationJobScheduleData. </summary>
         internal AutomationJobScheduleData()
         {
-            Parameters = new ChangeTrackingDictionary<string, string>();
+            Parameters = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of AutomationJobScheduleData. </summary>

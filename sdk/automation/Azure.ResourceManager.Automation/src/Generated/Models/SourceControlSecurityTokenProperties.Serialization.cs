@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class SourceControlSecurityTokenProperties : IUtf8JsonSerializable
+    public partial class SourceControlSecurityTokenProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AccessToken))
+            if (Core.Optional.IsDefined(AccessToken))
             {
                 writer.WritePropertyName("accessToken"u8);
                 writer.WriteStringValue(AccessToken);
             }
-            if (Optional.IsDefined(RefreshToken))
+            if (Core.Optional.IsDefined(RefreshToken))
             {
                 writer.WritePropertyName("refreshToken"u8);
                 writer.WriteStringValue(RefreshToken);
             }
-            if (Optional.IsDefined(TokenType))
+            if (Core.Optional.IsDefined(TokenType))
             {
                 writer.WritePropertyName("tokenType"u8);
                 writer.WriteStringValue(TokenType.Value.ToString());

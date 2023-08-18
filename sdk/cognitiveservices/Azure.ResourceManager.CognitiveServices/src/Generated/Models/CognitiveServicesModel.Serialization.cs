@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<CognitiveServicesAccountModel> model = default;
-            Optional<string> kind = default;
-            Optional<string> skuName = default;
+            Core.Optional<CognitiveServicesAccountModel> model = default;
+            Core.Optional<string> kind = default;
+            Core.Optional<string> skuName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("model"u8))

@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<string> principalId = default;
-            Optional<ResourceIdentifier> roleDefinitionId = default;
-            Optional<ResourceIdentifier> scope = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> principalId = default;
+            Core.Optional<ResourceIdentifier> roleDefinitionId = default;
+            Core.Optional<ResourceIdentifier> scope = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

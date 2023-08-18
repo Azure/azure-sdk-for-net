@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Initializes a new instance of ApplicationInsightsComponentAPIKey. </summary>
         internal ApplicationInsightsComponentAPIKey()
         {
-            LinkedReadProperties = new ChangeTrackingList<string>();
-            LinkedWriteProperties = new ChangeTrackingList<string>();
+            LinkedReadProperties = new Core.ChangeTrackingList<string>();
+            LinkedWriteProperties = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ApplicationInsightsComponentAPIKey. </summary>

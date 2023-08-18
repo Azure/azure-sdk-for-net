@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ConnectivityCheckRequestHttpConfiguration. </summary>
         public ConnectivityCheckRequestHttpConfiguration()
         {
-            ValidStatusCodes = new ChangeTrackingList<long>();
-            Headers = new ChangeTrackingList<HttpHeaderConfiguration>();
+            ValidStatusCodes = new Core.ChangeTrackingList<long>();
+            Headers = new Core.ChangeTrackingList<HttpHeaderConfiguration>();
         }
 
         /// <summary> The HTTP method to be used. </summary>

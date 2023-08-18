@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    public partial class CdnEndpointData : IUtf8JsonSerializable
+    public partial class CdnEndpointData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.Cdn
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(OriginPath))
+            if (Core.Optional.IsDefined(OriginPath))
             {
                 writer.WritePropertyName("originPath"u8);
                 writer.WriteStringValue(OriginPath);
             }
-            if (Optional.IsCollectionDefined(ContentTypesToCompress))
+            if (Core.Optional.IsCollectionDefined(ContentTypesToCompress))
             {
                 writer.WritePropertyName("contentTypesToCompress"u8);
                 writer.WriteStartArray();
@@ -48,32 +48,32 @@ namespace Azure.ResourceManager.Cdn
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OriginHostHeader))
+            if (Core.Optional.IsDefined(OriginHostHeader))
             {
                 writer.WritePropertyName("originHostHeader"u8);
                 writer.WriteStringValue(OriginHostHeader);
             }
-            if (Optional.IsDefined(IsCompressionEnabled))
+            if (Core.Optional.IsDefined(IsCompressionEnabled))
             {
                 writer.WritePropertyName("isCompressionEnabled"u8);
                 writer.WriteBooleanValue(IsCompressionEnabled.Value);
             }
-            if (Optional.IsDefined(IsHttpAllowed))
+            if (Core.Optional.IsDefined(IsHttpAllowed))
             {
                 writer.WritePropertyName("isHttpAllowed"u8);
                 writer.WriteBooleanValue(IsHttpAllowed.Value);
             }
-            if (Optional.IsDefined(IsHttpsAllowed))
+            if (Core.Optional.IsDefined(IsHttpsAllowed))
             {
                 writer.WritePropertyName("isHttpsAllowed"u8);
                 writer.WriteBooleanValue(IsHttpsAllowed.Value);
             }
-            if (Optional.IsDefined(QueryStringCachingBehavior))
+            if (Core.Optional.IsDefined(QueryStringCachingBehavior))
             {
                 writer.WritePropertyName("queryStringCachingBehavior"u8);
                 writer.WriteStringValue(QueryStringCachingBehavior.Value.ToSerialString());
             }
-            if (Optional.IsDefined(OptimizationType))
+            if (Core.Optional.IsDefined(OptimizationType))
             {
                 if (OptimizationType != null)
                 {
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("optimizationType");
                 }
             }
-            if (Optional.IsDefined(ProbePath))
+            if (Core.Optional.IsDefined(ProbePath))
             {
                 writer.WritePropertyName("probePath"u8);
                 writer.WriteStringValue(ProbePath);
             }
-            if (Optional.IsCollectionDefined(GeoFilters))
+            if (Core.Optional.IsCollectionDefined(GeoFilters))
             {
                 writer.WritePropertyName("geoFilters"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Cdn
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DefaultOriginGroup))
+            if (Core.Optional.IsDefined(DefaultOriginGroup))
             {
                 if (DefaultOriginGroup != null)
                 {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("defaultOriginGroup");
                 }
             }
-            if (Optional.IsCollectionDefined(UriSigningKeys))
+            if (Core.Optional.IsCollectionDefined(UriSigningKeys))
             {
                 if (UriSigningKeys != null)
                 {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("urlSigningKeys");
                 }
             }
-            if (Optional.IsDefined(DeliveryPolicy))
+            if (Core.Optional.IsDefined(DeliveryPolicy))
             {
                 if (DeliveryPolicy != null)
                 {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("deliveryPolicy");
                 }
             }
-            if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
+            if (Core.Optional.IsDefined(WebApplicationFirewallPolicyLink))
             {
                 if (WebApplicationFirewallPolicyLink != null)
                 {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("webApplicationFirewallPolicyLink");
                 }
             }
-            if (Optional.IsCollectionDefined(Origins))
+            if (Core.Optional.IsCollectionDefined(Origins))
             {
                 writer.WritePropertyName("origins"u8);
                 writer.WriteStartArray();
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Cdn
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(OriginGroups))
+            if (Core.Optional.IsCollectionDefined(OriginGroups))
             {
                 writer.WritePropertyName("originGroups"u8);
                 writer.WriteStartArray();
@@ -183,32 +183,32 @@ namespace Azure.ResourceManager.Cdn
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> originPath = default;
-            Optional<IList<string>> contentTypesToCompress = default;
-            Optional<string> originHostHeader = default;
-            Optional<bool> isCompressionEnabled = default;
-            Optional<bool> isHttpAllowed = default;
-            Optional<bool> isHttpsAllowed = default;
-            Optional<QueryStringCachingBehavior> queryStringCachingBehavior = default;
-            Optional<OptimizationType?> optimizationType = default;
-            Optional<string> probePath = default;
-            Optional<IList<GeoFilter>> geoFilters = default;
-            Optional<EndpointPropertiesUpdateParametersDefaultOriginGroup> defaultOriginGroup = default;
-            Optional<IList<UriSigningKey>> uriSigningKeys = default;
-            Optional<EndpointDeliveryPolicy> deliveryPolicy = default;
-            Optional<EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink> webApplicationFirewallPolicyLink = default;
-            Optional<string> hostName = default;
-            Optional<IList<DeepCreatedOrigin>> origins = default;
-            Optional<IList<DeepCreatedOriginGroup>> originGroups = default;
-            Optional<IReadOnlyList<CdnCustomDomainData>> customDomains = default;
-            Optional<EndpointResourceState> resourceState = default;
-            Optional<CdnEndpointProvisioningState> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> originPath = default;
+            Core.Optional<IList<string>> contentTypesToCompress = default;
+            Core.Optional<string> originHostHeader = default;
+            Core.Optional<bool> isCompressionEnabled = default;
+            Core.Optional<bool> isHttpAllowed = default;
+            Core.Optional<bool> isHttpsAllowed = default;
+            Core.Optional<QueryStringCachingBehavior> queryStringCachingBehavior = default;
+            Core.Optional<OptimizationType?> optimizationType = default;
+            Core.Optional<string> probePath = default;
+            Core.Optional<IList<GeoFilter>> geoFilters = default;
+            Core.Optional<EndpointPropertiesUpdateParametersDefaultOriginGroup> defaultOriginGroup = default;
+            Core.Optional<IList<UriSigningKey>> uriSigningKeys = default;
+            Core.Optional<EndpointDeliveryPolicy> deliveryPolicy = default;
+            Core.Optional<EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink> webApplicationFirewallPolicyLink = default;
+            Core.Optional<string> hostName = default;
+            Core.Optional<IList<DeepCreatedOrigin>> origins = default;
+            Core.Optional<IList<DeepCreatedOriginGroup>> originGroups = default;
+            Core.Optional<IReadOnlyList<CdnCustomDomainData>> customDomains = default;
+            Core.Optional<EndpointResourceState> resourceState = default;
+            Core.Optional<CdnEndpointProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new CdnEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, originPath.Value, Optional.ToList(contentTypesToCompress), originHostHeader.Value, Optional.ToNullable(isCompressionEnabled), Optional.ToNullable(isHttpAllowed), Optional.ToNullable(isHttpsAllowed), Optional.ToNullable(queryStringCachingBehavior), Optional.ToNullable(optimizationType), probePath.Value, Optional.ToList(geoFilters), defaultOriginGroup.Value, Optional.ToList(uriSigningKeys), deliveryPolicy.Value, webApplicationFirewallPolicyLink.Value, hostName.Value, Optional.ToList(origins), Optional.ToList(originGroups), Optional.ToList(customDomains), Optional.ToNullable(resourceState), Optional.ToNullable(provisioningState));
+            return new CdnEndpointData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, originPath.Value, Core.Optional.ToList(contentTypesToCompress), originHostHeader.Value, Core.Optional.ToNullable(isCompressionEnabled), Core.Optional.ToNullable(isHttpAllowed), Core.Optional.ToNullable(isHttpsAllowed), Core.Optional.ToNullable(queryStringCachingBehavior), Core.Optional.ToNullable(optimizationType), probePath.Value, Core.Optional.ToList(geoFilters), defaultOriginGroup.Value, Core.Optional.ToList(uriSigningKeys), deliveryPolicy.Value, webApplicationFirewallPolicyLink.Value, hostName.Value, Core.Optional.ToList(origins), Core.Optional.ToList(originGroups), Core.Optional.ToList(customDomains), Core.Optional.ToNullable(resourceState), Core.Optional.ToNullable(provisioningState));
         }
     }
 }

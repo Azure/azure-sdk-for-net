@@ -13,39 +13,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    public partial class DscNodeConfigurationData : IUtf8JsonSerializable
+    public partial class DscNodeConfigurationData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(LastModifiedOn))
+            if (Core.Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (Core.Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(Configuration))
+            if (Core.Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
             }
-            if (Optional.IsDefined(Source))
+            if (Core.Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Optional.IsDefined(NodeCount))
+            if (Core.Optional.IsDefined(NodeCount))
             {
                 writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
             }
-            if (Optional.IsDefined(IsIncrementNodeConfigurationBuildRequired))
+            if (Core.Optional.IsDefined(IsIncrementNodeConfigurationBuildRequired))
             {
                 writer.WritePropertyName("incrementNodeConfigurationBuild"u8);
                 writer.WriteBooleanValue(IsIncrementNodeConfigurationBuildRequired.Value);
@@ -63,13 +63,13 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DscConfigurationAssociationProperty> configuration = default;
-            Optional<string> source = default;
-            Optional<long> nodeCount = default;
-            Optional<bool> incrementNodeConfigurationBuild = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DateTimeOffset> lastModifiedTime = default;
+            Core.Optional<DateTimeOffset> creationTime = default;
+            Core.Optional<DscConfigurationAssociationProperty> configuration = default;
+            Core.Optional<string> source = default;
+            Core.Optional<long> nodeCount = default;
+            Core.Optional<bool> incrementNodeConfigurationBuild = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Automation
                     continue;
                 }
             }
-            return new DscNodeConfigurationData(id, name, type, systemData.Value, Optional.ToNullable(lastModifiedTime), Optional.ToNullable(creationTime), configuration.Value, source.Value, Optional.ToNullable(nodeCount), Optional.ToNullable(incrementNodeConfigurationBuild));
+            return new DscNodeConfigurationData(id, name, type, systemData.Value, Core.Optional.ToNullable(lastModifiedTime), Core.Optional.ToNullable(creationTime), configuration.Value, source.Value, Core.Optional.ToNullable(nodeCount), Core.Optional.ToNullable(incrementNodeConfigurationBuild));
         }
     }
 }

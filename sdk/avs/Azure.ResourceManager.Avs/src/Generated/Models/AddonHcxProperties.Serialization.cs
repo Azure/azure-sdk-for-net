@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class AddonHcxProperties : IUtf8JsonSerializable
+    public partial class AddonHcxProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("offer"u8);
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
             string offer = default;
             AddonType addonType = default;
-            Optional<AddonProvisioningState> provisioningState = default;
+            Core.Optional<AddonProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offer"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new AddonHcxProperties(addonType, Optional.ToNullable(provisioningState), offer);
+            return new AddonHcxProperties(addonType, Core.Optional.ToNullable(provisioningState), offer);
         }
     }
 }

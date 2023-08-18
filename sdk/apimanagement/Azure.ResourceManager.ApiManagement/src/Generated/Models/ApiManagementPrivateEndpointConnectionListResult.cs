@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ApiManagementPrivateEndpointConnectionListResult. </summary>
         internal ApiManagementPrivateEndpointConnectionListResult()
         {
-            Value = new ChangeTrackingList<ApiManagementPrivateEndpointConnectionData>();
+            Value = new Core.ChangeTrackingList<ApiManagementPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of ApiManagementPrivateEndpointConnectionListResult. </summary>

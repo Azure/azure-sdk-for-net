@@ -15,19 +15,19 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    public partial class CdnWebApplicationFirewallPolicyData : IUtf8JsonSerializable
+    public partial class CdnWebApplicationFirewallPolicyData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -42,22 +42,22 @@ namespace Azure.ResourceManager.Cdn
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PolicySettings))
+            if (Core.Optional.IsDefined(PolicySettings))
             {
                 writer.WritePropertyName("policySettings"u8);
                 writer.WriteObjectValue(PolicySettings);
             }
-            if (Optional.IsDefined(RateLimitSettings))
+            if (Core.Optional.IsDefined(RateLimitSettings))
             {
                 writer.WritePropertyName("rateLimitRules"u8);
                 writer.WriteObjectValue(RateLimitSettings);
             }
-            if (Optional.IsDefined(CustomSettings))
+            if (Core.Optional.IsDefined(CustomSettings))
             {
                 writer.WritePropertyName("customRules"u8);
                 writer.WriteObjectValue(CustomSettings);
             }
-            if (Optional.IsDefined(ManagedRules))
+            if (Core.Optional.IsDefined(ManagedRules))
             {
                 writer.WritePropertyName("managedRules"u8);
                 writer.WriteObjectValue(ManagedRules);
@@ -72,21 +72,21 @@ namespace Azure.ResourceManager.Cdn
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            Core.Optional<ETag> etag = default;
             CdnSku sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<WafPolicySettings> policySettings = default;
-            Optional<RateLimitRuleList> rateLimitRules = default;
-            Optional<CustomRuleList> customRules = default;
-            Optional<ManagedRuleSetList> managedRules = default;
-            Optional<IReadOnlyList<SubResource>> endpointLinks = default;
-            Optional<WebApplicationFirewallPolicyProvisioningState> provisioningState = default;
-            Optional<PolicyResourceState> resourceState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<WafPolicySettings> policySettings = default;
+            Core.Optional<RateLimitRuleList> rateLimitRules = default;
+            Core.Optional<CustomRuleList> customRules = default;
+            Core.Optional<ManagedRuleSetList> managedRules = default;
+            Core.Optional<IReadOnlyList<SubResource>> endpointLinks = default;
+            Core.Optional<WebApplicationFirewallPolicyProvisioningState> provisioningState = default;
+            Core.Optional<PolicyResourceState> resourceState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new CdnWebApplicationFirewallPolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), sku, policySettings.Value, rateLimitRules.Value, customRules.Value, managedRules.Value, Optional.ToList(endpointLinks), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState));
+            return new CdnWebApplicationFirewallPolicyData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(etag), sku, policySettings.Value, rateLimitRules.Value, customRules.Value, managedRules.Value, Core.Optional.ToList(endpointLinks), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(resourceState));
         }
     }
 }

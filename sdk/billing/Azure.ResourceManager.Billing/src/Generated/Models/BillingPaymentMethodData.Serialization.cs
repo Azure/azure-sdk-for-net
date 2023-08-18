@@ -13,19 +13,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    public partial class BillingPaymentMethodData : IUtf8JsonSerializable
+    public partial class BillingPaymentMethodData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Family))
+            if (Core.Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Logos))
+            if (Core.Optional.IsCollectionDefined(Logos))
             {
                 writer.WritePropertyName("logos"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Billing
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -53,15 +53,15 @@ namespace Azure.ResourceManager.Billing
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<PaymentMethodFamily> family = default;
-            Optional<string> type0 = default;
-            Optional<string> accountHolderName = default;
-            Optional<string> expiration = default;
-            Optional<string> lastFourDigits = default;
-            Optional<string> displayName = default;
-            Optional<IList<PaymentMethodLogo>> logos = default;
-            Optional<PaymentMethodStatus> status = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<PaymentMethodFamily> family = default;
+            Core.Optional<string> type0 = default;
+            Core.Optional<string> accountHolderName = default;
+            Core.Optional<string> expiration = default;
+            Core.Optional<string> lastFourDigits = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<IList<PaymentMethodLogo>> logos = default;
+            Core.Optional<PaymentMethodStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Billing
                     continue;
                 }
             }
-            return new BillingPaymentMethodData(id, name, type, systemData.Value, Optional.ToNullable(family), type0.Value, accountHolderName.Value, expiration.Value, lastFourDigits.Value, displayName.Value, Optional.ToList(logos), Optional.ToNullable(status));
+            return new BillingPaymentMethodData(id, name, type, systemData.Value, Core.Optional.ToNullable(family), type0.Value, accountHolderName.Value, expiration.Value, lastFourDigits.Value, displayName.Value, Core.Optional.ToList(logos), Core.Optional.ToNullable(status));
         }
     }
 }

@@ -10,42 +10,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
-    public partial class HardwareProfile : IUtf8JsonSerializable
+    public partial class HardwareProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MemoryMB))
+            if (Core.Optional.IsDefined(MemoryMB))
             {
                 writer.WritePropertyName("memoryMB"u8);
                 writer.WriteNumberValue(MemoryMB.Value);
             }
-            if (Optional.IsDefined(CpuCount))
+            if (Core.Optional.IsDefined(CpuCount))
             {
                 writer.WritePropertyName("cpuCount"u8);
                 writer.WriteNumberValue(CpuCount.Value);
             }
-            if (Optional.IsDefined(LimitCpuForMigration))
+            if (Core.Optional.IsDefined(LimitCpuForMigration))
             {
                 writer.WritePropertyName("limitCpuForMigration"u8);
                 writer.WriteStringValue(LimitCpuForMigration.Value.ToString());
             }
-            if (Optional.IsDefined(DynamicMemoryEnabled))
+            if (Core.Optional.IsDefined(DynamicMemoryEnabled))
             {
                 writer.WritePropertyName("dynamicMemoryEnabled"u8);
                 writer.WriteStringValue(DynamicMemoryEnabled.Value.ToString());
             }
-            if (Optional.IsDefined(DynamicMemoryMaxMB))
+            if (Core.Optional.IsDefined(DynamicMemoryMaxMB))
             {
                 writer.WritePropertyName("dynamicMemoryMaxMB"u8);
                 writer.WriteNumberValue(DynamicMemoryMaxMB.Value);
             }
-            if (Optional.IsDefined(DynamicMemoryMinMB))
+            if (Core.Optional.IsDefined(DynamicMemoryMinMB))
             {
                 writer.WritePropertyName("dynamicMemoryMinMB"u8);
                 writer.WriteNumberValue(DynamicMemoryMinMB.Value);
             }
-            if (Optional.IsDefined(IsHighlyAvailable))
+            if (Core.Optional.IsDefined(IsHighlyAvailable))
             {
                 writer.WritePropertyName("isHighlyAvailable"u8);
                 writer.WriteStringValue(IsHighlyAvailable);
@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<int> memoryMB = default;
-            Optional<int> cpuCount = default;
-            Optional<LimitCpuForMigration> limitCpuForMigration = default;
-            Optional<DynamicMemoryEnabled> dynamicMemoryEnabled = default;
-            Optional<int> dynamicMemoryMaxMB = default;
-            Optional<int> dynamicMemoryMinMB = default;
-            Optional<string> isHighlyAvailable = default;
+            Core.Optional<int> memoryMB = default;
+            Core.Optional<int> cpuCount = default;
+            Core.Optional<LimitCpuForMigration> limitCpuForMigration = default;
+            Core.Optional<DynamicMemoryEnabled> dynamicMemoryEnabled = default;
+            Core.Optional<int> dynamicMemoryMaxMB = default;
+            Core.Optional<int> dynamicMemoryMinMB = default;
+            Core.Optional<string> isHighlyAvailable = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("memoryMB"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     continue;
                 }
             }
-            return new HardwareProfile(Optional.ToNullable(memoryMB), Optional.ToNullable(cpuCount), Optional.ToNullable(limitCpuForMigration), Optional.ToNullable(dynamicMemoryEnabled), Optional.ToNullable(dynamicMemoryMaxMB), Optional.ToNullable(dynamicMemoryMinMB), isHighlyAvailable.Value);
+            return new HardwareProfile(Core.Optional.ToNullable(memoryMB), Core.Optional.ToNullable(cpuCount), Core.Optional.ToNullable(limitCpuForMigration), Core.Optional.ToNullable(dynamicMemoryEnabled), Core.Optional.ToNullable(dynamicMemoryMaxMB), Core.Optional.ToNullable(dynamicMemoryMinMB), isHighlyAvailable.Value);
         }
     }
 }

@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jobStreamRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobStreamRestClient.CreateListByJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AutomationJobStream.DeserializeAutomationJobStream, _jobStreamClientDiagnostics, Pipeline, "AutomationJobResource.GetJobStreams", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AutomationJobStream.DeserializeAutomationJobStream, _jobStreamClientDiagnostics, Pipeline, "AutomationJobResource.GetJobStreams", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jobStreamRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobStreamRestClient.CreateListByJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AutomationJobStream.DeserializeAutomationJobStream, _jobStreamClientDiagnostics, Pipeline, "AutomationJobResource.GetJobStreams", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AutomationJobStream.DeserializeAutomationJobStream, _jobStreamClientDiagnostics, Pipeline, "AutomationJobResource.GetJobStreams", "value", "nextLink", cancellationToken);
         }
     }
 }

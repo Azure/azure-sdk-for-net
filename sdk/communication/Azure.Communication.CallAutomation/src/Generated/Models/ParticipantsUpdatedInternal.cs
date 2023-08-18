@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of ParticipantsUpdatedInternal. </summary>
         internal ParticipantsUpdatedInternal()
         {
-            Participants = new ChangeTrackingList<CallParticipantInternal>();
+            Participants = new Core.ChangeTrackingList<CallParticipantInternal>();
         }
 
         /// <summary> Initializes a new instance of ParticipantsUpdatedInternal. </summary>

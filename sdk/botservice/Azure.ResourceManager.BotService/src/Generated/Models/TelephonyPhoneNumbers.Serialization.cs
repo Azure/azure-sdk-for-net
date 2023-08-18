@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class TelephonyPhoneNumbers : IUtf8JsonSerializable
+    public partial class TelephonyPhoneNumbers : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(PhoneNumber))
+            if (Core.Optional.IsDefined(PhoneNumber))
             {
                 writer.WritePropertyName("phoneNumber"u8);
                 writer.WriteStringValue(PhoneNumber);
             }
-            if (Optional.IsDefined(AcsEndpoint))
+            if (Core.Optional.IsDefined(AcsEndpoint))
             {
                 if (AcsEndpoint != null)
                 {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("acsEndpoint");
                 }
             }
-            if (Optional.IsDefined(AcsSecret))
+            if (Core.Optional.IsDefined(AcsSecret))
             {
                 if (AcsSecret != null)
                 {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("acsSecret");
                 }
             }
-            if (Optional.IsDefined(AcsResourceId))
+            if (Core.Optional.IsDefined(AcsResourceId))
             {
                 if (AcsResourceId != null)
                 {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("acsResourceId");
                 }
             }
-            if (Optional.IsDefined(CognitiveServiceSubscriptionKey))
+            if (Core.Optional.IsDefined(CognitiveServiceSubscriptionKey))
             {
                 if (CognitiveServiceSubscriptionKey != null)
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceSubscriptionKey");
                 }
             }
-            if (Optional.IsDefined(CognitiveServiceRegion))
+            if (Core.Optional.IsDefined(CognitiveServiceRegion))
             {
                 if (CognitiveServiceRegion != null)
                 {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceRegion");
                 }
             }
-            if (Optional.IsDefined(CognitiveServiceResourceId))
+            if (Core.Optional.IsDefined(CognitiveServiceResourceId))
             {
                 if (CognitiveServiceResourceId != null)
                 {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceResourceId");
                 }
             }
-            if (Optional.IsDefined(DefaultLocale))
+            if (Core.Optional.IsDefined(DefaultLocale))
             {
                 if (DefaultLocale != null)
                 {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("defaultLocale");
                 }
             }
-            if (Optional.IsDefined(OfferType))
+            if (Core.Optional.IsDefined(OfferType))
             {
                 if (OfferType != null)
                 {
@@ -130,16 +130,16 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> phoneNumber = default;
-            Optional<string> acsEndpoint = default;
-            Optional<string> acsSecret = default;
-            Optional<ResourceIdentifier> acsResourceId = default;
-            Optional<string> cognitiveServiceSubscriptionKey = default;
-            Optional<string> cognitiveServiceRegion = default;
-            Optional<ResourceIdentifier> cognitiveServiceResourceId = default;
-            Optional<string> defaultLocale = default;
-            Optional<string> offerType = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> phoneNumber = default;
+            Core.Optional<string> acsEndpoint = default;
+            Core.Optional<string> acsSecret = default;
+            Core.Optional<ResourceIdentifier> acsResourceId = default;
+            Core.Optional<string> cognitiveServiceSubscriptionKey = default;
+            Core.Optional<string> cognitiveServiceRegion = default;
+            Core.Optional<ResourceIdentifier> cognitiveServiceResourceId = default;
+            Core.Optional<string> defaultLocale = default;
+            Core.Optional<string> offerType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

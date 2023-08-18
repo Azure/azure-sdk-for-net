@@ -14,15 +14,15 @@ using Azure.ResourceManager.AppPlatform.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    internal class AppPlatformConfigurationServiceSettingsValidateResultOperationSource : IOperationSource<AppPlatformConfigurationServiceSettingsValidateResult>
+    internal class AppPlatformConfigurationServiceSettingsValidateResultOperationSource : Core.IOperationSource<AppPlatformConfigurationServiceSettingsValidateResult>
     {
-        AppPlatformConfigurationServiceSettingsValidateResult IOperationSource<AppPlatformConfigurationServiceSettingsValidateResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        AppPlatformConfigurationServiceSettingsValidateResult Core.IOperationSource<AppPlatformConfigurationServiceSettingsValidateResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return AppPlatformConfigurationServiceSettingsValidateResult.DeserializeAppPlatformConfigurationServiceSettingsValidateResult(document.RootElement);
         }
 
-        async ValueTask<AppPlatformConfigurationServiceSettingsValidateResult> IOperationSource<AppPlatformConfigurationServiceSettingsValidateResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AppPlatformConfigurationServiceSettingsValidateResult> Core.IOperationSource<AppPlatformConfigurationServiceSettingsValidateResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return AppPlatformConfigurationServiceSettingsValidateResult.DeserializeAppPlatformConfigurationServiceSettingsValidateResult(document.RootElement);

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of ConfigurationServiceGitProperty. </summary>
         public ConfigurationServiceGitProperty()
         {
-            ConfigurationServiceGitRepositories = new ChangeTrackingList<AppPlatformConfigurationServiceGitRepository>();
+            ConfigurationServiceGitRepositories = new Core.ChangeTrackingList<AppPlatformConfigurationServiceGitRepository>();
         }
 
         /// <summary> Initializes a new instance of ConfigurationServiceGitProperty. </summary>

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RequestReportRecordContract>> value = default;
-            Optional<long> count = default;
+            Core.Optional<IReadOnlyList<RequestReportRecordContract>> value = default;
+            Core.Optional<long> count = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new RequestReportListResult(Optional.ToList(value), Optional.ToNullable(count));
+            return new RequestReportListResult(Core.Optional.ToList(value), Core.Optional.ToNullable(count));
         }
     }
 }

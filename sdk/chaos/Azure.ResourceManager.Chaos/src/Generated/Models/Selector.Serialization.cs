@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    public partial class Selector : IUtf8JsonSerializable
+    public partial class Selector : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Filter))
+            if (Core.Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Chaos.Models
             SelectorType type = default;
             string id = default;
             IList<TargetReference> targets = default;
-            Optional<Filter> filter = default;
+            Core.Optional<Filter> filter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))

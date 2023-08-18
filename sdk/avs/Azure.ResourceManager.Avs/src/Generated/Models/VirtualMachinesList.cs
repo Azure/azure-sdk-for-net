@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of VirtualMachinesList. </summary>
         internal VirtualMachinesList()
         {
-            Value = new ChangeTrackingList<AvsPrivateCloudClusterVirtualMachineData>();
+            Value = new Core.ChangeTrackingList<AvsPrivateCloudClusterVirtualMachineData>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachinesList. </summary>

@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<Uri> uri = default;
-            Optional<IReadOnlyList<string>> messages = default;
+            Core.Optional<string> name = default;
+            Core.Optional<Uri> uri = default;
+            Core.Optional<IReadOnlyList<string>> messages = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new ConfigServerSettingsErrorRecord(name.Value, uri.Value, Optional.ToList(messages));
+            return new ConfigServerSettingsErrorRecord(name.Value, uri.Value, Core.Optional.ToList(messages));
         }
     }
 }

@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of MetricsResponseSeriesItem. </summary>
         internal MetricsResponseSeriesItem()
         {
-            Groups = new ChangeTrackingList<MetricsResponseSeriesPropertiesItemsItem>();
-            Data = new ChangeTrackingList<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems>();
+            Groups = new Core.ChangeTrackingList<MetricsResponseSeriesPropertiesItemsItem>();
+            Data = new Core.ChangeTrackingList<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems>();
         }
 
         /// <summary> Initializes a new instance of MetricsResponseSeriesItem. </summary>

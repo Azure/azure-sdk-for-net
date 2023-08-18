@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
-    internal class ExpressRouteAuthorizationOperationSource : IOperationSource<ExpressRouteAuthorizationResource>
+    internal class ExpressRouteAuthorizationOperationSource : Core.IOperationSource<ExpressRouteAuthorizationResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Avs
             _client = client;
         }
 
-        ExpressRouteAuthorizationResource IOperationSource<ExpressRouteAuthorizationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ExpressRouteAuthorizationResource Core.IOperationSource<ExpressRouteAuthorizationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ExpressRouteAuthorizationData.DeserializeExpressRouteAuthorizationData(document.RootElement);
             return new ExpressRouteAuthorizationResource(_client, data);
         }
 
-        async ValueTask<ExpressRouteAuthorizationResource> IOperationSource<ExpressRouteAuthorizationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ExpressRouteAuthorizationResource> Core.IOperationSource<ExpressRouteAuthorizationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ExpressRouteAuthorizationData.DeserializeExpressRouteAuthorizationData(document.RootElement);

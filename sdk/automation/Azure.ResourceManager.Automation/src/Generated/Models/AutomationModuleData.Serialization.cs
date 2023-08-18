@@ -15,17 +15,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    public partial class AutomationModuleData : IUtf8JsonSerializable
+    public partial class AutomationModuleData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -40,57 +40,57 @@ namespace Azure.ResourceManager.Automation
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsGlobal))
+            if (Core.Optional.IsDefined(IsGlobal))
             {
                 writer.WritePropertyName("isGlobal"u8);
                 writer.WriteBooleanValue(IsGlobal.Value);
             }
-            if (Optional.IsDefined(Version))
+            if (Core.Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(SizeInBytes))
+            if (Core.Optional.IsDefined(SizeInBytes))
             {
                 writer.WritePropertyName("sizeInBytes"u8);
                 writer.WriteNumberValue(SizeInBytes.Value);
             }
-            if (Optional.IsDefined(ActivityCount))
+            if (Core.Optional.IsDefined(ActivityCount))
             {
                 writer.WritePropertyName("activityCount"u8);
                 writer.WriteNumberValue(ActivityCount.Value);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (Core.Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (Optional.IsDefined(ContentLink))
+            if (Core.Optional.IsDefined(ContentLink))
             {
                 writer.WritePropertyName("contentLink"u8);
                 writer.WriteObjectValue(ContentLink);
             }
-            if (Optional.IsDefined(Error))
+            if (Core.Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (Core.Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(LastModifiedOn))
+            if (Core.Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(IsComposite))
+            if (Core.Optional.IsDefined(IsComposite))
             {
                 writer.WritePropertyName("isComposite"u8);
                 writer.WriteBooleanValue(IsComposite.Value);
@@ -105,24 +105,24 @@ namespace Azure.ResourceManager.Automation
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isGlobal = default;
-            Optional<string> version = default;
-            Optional<long> sizeInBytes = default;
-            Optional<int> activityCount = default;
-            Optional<ModuleProvisioningState> provisioningState = default;
-            Optional<AutomationContentLink> contentLink = default;
-            Optional<AutomationModuleErrorInfo> error = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> description = default;
-            Optional<bool> isComposite = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<bool> isGlobal = default;
+            Core.Optional<string> version = default;
+            Core.Optional<long> sizeInBytes = default;
+            Core.Optional<int> activityCount = default;
+            Core.Optional<ModuleProvisioningState> provisioningState = default;
+            Core.Optional<AutomationContentLink> contentLink = default;
+            Core.Optional<AutomationModuleErrorInfo> error = default;
+            Core.Optional<DateTimeOffset> creationTime = default;
+            Core.Optional<DateTimeOffset> lastModifiedTime = default;
+            Core.Optional<string> description = default;
+            Core.Optional<bool> isComposite = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Automation
                     continue;
                 }
             }
-            return new AutomationModuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(isGlobal), version.Value, Optional.ToNullable(sizeInBytes), Optional.ToNullable(activityCount), Optional.ToNullable(provisioningState), contentLink.Value, error.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, Optional.ToNullable(isComposite));
+            return new AutomationModuleData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(etag), Core.Optional.ToNullable(isGlobal), version.Value, Core.Optional.ToNullable(sizeInBytes), Core.Optional.ToNullable(activityCount), Core.Optional.ToNullable(provisioningState), contentLink.Value, error.Value, Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(lastModifiedTime), description.Value, Core.Optional.ToNullable(isComposite));
         }
     }
 }

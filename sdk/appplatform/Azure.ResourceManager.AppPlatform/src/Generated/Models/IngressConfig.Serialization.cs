@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    internal partial class IngressConfig : IUtf8JsonSerializable
+    internal partial class IngressConfig : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReadTimeoutInSeconds))
+            if (Core.Optional.IsDefined(ReadTimeoutInSeconds))
             {
                 writer.WritePropertyName("readTimeoutInSeconds"u8);
                 writer.WriteNumberValue(ReadTimeoutInSeconds.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<int> readTimeoutInSeconds = default;
+            Core.Optional<int> readTimeoutInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("readTimeoutInSeconds"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new IngressConfig(Optional.ToNullable(readTimeoutInSeconds));
+            return new IngressConfig(Core.Optional.ToNullable(readTimeoutInSeconds));
         }
     }
 }

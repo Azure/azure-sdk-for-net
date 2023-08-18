@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = await _dscNodeConfigurationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeConfigurationName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation(_dscNodeConfigurationClientDiagnostics, Pipeline, _dscNodeConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeConfigurationName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new AutomationArmOperation(_dscNodeConfigurationClientDiagnostics, Pipeline, _dscNodeConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeConfigurationName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = _dscNodeConfigurationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeConfigurationName, content, cancellationToken);
-                var operation = new AutomationArmOperation(_dscNodeConfigurationClientDiagnostics, Pipeline, _dscNodeConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeConfigurationName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new AutomationArmOperation(_dscNodeConfigurationClientDiagnostics, Pipeline, _dscNodeConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, nodeConfigurationName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dscNodeConfigurationRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skip, top, inlinecount);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dscNodeConfigurationRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skip, top, inlinecount);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DscNodeConfigurationResource(Client, DscNodeConfigurationData.DeserializeDscNodeConfigurationData(e)), _dscNodeConfigurationClientDiagnostics, Pipeline, "DscNodeConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DscNodeConfigurationResource(Client, DscNodeConfigurationData.DeserializeDscNodeConfigurationData(e)), _dscNodeConfigurationClientDiagnostics, Pipeline, "DscNodeConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dscNodeConfigurationRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skip, top, inlinecount);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dscNodeConfigurationRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skip, top, inlinecount);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DscNodeConfigurationResource(Client, DscNodeConfigurationData.DeserializeDscNodeConfigurationData(e)), _dscNodeConfigurationClientDiagnostics, Pipeline, "DscNodeConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DscNodeConfigurationResource(Client, DscNodeConfigurationData.DeserializeDscNodeConfigurationData(e)), _dscNodeConfigurationClientDiagnostics, Pipeline, "DscNodeConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

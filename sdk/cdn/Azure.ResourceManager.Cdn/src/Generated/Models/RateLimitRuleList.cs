@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of RateLimitRuleList. </summary>
         public RateLimitRuleList()
         {
-            Rules = new ChangeTrackingList<RateLimitRule>();
+            Rules = new Core.ChangeTrackingList<RateLimitRule>();
         }
 
         /// <summary> Initializes a new instance of RateLimitRuleList. </summary>

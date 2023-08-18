@@ -12,27 +12,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    public partial class BillingPlanInformation : IUtf8JsonSerializable
+    public partial class BillingPlanInformation : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PricingCurrencyTotal))
+            if (Core.Optional.IsDefined(PricingCurrencyTotal))
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
                 writer.WriteObjectValue(PricingCurrencyTotal);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Core.Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDate"u8);
                 writer.WriteStringValue(StartOn.Value, "D");
             }
-            if (Optional.IsDefined(NextPaymentDueOn))
+            if (Core.Optional.IsDefined(NextPaymentDueOn))
             {
                 writer.WritePropertyName("nextPaymentDueDate"u8);
                 writer.WriteStringValue(NextPaymentDueOn.Value, "D");
             }
-            if (Optional.IsCollectionDefined(Transactions))
+            if (Core.Optional.IsCollectionDefined(Transactions))
             {
                 writer.WritePropertyName("transactions"u8);
                 writer.WriteStartArray();
@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<BillingBenefitsPrice> pricingCurrencyTotal = default;
-            Optional<DateTimeOffset> startDate = default;
-            Optional<DateTimeOffset> nextPaymentDueDate = default;
-            Optional<IList<SavingsPlanOrderPaymentDetail>> transactions = default;
+            Core.Optional<BillingBenefitsPrice> pricingCurrencyTotal = default;
+            Core.Optional<DateTimeOffset> startDate = default;
+            Core.Optional<DateTimeOffset> nextPaymentDueDate = default;
+            Core.Optional<IList<SavingsPlanOrderPaymentDetail>> transactions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pricingCurrencyTotal"u8))
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     continue;
                 }
             }
-            return new BillingPlanInformation(pricingCurrencyTotal.Value, Optional.ToNullable(startDate), Optional.ToNullable(nextPaymentDueDate), Optional.ToList(transactions));
+            return new BillingPlanInformation(pricingCurrencyTotal.Value, Core.Optional.ToNullable(startDate), Core.Optional.ToNullable(nextPaymentDueDate), Core.Optional.ToList(transactions));
         }
     }
 }

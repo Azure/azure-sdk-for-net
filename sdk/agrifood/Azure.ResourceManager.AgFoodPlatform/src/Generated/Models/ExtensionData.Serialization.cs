@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AgFoodPlatform
 {
-    public partial class ExtensionData : IUtf8JsonSerializable
+    public partial class ExtensionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -29,16 +29,16 @@ namespace Azure.ResourceManager.AgFoodPlatform
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            Core.Optional<ETag> eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> extensionId = default;
-            Optional<string> extensionCategory = default;
-            Optional<string> installedExtensionVersion = default;
-            Optional<string> extensionAuthLink = default;
-            Optional<string> extensionApiDocsLink = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> extensionId = default;
+            Core.Optional<string> extensionCategory = default;
+            Core.Optional<string> installedExtensionVersion = default;
+            Core.Optional<string> extensionAuthLink = default;
+            Core.Optional<string> extensionApiDocsLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                     continue;
                 }
             }
-            return new ExtensionData(id, name, type, systemData.Value, Optional.ToNullable(eTag), extensionId.Value, extensionCategory.Value, installedExtensionVersion.Value, extensionAuthLink.Value, extensionApiDocsLink.Value);
+            return new ExtensionData(id, name, type, systemData.Value, Core.Optional.ToNullable(eTag), extensionId.Value, extensionCategory.Value, installedExtensionVersion.Value, extensionAuthLink.Value, extensionApiDocsLink.Value);
         }
     }
 }

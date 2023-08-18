@@ -15,7 +15,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class CdnEndpointOperationSource : IOperationSource<CdnEndpointResource>
+    internal class CdnEndpointOperationSource : Core.IOperationSource<CdnEndpointResource>
     {
         private readonly ArmClient _client;
         private readonly Dictionary<string, string> _idMappings = new Dictionary<string, string>()
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.Cdn
             _client = client;
         }
 
-        CdnEndpointResource IOperationSource<CdnEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CdnEndpointResource Core.IOperationSource<CdnEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ScrubId(CdnEndpointData.DeserializeCdnEndpointData(document.RootElement));
             return new CdnEndpointResource(_client, data);
         }
 
-        async ValueTask<CdnEndpointResource> IOperationSource<CdnEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CdnEndpointResource> Core.IOperationSource<CdnEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ScrubId(CdnEndpointData.DeserializeCdnEndpointData(document.RootElement));

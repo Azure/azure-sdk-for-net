@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> protocol = default;
-            Optional<int> port = default;
-            Optional<IReadOnlyList<IPAddress>> ips = default;
-            Optional<IReadOnlyList<string>> fqdns = default;
-            Optional<AppPlatformServiceTrafficDirection> direction = default;
+            Core.Optional<string> protocol = default;
+            Core.Optional<int> port = default;
+            Core.Optional<IReadOnlyList<IPAddress>> ips = default;
+            Core.Optional<IReadOnlyList<string>> fqdns = default;
+            Core.Optional<AppPlatformServiceTrafficDirection> direction = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protocol"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformServiceRequiredTraffic(protocol.Value, Optional.ToNullable(port), Optional.ToList(ips), Optional.ToList(fqdns), Optional.ToNullable(direction));
+            return new AppPlatformServiceRequiredTraffic(protocol.Value, Core.Optional.ToNullable(port), Core.Optional.ToList(ips), Core.Optional.ToList(fqdns), Core.Optional.ToNullable(direction));
         }
     }
 }

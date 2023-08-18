@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/myWorkbooks", false);
             uri.AppendQuery("category", category.ToString(), true);
-            if (tags != null && Optional.IsCollectionDefined(tags))
+            if (tags != null && Core.Optional.IsCollectionDefined(tags))
             {
                 uri.AppendQueryDelimited("tags", tags, ",", true);
             }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Insights/myWorkbooks", false);
             uri.AppendQuery("category", category.ToString(), true);
-            if (tags != null && Optional.IsCollectionDefined(tags))
+            if (tags != null && Core.Optional.IsCollectionDefined(tags))
             {
                 uri.AppendQueryDelimited("tags", tags, ",", true);
             }
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);

@@ -12,44 +12,44 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementProductData : IUtf8JsonSerializable
+    public partial class ApiManagementProductData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Terms))
+            if (Core.Optional.IsDefined(Terms))
             {
                 writer.WritePropertyName("terms"u8);
                 writer.WriteStringValue(Terms);
             }
-            if (Optional.IsDefined(IsSubscriptionRequired))
+            if (Core.Optional.IsDefined(IsSubscriptionRequired))
             {
                 writer.WritePropertyName("subscriptionRequired"u8);
                 writer.WriteBooleanValue(IsSubscriptionRequired.Value);
             }
-            if (Optional.IsDefined(IsApprovalRequired))
+            if (Core.Optional.IsDefined(IsApprovalRequired))
             {
                 writer.WritePropertyName("approvalRequired"u8);
                 writer.WriteBooleanValue(IsApprovalRequired.Value);
             }
-            if (Optional.IsDefined(SubscriptionsLimit))
+            if (Core.Optional.IsDefined(SubscriptionsLimit))
             {
                 writer.WritePropertyName("subscriptionsLimit"u8);
                 writer.WriteNumberValue(SubscriptionsLimit.Value);
             }
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -67,14 +67,14 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> terms = default;
-            Optional<bool> subscriptionRequired = default;
-            Optional<bool> approvalRequired = default;
-            Optional<int> subscriptionsLimit = default;
-            Optional<ApiManagementProductState> state = default;
-            Optional<string> displayName = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> terms = default;
+            Core.Optional<bool> subscriptionRequired = default;
+            Core.Optional<bool> approvalRequired = default;
+            Core.Optional<int> subscriptionsLimit = default;
+            Core.Optional<ApiManagementProductState> state = default;
+            Core.Optional<string> displayName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new ApiManagementProductData(id, name, type, systemData.Value, description.Value, terms.Value, Optional.ToNullable(subscriptionRequired), Optional.ToNullable(approvalRequired), Optional.ToNullable(subscriptionsLimit), Optional.ToNullable(state), displayName.Value);
+            return new ApiManagementProductData(id, name, type, systemData.Value, description.Value, terms.Value, Core.Optional.ToNullable(subscriptionRequired), Core.Optional.ToNullable(approvalRequired), Core.Optional.ToNullable(subscriptionsLimit), Core.Optional.ToNullable(state), displayName.Value);
         }
     }
 }

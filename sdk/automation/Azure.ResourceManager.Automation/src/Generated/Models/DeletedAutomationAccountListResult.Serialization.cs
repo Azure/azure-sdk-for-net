@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DeletedAutomationAccount>> value = default;
+            Core.Optional<IReadOnlyList<DeletedAutomationAccount>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new DeletedAutomationAccountListResult(Optional.ToList(value));
+            return new DeletedAutomationAccountListResult(Core.Optional.ToList(value));
         }
     }
 }

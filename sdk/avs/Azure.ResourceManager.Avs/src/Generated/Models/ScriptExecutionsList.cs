@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of ScriptExecutionsList. </summary>
         internal ScriptExecutionsList()
         {
-            Value = new ChangeTrackingList<ScriptExecutionData>();
+            Value = new Core.ChangeTrackingList<ScriptExecutionData>();
         }
 
         /// <summary> Initializes a new instance of ScriptExecutionsList. </summary>

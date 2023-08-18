@@ -13,39 +13,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    public partial class HybridRunbookWorkerData : IUtf8JsonSerializable
+    public partial class HybridRunbookWorkerData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IP))
+            if (Core.Optional.IsDefined(IP))
             {
                 writer.WritePropertyName("ip"u8);
                 writer.WriteStringValue(IP);
             }
-            if (Optional.IsDefined(RegisteredOn))
+            if (Core.Optional.IsDefined(RegisteredOn))
             {
                 writer.WritePropertyName("registeredDateTime"u8);
                 writer.WriteStringValue(RegisteredOn.Value, "O");
             }
-            if (Optional.IsDefined(LastSeenOn))
+            if (Core.Optional.IsDefined(LastSeenOn))
             {
                 writer.WritePropertyName("lastSeenDateTime"u8);
                 writer.WriteStringValue(LastSeenOn.Value, "O");
             }
-            if (Optional.IsDefined(VmResourceId))
+            if (Core.Optional.IsDefined(VmResourceId))
             {
                 writer.WritePropertyName("vmResourceId"u8);
                 writer.WriteStringValue(VmResourceId);
             }
-            if (Optional.IsDefined(WorkerType))
+            if (Core.Optional.IsDefined(WorkerType))
             {
                 writer.WritePropertyName("workerType"u8);
                 writer.WriteStringValue(WorkerType.Value.ToString());
             }
-            if (Optional.IsDefined(WorkerName))
+            if (Core.Optional.IsDefined(WorkerName))
             {
                 writer.WritePropertyName("workerName"u8);
                 writer.WriteStringValue(WorkerName);
@@ -63,13 +63,13 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> ip = default;
-            Optional<DateTimeOffset> registeredDateTime = default;
-            Optional<DateTimeOffset> lastSeenDateTime = default;
-            Optional<ResourceIdentifier> vmResourceId = default;
-            Optional<HybridWorkerType> workerType = default;
-            Optional<string> workerName = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> ip = default;
+            Core.Optional<DateTimeOffset> registeredDateTime = default;
+            Core.Optional<DateTimeOffset> lastSeenDateTime = default;
+            Core.Optional<ResourceIdentifier> vmResourceId = default;
+            Core.Optional<HybridWorkerType> workerType = default;
+            Core.Optional<string> workerName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Automation
                     continue;
                 }
             }
-            return new HybridRunbookWorkerData(id, name, type, systemData.Value, ip.Value, Optional.ToNullable(registeredDateTime), Optional.ToNullable(lastSeenDateTime), vmResourceId.Value, Optional.ToNullable(workerType), workerName.Value);
+            return new HybridRunbookWorkerData(id, name, type, systemData.Value, ip.Value, Core.Optional.ToNullable(registeredDateTime), Core.Optional.ToNullable(lastSeenDateTime), vmResourceId.Value, Core.Optional.ToNullable(workerType), workerName.Value);
         }
     }
 }

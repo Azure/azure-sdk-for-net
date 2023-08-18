@@ -815,7 +815,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetProjects", "value", "nextLink", context);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetProjects", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -836,7 +836,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetProjects", "value", "nextLink", context);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetProjects", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -862,7 +862,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, projectName, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetDeployments", "value", "nextLink", context);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetDeployments", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -888,7 +888,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, projectName, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetDeployments", "value", "nextLink", context);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetDeployments", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -914,7 +914,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSynonymsRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSynonymsNextPageRequest(nextLink, projectName, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSynonyms", "value", "nextLink", context);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSynonyms", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -940,7 +940,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSynonymsRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSynonymsNextPageRequest(nextLink, projectName, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSynonyms", "value", "nextLink", context);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSynonyms", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -966,7 +966,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSourcesRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSourcesNextPageRequest(nextLink, projectName, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSources", "value", "nextLink", context);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSources", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -992,7 +992,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSourcesRequest(projectName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSourcesNextPageRequest(nextLink, projectName, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSources", "value", "nextLink", context);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetSources", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1019,7 +1019,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQnasRequest(projectName, source, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetQnasNextPageRequest(nextLink, projectName, source, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetQnas", "value", "nextLink", context);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetQnas", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1046,7 +1046,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQnasRequest(projectName, source, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetQnasNextPageRequest(nextLink, projectName, source, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetQnas", "value", "nextLink", context);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "QuestionAnsweringAuthoringClient.GetQnas", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1076,7 +1076,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             try
             {
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await Core.ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeleteProject", Core.OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1112,7 +1112,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             try
             {
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil);
+                return Core.ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeleteProject", Core.OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1150,7 +1150,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             try
             {
                 using HttpMessage message = CreateExportRequest(projectName, format, assetKind, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Export", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await Core.ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Export", Core.OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1188,7 +1188,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             try
             {
                 using HttpMessage message = CreateExportRequest(projectName, format, assetKind, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Export", OperationFinalStateVia.Location, context, waitUntil);
+                return Core.ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Export", Core.OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1227,7 +1227,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             try
             {
                 using HttpMessage message = CreateImportRequest(projectName, content, format, assetKind, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Import", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await Core.ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Import", Core.OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1266,7 +1266,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             try
             {
                 using HttpMessage message = CreateImportRequest(projectName, content, format, assetKind, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Import", OperationFinalStateVia.Location, context, waitUntil);
+                return Core.ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Import", Core.OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1304,7 +1304,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             try
             {
                 using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await Core.ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeployProject", Core.OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1342,7 +1342,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             try
             {
                 using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil);
+                return Core.ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeployProject", Core.OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1381,7 +1381,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateUpdateSourcesNextPageRequest(nextLink, projectName, content, context);
                 using HttpMessage message = CreateUpdateSourcesRequest(projectName, content, context);
-                return await PageableHelpers.CreateAsyncPageable(waitUntil, message, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, OperationFinalStateVia.Location, "QuestionAnsweringAuthoringClient.UpdateSources", "value", "nextLink", context).ConfigureAwait(false);
+                return await Core.PageableHelpers.CreateAsyncPageable(waitUntil, message, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, Core.OperationFinalStateVia.Location, "QuestionAnsweringAuthoringClient.UpdateSources", "value", "nextLink", context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1420,7 +1420,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateUpdateSourcesNextPageRequest(nextLink, projectName, content, context);
                 using HttpMessage message = CreateUpdateSourcesRequest(projectName, content, context);
-                return PageableHelpers.CreatePageable(waitUntil, message, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, OperationFinalStateVia.Location, "QuestionAnsweringAuthoringClient.UpdateSources", "value", "nextLink", context);
+                return Core.PageableHelpers.CreatePageable(waitUntil, message, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, Core.OperationFinalStateVia.Location, "QuestionAnsweringAuthoringClient.UpdateSources", "value", "nextLink", context);
             }
             catch (Exception e)
             {
@@ -1459,7 +1459,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateUpdateQnasNextPageRequest(nextLink, projectName, content, context);
                 using HttpMessage message = CreateUpdateQnasRequest(projectName, content, context);
-                return await PageableHelpers.CreateAsyncPageable(waitUntil, message, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, OperationFinalStateVia.Location, "QuestionAnsweringAuthoringClient.UpdateQnas", "value", "nextLink", context).ConfigureAwait(false);
+                return await Core.PageableHelpers.CreateAsyncPageable(waitUntil, message, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, Core.OperationFinalStateVia.Location, "QuestionAnsweringAuthoringClient.UpdateQnas", "value", "nextLink", context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1498,7 +1498,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateUpdateQnasNextPageRequest(nextLink, projectName, content, context);
                 using HttpMessage message = CreateUpdateQnasRequest(projectName, content, context);
-                return PageableHelpers.CreatePageable(waitUntil, message, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, OperationFinalStateVia.Location, "QuestionAnsweringAuthoringClient.UpdateQnas", "value", "nextLink", context);
+                return Core.PageableHelpers.CreatePageable(waitUntil, message, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, Core.OperationFinalStateVia.Location, "QuestionAnsweringAuthoringClient.UpdateQnas", "value", "nextLink", context);
             }
             catch (Exception e)
             {

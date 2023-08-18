@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AppConfigurationKeyValueData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<AppConfigurationKeyValueData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new AppConfigurationKeyValueListResult(Optional.ToList(value), nextLink.Value);
+            return new AppConfigurationKeyValueListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

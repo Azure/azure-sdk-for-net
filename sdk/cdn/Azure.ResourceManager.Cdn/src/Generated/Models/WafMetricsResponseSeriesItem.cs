@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of WafMetricsResponseSeriesItem. </summary>
         internal WafMetricsResponseSeriesItem()
         {
-            Groups = new ChangeTrackingList<WafMetricsResponseSeriesPropertiesItemsItem>();
-            Data = new ChangeTrackingList<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>();
+            Groups = new Core.ChangeTrackingList<WafMetricsResponseSeriesPropertiesItemsItem>();
+            Data = new Core.ChangeTrackingList<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>();
         }
 
         /// <summary> Initializes a new instance of WafMetricsResponseSeriesItem. </summary>

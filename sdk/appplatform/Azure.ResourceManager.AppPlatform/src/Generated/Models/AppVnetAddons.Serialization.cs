@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppVnetAddons : IUtf8JsonSerializable
+    public partial class AppVnetAddons : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsPublicEndpoint))
+            if (Core.Optional.IsDefined(IsPublicEndpoint))
             {
                 writer.WritePropertyName("publicEndpoint"u8);
                 writer.WriteBooleanValue(IsPublicEndpoint.Value);
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<bool> publicEndpoint = default;
-            Optional<Uri> publicEndpointUri = default;
+            Core.Optional<bool> publicEndpoint = default;
+            Core.Optional<Uri> publicEndpointUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicEndpoint"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppVnetAddons(Optional.ToNullable(publicEndpoint), publicEndpointUri.Value);
+            return new AppVnetAddons(Core.Optional.ToNullable(publicEndpoint), publicEndpointUri.Value);
         }
     }
 }

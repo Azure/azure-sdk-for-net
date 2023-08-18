@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Batch.Models
             Name = name;
             Publisher = publisher;
             ExtensionType = extensionType;
-            ProvisionAfterExtensions = new ChangeTrackingList<string>();
+            ProvisionAfterExtensions = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of BatchVmExtension. </summary>

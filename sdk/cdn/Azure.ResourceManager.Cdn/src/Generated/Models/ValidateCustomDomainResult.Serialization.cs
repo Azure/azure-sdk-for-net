@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<bool> customDomainValidated = default;
-            Optional<string> reason = default;
-            Optional<string> message = default;
+            Core.Optional<bool> customDomainValidated = default;
+            Core.Optional<string> reason = default;
+            Core.Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customDomainValidated"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new ValidateCustomDomainResult(Optional.ToNullable(customDomainValidated), reason.Value, message.Value);
+            return new ValidateCustomDomainResult(Core.Optional.ToNullable(customDomainValidated), reason.Value, message.Value);
         }
     }
 }

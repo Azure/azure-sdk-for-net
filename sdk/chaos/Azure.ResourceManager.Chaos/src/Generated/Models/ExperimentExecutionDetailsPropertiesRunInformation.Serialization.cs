@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StepStatus>> steps = default;
+            Core.Optional<IReadOnlyList<StepStatus>> steps = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("steps"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     continue;
                 }
             }
-            return new ExperimentExecutionDetailsPropertiesRunInformation(Optional.ToList(steps));
+            return new ExperimentExecutionDetailsPropertiesRunInformation(Core.Optional.ToList(steps));
         }
     }
 }

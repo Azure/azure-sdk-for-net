@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _appPlatformStorageStoragesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppPlatformStorageResource>(new AppPlatformStorageOperationSource(Client), _appPlatformStorageStoragesClientDiagnostics, Pipeline, _appPlatformStorageStoragesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppPlatformArmOperation<AppPlatformStorageResource>(new AppPlatformStorageOperationSource(Client), _appPlatformStorageStoragesClientDiagnostics, Pipeline, _appPlatformStorageStoragesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _appPlatformStorageStoragesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppPlatformStorageResource>(new AppPlatformStorageOperationSource(Client), _appPlatformStorageStoragesClientDiagnostics, Pipeline, _appPlatformStorageStoragesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppPlatformArmOperation<AppPlatformStorageResource>(new AppPlatformStorageOperationSource(Client), _appPlatformStorageStoragesClientDiagnostics, Pipeline, _appPlatformStorageStoragesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformStorageStoragesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformStorageStoragesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformStorageResource(Client, AppPlatformStorageData.DeserializeAppPlatformStorageData(e)), _appPlatformStorageStoragesClientDiagnostics, Pipeline, "AppPlatformStorageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformStorageResource(Client, AppPlatformStorageData.DeserializeAppPlatformStorageData(e)), _appPlatformStorageStoragesClientDiagnostics, Pipeline, "AppPlatformStorageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformStorageStoragesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformStorageStoragesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformStorageResource(Client, AppPlatformStorageData.DeserializeAppPlatformStorageData(e)), _appPlatformStorageStoragesClientDiagnostics, Pipeline, "AppPlatformStorageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformStorageResource(Client, AppPlatformStorageData.DeserializeAppPlatformStorageData(e)), _appPlatformStorageStoragesClientDiagnostics, Pipeline, "AppPlatformStorageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

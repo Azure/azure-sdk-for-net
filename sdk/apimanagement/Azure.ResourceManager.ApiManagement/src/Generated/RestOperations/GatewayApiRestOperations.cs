@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (associationContract != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
+                var content = new Core.Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(associationContract);
                 request.Content = content;
             }

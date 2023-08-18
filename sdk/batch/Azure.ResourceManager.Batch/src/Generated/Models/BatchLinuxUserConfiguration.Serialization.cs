@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchLinuxUserConfiguration : IUtf8JsonSerializable
+    public partial class BatchLinuxUserConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Uid))
+            if (Core.Optional.IsDefined(Uid))
             {
                 writer.WritePropertyName("uid"u8);
                 writer.WriteNumberValue(Uid.Value);
             }
-            if (Optional.IsDefined(Gid))
+            if (Core.Optional.IsDefined(Gid))
             {
                 writer.WritePropertyName("gid"u8);
                 writer.WriteNumberValue(Gid.Value);
             }
-            if (Optional.IsDefined(SshPrivateKey))
+            if (Core.Optional.IsDefined(SshPrivateKey))
             {
                 writer.WritePropertyName("sshPrivateKey"u8);
                 writer.WriteStringValue(SshPrivateKey);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<int> uid = default;
-            Optional<int> gid = default;
-            Optional<string> sshPrivateKey = default;
+            Core.Optional<int> uid = default;
+            Core.Optional<int> gid = default;
+            Core.Optional<string> sshPrivateKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uid"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new BatchLinuxUserConfiguration(Optional.ToNullable(uid), Optional.ToNullable(gid), sshPrivateKey.Value);
+            return new BatchLinuxUserConfiguration(Core.Optional.ToNullable(uid), Core.Optional.ToNullable(gid), sshPrivateKey.Value);
         }
     }
 }

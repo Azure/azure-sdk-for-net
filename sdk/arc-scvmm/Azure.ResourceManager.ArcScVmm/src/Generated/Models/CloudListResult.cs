@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <summary> Initializes a new instance of CloudListResult. </summary>
         internal CloudListResult()
         {
-            Value = new ChangeTrackingList<ScVmmCloudData>();
+            Value = new Core.ChangeTrackingList<ScVmmCloudData>();
         }
 
         /// <summary> Initializes a new instance of CloudListResult. </summary>

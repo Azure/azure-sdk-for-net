@@ -12,37 +12,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CommitmentPlanProperties : IUtf8JsonSerializable
+    public partial class CommitmentPlanProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CommitmentPlanGuid))
+            if (Core.Optional.IsDefined(CommitmentPlanGuid))
             {
                 writer.WritePropertyName("commitmentPlanGuid"u8);
                 writer.WriteStringValue(CommitmentPlanGuid.Value);
             }
-            if (Optional.IsDefined(HostingModel))
+            if (Core.Optional.IsDefined(HostingModel))
             {
                 writer.WritePropertyName("hostingModel"u8);
                 writer.WriteStringValue(HostingModel.Value.ToString());
             }
-            if (Optional.IsDefined(PlanType))
+            if (Core.Optional.IsDefined(PlanType))
             {
                 writer.WritePropertyName("planType"u8);
                 writer.WriteStringValue(PlanType);
             }
-            if (Optional.IsDefined(Current))
+            if (Core.Optional.IsDefined(Current))
             {
                 writer.WritePropertyName("current"u8);
                 writer.WriteObjectValue(Current);
             }
-            if (Optional.IsDefined(AutoRenew))
+            if (Core.Optional.IsDefined(AutoRenew))
             {
                 writer.WritePropertyName("autoRenew"u8);
                 writer.WriteBooleanValue(AutoRenew.Value);
             }
-            if (Optional.IsDefined(Next))
+            if (Core.Optional.IsDefined(Next))
             {
                 writer.WritePropertyName("next"u8);
                 writer.WriteObjectValue(Next);
@@ -56,15 +56,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<CommitmentPlanProvisioningState> provisioningState = default;
-            Optional<Guid> commitmentPlanGuid = default;
-            Optional<ServiceAccountHostingModel> hostingModel = default;
-            Optional<string> planType = default;
-            Optional<CommitmentPeriod> current = default;
-            Optional<bool> autoRenew = default;
-            Optional<CommitmentPeriod> next = default;
-            Optional<CommitmentPeriod> last = default;
-            Optional<IReadOnlyList<string>> provisioningIssues = default;
+            Core.Optional<CommitmentPlanProvisioningState> provisioningState = default;
+            Core.Optional<Guid> commitmentPlanGuid = default;
+            Core.Optional<ServiceAccountHostingModel> hostingModel = default;
+            Core.Optional<string> planType = default;
+            Core.Optional<CommitmentPeriod> current = default;
+            Core.Optional<bool> autoRenew = default;
+            Core.Optional<CommitmentPeriod> next = default;
+            Core.Optional<CommitmentPeriod> last = default;
+            Core.Optional<IReadOnlyList<string>> provisioningIssues = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new CommitmentPlanProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(commitmentPlanGuid), Optional.ToNullable(hostingModel), planType.Value, current.Value, Optional.ToNullable(autoRenew), next.Value, last.Value, Optional.ToList(provisioningIssues));
+            return new CommitmentPlanProperties(Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(commitmentPlanGuid), Core.Optional.ToNullable(hostingModel), planType.Value, current.Value, Core.Optional.ToNullable(autoRenew), next.Value, last.Value, Core.Optional.ToList(provisioningIssues));
         }
     }
 }

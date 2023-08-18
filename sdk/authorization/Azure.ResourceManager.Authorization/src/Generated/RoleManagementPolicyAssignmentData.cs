@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> Initializes a new instance of RoleManagementPolicyAssignmentData. </summary>
         public RoleManagementPolicyAssignmentData()
         {
-            EffectiveRules = new ChangeTrackingList<RoleManagementPolicyRule>();
+            EffectiveRules = new Core.ChangeTrackingList<RoleManagementPolicyRule>();
         }
 
         /// <summary> Initializes a new instance of RoleManagementPolicyAssignmentData. </summary>

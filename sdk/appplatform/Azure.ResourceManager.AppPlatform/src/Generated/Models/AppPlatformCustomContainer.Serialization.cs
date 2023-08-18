@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformCustomContainer : IUtf8JsonSerializable
+    public partial class AppPlatformCustomContainer : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Server))
+            if (Core.Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
                 writer.WriteStringValue(Server);
             }
-            if (Optional.IsDefined(ContainerImage))
+            if (Core.Optional.IsDefined(ContainerImage))
             {
                 writer.WritePropertyName("containerImage"u8);
                 writer.WriteStringValue(ContainerImage);
             }
-            if (Optional.IsCollectionDefined(Command))
+            if (Core.Optional.IsCollectionDefined(Command))
             {
                 writer.WritePropertyName("command"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Args))
+            if (Core.Optional.IsCollectionDefined(Args))
             {
                 writer.WritePropertyName("args"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ImageRegistryCredential))
+            if (Core.Optional.IsDefined(ImageRegistryCredential))
             {
                 writer.WritePropertyName("imageRegistryCredential"u8);
                 writer.WriteObjectValue(ImageRegistryCredential);
             }
-            if (Optional.IsDefined(LanguageFramework))
+            if (Core.Optional.IsDefined(LanguageFramework))
             {
                 writer.WritePropertyName("languageFramework"u8);
                 writer.WriteStringValue(LanguageFramework);
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> server = default;
-            Optional<string> containerImage = default;
-            Optional<IList<string>> command = default;
-            Optional<IList<string>> args = default;
-            Optional<AppPlatformImageRegistryCredential> imageRegistryCredential = default;
-            Optional<string> languageFramework = default;
+            Core.Optional<string> server = default;
+            Core.Optional<string> containerImage = default;
+            Core.Optional<IList<string>> command = default;
+            Core.Optional<IList<string>> args = default;
+            Core.Optional<AppPlatformImageRegistryCredential> imageRegistryCredential = default;
+            Core.Optional<string> languageFramework = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("server"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformCustomContainer(server.Value, containerImage.Value, Optional.ToList(command), Optional.ToList(args), imageRegistryCredential.Value, languageFramework.Value);
+            return new AppPlatformCustomContainer(server.Value, containerImage.Value, Core.Optional.ToList(command), Core.Optional.ToList(args), imageRegistryCredential.Value, languageFramework.Value);
         }
     }
 }

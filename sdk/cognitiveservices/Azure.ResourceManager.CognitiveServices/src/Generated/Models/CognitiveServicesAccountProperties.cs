@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of CognitiveServicesAccountProperties. </summary>
         public CognitiveServicesAccountProperties()
         {
-            Capabilities = new ChangeTrackingList<CognitiveServicesSkuCapability>();
-            UserOwnedStorage = new ChangeTrackingList<ServiceAccountUserOwnedStorage>();
-            PrivateEndpointConnections = new ChangeTrackingList<CognitiveServicesPrivateEndpointConnectionData>();
-            AllowedFqdnList = new ChangeTrackingList<string>();
-            Endpoints = new ChangeTrackingDictionary<string, string>();
-            CommitmentPlanAssociations = new ChangeTrackingList<CommitmentPlanAssociation>();
+            Capabilities = new Core.ChangeTrackingList<CognitiveServicesSkuCapability>();
+            UserOwnedStorage = new Core.ChangeTrackingList<ServiceAccountUserOwnedStorage>();
+            PrivateEndpointConnections = new Core.ChangeTrackingList<CognitiveServicesPrivateEndpointConnectionData>();
+            AllowedFqdnList = new Core.ChangeTrackingList<string>();
+            Endpoints = new Core.ChangeTrackingDictionary<string, string>();
+            CommitmentPlanAssociations = new Core.ChangeTrackingList<CommitmentPlanAssociation>();
         }
 
         /// <summary> Initializes a new instance of CognitiveServicesAccountProperties. </summary>

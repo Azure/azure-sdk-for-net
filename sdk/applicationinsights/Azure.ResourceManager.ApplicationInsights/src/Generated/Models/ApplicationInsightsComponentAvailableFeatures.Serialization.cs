@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApplicationInsightsComponentFeature>> result = default;
+            Core.Optional<IReadOnlyList<ApplicationInsightsComponentFeature>> result = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Result"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     continue;
                 }
             }
-            return new ApplicationInsightsComponentAvailableFeatures(Optional.ToList(result));
+            return new ApplicationInsightsComponentAvailableFeatures(Core.Optional.ToList(result));
         }
     }
 }

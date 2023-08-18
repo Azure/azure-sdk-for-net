@@ -13,39 +13,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class GitOperationResultContractData : IUtf8JsonSerializable
+    public partial class GitOperationResultContractData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(OperationResultIdentifier))
+            if (Core.Optional.IsDefined(OperationResultIdentifier))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(OperationResultIdentifier);
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(StartedOn))
+            if (Core.Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("started"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (Optional.IsDefined(UpdatedOn))
+            if (Core.Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (Optional.IsDefined(ResultInfo))
+            if (Core.Optional.IsDefined(ResultInfo))
             {
                 writer.WritePropertyName("resultInfo"u8);
                 writer.WriteStringValue(ResultInfo);
             }
-            if (Optional.IsDefined(Error))
+            if (Core.Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> id0 = default;
-            Optional<AsyncOperationStatus> status = default;
-            Optional<DateTimeOffset> started = default;
-            Optional<DateTimeOffset> updated = default;
-            Optional<string> resultInfo = default;
-            Optional<ErrorResponseBody> error = default;
-            Optional<IReadOnlyList<OperationResultLogItemContract>> actionLog = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> id0 = default;
+            Core.Optional<AsyncOperationStatus> status = default;
+            Core.Optional<DateTimeOffset> started = default;
+            Core.Optional<DateTimeOffset> updated = default;
+            Core.Optional<string> resultInfo = default;
+            Core.Optional<ErrorResponseBody> error = default;
+            Core.Optional<IReadOnlyList<OperationResultLogItemContract>> actionLog = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new GitOperationResultContractData(id, name, type, systemData.Value, id0.Value, Optional.ToNullable(status), Optional.ToNullable(started), Optional.ToNullable(updated), resultInfo.Value, error.Value, Optional.ToList(actionLog));
+            return new GitOperationResultContractData(id, name, type, systemData.Value, id0.Value, Core.Optional.ToNullable(status), Core.Optional.ToNullable(started), Core.Optional.ToNullable(updated), resultInfo.Value, error.Value, Core.Optional.ToList(actionLog));
         }
     }
 }

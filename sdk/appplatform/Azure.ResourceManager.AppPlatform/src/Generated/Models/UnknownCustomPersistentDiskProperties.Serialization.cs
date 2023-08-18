@@ -11,21 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    internal partial class UnknownCustomPersistentDiskProperties : IUtf8JsonSerializable
+    internal partial class UnknownCustomPersistentDiskProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UnderlyingResourceType.ToString());
             writer.WritePropertyName("mountPath"u8);
             writer.WriteStringValue(MountPath);
-            if (Optional.IsDefined(IsReadOnly))
+            if (Core.Optional.IsDefined(IsReadOnly))
             {
                 writer.WritePropertyName("readOnly"u8);
                 writer.WriteBooleanValue(IsReadOnly.Value);
             }
-            if (Optional.IsCollectionDefined(MountOptions))
+            if (Core.Optional.IsCollectionDefined(MountOptions))
             {
                 writer.WritePropertyName("mountOptions"u8);
                 writer.WriteStartArray();
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             UnderlyingResourceType type = "Unknown";
             string mountPath = default;
-            Optional<bool> readOnly = default;
-            Optional<IList<string>> mountOptions = default;
+            Core.Optional<bool> readOnly = default;
+            Core.Optional<IList<string>> mountOptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new UnknownCustomPersistentDiskProperties(type, mountPath, Optional.ToNullable(readOnly), Optional.ToList(mountOptions));
+            return new UnknownCustomPersistentDiskProperties(type, mountPath, Core.Optional.ToNullable(readOnly), Core.Optional.ToList(mountOptions));
         }
     }
 }

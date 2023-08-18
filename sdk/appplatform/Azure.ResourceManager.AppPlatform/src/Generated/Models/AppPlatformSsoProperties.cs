@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformSsoProperties. </summary>
         public AppPlatformSsoProperties()
         {
-            Scope = new ChangeTrackingList<string>();
+            Scope = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AppPlatformSsoProperties. </summary>

@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchAccountPoolStartTask : IUtf8JsonSerializable
+    public partial class BatchAccountPoolStartTask : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CommandLine))
+            if (Core.Optional.IsDefined(CommandLine))
             {
                 writer.WritePropertyName("commandLine"u8);
                 writer.WriteStringValue(CommandLine);
             }
-            if (Optional.IsCollectionDefined(ResourceFiles))
+            if (Core.Optional.IsCollectionDefined(ResourceFiles))
             {
                 writer.WritePropertyName("resourceFiles"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EnvironmentSettings))
+            if (Core.Optional.IsCollectionDefined(EnvironmentSettings))
             {
                 writer.WritePropertyName("environmentSettings"u8);
                 writer.WriteStartArray();
@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(UserIdentity))
+            if (Core.Optional.IsDefined(UserIdentity))
             {
                 writer.WritePropertyName("userIdentity"u8);
                 writer.WriteObjectValue(UserIdentity);
             }
-            if (Optional.IsDefined(MaxTaskRetryCount))
+            if (Core.Optional.IsDefined(MaxTaskRetryCount))
             {
                 writer.WritePropertyName("maxTaskRetryCount"u8);
                 writer.WriteNumberValue(MaxTaskRetryCount.Value);
             }
-            if (Optional.IsDefined(WaitForSuccess))
+            if (Core.Optional.IsDefined(WaitForSuccess))
             {
                 writer.WritePropertyName("waitForSuccess"u8);
                 writer.WriteBooleanValue(WaitForSuccess.Value);
             }
-            if (Optional.IsDefined(ContainerSettings))
+            if (Core.Optional.IsDefined(ContainerSettings))
             {
                 writer.WritePropertyName("containerSettings"u8);
                 writer.WriteObjectValue(ContainerSettings);
@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<string> commandLine = default;
-            Optional<IList<BatchResourceFile>> resourceFiles = default;
-            Optional<IList<BatchEnvironmentSetting>> environmentSettings = default;
-            Optional<BatchUserIdentity> userIdentity = default;
-            Optional<int> maxTaskRetryCount = default;
-            Optional<bool> waitForSuccess = default;
-            Optional<BatchTaskContainerSettings> containerSettings = default;
+            Core.Optional<string> commandLine = default;
+            Core.Optional<IList<BatchResourceFile>> resourceFiles = default;
+            Core.Optional<IList<BatchEnvironmentSetting>> environmentSettings = default;
+            Core.Optional<BatchUserIdentity> userIdentity = default;
+            Core.Optional<int> maxTaskRetryCount = default;
+            Core.Optional<bool> waitForSuccess = default;
+            Core.Optional<BatchTaskContainerSettings> containerSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("commandLine"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new BatchAccountPoolStartTask(commandLine.Value, Optional.ToList(resourceFiles), Optional.ToList(environmentSettings), userIdentity.Value, Optional.ToNullable(maxTaskRetryCount), Optional.ToNullable(waitForSuccess), containerSettings.Value);
+            return new BatchAccountPoolStartTask(commandLine.Value, Core.Optional.ToList(resourceFiles), Core.Optional.ToList(environmentSettings), userIdentity.Value, Core.Optional.ToNullable(maxTaskRetryCount), Core.Optional.ToNullable(waitForSuccess), containerSettings.Value);
         }
     }
 }

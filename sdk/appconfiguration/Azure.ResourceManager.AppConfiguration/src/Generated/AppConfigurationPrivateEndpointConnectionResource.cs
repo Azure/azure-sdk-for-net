@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppConfiguration
             try
             {
                 var response = await _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppConfigurationArmOperation(_appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppConfigurationArmOperation(_appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.AppConfiguration
             try
             {
                 var response = _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AppConfigurationArmOperation(_appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppConfigurationArmOperation(_appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.AppConfiguration
             try
             {
                 var response = await _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppConfigurationArmOperation<AppConfigurationPrivateEndpointConnectionResource>(new AppConfigurationPrivateEndpointConnectionOperationSource(Client), _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppConfigurationArmOperation<AppConfigurationPrivateEndpointConnectionResource>(new AppConfigurationPrivateEndpointConnectionOperationSource(Client), _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.AppConfiguration
             try
             {
                 var response = _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AppConfigurationArmOperation<AppConfigurationPrivateEndpointConnectionResource>(new AppConfigurationPrivateEndpointConnectionOperationSource(Client), _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppConfigurationArmOperation<AppConfigurationPrivateEndpointConnectionResource>(new AppConfigurationPrivateEndpointConnectionOperationSource(Client), _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

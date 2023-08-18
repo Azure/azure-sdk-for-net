@@ -20,17 +20,17 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<string> callConnectionId = default;
-            Optional<string> serverCallId = default;
-            Optional<IReadOnlyList<CommunicationIdentifierModel>> targets = default;
-            Optional<CallConnectionState> callConnectionState = default;
-            Optional<string> callbackUri = default;
-            Optional<string> mediaSubscriptionId = default;
-            Optional<PhoneNumberIdentifierModel> sourceCallerIdNumber = default;
-            Optional<string> sourceDisplayName = default;
-            Optional<CommunicationIdentifierModel> sourceIdentity = default;
-            Optional<string> correlationId = default;
-            Optional<CommunicationUserIdentifierModel> answeredByIdentifier = default;
+            Core.Optional<string> callConnectionId = default;
+            Core.Optional<string> serverCallId = default;
+            Core.Optional<IReadOnlyList<CommunicationIdentifierModel>> targets = default;
+            Core.Optional<CallConnectionState> callConnectionState = default;
+            Core.Optional<string> callbackUri = default;
+            Core.Optional<string> mediaSubscriptionId = default;
+            Core.Optional<PhoneNumberIdentifierModel> sourceCallerIdNumber = default;
+            Core.Optional<string> sourceDisplayName = default;
+            Core.Optional<CommunicationIdentifierModel> sourceIdentity = default;
+            Core.Optional<string> correlationId = default;
+            Core.Optional<CommunicationUserIdentifierModel> answeredByIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -114,7 +114,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new CallConnectionPropertiesInternal(callConnectionId.Value, serverCallId.Value, Optional.ToList(targets), Optional.ToNullable(callConnectionState), callbackUri.Value, mediaSubscriptionId.Value, sourceCallerIdNumber.Value, sourceDisplayName.Value, sourceIdentity.Value, correlationId.Value, answeredByIdentifier.Value);
+            return new CallConnectionPropertiesInternal(callConnectionId.Value, serverCallId.Value, Core.Optional.ToList(targets), Core.Optional.ToNullable(callConnectionState), callbackUri.Value, mediaSubscriptionId.Value, sourceCallerIdNumber.Value, sourceDisplayName.Value, sourceIdentity.Value, correlationId.Value, answeredByIdentifier.Value);
         }
     }
 }

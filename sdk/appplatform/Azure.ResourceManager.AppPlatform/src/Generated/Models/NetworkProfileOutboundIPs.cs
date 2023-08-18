@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of NetworkProfileOutboundIPs. </summary>
         internal NetworkProfileOutboundIPs()
         {
-            PublicIPs = new ChangeTrackingList<IPAddress>();
+            PublicIPs = new Core.ChangeTrackingList<IPAddress>();
         }
 
         /// <summary> Initializes a new instance of NetworkProfileOutboundIPs. </summary>

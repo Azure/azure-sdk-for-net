@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Initializes a new instance of AuthorizationClassicAdministratorListResult. </summary>
         internal AuthorizationClassicAdministratorListResult()
         {
-            Value = new ChangeTrackingList<AuthorizationClassicAdministrator>();
+            Value = new Core.ChangeTrackingList<AuthorizationClassicAdministrator>();
         }
 
         /// <summary> Initializes a new instance of AuthorizationClassicAdministratorListResult. </summary>

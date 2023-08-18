@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    internal partial class UnknownPlacementPolicyProperties : IUtf8JsonSerializable
+    internal partial class UnknownPlacementPolicyProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(PolicyType.ToString());
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Avs.Models
                 return null;
             }
             PlacementPolicyType type = "Unknown";
-            Optional<PlacementPolicyState> state = default;
-            Optional<string> displayName = default;
-            Optional<PlacementPolicyProvisioningState> provisioningState = default;
+            Core.Optional<PlacementPolicyState> state = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<PlacementPolicyProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new UnknownPlacementPolicyProperties(type, Optional.ToNullable(state), displayName.Value, Optional.ToNullable(provisioningState));
+            return new UnknownPlacementPolicyProperties(type, Core.Optional.ToNullable(state), displayName.Value, Core.Optional.ToNullable(provisioningState));
         }
     }
 }

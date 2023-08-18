@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> dscMetaConfiguration = default;
-            Optional<Uri> endpoint = default;
-            Optional<AgentRegistrationKeys> keys = default;
-            Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> dscMetaConfiguration = default;
+            Core.Optional<Uri> endpoint = default;
+            Core.Optional<AgentRegistrationKeys> keys = default;
+            Core.Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dscMetaConfiguration"u8))

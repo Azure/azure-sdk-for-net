@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    internal partial class RegistrationDelegationSettingProperties : IUtf8JsonSerializable
+    internal partial class RegistrationDelegationSettingProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsUserRegistrationDelegationEnabled))
+            if (Core.Optional.IsDefined(IsUserRegistrationDelegationEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsUserRegistrationDelegationEnabled.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
+            Core.Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new RegistrationDelegationSettingProperties(Optional.ToNullable(enabled));
+            return new RegistrationDelegationSettingProperties(Core.Optional.ToNullable(enabled));
         }
     }
 }

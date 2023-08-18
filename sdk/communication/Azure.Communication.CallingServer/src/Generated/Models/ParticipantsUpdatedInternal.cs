@@ -17,7 +17,7 @@ namespace Azure.Communication.CallingServer
         /// <summary> Initializes a new instance of ParticipantsUpdatedInternal. </summary>
         internal ParticipantsUpdatedInternal()
         {
-            Participants = new ChangeTrackingList<CommunicationIdentifierModel>();
+            Participants = new Core.ChangeTrackingList<CommunicationIdentifierModel>();
         }
 
         /// <summary> Initializes a new instance of ParticipantsUpdatedInternal. </summary>

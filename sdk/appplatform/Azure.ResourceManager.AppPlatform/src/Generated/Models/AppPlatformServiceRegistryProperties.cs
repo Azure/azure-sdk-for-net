@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformServiceRegistryProperties. </summary>
         public AppPlatformServiceRegistryProperties()
         {
-            Instances = new ChangeTrackingList<AppPlatformServiceRegistryInstance>();
+            Instances = new Core.ChangeTrackingList<AppPlatformServiceRegistryInstance>();
         }
 
         /// <summary> Initializes a new instance of AppPlatformServiceRegistryProperties. </summary>

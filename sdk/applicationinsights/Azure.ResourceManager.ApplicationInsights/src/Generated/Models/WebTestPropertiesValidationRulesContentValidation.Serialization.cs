@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class WebTestPropertiesValidationRulesContentValidation : IUtf8JsonSerializable
+    public partial class WebTestPropertiesValidationRulesContentValidation : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContentMatch))
+            if (Core.Optional.IsDefined(ContentMatch))
             {
                 writer.WritePropertyName("ContentMatch"u8);
                 writer.WriteStringValue(ContentMatch);
             }
-            if (Optional.IsDefined(IgnoreCase))
+            if (Core.Optional.IsDefined(IgnoreCase))
             {
                 writer.WritePropertyName("IgnoreCase"u8);
                 writer.WriteBooleanValue(IgnoreCase.Value);
             }
-            if (Optional.IsDefined(PassIfTextFound))
+            if (Core.Optional.IsDefined(PassIfTextFound))
             {
                 writer.WritePropertyName("PassIfTextFound"u8);
                 writer.WriteBooleanValue(PassIfTextFound.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> contentMatch = default;
-            Optional<bool> ignoreCase = default;
-            Optional<bool> passIfTextFound = default;
+            Core.Optional<string> contentMatch = default;
+            Core.Optional<bool> ignoreCase = default;
+            Core.Optional<bool> passIfTextFound = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ContentMatch"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     continue;
                 }
             }
-            return new WebTestPropertiesValidationRulesContentValidation(contentMatch.Value, Optional.ToNullable(ignoreCase), Optional.ToNullable(passIfTextFound));
+            return new WebTestPropertiesValidationRulesContentValidation(contentMatch.Value, Core.Optional.ToNullable(ignoreCase), Core.Optional.ToNullable(passIfTextFound));
         }
     }
 }

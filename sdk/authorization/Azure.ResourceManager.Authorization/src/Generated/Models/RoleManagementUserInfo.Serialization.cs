@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleManagementUserInfo : IUtf8JsonSerializable
+    public partial class RoleManagementUserInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserType))
+            if (Core.Optional.IsDefined(UserType))
             {
                 writer.WritePropertyName("userType"u8);
                 writer.WriteStringValue(UserType.Value.ToString());
             }
-            if (Optional.IsDefined(IsBackup))
+            if (Core.Optional.IsDefined(IsBackup))
             {
                 writer.WritePropertyName("isBackup"u8);
                 writer.WriteBooleanValue(IsBackup.Value);
             }
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<RoleManagementUserType> userType = default;
-            Optional<bool> isBackup = default;
-            Optional<string> id = default;
-            Optional<string> description = default;
+            Core.Optional<RoleManagementUserType> userType = default;
+            Core.Optional<bool> isBackup = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userType"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new RoleManagementUserInfo(Optional.ToNullable(userType), Optional.ToNullable(isBackup), id.Value, description.Value);
+            return new RoleManagementUserInfo(Core.Optional.ToNullable(userType), Core.Optional.ToNullable(isBackup), id.Value, description.Value);
         }
     }
 }

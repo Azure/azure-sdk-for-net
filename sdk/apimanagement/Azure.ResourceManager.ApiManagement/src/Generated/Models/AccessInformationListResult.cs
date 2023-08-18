@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of AccessInformationListResult. </summary>
         internal AccessInformationListResult()
         {
-            Value = new ChangeTrackingList<TenantAccessInfoData>();
+            Value = new Core.ChangeTrackingList<TenantAccessInfoData>();
         }
 
         /// <summary> Initializes a new instance of AccessInformationListResult. </summary>

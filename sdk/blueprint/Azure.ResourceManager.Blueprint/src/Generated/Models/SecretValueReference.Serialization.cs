@@ -11,15 +11,15 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
-    public partial class SecretValueReference : IUtf8JsonSerializable
+    public partial class SecretValueReference : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("keyVault"u8);
             JsonSerializer.Serialize(writer, KeyVault); writer.WritePropertyName("secretName"u8);
             writer.WriteStringValue(SecretName);
-            if (Optional.IsDefined(SecretVersion))
+            if (Core.Optional.IsDefined(SecretVersion))
             {
                 writer.WritePropertyName("secretVersion"u8);
                 writer.WriteStringValue(SecretVersion);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
             WritableSubResource keyVault = default;
             string secretName = default;
-            Optional<string> secretVersion = default;
+            Core.Optional<string> secretVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVault"u8))

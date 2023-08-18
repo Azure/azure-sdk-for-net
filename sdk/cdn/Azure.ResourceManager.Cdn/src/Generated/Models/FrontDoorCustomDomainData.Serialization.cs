@@ -13,24 +13,24 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    public partial class FrontDoorCustomDomainData : IUtf8JsonSerializable
+    public partial class FrontDoorCustomDomainData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TlsSettings))
+            if (Core.Optional.IsDefined(TlsSettings))
             {
                 writer.WritePropertyName("tlsSettings"u8);
                 writer.WriteObjectValue(TlsSettings);
             }
-            if (Optional.IsDefined(DnsZone))
+            if (Core.Optional.IsDefined(DnsZone))
             {
                 writer.WritePropertyName("azureDnsZone"u8);
                 JsonSerializer.Serialize(writer, DnsZone);
             }
-            if (Optional.IsDefined(PreValidatedCustomDomainResource))
+            if (Core.Optional.IsDefined(PreValidatedCustomDomainResource))
             {
                 if (PreValidatedCustomDomainResource != null)
                 {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("preValidatedCustomDomainResourceId");
                 }
             }
-            if (Optional.IsDefined(HostName))
+            if (Core.Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
@@ -60,16 +60,16 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> profileName = default;
-            Optional<FrontDoorCustomDomainHttpsContent> tlsSettings = default;
-            Optional<WritableSubResource> azureDnsZone = default;
-            Optional<FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId> preValidatedCustomDomainResourceId = default;
-            Optional<FrontDoorProvisioningState> provisioningState = default;
-            Optional<FrontDoorDeploymentStatus> deploymentStatus = default;
-            Optional<DomainValidationState> domainValidationState = default;
-            Optional<string> hostName = default;
-            Optional<DomainValidationProperties> validationProperties = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> profileName = default;
+            Core.Optional<FrontDoorCustomDomainHttpsContent> tlsSettings = default;
+            Core.Optional<WritableSubResource> azureDnsZone = default;
+            Core.Optional<FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId> preValidatedCustomDomainResourceId = default;
+            Core.Optional<FrontDoorProvisioningState> provisioningState = default;
+            Core.Optional<FrontDoorDeploymentStatus> deploymentStatus = default;
+            Core.Optional<DomainValidationState> domainValidationState = default;
+            Core.Optional<string> hostName = default;
+            Core.Optional<DomainValidationProperties> validationProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new FrontDoorCustomDomainData(id, name, type, systemData.Value, profileName.Value, tlsSettings.Value, azureDnsZone, preValidatedCustomDomainResourceId.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), Optional.ToNullable(domainValidationState), hostName.Value, validationProperties.Value);
+            return new FrontDoorCustomDomainData(id, name, type, systemData.Value, profileName.Value, tlsSettings.Value, azureDnsZone, preValidatedCustomDomainResourceId.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(deploymentStatus), Core.Optional.ToNullable(domainValidationState), hostName.Value, validationProperties.Value);
         }
     }
 }

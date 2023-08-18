@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformBuilderProperties : IUtf8JsonSerializable
+    public partial class AppPlatformBuilderProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Stack))
+            if (Core.Optional.IsDefined(Stack))
             {
                 writer.WritePropertyName("stack"u8);
                 writer.WriteObjectValue(Stack);
             }
-            if (Optional.IsCollectionDefined(BuildpackGroups))
+            if (Core.Optional.IsCollectionDefined(BuildpackGroups))
             {
                 writer.WritePropertyName("buildpackGroups"u8);
                 writer.WriteStartArray();
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformBuilderProvisioningState> provisioningState = default;
-            Optional<AppPlatformClusterStackProperties> stack = default;
-            Optional<IList<BuildpacksGroupProperties>> buildpackGroups = default;
+            Core.Optional<AppPlatformBuilderProvisioningState> provisioningState = default;
+            Core.Optional<AppPlatformClusterStackProperties> stack = default;
+            Core.Optional<IList<BuildpacksGroupProperties>> buildpackGroups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformBuilderProperties(Optional.ToNullable(provisioningState), stack.Value, Optional.ToList(buildpackGroups));
+            return new AppPlatformBuilderProperties(Core.Optional.ToNullable(provisioningState), stack.Value, Core.Optional.ToList(buildpackGroups));
         }
     }
 }

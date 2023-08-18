@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class HealthProbeSettings : IUtf8JsonSerializable
+    public partial class HealthProbeSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProbePath))
+            if (Core.Optional.IsDefined(ProbePath))
             {
                 writer.WritePropertyName("probePath"u8);
                 writer.WriteStringValue(ProbePath);
             }
-            if (Optional.IsDefined(ProbeRequestType))
+            if (Core.Optional.IsDefined(ProbeRequestType))
             {
                 writer.WritePropertyName("probeRequestType"u8);
                 writer.WriteStringValue(ProbeRequestType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(ProbeProtocol))
+            if (Core.Optional.IsDefined(ProbeProtocol))
             {
                 writer.WritePropertyName("probeProtocol"u8);
                 writer.WriteStringValue(ProbeProtocol.Value.ToSerialString());
             }
-            if (Optional.IsDefined(ProbeIntervalInSeconds))
+            if (Core.Optional.IsDefined(ProbeIntervalInSeconds))
             {
                 writer.WritePropertyName("probeIntervalInSeconds"u8);
                 writer.WriteNumberValue(ProbeIntervalInSeconds.Value);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> probePath = default;
-            Optional<HealthProbeRequestType> probeRequestType = default;
-            Optional<HealthProbeProtocol> probeProtocol = default;
-            Optional<int> probeIntervalInSeconds = default;
+            Core.Optional<string> probePath = default;
+            Core.Optional<HealthProbeRequestType> probeRequestType = default;
+            Core.Optional<HealthProbeProtocol> probeProtocol = default;
+            Core.Optional<int> probeIntervalInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("probePath"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new HealthProbeSettings(probePath.Value, Optional.ToNullable(probeRequestType), Optional.ToNullable(probeProtocol), Optional.ToNullable(probeIntervalInSeconds));
+            return new HealthProbeSettings(probePath.Value, Core.Optional.ToNullable(probeRequestType), Core.Optional.ToNullable(probeProtocol), Core.Optional.ToNullable(probeIntervalInSeconds));
         }
     }
 }

@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> origin = default;
-            Optional<BinaryData> properties = default;
-            Optional<bool> isDataAction = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> origin = default;
+            Core.Optional<BinaryData> properties = default;
+            Core.Optional<bool> isDataAction = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new AuthorizationProviderOperationInfo(name.Value, displayName.Value, description.Value, origin.Value, properties.Value, Optional.ToNullable(isDataAction));
+            return new AuthorizationProviderOperationInfo(name.Value, displayName.Value, description.Value, origin.Value, properties.Value, Core.Optional.ToNullable(isDataAction));
         }
     }
 }

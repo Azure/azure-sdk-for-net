@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    internal partial class IngressSettingsClientAuth : IUtf8JsonSerializable
+    internal partial class IngressSettingsClientAuth : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Certificates))
+            if (Core.Optional.IsCollectionDefined(Certificates))
             {
                 writer.WritePropertyName("certificates"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IList<string>> certificates = default;
+            Core.Optional<IList<string>> certificates = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificates"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new IngressSettingsClientAuth(Optional.ToList(certificates));
+            return new IngressSettingsClientAuth(Core.Optional.ToList(certificates));
         }
     }
 }

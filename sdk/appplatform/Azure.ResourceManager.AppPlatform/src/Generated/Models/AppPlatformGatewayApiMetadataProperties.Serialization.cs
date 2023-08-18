@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformGatewayApiMetadataProperties : IUtf8JsonSerializable
+    public partial class AppPlatformGatewayApiMetadataProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Title))
+            if (Core.Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Documentation))
+            if (Core.Optional.IsDefined(Documentation))
             {
                 writer.WritePropertyName("documentation"u8);
                 writer.WriteStringValue(Documentation);
             }
-            if (Optional.IsDefined(Version))
+            if (Core.Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(ServerUri))
+            if (Core.Optional.IsDefined(ServerUri))
             {
                 writer.WritePropertyName("serverUrl"u8);
                 writer.WriteStringValue(ServerUri.AbsoluteUri);
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<string> documentation = default;
-            Optional<string> version = default;
-            Optional<Uri> serverUri = default;
+            Core.Optional<string> title = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> documentation = default;
+            Core.Optional<string> version = default;
+            Core.Optional<Uri> serverUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("title"u8))

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<Uri> url = default;
+            Core.Optional<Uri> url = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"u8))

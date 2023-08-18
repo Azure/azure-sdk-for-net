@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of HciPublisherList. </summary>
         internal HciPublisherList()
         {
-            Value = new ChangeTrackingList<PublisherData>();
+            Value = new Core.ChangeTrackingList<PublisherData>();
         }
 
         /// <summary> Initializes a new instance of HciPublisherList. </summary>

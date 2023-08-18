@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformConfigServerGitProperty : IUtf8JsonSerializable
+    public partial class AppPlatformConfigServerGitProperty : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Repositories))
+            if (Core.Optional.IsCollectionDefined(Repositories))
             {
                 writer.WritePropertyName("repositories"u8);
                 writer.WriteStartArray();
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
-            if (Optional.IsDefined(Label))
+            if (Core.Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (Optional.IsCollectionDefined(SearchPaths))
+            if (Core.Optional.IsCollectionDefined(SearchPaths))
             {
                 writer.WritePropertyName("searchPaths"u8);
                 writer.WriteStartArray();
@@ -44,32 +44,32 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Username))
+            if (Core.Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Optional.IsDefined(Password))
+            if (Core.Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(HostKey))
+            if (Core.Optional.IsDefined(HostKey))
             {
                 writer.WritePropertyName("hostKey"u8);
                 writer.WriteStringValue(HostKey);
             }
-            if (Optional.IsDefined(HostKeyAlgorithm))
+            if (Core.Optional.IsDefined(HostKeyAlgorithm))
             {
                 writer.WritePropertyName("hostKeyAlgorithm"u8);
                 writer.WriteStringValue(HostKeyAlgorithm);
             }
-            if (Optional.IsDefined(PrivateKey))
+            if (Core.Optional.IsDefined(PrivateKey))
             {
                 writer.WritePropertyName("privateKey"u8);
                 writer.WriteStringValue(PrivateKey);
             }
-            if (Optional.IsDefined(IsHostKeyCheckingStrict))
+            if (Core.Optional.IsDefined(IsHostKeyCheckingStrict))
             {
                 writer.WritePropertyName("strictHostKeyChecking"u8);
                 writer.WriteBooleanValue(IsHostKeyCheckingStrict.Value);
@@ -83,16 +83,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IList<ConfigServerGitPatternRepository>> repositories = default;
+            Core.Optional<IList<ConfigServerGitPatternRepository>> repositories = default;
             Uri uri = default;
-            Optional<string> label = default;
-            Optional<IList<string>> searchPaths = default;
-            Optional<string> username = default;
-            Optional<string> password = default;
-            Optional<string> hostKey = default;
-            Optional<string> hostKeyAlgorithm = default;
-            Optional<string> privateKey = default;
-            Optional<bool> strictHostKeyChecking = default;
+            Core.Optional<string> label = default;
+            Core.Optional<IList<string>> searchPaths = default;
+            Core.Optional<string> username = default;
+            Core.Optional<string> password = default;
+            Core.Optional<string> hostKey = default;
+            Core.Optional<string> hostKeyAlgorithm = default;
+            Core.Optional<string> privateKey = default;
+            Core.Optional<bool> strictHostKeyChecking = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("repositories"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformConfigServerGitProperty(Optional.ToList(repositories), uri, label.Value, Optional.ToList(searchPaths), username.Value, password.Value, hostKey.Value, hostKeyAlgorithm.Value, privateKey.Value, Optional.ToNullable(strictHostKeyChecking));
+            return new AppPlatformConfigServerGitProperty(Core.Optional.ToList(repositories), uri, label.Value, Core.Optional.ToList(searchPaths), username.Value, password.Value, hostKey.Value, hostKeyAlgorithm.Value, privateKey.Value, Core.Optional.ToNullable(strictHostKeyChecking));
         }
     }
 }

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class AlertProcessingRuleProperties : IUtf8JsonSerializable
+    public partial class AlertProcessingRuleProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("scopes"u8);
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Conditions))
+            if (Core.Optional.IsCollectionDefined(Conditions))
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Schedule))
+            if (Core.Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteObjectValue(Schedule);
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (Core.Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -65,11 +65,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 return null;
             }
             IList<string> scopes = default;
-            Optional<IList<AlertProcessingRuleCondition>> conditions = default;
-            Optional<AlertProcessingRuleSchedule> schedule = default;
+            Core.Optional<IList<AlertProcessingRuleCondition>> conditions = default;
+            Core.Optional<AlertProcessingRuleSchedule> schedule = default;
             IList<AlertProcessingRuleAction> actions = default;
-            Optional<string> description = default;
-            Optional<bool> enabled = default;
+            Core.Optional<string> description = default;
+            Core.Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scopes"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     continue;
                 }
             }
-            return new AlertProcessingRuleProperties(scopes, Optional.ToList(conditions), schedule.Value, actions, description.Value, Optional.ToNullable(enabled));
+            return new AlertProcessingRuleProperties(scopes, Core.Optional.ToList(conditions), schedule.Value, actions, description.Value, Core.Optional.ToNullable(enabled));
         }
     }
 }

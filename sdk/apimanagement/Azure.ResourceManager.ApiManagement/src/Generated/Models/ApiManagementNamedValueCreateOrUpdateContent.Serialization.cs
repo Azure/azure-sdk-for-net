@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiManagementNamedValueCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class ApiManagementNamedValueCreateOrUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();
@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsSecret))
+            if (Core.Optional.IsDefined(IsSecret))
             {
                 writer.WritePropertyName("secret"u8);
                 writer.WriteBooleanValue(IsSecret.Value);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Value))
+            if (Core.Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(KeyVault))
+            if (Core.Optional.IsDefined(KeyVault))
             {
                 writer.WritePropertyName("keyVault"u8);
                 writer.WriteObjectValue(KeyVault);
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<string>> tags = default;
-            Optional<bool> secret = default;
-            Optional<string> displayName = default;
-            Optional<string> value = default;
-            Optional<KeyVaultContractCreateProperties> keyVault = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IList<string>> tags = default;
+            Core.Optional<bool> secret = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> value = default;
+            Core.Optional<KeyVaultContractCreateProperties> keyVault = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ApiManagementNamedValueCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToList(tags), Optional.ToNullable(secret), displayName.Value, value.Value, keyVault.Value);
+            return new ApiManagementNamedValueCreateOrUpdateContent(id, name, type, systemData.Value, Core.Optional.ToList(tags), Core.Optional.ToNullable(secret), displayName.Value, value.Value, keyVault.Value);
         }
     }
 }

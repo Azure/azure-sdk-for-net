@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformGatewayCorsProperties : IUtf8JsonSerializable
+    public partial class AppPlatformGatewayCorsProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AllowedOrigins))
+            if (Core.Optional.IsCollectionDefined(AllowedOrigins))
             {
                 writer.WritePropertyName("allowedOrigins"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AllowedMethods))
+            if (Core.Optional.IsCollectionDefined(AllowedMethods))
             {
                 writer.WritePropertyName("allowedMethods"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AllowedHeaders))
+            if (Core.Optional.IsCollectionDefined(AllowedHeaders))
             {
                 writer.WritePropertyName("allowedHeaders"u8);
                 writer.WriteStartArray();
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MaxAge))
+            if (Core.Optional.IsDefined(MaxAge))
             {
                 writer.WritePropertyName("maxAge"u8);
                 writer.WriteNumberValue(MaxAge.Value);
             }
-            if (Optional.IsDefined(AreCredentialsAllowed))
+            if (Core.Optional.IsDefined(AreCredentialsAllowed))
             {
                 writer.WritePropertyName("allowCredentials"u8);
                 writer.WriteBooleanValue(AreCredentialsAllowed.Value);
             }
-            if (Optional.IsCollectionDefined(ExposedHeaders))
+            if (Core.Optional.IsCollectionDefined(ExposedHeaders))
             {
                 writer.WritePropertyName("exposedHeaders"u8);
                 writer.WriteStartArray();
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IList<string>> allowedOrigins = default;
-            Optional<IList<string>> allowedMethods = default;
-            Optional<IList<string>> allowedHeaders = default;
-            Optional<int> maxAge = default;
-            Optional<bool> allowCredentials = default;
-            Optional<IList<string>> exposedHeaders = default;
+            Core.Optional<IList<string>> allowedOrigins = default;
+            Core.Optional<IList<string>> allowedMethods = default;
+            Core.Optional<IList<string>> allowedHeaders = default;
+            Core.Optional<int> maxAge = default;
+            Core.Optional<bool> allowCredentials = default;
+            Core.Optional<IList<string>> exposedHeaders = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedOrigins"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformGatewayCorsProperties(Optional.ToList(allowedOrigins), Optional.ToList(allowedMethods), Optional.ToList(allowedHeaders), Optional.ToNullable(maxAge), Optional.ToNullable(allowCredentials), Optional.ToList(exposedHeaders));
+            return new AppPlatformGatewayCorsProperties(Core.Optional.ToList(allowedOrigins), Core.Optional.ToList(allowedMethods), Core.Optional.ToList(allowedHeaders), Core.Optional.ToNullable(maxAge), Core.Optional.ToNullable(allowCredentials), Core.Optional.ToList(exposedHeaders));
         }
     }
 }

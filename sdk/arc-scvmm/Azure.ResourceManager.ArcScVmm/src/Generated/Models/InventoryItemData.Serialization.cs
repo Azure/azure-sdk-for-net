@@ -12,12 +12,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ArcScVmm
 {
-    public partial class InventoryItemData : IUtf8JsonSerializable
+    public partial class InventoryItemData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -36,16 +36,16 @@ namespace Azure.ResourceManager.ArcScVmm
             {
                 return null;
             }
-            Optional<string> kind = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             InventoryType inventoryType = default;
-            Optional<string> managedResourceId = default;
-            Optional<string> uuid = default;
-            Optional<string> inventoryItemName = default;
-            Optional<string> provisioningState = default;
+            Core.Optional<string> managedResourceId = default;
+            Core.Optional<string> uuid = default;
+            Core.Optional<string> inventoryItemName = default;
+            Core.Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))

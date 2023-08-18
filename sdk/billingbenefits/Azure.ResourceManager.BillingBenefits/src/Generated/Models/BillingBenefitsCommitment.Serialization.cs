@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    public partial class BillingBenefitsCommitment : IUtf8JsonSerializable
+    public partial class BillingBenefitsCommitment : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Grain))
+            if (Core.Optional.IsDefined(Grain))
             {
                 writer.WritePropertyName("grain"u8);
                 writer.WriteStringValue(Grain.Value.ToString());
             }
-            if (Optional.IsDefined(CurrencyCode))
+            if (Core.Optional.IsDefined(CurrencyCode))
             {
                 writer.WritePropertyName("currencyCode"u8);
                 writer.WriteStringValue(CurrencyCode);
             }
-            if (Optional.IsDefined(Amount))
+            if (Core.Optional.IsDefined(Amount))
             {
                 writer.WritePropertyName("amount"u8);
                 writer.WriteNumberValue(Amount.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<BillingBenefitsCommitmentGrain> grain = default;
-            Optional<string> currencyCode = default;
-            Optional<double> amount = default;
+            Core.Optional<BillingBenefitsCommitmentGrain> grain = default;
+            Core.Optional<string> currencyCode = default;
+            Core.Optional<double> amount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("grain"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     continue;
                 }
             }
-            return new BillingBenefitsCommitment(currencyCode.Value, Optional.ToNullable(amount), Optional.ToNullable(grain));
+            return new BillingBenefitsCommitment(currencyCode.Value, Core.Optional.ToNullable(amount), Core.Optional.ToNullable(grain));
         }
     }
 }

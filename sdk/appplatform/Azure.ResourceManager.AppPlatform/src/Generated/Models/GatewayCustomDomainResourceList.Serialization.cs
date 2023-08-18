@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AppPlatformGatewayCustomDomainData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<AppPlatformGatewayCustomDomainData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new GatewayCustomDomainResourceList(Optional.ToList(value), nextLink.Value);
+            return new GatewayCustomDomainResourceList(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

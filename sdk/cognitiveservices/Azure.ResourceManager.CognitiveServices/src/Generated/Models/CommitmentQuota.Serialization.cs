@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<long> quantity = default;
-            Optional<string> unit = default;
+            Core.Optional<long> quantity = default;
+            Core.Optional<string> unit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("quantity"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new CommitmentQuota(Optional.ToNullable(quantity), unit.Value);
+            return new CommitmentQuota(Core.Optional.ToNullable(quantity), unit.Value);
         }
     }
 }

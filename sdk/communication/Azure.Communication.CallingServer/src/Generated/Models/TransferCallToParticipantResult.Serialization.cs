@@ -18,7 +18,7 @@ namespace Azure.Communication.CallingServer
             {
                 return null;
             }
-            Optional<string> operationContext = default;
+            Core.Optional<string> operationContext = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationContext"u8))

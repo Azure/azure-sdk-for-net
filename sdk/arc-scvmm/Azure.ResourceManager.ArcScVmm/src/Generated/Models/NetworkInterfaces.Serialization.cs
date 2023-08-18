@@ -11,42 +11,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
-    public partial class NetworkInterfaces : IUtf8JsonSerializable
+    public partial class NetworkInterfaces : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(MacAddress))
+            if (Core.Optional.IsDefined(MacAddress))
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (Optional.IsDefined(VirtualNetworkId))
+            if (Core.Optional.IsDefined(VirtualNetworkId))
             {
                 writer.WritePropertyName("virtualNetworkId"u8);
                 writer.WriteStringValue(VirtualNetworkId);
             }
-            if (Optional.IsDefined(IPv4AddressType))
+            if (Core.Optional.IsDefined(IPv4AddressType))
             {
                 writer.WritePropertyName("ipv4AddressType"u8);
                 writer.WriteStringValue(IPv4AddressType.Value.ToString());
             }
-            if (Optional.IsDefined(IPv6AddressType))
+            if (Core.Optional.IsDefined(IPv6AddressType))
             {
                 writer.WritePropertyName("ipv6AddressType"u8);
                 writer.WriteStringValue(IPv6AddressType.Value.ToString());
             }
-            if (Optional.IsDefined(MacAddressType))
+            if (Core.Optional.IsDefined(MacAddressType))
             {
                 writer.WritePropertyName("macAddressType"u8);
                 writer.WriteStringValue(MacAddressType.Value.ToString());
             }
-            if (Optional.IsDefined(NicId))
+            if (Core.Optional.IsDefined(NicId))
             {
                 writer.WritePropertyName("nicId"u8);
                 writer.WriteStringValue(NicId);
@@ -60,17 +60,17 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> displayName = default;
-            Optional<IReadOnlyList<string>> ipv4Addresses = default;
-            Optional<IReadOnlyList<string>> ipv6Addresses = default;
-            Optional<string> macAddress = default;
-            Optional<string> virtualNetworkId = default;
-            Optional<string> networkName = default;
-            Optional<AllocationMethod> ipv4AddressType = default;
-            Optional<AllocationMethod> ipv6AddressType = default;
-            Optional<AllocationMethod> macAddressType = default;
-            Optional<string> nicId = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<IReadOnlyList<string>> ipv4Addresses = default;
+            Core.Optional<IReadOnlyList<string>> ipv6Addresses = default;
+            Core.Optional<string> macAddress = default;
+            Core.Optional<string> virtualNetworkId = default;
+            Core.Optional<string> networkName = default;
+            Core.Optional<AllocationMethod> ipv4AddressType = default;
+            Core.Optional<AllocationMethod> ipv6AddressType = default;
+            Core.Optional<AllocationMethod> macAddressType = default;
+            Core.Optional<string> nicId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     continue;
                 }
             }
-            return new NetworkInterfaces(name.Value, displayName.Value, Optional.ToList(ipv4Addresses), Optional.ToList(ipv6Addresses), macAddress.Value, virtualNetworkId.Value, networkName.Value, Optional.ToNullable(ipv4AddressType), Optional.ToNullable(ipv6AddressType), Optional.ToNullable(macAddressType), nicId.Value);
+            return new NetworkInterfaces(name.Value, displayName.Value, Core.Optional.ToList(ipv4Addresses), Core.Optional.ToList(ipv6Addresses), macAddress.Value, virtualNetworkId.Value, networkName.Value, Core.Optional.ToNullable(ipv4AddressType), Core.Optional.ToNullable(ipv6AddressType), Core.Optional.ToNullable(macAddressType), nicId.Value);
         }
     }
 }

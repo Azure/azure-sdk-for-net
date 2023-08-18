@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Automation.Models
 
             Schedule = schedule;
             Runbook = runbook;
-            Parameters = new ChangeTrackingDictionary<string, string>();
+            Parameters = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Gets or sets the schedule. </summary>

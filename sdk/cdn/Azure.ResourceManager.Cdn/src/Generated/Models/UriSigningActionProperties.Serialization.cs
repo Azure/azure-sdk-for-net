@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class UriSigningActionProperties : IUtf8JsonSerializable
+    public partial class UriSigningActionProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("typeName"u8);
             writer.WriteStringValue(ActionType.ToString());
-            if (Optional.IsDefined(Algorithm))
+            if (Core.Optional.IsDefined(Algorithm))
             {
                 writer.WritePropertyName("algorithm"u8);
                 writer.WriteStringValue(Algorithm.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ParameterNameOverride))
+            if (Core.Optional.IsCollectionDefined(ParameterNameOverride))
             {
                 writer.WritePropertyName("parameterNameOverride"u8);
                 writer.WriteStartArray();
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             UriSigningActionType typeName = default;
-            Optional<UriSigningAlgorithm> algorithm = default;
-            Optional<IList<UriSigningParamIdentifier>> parameterNameOverride = default;
+            Core.Optional<UriSigningAlgorithm> algorithm = default;
+            Core.Optional<IList<UriSigningParamIdentifier>> parameterNameOverride = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("typeName"u8))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new UriSigningActionProperties(typeName, Optional.ToNullable(algorithm), Optional.ToList(parameterNameOverride));
+            return new UriSigningActionProperties(typeName, Core.Optional.ToNullable(algorithm), Core.Optional.ToList(parameterNameOverride));
         }
     }
 }

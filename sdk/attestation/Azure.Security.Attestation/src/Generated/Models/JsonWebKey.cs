@@ -28,7 +28,7 @@ namespace Azure.Security.Attestation
             Argument.AssertNotNull(kty, nameof(kty));
 
             Kty = kty;
-            X5C = new ChangeTrackingList<string>();
+            X5C = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of JsonWebKey. </summary>

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            Optional<SubscriptionTransferValidationErrorCode> code = default;
-            Optional<string> message = default;
-            Optional<string> details = default;
+            Core.Optional<SubscriptionTransferValidationErrorCode> code = default;
+            Core.Optional<string> message = default;
+            Core.Optional<string> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Billing.Models
                     continue;
                 }
             }
-            return new BillingSubscriptionValidateMoveEligibilityError(Optional.ToNullable(code), message.Value, details.Value);
+            return new BillingSubscriptionValidateMoveEligibilityError(Core.Optional.ToNullable(code), message.Value, details.Value);
         }
     }
 }

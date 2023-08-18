@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public ResponseContract(int statusCode)
         {
             StatusCode = statusCode;
-            Representations = new ChangeTrackingList<RepresentationContract>();
-            Headers = new ChangeTrackingList<ParameterContract>();
+            Representations = new Core.ChangeTrackingList<RepresentationContract>();
+            Headers = new Core.ChangeTrackingList<ParameterContract>();
         }
 
         /// <summary> Initializes a new instance of ResponseContract. </summary>

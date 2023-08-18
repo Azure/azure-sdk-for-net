@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of MetricsResponse. </summary>
         internal MetricsResponse()
         {
-            Series = new ChangeTrackingList<MetricsResponseSeriesItem>();
+            Series = new Core.ChangeTrackingList<MetricsResponseSeriesItem>();
         }
 
         /// <summary> Initializes a new instance of MetricsResponse. </summary>

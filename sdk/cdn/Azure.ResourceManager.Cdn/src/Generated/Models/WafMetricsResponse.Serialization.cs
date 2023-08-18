@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> dateTimeBegin = default;
-            Optional<DateTimeOffset> dateTimeEnd = default;
-            Optional<WafMetricsResponseGranularity> granularity = default;
-            Optional<IReadOnlyList<WafMetricsResponseSeriesItem>> series = default;
+            Core.Optional<DateTimeOffset> dateTimeBegin = default;
+            Core.Optional<DateTimeOffset> dateTimeEnd = default;
+            Core.Optional<WafMetricsResponseGranularity> granularity = default;
+            Core.Optional<IReadOnlyList<WafMetricsResponseSeriesItem>> series = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dateTimeBegin"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new WafMetricsResponse(Optional.ToNullable(dateTimeBegin), Optional.ToNullable(dateTimeEnd), Optional.ToNullable(granularity), Optional.ToList(series));
+            return new WafMetricsResponse(Core.Optional.ToNullable(dateTimeBegin), Core.Optional.ToNullable(dateTimeEnd), Core.Optional.ToNullable(granularity), Core.Optional.ToList(series));
         }
     }
 }

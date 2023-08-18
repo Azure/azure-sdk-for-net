@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    internal partial class UnknownAddonProperties : IUtf8JsonSerializable
+    internal partial class UnknownAddonProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("addonType"u8);
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Avs.Models
                 return null;
             }
             AddonType addonType = "Unknown";
-            Optional<AddonProvisioningState> provisioningState = default;
+            Core.Optional<AddonProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addonType"u8))
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new UnknownAddonProperties(addonType, Optional.ToNullable(provisioningState));
+            return new UnknownAddonProperties(addonType, Core.Optional.ToNullable(provisioningState));
         }
     }
 }

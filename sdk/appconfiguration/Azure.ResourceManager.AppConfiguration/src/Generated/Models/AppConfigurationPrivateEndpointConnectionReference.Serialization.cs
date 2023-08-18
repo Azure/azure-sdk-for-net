@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AppConfigurationProvisioningState> provisioningState = default;
-            Optional<WritableSubResource> privateEndpoint = default;
-            Optional<AppConfigurationPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<AppConfigurationProvisioningState> provisioningState = default;
+            Core.Optional<WritableSubResource> privateEndpoint = default;
+            Core.Optional<AppConfigurationPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new AppConfigurationPrivateEndpointConnectionReference(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), privateEndpoint, privateLinkServiceConnectionState.Value);
+            return new AppConfigurationPrivateEndpointConnectionReference(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), privateEndpoint, privateLinkServiceConnectionState.Value);
         }
     }
 }

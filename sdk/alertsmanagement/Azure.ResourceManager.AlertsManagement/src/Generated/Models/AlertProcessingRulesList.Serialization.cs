@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<AlertProcessingRuleData>> value = default;
+            Core.Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<AlertProcessingRuleData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     continue;
                 }
             }
-            return new AlertProcessingRulesList(nextLink.Value, Optional.ToList(value));
+            return new AlertProcessingRulesList(nextLink.Value, Core.Optional.ToList(value));
         }
     }
 }

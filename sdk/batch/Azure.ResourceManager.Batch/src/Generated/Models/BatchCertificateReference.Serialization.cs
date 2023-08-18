@@ -11,24 +11,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchCertificateReference : IUtf8JsonSerializable
+    public partial class BatchCertificateReference : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(StoreLocation))
+            if (Core.Optional.IsDefined(StoreLocation))
             {
                 writer.WritePropertyName("storeLocation"u8);
                 writer.WriteStringValue(StoreLocation.Value.ToSerialString());
             }
-            if (Optional.IsDefined(StoreName))
+            if (Core.Optional.IsDefined(StoreName))
             {
                 writer.WritePropertyName("storeName"u8);
                 writer.WriteStringValue(StoreName);
             }
-            if (Optional.IsCollectionDefined(Visibility))
+            if (Core.Optional.IsCollectionDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStartArray();
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            Optional<BatchCertificateStoreLocation> storeLocation = default;
-            Optional<string> storeName = default;
-            Optional<IList<BatchCertificateVisibility>> visibility = default;
+            Core.Optional<BatchCertificateStoreLocation> storeLocation = default;
+            Core.Optional<string> storeName = default;
+            Core.Optional<IList<BatchCertificateVisibility>> visibility = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new BatchCertificateReference(id, Optional.ToNullable(storeLocation), storeName.Value, Optional.ToList(visibility));
+            return new BatchCertificateReference(id, Core.Optional.ToNullable(storeLocation), storeName.Value, Core.Optional.ToList(visibility));
         }
     }
 }

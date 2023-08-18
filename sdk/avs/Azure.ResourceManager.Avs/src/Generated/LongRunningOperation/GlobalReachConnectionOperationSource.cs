@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
-    internal class GlobalReachConnectionOperationSource : IOperationSource<GlobalReachConnectionResource>
+    internal class GlobalReachConnectionOperationSource : Core.IOperationSource<GlobalReachConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Avs
             _client = client;
         }
 
-        GlobalReachConnectionResource IOperationSource<GlobalReachConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        GlobalReachConnectionResource Core.IOperationSource<GlobalReachConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = GlobalReachConnectionData.DeserializeGlobalReachConnectionData(document.RootElement);
             return new GlobalReachConnectionResource(_client, data);
         }
 
-        async ValueTask<GlobalReachConnectionResource> IOperationSource<GlobalReachConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<GlobalReachConnectionResource> Core.IOperationSource<GlobalReachConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = GlobalReachConnectionData.DeserializeGlobalReachConnectionData(document.RootElement);

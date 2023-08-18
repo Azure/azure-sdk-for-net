@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
             Location = location;
             Sku = sku;
-            Zones = new ChangeTrackingList<string>();
-            PublicIPAddresses = new ChangeTrackingList<IPAddress>();
-            PrivateIPAddresses = new ChangeTrackingList<IPAddress>();
+            Zones = new Core.ChangeTrackingList<string>();
+            PublicIPAddresses = new Core.ChangeTrackingList<IPAddress>();
+            PrivateIPAddresses = new Core.ChangeTrackingList<IPAddress>();
         }
 
         /// <summary> Initializes a new instance of AdditionalLocation. </summary>

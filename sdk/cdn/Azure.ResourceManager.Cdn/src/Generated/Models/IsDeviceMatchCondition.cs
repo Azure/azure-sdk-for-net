@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             ConditionType = conditionType;
             IsDeviceOperator = isDeviceOperator;
-            MatchValues = new ChangeTrackingList<IsDeviceMatchConditionMatchValue>();
-            Transforms = new ChangeTrackingList<PreTransformCategory>();
+            MatchValues = new Core.ChangeTrackingList<IsDeviceMatchConditionMatchValue>();
+            Transforms = new Core.ChangeTrackingList<PreTransformCategory>();
         }
 
         /// <summary> Initializes a new instance of IsDeviceMatchCondition. </summary>

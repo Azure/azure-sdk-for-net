@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of GroupListResult. </summary>
         internal GroupListResult()
         {
-            Value = new ChangeTrackingList<ApiManagementGroupData>();
+            Value = new Core.ChangeTrackingList<ApiManagementGroupData>();
         }
 
         /// <summary> Initializes a new instance of GroupListResult. </summary>

@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class ResponseBasedOriginErrorDetectionSettings : IUtf8JsonSerializable
+    public partial class ResponseBasedOriginErrorDetectionSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResponseBasedDetectedErrorType))
+            if (Core.Optional.IsDefined(ResponseBasedDetectedErrorType))
             {
                 writer.WritePropertyName("responseBasedDetectedErrorTypes"u8);
                 writer.WriteStringValue(ResponseBasedDetectedErrorType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(ResponseBasedFailoverThresholdPercentage))
+            if (Core.Optional.IsDefined(ResponseBasedFailoverThresholdPercentage))
             {
                 writer.WritePropertyName("responseBasedFailoverThresholdPercentage"u8);
                 writer.WriteNumberValue(ResponseBasedFailoverThresholdPercentage.Value);
             }
-            if (Optional.IsCollectionDefined(HttpErrorRanges))
+            if (Core.Optional.IsCollectionDefined(HttpErrorRanges))
             {
                 writer.WritePropertyName("httpErrorRanges"u8);
                 writer.WriteStartArray();
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<ResponseBasedDetectedErrorType> responseBasedDetectedErrorTypes = default;
-            Optional<int> responseBasedFailoverThresholdPercentage = default;
-            Optional<IList<HttpErrorRange>> httpErrorRanges = default;
+            Core.Optional<ResponseBasedDetectedErrorType> responseBasedDetectedErrorTypes = default;
+            Core.Optional<int> responseBasedFailoverThresholdPercentage = default;
+            Core.Optional<IList<HttpErrorRange>> httpErrorRanges = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("responseBasedDetectedErrorTypes"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new ResponseBasedOriginErrorDetectionSettings(Optional.ToNullable(responseBasedDetectedErrorTypes), Optional.ToNullable(responseBasedFailoverThresholdPercentage), Optional.ToList(httpErrorRanges));
+            return new ResponseBasedOriginErrorDetectionSettings(Core.Optional.ToNullable(responseBasedDetectedErrorTypes), Core.Optional.ToNullable(responseBasedFailoverThresholdPercentage), Core.Optional.ToList(httpErrorRanges));
         }
     }
 }

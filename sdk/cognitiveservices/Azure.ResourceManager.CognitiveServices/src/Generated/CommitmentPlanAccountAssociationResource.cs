@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CognitiveServices
             try
             {
                 var response = await _commitmentPlanAccountAssociationCommitmentPlansRestClient.DeleteAssociationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CognitiveServicesArmOperation(_commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics, Pipeline, _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateDeleteAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CognitiveServicesArmOperation(_commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics, Pipeline, _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateDeleteAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.CognitiveServices
             try
             {
                 var response = _commitmentPlanAccountAssociationCommitmentPlansRestClient.DeleteAssociation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CognitiveServicesArmOperation(_commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics, Pipeline, _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateDeleteAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CognitiveServicesArmOperation(_commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics, Pipeline, _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateDeleteAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.CognitiveServices
             try
             {
                 var response = await _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateOrUpdateAssociationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CognitiveServicesArmOperation<CommitmentPlanAccountAssociationResource>(new CommitmentPlanAccountAssociationOperationSource(Client), _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics, Pipeline, _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateCreateOrUpdateAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new CognitiveServicesArmOperation<CommitmentPlanAccountAssociationResource>(new CommitmentPlanAccountAssociationOperationSource(Client), _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics, Pipeline, _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateCreateOrUpdateAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.CognitiveServices
             try
             {
                 var response = _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateOrUpdateAssociation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new CognitiveServicesArmOperation<CommitmentPlanAccountAssociationResource>(new CommitmentPlanAccountAssociationOperationSource(Client), _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics, Pipeline, _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateCreateOrUpdateAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new CognitiveServicesArmOperation<CommitmentPlanAccountAssociationResource>(new CommitmentPlanAccountAssociationOperationSource(Client), _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics, Pipeline, _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateCreateOrUpdateAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

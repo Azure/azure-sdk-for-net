@@ -11,37 +11,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class Annotation : IUtf8JsonSerializable
+    public partial class Annotation : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AnnotationName))
+            if (Core.Optional.IsDefined(AnnotationName))
             {
                 writer.WritePropertyName("AnnotationName"u8);
                 writer.WriteStringValue(AnnotationName);
             }
-            if (Optional.IsDefined(Category))
+            if (Core.Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("Category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Optional.IsDefined(EventOn))
+            if (Core.Optional.IsDefined(EventOn))
             {
                 writer.WritePropertyName("EventTime"u8);
                 writer.WriteStringValue(EventOn.Value, "O");
             }
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("Id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("Properties"u8);
                 writer.WriteStringValue(Properties);
             }
-            if (Optional.IsDefined(RelatedAnnotation))
+            if (Core.Optional.IsDefined(RelatedAnnotation))
             {
                 writer.WritePropertyName("RelatedAnnotation"u8);
                 writer.WriteStringValue(RelatedAnnotation);
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> annotationName = default;
-            Optional<string> category = default;
-            Optional<DateTimeOffset> eventTime = default;
-            Optional<string> id = default;
-            Optional<string> properties = default;
-            Optional<string> relatedAnnotation = default;
+            Core.Optional<string> annotationName = default;
+            Core.Optional<string> category = default;
+            Core.Optional<DateTimeOffset> eventTime = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> properties = default;
+            Core.Optional<string> relatedAnnotation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("AnnotationName"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     continue;
                 }
             }
-            return new Annotation(annotationName.Value, category.Value, Optional.ToNullable(eventTime), id.Value, properties.Value, relatedAnnotation.Value);
+            return new Annotation(annotationName.Value, category.Value, Core.Optional.ToNullable(eventTime), id.Value, properties.Value, relatedAnnotation.Value);
         }
     }
 }

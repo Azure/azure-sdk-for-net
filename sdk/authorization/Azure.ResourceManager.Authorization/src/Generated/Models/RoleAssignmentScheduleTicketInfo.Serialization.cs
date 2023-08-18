@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleAssignmentScheduleTicketInfo : IUtf8JsonSerializable
+    public partial class RoleAssignmentScheduleTicketInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TicketNumber))
+            if (Core.Optional.IsDefined(TicketNumber))
             {
                 writer.WritePropertyName("ticketNumber"u8);
                 writer.WriteStringValue(TicketNumber);
             }
-            if (Optional.IsDefined(TicketSystem))
+            if (Core.Optional.IsDefined(TicketSystem))
             {
                 writer.WritePropertyName("ticketSystem"u8);
                 writer.WriteStringValue(TicketSystem);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<string> ticketNumber = default;
-            Optional<string> ticketSystem = default;
+            Core.Optional<string> ticketNumber = default;
+            Core.Optional<string> ticketSystem = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ticketNumber"u8))

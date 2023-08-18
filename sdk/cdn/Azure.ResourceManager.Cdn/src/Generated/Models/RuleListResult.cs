@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of RuleListResult. </summary>
         internal RuleListResult()
         {
-            Value = new ChangeTrackingList<FrontDoorRuleData>();
+            Value = new Core.ChangeTrackingList<FrontDoorRuleData>();
         }
 
         /// <summary> Initializes a new instance of RuleListResult. </summary>

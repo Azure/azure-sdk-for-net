@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> metric = default;
-            Optional<WafMetricsResponseSeriesItemUnit> unit = default;
-            Optional<IReadOnlyList<WafMetricsResponseSeriesPropertiesItemsItem>> groups = default;
-            Optional<IReadOnlyList<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>> data = default;
+            Core.Optional<string> metric = default;
+            Core.Optional<WafMetricsResponseSeriesItemUnit> unit = default;
+            Core.Optional<IReadOnlyList<WafMetricsResponseSeriesPropertiesItemsItem>> groups = default;
+            Core.Optional<IReadOnlyList<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>> data = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metric"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new WafMetricsResponseSeriesItem(metric.Value, Optional.ToNullable(unit), Optional.ToList(groups), Optional.ToList(data));
+            return new WafMetricsResponseSeriesItem(metric.Value, Core.Optional.ToNullable(unit), Core.Optional.ToList(groups), Core.Optional.ToList(data));
         }
     }
 }

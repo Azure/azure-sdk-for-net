@@ -14,13 +14,13 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ArcScVmm
 {
-    public partial class ScVmmVirtualMachineTemplateData : IUtf8JsonSerializable
+    public partial class ScVmmVirtualMachineTemplateData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            JsonSerializer.Serialize(writer, ExtendedLocation); if (Optional.IsCollectionDefined(Tags))
+            JsonSerializer.Serialize(writer, ExtendedLocation); if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -35,17 +35,17 @@ namespace Azure.ResourceManager.ArcScVmm
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(InventoryItemId))
+            if (Core.Optional.IsDefined(InventoryItemId))
             {
                 writer.WritePropertyName("inventoryItemId"u8);
                 writer.WriteStringValue(InventoryItemId);
             }
-            if (Optional.IsDefined(Uuid))
+            if (Core.Optional.IsDefined(Uuid))
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
-            if (Optional.IsDefined(VmmServerId))
+            if (Core.Optional.IsDefined(VmmServerId))
             {
                 writer.WritePropertyName("vmmServerId"u8);
                 writer.WriteStringValue(VmmServerId);
@@ -61,30 +61,30 @@ namespace Azure.ResourceManager.ArcScVmm
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> inventoryItemId = default;
-            Optional<string> uuid = default;
-            Optional<string> vmmServerId = default;
-            Optional<OSType> osType = default;
-            Optional<string> osName = default;
-            Optional<string> computerName = default;
-            Optional<int> memoryMB = default;
-            Optional<int> cpuCount = default;
-            Optional<LimitCpuForMigration> limitCpuForMigration = default;
-            Optional<DynamicMemoryEnabled> dynamicMemoryEnabled = default;
-            Optional<IsCustomizable> isCustomizable = default;
-            Optional<int> dynamicMemoryMaxMB = default;
-            Optional<int> dynamicMemoryMinMB = default;
-            Optional<string> isHighlyAvailable = default;
-            Optional<int> generation = default;
-            Optional<IReadOnlyList<NetworkInterfaces>> networkInterfaces = default;
-            Optional<IReadOnlyList<VirtualDisk>> disks = default;
-            Optional<string> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> inventoryItemId = default;
+            Core.Optional<string> uuid = default;
+            Core.Optional<string> vmmServerId = default;
+            Core.Optional<OSType> osType = default;
+            Core.Optional<string> osName = default;
+            Core.Optional<string> computerName = default;
+            Core.Optional<int> memoryMB = default;
+            Core.Optional<int> cpuCount = default;
+            Core.Optional<LimitCpuForMigration> limitCpuForMigration = default;
+            Core.Optional<DynamicMemoryEnabled> dynamicMemoryEnabled = default;
+            Core.Optional<IsCustomizable> isCustomizable = default;
+            Core.Optional<int> dynamicMemoryMaxMB = default;
+            Core.Optional<int> dynamicMemoryMinMB = default;
+            Core.Optional<string> isHighlyAvailable = default;
+            Core.Optional<int> generation = default;
+            Core.Optional<IReadOnlyList<NetworkInterfaces>> networkInterfaces = default;
+            Core.Optional<IReadOnlyList<VirtualDisk>> disks = default;
+            Core.Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ArcScVmm
                     continue;
                 }
             }
-            return new ScVmmVirtualMachineTemplateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, inventoryItemId.Value, uuid.Value, vmmServerId.Value, Optional.ToNullable(osType), osName.Value, computerName.Value, Optional.ToNullable(memoryMB), Optional.ToNullable(cpuCount), Optional.ToNullable(limitCpuForMigration), Optional.ToNullable(dynamicMemoryEnabled), Optional.ToNullable(isCustomizable), Optional.ToNullable(dynamicMemoryMaxMB), Optional.ToNullable(dynamicMemoryMinMB), isHighlyAvailable.Value, Optional.ToNullable(generation), Optional.ToList(networkInterfaces), Optional.ToList(disks), provisioningState.Value);
+            return new ScVmmVirtualMachineTemplateData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, extendedLocation, inventoryItemId.Value, uuid.Value, vmmServerId.Value, Core.Optional.ToNullable(osType), osName.Value, computerName.Value, Core.Optional.ToNullable(memoryMB), Core.Optional.ToNullable(cpuCount), Core.Optional.ToNullable(limitCpuForMigration), Core.Optional.ToNullable(dynamicMemoryEnabled), Core.Optional.ToNullable(isCustomizable), Core.Optional.ToNullable(dynamicMemoryMaxMB), Core.Optional.ToNullable(dynamicMemoryMinMB), isHighlyAvailable.Value, Core.Optional.ToNullable(generation), Core.Optional.ToList(networkInterfaces), Core.Optional.ToList(disks), provisioningState.Value);
         }
     }
 }

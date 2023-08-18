@@ -11,26 +11,26 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class PostArgsMatchCondition : IUtf8JsonSerializable
+    public partial class PostArgsMatchCondition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("typeName"u8);
             writer.WriteStringValue(ConditionType.ToString());
-            if (Optional.IsDefined(Selector))
+            if (Core.Optional.IsDefined(Selector))
             {
                 writer.WritePropertyName("selector"u8);
                 writer.WriteStringValue(Selector);
             }
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(PostArgsOperator.ToString());
-            if (Optional.IsDefined(NegateCondition))
+            if (Core.Optional.IsDefined(NegateCondition))
             {
                 writer.WritePropertyName("negateCondition"u8);
                 writer.WriteBooleanValue(NegateCondition.Value);
             }
-            if (Optional.IsCollectionDefined(MatchValues))
+            if (Core.Optional.IsCollectionDefined(MatchValues))
             {
                 writer.WritePropertyName("matchValues"u8);
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Transforms))
+            if (Core.Optional.IsCollectionDefined(Transforms))
             {
                 writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             PostArgsMatchConditionType typeName = default;
-            Optional<string> selector = default;
+            Core.Optional<string> selector = default;
             PostArgsOperator @operator = default;
-            Optional<bool> negateCondition = default;
-            Optional<IList<string>> matchValues = default;
-            Optional<IList<PreTransformCategory>> transforms = default;
+            Core.Optional<bool> negateCondition = default;
+            Core.Optional<IList<string>> matchValues = default;
+            Core.Optional<IList<PreTransformCategory>> transforms = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("typeName"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new PostArgsMatchCondition(typeName, selector.Value, @operator, Optional.ToNullable(negateCondition), Optional.ToList(matchValues), Optional.ToList(transforms));
+            return new PostArgsMatchCondition(typeName, selector.Value, @operator, Core.Optional.ToNullable(negateCondition), Core.Optional.ToList(matchValues), Core.Optional.ToList(transforms));
         }
     }
 }

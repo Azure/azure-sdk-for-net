@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<AbusePenaltyAction> action = default;
-            Optional<float> rateLimitPercentage = default;
-            Optional<DateTimeOffset> expiration = default;
+            Core.Optional<AbusePenaltyAction> action = default;
+            Core.Optional<float> rateLimitPercentage = default;
+            Core.Optional<DateTimeOffset> expiration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new AbusePenalty(Optional.ToNullable(action), Optional.ToNullable(rateLimitPercentage), Optional.ToNullable(expiration));
+            return new AbusePenalty(Core.Optional.ToNullable(action), Core.Optional.ToNullable(rateLimitPercentage), Core.Optional.ToNullable(expiration));
         }
     }
 }

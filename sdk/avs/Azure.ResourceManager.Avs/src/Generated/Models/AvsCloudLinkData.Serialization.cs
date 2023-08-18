@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class AvsCloudLinkData : IUtf8JsonSerializable
+    public partial class AvsCloudLinkData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedCloud))
+            if (Core.Optional.IsDefined(LinkedCloud))
             {
                 writer.WritePropertyName("linkedCloud"u8);
                 writer.WriteStringValue(LinkedCloud);
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AvsCloudLinkStatus> status = default;
-            Optional<ResourceIdentifier> linkedCloud = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<AvsCloudLinkStatus> status = default;
+            Core.Optional<ResourceIdentifier> linkedCloud = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Avs
                     continue;
                 }
             }
-            return new AvsCloudLinkData(id, name, type, systemData.Value, Optional.ToNullable(status), linkedCloud.Value);
+            return new AvsCloudLinkData(id, name, type, systemData.Value, Core.Optional.ToNullable(status), linkedCloud.Value);
         }
     }
 }

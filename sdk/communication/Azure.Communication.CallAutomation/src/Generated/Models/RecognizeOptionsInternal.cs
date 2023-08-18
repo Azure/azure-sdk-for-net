@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
 
             TargetParticipant = targetParticipant;
-            Choices = new ChangeTrackingList<RecognizeChoice>();
+            Choices = new Core.ChangeTrackingList<RecognizeChoice>();
         }
 
         /// <summary> Determines if we interrupt the prompt and start recognizing. </summary>

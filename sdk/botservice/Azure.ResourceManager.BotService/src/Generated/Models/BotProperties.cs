@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.BotService.Models
 
             DisplayName = displayName;
             Endpoint = endpoint;
-            AllSettings = new ChangeTrackingDictionary<string, string>();
-            Parameters = new ChangeTrackingDictionary<string, string>();
+            AllSettings = new Core.ChangeTrackingDictionary<string, string>();
+            Parameters = new Core.ChangeTrackingDictionary<string, string>();
             MsaAppId = msaAppId;
-            ConfiguredChannels = new ChangeTrackingList<string>();
-            EnabledChannels = new ChangeTrackingList<string>();
-            LuisAppIds = new ChangeTrackingList<string>();
-            PrivateEndpointConnections = new ChangeTrackingList<BotServicePrivateEndpointConnectionData>();
+            ConfiguredChannels = new Core.ChangeTrackingList<string>();
+            EnabledChannels = new Core.ChangeTrackingList<string>();
+            LuisAppIds = new Core.ChangeTrackingList<string>();
+            PrivateEndpointConnections = new Core.ChangeTrackingList<BotServicePrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of BotProperties. </summary>

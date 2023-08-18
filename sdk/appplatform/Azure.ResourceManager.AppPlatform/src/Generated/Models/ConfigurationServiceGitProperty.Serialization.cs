@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    internal partial class ConfigurationServiceGitProperty : IUtf8JsonSerializable
+    internal partial class ConfigurationServiceGitProperty : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ConfigurationServiceGitRepositories))
+            if (Core.Optional.IsCollectionDefined(ConfigurationServiceGitRepositories))
             {
                 writer.WritePropertyName("repositories"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IList<AppPlatformConfigurationServiceGitRepository>> repositories = default;
+            Core.Optional<IList<AppPlatformConfigurationServiceGitRepository>> repositories = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("repositories"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new ConfigurationServiceGitProperty(Optional.ToList(repositories));
+            return new ConfigurationServiceGitProperty(Core.Optional.ToList(repositories));
         }
     }
 }

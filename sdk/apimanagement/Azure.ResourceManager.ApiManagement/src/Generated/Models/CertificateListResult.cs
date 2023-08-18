@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of CertificateListResult. </summary>
         internal CertificateListResult()
         {
-            Value = new ChangeTrackingList<ApiManagementCertificateData>();
+            Value = new Core.ChangeTrackingList<ApiManagementCertificateData>();
         }
 
         /// <summary> Initializes a new instance of CertificateListResult. </summary>

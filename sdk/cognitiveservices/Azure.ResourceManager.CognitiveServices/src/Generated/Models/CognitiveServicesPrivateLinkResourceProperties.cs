@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of CognitiveServicesPrivateLinkResourceProperties. </summary>
         public CognitiveServicesPrivateLinkResourceProperties()
         {
-            RequiredMembers = new ChangeTrackingList<string>();
-            RequiredZoneNames = new ChangeTrackingList<string>();
+            RequiredMembers = new Core.ChangeTrackingList<string>();
+            RequiredZoneNames = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of CognitiveServicesPrivateLinkResourceProperties. </summary>

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiManagementServiceBackupRestoreContent : IUtf8JsonSerializable
+    public partial class ApiManagementServiceBackupRestoreContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("storageAccount"u8);
@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStringValue(ContainerName);
             writer.WritePropertyName("backupName"u8);
             writer.WriteStringValue(BackupName);
-            if (Optional.IsDefined(AccessType))
+            if (Core.Optional.IsDefined(AccessType))
             {
                 writer.WritePropertyName("accessType"u8);
                 writer.WriteStringValue(AccessType.Value.ToString());
             }
-            if (Optional.IsDefined(AccessKey))
+            if (Core.Optional.IsDefined(AccessKey))
             {
                 writer.WritePropertyName("accessKey"u8);
                 writer.WriteStringValue(AccessKey);
             }
-            if (Optional.IsDefined(ClientId))
+            if (Core.Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);

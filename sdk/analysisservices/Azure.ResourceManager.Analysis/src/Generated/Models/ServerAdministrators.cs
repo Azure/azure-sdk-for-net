@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Analysis.Models
         /// <summary> Initializes a new instance of ServerAdministrators. </summary>
         public ServerAdministrators()
         {
-            AsAdministratorIdentities = new ChangeTrackingList<string>();
+            AsAdministratorIdentities = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ServerAdministrators. </summary>

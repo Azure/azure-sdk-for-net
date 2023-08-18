@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<string> type = default;
-            Optional<string> skuName = default;
-            Optional<bool> skuAvailable = default;
-            Optional<string> reason = default;
-            Optional<string> message = default;
+            Core.Optional<string> kind = default;
+            Core.Optional<string> type = default;
+            Core.Optional<string> skuName = default;
+            Core.Optional<bool> skuAvailable = default;
+            Core.Optional<string> reason = default;
+            Core.Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new CognitiveServicesSkuAvailabilityList(kind.Value, type.Value, skuName.Value, Optional.ToNullable(skuAvailable), reason.Value, message.Value);
+            return new CognitiveServicesSkuAvailabilityList(kind.Value, type.Value, skuName.Value, Core.Optional.ToNullable(skuAvailable), reason.Value, message.Value);
         }
     }
 }

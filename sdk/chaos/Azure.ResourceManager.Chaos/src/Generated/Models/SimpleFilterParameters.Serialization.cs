@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    internal partial class SimpleFilterParameters : IUtf8JsonSerializable
+    internal partial class SimpleFilterParameters : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Zones))
+            if (Core.Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            Optional<IList<string>> zones = default;
+            Core.Optional<IList<string>> zones = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zones"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     continue;
                 }
             }
-            return new SimpleFilterParameters(Optional.ToList(zones));
+            return new SimpleFilterParameters(Core.Optional.ToList(zones));
         }
     }
 }

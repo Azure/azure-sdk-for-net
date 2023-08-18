@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Initializes a new instance of UpdateData. </summary>
         public UpdateData()
         {
-            Prerequisites = new ChangeTrackingList<UpdatePrerequisite>();
-            ComponentVersions = new ChangeTrackingList<HciPackageVersionInfo>();
-            HealthCheckResult = new ChangeTrackingList<HciPrecheckResult>();
+            Prerequisites = new Core.ChangeTrackingList<UpdatePrerequisite>();
+            ComponentVersions = new Core.ChangeTrackingList<HciPackageVersionInfo>();
+            HealthCheckResult = new Core.ChangeTrackingList<HciPrecheckResult>();
         }
 
         /// <summary> Initializes a new instance of UpdateData. </summary>

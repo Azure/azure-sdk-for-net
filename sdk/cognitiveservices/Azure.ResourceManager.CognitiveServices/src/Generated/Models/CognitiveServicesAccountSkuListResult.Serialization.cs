@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CognitiveServicesAccountSku>> value = default;
+            Core.Optional<IReadOnlyList<CognitiveServicesAccountSku>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new CognitiveServicesAccountSkuListResult(Optional.ToList(value));
+            return new CognitiveServicesAccountSkuListResult(Core.Optional.ToList(value));
         }
     }
 }

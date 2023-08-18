@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> commitmentPlanId = default;
-            Optional<string> commitmentPlanLocation = default;
+            Core.Optional<ResourceIdentifier> commitmentPlanId = default;
+            Core.Optional<string> commitmentPlanLocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("commitmentPlanId"u8))

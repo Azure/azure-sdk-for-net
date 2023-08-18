@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class BuildServiceAgentPoolSizeProperties : IUtf8JsonSerializable
+    public partial class BuildServiceAgentPoolSizeProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> cpu = default;
-            Optional<string> memory = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> cpu = default;
+            Core.Optional<string> memory = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

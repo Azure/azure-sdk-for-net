@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformApiPortalProperties. </summary>
         public AppPlatformApiPortalProperties()
         {
-            GatewayIds = new ChangeTrackingList<ResourceIdentifier>();
-            SourceUris = new ChangeTrackingList<Uri>();
-            Instances = new ChangeTrackingList<AppPlatformApiPortalInstance>();
+            GatewayIds = new Core.ChangeTrackingList<ResourceIdentifier>();
+            SourceUris = new Core.ChangeTrackingList<Uri>();
+            Instances = new Core.ChangeTrackingList<AppPlatformApiPortalInstance>();
         }
 
         /// <summary> Initializes a new instance of AppPlatformApiPortalProperties. </summary>

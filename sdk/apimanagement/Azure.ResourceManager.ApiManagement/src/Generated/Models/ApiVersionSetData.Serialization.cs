@@ -12,34 +12,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiVersionSetData : IUtf8JsonSerializable
+    public partial class ApiVersionSetData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(VersionQueryName))
+            if (Core.Optional.IsDefined(VersionQueryName))
             {
                 writer.WritePropertyName("versionQueryName"u8);
                 writer.WriteStringValue(VersionQueryName);
             }
-            if (Optional.IsDefined(VersionHeaderName))
+            if (Core.Optional.IsDefined(VersionHeaderName))
             {
                 writer.WritePropertyName("versionHeaderName"u8);
                 writer.WriteStringValue(VersionHeaderName);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(VersioningScheme))
+            if (Core.Optional.IsDefined(VersioningScheme))
             {
                 writer.WritePropertyName("versioningScheme"u8);
                 writer.WriteStringValue(VersioningScheme.Value.ToString());
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> versionQueryName = default;
-            Optional<string> versionHeaderName = default;
-            Optional<string> displayName = default;
-            Optional<VersioningScheme> versioningScheme = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> versionQueryName = default;
+            Core.Optional<string> versionHeaderName = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<VersioningScheme> versioningScheme = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new ApiVersionSetData(id, name, type, systemData.Value, description.Value, versionQueryName.Value, versionHeaderName.Value, displayName.Value, Optional.ToNullable(versioningScheme));
+            return new ApiVersionSetData(id, name, type, systemData.Value, description.Value, versionQueryName.Value, versionHeaderName.Value, displayName.Value, Core.Optional.ToNullable(versioningScheme));
         }
     }
 }

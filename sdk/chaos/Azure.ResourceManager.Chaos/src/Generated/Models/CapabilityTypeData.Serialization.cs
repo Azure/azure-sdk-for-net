@@ -12,19 +12,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Chaos
 {
-    public partial class CapabilityTypeData : IUtf8JsonSerializable
+    public partial class CapabilityTypeData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RuntimeProperties))
+            if (Core.Optional.IsDefined(RuntimeProperties))
             {
                 writer.WritePropertyName("runtimeProperties"u8);
                 writer.WriteObjectValue(RuntimeProperties);
@@ -39,19 +39,19 @@ namespace Azure.ResourceManager.Chaos
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            Core.Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> publisher = default;
-            Optional<string> targetType = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> parametersSchema = default;
-            Optional<string> urn = default;
-            Optional<string> kind = default;
-            Optional<CapabilityTypePropertiesRuntimeProperties> runtimeProperties = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> publisher = default;
+            Core.Optional<string> targetType = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> parametersSchema = default;
+            Core.Optional<string> urn = default;
+            Core.Optional<string> kind = default;
+            Core.Optional<CapabilityTypePropertiesRuntimeProperties> runtimeProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Chaos
                     continue;
                 }
             }
-            return new CapabilityTypeData(id, name, type, systemData.Value, Optional.ToNullable(location), publisher.Value, targetType.Value, displayName.Value, description.Value, parametersSchema.Value, urn.Value, kind.Value, runtimeProperties.Value);
+            return new CapabilityTypeData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), publisher.Value, targetType.Value, displayName.Value, description.Value, parametersSchema.Value, urn.Value, kind.Value, runtimeProperties.Value);
         }
     }
 }

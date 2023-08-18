@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of EndpointListResult. </summary>
         internal EndpointListResult()
         {
-            Value = new ChangeTrackingList<CdnEndpointData>();
+            Value = new Core.ChangeTrackingList<CdnEndpointData>();
         }
 
         /// <summary> Initializes a new instance of EndpointListResult. </summary>

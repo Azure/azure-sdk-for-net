@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SourceControlSyncJob>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<SourceControlSyncJob>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new SourceControlSyncJobListResult(Optional.ToList(value), nextLink.Value);
+            return new SourceControlSyncJobListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }
