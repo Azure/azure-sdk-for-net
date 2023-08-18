@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of SiteRecoveryAgentDetails. </summary>
         internal SiteRecoveryAgentDetails()
         {
-            Disks = new ChangeTrackingList<SiteRecoveryAgentDiskDetails>();
+            Disks = new Core.ChangeTrackingList<SiteRecoveryAgentDiskDetails>();
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryAgentDetails. </summary>

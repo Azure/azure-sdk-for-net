@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SqlServerJobExecutionData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<SqlServerJobExecutionData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new JobExecutionListResult(Optional.ToList(value), nextLink.Value);
+            return new JobExecutionListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

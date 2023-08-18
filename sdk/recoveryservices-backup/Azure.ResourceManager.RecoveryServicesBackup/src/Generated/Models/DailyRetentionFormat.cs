@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of DailyRetentionFormat. </summary>
         public DailyRetentionFormat()
         {
-            DaysOfTheMonth = new ChangeTrackingList<BackupDay>();
+            DaysOfTheMonth = new Core.ChangeTrackingList<BackupDay>();
         }
 
         /// <summary> Initializes a new instance of DailyRetentionFormat. </summary>

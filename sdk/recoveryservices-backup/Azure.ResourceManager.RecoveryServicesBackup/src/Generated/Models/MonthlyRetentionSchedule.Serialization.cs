@@ -12,27 +12,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class MonthlyRetentionSchedule : IUtf8JsonSerializable
+    public partial class MonthlyRetentionSchedule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RetentionScheduleFormatType))
+            if (Core.Optional.IsDefined(RetentionScheduleFormatType))
             {
                 writer.WritePropertyName("retentionScheduleFormatType"u8);
                 writer.WriteStringValue(RetentionScheduleFormatType.Value.ToString());
             }
-            if (Optional.IsDefined(RetentionScheduleDaily))
+            if (Core.Optional.IsDefined(RetentionScheduleDaily))
             {
                 writer.WritePropertyName("retentionScheduleDaily"u8);
                 writer.WriteObjectValue(RetentionScheduleDaily);
             }
-            if (Optional.IsDefined(RetentionScheduleWeekly))
+            if (Core.Optional.IsDefined(RetentionScheduleWeekly))
             {
                 writer.WritePropertyName("retentionScheduleWeekly"u8);
                 writer.WriteObjectValue(RetentionScheduleWeekly);
             }
-            if (Optional.IsCollectionDefined(RetentionTimes))
+            if (Core.Optional.IsCollectionDefined(RetentionTimes))
             {
                 writer.WritePropertyName("retentionTimes"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RetentionDuration))
+            if (Core.Optional.IsDefined(RetentionDuration))
             {
                 writer.WritePropertyName("retentionDuration"u8);
                 writer.WriteObjectValue(RetentionDuration);
@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<RetentionScheduleFormat> retentionScheduleFormatType = default;
-            Optional<DailyRetentionFormat> retentionScheduleDaily = default;
-            Optional<WeeklyRetentionFormat> retentionScheduleWeekly = default;
-            Optional<IList<DateTimeOffset>> retentionTimes = default;
-            Optional<RetentionDuration> retentionDuration = default;
+            Core.Optional<RetentionScheduleFormat> retentionScheduleFormatType = default;
+            Core.Optional<DailyRetentionFormat> retentionScheduleDaily = default;
+            Core.Optional<WeeklyRetentionFormat> retentionScheduleWeekly = default;
+            Core.Optional<IList<DateTimeOffset>> retentionTimes = default;
+            Core.Optional<RetentionDuration> retentionDuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("retentionScheduleFormatType"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new MonthlyRetentionSchedule(Optional.ToNullable(retentionScheduleFormatType), retentionScheduleDaily.Value, retentionScheduleWeekly.Value, Optional.ToList(retentionTimes), retentionDuration.Value);
+            return new MonthlyRetentionSchedule(Core.Optional.ToNullable(retentionScheduleFormatType), retentionScheduleDaily.Value, retentionScheduleWeekly.Value, Core.Optional.ToList(retentionTimes), retentionDuration.Value);
         }
     }
 }

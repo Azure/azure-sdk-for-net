@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Qumulo.Models
 {
-    public partial class MarketplaceDetails : IUtf8JsonSerializable
+    public partial class MarketplaceDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MarketplaceSubscriptionId))
+            if (Core.Optional.IsDefined(MarketplaceSubscriptionId))
             {
                 writer.WritePropertyName("marketplaceSubscriptionId"u8);
                 writer.WriteStringValue(MarketplaceSubscriptionId);
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.Qumulo.Models
             {
                 return null;
             }
-            Optional<string> marketplaceSubscriptionId = default;
+            Core.Optional<string> marketplaceSubscriptionId = default;
             string planId = default;
             string offerId = default;
             string publisherId = default;
-            Optional<MarketplaceSubscriptionStatus> marketplaceSubscriptionStatus = default;
+            Core.Optional<MarketplaceSubscriptionStatus> marketplaceSubscriptionStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("marketplaceSubscriptionId"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                     continue;
                 }
             }
-            return new MarketplaceDetails(marketplaceSubscriptionId.Value, planId, offerId, publisherId, Optional.ToNullable(marketplaceSubscriptionStatus));
+            return new MarketplaceDetails(marketplaceSubscriptionId.Value, planId, offerId, publisherId, Core.Optional.ToNullable(marketplaceSubscriptionStatus));
         }
     }
 }

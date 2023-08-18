@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SyncGroupSchemaTable. </summary>
         public SyncGroupSchemaTable()
         {
-            Columns = new ChangeTrackingList<SyncGroupSchemaTableColumn>();
+            Columns = new Core.ChangeTrackingList<SyncGroupSchemaTableColumn>();
         }
 
         /// <summary> Initializes a new instance of SyncGroupSchemaTable. </summary>

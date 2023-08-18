@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ElasticPoolEditionCapability. </summary>
         internal ElasticPoolEditionCapability()
         {
-            SupportedElasticPoolPerformanceLevels = new ChangeTrackingList<ElasticPoolPerformanceLevelCapability>();
+            SupportedElasticPoolPerformanceLevels = new Core.ChangeTrackingList<ElasticPoolPerformanceLevelCapability>();
         }
 
         /// <summary> Initializes a new instance of ElasticPoolEditionCapability. </summary>

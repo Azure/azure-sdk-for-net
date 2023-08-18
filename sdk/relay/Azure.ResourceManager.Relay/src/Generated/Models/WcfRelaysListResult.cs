@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Relay.Models
         /// <summary> Initializes a new instance of WcfRelaysListResult. </summary>
         internal WcfRelaysListResult()
         {
-            Value = new ChangeTrackingList<WcfRelayData>();
+            Value = new Core.ChangeTrackingList<WcfRelayData>();
         }
 
         /// <summary> Initializes a new instance of WcfRelaysListResult. </summary>

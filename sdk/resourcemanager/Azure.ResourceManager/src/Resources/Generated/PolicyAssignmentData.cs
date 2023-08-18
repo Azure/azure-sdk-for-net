@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of PolicyAssignmentData. </summary>
         public PolicyAssignmentData()
         {
-            ExcludedScopes = new ChangeTrackingList<string>();
-            Parameters = new ChangeTrackingDictionary<string, ArmPolicyParameterValue>();
-            NonComplianceMessages = new ChangeTrackingList<NonComplianceMessage>();
-            ResourceSelectors = new ChangeTrackingList<ResourceSelector>();
-            Overrides = new ChangeTrackingList<PolicyOverride>();
+            ExcludedScopes = new Core.ChangeTrackingList<string>();
+            Parameters = new Core.ChangeTrackingDictionary<string, ArmPolicyParameterValue>();
+            NonComplianceMessages = new Core.ChangeTrackingList<NonComplianceMessage>();
+            ResourceSelectors = new Core.ChangeTrackingList<ResourceSelector>();
+            Overrides = new Core.ChangeTrackingList<PolicyOverride>();
         }
 
         /// <summary> Initializes a new instance of PolicyAssignmentData. </summary>

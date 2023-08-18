@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class DeletedServerOperationSource : IOperationSource<DeletedServerResource>
+    internal class DeletedServerOperationSource : Core.IOperationSource<DeletedServerResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        DeletedServerResource IOperationSource<DeletedServerResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DeletedServerResource Core.IOperationSource<DeletedServerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DeletedServerData.DeserializeDeletedServerData(document.RootElement);
             return new DeletedServerResource(_client, data);
         }
 
-        async ValueTask<DeletedServerResource> IOperationSource<DeletedServerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DeletedServerResource> Core.IOperationSource<DeletedServerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DeletedServerData.DeserializeDeletedServerData(document.RootElement);

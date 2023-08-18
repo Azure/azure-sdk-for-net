@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> Initializes a new instance of MetadataEntityListResult. </summary>
         internal MetadataEntityListResult()
         {
-            Value = new ChangeTrackingList<ResourceHealthMetadataEntityData>();
+            Value = new Core.ChangeTrackingList<ResourceHealthMetadataEntityData>();
         }
 
         /// <summary> Initializes a new instance of MetadataEntityListResult. </summary>

@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class QuotaProperties : IUtf8JsonSerializable
+    public partial class QuotaProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Limit))
+            if (Core.Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (Optional.IsDefined(Unit))
+            if (Core.Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (Optional.IsDefined(ResourceName))
+            if (Core.Optional.IsDefined(ResourceName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(ResourceName);
             }
-            if (Optional.IsDefined(ResourceTypeName))
+            if (Core.Optional.IsDefined(ResourceTypeName))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceTypeName.Value.ToString());
             }
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
 #if NET6_0_OR_GREATER
@@ -54,13 +54,13 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<int> limit = default;
-            Optional<int> currentValue = default;
-            Optional<string> unit = default;
-            Optional<ReservationResourceName> name = default;
-            Optional<ResourceTypeName> resourceType = default;
-            Optional<string> quotaPeriod = default;
-            Optional<BinaryData> properties = default;
+            Core.Optional<int> limit = default;
+            Core.Optional<int> currentValue = default;
+            Core.Optional<string> unit = default;
+            Core.Optional<ReservationResourceName> name = default;
+            Core.Optional<ResourceTypeName> resourceType = default;
+            Core.Optional<string> quotaPeriod = default;
+            Core.Optional<BinaryData> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("limit"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new QuotaProperties(Optional.ToNullable(limit), Optional.ToNullable(currentValue), unit.Value, name.Value, Optional.ToNullable(resourceType), quotaPeriod.Value, properties.Value);
+            return new QuotaProperties(Core.Optional.ToNullable(limit), Core.Optional.ToNullable(currentValue), unit.Value, name.Value, Core.Optional.ToNullable(resourceType), quotaPeriod.Value, properties.Value);
         }
     }
 }

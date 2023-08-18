@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of EditionCapability. </summary>
         internal EditionCapability()
         {
-            SupportedServiceLevelObjectives = new ChangeTrackingList<ServiceObjectiveCapability>();
-            SupportedStorageCapabilities = new ChangeTrackingList<StorageCapability>();
+            SupportedServiceLevelObjectives = new Core.ChangeTrackingList<ServiceObjectiveCapability>();
+            SupportedStorageCapabilities = new Core.ChangeTrackingList<StorageCapability>();
         }
 
         /// <summary> Initializes a new instance of EditionCapability. </summary>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<InMageRcmApplianceDetails>> appliances = default;
+            Core.Optional<IReadOnlyList<InMageRcmApplianceDetails>> appliances = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new InMageRcmApplianceSpecificDetails(instanceType, Optional.ToList(appliances));
+            return new InMageRcmApplianceSpecificDetails(instanceType, Core.Optional.ToList(appliances));
         }
     }
 }

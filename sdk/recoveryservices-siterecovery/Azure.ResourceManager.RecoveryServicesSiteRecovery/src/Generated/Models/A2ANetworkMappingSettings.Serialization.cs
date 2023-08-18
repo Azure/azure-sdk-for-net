@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<AzureLocation> primaryFabricLocation = default;
-            Optional<AzureLocation> recoveryFabricLocation = default;
+            Core.Optional<AzureLocation> primaryFabricLocation = default;
+            Core.Optional<AzureLocation> recoveryFabricLocation = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new A2ANetworkMappingSettings(instanceType, Optional.ToNullable(primaryFabricLocation), Optional.ToNullable(recoveryFabricLocation));
+            return new A2ANetworkMappingSettings(instanceType, Core.Optional.ToNullable(primaryFabricLocation), Core.Optional.ToNullable(recoveryFabricLocation));
         }
     }
 }

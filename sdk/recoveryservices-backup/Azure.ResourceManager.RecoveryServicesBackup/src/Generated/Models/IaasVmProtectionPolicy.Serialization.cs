@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasVmProtectionPolicy : IUtf8JsonSerializable
+    public partial class IaasVmProtectionPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(InstantRPDetails))
+            if (Core.Optional.IsDefined(InstantRPDetails))
             {
                 writer.WritePropertyName("instantRPDetails"u8);
                 writer.WriteObjectValue(InstantRPDetails);
             }
-            if (Optional.IsDefined(SchedulePolicy))
+            if (Core.Optional.IsDefined(SchedulePolicy))
             {
                 writer.WritePropertyName("schedulePolicy"u8);
                 writer.WriteObjectValue(SchedulePolicy);
             }
-            if (Optional.IsDefined(RetentionPolicy))
+            if (Core.Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
                 writer.WriteObjectValue(RetentionPolicy);
             }
-            if (Optional.IsCollectionDefined(TieringPolicy))
+            if (Core.Optional.IsCollectionDefined(TieringPolicy))
             {
                 writer.WritePropertyName("tieringPolicy"u8);
                 writer.WriteStartObject();
@@ -42,29 +42,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(InstantRPRetentionRangeInDays))
+            if (Core.Optional.IsDefined(InstantRPRetentionRangeInDays))
             {
                 writer.WritePropertyName("instantRpRetentionRangeInDays"u8);
                 writer.WriteNumberValue(InstantRPRetentionRangeInDays.Value);
             }
-            if (Optional.IsDefined(TimeZone))
+            if (Core.Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Optional.IsDefined(PolicyType))
+            if (Core.Optional.IsDefined(PolicyType))
             {
                 writer.WritePropertyName("policyType"u8);
                 writer.WriteStringValue(PolicyType.Value.ToString());
             }
-            if (Optional.IsDefined(ProtectedItemsCount))
+            if (Core.Optional.IsDefined(ProtectedItemsCount))
             {
                 writer.WritePropertyName("protectedItemsCount"u8);
                 writer.WriteNumberValue(ProtectedItemsCount.Value);
             }
             writer.WritePropertyName("backupManagementType"u8);
             writer.WriteStringValue(BackupManagementType);
-            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
+            if (Core.Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {
                 writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
@@ -83,16 +83,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<InstantRPAdditionalDetails> instantRPDetails = default;
-            Optional<BackupSchedulePolicy> schedulePolicy = default;
-            Optional<BackupRetentionPolicy> retentionPolicy = default;
-            Optional<IDictionary<string, BackupTieringPolicy>> tieringPolicy = default;
-            Optional<int> instantRpRetentionRangeInDays = default;
-            Optional<string> timeZone = default;
-            Optional<IaasVmPolicyType> policyType = default;
-            Optional<int> protectedItemsCount = default;
+            Core.Optional<InstantRPAdditionalDetails> instantRPDetails = default;
+            Core.Optional<BackupSchedulePolicy> schedulePolicy = default;
+            Core.Optional<BackupRetentionPolicy> retentionPolicy = default;
+            Core.Optional<IDictionary<string, BackupTieringPolicy>> tieringPolicy = default;
+            Core.Optional<int> instantRpRetentionRangeInDays = default;
+            Core.Optional<string> timeZone = default;
+            Core.Optional<IaasVmPolicyType> policyType = default;
+            Core.Optional<int> protectedItemsCount = default;
             string backupManagementType = default;
-            Optional<IList<string>> resourceGuardOperationRequests = default;
+            Core.Optional<IList<string>> resourceGuardOperationRequests = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instantRPDetails"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new IaasVmProtectionPolicy(Optional.ToNullable(protectedItemsCount), backupManagementType, Optional.ToList(resourceGuardOperationRequests), instantRPDetails.Value, schedulePolicy.Value, retentionPolicy.Value, Optional.ToDictionary(tieringPolicy), Optional.ToNullable(instantRpRetentionRangeInDays), timeZone.Value, Optional.ToNullable(policyType));
+            return new IaasVmProtectionPolicy(Core.Optional.ToNullable(protectedItemsCount), backupManagementType, Core.Optional.ToList(resourceGuardOperationRequests), instantRPDetails.Value, schedulePolicy.Value, retentionPolicy.Value, Core.Optional.ToDictionary(tieringPolicy), Core.Optional.ToNullable(instantRpRetentionRangeInDays), timeZone.Value, Core.Optional.ToNullable(policyType));
         }
     }
 }

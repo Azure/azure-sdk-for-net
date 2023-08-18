@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class MabErrorInfo : IUtf8JsonSerializable
+    public partial class MabErrorInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> errorString = default;
-            Optional<IReadOnlyList<string>> recommendations = default;
+            Core.Optional<string> errorString = default;
+            Core.Optional<IReadOnlyList<string>> recommendations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorString"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new MabErrorInfo(errorString.Value, Optional.ToList(recommendations));
+            return new MabErrorInfo(errorString.Value, Core.Optional.ToList(recommendations));
         }
     }
 }

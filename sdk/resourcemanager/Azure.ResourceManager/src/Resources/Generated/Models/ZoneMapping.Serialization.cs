@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<IReadOnlyList<string>> zones = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<IReadOnlyList<string>> zones = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ZoneMapping(Optional.ToNullable(location), Optional.ToList(zones));
+            return new ZoneMapping(Core.Optional.ToNullable(location), Core.Optional.ToList(zones));
         }
     }
 }

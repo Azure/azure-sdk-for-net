@@ -11,14 +11,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlServerCommunicationLinkData : IUtf8JsonSerializable
+    public partial class SqlServerCommunicationLinkData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PartnerServer))
+            if (Core.Optional.IsDefined(PartnerServer))
             {
                 writer.WritePropertyName("partnerServer"u8);
                 writer.WriteStringValue(PartnerServer);
@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> kind = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> state = default;
-            Optional<string> partnerServer = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> state = default;
+            Core.Optional<string> partnerServer = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new SqlServerCommunicationLinkData(id, name, type, systemData.Value, Optional.ToNullable(location), kind.Value, state.Value, partnerServer.Value);
+            return new SqlServerCommunicationLinkData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), kind.Value, state.Value, partnerServer.Value);
         }
     }
 }

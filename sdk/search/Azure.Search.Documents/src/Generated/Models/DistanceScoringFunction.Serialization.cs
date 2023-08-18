@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class DistanceScoringFunction : IUtf8JsonSerializable
+    public partial class DistanceScoringFunction : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("distance"u8);
@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(FieldName);
             writer.WritePropertyName("boost"u8);
             writer.WriteNumberValue(Boost);
-            if (Optional.IsDefined(Interpolation))
+            if (Core.Optional.IsDefined(Interpolation))
             {
                 writer.WritePropertyName("interpolation"u8);
                 writer.WriteStringValue(Interpolation.Value.ToSerialString());
@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string type = default;
             string fieldName = default;
             double boost = default;
-            Optional<ScoringFunctionInterpolation> interpolation = default;
+            Core.Optional<ScoringFunctionInterpolation> interpolation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("distance"u8))
@@ -74,7 +74,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new DistanceScoringFunction(type, fieldName, boost, Optional.ToNullable(interpolation), distance);
+            return new DistanceScoringFunction(type, fieldName, boost, Core.Optional.ToNullable(interpolation), distance);
         }
     }
 }

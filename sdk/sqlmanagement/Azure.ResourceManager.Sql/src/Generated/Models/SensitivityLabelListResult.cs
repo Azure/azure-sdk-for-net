@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SensitivityLabelListResult. </summary>
         internal SensitivityLabelListResult()
         {
-            Value = new ChangeTrackingList<SensitivityLabelData>();
+            Value = new Core.ChangeTrackingList<SensitivityLabelData>();
         }
 
         /// <summary> Initializes a new instance of SensitivityLabelListResult. </summary>

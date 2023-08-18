@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <summary> Initializes a new instance of WorkspaceListResult. </summary>
         internal WorkspaceListResult()
         {
-            Value = new ChangeTrackingList<QuantumWorkspaceData>();
+            Value = new Core.ChangeTrackingList<QuantumWorkspaceData>();
         }
 
         /// <summary> Initializes a new instance of WorkspaceListResult. </summary>

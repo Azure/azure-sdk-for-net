@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityContactPropertiesAlertNotifications : IUtf8JsonSerializable
+    public partial class SecurityContactPropertiesAlertNotifications : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(MinimalSeverity))
+            if (Core.Optional.IsDefined(MinimalSeverity))
             {
                 writer.WritePropertyName("minimalSeverity"u8);
                 writer.WriteStringValue(MinimalSeverity.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<SecurityAlertNotificationState> state = default;
-            Optional<SecurityAlertMinimalSeverity> minimalSeverity = default;
+            Core.Optional<SecurityAlertNotificationState> state = default;
+            Core.Optional<SecurityAlertMinimalSeverity> minimalSeverity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new SecurityContactPropertiesAlertNotifications(Optional.ToNullable(state), Optional.ToNullable(minimalSeverity));
+            return new SecurityContactPropertiesAlertNotifications(Core.Optional.ToNullable(state), Core.Optional.ToNullable(minimalSeverity));
         }
     }
 }

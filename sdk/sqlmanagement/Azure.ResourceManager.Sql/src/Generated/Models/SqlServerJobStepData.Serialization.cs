@@ -12,39 +12,39 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlServerJobStepData : IUtf8JsonSerializable
+    public partial class SqlServerJobStepData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StepId))
+            if (Core.Optional.IsDefined(StepId))
             {
                 writer.WritePropertyName("stepId"u8);
                 writer.WriteNumberValue(StepId.Value);
             }
-            if (Optional.IsDefined(TargetGroup))
+            if (Core.Optional.IsDefined(TargetGroup))
             {
                 writer.WritePropertyName("targetGroup"u8);
                 writer.WriteStringValue(TargetGroup);
             }
-            if (Optional.IsDefined(Credential))
+            if (Core.Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteStringValue(Credential);
             }
-            if (Optional.IsDefined(Action))
+            if (Core.Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteObjectValue(Action);
             }
-            if (Optional.IsDefined(Output))
+            if (Core.Optional.IsDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteObjectValue(Output);
             }
-            if (Optional.IsDefined(ExecutionOptions))
+            if (Core.Optional.IsDefined(ExecutionOptions))
             {
                 writer.WritePropertyName("executionOptions"u8);
                 writer.WriteObjectValue(ExecutionOptions);
@@ -62,13 +62,13 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> stepId = default;
-            Optional<string> targetGroup = default;
-            Optional<string> credential = default;
-            Optional<JobStepAction> action = default;
-            Optional<JobStepOutput> output = default;
-            Optional<JobStepExecutionOptions> executionOptions = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<int> stepId = default;
+            Core.Optional<string> targetGroup = default;
+            Core.Optional<string> credential = default;
+            Core.Optional<JobStepAction> action = default;
+            Core.Optional<JobStepOutput> output = default;
+            Core.Optional<JobStepExecutionOptions> executionOptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new SqlServerJobStepData(id, name, type, systemData.Value, Optional.ToNullable(stepId), targetGroup.Value, credential.Value, action.Value, output.Value, executionOptions.Value);
+            return new SqlServerJobStepData(id, name, type, systemData.Value, Core.Optional.ToNullable(stepId), targetGroup.Value, credential.Value, action.Value, output.Value, executionOptions.Value);
         }
     }
 }

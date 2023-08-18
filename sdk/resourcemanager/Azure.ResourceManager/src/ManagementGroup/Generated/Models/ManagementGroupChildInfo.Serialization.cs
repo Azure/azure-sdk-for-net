@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             {
                 return null;
             }
-            Optional<ManagementGroupChildType> type = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> displayName = default;
-            Optional<IReadOnlyList<ManagementGroupChildInfo>> children = default;
+            Core.Optional<ManagementGroupChildType> type = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<IReadOnlyList<ManagementGroupChildInfo>> children = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     continue;
                 }
             }
-            return new ManagementGroupChildInfo(Optional.ToNullable(type), id.Value, name.Value, displayName.Value, Optional.ToList(children));
+            return new ManagementGroupChildInfo(Core.Optional.ToNullable(type), id.Value, name.Value, displayName.Value, Core.Optional.ToList(children));
         }
     }
 }

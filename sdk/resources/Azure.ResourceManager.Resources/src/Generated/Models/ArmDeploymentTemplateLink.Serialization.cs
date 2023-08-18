@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmDeploymentTemplateLink : IUtf8JsonSerializable
+    public partial class ArmDeploymentTemplateLink : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Uri))
+            if (Core.Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(RelativePath))
+            if (Core.Optional.IsDefined(RelativePath))
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
             }
-            if (Optional.IsDefined(ContentVersion))
+            if (Core.Optional.IsDefined(ContentVersion))
             {
                 writer.WritePropertyName("contentVersion"u8);
                 writer.WriteStringValue(ContentVersion);
             }
-            if (Optional.IsDefined(QueryString))
+            if (Core.Optional.IsDefined(QueryString))
             {
                 writer.WritePropertyName("queryString"u8);
                 writer.WriteStringValue(QueryString);
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<Uri> uri = default;
-            Optional<string> id = default;
-            Optional<string> relativePath = default;
-            Optional<string> contentVersion = default;
-            Optional<string> queryString = default;
+            Core.Optional<Uri> uri = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> relativePath = default;
+            Core.Optional<string> contentVersion = default;
+            Core.Optional<string> queryString = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uri"u8))

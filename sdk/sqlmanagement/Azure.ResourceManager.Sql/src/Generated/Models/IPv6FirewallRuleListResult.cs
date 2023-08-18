@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of IPv6FirewallRuleListResult. </summary>
         internal IPv6FirewallRuleListResult()
         {
-            Value = new ChangeTrackingList<IPv6FirewallRuleData>();
+            Value = new Core.ChangeTrackingList<IPv6FirewallRuleData>();
         }
 
         /// <summary> Initializes a new instance of IPv6FirewallRuleListResult. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of GenericContainerExtendedInfo. </summary>
         public GenericContainerExtendedInfo()
         {
-            ServiceEndpoints = new ChangeTrackingDictionary<string, string>();
+            ServiceEndpoints = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of GenericContainerExtendedInfo. </summary>

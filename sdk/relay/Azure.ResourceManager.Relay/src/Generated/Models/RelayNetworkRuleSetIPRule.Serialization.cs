@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Relay.Models
 {
-    public partial class RelayNetworkRuleSetIPRule : IUtf8JsonSerializable
+    public partial class RelayNetworkRuleSetIPRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPMask))
+            if (Core.Optional.IsDefined(IPMask))
             {
                 writer.WritePropertyName("ipMask"u8);
                 writer.WriteStringValue(IPMask);
             }
-            if (Optional.IsDefined(Action))
+            if (Core.Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Relay.Models
             {
                 return null;
             }
-            Optional<string> ipMask = default;
-            Optional<RelayNetworkRuleIPAction> action = default;
+            Core.Optional<string> ipMask = default;
+            Core.Optional<RelayNetworkRuleIPAction> action = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipMask"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Relay.Models
                     continue;
                 }
             }
-            return new RelayNetworkRuleSetIPRule(ipMask.Value, Optional.ToNullable(action));
+            return new RelayNetworkRuleSetIPRule(ipMask.Value, Core.Optional.ToNullable(action));
         }
     }
 }

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryConfigureAlertProperties : IUtf8JsonSerializable
+    public partial class SiteRecoveryConfigureAlertProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SendToOwners))
+            if (Core.Optional.IsDefined(SendToOwners))
             {
                 writer.WritePropertyName("sendToOwners"u8);
                 writer.WriteStringValue(SendToOwners);
             }
-            if (Optional.IsCollectionDefined(CustomEmailAddresses))
+            if (Core.Optional.IsCollectionDefined(CustomEmailAddresses))
             {
                 writer.WritePropertyName("customEmailAddresses"u8);
                 writer.WriteStartArray();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Locale))
+            if (Core.Optional.IsDefined(Locale))
             {
                 writer.WritePropertyName("locale"u8);
                 writer.WriteStringValue(Locale);

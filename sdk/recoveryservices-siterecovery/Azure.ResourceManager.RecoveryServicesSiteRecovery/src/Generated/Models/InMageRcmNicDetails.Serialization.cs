@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> nicId = default;
-            Optional<string> isPrimaryNic = default;
-            Optional<string> isSelectedForFailover = default;
-            Optional<IPAddress> sourceIPAddress = default;
-            Optional<SiteRecoveryEthernetAddressType> sourceIPAddressType = default;
-            Optional<ResourceIdentifier> sourceNetworkId = default;
-            Optional<string> sourceSubnetName = default;
-            Optional<IPAddress> targetIPAddress = default;
-            Optional<SiteRecoveryEthernetAddressType> targetIPAddressType = default;
-            Optional<string> targetSubnetName = default;
-            Optional<string> testSubnetName = default;
-            Optional<IPAddress> testIPAddress = default;
-            Optional<SiteRecoveryEthernetAddressType> testIPAddressType = default;
+            Core.Optional<string> nicId = default;
+            Core.Optional<string> isPrimaryNic = default;
+            Core.Optional<string> isSelectedForFailover = default;
+            Core.Optional<IPAddress> sourceIPAddress = default;
+            Core.Optional<SiteRecoveryEthernetAddressType> sourceIPAddressType = default;
+            Core.Optional<ResourceIdentifier> sourceNetworkId = default;
+            Core.Optional<string> sourceSubnetName = default;
+            Core.Optional<IPAddress> targetIPAddress = default;
+            Core.Optional<SiteRecoveryEthernetAddressType> targetIPAddressType = default;
+            Core.Optional<string> targetSubnetName = default;
+            Core.Optional<string> testSubnetName = default;
+            Core.Optional<IPAddress> testIPAddress = default;
+            Core.Optional<SiteRecoveryEthernetAddressType> testIPAddressType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nicId"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new InMageRcmNicDetails(nicId.Value, isPrimaryNic.Value, isSelectedForFailover.Value, sourceIPAddress.Value, Optional.ToNullable(sourceIPAddressType), sourceNetworkId.Value, sourceSubnetName.Value, targetIPAddress.Value, Optional.ToNullable(targetIPAddressType), targetSubnetName.Value, testSubnetName.Value, testIPAddress.Value, Optional.ToNullable(testIPAddressType));
+            return new InMageRcmNicDetails(nicId.Value, isPrimaryNic.Value, isSelectedForFailover.Value, sourceIPAddress.Value, Core.Optional.ToNullable(sourceIPAddressType), sourceNetworkId.Value, sourceSubnetName.Value, targetIPAddress.Value, Core.Optional.ToNullable(targetIPAddressType), targetSubnetName.Value, testSubnetName.Value, testIPAddress.Value, Core.Optional.ToNullable(testIPAddressType));
         }
     }
 }

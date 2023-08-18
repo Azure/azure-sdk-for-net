@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class SoftDeleteColumnDeletionDetectionPolicy : IUtf8JsonSerializable
+    public partial class SoftDeleteColumnDeletionDetectionPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SoftDeleteColumnName))
+            if (Core.Optional.IsDefined(SoftDeleteColumnName))
             {
                 writer.WritePropertyName("softDeleteColumnName"u8);
                 writer.WriteStringValue(SoftDeleteColumnName);
             }
-            if (Optional.IsDefined(SoftDeleteMarkerValue))
+            if (Core.Optional.IsDefined(SoftDeleteMarkerValue))
             {
                 writer.WritePropertyName("softDeleteMarkerValue"u8);
                 writer.WriteStringValue(SoftDeleteMarkerValue);
@@ -36,8 +36,8 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<string> softDeleteColumnName = default;
-            Optional<string> softDeleteMarkerValue = default;
+            Core.Optional<string> softDeleteColumnName = default;
+            Core.Optional<string> softDeleteMarkerValue = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {

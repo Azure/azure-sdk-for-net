@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Purview.Models
         /// <summary> Initializes a new instance of PurviewPrivateLinkResourceProperties. </summary>
         internal PurviewPrivateLinkResourceProperties()
         {
-            RequiredMembers = new ChangeTrackingList<string>();
-            RequiredZoneNames = new ChangeTrackingList<string>();
+            RequiredMembers = new Core.ChangeTrackingList<string>();
+            RequiredZoneNames = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PurviewPrivateLinkResourceProperties. </summary>

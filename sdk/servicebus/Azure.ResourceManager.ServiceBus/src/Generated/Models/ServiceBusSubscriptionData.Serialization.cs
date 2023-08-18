@@ -13,79 +13,79 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    public partial class ServiceBusSubscriptionData : IUtf8JsonSerializable
+    public partial class ServiceBusSubscriptionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(LockDuration))
+            if (Core.Optional.IsDefined(LockDuration))
             {
                 writer.WritePropertyName("lockDuration"u8);
                 writer.WriteStringValue(LockDuration.Value, "P");
             }
-            if (Optional.IsDefined(RequiresSession))
+            if (Core.Optional.IsDefined(RequiresSession))
             {
                 writer.WritePropertyName("requiresSession"u8);
                 writer.WriteBooleanValue(RequiresSession.Value);
             }
-            if (Optional.IsDefined(DefaultMessageTimeToLive))
+            if (Core.Optional.IsDefined(DefaultMessageTimeToLive))
             {
                 writer.WritePropertyName("defaultMessageTimeToLive"u8);
                 writer.WriteStringValue(DefaultMessageTimeToLive.Value, "P");
             }
-            if (Optional.IsDefined(DeadLetteringOnFilterEvaluationExceptions))
+            if (Core.Optional.IsDefined(DeadLetteringOnFilterEvaluationExceptions))
             {
                 writer.WritePropertyName("deadLetteringOnFilterEvaluationExceptions"u8);
                 writer.WriteBooleanValue(DeadLetteringOnFilterEvaluationExceptions.Value);
             }
-            if (Optional.IsDefined(DeadLetteringOnMessageExpiration))
+            if (Core.Optional.IsDefined(DeadLetteringOnMessageExpiration))
             {
                 writer.WritePropertyName("deadLetteringOnMessageExpiration"u8);
                 writer.WriteBooleanValue(DeadLetteringOnMessageExpiration.Value);
             }
-            if (Optional.IsDefined(DuplicateDetectionHistoryTimeWindow))
+            if (Core.Optional.IsDefined(DuplicateDetectionHistoryTimeWindow))
             {
                 writer.WritePropertyName("duplicateDetectionHistoryTimeWindow"u8);
                 writer.WriteStringValue(DuplicateDetectionHistoryTimeWindow.Value, "P");
             }
-            if (Optional.IsDefined(MaxDeliveryCount))
+            if (Core.Optional.IsDefined(MaxDeliveryCount))
             {
                 writer.WritePropertyName("maxDeliveryCount"u8);
                 writer.WriteNumberValue(MaxDeliveryCount.Value);
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(EnableBatchedOperations))
+            if (Core.Optional.IsDefined(EnableBatchedOperations))
             {
                 writer.WritePropertyName("enableBatchedOperations"u8);
                 writer.WriteBooleanValue(EnableBatchedOperations.Value);
             }
-            if (Optional.IsDefined(AutoDeleteOnIdle))
+            if (Core.Optional.IsDefined(AutoDeleteOnIdle))
             {
                 writer.WritePropertyName("autoDeleteOnIdle"u8);
                 writer.WriteStringValue(AutoDeleteOnIdle.Value, "P");
             }
-            if (Optional.IsDefined(ForwardTo))
+            if (Core.Optional.IsDefined(ForwardTo))
             {
                 writer.WritePropertyName("forwardTo"u8);
                 writer.WriteStringValue(ForwardTo);
             }
-            if (Optional.IsDefined(ForwardDeadLetteredMessagesTo))
+            if (Core.Optional.IsDefined(ForwardDeadLetteredMessagesTo))
             {
                 writer.WritePropertyName("forwardDeadLetteredMessagesTo"u8);
                 writer.WriteStringValue(ForwardDeadLetteredMessagesTo);
             }
-            if (Optional.IsDefined(IsClientAffine))
+            if (Core.Optional.IsDefined(IsClientAffine))
             {
                 writer.WritePropertyName("isClientAffine"u8);
                 writer.WriteBooleanValue(IsClientAffine.Value);
             }
-            if (Optional.IsDefined(ClientAffineProperties))
+            if (Core.Optional.IsDefined(ClientAffineProperties))
             {
                 writer.WritePropertyName("clientAffineProperties"u8);
                 writer.WriteObjectValue(ClientAffineProperties);
@@ -100,30 +100,30 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            Core.Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<long> messageCount = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> accessedAt = default;
-            Optional<DateTimeOffset> updatedAt = default;
-            Optional<MessageCountDetails> countDetails = default;
-            Optional<TimeSpan> lockDuration = default;
-            Optional<bool> requiresSession = default;
-            Optional<TimeSpan> defaultMessageTimeToLive = default;
-            Optional<bool> deadLetteringOnFilterEvaluationExceptions = default;
-            Optional<bool> deadLetteringOnMessageExpiration = default;
-            Optional<TimeSpan> duplicateDetectionHistoryTimeWindow = default;
-            Optional<int> maxDeliveryCount = default;
-            Optional<ServiceBusMessagingEntityStatus> status = default;
-            Optional<bool> enableBatchedOperations = default;
-            Optional<TimeSpan> autoDeleteOnIdle = default;
-            Optional<string> forwardTo = default;
-            Optional<string> forwardDeadLetteredMessagesTo = default;
-            Optional<bool> isClientAffine = default;
-            Optional<ServiceBusClientAffineProperties> clientAffineProperties = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<long> messageCount = default;
+            Core.Optional<DateTimeOffset> createdAt = default;
+            Core.Optional<DateTimeOffset> accessedAt = default;
+            Core.Optional<DateTimeOffset> updatedAt = default;
+            Core.Optional<MessageCountDetails> countDetails = default;
+            Core.Optional<TimeSpan> lockDuration = default;
+            Core.Optional<bool> requiresSession = default;
+            Core.Optional<TimeSpan> defaultMessageTimeToLive = default;
+            Core.Optional<bool> deadLetteringOnFilterEvaluationExceptions = default;
+            Core.Optional<bool> deadLetteringOnMessageExpiration = default;
+            Core.Optional<TimeSpan> duplicateDetectionHistoryTimeWindow = default;
+            Core.Optional<int> maxDeliveryCount = default;
+            Core.Optional<ServiceBusMessagingEntityStatus> status = default;
+            Core.Optional<bool> enableBatchedOperations = default;
+            Core.Optional<TimeSpan> autoDeleteOnIdle = default;
+            Core.Optional<string> forwardTo = default;
+            Core.Optional<string> forwardDeadLetteredMessagesTo = default;
+            Core.Optional<bool> isClientAffine = default;
+            Core.Optional<ServiceBusClientAffineProperties> clientAffineProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.ServiceBus
                     continue;
                 }
             }
-            return new ServiceBusSubscriptionData(id, name, type, systemData.Value, Optional.ToNullable(messageCount), Optional.ToNullable(createdAt), Optional.ToNullable(accessedAt), Optional.ToNullable(updatedAt), countDetails.Value, Optional.ToNullable(lockDuration), Optional.ToNullable(requiresSession), Optional.ToNullable(defaultMessageTimeToLive), Optional.ToNullable(deadLetteringOnFilterEvaluationExceptions), Optional.ToNullable(deadLetteringOnMessageExpiration), Optional.ToNullable(duplicateDetectionHistoryTimeWindow), Optional.ToNullable(maxDeliveryCount), Optional.ToNullable(status), Optional.ToNullable(enableBatchedOperations), Optional.ToNullable(autoDeleteOnIdle), forwardTo.Value, forwardDeadLetteredMessagesTo.Value, Optional.ToNullable(isClientAffine), clientAffineProperties.Value, Optional.ToNullable(location));
+            return new ServiceBusSubscriptionData(id, name, type, systemData.Value, Core.Optional.ToNullable(messageCount), Core.Optional.ToNullable(createdAt), Core.Optional.ToNullable(accessedAt), Core.Optional.ToNullable(updatedAt), countDetails.Value, Core.Optional.ToNullable(lockDuration), Core.Optional.ToNullable(requiresSession), Core.Optional.ToNullable(defaultMessageTimeToLive), Core.Optional.ToNullable(deadLetteringOnFilterEvaluationExceptions), Core.Optional.ToNullable(deadLetteringOnMessageExpiration), Core.Optional.ToNullable(duplicateDetectionHistoryTimeWindow), Core.Optional.ToNullable(maxDeliveryCount), Core.Optional.ToNullable(status), Core.Optional.ToNullable(enableBatchedOperations), Core.Optional.ToNullable(autoDeleteOnIdle), forwardTo.Value, forwardDeadLetteredMessagesTo.Value, Core.Optional.ToNullable(isClientAffine), clientAffineProperties.Value, Core.Optional.ToNullable(location));
         }
     }
 }

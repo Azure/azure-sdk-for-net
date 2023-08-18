@@ -13,39 +13,39 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class SecurityAlertsSuppressionRuleData : IUtf8JsonSerializable
+    public partial class SecurityAlertsSuppressionRuleData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AlertType))
+            if (Core.Optional.IsDefined(AlertType))
             {
                 writer.WritePropertyName("alertType"u8);
                 writer.WriteStringValue(AlertType);
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (Core.Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDateUtc"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(Reason))
+            if (Core.Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Comment))
+            if (Core.Optional.IsDefined(Comment))
             {
                 writer.WritePropertyName("comment"u8);
                 writer.WriteStringValue(Comment);
             }
-            if (Optional.IsDefined(SuppressionAlertsScope))
+            if (Core.Optional.IsDefined(SuppressionAlertsScope))
             {
                 writer.WritePropertyName("suppressionAlertsScope"u8);
                 writer.WriteObjectValue(SuppressionAlertsScope);
@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> alertType = default;
-            Optional<DateTimeOffset> lastModifiedUtc = default;
-            Optional<DateTimeOffset> expirationDateUtc = default;
-            Optional<string> reason = default;
-            Optional<SecurityAlertsSuppressionRuleState> state = default;
-            Optional<string> comment = default;
-            Optional<SuppressionAlertsScope> suppressionAlertsScope = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> alertType = default;
+            Core.Optional<DateTimeOffset> lastModifiedUtc = default;
+            Core.Optional<DateTimeOffset> expirationDateUtc = default;
+            Core.Optional<string> reason = default;
+            Core.Optional<SecurityAlertsSuppressionRuleState> state = default;
+            Core.Optional<string> comment = default;
+            Core.Optional<SuppressionAlertsScope> suppressionAlertsScope = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     continue;
                 }
             }
-            return new SecurityAlertsSuppressionRuleData(id, name, type, systemData.Value, alertType.Value, Optional.ToNullable(lastModifiedUtc), Optional.ToNullable(expirationDateUtc), reason.Value, Optional.ToNullable(state), comment.Value, suppressionAlertsScope.Value);
+            return new SecurityAlertsSuppressionRuleData(id, name, type, systemData.Value, alertType.Value, Core.Optional.ToNullable(lastModifiedUtc), Core.Optional.ToNullable(expirationDateUtc), reason.Value, Core.Optional.ToNullable(state), comment.Value, suppressionAlertsScope.Value);
         }
     }
 }

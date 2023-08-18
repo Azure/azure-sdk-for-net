@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<int> recoveryPointHistoryDurationInHours = default;
-            Optional<int> applicationConsistentSnapshotFrequencyInHours = default;
-            Optional<int> replicationInterval = default;
-            Optional<string> onlineReplicationStartTime = default;
-            Optional<string> encryption = default;
-            Optional<ResourceIdentifier> activeStorageAccountId = default;
+            Core.Optional<int> recoveryPointHistoryDurationInHours = default;
+            Core.Optional<int> applicationConsistentSnapshotFrequencyInHours = default;
+            Core.Optional<int> replicationInterval = default;
+            Core.Optional<string> onlineReplicationStartTime = default;
+            Core.Optional<string> encryption = default;
+            Core.Optional<ResourceIdentifier> activeStorageAccountId = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new HyperVReplicaAzurePolicyDetails(instanceType, Optional.ToNullable(recoveryPointHistoryDurationInHours), Optional.ToNullable(applicationConsistentSnapshotFrequencyInHours), Optional.ToNullable(replicationInterval), onlineReplicationStartTime.Value, encryption.Value, activeStorageAccountId.Value);
+            return new HyperVReplicaAzurePolicyDetails(instanceType, Core.Optional.ToNullable(recoveryPointHistoryDurationInHours), Core.Optional.ToNullable(applicationConsistentSnapshotFrequencyInHours), Core.Optional.ToNullable(replicationInterval), onlineReplicationStartTime.Value, encryption.Value, activeStorageAccountId.Value);
         }
     }
 }

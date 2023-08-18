@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of SecurityInsightsFusionAlertRule. </summary>
         public SecurityInsightsFusionAlertRule()
         {
-            Tactics = new ChangeTrackingList<SecurityInsightsAttackTactic>();
-            Techniques = new ChangeTrackingList<string>();
+            Tactics = new Core.ChangeTrackingList<SecurityInsightsAttackTactic>();
+            Techniques = new Core.ChangeTrackingList<string>();
             Kind = AlertRuleKind.Fusion;
         }
 

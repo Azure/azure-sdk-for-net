@@ -13,64 +13,64 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    public partial class ServiceBusTopicData : IUtf8JsonSerializable
+    public partial class ServiceBusTopicData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultMessageTimeToLive))
+            if (Core.Optional.IsDefined(DefaultMessageTimeToLive))
             {
                 writer.WritePropertyName("defaultMessageTimeToLive"u8);
                 writer.WriteStringValue(DefaultMessageTimeToLive.Value, "P");
             }
-            if (Optional.IsDefined(MaxSizeInMegabytes))
+            if (Core.Optional.IsDefined(MaxSizeInMegabytes))
             {
                 writer.WritePropertyName("maxSizeInMegabytes"u8);
                 writer.WriteNumberValue(MaxSizeInMegabytes.Value);
             }
-            if (Optional.IsDefined(MaxMessageSizeInKilobytes))
+            if (Core.Optional.IsDefined(MaxMessageSizeInKilobytes))
             {
                 writer.WritePropertyName("maxMessageSizeInKilobytes"u8);
                 writer.WriteNumberValue(MaxMessageSizeInKilobytes.Value);
             }
-            if (Optional.IsDefined(RequiresDuplicateDetection))
+            if (Core.Optional.IsDefined(RequiresDuplicateDetection))
             {
                 writer.WritePropertyName("requiresDuplicateDetection"u8);
                 writer.WriteBooleanValue(RequiresDuplicateDetection.Value);
             }
-            if (Optional.IsDefined(DuplicateDetectionHistoryTimeWindow))
+            if (Core.Optional.IsDefined(DuplicateDetectionHistoryTimeWindow))
             {
                 writer.WritePropertyName("duplicateDetectionHistoryTimeWindow"u8);
                 writer.WriteStringValue(DuplicateDetectionHistoryTimeWindow.Value, "P");
             }
-            if (Optional.IsDefined(EnableBatchedOperations))
+            if (Core.Optional.IsDefined(EnableBatchedOperations))
             {
                 writer.WritePropertyName("enableBatchedOperations"u8);
                 writer.WriteBooleanValue(EnableBatchedOperations.Value);
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(SupportOrdering))
+            if (Core.Optional.IsDefined(SupportOrdering))
             {
                 writer.WritePropertyName("supportOrdering"u8);
                 writer.WriteBooleanValue(SupportOrdering.Value);
             }
-            if (Optional.IsDefined(AutoDeleteOnIdle))
+            if (Core.Optional.IsDefined(AutoDeleteOnIdle))
             {
                 writer.WritePropertyName("autoDeleteOnIdle"u8);
                 writer.WriteStringValue(AutoDeleteOnIdle.Value, "P");
             }
-            if (Optional.IsDefined(EnablePartitioning))
+            if (Core.Optional.IsDefined(EnablePartitioning))
             {
                 writer.WritePropertyName("enablePartitioning"u8);
                 writer.WriteBooleanValue(EnablePartitioning.Value);
             }
-            if (Optional.IsDefined(EnableExpress))
+            if (Core.Optional.IsDefined(EnableExpress))
             {
                 writer.WritePropertyName("enableExpress"u8);
                 writer.WriteBooleanValue(EnableExpress.Value);
@@ -85,28 +85,28 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            Core.Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<long> sizeInBytes = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<DateTimeOffset> updatedAt = default;
-            Optional<DateTimeOffset> accessedAt = default;
-            Optional<int> subscriptionCount = default;
-            Optional<MessageCountDetails> countDetails = default;
-            Optional<TimeSpan> defaultMessageTimeToLive = default;
-            Optional<int> maxSizeInMegabytes = default;
-            Optional<long> maxMessageSizeInKilobytes = default;
-            Optional<bool> requiresDuplicateDetection = default;
-            Optional<TimeSpan> duplicateDetectionHistoryTimeWindow = default;
-            Optional<bool> enableBatchedOperations = default;
-            Optional<ServiceBusMessagingEntityStatus> status = default;
-            Optional<bool> supportOrdering = default;
-            Optional<TimeSpan> autoDeleteOnIdle = default;
-            Optional<bool> enablePartitioning = default;
-            Optional<bool> enableExpress = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<long> sizeInBytes = default;
+            Core.Optional<DateTimeOffset> createdAt = default;
+            Core.Optional<DateTimeOffset> updatedAt = default;
+            Core.Optional<DateTimeOffset> accessedAt = default;
+            Core.Optional<int> subscriptionCount = default;
+            Core.Optional<MessageCountDetails> countDetails = default;
+            Core.Optional<TimeSpan> defaultMessageTimeToLive = default;
+            Core.Optional<int> maxSizeInMegabytes = default;
+            Core.Optional<long> maxMessageSizeInKilobytes = default;
+            Core.Optional<bool> requiresDuplicateDetection = default;
+            Core.Optional<TimeSpan> duplicateDetectionHistoryTimeWindow = default;
+            Core.Optional<bool> enableBatchedOperations = default;
+            Core.Optional<ServiceBusMessagingEntityStatus> status = default;
+            Core.Optional<bool> supportOrdering = default;
+            Core.Optional<TimeSpan> autoDeleteOnIdle = default;
+            Core.Optional<bool> enablePartitioning = default;
+            Core.Optional<bool> enableExpress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.ServiceBus
                     continue;
                 }
             }
-            return new ServiceBusTopicData(id, name, type, systemData.Value, Optional.ToNullable(sizeInBytes), Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(accessedAt), Optional.ToNullable(subscriptionCount), countDetails.Value, Optional.ToNullable(defaultMessageTimeToLive), Optional.ToNullable(maxSizeInMegabytes), Optional.ToNullable(maxMessageSizeInKilobytes), Optional.ToNullable(requiresDuplicateDetection), Optional.ToNullable(duplicateDetectionHistoryTimeWindow), Optional.ToNullable(enableBatchedOperations), Optional.ToNullable(status), Optional.ToNullable(supportOrdering), Optional.ToNullable(autoDeleteOnIdle), Optional.ToNullable(enablePartitioning), Optional.ToNullable(enableExpress), Optional.ToNullable(location));
+            return new ServiceBusTopicData(id, name, type, systemData.Value, Core.Optional.ToNullable(sizeInBytes), Core.Optional.ToNullable(createdAt), Core.Optional.ToNullable(updatedAt), Core.Optional.ToNullable(accessedAt), Core.Optional.ToNullable(subscriptionCount), countDetails.Value, Core.Optional.ToNullable(defaultMessageTimeToLive), Core.Optional.ToNullable(maxSizeInMegabytes), Core.Optional.ToNullable(maxMessageSizeInKilobytes), Core.Optional.ToNullable(requiresDuplicateDetection), Core.Optional.ToNullable(duplicateDetectionHistoryTimeWindow), Core.Optional.ToNullable(enableBatchedOperations), Core.Optional.ToNullable(status), Core.Optional.ToNullable(supportOrdering), Core.Optional.ToNullable(autoDeleteOnIdle), Core.Optional.ToNullable(enablePartitioning), Core.Optional.ToNullable(enableExpress), Core.Optional.ToNullable(location));
         }
     }
 }

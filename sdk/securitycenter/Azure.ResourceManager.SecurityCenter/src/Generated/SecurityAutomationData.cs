@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="location"> The location. </param>
         public SecurityAutomationData(AzureLocation location) : base(location)
         {
-            Scopes = new ChangeTrackingList<SecurityAutomationScope>();
-            Sources = new ChangeTrackingList<SecurityAutomationSource>();
-            Actions = new ChangeTrackingList<SecurityAutomationAction>();
+            Scopes = new Core.ChangeTrackingList<SecurityAutomationScope>();
+            Sources = new Core.ChangeTrackingList<SecurityAutomationSource>();
+            Actions = new Core.ChangeTrackingList<SecurityAutomationAction>();
         }
 
         /// <summary> Initializes a new instance of SecurityAutomationData. </summary>

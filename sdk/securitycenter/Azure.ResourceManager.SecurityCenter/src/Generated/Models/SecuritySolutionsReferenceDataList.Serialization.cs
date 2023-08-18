@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecuritySolutionsReferenceData>> value = default;
+            Core.Optional<IReadOnlyList<SecuritySolutionsReferenceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new SecuritySolutionsReferenceDataList(Optional.ToList(value));
+            return new SecuritySolutionsReferenceDataList(Core.Optional.ToList(value));
         }
     }
 }

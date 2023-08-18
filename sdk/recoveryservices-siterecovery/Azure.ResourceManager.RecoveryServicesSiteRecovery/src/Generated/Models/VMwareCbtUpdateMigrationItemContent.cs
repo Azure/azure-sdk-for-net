@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of VMwareCbtUpdateMigrationItemContent. </summary>
         public VMwareCbtUpdateMigrationItemContent()
         {
-            VmNics = new ChangeTrackingList<VMwareCbtNicContent>();
-            VmDisks = new ChangeTrackingList<VMwareCbtUpdateDiskContent>();
-            TargetVmTags = new ChangeTrackingDictionary<string, string>();
-            TargetDiskTags = new ChangeTrackingDictionary<string, string>();
-            TargetNicTags = new ChangeTrackingDictionary<string, string>();
+            VmNics = new Core.ChangeTrackingList<VMwareCbtNicContent>();
+            VmDisks = new Core.ChangeTrackingList<VMwareCbtUpdateDiskContent>();
+            TargetVmTags = new Core.ChangeTrackingDictionary<string, string>();
+            TargetDiskTags = new Core.ChangeTrackingDictionary<string, string>();
+            TargetNicTags = new Core.ChangeTrackingDictionary<string, string>();
             InstanceType = "VMwareCbt";
         }
 

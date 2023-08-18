@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<long> count = default;
-            Optional<string> nextLink = default;
+            Core.Optional<long> count = default;
+            Core.Optional<string> nextLink = default;
             IReadOnlyList<PurviewPrivateLinkResourceData> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Purview.Models
                     continue;
                 }
             }
-            return new PrivateLinkResourceList(Optional.ToNullable(count), nextLink.Value, value);
+            return new PrivateLinkResourceList(Core.Optional.ToNullable(count), nextLink.Value, value);
         }
     }
 }

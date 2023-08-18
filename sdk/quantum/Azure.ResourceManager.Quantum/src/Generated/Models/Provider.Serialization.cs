@@ -11,37 +11,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    public partial class Provider : IUtf8JsonSerializable
+    public partial class Provider : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProviderId))
+            if (Core.Optional.IsDefined(ProviderId))
             {
                 writer.WritePropertyName("providerId"u8);
                 writer.WriteStringValue(ProviderId);
             }
-            if (Optional.IsDefined(ProviderSku))
+            if (Core.Optional.IsDefined(ProviderSku))
             {
                 writer.WritePropertyName("providerSku"u8);
                 writer.WriteStringValue(ProviderSku);
             }
-            if (Optional.IsDefined(InstanceUri))
+            if (Core.Optional.IsDefined(InstanceUri))
             {
                 writer.WritePropertyName("instanceUri"u8);
                 writer.WriteStringValue(InstanceUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ApplicationName))
+            if (Core.Optional.IsDefined(ApplicationName))
             {
                 writer.WritePropertyName("applicationName"u8);
                 writer.WriteStringValue(ApplicationName);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (Core.Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(ResourceUsageId))
+            if (Core.Optional.IsDefined(ResourceUsageId))
             {
                 writer.WritePropertyName("resourceUsageId"u8);
                 writer.WriteStringValue(ResourceUsageId);
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            Optional<string> providerId = default;
-            Optional<string> providerSku = default;
-            Optional<Uri> instanceUri = default;
-            Optional<string> applicationName = default;
-            Optional<Status> provisioningState = default;
-            Optional<string> resourceUsageId = default;
+            Core.Optional<string> providerId = default;
+            Core.Optional<string> providerSku = default;
+            Core.Optional<Uri> instanceUri = default;
+            Core.Optional<string> applicationName = default;
+            Core.Optional<Status> provisioningState = default;
+            Core.Optional<string> resourceUsageId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("providerId"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     continue;
                 }
             }
-            return new Provider(providerId.Value, providerSku.Value, instanceUri.Value, applicationName.Value, Optional.ToNullable(provisioningState), resourceUsageId.Value);
+            return new Provider(providerId.Value, providerSku.Value, instanceUri.Value, applicationName.Value, Core.Optional.ToNullable(provisioningState), resourceUsageId.Value);
         }
     }
 }

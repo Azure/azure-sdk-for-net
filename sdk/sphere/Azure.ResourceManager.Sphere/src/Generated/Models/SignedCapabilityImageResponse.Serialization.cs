@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sphere.Models
             {
                 return null;
             }
-            Optional<string> image = default;
+            Core.Optional<string> image = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("image"u8))

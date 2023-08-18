@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<RecoveryServicesPrivateEndpointConnection> properties = default;
-            Optional<AzureLocation> location = default;
+            Core.Optional<RecoveryServicesPrivateEndpointConnection> properties = default;
+            Core.Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     continue;
                 }
             }
-            return new RecoveryServicesPrivateEndpointConnectionVaultProperties(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(location));
+            return new RecoveryServicesPrivateEndpointConnectionVaultProperties(id, name, type, systemData.Value, properties.Value, Core.Optional.ToNullable(location));
         }
     }
 }

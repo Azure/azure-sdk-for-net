@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ReplicationLinkListResult. </summary>
         internal ReplicationLinkListResult()
         {
-            Value = new ChangeTrackingList<SqlServerDatabaseReplicationLinkData>();
+            Value = new Core.ChangeTrackingList<SqlServerDatabaseReplicationLinkData>();
         }
 
         /// <summary> Initializes a new instance of ReplicationLinkListResult. </summary>

@@ -19,25 +19,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> nicId = default;
-            Optional<string> replicaNicId = default;
-            Optional<ResourceIdentifier> sourceNicArmId = default;
-            Optional<string> vmNetworkName = default;
-            Optional<ResourceIdentifier> recoveryVmNetworkId = default;
-            Optional<IReadOnlyList<HyperVIPConfigDetails>> ipConfigs = default;
-            Optional<string> selectionType = default;
-            Optional<string> recoveryNetworkSecurityGroupId = default;
-            Optional<bool> enableAcceleratedNetworkingOnRecovery = default;
-            Optional<ResourceIdentifier> tfoVmNetworkId = default;
-            Optional<string> tfoNetworkSecurityGroupId = default;
-            Optional<bool> enableAcceleratedNetworkingOnTfo = default;
-            Optional<string> recoveryNicName = default;
-            Optional<string> recoveryNicResourceGroupName = default;
-            Optional<bool> reuseExistingNic = default;
-            Optional<string> tfoRecoveryNicName = default;
-            Optional<string> tfoRecoveryNicResourceGroupName = default;
-            Optional<bool> tfoReuseExistingNic = default;
-            Optional<string> targetNicName = default;
+            Core.Optional<string> nicId = default;
+            Core.Optional<string> replicaNicId = default;
+            Core.Optional<ResourceIdentifier> sourceNicArmId = default;
+            Core.Optional<string> vmNetworkName = default;
+            Core.Optional<ResourceIdentifier> recoveryVmNetworkId = default;
+            Core.Optional<IReadOnlyList<HyperVIPConfigDetails>> ipConfigs = default;
+            Core.Optional<string> selectionType = default;
+            Core.Optional<string> recoveryNetworkSecurityGroupId = default;
+            Core.Optional<bool> enableAcceleratedNetworkingOnRecovery = default;
+            Core.Optional<ResourceIdentifier> tfoVmNetworkId = default;
+            Core.Optional<string> tfoNetworkSecurityGroupId = default;
+            Core.Optional<bool> enableAcceleratedNetworkingOnTfo = default;
+            Core.Optional<string> recoveryNicName = default;
+            Core.Optional<string> recoveryNicResourceGroupName = default;
+            Core.Optional<bool> reuseExistingNic = default;
+            Core.Optional<string> tfoRecoveryNicName = default;
+            Core.Optional<string> tfoRecoveryNicResourceGroupName = default;
+            Core.Optional<bool> tfoReuseExistingNic = default;
+            Core.Optional<string> targetNicName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nicId"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new VmNicDetails(nicId.Value, replicaNicId.Value, sourceNicArmId.Value, vmNetworkName.Value, recoveryVmNetworkId.Value, Optional.ToList(ipConfigs), selectionType.Value, recoveryNetworkSecurityGroupId.Value, Optional.ToNullable(enableAcceleratedNetworkingOnRecovery), tfoVmNetworkId.Value, tfoNetworkSecurityGroupId.Value, Optional.ToNullable(enableAcceleratedNetworkingOnTfo), recoveryNicName.Value, recoveryNicResourceGroupName.Value, Optional.ToNullable(reuseExistingNic), tfoRecoveryNicName.Value, tfoRecoveryNicResourceGroupName.Value, Optional.ToNullable(tfoReuseExistingNic), targetNicName.Value);
+            return new VmNicDetails(nicId.Value, replicaNicId.Value, sourceNicArmId.Value, vmNetworkName.Value, recoveryVmNetworkId.Value, Core.Optional.ToList(ipConfigs), selectionType.Value, recoveryNetworkSecurityGroupId.Value, Core.Optional.ToNullable(enableAcceleratedNetworkingOnRecovery), tfoVmNetworkId.Value, tfoNetworkSecurityGroupId.Value, Core.Optional.ToNullable(enableAcceleratedNetworkingOnTfo), recoveryNicName.Value, recoveryNicResourceGroupName.Value, Core.Optional.ToNullable(reuseExistingNic), tfoRecoveryNicName.Value, tfoRecoveryNicResourceGroupName.Value, Core.Optional.ToNullable(tfoReuseExistingNic), targetNicName.Value);
         }
     }
 }

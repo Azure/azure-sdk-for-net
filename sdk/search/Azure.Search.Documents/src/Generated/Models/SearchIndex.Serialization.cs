@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class SearchIndex : IUtf8JsonSerializable
+    public partial class SearchIndex : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(ScoringProfiles))
+            if (Core.Optional.IsCollectionDefined(ScoringProfiles))
             {
                 writer.WritePropertyName("scoringProfiles"u8);
                 writer.WriteStartArray();
@@ -35,12 +35,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DefaultScoringProfile))
+            if (Core.Optional.IsDefined(DefaultScoringProfile))
             {
                 writer.WritePropertyName("defaultScoringProfile"u8);
                 writer.WriteStringValue(DefaultScoringProfile);
             }
-            if (Optional.IsDefined(CorsOptions))
+            if (Core.Optional.IsDefined(CorsOptions))
             {
                 if (CorsOptions != null)
                 {
@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("corsOptions");
                 }
             }
-            if (Optional.IsCollectionDefined(Suggesters))
+            if (Core.Optional.IsCollectionDefined(Suggesters))
             {
                 writer.WritePropertyName("suggesters"u8);
                 writer.WriteStartArray();
@@ -62,7 +62,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Analyzers))
+            if (Core.Optional.IsCollectionDefined(Analyzers))
             {
                 writer.WritePropertyName("analyzers"u8);
                 writer.WriteStartArray();
@@ -72,7 +72,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tokenizers))
+            if (Core.Optional.IsCollectionDefined(Tokenizers))
             {
                 writer.WritePropertyName("tokenizers"u8);
                 writer.WriteStartArray();
@@ -82,7 +82,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TokenFilters))
+            if (Core.Optional.IsCollectionDefined(TokenFilters))
             {
                 writer.WritePropertyName("tokenFilters"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CharFilters))
+            if (Core.Optional.IsCollectionDefined(CharFilters))
             {
                 writer.WritePropertyName("charFilters"u8);
                 writer.WriteStartArray();
@@ -102,7 +102,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Normalizers))
+            if (Core.Optional.IsCollectionDefined(Normalizers))
             {
                 writer.WritePropertyName("normalizers"u8);
                 writer.WriteStartArray();
@@ -112,7 +112,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EncryptionKey))
+            if (Core.Optional.IsDefined(EncryptionKey))
             {
                 if (EncryptionKey != null)
                 {
@@ -124,12 +124,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("encryptionKey");
                 }
             }
-            if (Optional.IsDefined(Similarity))
+            if (Core.Optional.IsDefined(Similarity))
             {
                 writer.WritePropertyName("similarity"u8);
                 writer.WriteObjectValue(Similarity);
             }
-            if (Optional.IsDefined(SemanticSettings))
+            if (Core.Optional.IsDefined(SemanticSettings))
             {
                 if (SemanticSettings != null)
                 {
@@ -141,7 +141,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("semantic");
                 }
             }
-            if (Optional.IsDefined(VectorSearch))
+            if (Core.Optional.IsDefined(VectorSearch))
             {
                 if (VectorSearch != null)
                 {
@@ -153,7 +153,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("vectorSearch");
                 }
             }
-            if (Optional.IsDefined(_etag))
+            if (Core.Optional.IsDefined(_etag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
                 writer.WriteStringValue(_etag);
@@ -169,20 +169,20 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string name = default;
             IList<SearchField> fields = default;
-            Optional<IList<ScoringProfile>> scoringProfiles = default;
-            Optional<string> defaultScoringProfile = default;
-            Optional<CorsOptions> corsOptions = default;
-            Optional<IList<SearchSuggester>> suggesters = default;
-            Optional<IList<LexicalAnalyzer>> analyzers = default;
-            Optional<IList<LexicalTokenizer>> tokenizers = default;
-            Optional<IList<TokenFilter>> tokenFilters = default;
-            Optional<IList<CharFilter>> charFilters = default;
-            Optional<IList<LexicalNormalizer>> normalizers = default;
-            Optional<SearchResourceEncryptionKey> encryptionKey = default;
-            Optional<SimilarityAlgorithm> similarity = default;
-            Optional<SemanticSettings> semantic = default;
-            Optional<VectorSearch> vectorSearch = default;
-            Optional<string> odataEtag = default;
+            Core.Optional<IList<ScoringProfile>> scoringProfiles = default;
+            Core.Optional<string> defaultScoringProfile = default;
+            Core.Optional<CorsOptions> corsOptions = default;
+            Core.Optional<IList<SearchSuggester>> suggesters = default;
+            Core.Optional<IList<LexicalAnalyzer>> analyzers = default;
+            Core.Optional<IList<LexicalTokenizer>> tokenizers = default;
+            Core.Optional<IList<TokenFilter>> tokenFilters = default;
+            Core.Optional<IList<CharFilter>> charFilters = default;
+            Core.Optional<IList<LexicalNormalizer>> normalizers = default;
+            Core.Optional<SearchResourceEncryptionKey> encryptionKey = default;
+            Core.Optional<SimilarityAlgorithm> similarity = default;
+            Core.Optional<SemanticSettings> semantic = default;
+            Core.Optional<VectorSearch> vectorSearch = default;
+            Core.Optional<string> odataEtag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -358,7 +358,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndex(name, fields, Optional.ToList(scoringProfiles), defaultScoringProfile.Value, corsOptions.Value, Optional.ToList(suggesters), Optional.ToList(analyzers), Optional.ToList(tokenizers), Optional.ToList(tokenFilters), Optional.ToList(charFilters), Optional.ToList(normalizers), encryptionKey.Value, similarity.Value, semantic.Value, vectorSearch.Value, odataEtag.Value);
+            return new SearchIndex(name, fields, Core.Optional.ToList(scoringProfiles), defaultScoringProfile.Value, corsOptions.Value, Core.Optional.ToList(suggesters), Core.Optional.ToList(analyzers), Core.Optional.ToList(tokenizers), Core.Optional.ToList(tokenFilters), Core.Optional.ToList(charFilters), Core.Optional.ToList(normalizers), encryptionKey.Value, similarity.Value, semantic.Value, vectorSearch.Value, odataEtag.Value);
         }
     }
 }

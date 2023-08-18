@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> totalSteps = default;
-            Optional<int> currentStep = default;
-            Optional<IReadOnlyList<UpsertManagedServerOperationStep>> stepsList = default;
+            Core.Optional<string> totalSteps = default;
+            Core.Optional<int> currentStep = default;
+            Core.Optional<IReadOnlyList<UpsertManagedServerOperationStep>> stepsList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalSteps"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ManagedInstanceOperationSteps(totalSteps.Value, Optional.ToNullable(currentStep), Optional.ToList(stepsList));
+            return new ManagedInstanceOperationSteps(totalSteps.Value, Core.Optional.ToNullable(currentStep), Core.Optional.ToList(stepsList));
         }
     }
 }

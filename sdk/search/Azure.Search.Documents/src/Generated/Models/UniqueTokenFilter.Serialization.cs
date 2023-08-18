@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class UniqueTokenFilter : IUtf8JsonSerializable
+    public partial class UniqueTokenFilter : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(OnlyOnSamePosition))
+            if (Core.Optional.IsDefined(OnlyOnSamePosition))
             {
                 writer.WritePropertyName("onlyOnSamePosition"u8);
                 writer.WriteBooleanValue(OnlyOnSamePosition.Value);
@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<bool> onlyOnSamePosition = default;
+            Core.Optional<bool> onlyOnSamePosition = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -58,7 +58,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new UniqueTokenFilter(odataType, name, Optional.ToNullable(onlyOnSamePosition));
+            return new UniqueTokenFilter(odataType, name, Core.Optional.ToNullable(onlyOnSamePosition));
         }
     }
 }

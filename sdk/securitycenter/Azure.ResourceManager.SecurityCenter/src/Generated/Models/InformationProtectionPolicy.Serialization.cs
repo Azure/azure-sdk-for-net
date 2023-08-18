@@ -13,14 +13,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class InformationProtectionPolicy : IUtf8JsonSerializable
+    public partial class InformationProtectionPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Labels))
+            if (Core.Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(InformationTypes))
+            if (Core.Optional.IsCollectionDefined(InformationTypes))
             {
                 writer.WritePropertyName("informationTypes"u8);
                 writer.WriteStartObject();
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> lastModifiedUtc = default;
-            Optional<string> version = default;
-            Optional<IDictionary<string, SensitivityLabel>> labels = default;
-            Optional<IDictionary<string, SecurityInformationTypeInfo>> informationTypes = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DateTimeOffset> lastModifiedUtc = default;
+            Core.Optional<string> version = default;
+            Core.Optional<IDictionary<string, SensitivityLabel>> labels = default;
+            Core.Optional<IDictionary<string, SecurityInformationTypeInfo>> informationTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new InformationProtectionPolicy(id, name, type, systemData.Value, Optional.ToNullable(lastModifiedUtc), version.Value, Optional.ToDictionary(labels), Optional.ToDictionary(informationTypes));
+            return new InformationProtectionPolicy(id, name, type, systemData.Value, Core.Optional.ToNullable(lastModifiedUtc), version.Value, Core.Optional.ToDictionary(labels), Core.Optional.ToDictionary(informationTypes));
         }
     }
 }

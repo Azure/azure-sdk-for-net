@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> Initializes a new instance of RedisEnterpriseClusterPatch. </summary>
         public RedisEnterpriseClusterPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            PrivateEndpointConnections = new ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            PrivateEndpointConnections = new Core.ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>();
         }
 
         /// <summary> The SKU to create, which affects price, performance, and features. </summary>

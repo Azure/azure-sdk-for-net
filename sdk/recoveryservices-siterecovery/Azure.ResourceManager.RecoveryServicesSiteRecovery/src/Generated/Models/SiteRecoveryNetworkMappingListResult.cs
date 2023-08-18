@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of SiteRecoveryNetworkMappingListResult. </summary>
         internal SiteRecoveryNetworkMappingListResult()
         {
-            Value = new ChangeTrackingList<SiteRecoveryNetworkMappingData>();
+            Value = new Core.ChangeTrackingList<SiteRecoveryNetworkMappingData>();
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryNetworkMappingListResult. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of SecurityInformationTypeInfo. </summary>
         public SecurityInformationTypeInfo()
         {
-            Keywords = new ChangeTrackingList<InformationProtectionKeyword>();
+            Keywords = new Core.ChangeTrackingList<InformationProtectionKeyword>();
         }
 
         /// <summary> Initializes a new instance of SecurityInformationTypeInfo. </summary>

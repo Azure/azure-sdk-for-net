@@ -19,18 +19,18 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<PerformanceLevelCapability> performanceLevel = default;
-            Optional<SqlSku> sku = default;
-            Optional<IReadOnlyList<LicenseTypeCapability>> supportedLicenseTypes = default;
-            Optional<int> maxDatabaseCount = default;
-            Optional<MaxSizeCapability> includedMaxSize = default;
-            Optional<IReadOnlyList<MaxSizeRangeCapability>> supportedMaxSizes = default;
-            Optional<IReadOnlyList<MaxSizeRangeCapability>> supportedPerDatabaseMaxSizes = default;
-            Optional<IReadOnlyList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>> supportedPerDatabaseMaxPerformanceLevels = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<IReadOnlyList<MaintenanceConfigurationCapability>> supportedMaintenanceConfigurations = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            Core.Optional<PerformanceLevelCapability> performanceLevel = default;
+            Core.Optional<SqlSku> sku = default;
+            Core.Optional<IReadOnlyList<LicenseTypeCapability>> supportedLicenseTypes = default;
+            Core.Optional<int> maxDatabaseCount = default;
+            Core.Optional<MaxSizeCapability> includedMaxSize = default;
+            Core.Optional<IReadOnlyList<MaxSizeRangeCapability>> supportedMaxSizes = default;
+            Core.Optional<IReadOnlyList<MaxSizeRangeCapability>> supportedPerDatabaseMaxSizes = default;
+            Core.Optional<IReadOnlyList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>> supportedPerDatabaseMaxPerformanceLevels = default;
+            Core.Optional<bool> zoneRedundant = default;
+            Core.Optional<IReadOnlyList<MaintenanceConfigurationCapability>> supportedMaintenanceConfigurations = default;
+            Core.Optional<SqlCapabilityStatus> status = default;
+            Core.Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("performanceLevel"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ElasticPoolPerformanceLevelCapability(performanceLevel.Value, sku.Value, Optional.ToList(supportedLicenseTypes), Optional.ToNullable(maxDatabaseCount), includedMaxSize.Value, Optional.ToList(supportedMaxSizes), Optional.ToList(supportedPerDatabaseMaxSizes), Optional.ToList(supportedPerDatabaseMaxPerformanceLevels), Optional.ToNullable(zoneRedundant), Optional.ToList(supportedMaintenanceConfigurations), Optional.ToNullable(status), reason.Value);
+            return new ElasticPoolPerformanceLevelCapability(performanceLevel.Value, sku.Value, Core.Optional.ToList(supportedLicenseTypes), Core.Optional.ToNullable(maxDatabaseCount), includedMaxSize.Value, Core.Optional.ToList(supportedMaxSizes), Core.Optional.ToList(supportedPerDatabaseMaxSizes), Core.Optional.ToList(supportedPerDatabaseMaxPerformanceLevels), Core.Optional.ToNullable(zoneRedundant), Core.Optional.ToList(supportedMaintenanceConfigurations), Core.Optional.ToNullable(status), reason.Value);
         }
     }
 }

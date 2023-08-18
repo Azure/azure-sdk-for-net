@@ -18,18 +18,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> initialPrimaryZone = default;
-            Optional<string> initialRecoveryZone = default;
-            Optional<SiteRecoveryExtendedLocation> initialPrimaryExtendedLocation = default;
-            Optional<SiteRecoveryExtendedLocation> initialRecoveryExtendedLocation = default;
-            Optional<AzureLocation> initialPrimaryFabricLocation = default;
-            Optional<AzureLocation> initialRecoveryFabricLocation = default;
-            Optional<string> primaryZone = default;
-            Optional<string> recoveryZone = default;
-            Optional<SiteRecoveryExtendedLocation> primaryExtendedLocation = default;
-            Optional<SiteRecoveryExtendedLocation> recoveryExtendedLocation = default;
-            Optional<AzureLocation> primaryFabricLocation = default;
-            Optional<AzureLocation> recoveryFabricLocation = default;
+            Core.Optional<string> initialPrimaryZone = default;
+            Core.Optional<string> initialRecoveryZone = default;
+            Core.Optional<SiteRecoveryExtendedLocation> initialPrimaryExtendedLocation = default;
+            Core.Optional<SiteRecoveryExtendedLocation> initialRecoveryExtendedLocation = default;
+            Core.Optional<AzureLocation> initialPrimaryFabricLocation = default;
+            Core.Optional<AzureLocation> initialRecoveryFabricLocation = default;
+            Core.Optional<string> primaryZone = default;
+            Core.Optional<string> recoveryZone = default;
+            Core.Optional<SiteRecoveryExtendedLocation> primaryExtendedLocation = default;
+            Core.Optional<SiteRecoveryExtendedLocation> recoveryExtendedLocation = default;
+            Core.Optional<AzureLocation> primaryFabricLocation = default;
+            Core.Optional<AzureLocation> recoveryFabricLocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("initialPrimaryZone"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new A2AFabricSpecificLocationDetails(initialPrimaryZone.Value, initialRecoveryZone.Value, initialPrimaryExtendedLocation.Value, initialRecoveryExtendedLocation.Value, Optional.ToNullable(initialPrimaryFabricLocation), Optional.ToNullable(initialRecoveryFabricLocation), primaryZone.Value, recoveryZone.Value, primaryExtendedLocation.Value, recoveryExtendedLocation.Value, Optional.ToNullable(primaryFabricLocation), Optional.ToNullable(recoveryFabricLocation));
+            return new A2AFabricSpecificLocationDetails(initialPrimaryZone.Value, initialRecoveryZone.Value, initialPrimaryExtendedLocation.Value, initialRecoveryExtendedLocation.Value, Core.Optional.ToNullable(initialPrimaryFabricLocation), Core.Optional.ToNullable(initialRecoveryFabricLocation), primaryZone.Value, recoveryZone.Value, primaryExtendedLocation.Value, recoveryExtendedLocation.Value, Core.Optional.ToNullable(primaryFabricLocation), Core.Optional.ToNullable(recoveryFabricLocation));
         }
     }
 }

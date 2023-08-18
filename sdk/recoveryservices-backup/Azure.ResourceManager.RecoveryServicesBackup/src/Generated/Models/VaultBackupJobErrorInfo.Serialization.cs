@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class VaultBackupJobErrorInfo : IUtf8JsonSerializable
+    public partial class VaultBackupJobErrorInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ErrorCode))
+            if (Core.Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteNumberValue(ErrorCode.Value);
             }
-            if (Optional.IsDefined(ErrorString))
+            if (Core.Optional.IsDefined(ErrorString))
             {
                 writer.WritePropertyName("errorString"u8);
                 writer.WriteStringValue(ErrorString);
             }
-            if (Optional.IsCollectionDefined(Recommendations))
+            if (Core.Optional.IsCollectionDefined(Recommendations))
             {
                 writer.WritePropertyName("recommendations"u8);
                 writer.WriteStartArray();
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<int> errorCode = default;
-            Optional<string> errorString = default;
-            Optional<IList<string>> recommendations = default;
+            Core.Optional<int> errorCode = default;
+            Core.Optional<string> errorString = default;
+            Core.Optional<IList<string>> recommendations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorCode"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new VaultBackupJobErrorInfo(Optional.ToNullable(errorCode), errorString.Value, Optional.ToList(recommendations));
+            return new VaultBackupJobErrorInfo(Core.Optional.ToNullable(errorCode), errorString.Value, Core.Optional.ToList(recommendations));
         }
     }
 }

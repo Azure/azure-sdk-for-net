@@ -12,34 +12,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServices
 {
-    public partial class RecoveryServicesVaultExtendedInfoData : IUtf8JsonSerializable
+    public partial class RecoveryServicesVaultExtendedInfoData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IntegrityKey))
+            if (Core.Optional.IsDefined(IntegrityKey))
             {
                 writer.WritePropertyName("integrityKey"u8);
                 writer.WriteStringValue(IntegrityKey);
             }
-            if (Optional.IsDefined(EncryptionKey))
+            if (Core.Optional.IsDefined(EncryptionKey))
             {
                 writer.WritePropertyName("encryptionKey"u8);
                 writer.WriteStringValue(EncryptionKey);
             }
-            if (Optional.IsDefined(EncryptionKeyThumbprint))
+            if (Core.Optional.IsDefined(EncryptionKeyThumbprint))
             {
                 writer.WritePropertyName("encryptionKeyThumbprint"u8);
                 writer.WriteStringValue(EncryptionKeyThumbprint);
             }
-            if (Optional.IsDefined(Algorithm))
+            if (Core.Optional.IsDefined(Algorithm))
             {
                 writer.WritePropertyName("algorithm"u8);
                 writer.WriteStringValue(Algorithm);
@@ -54,15 +54,15 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            Core.Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> integrityKey = default;
-            Optional<string> encryptionKey = default;
-            Optional<string> encryptionKeyThumbprint = default;
-            Optional<string> algorithm = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> integrityKey = default;
+            Core.Optional<string> encryptionKey = default;
+            Core.Optional<string> encryptionKeyThumbprint = default;
+            Core.Optional<string> algorithm = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServices
                     continue;
                 }
             }
-            return new RecoveryServicesVaultExtendedInfoData(id, name, type, systemData.Value, integrityKey.Value, encryptionKey.Value, encryptionKeyThumbprint.Value, algorithm.Value, Optional.ToNullable(etag));
+            return new RecoveryServicesVaultExtendedInfoData(id, name, type, systemData.Value, integrityKey.Value, encryptionKey.Value, encryptionKeyThumbprint.Value, algorithm.Value, Core.Optional.ToNullable(etag));
         }
     }
 }

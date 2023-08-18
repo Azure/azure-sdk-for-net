@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of HealthErrorSummary. </summary>
         internal HealthErrorSummary()
         {
-            AffectedResourceCorrelationIds = new ChangeTrackingList<string>();
+            AffectedResourceCorrelationIds = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of HealthErrorSummary. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of DefenderForServersAwsOfferingVmScannersConfiguration. </summary>
         public DefenderForServersAwsOfferingVmScannersConfiguration()
         {
-            ExclusionTags = new ChangeTrackingDictionary<string, string>();
+            ExclusionTags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of DefenderForServersAwsOfferingVmScannersConfiguration. </summary>

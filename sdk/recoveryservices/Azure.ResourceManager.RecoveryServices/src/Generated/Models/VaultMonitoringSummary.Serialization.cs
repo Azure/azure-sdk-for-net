@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<int> unHealthyVmCount = default;
-            Optional<int> unHealthyProviderCount = default;
-            Optional<int> eventsCount = default;
-            Optional<int> deprecatedProviderCount = default;
-            Optional<int> supportedProviderCount = default;
-            Optional<int> unsupportedProviderCount = default;
+            Core.Optional<int> unHealthyVmCount = default;
+            Core.Optional<int> unHealthyProviderCount = default;
+            Core.Optional<int> eventsCount = default;
+            Core.Optional<int> deprecatedProviderCount = default;
+            Core.Optional<int> supportedProviderCount = default;
+            Core.Optional<int> unsupportedProviderCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unHealthyVmCount"u8))
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     continue;
                 }
             }
-            return new VaultMonitoringSummary(Optional.ToNullable(unHealthyVmCount), Optional.ToNullable(unHealthyProviderCount), Optional.ToNullable(eventsCount), Optional.ToNullable(deprecatedProviderCount), Optional.ToNullable(supportedProviderCount), Optional.ToNullable(unsupportedProviderCount));
+            return new VaultMonitoringSummary(Core.Optional.ToNullable(unHealthyVmCount), Core.Optional.ToNullable(unHealthyProviderCount), Core.Optional.ToNullable(eventsCount), Core.Optional.ToNullable(deprecatedProviderCount), Core.Optional.ToNullable(supportedProviderCount), Core.Optional.ToNullable(unsupportedProviderCount));
         }
     }
 }

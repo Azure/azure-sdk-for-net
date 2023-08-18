@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> primaryZone = default;
-            Optional<string> recoveryZone = default;
-            Optional<SiteRecoveryExtendedLocation> primaryExtendedLocation = default;
-            Optional<SiteRecoveryExtendedLocation> recoveryExtendedLocation = default;
+            Core.Optional<string> primaryZone = default;
+            Core.Optional<string> recoveryZone = default;
+            Core.Optional<SiteRecoveryExtendedLocation> primaryExtendedLocation = default;
+            Core.Optional<SiteRecoveryExtendedLocation> recoveryExtendedLocation = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {

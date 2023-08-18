@@ -13,39 +13,39 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlServerDevOpsAuditingSettingData : IUtf8JsonSerializable
+    public partial class SqlServerDevOpsAuditingSettingData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsAzureMonitorTargetEnabled))
+            if (Core.Optional.IsDefined(IsAzureMonitorTargetEnabled))
             {
                 writer.WritePropertyName("isAzureMonitorTargetEnabled"u8);
                 writer.WriteBooleanValue(IsAzureMonitorTargetEnabled.Value);
             }
-            if (Optional.IsDefined(IsManagedIdentityInUse))
+            if (Core.Optional.IsDefined(IsManagedIdentityInUse))
             {
                 writer.WritePropertyName("isManagedIdentityInUse"u8);
                 writer.WriteBooleanValue(IsManagedIdentityInUse.Value);
             }
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (Optional.IsDefined(StorageEndpoint))
+            if (Core.Optional.IsDefined(StorageEndpoint))
             {
                 writer.WritePropertyName("storageEndpoint"u8);
                 writer.WriteStringValue(StorageEndpoint);
             }
-            if (Optional.IsDefined(StorageAccountAccessKey))
+            if (Core.Optional.IsDefined(StorageAccountAccessKey))
             {
                 writer.WritePropertyName("storageAccountAccessKey"u8);
                 writer.WriteStringValue(StorageAccountAccessKey);
             }
-            if (Optional.IsDefined(StorageAccountSubscriptionId))
+            if (Core.Optional.IsDefined(StorageAccountSubscriptionId))
             {
                 writer.WritePropertyName("storageAccountSubscriptionId"u8);
                 writer.WriteStringValue(StorageAccountSubscriptionId.Value);
@@ -63,13 +63,13 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isAzureMonitorTargetEnabled = default;
-            Optional<bool> isManagedIdentityInUse = default;
-            Optional<BlobAuditingPolicyState> state = default;
-            Optional<string> storageEndpoint = default;
-            Optional<string> storageAccountAccessKey = default;
-            Optional<Guid> storageAccountSubscriptionId = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<bool> isAzureMonitorTargetEnabled = default;
+            Core.Optional<bool> isManagedIdentityInUse = default;
+            Core.Optional<BlobAuditingPolicyState> state = default;
+            Core.Optional<string> storageEndpoint = default;
+            Core.Optional<string> storageAccountAccessKey = default;
+            Core.Optional<Guid> storageAccountSubscriptionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new SqlServerDevOpsAuditingSettingData(id, name, type, systemData.Value, Optional.ToNullable(isAzureMonitorTargetEnabled), Optional.ToNullable(isManagedIdentityInUse), Optional.ToNullable(state), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(storageAccountSubscriptionId));
+            return new SqlServerDevOpsAuditingSettingData(id, name, type, systemData.Value, Core.Optional.ToNullable(isAzureMonitorTargetEnabled), Core.Optional.ToNullable(isManagedIdentityInUse), Core.Optional.ToNullable(state), storageEndpoint.Value, storageAccountAccessKey.Value, Core.Optional.ToNullable(storageAccountSubscriptionId));
         }
     }
 }

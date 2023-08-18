@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of UpdateRecoveryPlanContentProperties. </summary>
         public UpdateRecoveryPlanContentProperties()
         {
-            Groups = new ChangeTrackingList<SiteRecoveryPlanGroup>();
+            Groups = new Core.ChangeTrackingList<SiteRecoveryPlanGroup>();
         }
 
         /// <summary> The recovery plan groups. </summary>

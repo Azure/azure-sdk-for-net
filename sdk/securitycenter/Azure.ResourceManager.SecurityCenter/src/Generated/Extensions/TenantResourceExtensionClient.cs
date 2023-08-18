@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecureScoreControlDefinitionsRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecureScoreControlDefinitionsRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SecureScoreControlDefinitionItem.DeserializeSecureScoreControlDefinitionItem, SecureScoreControlDefinitionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetSecureScoreControlDefinitions", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SecureScoreControlDefinitionItem.DeserializeSecureScoreControlDefinitionItem, SecureScoreControlDefinitionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetSecureScoreControlDefinitions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SecureScoreControlDefinitionsRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecureScoreControlDefinitionsRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SecureScoreControlDefinitionItem.DeserializeSecureScoreControlDefinitionItem, SecureScoreControlDefinitionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetSecureScoreControlDefinitions", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SecureScoreControlDefinitionItem.DeserializeSecureScoreControlDefinitionItem, SecureScoreControlDefinitionsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetSecureScoreControlDefinitions", "value", "nextLink", cancellationToken);
         }
     }
 }

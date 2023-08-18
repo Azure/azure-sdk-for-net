@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<SiteRecoveryDiskReplicationProgressHealth> progressHealth = default;
-            Optional<long> transferredBytes = default;
-            Optional<long> last15MinutesTransferredBytes = default;
-            Optional<DateTimeOffset> lastDataTransferTimeUtc = default;
-            Optional<long> processedBytes = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> lastRefreshTime = default;
-            Optional<int> progressPercentage = default;
+            Core.Optional<SiteRecoveryDiskReplicationProgressHealth> progressHealth = default;
+            Core.Optional<long> transferredBytes = default;
+            Core.Optional<long> last15MinutesTransferredBytes = default;
+            Core.Optional<DateTimeOffset> lastDataTransferTimeUtc = default;
+            Core.Optional<long> processedBytes = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> lastRefreshTime = default;
+            Core.Optional<int> progressPercentage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("progressHealth"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new InMageRcmFailbackSyncDetails(Optional.ToNullable(progressHealth), Optional.ToNullable(transferredBytes), Optional.ToNullable(last15MinutesTransferredBytes), Optional.ToNullable(lastDataTransferTimeUtc), Optional.ToNullable(processedBytes), Optional.ToNullable(startTime), Optional.ToNullable(lastRefreshTime), Optional.ToNullable(progressPercentage));
+            return new InMageRcmFailbackSyncDetails(Core.Optional.ToNullable(progressHealth), Core.Optional.ToNullable(transferredBytes), Core.Optional.ToNullable(last15MinutesTransferredBytes), Core.Optional.ToNullable(lastDataTransferTimeUtc), Core.Optional.ToNullable(processedBytes), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(lastRefreshTime), Core.Optional.ToNullable(progressPercentage));
         }
     }
 }

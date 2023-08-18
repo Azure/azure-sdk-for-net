@@ -13,9 +13,9 @@ using Azure.ResourceManager.SignalR.Models;
 
 namespace Azure.ResourceManager.SignalR
 {
-    public partial class SignalRCustomCertificateData : IUtf8JsonSerializable
+    public partial class SignalRCustomCertificateData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SignalR
             writer.WriteStringValue(KeyVaultBaseUri.AbsoluteUri);
             writer.WritePropertyName("keyVaultSecretName"u8);
             writer.WriteStringValue(KeyVaultSecretName);
-            if (Optional.IsDefined(KeyVaultSecretVersion))
+            if (Core.Optional.IsDefined(KeyVaultSecretVersion))
             {
                 writer.WritePropertyName("keyVaultSecretVersion"u8);
                 writer.WriteStringValue(KeyVaultSecretVersion);
@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.SignalR
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SignalRProvisioningState> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<SignalRProvisioningState> provisioningState = default;
             Uri keyVaultBaseUri = default;
             string keyVaultSecretName = default;
-            Optional<string> keyVaultSecretVersion = default;
+            Core.Optional<string> keyVaultSecretVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SignalR
                     continue;
                 }
             }
-            return new SignalRCustomCertificateData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), keyVaultBaseUri, keyVaultSecretName, keyVaultSecretVersion.Value);
+            return new SignalRCustomCertificateData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), keyVaultBaseUri, keyVaultSecretName, keyVaultSecretVersion.Value);
         }
     }
 }

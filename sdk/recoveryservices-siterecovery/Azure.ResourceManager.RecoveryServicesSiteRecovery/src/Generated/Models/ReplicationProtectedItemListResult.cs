@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of ReplicationProtectedItemListResult. </summary>
         internal ReplicationProtectedItemListResult()
         {
-            Value = new ChangeTrackingList<ReplicationProtectedItemData>();
+            Value = new Core.ChangeTrackingList<ReplicationProtectedItemData>();
         }
 
         /// <summary> Initializes a new instance of ReplicationProtectedItemListResult. </summary>

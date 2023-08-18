@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Resources.Models
 
             ResourceId = resourceId;
             ChangeType = changeType;
-            Delta = new ChangeTrackingList<WhatIfPropertyChange>();
+            Delta = new Core.ChangeTrackingList<WhatIfPropertyChange>();
         }
 
         /// <summary> Initializes a new instance of WhatIfChange. </summary>

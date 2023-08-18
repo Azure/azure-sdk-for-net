@@ -12,42 +12,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class StatefulServiceProperties : IUtf8JsonSerializable
+    public partial class StatefulServiceProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(HasPersistedState))
+            if (Core.Optional.IsDefined(HasPersistedState))
             {
                 writer.WritePropertyName("hasPersistedState"u8);
                 writer.WriteBooleanValue(HasPersistedState.Value);
             }
-            if (Optional.IsDefined(TargetReplicaSetSize))
+            if (Core.Optional.IsDefined(TargetReplicaSetSize))
             {
                 writer.WritePropertyName("targetReplicaSetSize"u8);
                 writer.WriteNumberValue(TargetReplicaSetSize.Value);
             }
-            if (Optional.IsDefined(MinReplicaSetSize))
+            if (Core.Optional.IsDefined(MinReplicaSetSize))
             {
                 writer.WritePropertyName("minReplicaSetSize"u8);
                 writer.WriteNumberValue(MinReplicaSetSize.Value);
             }
-            if (Optional.IsDefined(ReplicaRestartWaitDuration))
+            if (Core.Optional.IsDefined(ReplicaRestartWaitDuration))
             {
                 writer.WritePropertyName("replicaRestartWaitDuration"u8);
                 writer.WriteStringValue(ReplicaRestartWaitDuration.Value, "c");
             }
-            if (Optional.IsDefined(QuorumLossWaitDuration))
+            if (Core.Optional.IsDefined(QuorumLossWaitDuration))
             {
                 writer.WritePropertyName("quorumLossWaitDuration"u8);
                 writer.WriteStringValue(QuorumLossWaitDuration.Value, "c");
             }
-            if (Optional.IsDefined(StandByReplicaKeepDuration))
+            if (Core.Optional.IsDefined(StandByReplicaKeepDuration))
             {
                 writer.WritePropertyName("standByReplicaKeepDuration"u8);
                 writer.WriteStringValue(StandByReplicaKeepDuration.Value, "c");
             }
-            if (Optional.IsDefined(ServicePlacementTimeLimit))
+            if (Core.Optional.IsDefined(ServicePlacementTimeLimit))
             {
                 writer.WritePropertyName("servicePlacementTimeLimit"u8);
                 writer.WriteStringValue(ServicePlacementTimeLimit.Value, "c");
@@ -58,22 +58,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStringValue(ServiceTypeName);
             writer.WritePropertyName("partitionDescription"u8);
             writer.WriteObjectValue(PartitionDescription);
-            if (Optional.IsDefined(ServicePackageActivationMode))
+            if (Core.Optional.IsDefined(ServicePackageActivationMode))
             {
                 writer.WritePropertyName("servicePackageActivationMode"u8);
                 writer.WriteStringValue(ServicePackageActivationMode.Value.ToString());
             }
-            if (Optional.IsDefined(ServiceDnsName))
+            if (Core.Optional.IsDefined(ServiceDnsName))
             {
                 writer.WritePropertyName("serviceDnsName"u8);
                 writer.WriteStringValue(ServiceDnsName);
             }
-            if (Optional.IsDefined(PlacementConstraints))
+            if (Core.Optional.IsDefined(PlacementConstraints))
             {
                 writer.WritePropertyName("placementConstraints"u8);
                 writer.WriteStringValue(PlacementConstraints);
             }
-            if (Optional.IsCollectionDefined(CorrelationScheme))
+            if (Core.Optional.IsCollectionDefined(CorrelationScheme))
             {
                 writer.WritePropertyName("correlationScheme"u8);
                 writer.WriteStartArray();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ServiceLoadMetrics))
+            if (Core.Optional.IsCollectionDefined(ServiceLoadMetrics))
             {
                 writer.WritePropertyName("serviceLoadMetrics"u8);
                 writer.WriteStartArray();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ServicePlacementPolicies))
+            if (Core.Optional.IsCollectionDefined(ServicePlacementPolicies))
             {
                 writer.WritePropertyName("servicePlacementPolicies"u8);
                 writer.WriteStartArray();
@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DefaultMoveCost))
+            if (Core.Optional.IsDefined(DefaultMoveCost))
             {
                 writer.WritePropertyName("defaultMoveCost"u8);
                 writer.WriteStringValue(DefaultMoveCost.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ScalingPolicies))
+            if (Core.Optional.IsCollectionDefined(ScalingPolicies))
             {
                 writer.WritePropertyName("scalingPolicies"u8);
                 writer.WriteStartArray();
@@ -127,25 +127,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<bool> hasPersistedState = default;
-            Optional<int> targetReplicaSetSize = default;
-            Optional<int> minReplicaSetSize = default;
-            Optional<TimeSpan> replicaRestartWaitDuration = default;
-            Optional<TimeSpan> quorumLossWaitDuration = default;
-            Optional<TimeSpan> standByReplicaKeepDuration = default;
-            Optional<TimeSpan> servicePlacementTimeLimit = default;
-            Optional<string> provisioningState = default;
+            Core.Optional<bool> hasPersistedState = default;
+            Core.Optional<int> targetReplicaSetSize = default;
+            Core.Optional<int> minReplicaSetSize = default;
+            Core.Optional<TimeSpan> replicaRestartWaitDuration = default;
+            Core.Optional<TimeSpan> quorumLossWaitDuration = default;
+            Core.Optional<TimeSpan> standByReplicaKeepDuration = default;
+            Core.Optional<TimeSpan> servicePlacementTimeLimit = default;
+            Core.Optional<string> provisioningState = default;
             ServiceKind serviceKind = default;
             string serviceTypeName = default;
             ManagedServicePartitionScheme partitionDescription = default;
-            Optional<ManagedServicePackageActivationMode> servicePackageActivationMode = default;
-            Optional<string> serviceDnsName = default;
-            Optional<string> placementConstraints = default;
-            Optional<IList<ManagedServiceCorrelation>> correlationScheme = default;
-            Optional<IList<ManagedServiceLoadMetric>> serviceLoadMetrics = default;
-            Optional<IList<ManagedServicePlacementPolicy>> servicePlacementPolicies = default;
-            Optional<ServiceFabricManagedServiceMoveCost> defaultMoveCost = default;
-            Optional<IList<ManagedServiceScalingPolicy>> scalingPolicies = default;
+            Core.Optional<ManagedServicePackageActivationMode> servicePackageActivationMode = default;
+            Core.Optional<string> serviceDnsName = default;
+            Core.Optional<string> placementConstraints = default;
+            Core.Optional<IList<ManagedServiceCorrelation>> correlationScheme = default;
+            Core.Optional<IList<ManagedServiceLoadMetric>> serviceLoadMetrics = default;
+            Core.Optional<IList<ManagedServicePlacementPolicy>> servicePlacementPolicies = default;
+            Core.Optional<ServiceFabricManagedServiceMoveCost> defaultMoveCost = default;
+            Core.Optional<IList<ManagedServiceScalingPolicy>> scalingPolicies = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hasPersistedState"u8))
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     continue;
                 }
             }
-            return new StatefulServiceProperties(placementConstraints.Value, Optional.ToList(correlationScheme), Optional.ToList(serviceLoadMetrics), Optional.ToList(servicePlacementPolicies), Optional.ToNullable(defaultMoveCost), Optional.ToList(scalingPolicies), provisioningState.Value, serviceKind, serviceTypeName, partitionDescription, Optional.ToNullable(servicePackageActivationMode), serviceDnsName.Value, Optional.ToNullable(hasPersistedState), Optional.ToNullable(targetReplicaSetSize), Optional.ToNullable(minReplicaSetSize), Optional.ToNullable(replicaRestartWaitDuration), Optional.ToNullable(quorumLossWaitDuration), Optional.ToNullable(standByReplicaKeepDuration), Optional.ToNullable(servicePlacementTimeLimit));
+            return new StatefulServiceProperties(placementConstraints.Value, Core.Optional.ToList(correlationScheme), Core.Optional.ToList(serviceLoadMetrics), Core.Optional.ToList(servicePlacementPolicies), Core.Optional.ToNullable(defaultMoveCost), Core.Optional.ToList(scalingPolicies), provisioningState.Value, serviceKind, serviceTypeName, partitionDescription, Core.Optional.ToNullable(servicePackageActivationMode), serviceDnsName.Value, Core.Optional.ToNullable(hasPersistedState), Core.Optional.ToNullable(targetReplicaSetSize), Core.Optional.ToNullable(minReplicaSetSize), Core.Optional.ToNullable(replicaRestartWaitDuration), Core.Optional.ToNullable(quorumLossWaitDuration), Core.Optional.ToNullable(standByReplicaKeepDuration), Core.Optional.ToNullable(servicePlacementTimeLimit));
         }
     }
 }

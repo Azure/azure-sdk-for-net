@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<string> protectionStatus = default;
-            Optional<ResourceIdentifier> replicationProtectedItemId = default;
-            Optional<ResourceIdentifier> recoveryServicesProviderId = default;
-            Optional<IReadOnlyList<string>> protectionReadinessErrors = default;
-            Optional<IReadOnlyList<string>> supportedReplicationProviders = default;
-            Optional<SiteRecoveryReplicationProviderSettings> customDetails = default;
+            Core.Optional<string> friendlyName = default;
+            Core.Optional<string> protectionStatus = default;
+            Core.Optional<ResourceIdentifier> replicationProtectedItemId = default;
+            Core.Optional<ResourceIdentifier> recoveryServicesProviderId = default;
+            Core.Optional<IReadOnlyList<string>> protectionReadinessErrors = default;
+            Core.Optional<IReadOnlyList<string>> supportedReplicationProviders = default;
+            Core.Optional<SiteRecoveryReplicationProviderSettings> customDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryProtectableItemProperties(friendlyName.Value, protectionStatus.Value, replicationProtectedItemId.Value, recoveryServicesProviderId.Value, Optional.ToList(protectionReadinessErrors), Optional.ToList(supportedReplicationProviders), customDetails.Value);
+            return new SiteRecoveryProtectableItemProperties(friendlyName.Value, protectionStatus.Value, replicationProtectedItemId.Value, recoveryServicesProviderId.Value, Core.Optional.ToList(protectionReadinessErrors), Core.Optional.ToList(supportedReplicationProviders), customDetails.Value);
         }
     }
 }

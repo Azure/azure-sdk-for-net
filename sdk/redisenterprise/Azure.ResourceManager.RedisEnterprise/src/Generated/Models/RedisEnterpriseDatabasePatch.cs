@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> Initializes a new instance of RedisEnterpriseDatabasePatch. </summary>
         public RedisEnterpriseDatabasePatch()
         {
-            Modules = new ChangeTrackingList<RedisEnterpriseModule>();
+            Modules = new Core.ChangeTrackingList<RedisEnterpriseModule>();
         }
 
         /// <summary> Specifies whether redis clients can connect using TLS-encrypted or plaintext redis protocols. Default is TLS-encrypted. </summary>

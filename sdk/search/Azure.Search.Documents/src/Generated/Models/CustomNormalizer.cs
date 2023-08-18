@@ -21,8 +21,8 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            TokenFilters = new ChangeTrackingList<TokenFilterName>();
-            CharFilters = new ChangeTrackingList<CharFilterName>();
+            TokenFilters = new Core.ChangeTrackingList<TokenFilterName>();
+            CharFilters = new Core.ChangeTrackingList<CharFilterName>();
             ODataType = "#Microsoft.Azure.Search.CustomNormalizer";
         }
 

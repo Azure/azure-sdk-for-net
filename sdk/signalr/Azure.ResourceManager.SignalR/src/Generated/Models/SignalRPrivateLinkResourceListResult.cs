@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <summary> Initializes a new instance of SignalRPrivateLinkResourceListResult. </summary>
         internal SignalRPrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<SignalRPrivateLinkResource>();
+            Value = new Core.ChangeTrackingList<SignalRPrivateLinkResource>();
         }
 
         /// <summary> Initializes a new instance of SignalRPrivateLinkResourceListResult. </summary>

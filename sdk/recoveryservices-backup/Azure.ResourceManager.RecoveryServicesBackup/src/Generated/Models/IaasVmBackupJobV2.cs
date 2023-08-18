@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of IaasVmBackupJobV2. </summary>
         public IaasVmBackupJobV2()
         {
-            ActionsInfo = new ChangeTrackingList<JobSupportedAction>();
-            ErrorDetails = new ChangeTrackingList<IaasVmErrorInfo>();
+            ActionsInfo = new Core.ChangeTrackingList<JobSupportedAction>();
+            ErrorDetails = new Core.ChangeTrackingList<IaasVmErrorInfo>();
             JobType = "AzureIaaSVMJobV2";
         }
 

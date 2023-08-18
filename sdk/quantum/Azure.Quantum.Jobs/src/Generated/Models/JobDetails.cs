@@ -31,8 +31,8 @@ namespace Azure.Quantum.Jobs.Models
             InputDataFormat = inputDataFormat;
             ProviderId = providerId;
             Target = target;
-            Metadata = new ChangeTrackingDictionary<string, string>();
-            Tags = new ChangeTrackingList<string>();
+            Metadata = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of JobDetails. </summary>

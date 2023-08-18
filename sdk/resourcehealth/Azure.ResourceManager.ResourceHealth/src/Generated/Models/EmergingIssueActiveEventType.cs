@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> Initializes a new instance of EmergingIssueActiveEventType. </summary>
         internal EmergingIssueActiveEventType()
         {
-            Impacts = new ChangeTrackingList<EmergingIssueImpact>();
+            Impacts = new Core.ChangeTrackingList<EmergingIssueImpact>();
         }
 
         /// <summary> Initializes a new instance of EmergingIssueActiveEventType. </summary>

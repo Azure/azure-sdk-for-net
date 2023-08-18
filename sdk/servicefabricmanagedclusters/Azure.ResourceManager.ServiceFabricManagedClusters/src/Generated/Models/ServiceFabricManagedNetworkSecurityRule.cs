@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
             Name = name;
             Protocol = protocol;
-            SourceAddressPrefixes = new ChangeTrackingList<string>();
-            DestinationAddressPrefixes = new ChangeTrackingList<string>();
-            SourcePortRanges = new ChangeTrackingList<string>();
-            DestinationPortRanges = new ChangeTrackingList<string>();
+            SourceAddressPrefixes = new Core.ChangeTrackingList<string>();
+            DestinationAddressPrefixes = new Core.ChangeTrackingList<string>();
+            SourcePortRanges = new Core.ChangeTrackingList<string>();
+            DestinationPortRanges = new Core.ChangeTrackingList<string>();
             Access = access;
             Priority = priority;
             Direction = direction;

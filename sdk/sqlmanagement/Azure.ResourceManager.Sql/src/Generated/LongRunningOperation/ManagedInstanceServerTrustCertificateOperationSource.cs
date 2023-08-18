@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ManagedInstanceServerTrustCertificateOperationSource : IOperationSource<ManagedInstanceServerTrustCertificateResource>
+    internal class ManagedInstanceServerTrustCertificateOperationSource : Core.IOperationSource<ManagedInstanceServerTrustCertificateResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        ManagedInstanceServerTrustCertificateResource IOperationSource<ManagedInstanceServerTrustCertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedInstanceServerTrustCertificateResource Core.IOperationSource<ManagedInstanceServerTrustCertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ServerTrustCertificateData.DeserializeServerTrustCertificateData(document.RootElement);
             return new ManagedInstanceServerTrustCertificateResource(_client, data);
         }
 
-        async ValueTask<ManagedInstanceServerTrustCertificateResource> IOperationSource<ManagedInstanceServerTrustCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedInstanceServerTrustCertificateResource> Core.IOperationSource<ManagedInstanceServerTrustCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ServerTrustCertificateData.DeserializeServerTrustCertificateData(document.RootElement);

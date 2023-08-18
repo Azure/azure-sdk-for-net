@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class DpmContainer : IUtf8JsonSerializable
+    public partial class DpmContainer : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CanReRegister))
+            if (Core.Optional.IsDefined(CanReRegister))
             {
                 writer.WritePropertyName("canReRegister"u8);
                 writer.WriteBooleanValue(CanReRegister.Value);
             }
-            if (Optional.IsDefined(ContainerId))
+            if (Core.Optional.IsDefined(ContainerId))
             {
                 writer.WritePropertyName("containerId"u8);
                 writer.WriteStringValue(ContainerId);
             }
-            if (Optional.IsDefined(ProtectedItemCount))
+            if (Core.Optional.IsDefined(ProtectedItemCount))
             {
                 writer.WritePropertyName("protectedItemCount"u8);
                 writer.WriteNumberValue(ProtectedItemCount.Value);
             }
-            if (Optional.IsDefined(DpmAgentVersion))
+            if (Core.Optional.IsDefined(DpmAgentVersion))
             {
                 writer.WritePropertyName("dpmAgentVersion"u8);
                 writer.WriteStringValue(DpmAgentVersion);
             }
-            if (Optional.IsCollectionDefined(DpmServers))
+            if (Core.Optional.IsCollectionDefined(DpmServers))
             {
                 writer.WritePropertyName("dpmServers"u8);
                 writer.WriteStartArray();
@@ -46,44 +46,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsUpgradeAvailable))
+            if (Core.Optional.IsDefined(IsUpgradeAvailable))
             {
                 writer.WritePropertyName("upgradeAvailable"u8);
                 writer.WriteBooleanValue(IsUpgradeAvailable.Value);
             }
-            if (Optional.IsDefined(ProtectionStatus))
+            if (Core.Optional.IsDefined(ProtectionStatus))
             {
                 writer.WritePropertyName("protectionStatus"u8);
                 writer.WriteStringValue(ProtectionStatus);
             }
-            if (Optional.IsDefined(ExtendedInfo))
+            if (Core.Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteObjectValue(ExtendedInfo);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (Core.Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(BackupManagementType))
+            if (Core.Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (Optional.IsDefined(RegistrationStatus))
+            if (Core.Optional.IsDefined(RegistrationStatus))
             {
                 writer.WritePropertyName("registrationStatus"u8);
                 writer.WriteStringValue(RegistrationStatus);
             }
-            if (Optional.IsDefined(HealthStatus))
+            if (Core.Optional.IsDefined(HealthStatus))
             {
                 writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus);
             }
             writer.WritePropertyName("containerType"u8);
             writer.WriteStringValue(ContainerType.ToSerialString());
-            if (Optional.IsDefined(ProtectableObjectType))
+            if (Core.Optional.IsDefined(ProtectableObjectType))
             {
                 writer.WritePropertyName("protectableObjectType"u8);
                 writer.WriteStringValue(ProtectableObjectType);
@@ -104,20 +104,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "AzureBackupServerContainer": return BackupServerContainer.DeserializeBackupServerContainer(element);
                 }
             }
-            Optional<bool> canReRegister = default;
-            Optional<string> containerId = default;
-            Optional<long> protectedItemCount = default;
-            Optional<string> dpmAgentVersion = default;
-            Optional<IList<string>> dpmServers = default;
-            Optional<bool> upgradeAvailable = default;
-            Optional<string> protectionStatus = default;
-            Optional<DpmContainerExtendedInfo> extendedInfo = default;
-            Optional<string> friendlyName = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<string> registrationStatus = default;
-            Optional<string> healthStatus = default;
+            Core.Optional<bool> canReRegister = default;
+            Core.Optional<string> containerId = default;
+            Core.Optional<long> protectedItemCount = default;
+            Core.Optional<string> dpmAgentVersion = default;
+            Core.Optional<IList<string>> dpmServers = default;
+            Core.Optional<bool> upgradeAvailable = default;
+            Core.Optional<string> protectionStatus = default;
+            Core.Optional<DpmContainerExtendedInfo> extendedInfo = default;
+            Core.Optional<string> friendlyName = default;
+            Core.Optional<BackupManagementType> backupManagementType = default;
+            Core.Optional<string> registrationStatus = default;
+            Core.Optional<string> healthStatus = default;
             ProtectableContainerType containerType = default;
-            Optional<string> protectableObjectType = default;
+            Core.Optional<string> protectableObjectType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("canReRegister"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new DpmContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, healthStatus.Value, containerType, protectableObjectType.Value, Optional.ToNullable(canReRegister), containerId.Value, Optional.ToNullable(protectedItemCount), dpmAgentVersion.Value, Optional.ToList(dpmServers), Optional.ToNullable(upgradeAvailable), protectionStatus.Value, extendedInfo.Value);
+            return new DpmContainer(friendlyName.Value, Core.Optional.ToNullable(backupManagementType), registrationStatus.Value, healthStatus.Value, containerType, protectableObjectType.Value, Core.Optional.ToNullable(canReRegister), containerId.Value, Core.Optional.ToNullable(protectedItemCount), dpmAgentVersion.Value, Core.Optional.ToList(dpmServers), Core.Optional.ToNullable(upgradeAvailable), protectionStatus.Value, extendedInfo.Value);
         }
     }
 }

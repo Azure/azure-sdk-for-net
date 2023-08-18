@@ -19,10 +19,10 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            Optional<double> score = default;
-            Optional<string> key = default;
-            Optional<string> text = default;
-            Optional<string> highlights = default;
+            Core.Optional<double> score = default;
+            Core.Optional<string> key = default;
+            Core.Optional<string> text = default;
+            Core.Optional<string> highlights = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -59,7 +59,7 @@ namespace Azure.Search.Documents.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AnswerResult(Optional.ToNullable(score), key.Value, text.Value, highlights.Value, additionalProperties);
+            return new AnswerResult(Core.Optional.ToNullable(score), key.Value, text.Value, highlights.Value, additionalProperties);
         }
     }
 }

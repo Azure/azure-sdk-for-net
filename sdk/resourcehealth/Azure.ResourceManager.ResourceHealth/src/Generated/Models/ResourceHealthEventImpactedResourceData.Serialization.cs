@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.ResourceHealth
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceType> targetResourceType = default;
-            Optional<ResourceIdentifier> targetResourceId = default;
-            Optional<string> targetRegion = default;
-            Optional<IReadOnlyList<ResourceHealthKeyValueItem>> info = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ResourceType> targetResourceType = default;
+            Core.Optional<ResourceIdentifier> targetResourceId = default;
+            Core.Optional<string> targetRegion = default;
+            Core.Optional<IReadOnlyList<ResourceHealthKeyValueItem>> info = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ResourceHealth
                     continue;
                 }
             }
-            return new ResourceHealthEventImpactedResourceData(id, name, type, systemData.Value, Optional.ToNullable(targetResourceType), targetResourceId.Value, targetRegion.Value, Optional.ToList(info));
+            return new ResourceHealthEventImpactedResourceData(id, name, type, systemData.Value, Core.Optional.ToNullable(targetResourceType), targetResourceId.Value, targetRegion.Value, Core.Optional.ToList(info));
         }
     }
 }

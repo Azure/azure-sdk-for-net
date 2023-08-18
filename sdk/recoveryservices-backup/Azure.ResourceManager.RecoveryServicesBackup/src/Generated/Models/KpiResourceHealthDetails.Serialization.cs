@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class KpiResourceHealthDetails : IUtf8JsonSerializable
+    public partial class KpiResourceHealthDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceHealthStatus))
+            if (Core.Optional.IsDefined(ResourceHealthStatus))
             {
                 writer.WritePropertyName("resourceHealthStatus"u8);
                 writer.WriteStringValue(ResourceHealthStatus.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ResourceHealthDetails))
+            if (Core.Optional.IsCollectionDefined(ResourceHealthDetails))
             {
                 writer.WritePropertyName("resourceHealthDetails"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<ResourceHealthStatus> resourceHealthStatus = default;
-            Optional<IList<ResourceHealthDetails>> resourceHealthDetails = default;
+            Core.Optional<ResourceHealthStatus> resourceHealthStatus = default;
+            Core.Optional<IList<ResourceHealthDetails>> resourceHealthDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceHealthStatus"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new KpiResourceHealthDetails(Optional.ToNullable(resourceHealthStatus), Optional.ToList(resourceHealthDetails));
+            return new KpiResourceHealthDetails(Core.Optional.ToNullable(resourceHealthStatus), Core.Optional.ToList(resourceHealthDetails));
         }
     }
 }

@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class AlertRuleTemplateDataSource : IUtf8JsonSerializable
+    public partial class AlertRuleTemplateDataSource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectorId))
+            if (Core.Optional.IsDefined(ConnectorId))
             {
                 writer.WritePropertyName("connectorId"u8);
                 writer.WriteStringValue(ConnectorId);
             }
-            if (Optional.IsCollectionDefined(DataTypes))
+            if (Core.Optional.IsCollectionDefined(DataTypes))
             {
                 writer.WritePropertyName("dataTypes"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> connectorId = default;
-            Optional<IList<string>> dataTypes = default;
+            Core.Optional<string> connectorId = default;
+            Core.Optional<IList<string>> dataTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectorId"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new AlertRuleTemplateDataSource(connectorId.Value, Optional.ToList(dataTypes));
+            return new AlertRuleTemplateDataSource(connectorId.Value, Core.Optional.ToList(dataTypes));
         }
     }
 }

@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of VaultBackupJob. </summary>
         public VaultBackupJob()
         {
-            ActionsInfo = new ChangeTrackingList<JobSupportedAction>();
-            ErrorDetails = new ChangeTrackingList<VaultBackupJobErrorInfo>();
+            ActionsInfo = new Core.ChangeTrackingList<JobSupportedAction>();
+            ErrorDetails = new Core.ChangeTrackingList<VaultBackupJobErrorInfo>();
             JobType = "VaultJob";
         }
 

@@ -21,17 +21,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IndexerExecutionStatus status = default;
-            Optional<IndexerExecutionStatusDetail?> statusDetail = default;
-            Optional<IndexerState> currentState = default;
-            Optional<string> errorMessage = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
+            Core.Optional<IndexerExecutionStatusDetail?> statusDetail = default;
+            Core.Optional<IndexerState> currentState = default;
+            Core.Optional<string> errorMessage = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset?> endTime = default;
             IReadOnlyList<SearchIndexerError> errors = default;
             IReadOnlyList<SearchIndexerWarning> warnings = default;
             int itemsProcessed = default;
             int itemsFailed = default;
-            Optional<string> initialTrackingState = default;
-            Optional<string> finalTrackingState = default;
+            Core.Optional<string> initialTrackingState = default;
+            Core.Optional<string> finalTrackingState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -123,7 +123,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new IndexerExecutionResult(status, Optional.ToNullable(statusDetail), currentState.Value, errorMessage.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), errors, warnings, itemsProcessed, itemsFailed, initialTrackingState.Value, finalTrackingState.Value);
+            return new IndexerExecutionResult(status, Core.Optional.ToNullable(statusDetail), currentState.Value, errorMessage.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), errors, warnings, itemsProcessed, itemsFailed, initialTrackingState.Value, finalTrackingState.Value);
         }
     }
 }

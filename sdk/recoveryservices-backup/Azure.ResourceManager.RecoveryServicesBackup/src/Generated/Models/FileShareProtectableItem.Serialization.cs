@@ -10,44 +10,44 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class FileShareProtectableItem : IUtf8JsonSerializable
+    public partial class FileShareProtectableItem : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ParentContainerFabricId))
+            if (Core.Optional.IsDefined(ParentContainerFabricId))
             {
                 writer.WritePropertyName("parentContainerFabricId"u8);
                 writer.WriteStringValue(ParentContainerFabricId);
             }
-            if (Optional.IsDefined(ParentContainerFriendlyName))
+            if (Core.Optional.IsDefined(ParentContainerFriendlyName))
             {
                 writer.WritePropertyName("parentContainerFriendlyName"u8);
                 writer.WriteStringValue(ParentContainerFriendlyName);
             }
-            if (Optional.IsDefined(AzureFileShareType))
+            if (Core.Optional.IsDefined(AzureFileShareType))
             {
                 writer.WritePropertyName("azureFileShareType"u8);
                 writer.WriteStringValue(AzureFileShareType.Value.ToString());
             }
-            if (Optional.IsDefined(BackupManagementType))
+            if (Core.Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType);
             }
-            if (Optional.IsDefined(WorkloadType))
+            if (Core.Optional.IsDefined(WorkloadType))
             {
                 writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType);
             }
             writer.WritePropertyName("protectableItemType"u8);
             writer.WriteStringValue(ProtectableItemType);
-            if (Optional.IsDefined(FriendlyName))
+            if (Core.Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(ProtectionState))
+            if (Core.Optional.IsDefined(ProtectionState))
             {
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> parentContainerFabricId = default;
-            Optional<string> parentContainerFriendlyName = default;
-            Optional<BackupFileShareType> azureFileShareType = default;
-            Optional<string> backupManagementType = default;
-            Optional<string> workloadType = default;
+            Core.Optional<string> parentContainerFabricId = default;
+            Core.Optional<string> parentContainerFriendlyName = default;
+            Core.Optional<BackupFileShareType> azureFileShareType = default;
+            Core.Optional<string> backupManagementType = default;
+            Core.Optional<string> workloadType = default;
             string protectableItemType = default;
-            Optional<string> friendlyName = default;
-            Optional<BackupProtectionStatus> protectionState = default;
+            Core.Optional<string> friendlyName = default;
+            Core.Optional<BackupProtectionStatus> protectionState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parentContainerFabricId"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new FileShareProtectableItem(backupManagementType.Value, workloadType.Value, protectableItemType, friendlyName.Value, Optional.ToNullable(protectionState), parentContainerFabricId.Value, parentContainerFriendlyName.Value, Optional.ToNullable(azureFileShareType));
+            return new FileShareProtectableItem(backupManagementType.Value, workloadType.Value, protectableItemType, friendlyName.Value, Core.Optional.ToNullable(protectionState), parentContainerFabricId.Value, parentContainerFriendlyName.Value, Core.Optional.ToNullable(azureFileShareType));
         }
     }
 }

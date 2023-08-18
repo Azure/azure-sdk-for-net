@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    internal partial class SearchSku : IUtf8JsonSerializable
+    internal partial class SearchSku : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name.Value.ToSerialString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<SearchSkuName> name = default;
+            Core.Optional<SearchSkuName> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Search.Models
                     continue;
                 }
             }
-            return new SearchSku(Optional.ToNullable(name));
+            return new SearchSku(Core.Optional.ToNullable(name));
         }
     }
 }

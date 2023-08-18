@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class JitNetworkAccessRequestInfo : IUtf8JsonSerializable
+    public partial class JitNetworkAccessRequestInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("virtualMachines"u8);
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStringValue(StartOn, "O");
             writer.WritePropertyName("requestor"u8);
             writer.WriteStringValue(Requestor);
-            if (Optional.IsDefined(Justification))
+            if (Core.Optional.IsDefined(Justification))
             {
                 writer.WritePropertyName("justification"u8);
                 writer.WriteStringValue(Justification);
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             IList<JitNetworkAccessRequestVirtualMachine> virtualMachines = default;
             DateTimeOffset startTimeUtc = default;
             string requestor = default;
-            Optional<string> justification = default;
+            Core.Optional<string> justification = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualMachines"u8))

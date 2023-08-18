@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<JobTargetType> type = default;
-            Optional<string> serverName = default;
-            Optional<string> databaseName = default;
+            Core.Optional<JobTargetType> type = default;
+            Core.Optional<string> serverName = default;
+            Core.Optional<string> databaseName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new JobExecutionTarget(Optional.ToNullable(type), serverName.Value, databaseName.Value);
+            return new JobExecutionTarget(Core.Optional.ToNullable(type), serverName.Value, databaseName.Value);
         }
     }
 }

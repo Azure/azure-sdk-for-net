@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RedisEnterpriseRegionSkuDetail>> value = default;
+            Core.Optional<IReadOnlyList<RedisEnterpriseRegionSkuDetail>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     continue;
                 }
             }
-            return new RegionSkuDetails(Optional.ToList(value));
+            return new RegionSkuDetails(Core.Optional.ToList(value));
         }
     }
 }

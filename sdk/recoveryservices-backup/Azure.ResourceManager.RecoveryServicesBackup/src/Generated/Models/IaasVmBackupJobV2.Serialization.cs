@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasVmBackupJobV2 : IUtf8JsonSerializable
+    public partial class IaasVmBackupJobV2 : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ActionsInfo))
+            if (Core.Optional.IsCollectionDefined(ActionsInfo))
             {
                 writer.WritePropertyName("actionsInfo"u8);
                 writer.WriteStartArray();
@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ContainerName))
+            if (Core.Optional.IsDefined(ContainerName))
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (Optional.IsDefined(Duration))
+            if (Core.Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
             }
-            if (Optional.IsCollectionDefined(ErrorDetails))
+            if (Core.Optional.IsCollectionDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteStartArray();
@@ -47,47 +47,47 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(VirtualMachineVersion))
+            if (Core.Optional.IsDefined(VirtualMachineVersion))
             {
                 writer.WritePropertyName("virtualMachineVersion"u8);
                 writer.WriteStringValue(VirtualMachineVersion);
             }
-            if (Optional.IsDefined(ExtendedInfo))
+            if (Core.Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteObjectValue(ExtendedInfo);
             }
-            if (Optional.IsDefined(EntityFriendlyName))
+            if (Core.Optional.IsDefined(EntityFriendlyName))
             {
                 writer.WritePropertyName("entityFriendlyName"u8);
                 writer.WriteStringValue(EntityFriendlyName);
             }
-            if (Optional.IsDefined(BackupManagementType))
+            if (Core.Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (Optional.IsDefined(Operation))
+            if (Core.Optional.IsDefined(Operation))
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation);
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Core.Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Core.Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(ActivityId))
+            if (Core.Optional.IsDefined(ActivityId))
             {
                 writer.WritePropertyName("activityId"u8);
                 writer.WriteStringValue(ActivityId);
@@ -103,19 +103,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IList<JobSupportedAction>> actionsInfo = default;
-            Optional<string> containerName = default;
-            Optional<TimeSpan> duration = default;
-            Optional<IList<IaasVmErrorInfo>> errorDetails = default;
-            Optional<string> virtualMachineVersion = default;
-            Optional<IaasVmBackupJobExtendedInfo> extendedInfo = default;
-            Optional<string> entityFriendlyName = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<string> operation = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> activityId = default;
+            Core.Optional<IList<JobSupportedAction>> actionsInfo = default;
+            Core.Optional<string> containerName = default;
+            Core.Optional<TimeSpan> duration = default;
+            Core.Optional<IList<IaasVmErrorInfo>> errorDetails = default;
+            Core.Optional<string> virtualMachineVersion = default;
+            Core.Optional<IaasVmBackupJobExtendedInfo> extendedInfo = default;
+            Core.Optional<string> entityFriendlyName = default;
+            Core.Optional<BackupManagementType> backupManagementType = default;
+            Core.Optional<string> operation = default;
+            Core.Optional<string> status = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<string> activityId = default;
             string jobType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new IaasVmBackupJobV2(entityFriendlyName.Value, Optional.ToNullable(backupManagementType), operation.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), activityId.Value, jobType, Optional.ToList(actionsInfo), containerName.Value, Optional.ToNullable(duration), Optional.ToList(errorDetails), virtualMachineVersion.Value, extendedInfo.Value);
+            return new IaasVmBackupJobV2(entityFriendlyName.Value, Core.Optional.ToNullable(backupManagementType), operation.Value, status.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), activityId.Value, jobType, Core.Optional.ToList(actionsInfo), containerName.Value, Core.Optional.ToNullable(duration), Core.Optional.ToList(errorDetails), virtualMachineVersion.Value, extendedInfo.Value);
         }
     }
 }

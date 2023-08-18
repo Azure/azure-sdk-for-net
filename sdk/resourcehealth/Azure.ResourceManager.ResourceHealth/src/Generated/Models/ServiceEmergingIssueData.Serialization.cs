@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.ResourceHealth
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> refreshTimestamp = default;
-            Optional<IReadOnlyList<EmergingIssueBannerType>> statusBanners = default;
-            Optional<IReadOnlyList<EmergingIssueActiveEventType>> statusActiveEvents = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DateTimeOffset> refreshTimestamp = default;
+            Core.Optional<IReadOnlyList<EmergingIssueBannerType>> statusBanners = default;
+            Core.Optional<IReadOnlyList<EmergingIssueActiveEventType>> statusActiveEvents = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ResourceHealth
                     continue;
                 }
             }
-            return new ServiceEmergingIssueData(id, name, type, systemData.Value, Optional.ToNullable(refreshTimestamp), Optional.ToList(statusBanners), Optional.ToList(statusActiveEvents));
+            return new ServiceEmergingIssueData(id, name, type, systemData.Value, Core.Optional.ToNullable(refreshTimestamp), Core.Optional.ToList(statusBanners), Core.Optional.ToList(statusActiveEvents));
         }
     }
 }

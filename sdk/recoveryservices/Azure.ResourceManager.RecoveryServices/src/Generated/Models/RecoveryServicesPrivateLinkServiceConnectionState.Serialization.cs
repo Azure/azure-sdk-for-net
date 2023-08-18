@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<RecoveryServicesPrivateEndpointConnectionStatus> status = default;
-            Optional<string> description = default;
-            Optional<string> actionsRequired = default;
+            Core.Optional<RecoveryServicesPrivateEndpointConnectionStatus> status = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     continue;
                 }
             }
-            return new RecoveryServicesPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, actionsRequired.Value);
+            return new RecoveryServicesPrivateLinkServiceConnectionState(Core.Optional.ToNullable(status), description.Value, actionsRequired.Value);
         }
     }
 }

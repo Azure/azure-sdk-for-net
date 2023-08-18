@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class AutomaticTuningOptions : IUtf8JsonSerializable
+    public partial class AutomaticTuningOptions : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DesiredState))
+            if (Core.Optional.IsDefined(DesiredState))
             {
                 writer.WritePropertyName("desiredState"u8);
                 writer.WriteStringValue(DesiredState.Value.ToSerialString());
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<AutomaticTuningOptionModeDesired> desiredState = default;
-            Optional<AutomaticTuningOptionModeActual> actualState = default;
-            Optional<int> reasonCode = default;
-            Optional<AutomaticTuningDisabledReason> reasonDesc = default;
+            Core.Optional<AutomaticTuningOptionModeDesired> desiredState = default;
+            Core.Optional<AutomaticTuningOptionModeActual> actualState = default;
+            Core.Optional<int> reasonCode = default;
+            Core.Optional<AutomaticTuningDisabledReason> reasonDesc = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("desiredState"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new AutomaticTuningOptions(Optional.ToNullable(desiredState), Optional.ToNullable(actualState), Optional.ToNullable(reasonCode), Optional.ToNullable(reasonDesc));
+            return new AutomaticTuningOptions(Core.Optional.ToNullable(desiredState), Core.Optional.ToNullable(actualState), Core.Optional.ToNullable(reasonCode), Core.Optional.ToNullable(reasonDesc));
         }
     }
 }

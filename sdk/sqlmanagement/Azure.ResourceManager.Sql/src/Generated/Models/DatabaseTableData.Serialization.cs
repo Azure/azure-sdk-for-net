@@ -12,19 +12,19 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class DatabaseTableData : IUtf8JsonSerializable
+    public partial class DatabaseTableData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TemporalType))
+            if (Core.Optional.IsDefined(TemporalType))
             {
                 writer.WritePropertyName("temporalType"u8);
                 writer.WriteStringValue(TemporalType.Value.ToString());
             }
-            if (Optional.IsDefined(IsMemoryOptimized))
+            if (Core.Optional.IsDefined(IsMemoryOptimized))
             {
                 writer.WritePropertyName("memoryOptimized"u8);
                 writer.WriteBooleanValue(IsMemoryOptimized.Value);
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<TableTemporalType> temporalType = default;
-            Optional<bool> memoryOptimized = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<TableTemporalType> temporalType = default;
+            Core.Optional<bool> memoryOptimized = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new DatabaseTableData(id, name, type, systemData.Value, Optional.ToNullable(temporalType), Optional.ToNullable(memoryOptimized));
+            return new DatabaseTableData(id, name, type, systemData.Value, Core.Optional.ToNullable(temporalType), Core.Optional.ToNullable(memoryOptimized));
         }
     }
 }

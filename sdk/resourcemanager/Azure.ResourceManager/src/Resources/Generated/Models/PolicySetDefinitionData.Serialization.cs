@@ -14,29 +14,29 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    public partial class PolicySetDefinitionData : IUtf8JsonSerializable
+    public partial class PolicySetDefinitionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PolicyType))
+            if (Core.Optional.IsDefined(PolicyType))
             {
                 writer.WritePropertyName("policyType"u8);
                 writer.WriteStringValue(PolicyType.Value.ToString());
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Metadata))
+            if (Core.Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Metadata.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (Core.Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(PolicyDefinitions))
+            if (Core.Optional.IsCollectionDefined(PolicyDefinitions))
             {
                 writer.WritePropertyName("policyDefinitions"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PolicyDefinitionGroups))
+            if (Core.Optional.IsCollectionDefined(PolicyDefinitionGroups))
             {
                 writer.WritePropertyName("policyDefinitionGroups"u8);
                 writer.WriteStartArray();
@@ -89,14 +89,14 @@ namespace Azure.ResourceManager.Resources
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<PolicyType> policyType = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<BinaryData> metadata = default;
-            Optional<IDictionary<string, ArmPolicyParameter>> parameters = default;
-            Optional<IList<PolicyDefinitionReference>> policyDefinitions = default;
-            Optional<IList<PolicyDefinitionGroup>> policyDefinitionGroups = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<PolicyType> policyType = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> description = default;
+            Core.Optional<BinaryData> metadata = default;
+            Core.Optional<IDictionary<string, ArmPolicyParameter>> parameters = default;
+            Core.Optional<IList<PolicyDefinitionReference>> policyDefinitions = default;
+            Core.Optional<IList<PolicyDefinitionGroup>> policyDefinitionGroups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new PolicySetDefinitionData(id, name, type, systemData.Value, Optional.ToNullable(policyType), displayName.Value, description.Value, metadata.Value, Optional.ToDictionary(parameters), Optional.ToList(policyDefinitions), Optional.ToList(policyDefinitionGroups));
+            return new PolicySetDefinitionData(id, name, type, systemData.Value, Core.Optional.ToNullable(policyType), displayName.Value, description.Value, metadata.Value, Core.Optional.ToDictionary(parameters), Core.Optional.ToList(policyDefinitions), Core.Optional.ToList(policyDefinitionGroups));
         }
     }
 }

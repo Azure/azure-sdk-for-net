@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Relay.Models
 {
-    public partial class RelayNameAvailabilityContent : IUtf8JsonSerializable
+    public partial class RelayNameAvailabilityContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);

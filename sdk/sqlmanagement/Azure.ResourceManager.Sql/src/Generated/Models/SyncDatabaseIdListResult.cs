@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SyncDatabaseIdListResult. </summary>
         internal SyncDatabaseIdListResult()
         {
-            Value = new ChangeTrackingList<SubResource>();
+            Value = new Core.ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of SyncDatabaseIdListResult. </summary>

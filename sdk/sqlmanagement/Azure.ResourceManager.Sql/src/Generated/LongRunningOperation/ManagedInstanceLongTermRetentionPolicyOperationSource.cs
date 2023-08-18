@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ManagedInstanceLongTermRetentionPolicyOperationSource : IOperationSource<ManagedInstanceLongTermRetentionPolicyResource>
+    internal class ManagedInstanceLongTermRetentionPolicyOperationSource : Core.IOperationSource<ManagedInstanceLongTermRetentionPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        ManagedInstanceLongTermRetentionPolicyResource IOperationSource<ManagedInstanceLongTermRetentionPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedInstanceLongTermRetentionPolicyResource Core.IOperationSource<ManagedInstanceLongTermRetentionPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedInstanceLongTermRetentionPolicyData.DeserializeManagedInstanceLongTermRetentionPolicyData(document.RootElement);
             return new ManagedInstanceLongTermRetentionPolicyResource(_client, data);
         }
 
-        async ValueTask<ManagedInstanceLongTermRetentionPolicyResource> IOperationSource<ManagedInstanceLongTermRetentionPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedInstanceLongTermRetentionPolicyResource> Core.IOperationSource<ManagedInstanceLongTermRetentionPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedInstanceLongTermRetentionPolicyData.DeserializeManagedInstanceLongTermRetentionPolicyData(document.RootElement);

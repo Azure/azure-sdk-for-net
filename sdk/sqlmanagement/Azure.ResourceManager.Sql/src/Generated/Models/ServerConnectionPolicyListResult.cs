@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ServerConnectionPolicyListResult. </summary>
         internal ServerConnectionPolicyListResult()
         {
-            Value = new ChangeTrackingList<SqlServerConnectionPolicyData>();
+            Value = new Core.ChangeTrackingList<SqlServerConnectionPolicyData>();
         }
 
         /// <summary> Initializes a new instance of ServerConnectionPolicyListResult. </summary>

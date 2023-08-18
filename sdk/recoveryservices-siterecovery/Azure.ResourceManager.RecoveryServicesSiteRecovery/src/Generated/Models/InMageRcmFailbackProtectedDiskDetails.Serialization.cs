@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> diskId = default;
-            Optional<string> diskName = default;
-            Optional<string> isOSDisk = default;
-            Optional<long> capacityInBytes = default;
-            Optional<string> diskUuid = default;
-            Optional<double> dataPendingInLogDataStoreInMB = default;
-            Optional<double> dataPendingAtSourceAgentInMB = default;
-            Optional<string> isInitialReplicationComplete = default;
-            Optional<InMageRcmFailbackSyncDetails> irDetails = default;
-            Optional<InMageRcmFailbackSyncDetails> resyncDetails = default;
-            Optional<DateTimeOffset> lastSyncTime = default;
+            Core.Optional<string> diskId = default;
+            Core.Optional<string> diskName = default;
+            Core.Optional<string> isOSDisk = default;
+            Core.Optional<long> capacityInBytes = default;
+            Core.Optional<string> diskUuid = default;
+            Core.Optional<double> dataPendingInLogDataStoreInMB = default;
+            Core.Optional<double> dataPendingAtSourceAgentInMB = default;
+            Core.Optional<string> isInitialReplicationComplete = default;
+            Core.Optional<InMageRcmFailbackSyncDetails> irDetails = default;
+            Core.Optional<InMageRcmFailbackSyncDetails> resyncDetails = default;
+            Core.Optional<DateTimeOffset> lastSyncTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskId"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new InMageRcmFailbackProtectedDiskDetails(diskId.Value, diskName.Value, isOSDisk.Value, Optional.ToNullable(capacityInBytes), diskUuid.Value, Optional.ToNullable(dataPendingInLogDataStoreInMB), Optional.ToNullable(dataPendingAtSourceAgentInMB), isInitialReplicationComplete.Value, irDetails.Value, resyncDetails.Value, Optional.ToNullable(lastSyncTime));
+            return new InMageRcmFailbackProtectedDiskDetails(diskId.Value, diskName.Value, isOSDisk.Value, Core.Optional.ToNullable(capacityInBytes), diskUuid.Value, Core.Optional.ToNullable(dataPendingInLogDataStoreInMB), Core.Optional.ToNullable(dataPendingAtSourceAgentInMB), isInitialReplicationComplete.Value, irDetails.Value, resyncDetails.Value, Core.Optional.ToNullable(lastSyncTime));
         }
     }
 }

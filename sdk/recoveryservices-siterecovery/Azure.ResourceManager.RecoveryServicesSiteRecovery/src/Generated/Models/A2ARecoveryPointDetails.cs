@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of A2ARecoveryPointDetails. </summary>
         internal A2ARecoveryPointDetails()
         {
-            Disks = new ChangeTrackingList<string>();
+            Disks = new Core.ChangeTrackingList<string>();
             InstanceType = "A2A";
         }
 

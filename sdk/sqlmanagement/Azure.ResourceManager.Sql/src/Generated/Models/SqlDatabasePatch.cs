@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SqlDatabasePatch. </summary>
         public SqlDatabasePatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            Keys = new ChangeTrackingDictionary<string, SqlDatabaseKey>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Keys = new Core.ChangeTrackingDictionary<string, SqlDatabaseKey>();
         }
 
         /// <summary> The name and tier of the SKU. </summary>

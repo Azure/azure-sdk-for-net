@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class ThreatIntelligenceKillChainPhase : IUtf8JsonSerializable
+    public partial class ThreatIntelligenceKillChainPhase : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(KillChainName))
+            if (Core.Optional.IsDefined(KillChainName))
             {
                 writer.WritePropertyName("killChainName"u8);
                 writer.WriteStringValue(KillChainName);
             }
-            if (Optional.IsDefined(PhaseName))
+            if (Core.Optional.IsDefined(PhaseName))
             {
                 writer.WritePropertyName("phaseName"u8);
                 writer.WriteStringValue(PhaseName);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> killChainName = default;
-            Optional<string> phaseName = default;
+            Core.Optional<string> killChainName = default;
+            Core.Optional<string> phaseName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("killChainName"u8))

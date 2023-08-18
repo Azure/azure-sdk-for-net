@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Argument.AssertNotNull(inputs, nameof(inputs));
             Argument.AssertNotNull(outputs, nameof(outputs));
 
-            PiiCategories = new ChangeTrackingList<string>();
+            PiiCategories = new Core.ChangeTrackingList<string>();
             ODataType = "#Microsoft.Skills.Text.PIIDetectionSkill";
         }
 

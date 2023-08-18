@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> Initializes a new instance of MetadataSupportedValueDetail. </summary>
         internal MetadataSupportedValueDetail()
         {
-            ResourceTypes = new ChangeTrackingList<ResourceType>();
+            ResourceTypes = new Core.ChangeTrackingList<ResourceType>();
         }
 
         /// <summary> Initializes a new instance of MetadataSupportedValueDetail. </summary>

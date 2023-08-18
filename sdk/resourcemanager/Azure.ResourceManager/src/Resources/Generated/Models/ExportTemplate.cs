@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ExportTemplate. </summary>
         public ExportTemplate()
         {
-            Resources = new ChangeTrackingList<string>();
+            Resources = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> The IDs of the resources to filter the export by. To export all resources, supply an array with single entry '*'. </summary>

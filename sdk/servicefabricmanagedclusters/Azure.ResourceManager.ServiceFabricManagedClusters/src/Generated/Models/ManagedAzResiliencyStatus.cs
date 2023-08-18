@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Initializes a new instance of ManagedAzResiliencyStatus. </summary>
         internal ManagedAzResiliencyStatus()
         {
-            BaseResourceStatus = new ChangeTrackingList<ResourceAzStatus>();
+            BaseResourceStatus = new Core.ChangeTrackingList<ResourceAzStatus>();
         }
 
         /// <summary> Initializes a new instance of ManagedAzResiliencyStatus. </summary>

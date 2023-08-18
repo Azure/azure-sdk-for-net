@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of SecurityApplicationData. </summary>
         public SecurityApplicationData()
         {
-            ConditionSets = new ChangeTrackingList<BinaryData>();
+            ConditionSets = new Core.ChangeTrackingList<BinaryData>();
         }
 
         /// <summary> Initializes a new instance of SecurityApplicationData. </summary>

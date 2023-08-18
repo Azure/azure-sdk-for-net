@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsPropertyArrayChangedConditionProperties : IUtf8JsonSerializable
+    public partial class SecurityInsightsPropertyArrayChangedConditionProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConditionProperties))
+            if (Core.Optional.IsDefined(ConditionProperties))
             {
                 writer.WritePropertyName("conditionProperties"u8);
                 writer.WriteObjectValue(ConditionProperties);
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<AutomationRulePropertyArrayChangedValuesCondition> conditionProperties = default;
+            Core.Optional<AutomationRulePropertyArrayChangedValuesCondition> conditionProperties = default;
             ConditionType conditionType = default;
             foreach (var property in element.EnumerateObject())
             {

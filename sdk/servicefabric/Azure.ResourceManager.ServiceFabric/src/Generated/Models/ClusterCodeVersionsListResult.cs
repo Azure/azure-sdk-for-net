@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> Initializes a new instance of ClusterCodeVersionsListResult. </summary>
         internal ClusterCodeVersionsListResult()
         {
-            Value = new ChangeTrackingList<ClusterCodeVersionsResult>();
+            Value = new Core.ChangeTrackingList<ClusterCodeVersionsResult>();
         }
 
         /// <summary> Initializes a new instance of ClusterCodeVersionsListResult. </summary>

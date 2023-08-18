@@ -12,29 +12,29 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    public partial class ServiceBusRuleData : IUtf8JsonSerializable
+    public partial class ServiceBusRuleData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Action))
+            if (Core.Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteObjectValue(Action);
             }
-            if (Optional.IsDefined(FilterType))
+            if (Core.Optional.IsDefined(FilterType))
             {
                 writer.WritePropertyName("filterType"u8);
                 writer.WriteStringValue(FilterType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(SqlFilter))
+            if (Core.Optional.IsDefined(SqlFilter))
             {
                 writer.WritePropertyName("sqlFilter"u8);
                 writer.WriteObjectValue(SqlFilter);
             }
-            if (Optional.IsDefined(CorrelationFilter))
+            if (Core.Optional.IsDefined(CorrelationFilter))
             {
                 writer.WritePropertyName("correlationFilter"u8);
                 writer.WriteObjectValue(CorrelationFilter);
@@ -49,15 +49,15 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            Core.Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ServiceBusFilterAction> action = default;
-            Optional<ServiceBusFilterType> filterType = default;
-            Optional<ServiceBusSqlFilter> sqlFilter = default;
-            Optional<ServiceBusCorrelationFilter> correlationFilter = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ServiceBusFilterAction> action = default;
+            Core.Optional<ServiceBusFilterType> filterType = default;
+            Core.Optional<ServiceBusSqlFilter> sqlFilter = default;
+            Core.Optional<ServiceBusCorrelationFilter> correlationFilter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ServiceBus
                     continue;
                 }
             }
-            return new ServiceBusRuleData(id, name, type, systemData.Value, action.Value, Optional.ToNullable(filterType), sqlFilter.Value, correlationFilter.Value, Optional.ToNullable(location));
+            return new ServiceBusRuleData(id, name, type, systemData.Value, action.Value, Core.Optional.ToNullable(filterType), sqlFilter.Value, correlationFilter.Value, Core.Optional.ToNullable(location));
         }
     }
 }

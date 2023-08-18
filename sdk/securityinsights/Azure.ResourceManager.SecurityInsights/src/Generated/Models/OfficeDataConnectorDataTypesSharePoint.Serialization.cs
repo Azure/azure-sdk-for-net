@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    internal partial class OfficeDataConnectorDataTypesSharePoint : IUtf8JsonSerializable
+    internal partial class OfficeDataConnectorDataTypesSharePoint : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<SecurityInsightsDataTypeConnectionState> state = default;
+            Core.Optional<SecurityInsightsDataTypeConnectionState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new OfficeDataConnectorDataTypesSharePoint(Optional.ToNullable(state));
+            return new OfficeDataConnectorDataTypesSharePoint(Core.Optional.ToNullable(state));
         }
     }
 }

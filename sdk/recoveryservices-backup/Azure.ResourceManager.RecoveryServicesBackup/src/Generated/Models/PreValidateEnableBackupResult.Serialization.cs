@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<BackupValidationStatus> status = default;
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<string> recommendation = default;
-            Optional<string> containerName = default;
-            Optional<string> protectedItemName = default;
+            Core.Optional<BackupValidationStatus> status = default;
+            Core.Optional<string> errorCode = default;
+            Core.Optional<string> errorMessage = default;
+            Core.Optional<string> recommendation = default;
+            Core.Optional<string> containerName = default;
+            Core.Optional<string> protectedItemName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new PreValidateEnableBackupResult(Optional.ToNullable(status), errorCode.Value, errorMessage.Value, recommendation.Value, containerName.Value, protectedItemName.Value);
+            return new PreValidateEnableBackupResult(Core.Optional.ToNullable(status), errorCode.Value, errorMessage.Value, recommendation.Value, containerName.Value, protectedItemName.Value);
         }
     }
 }

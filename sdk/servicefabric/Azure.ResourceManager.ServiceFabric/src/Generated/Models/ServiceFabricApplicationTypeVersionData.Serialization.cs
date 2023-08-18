@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
-    public partial class ServiceFabricApplicationTypeVersionData : IUtf8JsonSerializable
+    public partial class ServiceFabricApplicationTypeVersionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ServiceFabric
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AppPackageUri))
+            if (Core.Optional.IsDefined(AppPackageUri))
             {
                 writer.WritePropertyName("appPackageUrl"u8);
                 writer.WriteStringValue(AppPackageUri.AbsoluteUri);
@@ -49,16 +49,16 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
-            Optional<Uri> appPackageUrl = default;
-            Optional<IReadOnlyDictionary<string, string>> defaultParameterList = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<Uri> appPackageUrl = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> defaultParameterList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ServiceFabric
                     continue;
                 }
             }
-            return new ServiceFabricApplicationTypeVersionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, appPackageUrl.Value, Optional.ToDictionary(defaultParameterList), Optional.ToNullable(etag));
+            return new ServiceFabricApplicationTypeVersionData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, provisioningState.Value, appPackageUrl.Value, Core.Optional.ToDictionary(defaultParameterList), Core.Optional.ToNullable(etag));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of ExchangePolicyErrors. </summary>
         internal ExchangePolicyErrors()
         {
-            PolicyErrors = new ChangeTrackingList<ExchangePolicyError>();
+            PolicyErrors = new Core.ChangeTrackingList<ExchangePolicyError>();
         }
 
         /// <summary> Initializes a new instance of ExchangePolicyErrors. </summary>

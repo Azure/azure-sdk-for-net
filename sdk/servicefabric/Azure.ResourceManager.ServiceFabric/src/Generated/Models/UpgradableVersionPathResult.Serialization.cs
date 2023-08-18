@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> supportedPath = default;
+            Core.Optional<IReadOnlyList<string>> supportedPath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("supportedPath"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     continue;
                 }
             }
-            return new UpgradableVersionPathResult(Optional.ToList(supportedPath));
+            return new UpgradableVersionPathResult(Core.Optional.ToList(supportedPath));
         }
     }
 }

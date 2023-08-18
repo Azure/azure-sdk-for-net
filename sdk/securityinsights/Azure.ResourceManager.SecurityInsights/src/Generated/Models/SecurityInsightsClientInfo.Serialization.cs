@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> email = default;
-            Optional<string> name = default;
-            Optional<Guid> objectId = default;
-            Optional<string> userPrincipalName = default;
+            Core.Optional<string> email = default;
+            Core.Optional<string> name = default;
+            Core.Optional<Guid> objectId = default;
+            Core.Optional<string> userPrincipalName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("email"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsClientInfo(email.Value, name.Value, Optional.ToNullable(objectId), userPrincipalName.Value);
+            return new SecurityInsightsClientInfo(email.Value, name.Value, Core.Optional.ToNullable(objectId), userPrincipalName.Value);
         }
     }
 }

@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class RecoveryPointTierInformationV2 : IUtf8JsonSerializable
+    public partial class RecoveryPointTierInformationV2 : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TierType))
+            if (Core.Optional.IsDefined(TierType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TierType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(ExtendedInfo))
+            if (Core.Optional.IsCollectionDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteStartObject();
@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<RecoveryPointTierType> type = default;
-            Optional<RecoveryPointTierStatus> status = default;
-            Optional<IDictionary<string, string>> extendedInfo = default;
+            Core.Optional<RecoveryPointTierType> type = default;
+            Core.Optional<RecoveryPointTierStatus> status = default;
+            Core.Optional<IDictionary<string, string>> extendedInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new RecoveryPointTierInformationV2(Optional.ToNullable(type), Optional.ToNullable(status), Optional.ToDictionary(extendedInfo));
+            return new RecoveryPointTierInformationV2(Core.Optional.ToNullable(type), Core.Optional.ToNullable(status), Core.Optional.ToDictionary(extendedInfo));
         }
     }
 }

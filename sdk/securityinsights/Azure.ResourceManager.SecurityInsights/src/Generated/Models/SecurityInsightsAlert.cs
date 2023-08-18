@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of SecurityInsightsAlert. </summary>
         public SecurityInsightsAlert()
         {
-            AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
-            ConfidenceReasons = new ChangeTrackingList<SecurityInsightsAlertConfidenceReason>();
-            RemediationSteps = new ChangeTrackingList<string>();
-            Tactics = new ChangeTrackingList<SecurityInsightsAttackTactic>();
-            ResourceIdentifiers = new ChangeTrackingList<BinaryData>();
+            AdditionalData = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            ConfidenceReasons = new Core.ChangeTrackingList<SecurityInsightsAlertConfidenceReason>();
+            RemediationSteps = new Core.ChangeTrackingList<string>();
+            Tactics = new Core.ChangeTrackingList<SecurityInsightsAttackTactic>();
+            ResourceIdentifiers = new Core.ChangeTrackingList<BinaryData>();
             Kind = SecurityInsightsEntityKind.SecurityAlert;
         }
 

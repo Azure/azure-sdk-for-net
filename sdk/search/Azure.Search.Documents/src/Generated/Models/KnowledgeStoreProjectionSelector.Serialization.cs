@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class KnowledgeStoreProjectionSelector : IUtf8JsonSerializable
+    public partial class KnowledgeStoreProjectionSelector : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReferenceKeyName))
+            if (Core.Optional.IsDefined(ReferenceKeyName))
             {
                 writer.WritePropertyName("referenceKeyName"u8);
                 writer.WriteStringValue(ReferenceKeyName);
             }
-            if (Optional.IsDefined(GeneratedKeyName))
+            if (Core.Optional.IsDefined(GeneratedKeyName))
             {
                 writer.WritePropertyName("generatedKeyName"u8);
                 writer.WriteStringValue(GeneratedKeyName);
             }
-            if (Optional.IsDefined(Source))
+            if (Core.Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Optional.IsDefined(SourceContext))
+            if (Core.Optional.IsDefined(SourceContext))
             {
                 writer.WritePropertyName("sourceContext"u8);
                 writer.WriteStringValue(SourceContext);
             }
-            if (Optional.IsCollectionDefined(Inputs))
+            if (Core.Optional.IsCollectionDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();

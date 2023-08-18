@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MigrationRecoveryPointData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<MigrationRecoveryPointData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new MigrationRecoveryPointListResult(Optional.ToList(value), nextLink.Value);
+            return new MigrationRecoveryPointListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

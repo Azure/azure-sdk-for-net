@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of SiteRecoveryProcessServerDetails. </summary>
         internal SiteRecoveryProcessServerDetails()
         {
-            IPAddresses = new ChangeTrackingList<IPAddress>();
-            HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
+            IPAddresses = new Core.ChangeTrackingList<IPAddress>();
+            HealthErrors = new Core.ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryProcessServerDetails. </summary>

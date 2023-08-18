@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SyncMemberListResult. </summary>
         internal SyncMemberListResult()
         {
-            Value = new ChangeTrackingList<SyncMemberData>();
+            Value = new Core.ChangeTrackingList<SyncMemberData>();
         }
 
         /// <summary> Initializes a new instance of SyncMemberListResult. </summary>

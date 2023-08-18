@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedLedgerDigestUploadsListResult. </summary>
         internal ManagedLedgerDigestUploadsListResult()
         {
-            Value = new ChangeTrackingList<ManagedLedgerDigestUploadData>();
+            Value = new Core.ChangeTrackingList<ManagedLedgerDigestUploadData>();
         }
 
         /// <summary> Initializes a new instance of ManagedLedgerDigestUploadsListResult. </summary>

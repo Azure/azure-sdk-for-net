@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of CustomAssessmentAutomationsListResult. </summary>
         internal CustomAssessmentAutomationsListResult()
         {
-            Value = new ChangeTrackingList<CustomAssessmentAutomationData>();
+            Value = new Core.ChangeTrackingList<CustomAssessmentAutomationData>();
         }
 
         /// <summary> Initializes a new instance of CustomAssessmentAutomationsListResult. </summary>

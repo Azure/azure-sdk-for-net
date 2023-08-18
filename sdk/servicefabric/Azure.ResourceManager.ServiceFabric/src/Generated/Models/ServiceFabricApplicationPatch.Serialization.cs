@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ServiceFabricApplicationPatch : IUtf8JsonSerializable
+    public partial class ServiceFabricApplicationPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TypeVersion))
+            if (Core.Optional.IsDefined(TypeVersion))
             {
                 writer.WritePropertyName("typeVersion"u8);
                 writer.WriteStringValue(TypeVersion);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (Core.Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -49,27 +49,27 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(UpgradePolicy))
+            if (Core.Optional.IsDefined(UpgradePolicy))
             {
                 writer.WritePropertyName("upgradePolicy"u8);
                 writer.WriteObjectValue(UpgradePolicy);
             }
-            if (Optional.IsDefined(MinimumNodes))
+            if (Core.Optional.IsDefined(MinimumNodes))
             {
                 writer.WritePropertyName("minimumNodes"u8);
                 writer.WriteNumberValue(MinimumNodes.Value);
             }
-            if (Optional.IsDefined(MaximumNodes))
+            if (Core.Optional.IsDefined(MaximumNodes))
             {
                 writer.WritePropertyName("maximumNodes"u8);
                 writer.WriteNumberValue(MaximumNodes.Value);
             }
-            if (Optional.IsDefined(RemoveApplicationCapacity))
+            if (Core.Optional.IsDefined(RemoveApplicationCapacity))
             {
                 writer.WritePropertyName("removeApplicationCapacity"u8);
                 writer.WriteBooleanValue(RemoveApplicationCapacity.Value);
             }
-            if (Optional.IsCollectionDefined(Metrics))
+            if (Core.Optional.IsCollectionDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ManagedIdentities))
+            if (Core.Optional.IsCollectionDefined(ManagedIdentities))
             {
                 writer.WritePropertyName("managedIdentities"u8);
                 writer.WriteStartArray();
@@ -99,21 +99,21 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> typeVersion = default;
-            Optional<IDictionary<string, string>> parameters = default;
-            Optional<ApplicationUpgradePolicy> upgradePolicy = default;
-            Optional<long> minimumNodes = default;
-            Optional<long> maximumNodes = default;
-            Optional<bool> removeApplicationCapacity = default;
-            Optional<IList<ApplicationMetricDescription>> metrics = default;
-            Optional<IList<ApplicationUserAssignedIdentity>> managedIdentities = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> typeVersion = default;
+            Core.Optional<IDictionary<string, string>> parameters = default;
+            Core.Optional<ApplicationUpgradePolicy> upgradePolicy = default;
+            Core.Optional<long> minimumNodes = default;
+            Core.Optional<long> maximumNodes = default;
+            Core.Optional<bool> removeApplicationCapacity = default;
+            Core.Optional<IList<ApplicationMetricDescription>> metrics = default;
+            Core.Optional<IList<ApplicationUserAssignedIdentity>> managedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     continue;
                 }
             }
-            return new ServiceFabricApplicationPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, typeVersion.Value, Optional.ToDictionary(parameters), upgradePolicy.Value, Optional.ToNullable(minimumNodes), Optional.ToNullable(maximumNodes), Optional.ToNullable(removeApplicationCapacity), Optional.ToList(metrics), Optional.ToList(managedIdentities), Optional.ToNullable(etag));
+            return new ServiceFabricApplicationPatch(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, typeVersion.Value, Core.Optional.ToDictionary(parameters), upgradePolicy.Value, Core.Optional.ToNullable(minimumNodes), Core.Optional.ToNullable(maximumNodes), Core.Optional.ToNullable(removeApplicationCapacity), Core.Optional.ToList(metrics), Core.Optional.ToList(managedIdentities), Core.Optional.ToNullable(etag));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of InMageRcmMobilityAgentDetails. </summary>
         internal InMageRcmMobilityAgentDetails()
         {
-            ReasonsBlockingUpgrade = new ChangeTrackingList<AgentUpgradeBlockedReason>();
+            ReasonsBlockingUpgrade = new Core.ChangeTrackingList<AgentUpgradeBlockedReason>();
         }
 
         /// <summary> Initializes a new instance of InMageRcmMobilityAgentDetails. </summary>

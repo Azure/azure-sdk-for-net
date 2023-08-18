@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            Core.Optional<string> name = default;
+            Core.Optional<bool> zoneRedundant = default;
+            Core.Optional<SqlCapabilityStatus> status = default;
+            Core.Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new MaintenanceConfigurationCapability(name.Value, Optional.ToNullable(zoneRedundant), Optional.ToNullable(status), reason.Value);
+            return new MaintenanceConfigurationCapability(name.Value, Core.Optional.ToNullable(zoneRedundant), Core.Optional.ToNullable(status), reason.Value);
         }
     }
 }

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class NetworkSecurityGroupResourceSettings : IUtf8JsonSerializable
+    public partial class NetworkSecurityGroupResourceSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(SecurityRules))
+            if (Core.Optional.IsCollectionDefined(SecurityRules))
             {
                 writer.WritePropertyName("securityRules"u8);
                 writer.WriteStartArray();
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<NetworkSecurityGroupSecurityRule>> securityRules = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IList<NetworkSecurityGroupSecurityRule>> securityRules = default;
             string resourceType = default;
             string targetResourceName = default;
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new NetworkSecurityGroupResourceSettings(resourceType, targetResourceName, Optional.ToDictionary(tags), Optional.ToList(securityRules));
+            return new NetworkSecurityGroupResourceSettings(resourceType, targetResourceName, Core.Optional.ToDictionary(tags), Core.Optional.ToList(securityRules));
         }
     }
 }

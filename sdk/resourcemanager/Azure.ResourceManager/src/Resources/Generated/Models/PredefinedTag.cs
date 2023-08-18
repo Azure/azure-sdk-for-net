@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of PredefinedTag. </summary>
         internal PredefinedTag()
         {
-            Values = new ChangeTrackingList<PredefinedTagValue>();
+            Values = new Core.ChangeTrackingList<PredefinedTagValue>();
         }
 
         /// <summary> Initializes a new instance of PredefinedTag. </summary>

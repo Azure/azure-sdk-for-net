@@ -10,39 +10,39 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadSqlAutoProtectionIntent : IUtf8JsonSerializable
+    public partial class WorkloadSqlAutoProtectionIntent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(WorkloadItemType))
+            if (Core.Optional.IsDefined(WorkloadItemType))
             {
                 writer.WritePropertyName("workloadItemType"u8);
                 writer.WriteStringValue(WorkloadItemType.Value.ToString());
             }
             writer.WritePropertyName("protectionIntentItemType"u8);
             writer.WriteStringValue(ProtectionIntentItemType.ToString());
-            if (Optional.IsDefined(BackupManagementType))
+            if (Core.Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (Optional.IsDefined(SourceResourceId))
+            if (Core.Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (Optional.IsDefined(ItemId))
+            if (Core.Optional.IsDefined(ItemId))
             {
                 writer.WritePropertyName("itemId"u8);
                 writer.WriteStringValue(ItemId);
             }
-            if (Optional.IsDefined(PolicyId))
+            if (Core.Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (Optional.IsDefined(ProtectionState))
+            if (Core.Optional.IsDefined(ProtectionState))
             {
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<WorkloadItemType> workloadItemType = default;
+            Core.Optional<WorkloadItemType> workloadItemType = default;
             ProtectionIntentItemType protectionIntentItemType = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<ResourceIdentifier> itemId = default;
-            Optional<ResourceIdentifier> policyId = default;
-            Optional<BackupProtectionStatus> protectionState = default;
+            Core.Optional<BackupManagementType> backupManagementType = default;
+            Core.Optional<ResourceIdentifier> sourceResourceId = default;
+            Core.Optional<ResourceIdentifier> itemId = default;
+            Core.Optional<ResourceIdentifier> policyId = default;
+            Core.Optional<BackupProtectionStatus> protectionState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workloadItemType"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new WorkloadSqlAutoProtectionIntent(protectionIntentItemType, Optional.ToNullable(backupManagementType), sourceResourceId.Value, itemId.Value, policyId.Value, Optional.ToNullable(protectionState), Optional.ToNullable(workloadItemType));
+            return new WorkloadSqlAutoProtectionIntent(protectionIntentItemType, Core.Optional.ToNullable(backupManagementType), sourceResourceId.Value, itemId.Value, policyId.Value, Core.Optional.ToNullable(protectionState), Core.Optional.ToNullable(workloadItemType));
         }
     }
 }

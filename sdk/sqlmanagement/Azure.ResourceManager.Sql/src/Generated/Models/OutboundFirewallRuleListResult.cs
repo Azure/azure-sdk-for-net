@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of OutboundFirewallRuleListResult. </summary>
         internal OutboundFirewallRuleListResult()
         {
-            Value = new ChangeTrackingList<OutboundFirewallRuleData>();
+            Value = new Core.ChangeTrackingList<OutboundFirewallRuleData>();
         }
 
         /// <summary> Initializes a new instance of OutboundFirewallRuleListResult. </summary>

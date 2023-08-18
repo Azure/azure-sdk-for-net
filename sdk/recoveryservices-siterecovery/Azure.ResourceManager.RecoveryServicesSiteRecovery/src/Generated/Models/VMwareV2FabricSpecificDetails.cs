@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of VMwareV2FabricSpecificDetails. </summary>
         internal VMwareV2FabricSpecificDetails()
         {
-            ProcessServers = new ChangeTrackingList<SiteRecoveryProcessServerDetails>();
+            ProcessServers = new Core.ChangeTrackingList<SiteRecoveryProcessServerDetails>();
             InstanceType = "VMwareV2";
         }
 

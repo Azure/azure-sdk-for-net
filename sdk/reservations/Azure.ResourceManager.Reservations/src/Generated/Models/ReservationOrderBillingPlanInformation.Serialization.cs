@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<PurchasePrice> pricingCurrencyTotal = default;
-            Optional<DateTimeOffset> startDate = default;
-            Optional<DateTimeOffset> nextPaymentDueDate = default;
-            Optional<IReadOnlyList<PaymentDetail>> transactions = default;
+            Core.Optional<PurchasePrice> pricingCurrencyTotal = default;
+            Core.Optional<DateTimeOffset> startDate = default;
+            Core.Optional<DateTimeOffset> nextPaymentDueDate = default;
+            Core.Optional<IReadOnlyList<PaymentDetail>> transactions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pricingCurrencyTotal"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new ReservationOrderBillingPlanInformation(pricingCurrencyTotal.Value, Optional.ToNullable(startDate), Optional.ToNullable(nextPaymentDueDate), Optional.ToList(transactions));
+            return new ReservationOrderBillingPlanInformation(pricingCurrencyTotal.Value, Core.Optional.ToNullable(startDate), Core.Optional.ToNullable(nextPaymentDueDate), Core.Optional.ToList(transactions));
         }
     }
 }

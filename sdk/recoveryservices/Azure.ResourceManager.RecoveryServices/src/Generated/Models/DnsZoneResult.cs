@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <summary> Initializes a new instance of DnsZoneResult. </summary>
         public DnsZoneResult()
         {
-            RequiredZoneNames = new ChangeTrackingList<string>();
+            RequiredZoneNames = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DnsZoneResult. </summary>

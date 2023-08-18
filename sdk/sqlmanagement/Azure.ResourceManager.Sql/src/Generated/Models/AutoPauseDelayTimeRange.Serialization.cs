@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<int> minValue = default;
-            Optional<int> maxValue = default;
-            Optional<int> stepSize = default;
-            Optional<int> @default = default;
-            Optional<PauseDelayTimeUnit> unit = default;
-            Optional<int> doNotPauseValue = default;
+            Core.Optional<int> minValue = default;
+            Core.Optional<int> maxValue = default;
+            Core.Optional<int> stepSize = default;
+            Core.Optional<int> @default = default;
+            Core.Optional<PauseDelayTimeUnit> unit = default;
+            Core.Optional<int> doNotPauseValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minValue"u8))
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new AutoPauseDelayTimeRange(Optional.ToNullable(minValue), Optional.ToNullable(maxValue), Optional.ToNullable(stepSize), Optional.ToNullable(@default), Optional.ToNullable(unit), Optional.ToNullable(doNotPauseValue));
+            return new AutoPauseDelayTimeRange(Core.Optional.ToNullable(minValue), Core.Optional.ToNullable(maxValue), Core.Optional.ToNullable(stepSize), Core.Optional.ToNullable(@default), Core.Optional.ToNullable(unit), Core.Optional.ToNullable(doNotPauseValue));
         }
     }
 }

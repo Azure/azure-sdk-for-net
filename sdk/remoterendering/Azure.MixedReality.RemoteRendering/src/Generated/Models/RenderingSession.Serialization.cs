@@ -20,16 +20,16 @@ namespace Azure.MixedReality.RemoteRendering
                 return null;
             }
             string id = default;
-            Optional<int> arrInspectorPort = default;
-            Optional<int> handshakePort = default;
-            Optional<int> elapsedTimeMinutes = default;
-            Optional<string> hostname = default;
-            Optional<int> maxLeaseTimeMinutes = default;
+            Core.Optional<int> arrInspectorPort = default;
+            Core.Optional<int> handshakePort = default;
+            Core.Optional<int> elapsedTimeMinutes = default;
+            Core.Optional<string> hostname = default;
+            Core.Optional<int> maxLeaseTimeMinutes = default;
             RenderingServerSize size = default;
             RenderingSessionStatus status = default;
-            Optional<float> teraflops = default;
-            Optional<RemoteRenderingServiceError> error = default;
-            Optional<DateTimeOffset> creationTime = default;
+            Core.Optional<float> teraflops = default;
+            Core.Optional<RemoteRenderingServiceError> error = default;
+            Core.Optional<DateTimeOffset> creationTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -117,7 +117,7 @@ namespace Azure.MixedReality.RemoteRendering
                     continue;
                 }
             }
-            return new RenderingSession(id, Optional.ToNullable(arrInspectorPort), Optional.ToNullable(handshakePort), Optional.ToNullable(elapsedTimeMinutes), hostname.Value, Optional.ToNullable(maxLeaseTimeMinutes), size, status, Optional.ToNullable(teraflops), error.Value, Optional.ToNullable(creationTime));
+            return new RenderingSession(id, Core.Optional.ToNullable(arrInspectorPort), Core.Optional.ToNullable(handshakePort), Core.Optional.ToNullable(elapsedTimeMinutes), hostname.Value, Core.Optional.ToNullable(maxLeaseTimeMinutes), size, status, Core.Optional.ToNullable(teraflops), error.Value, Core.Optional.ToNullable(creationTime));
         }
     }
 }

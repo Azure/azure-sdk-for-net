@@ -10,37 +10,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class SharedSearchServicePrivateLinkResourceProperties : IUtf8JsonSerializable
+    public partial class SharedSearchServicePrivateLinkResourceProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateLinkResourceId))
+            if (Core.Optional.IsDefined(PrivateLinkResourceId))
             {
                 writer.WritePropertyName("privateLinkResourceId"u8);
                 writer.WriteStringValue(PrivateLinkResourceId);
             }
-            if (Optional.IsDefined(GroupId))
+            if (Core.Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (Optional.IsDefined(RequestMessage))
+            if (Core.Optional.IsDefined(RequestMessage))
             {
                 writer.WritePropertyName("requestMessage"u8);
                 writer.WriteStringValue(RequestMessage);
             }
-            if (Optional.IsDefined(ResourceRegion))
+            if (Core.Optional.IsDefined(ResourceRegion))
             {
                 writer.WritePropertyName("resourceRegion"u8);
                 writer.WriteStringValue(ResourceRegion.Value);
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (Core.Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> privateLinkResourceId = default;
-            Optional<string> groupId = default;
-            Optional<string> requestMessage = default;
-            Optional<AzureLocation> resourceRegion = default;
-            Optional<SharedSearchServicePrivateLinkResourceStatus> status = default;
-            Optional<SharedSearchServicePrivateLinkResourceProvisioningState> provisioningState = default;
+            Core.Optional<ResourceIdentifier> privateLinkResourceId = default;
+            Core.Optional<string> groupId = default;
+            Core.Optional<string> requestMessage = default;
+            Core.Optional<AzureLocation> resourceRegion = default;
+            Core.Optional<SharedSearchServicePrivateLinkResourceStatus> status = default;
+            Core.Optional<SharedSearchServicePrivateLinkResourceProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateLinkResourceId"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Search.Models
                     continue;
                 }
             }
-            return new SharedSearchServicePrivateLinkResourceProperties(privateLinkResourceId.Value, groupId.Value, requestMessage.Value, Optional.ToNullable(resourceRegion), Optional.ToNullable(status), Optional.ToNullable(provisioningState));
+            return new SharedSearchServicePrivateLinkResourceProperties(privateLinkResourceId.Value, groupId.Value, requestMessage.Value, Core.Optional.ToNullable(resourceRegion), Core.Optional.ToNullable(status), Core.Optional.ToNullable(provisioningState));
         }
     }
 }

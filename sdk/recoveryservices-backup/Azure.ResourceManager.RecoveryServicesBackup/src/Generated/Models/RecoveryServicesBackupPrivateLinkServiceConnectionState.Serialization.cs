@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class RecoveryServicesBackupPrivateLinkServiceConnectionState : IUtf8JsonSerializable
+    public partial class RecoveryServicesBackupPrivateLinkServiceConnectionState : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ActionRequired))
+            if (Core.Optional.IsDefined(ActionRequired))
             {
                 writer.WritePropertyName("actionRequired"u8);
                 writer.WriteStringValue(ActionRequired);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<PrivateEndpointConnectionStatus> status = default;
-            Optional<string> description = default;
-            Optional<string> actionRequired = default;
+            Core.Optional<PrivateEndpointConnectionStatus> status = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> actionRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new RecoveryServicesBackupPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, actionRequired.Value);
+            return new RecoveryServicesBackupPrivateLinkServiceConnectionState(Core.Optional.ToNullable(status), description.Value, actionRequired.Value);
         }
     }
 }

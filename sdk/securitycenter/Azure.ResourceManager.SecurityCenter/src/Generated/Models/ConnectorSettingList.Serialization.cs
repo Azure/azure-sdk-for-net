@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecurityCloudConnectorData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<SecurityCloudConnectorData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new ConnectorSettingList(Optional.ToList(value), nextLink.Value);
+            return new ConnectorSettingList(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

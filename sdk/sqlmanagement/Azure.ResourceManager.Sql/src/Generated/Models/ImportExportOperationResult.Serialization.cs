@@ -13,9 +13,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ImportExportOperationResult : IUtf8JsonSerializable
+    public partial class ImportExportOperationResult : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -33,17 +33,17 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> requestId = default;
-            Optional<string> requestType = default;
-            Optional<string> queuedTime = default;
-            Optional<string> lastModifiedTime = default;
-            Optional<Uri> blobUri = default;
-            Optional<string> serverName = default;
-            Optional<string> databaseName = default;
-            Optional<string> status = default;
-            Optional<string> errorMessage = default;
-            Optional<IReadOnlyList<PrivateEndpointConnectionRequestStatus>> privateEndpointConnections = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<Guid> requestId = default;
+            Core.Optional<string> requestType = default;
+            Core.Optional<string> queuedTime = default;
+            Core.Optional<string> lastModifiedTime = default;
+            Core.Optional<Uri> blobUri = default;
+            Core.Optional<string> serverName = default;
+            Core.Optional<string> databaseName = default;
+            Core.Optional<string> status = default;
+            Core.Optional<string> errorMessage = default;
+            Core.Optional<IReadOnlyList<PrivateEndpointConnectionRequestStatus>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ImportExportOperationResult(id, name, type, systemData.Value, Optional.ToNullable(requestId), requestType.Value, queuedTime.Value, lastModifiedTime.Value, blobUri.Value, serverName.Value, databaseName.Value, status.Value, errorMessage.Value, Optional.ToList(privateEndpointConnections));
+            return new ImportExportOperationResult(id, name, type, systemData.Value, Core.Optional.ToNullable(requestId), requestType.Value, queuedTime.Value, lastModifiedTime.Value, blobUri.Value, serverName.Value, databaseName.Value, status.Value, errorMessage.Value, Core.Optional.ToList(privateEndpointConnections));
         }
     }
 }

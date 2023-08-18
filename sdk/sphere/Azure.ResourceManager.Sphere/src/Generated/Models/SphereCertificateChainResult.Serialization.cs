@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sphere.Models
             {
                 return null;
             }
-            Optional<string> certificateChain = default;
+            Core.Optional<string> certificateChain = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateChain"u8))

@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             long totalRecords = default;
             long count = default;
             ResultTruncated resultTruncated = default;
-            Optional<string> skipToken = default;
+            Core.Optional<string> skipToken = default;
             BinaryData data = default;
-            Optional<IReadOnlyList<Facet>> facets = default;
+            Core.Optional<IReadOnlyList<Facet>> facets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalRecords"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     continue;
                 }
             }
-            return new ResourceQueryResult(totalRecords, count, resultTruncated, skipToken.Value, data, Optional.ToList(facets));
+            return new ResourceQueryResult(totalRecords, count, resultTruncated, skipToken.Value, data, Core.Optional.ToList(facets));
         }
     }
 }

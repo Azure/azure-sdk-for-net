@@ -13,37 +13,37 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmApplicationPatch : IUtf8JsonSerializable
+    public partial class ArmApplicationPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Plan))
+            if (Core.Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 JsonSerializer.Serialize(writer, Plan);
             }
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (Optional.IsDefined(ManagedBy))
+            if (Core.Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,17 +58,17 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ManagedResourceGroupId))
+            if (Core.Optional.IsDefined(ManagedResourceGroupId))
             {
                 writer.WritePropertyName("managedResourceGroupId"u8);
                 writer.WriteStringValue(ManagedResourceGroupId);
             }
-            if (Optional.IsDefined(ApplicationDefinitionId))
+            if (Core.Optional.IsDefined(ApplicationDefinitionId))
             {
                 writer.WritePropertyName("applicationDefinitionId"u8);
                 writer.WriteStringValue(ApplicationDefinitionId);
             }
-            if (Optional.IsDefined(Parameters))
+            if (Core.Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
 #if NET6_0_OR_GREATER
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Resources.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Parameters.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(JitAccessPolicy))
+            if (Core.Optional.IsDefined(JitAccessPolicy))
             {
                 writer.WritePropertyName("jitAccessPolicy"u8);
                 writer.WriteObjectValue(JitAccessPolicy);
@@ -92,32 +92,32 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<ArmPlan> plan = default;
-            Optional<string> kind = default;
-            Optional<ArmApplicationManagedIdentity> identity = default;
-            Optional<string> managedBy = default;
-            Optional<ArmApplicationSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ArmPlan> plan = default;
+            Core.Optional<string> kind = default;
+            Core.Optional<ArmApplicationManagedIdentity> identity = default;
+            Core.Optional<string> managedBy = default;
+            Core.Optional<ArmApplicationSku> sku = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> managedResourceGroupId = default;
-            Optional<ResourceIdentifier> applicationDefinitionId = default;
-            Optional<BinaryData> parameters = default;
-            Optional<BinaryData> outputs = default;
-            Optional<ResourcesProvisioningState> provisioningState = default;
-            Optional<ArmApplicationBillingDetails> billingDetails = default;
-            Optional<ArmApplicationJitAccessPolicy> jitAccessPolicy = default;
-            Optional<Guid> publisherTenantId = default;
-            Optional<IReadOnlyList<ArmApplicationAuthorization>> authorizations = default;
-            Optional<ArmApplicationManagementMode> managementMode = default;
-            Optional<ArmApplicationPackageContact> customerSupport = default;
-            Optional<ArmApplicationPackageSupportUris> supportUris = default;
-            Optional<IReadOnlyList<ArmApplicationArtifact>> artifacts = default;
-            Optional<ArmApplicationDetails> createdBy = default;
-            Optional<ArmApplicationDetails> updatedBy = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ResourceIdentifier> managedResourceGroupId = default;
+            Core.Optional<ResourceIdentifier> applicationDefinitionId = default;
+            Core.Optional<BinaryData> parameters = default;
+            Core.Optional<BinaryData> outputs = default;
+            Core.Optional<ResourcesProvisioningState> provisioningState = default;
+            Core.Optional<ArmApplicationBillingDetails> billingDetails = default;
+            Core.Optional<ArmApplicationJitAccessPolicy> jitAccessPolicy = default;
+            Core.Optional<Guid> publisherTenantId = default;
+            Core.Optional<IReadOnlyList<ArmApplicationAuthorization>> authorizations = default;
+            Core.Optional<ArmApplicationManagementMode> managementMode = default;
+            Core.Optional<ArmApplicationPackageContact> customerSupport = default;
+            Core.Optional<ArmApplicationPackageSupportUris> supportUris = default;
+            Core.Optional<IReadOnlyList<ArmApplicationArtifact>> artifacts = default;
+            Core.Optional<ArmApplicationDetails> createdBy = default;
+            Core.Optional<ArmApplicationDetails> updatedBy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("plan"u8))
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ArmApplicationPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, sku.Value, plan, kind.Value, identity.Value, managedResourceGroupId.Value, applicationDefinitionId.Value, parameters.Value, outputs.Value, Optional.ToNullable(provisioningState), billingDetails.Value, jitAccessPolicy.Value, Optional.ToNullable(publisherTenantId), Optional.ToList(authorizations), Optional.ToNullable(managementMode), customerSupport.Value, supportUris.Value, Optional.ToList(artifacts), createdBy.Value, updatedBy.Value);
+            return new ArmApplicationPatch(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, managedBy.Value, sku.Value, plan, kind.Value, identity.Value, managedResourceGroupId.Value, applicationDefinitionId.Value, parameters.Value, outputs.Value, Core.Optional.ToNullable(provisioningState), billingDetails.Value, jitAccessPolicy.Value, Core.Optional.ToNullable(publisherTenantId), Core.Optional.ToList(authorizations), Core.Optional.ToNullable(managementMode), customerSupport.Value, supportUris.Value, Core.Optional.ToList(artifacts), createdBy.Value, updatedBy.Value);
         }
     }
 }

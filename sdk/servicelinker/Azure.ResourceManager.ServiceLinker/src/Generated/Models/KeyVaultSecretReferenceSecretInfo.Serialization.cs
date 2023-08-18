@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class KeyVaultSecretReferenceSecretInfo : IUtf8JsonSerializable
+    public partial class KeyVaultSecretReferenceSecretInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Version))
+            if (Core.Optional.IsDefined(Version))
             {
                 if (Version != null)
                 {
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> version = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> version = default;
             LinkerSecretType secretType = default;
             foreach (var property in element.EnumerateObject())
             {

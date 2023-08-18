@@ -12,34 +12,34 @@ using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SensitivityLabelUpdate : IUtf8JsonSerializable
+    public partial class SensitivityLabelUpdate : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Op))
+            if (Core.Optional.IsDefined(Op))
             {
                 writer.WritePropertyName("op"u8);
                 writer.WriteStringValue(Op.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Schema))
+            if (Core.Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 writer.WriteStringValue(Schema);
             }
-            if (Optional.IsDefined(Table))
+            if (Core.Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
                 writer.WriteStringValue(Table);
             }
-            if (Optional.IsDefined(Column))
+            if (Core.Optional.IsDefined(Column))
             {
                 writer.WritePropertyName("column"u8);
                 writer.WriteStringValue(Column);
             }
-            if (Optional.IsDefined(SensitivityLabel))
+            if (Core.Optional.IsDefined(SensitivityLabel))
             {
                 writer.WritePropertyName("sensitivityLabel"u8);
                 writer.WriteObjectValue(SensitivityLabel);
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SensitivityLabelUpdateKind> op = default;
-            Optional<string> schema = default;
-            Optional<string> table = default;
-            Optional<string> column = default;
-            Optional<SensitivityLabelData> sensitivityLabel = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<SensitivityLabelUpdateKind> op = default;
+            Core.Optional<string> schema = default;
+            Core.Optional<string> table = default;
+            Core.Optional<string> column = default;
+            Core.Optional<SensitivityLabelData> sensitivityLabel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SensitivityLabelUpdate(id, name, type, systemData.Value, Optional.ToNullable(op), schema.Value, table.Value, column.Value, sensitivityLabel.Value);
+            return new SensitivityLabelUpdate(id, name, type, systemData.Value, Core.Optional.ToNullable(op), schema.Value, table.Value, column.Value, sensitivityLabel.Value);
         }
     }
 }

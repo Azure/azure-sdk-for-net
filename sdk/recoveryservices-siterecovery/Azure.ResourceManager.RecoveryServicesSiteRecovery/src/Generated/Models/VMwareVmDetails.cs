@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of VMwareVmDetails. </summary>
         internal VMwareVmDetails()
         {
-            DiskDetails = new ChangeTrackingList<InMageDiskDetails>();
-            ValidationErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
+            DiskDetails = new Core.ChangeTrackingList<InMageDiskDetails>();
+            ValidationErrors = new Core.ChangeTrackingList<SiteRecoveryHealthError>();
             InstanceType = "VMwareVirtualMachine";
         }
 

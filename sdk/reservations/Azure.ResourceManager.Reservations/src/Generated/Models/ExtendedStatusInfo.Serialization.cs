@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ReservationStatusCode> statusCode = default;
-            Optional<string> message = default;
+            Core.Optional<ReservationStatusCode> statusCode = default;
+            Core.Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("statusCode"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new ExtendedStatusInfo(Optional.ToNullable(statusCode), message.Value);
+            return new ExtendedStatusInfo(Core.Optional.ToNullable(statusCode), message.Value);
         }
     }
 }

@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of IaasVmRestoreContent. </summary>
         public IaasVmRestoreContent()
         {
-            RestoreDiskLunList = new ChangeTrackingList<int>();
-            Zones = new ChangeTrackingList<string>();
+            RestoreDiskLunList = new Core.ChangeTrackingList<int>();
+            Zones = new Core.ChangeTrackingList<string>();
             ObjectType = "IaasVMRestoreRequest";
         }
 

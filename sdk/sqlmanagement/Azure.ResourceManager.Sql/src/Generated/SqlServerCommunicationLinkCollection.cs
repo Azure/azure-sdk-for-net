@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlServerCommunicationLinkServerCommunicationLinksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServerCommunicationLinkResource>(new SqlServerCommunicationLinkOperationSource(Client), _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics, Pipeline, _sqlServerCommunicationLinkServerCommunicationLinksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerCommunicationLinkResource>(new SqlServerCommunicationLinkOperationSource(Client), _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics, Pipeline, _sqlServerCommunicationLinkServerCommunicationLinksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlServerCommunicationLinkServerCommunicationLinksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, data, cancellationToken);
-                var operation = new SqlArmOperation<SqlServerCommunicationLinkResource>(new SqlServerCommunicationLinkOperationSource(Client), _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics, Pipeline, _sqlServerCommunicationLinkServerCommunicationLinksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerCommunicationLinkResource>(new SqlServerCommunicationLinkOperationSource(Client), _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics, Pipeline, _sqlServerCommunicationLinkServerCommunicationLinksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, communicationLinkName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Sql
         public virtual AsyncPageable<SqlServerCommunicationLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerCommunicationLinkServerCommunicationLinksRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SqlServerCommunicationLinkResource(Client, SqlServerCommunicationLinkData.DeserializeSqlServerCommunicationLinkData(e)), _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics, Pipeline, "SqlServerCommunicationLinkCollection.GetAll", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SqlServerCommunicationLinkResource(Client, SqlServerCommunicationLinkData.DeserializeSqlServerCommunicationLinkData(e)), _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics, Pipeline, "SqlServerCommunicationLinkCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Pageable<SqlServerCommunicationLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerCommunicationLinkServerCommunicationLinksRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SqlServerCommunicationLinkResource(Client, SqlServerCommunicationLinkData.DeserializeSqlServerCommunicationLinkData(e)), _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics, Pipeline, "SqlServerCommunicationLinkCollection.GetAll", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SqlServerCommunicationLinkResource(Client, SqlServerCommunicationLinkData.DeserializeSqlServerCommunicationLinkData(e)), _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics, Pipeline, "SqlServerCommunicationLinkCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

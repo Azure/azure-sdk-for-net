@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class GenericContainerExtendedInfo : IUtf8JsonSerializable
+    public partial class GenericContainerExtendedInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RawCertData))
+            if (Core.Optional.IsDefined(RawCertData))
             {
                 writer.WritePropertyName("rawCertData"u8);
                 writer.WriteStringValue(RawCertData);
             }
-            if (Optional.IsDefined(ContainerIdentityInfo))
+            if (Core.Optional.IsDefined(ContainerIdentityInfo))
             {
                 writer.WritePropertyName("containerIdentityInfo"u8);
                 writer.WriteObjectValue(ContainerIdentityInfo);
             }
-            if (Optional.IsCollectionDefined(ServiceEndpoints))
+            if (Core.Optional.IsCollectionDefined(ServiceEndpoints))
             {
                 writer.WritePropertyName("serviceEndpoints"u8);
                 writer.WriteStartObject();
@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> rawCertData = default;
-            Optional<ContainerIdentityInfo> containerIdentityInfo = default;
-            Optional<IDictionary<string, string>> serviceEndpoints = default;
+            Core.Optional<string> rawCertData = default;
+            Core.Optional<ContainerIdentityInfo> containerIdentityInfo = default;
+            Core.Optional<IDictionary<string, string>> serviceEndpoints = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rawCertData"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new GenericContainerExtendedInfo(rawCertData.Value, containerIdentityInfo.Value, Optional.ToDictionary(serviceEndpoints));
+            return new GenericContainerExtendedInfo(rawCertData.Value, containerIdentityInfo.Value, Core.Optional.ToDictionary(serviceEndpoints));
         }
     }
 }

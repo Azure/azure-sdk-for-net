@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of BackupResourceVaultConfigProperties. </summary>
         public BackupResourceVaultConfigProperties()
         {
-            ResourceGuardOperationRequests = new ChangeTrackingList<string>();
+            ResourceGuardOperationRequests = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of BackupResourceVaultConfigProperties. </summary>

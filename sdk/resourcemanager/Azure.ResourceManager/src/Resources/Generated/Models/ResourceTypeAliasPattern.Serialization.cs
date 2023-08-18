@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> phrase = default;
-            Optional<string> variable = default;
-            Optional<ResourceTypeAliasPatternType> type = default;
+            Core.Optional<string> phrase = default;
+            Core.Optional<string> variable = default;
+            Core.Optional<ResourceTypeAliasPatternType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("phrase"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ResourceTypeAliasPattern(phrase.Value, variable.Value, Optional.ToNullable(type));
+            return new ResourceTypeAliasPattern(phrase.Value, variable.Value, Core.Optional.ToNullable(type));
         }
     }
 }

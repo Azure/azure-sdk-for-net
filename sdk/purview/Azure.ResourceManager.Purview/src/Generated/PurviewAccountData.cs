@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="location"> The location. </param>
         public PurviewAccountData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<PurviewPrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new Core.ChangeTrackingList<PurviewPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of PurviewAccountData. </summary>

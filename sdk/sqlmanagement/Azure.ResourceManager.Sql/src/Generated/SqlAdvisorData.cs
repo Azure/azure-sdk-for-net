@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of SqlAdvisorData. </summary>
         public SqlAdvisorData()
         {
-            RecommendedActions = new ChangeTrackingList<RecommendedActionData>();
+            RecommendedActions = new Core.ChangeTrackingList<RecommendedActionData>();
         }
 
         /// <summary> Initializes a new instance of SqlAdvisorData. </summary>

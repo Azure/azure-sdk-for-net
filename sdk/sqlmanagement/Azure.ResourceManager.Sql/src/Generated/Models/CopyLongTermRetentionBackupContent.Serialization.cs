@@ -10,39 +10,39 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class CopyLongTermRetentionBackupContent : IUtf8JsonSerializable
+    public partial class CopyLongTermRetentionBackupContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetSubscriptionId))
+            if (Core.Optional.IsDefined(TargetSubscriptionId))
             {
                 writer.WritePropertyName("targetSubscriptionId"u8);
                 writer.WriteStringValue(TargetSubscriptionId);
             }
-            if (Optional.IsDefined(TargetResourceGroup))
+            if (Core.Optional.IsDefined(TargetResourceGroup))
             {
                 writer.WritePropertyName("targetResourceGroup"u8);
                 writer.WriteStringValue(TargetResourceGroup);
             }
-            if (Optional.IsDefined(TargetServerResourceId))
+            if (Core.Optional.IsDefined(TargetServerResourceId))
             {
                 writer.WritePropertyName("targetServerResourceId"u8);
                 writer.WriteStringValue(TargetServerResourceId);
             }
-            if (Optional.IsDefined(TargetServerFullyQualifiedDomainName))
+            if (Core.Optional.IsDefined(TargetServerFullyQualifiedDomainName))
             {
                 writer.WritePropertyName("targetServerFullyQualifiedDomainName"u8);
                 writer.WriteStringValue(TargetServerFullyQualifiedDomainName);
             }
-            if (Optional.IsDefined(TargetDatabaseName))
+            if (Core.Optional.IsDefined(TargetDatabaseName))
             {
                 writer.WritePropertyName("targetDatabaseName"u8);
                 writer.WriteStringValue(TargetDatabaseName);
             }
-            if (Optional.IsDefined(TargetBackupStorageRedundancy))
+            if (Core.Optional.IsDefined(TargetBackupStorageRedundancy))
             {
                 writer.WritePropertyName("targetBackupStorageRedundancy"u8);
                 writer.WriteStringValue(TargetBackupStorageRedundancy.Value.ToString());

@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderCspmAwsOfferingVmScannersConfiguration : IUtf8JsonSerializable
+    public partial class DefenderCspmAwsOfferingVmScannersConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CloudRoleArn))
+            if (Core.Optional.IsDefined(CloudRoleArn))
             {
                 writer.WritePropertyName("cloudRoleArn"u8);
                 writer.WriteStringValue(CloudRoleArn);
             }
-            if (Optional.IsDefined(ScanningMode))
+            if (Core.Optional.IsDefined(ScanningMode))
             {
                 writer.WritePropertyName("scanningMode"u8);
                 writer.WriteStringValue(ScanningMode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ExclusionTags))
+            if (Core.Optional.IsCollectionDefined(ExclusionTags))
             {
                 writer.WritePropertyName("exclusionTags"u8);
                 writer.WriteStartObject();
@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> cloudRoleArn = default;
-            Optional<DefenderForServersScanningMode> scanningMode = default;
-            Optional<IDictionary<string, string>> exclusionTags = default;
+            Core.Optional<string> cloudRoleArn = default;
+            Core.Optional<DefenderForServersScanningMode> scanningMode = default;
+            Core.Optional<IDictionary<string, string>> exclusionTags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cloudRoleArn"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new DefenderCspmAwsOfferingVmScannersConfiguration(cloudRoleArn.Value, Optional.ToNullable(scanningMode), Optional.ToDictionary(exclusionTags));
+            return new DefenderCspmAwsOfferingVmScannersConfiguration(cloudRoleArn.Value, Core.Optional.ToNullable(scanningMode), Core.Optional.ToDictionary(exclusionTags));
         }
     }
 }

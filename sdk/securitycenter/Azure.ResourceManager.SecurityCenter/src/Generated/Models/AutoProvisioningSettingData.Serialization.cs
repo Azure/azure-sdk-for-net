@@ -12,14 +12,14 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class AutoProvisioningSettingData : IUtf8JsonSerializable
+    public partial class AutoProvisioningSettingData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AutoProvision))
+            if (Core.Optional.IsDefined(AutoProvision))
             {
                 writer.WritePropertyName("autoProvision"u8);
                 writer.WriteStringValue(AutoProvision.Value.ToString());
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AutoProvisionState> autoProvision = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<AutoProvisionState> autoProvision = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     continue;
                 }
             }
-            return new AutoProvisioningSettingData(id, name, type, systemData.Value, Optional.ToNullable(autoProvision));
+            return new AutoProvisioningSettingData(id, name, type, systemData.Value, Core.Optional.ToNullable(autoProvision));
         }
     }
 }

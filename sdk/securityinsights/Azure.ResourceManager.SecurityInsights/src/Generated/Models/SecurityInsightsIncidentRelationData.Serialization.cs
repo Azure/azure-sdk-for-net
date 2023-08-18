@@ -12,19 +12,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    public partial class SecurityInsightsIncidentRelationData : IUtf8JsonSerializable
+    public partial class SecurityInsightsIncidentRelationData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RelatedResourceId))
+            if (Core.Optional.IsDefined(RelatedResourceId))
             {
                 writer.WritePropertyName("relatedResourceId"u8);
                 writer.WriteStringValue(RelatedResourceId);
@@ -39,15 +39,15 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            Core.Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> relatedResourceId = default;
-            Optional<string> relatedResourceName = default;
-            Optional<ResourceType> relatedResourceType = default;
-            Optional<string> relatedResourceKind = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ResourceIdentifier> relatedResourceId = default;
+            Core.Optional<string> relatedResourceName = default;
+            Core.Optional<ResourceType> relatedResourceType = default;
+            Core.Optional<string> relatedResourceKind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     continue;
                 }
             }
-            return new SecurityInsightsIncidentRelationData(id, name, type, systemData.Value, relatedResourceId.Value, relatedResourceName.Value, Optional.ToNullable(relatedResourceType), relatedResourceKind.Value, Optional.ToNullable(etag));
+            return new SecurityInsightsIncidentRelationData(id, name, type, systemData.Value, relatedResourceId.Value, relatedResourceName.Value, Core.Optional.ToNullable(relatedResourceType), relatedResourceKind.Value, Core.Optional.ToNullable(etag));
         }
     }
 }

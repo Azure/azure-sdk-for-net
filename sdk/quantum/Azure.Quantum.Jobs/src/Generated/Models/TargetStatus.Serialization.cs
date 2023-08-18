@@ -18,10 +18,10 @@ namespace Azure.Quantum.Jobs.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<TargetAvailability> currentAvailability = default;
-            Optional<long> averageQueueTime = default;
-            Optional<string> statusPage = default;
+            Core.Optional<string> id = default;
+            Core.Optional<TargetAvailability> currentAvailability = default;
+            Core.Optional<long> averageQueueTime = default;
+            Core.Optional<string> statusPage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -53,7 +53,7 @@ namespace Azure.Quantum.Jobs.Models
                     continue;
                 }
             }
-            return new TargetStatus(id.Value, Optional.ToNullable(currentAvailability), Optional.ToNullable(averageQueueTime), statusPage.Value);
+            return new TargetStatus(id.Value, Core.Optional.ToNullable(currentAvailability), Core.Optional.ToNullable(averageQueueTime), statusPage.Value);
         }
     }
 }

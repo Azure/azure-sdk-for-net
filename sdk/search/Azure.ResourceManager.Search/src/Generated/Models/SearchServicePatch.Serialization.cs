@@ -13,22 +13,22 @@ using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class SearchServicePatch : IUtf8JsonSerializable
+    public partial class SearchServicePatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -43,37 +43,37 @@ namespace Azure.ResourceManager.Search.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReplicaCount))
+            if (Core.Optional.IsDefined(ReplicaCount))
             {
                 writer.WritePropertyName("replicaCount"u8);
                 writer.WriteNumberValue(ReplicaCount.Value);
             }
-            if (Optional.IsDefined(PartitionCount))
+            if (Core.Optional.IsDefined(PartitionCount))
             {
                 writer.WritePropertyName("partitionCount"u8);
                 writer.WriteNumberValue(PartitionCount.Value);
             }
-            if (Optional.IsDefined(HostingMode))
+            if (Core.Optional.IsDefined(HostingMode))
             {
                 writer.WritePropertyName("hostingMode"u8);
                 writer.WriteStringValue(HostingMode.Value.ToSerialString());
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (Core.Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
-            if (Optional.IsDefined(NetworkRuleSet))
+            if (Core.Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkRuleSet"u8);
                 writer.WriteObjectValue(NetworkRuleSet);
             }
-            if (Optional.IsDefined(EncryptionWithCmk))
+            if (Core.Optional.IsDefined(EncryptionWithCmk))
             {
                 writer.WritePropertyName("encryptionWithCmk"u8);
                 writer.WriteObjectValue(EncryptionWithCmk);
             }
-            if (Optional.IsDefined(IsLocalAuthDisabled))
+            if (Core.Optional.IsDefined(IsLocalAuthDisabled))
             {
                 if (IsLocalAuthDisabled != null)
                 {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Search.Models
                     writer.WriteNull("disableLocalAuth");
                 }
             }
-            if (Optional.IsDefined(AuthOptions))
+            if (Core.Optional.IsDefined(AuthOptions))
             {
                 writer.WritePropertyName("authOptions"u8);
                 writer.WriteObjectValue(AuthOptions);
@@ -100,27 +100,27 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<SearchSku> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<SearchSku> sku = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> replicaCount = default;
-            Optional<int> partitionCount = default;
-            Optional<SearchServiceHostingMode> hostingMode = default;
-            Optional<SearchServicePublicNetworkAccess> publicNetworkAccess = default;
-            Optional<SearchServiceStatus> status = default;
-            Optional<string> statusDetails = default;
-            Optional<SearchServiceProvisioningState> provisioningState = default;
-            Optional<NetworkRuleSet> networkRuleSet = default;
-            Optional<SearchEncryptionWithCmk> encryptionWithCmk = default;
-            Optional<bool?> disableLocalAuth = default;
-            Optional<SearchAadAuthDataPlaneAuthOptions> authOptions = default;
-            Optional<IReadOnlyList<SearchPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<IReadOnlyList<SharedSearchServicePrivateLinkResourceData>> sharedPrivateLinkResources = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<int> replicaCount = default;
+            Core.Optional<int> partitionCount = default;
+            Core.Optional<SearchServiceHostingMode> hostingMode = default;
+            Core.Optional<SearchServicePublicNetworkAccess> publicNetworkAccess = default;
+            Core.Optional<SearchServiceStatus> status = default;
+            Core.Optional<string> statusDetails = default;
+            Core.Optional<SearchServiceProvisioningState> provisioningState = default;
+            Core.Optional<NetworkRuleSet> networkRuleSet = default;
+            Core.Optional<SearchEncryptionWithCmk> encryptionWithCmk = default;
+            Core.Optional<bool?> disableLocalAuth = default;
+            Core.Optional<SearchAadAuthDataPlaneAuthOptions> authOptions = default;
+            Core.Optional<IReadOnlyList<SearchPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Core.Optional<IReadOnlyList<SharedSearchServicePrivateLinkResourceData>> sharedPrivateLinkResources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Search.Models
                     continue;
                 }
             }
-            return new SearchServicePatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToNullable(replicaCount), Optional.ToNullable(partitionCount), Optional.ToNullable(hostingMode), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(status), statusDetails.Value, Optional.ToNullable(provisioningState), networkRuleSet.Value, encryptionWithCmk.Value, Optional.ToNullable(disableLocalAuth), authOptions.Value, Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources));
+            return new SearchServicePatch(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku.Value, identity, Core.Optional.ToNullable(replicaCount), Core.Optional.ToNullable(partitionCount), Core.Optional.ToNullable(hostingMode), Core.Optional.ToNullable(publicNetworkAccess), Core.Optional.ToNullable(status), statusDetails.Value, Core.Optional.ToNullable(provisioningState), networkRuleSet.Value, encryptionWithCmk.Value, Core.Optional.ToNullable(disableLocalAuth), authOptions.Value, Core.Optional.ToList(privateEndpointConnections), Core.Optional.ToList(sharedPrivateLinkResources));
         }
     }
 }

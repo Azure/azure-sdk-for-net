@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<ResourceTypeAliasPathTokenType> type = default;
-            Optional<ResourceTypeAliasPathAttributes> attributes = default;
+            Core.Optional<ResourceTypeAliasPathTokenType> type = default;
+            Core.Optional<ResourceTypeAliasPathAttributes> attributes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ResourceTypeAliasPathMetadata(Optional.ToNullable(type), Optional.ToNullable(attributes));
+            return new ResourceTypeAliasPathMetadata(Core.Optional.ToNullable(type), Core.Optional.ToNullable(attributes));
         }
     }
 }

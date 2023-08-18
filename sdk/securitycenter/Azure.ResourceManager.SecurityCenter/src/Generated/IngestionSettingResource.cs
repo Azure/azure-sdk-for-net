@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual AsyncPageable<IngestionConnectionString> GetConnectionStringsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _ingestionSettingRestClient.CreateListConnectionStringsRequest(Id.SubscriptionId, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, IngestionConnectionString.DeserializeIngestionConnectionString, _ingestionSettingClientDiagnostics, Pipeline, "IngestionSettingResource.GetConnectionStrings", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, IngestionConnectionString.DeserializeIngestionConnectionString, _ingestionSettingClientDiagnostics, Pipeline, "IngestionSettingResource.GetConnectionStrings", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual Pageable<IngestionConnectionString> GetConnectionStrings(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _ingestionSettingRestClient.CreateListConnectionStringsRequest(Id.SubscriptionId, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, IngestionConnectionString.DeserializeIngestionConnectionString, _ingestionSettingClientDiagnostics, Pipeline, "IngestionSettingResource.GetConnectionStrings", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, IngestionConnectionString.DeserializeIngestionConnectionString, _ingestionSettingClientDiagnostics, Pipeline, "IngestionSettingResource.GetConnectionStrings", "value", null, cancellationToken);
         }
     }
 }

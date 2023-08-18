@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Reservations
         /// <summary> Initializes a new instance of ReservationOrderData. </summary>
         internal ReservationOrderData()
         {
-            Reservations = new ChangeTrackingList<ReservationDetailData>();
+            Reservations = new Core.ChangeTrackingList<ReservationDetailData>();
         }
 
         /// <summary> Initializes a new instance of ReservationOrderData. </summary>

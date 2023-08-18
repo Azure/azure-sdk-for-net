@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
-    internal class ServiceFabricApplicationOperationSource : IOperationSource<ServiceFabricApplicationResource>
+    internal class ServiceFabricApplicationOperationSource : Core.IOperationSource<ServiceFabricApplicationResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ServiceFabric
             _client = client;
         }
 
-        ServiceFabricApplicationResource IOperationSource<ServiceFabricApplicationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ServiceFabricApplicationResource Core.IOperationSource<ServiceFabricApplicationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ServiceFabricApplicationData.DeserializeServiceFabricApplicationData(document.RootElement);
             return new ServiceFabricApplicationResource(_client, data);
         }
 
-        async ValueTask<ServiceFabricApplicationResource> IOperationSource<ServiceFabricApplicationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ServiceFabricApplicationResource> Core.IOperationSource<ServiceFabricApplicationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ServiceFabricApplicationData.DeserializeServiceFabricApplicationData(document.RootElement);

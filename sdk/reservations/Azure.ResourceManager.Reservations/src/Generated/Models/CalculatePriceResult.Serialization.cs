@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<CalculatePriceResultProperties> properties = default;
+            Core.Optional<CalculatePriceResultProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))

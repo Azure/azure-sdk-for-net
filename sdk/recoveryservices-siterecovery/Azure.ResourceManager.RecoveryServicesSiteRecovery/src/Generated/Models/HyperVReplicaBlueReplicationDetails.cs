@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of HyperVReplicaBlueReplicationDetails. </summary>
         internal HyperVReplicaBlueReplicationDetails()
         {
-            VmNics = new ChangeTrackingList<VmNicDetails>();
-            VmDiskDetails = new ChangeTrackingList<SiteRecoveryDiskDetails>();
+            VmNics = new Core.ChangeTrackingList<VmNicDetails>();
+            VmDiskDetails = new Core.ChangeTrackingList<SiteRecoveryDiskDetails>();
             InstanceType = "HyperVReplica2012R2";
         }
 

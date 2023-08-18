@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> provisioningState = default;
-            Optional<ErrorDeploymentType> type = default;
-            Optional<string> deploymentName = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<ErrorDeploymentType> type = default;
+            Core.Optional<string> deploymentName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ErrorDeploymentExtended(provisioningState.Value, Optional.ToNullable(type), deploymentName.Value);
+            return new ErrorDeploymentExtended(provisioningState.Value, Core.Optional.ToNullable(type), deploymentName.Value);
         }
     }
 }

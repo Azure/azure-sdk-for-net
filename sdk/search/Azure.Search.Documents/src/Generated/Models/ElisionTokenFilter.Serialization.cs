@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class ElisionTokenFilter : IUtf8JsonSerializable
+    public partial class ElisionTokenFilter : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Articles))
+            if (Core.Optional.IsCollectionDefined(Articles))
             {
                 writer.WritePropertyName("articles"u8);
                 writer.WriteStartArray();
@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<IList<string>> articles = default;
+            Core.Optional<IList<string>> articles = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -69,7 +69,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new ElisionTokenFilter(odataType, name, Optional.ToList(articles));
+            return new ElisionTokenFilter(odataType, name, Core.Optional.ToList(articles));
         }
     }
 }

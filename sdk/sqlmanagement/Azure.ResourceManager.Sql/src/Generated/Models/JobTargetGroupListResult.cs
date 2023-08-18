@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of JobTargetGroupListResult. </summary>
         internal JobTargetGroupListResult()
         {
-            Value = new ChangeTrackingList<SqlServerJobTargetGroupData>();
+            Value = new Core.ChangeTrackingList<SqlServerJobTargetGroupData>();
         }
 
         /// <summary> Initializes a new instance of JobTargetGroupListResult. </summary>

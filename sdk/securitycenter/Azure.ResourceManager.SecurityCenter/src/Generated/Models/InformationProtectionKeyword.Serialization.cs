@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class InformationProtectionKeyword : IUtf8JsonSerializable
+    public partial class InformationProtectionKeyword : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Pattern))
+            if (Core.Optional.IsDefined(Pattern))
             {
                 writer.WritePropertyName("pattern"u8);
                 writer.WriteStringValue(Pattern);
             }
-            if (Optional.IsDefined(Custom))
+            if (Core.Optional.IsDefined(Custom))
             {
                 writer.WritePropertyName("custom"u8);
                 writer.WriteBooleanValue(Custom.Value);
             }
-            if (Optional.IsDefined(CanBeNumeric))
+            if (Core.Optional.IsDefined(CanBeNumeric))
             {
                 writer.WritePropertyName("canBeNumeric"u8);
                 writer.WriteBooleanValue(CanBeNumeric.Value);
             }
-            if (Optional.IsDefined(Excluded))
+            if (Core.Optional.IsDefined(Excluded))
             {
                 writer.WritePropertyName("excluded"u8);
                 writer.WriteBooleanValue(Excluded.Value);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> pattern = default;
-            Optional<bool> custom = default;
-            Optional<bool> canBeNumeric = default;
-            Optional<bool> excluded = default;
+            Core.Optional<string> pattern = default;
+            Core.Optional<bool> custom = default;
+            Core.Optional<bool> canBeNumeric = default;
+            Core.Optional<bool> excluded = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pattern"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new InformationProtectionKeyword(pattern.Value, Optional.ToNullable(custom), Optional.ToNullable(canBeNumeric), Optional.ToNullable(excluded));
+            return new InformationProtectionKeyword(pattern.Value, Core.Optional.ToNullable(custom), Core.Optional.ToNullable(canBeNumeric), Core.Optional.ToNullable(excluded));
         }
     }
 }

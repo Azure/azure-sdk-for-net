@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<int> numberOfQueries = default;
-            Optional<string> aggregationFunction = default;
-            Optional<string> observationMetric = default;
-            Optional<QueryTimeGrainType> intervalType = default;
-            Optional<string> startTime = default;
-            Optional<string> endTime = default;
-            Optional<IReadOnlyList<QueryStatisticsProperties>> queries = default;
+            Core.Optional<int> numberOfQueries = default;
+            Core.Optional<string> aggregationFunction = default;
+            Core.Optional<string> observationMetric = default;
+            Core.Optional<QueryTimeGrainType> intervalType = default;
+            Core.Optional<string> startTime = default;
+            Core.Optional<string> endTime = default;
+            Core.Optional<IReadOnlyList<QueryStatisticsProperties>> queries = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("numberOfQueries"u8))
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new TopQueries(Optional.ToNullable(numberOfQueries), aggregationFunction.Value, observationMetric.Value, Optional.ToNullable(intervalType), startTime.Value, endTime.Value, Optional.ToList(queries));
+            return new TopQueries(Core.Optional.ToNullable(numberOfQueries), aggregationFunction.Value, observationMetric.Value, Core.Optional.ToNullable(intervalType), startTime.Value, endTime.Value, Core.Optional.ToList(queries));
         }
     }
 }

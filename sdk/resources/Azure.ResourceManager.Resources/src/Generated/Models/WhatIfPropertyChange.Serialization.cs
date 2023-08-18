@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Resources.Models
             }
             string path = default;
             WhatIfPropertyChangeType propertyChangeType = default;
-            Optional<BinaryData> before = default;
-            Optional<BinaryData> after = default;
-            Optional<IReadOnlyList<WhatIfPropertyChange>> children = default;
+            Core.Optional<BinaryData> before = default;
+            Core.Optional<BinaryData> after = default;
+            Core.Optional<IReadOnlyList<WhatIfPropertyChange>> children = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new WhatIfPropertyChange(path, propertyChangeType, before.Value, after.Value, Optional.ToList(children));
+            return new WhatIfPropertyChange(path, propertyChangeType, before.Value, after.Value, Core.Optional.ToList(children));
         }
     }
 }

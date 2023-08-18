@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class PartnerRegionInfo : IUtf8JsonSerializable
+    public partial class PartnerRegionInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<InstanceFailoverGroupReplicationRole> replicationRole = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<InstanceFailoverGroupReplicationRole> replicationRole = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new PartnerRegionInfo(Optional.ToNullable(location), Optional.ToNullable(replicationRole));
+            return new PartnerRegionInfo(Core.Optional.ToNullable(location), Core.Optional.ToNullable(replicationRole));
         }
     }
 }

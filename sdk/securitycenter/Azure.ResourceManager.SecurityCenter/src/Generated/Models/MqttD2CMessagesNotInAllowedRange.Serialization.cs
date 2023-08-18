@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class MqttD2CMessagesNotInAllowedRange : IUtf8JsonSerializable
+    public partial class MqttD2CMessagesNotInAllowedRange : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("timeWindowSize"u8);
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             TimeSpan timeWindowSize = default;
             int minThreshold = default;
             int maxThreshold = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> description = default;
             bool isEnabled = default;
             string ruleType = default;
             foreach (var property in element.EnumerateObject())

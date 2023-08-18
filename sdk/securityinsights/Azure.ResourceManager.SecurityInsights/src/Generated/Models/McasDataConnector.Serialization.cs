@@ -13,26 +13,26 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class McasDataConnector : IUtf8JsonSerializable
+    public partial class McasDataConnector : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TenantId))
+            if (Core.Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(DataTypes))
+            if (Core.Optional.IsDefined(DataTypes))
             {
                 writer.WritePropertyName("dataTypes"u8);
                 writer.WriteObjectValue(DataTypes);
@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             DataConnectorKind kind = default;
-            Optional<ETag> etag = default;
+            Core.Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> tenantId = default;
-            Optional<McasDataConnectorDataTypes> dataTypes = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<Guid> tenantId = default;
+            Core.Optional<McasDataConnectorDataTypes> dataTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new McasDataConnector(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToNullable(tenantId), dataTypes.Value);
+            return new McasDataConnector(id, name, type, systemData.Value, kind, Core.Optional.ToNullable(etag), Core.Optional.ToNullable(tenantId), dataTypes.Value);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.MixedReality.RemoteRendering
             {
                 return null;
             }
-            Optional<string> outputAssetUri = default;
+            Core.Optional<string> outputAssetUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("outputAssetUri"u8))

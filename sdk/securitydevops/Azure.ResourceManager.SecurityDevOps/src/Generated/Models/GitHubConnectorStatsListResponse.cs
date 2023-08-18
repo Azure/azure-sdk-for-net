@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         /// <summary> Initializes a new instance of GitHubConnectorStatsListResponse. </summary>
         internal GitHubConnectorStatsListResponse()
         {
-            Value = new ChangeTrackingList<GitHubConnectorStats>();
+            Value = new Core.ChangeTrackingList<GitHubConnectorStats>();
         }
 
         /// <summary> Initializes a new instance of GitHubConnectorStatsListResponse. </summary>

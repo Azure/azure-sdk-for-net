@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of A2AUpdateReplicationProtectedItemContent. </summary>
         public A2AUpdateReplicationProtectedItemContent()
         {
-            ManagedDiskUpdateDetails = new ChangeTrackingList<A2AVmManagedDiskUpdateDetails>();
+            ManagedDiskUpdateDetails = new Core.ChangeTrackingList<A2AVmManagedDiskUpdateDetails>();
             InstanceType = "A2A";
         }
 

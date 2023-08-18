@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
-    public partial class AzureDevOpsProjectMetadata : IUtf8JsonSerializable
+    public partial class AzureDevOpsProjectMetadata : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(AutoDiscovery))
+            if (Core.Optional.IsDefined(AutoDiscovery))
             {
                 writer.WritePropertyName("autoDiscovery"u8);
                 writer.WriteStringValue(AutoDiscovery.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Repos))
+            if (Core.Optional.IsCollectionDefined(Repos))
             {
                 writer.WritePropertyName("repos"u8);
                 writer.WriteStartArray();
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AutoDiscovery> autoDiscovery = default;
-            Optional<IList<string>> repos = default;
+            Core.Optional<string> name = default;
+            Core.Optional<AutoDiscovery> autoDiscovery = default;
+            Core.Optional<IList<string>> repos = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     continue;
                 }
             }
-            return new AzureDevOpsProjectMetadata(name.Value, Optional.ToNullable(autoDiscovery), Optional.ToList(repos));
+            return new AzureDevOpsProjectMetadata(name.Value, Core.Optional.ToNullable(autoDiscovery), Core.Optional.ToList(repos));
         }
     }
 }

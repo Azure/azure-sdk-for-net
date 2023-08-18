@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class VaultMonitoringSettings : IUtf8JsonSerializable
+    public partial class VaultMonitoringSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureMonitorAlertSettings))
+            if (Core.Optional.IsDefined(AzureMonitorAlertSettings))
             {
                 writer.WritePropertyName("azureMonitorAlertSettings"u8);
                 writer.WriteObjectValue(AzureMonitorAlertSettings);
             }
-            if (Optional.IsDefined(ClassicAlertSettings))
+            if (Core.Optional.IsDefined(ClassicAlertSettings))
             {
                 writer.WritePropertyName("classicAlertSettings"u8);
                 writer.WriteObjectValue(ClassicAlertSettings);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<AzureMonitorAlertSettings> azureMonitorAlertSettings = default;
-            Optional<ClassicAlertSettings> classicAlertSettings = default;
+            Core.Optional<AzureMonitorAlertSettings> azureMonitorAlertSettings = default;
+            Core.Optional<ClassicAlertSettings> classicAlertSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureMonitorAlertSettings"u8))

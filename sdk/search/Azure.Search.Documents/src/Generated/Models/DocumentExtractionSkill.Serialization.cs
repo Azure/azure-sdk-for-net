@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class DocumentExtractionSkill : IUtf8JsonSerializable
+    public partial class DocumentExtractionSkill : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ParsingMode))
+            if (Core.Optional.IsDefined(ParsingMode))
             {
                 if (ParsingMode != null)
                 {
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("parsingMode");
                 }
             }
-            if (Optional.IsDefined(DataToExtract))
+            if (Core.Optional.IsDefined(DataToExtract))
             {
                 if (DataToExtract != null)
                 {
@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("dataToExtract");
                 }
             }
-            if (Optional.IsCollectionDefined(Configuration))
+            if (Core.Optional.IsCollectionDefined(Configuration))
             {
                 if (Configuration != null)
                 {
@@ -65,17 +65,17 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Context))
+            if (Core.Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
@@ -103,13 +103,13 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<BlobIndexerParsingMode?> parsingMode = default;
-            Optional<BlobIndexerDataToExtract?> dataToExtract = default;
-            Optional<IDictionary<string, object>> configuration = default;
+            Core.Optional<BlobIndexerParsingMode?> parsingMode = default;
+            Core.Optional<BlobIndexerDataToExtract?> dataToExtract = default;
+            Core.Optional<IDictionary<string, object>> configuration = default;
             string odataType = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> context = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
@@ -197,7 +197,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new DocumentExtractionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(parsingMode), Optional.ToNullable(dataToExtract), Optional.ToDictionary(configuration));
+            return new DocumentExtractionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Core.Optional.ToNullable(parsingMode), Core.Optional.ToNullable(dataToExtract), Core.Optional.ToDictionary(configuration));
         }
     }
 }

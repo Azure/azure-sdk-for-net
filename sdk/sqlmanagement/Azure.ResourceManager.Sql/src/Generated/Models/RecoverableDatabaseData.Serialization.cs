@@ -14,14 +14,14 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class RecoverableDatabaseData : IUtf8JsonSerializable
+    public partial class RecoverableDatabaseData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Keys))
+            if (Core.Optional.IsCollectionDefined(Keys))
             {
                 writer.WritePropertyName("keys"u8);
                 writer.WriteStartObject();
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> edition = default;
-            Optional<string> serviceLevelObjective = default;
-            Optional<string> elasticPoolName = default;
-            Optional<DateTimeOffset> lastAvailableBackupDate = default;
-            Optional<IDictionary<string, SqlDatabaseKey>> keys = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> edition = default;
+            Core.Optional<string> serviceLevelObjective = default;
+            Core.Optional<string> elasticPoolName = default;
+            Core.Optional<DateTimeOffset> lastAvailableBackupDate = default;
+            Core.Optional<IDictionary<string, SqlDatabaseKey>> keys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new RecoverableDatabaseData(id, name, type, systemData.Value, edition.Value, serviceLevelObjective.Value, elasticPoolName.Value, Optional.ToNullable(lastAvailableBackupDate), Optional.ToDictionary(keys));
+            return new RecoverableDatabaseData(id, name, type, systemData.Value, edition.Value, serviceLevelObjective.Value, elasticPoolName.Value, Core.Optional.ToNullable(lastAvailableBackupDate), Core.Optional.ToDictionary(keys));
         }
     }
 }

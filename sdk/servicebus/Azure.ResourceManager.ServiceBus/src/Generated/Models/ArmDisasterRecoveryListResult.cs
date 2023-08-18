@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Initializes a new instance of ArmDisasterRecoveryListResult. </summary>
         internal ArmDisasterRecoveryListResult()
         {
-            Value = new ChangeTrackingList<ServiceBusDisasterRecoveryData>();
+            Value = new Core.ChangeTrackingList<ServiceBusDisasterRecoveryData>();
         }
 
         /// <summary> Initializes a new instance of ArmDisasterRecoveryListResult. </summary>

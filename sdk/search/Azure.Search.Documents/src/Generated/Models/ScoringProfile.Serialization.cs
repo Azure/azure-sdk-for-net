@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class ScoringProfile : IUtf8JsonSerializable
+    public partial class ScoringProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(TextWeights))
+            if (Core.Optional.IsDefined(TextWeights))
             {
                 if (TextWeights != null)
                 {
@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("text");
                 }
             }
-            if (Optional.IsCollectionDefined(Functions))
+            if (Core.Optional.IsCollectionDefined(Functions))
             {
                 writer.WritePropertyName("functions"u8);
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FunctionAggregation))
+            if (Core.Optional.IsDefined(FunctionAggregation))
             {
                 if (FunctionAggregation != null)
                 {
@@ -62,9 +62,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string name = default;
-            Optional<TextWeights> text = default;
-            Optional<IList<ScoringFunction>> functions = default;
-            Optional<ScoringFunctionAggregation?> functionAggregation = default;
+            Core.Optional<TextWeights> text = default;
+            Core.Optional<IList<ScoringFunction>> functions = default;
+            Core.Optional<ScoringFunctionAggregation?> functionAggregation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -107,7 +107,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new ScoringProfile(name, text.Value, Optional.ToList(functions), Optional.ToNullable(functionAggregation));
+            return new ScoringProfile(name, text.Value, Core.Optional.ToList(functions), Core.Optional.ToNullable(functionAggregation));
         }
     }
 }

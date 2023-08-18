@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of VaultBackupJobExtendedInfo. </summary>
         public VaultBackupJobExtendedInfo()
         {
-            PropertyBag = new ChangeTrackingDictionary<string, string>();
+            PropertyBag = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of VaultBackupJobExtendedInfo. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of AdditionalWorkspacesProperties. </summary>
         public AdditionalWorkspacesProperties()
         {
-            DataTypes = new ChangeTrackingList<AdditionalWorkspaceDataType>();
+            DataTypes = new Core.ChangeTrackingList<AdditionalWorkspaceDataType>();
         }
 
         /// <summary> Initializes a new instance of AdditionalWorkspacesProperties. </summary>

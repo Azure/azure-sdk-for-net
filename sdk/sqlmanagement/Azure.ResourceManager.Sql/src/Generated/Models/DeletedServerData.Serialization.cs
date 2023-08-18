@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class DeletedServerData : IUtf8JsonSerializable
+    public partial class DeletedServerData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> version = default;
-            Optional<DateTimeOffset> deletionTime = default;
-            Optional<ResourceIdentifier> originalId = default;
-            Optional<string> fullyQualifiedDomainName = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> version = default;
+            Core.Optional<DateTimeOffset> deletionTime = default;
+            Core.Optional<ResourceIdentifier> originalId = default;
+            Core.Optional<string> fullyQualifiedDomainName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new DeletedServerData(id, name, type, systemData.Value, version.Value, Optional.ToNullable(deletionTime), originalId.Value, fullyQualifiedDomainName.Value);
+            return new DeletedServerData(id, name, type, systemData.Value, version.Value, Core.Optional.ToNullable(deletionTime), originalId.Value, fullyQualifiedDomainName.Value);
         }
     }
 }

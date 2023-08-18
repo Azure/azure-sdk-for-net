@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SqlVmData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<SqlVmData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     continue;
                 }
             }
-            return new SqlVmListResult(Optional.ToList(value), nextLink.Value);
+            return new SqlVmListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

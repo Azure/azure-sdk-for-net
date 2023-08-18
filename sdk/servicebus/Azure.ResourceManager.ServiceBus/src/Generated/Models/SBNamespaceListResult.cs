@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Initializes a new instance of SBNamespaceListResult. </summary>
         internal SBNamespaceListResult()
         {
-            Value = new ChangeTrackingList<ServiceBusNamespaceData>();
+            Value = new Core.ChangeTrackingList<ServiceBusNamespaceData>();
         }
 
         /// <summary> Initializes a new instance of SBNamespaceListResult. </summary>

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of SecurityComplianceData. </summary>
         public SecurityComplianceData()
         {
-            AssessmentResult = new ChangeTrackingList<ComplianceSegment>();
+            AssessmentResult = new Core.ChangeTrackingList<ComplianceSegment>();
         }
 
         /// <summary> Initializes a new instance of SecurityComplianceData. </summary>

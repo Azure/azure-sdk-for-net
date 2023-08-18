@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<string> possibleCauses = default;
-            Optional<string> recommendedAction = default;
-            Optional<IReadOnlyDictionary<string, string>> errorMessageParameters = default;
-            Optional<IReadOnlyDictionary<string, string>> errorTags = default;
+            Core.Optional<string> errorCode = default;
+            Core.Optional<string> errorMessage = default;
+            Core.Optional<string> possibleCauses = default;
+            Core.Optional<string> recommendedAction = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> errorMessageParameters = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> errorTags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorCode"u8))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new InMageRcmAgentUpgradeBlockingErrorDetails(errorCode.Value, errorMessage.Value, possibleCauses.Value, recommendedAction.Value, Optional.ToDictionary(errorMessageParameters), Optional.ToDictionary(errorTags));
+            return new InMageRcmAgentUpgradeBlockingErrorDetails(errorCode.Value, errorMessage.Value, possibleCauses.Value, recommendedAction.Value, Core.Optional.ToDictionary(errorMessageParameters), Core.Optional.ToDictionary(errorTags));
         }
     }
 }

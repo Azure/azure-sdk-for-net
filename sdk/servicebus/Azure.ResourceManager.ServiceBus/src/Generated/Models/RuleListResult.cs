@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Initializes a new instance of RuleListResult. </summary>
         internal RuleListResult()
         {
-            Value = new ChangeTrackingList<ServiceBusRuleData>();
+            Value = new Core.ChangeTrackingList<ServiceBusRuleData>();
         }
 
         /// <summary> Initializes a new instance of RuleListResult. </summary>

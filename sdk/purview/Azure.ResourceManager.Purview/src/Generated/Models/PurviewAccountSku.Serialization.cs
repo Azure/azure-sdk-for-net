@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<int> capacity = default;
-            Optional<PurviewAccountSkuName> name = default;
+            Core.Optional<int> capacity = default;
+            Core.Optional<PurviewAccountSkuName> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("capacity"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Purview.Models
                     continue;
                 }
             }
-            return new PurviewAccountSku(Optional.ToNullable(capacity), Optional.ToNullable(name));
+            return new PurviewAccountSku(Core.Optional.ToNullable(capacity), Core.Optional.ToNullable(name));
         }
     }
 }

@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class CustomEntityLookupSkill : IUtf8JsonSerializable
+    public partial class CustomEntityLookupSkill : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultLanguageCode))
+            if (Core.Optional.IsDefined(DefaultLanguageCode))
             {
                 if (DefaultLanguageCode != null)
                 {
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultLanguageCode");
                 }
             }
-            if (Optional.IsDefined(EntitiesDefinitionUri))
+            if (Core.Optional.IsDefined(EntitiesDefinitionUri))
             {
                 if (EntitiesDefinitionUri != null)
                 {
@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("entitiesDefinitionUri");
                 }
             }
-            if (Optional.IsCollectionDefined(InlineEntitiesDefinition))
+            if (Core.Optional.IsCollectionDefined(InlineEntitiesDefinition))
             {
                 if (InlineEntitiesDefinition != null)
                 {
@@ -58,7 +58,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("inlineEntitiesDefinition");
                 }
             }
-            if (Optional.IsDefined(GlobalDefaultCaseSensitive))
+            if (Core.Optional.IsDefined(GlobalDefaultCaseSensitive))
             {
                 if (GlobalDefaultCaseSensitive != null)
                 {
@@ -70,7 +70,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("globalDefaultCaseSensitive");
                 }
             }
-            if (Optional.IsDefined(GlobalDefaultAccentSensitive))
+            if (Core.Optional.IsDefined(GlobalDefaultAccentSensitive))
             {
                 if (GlobalDefaultAccentSensitive != null)
                 {
@@ -82,7 +82,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("globalDefaultAccentSensitive");
                 }
             }
-            if (Optional.IsDefined(GlobalDefaultFuzzyEditDistance))
+            if (Core.Optional.IsDefined(GlobalDefaultFuzzyEditDistance))
             {
                 if (GlobalDefaultFuzzyEditDistance != null)
                 {
@@ -96,17 +96,17 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Context))
+            if (Core.Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
@@ -134,16 +134,16 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<CustomEntityLookupSkillLanguage?> defaultLanguageCode = default;
-            Optional<Uri> entitiesDefinitionUri = default;
-            Optional<IList<CustomEntity>> inlineEntitiesDefinition = default;
-            Optional<bool?> globalDefaultCaseSensitive = default;
-            Optional<bool?> globalDefaultAccentSensitive = default;
-            Optional<int?> globalDefaultFuzzyEditDistance = default;
+            Core.Optional<CustomEntityLookupSkillLanguage?> defaultLanguageCode = default;
+            Core.Optional<Uri> entitiesDefinitionUri = default;
+            Core.Optional<IList<CustomEntity>> inlineEntitiesDefinition = default;
+            Core.Optional<bool?> globalDefaultCaseSensitive = default;
+            Core.Optional<bool?> globalDefaultAccentSensitive = default;
+            Core.Optional<int?> globalDefaultFuzzyEditDistance = default;
             string odataType = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> context = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
@@ -254,7 +254,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CustomEntityLookupSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(defaultLanguageCode), entitiesDefinitionUri.Value, Optional.ToList(inlineEntitiesDefinition), Optional.ToNullable(globalDefaultCaseSensitive), Optional.ToNullable(globalDefaultAccentSensitive), Optional.ToNullable(globalDefaultFuzzyEditDistance));
+            return new CustomEntityLookupSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Core.Optional.ToNullable(defaultLanguageCode), entitiesDefinitionUri.Value, Core.Optional.ToList(inlineEntitiesDefinition), Core.Optional.ToNullable(globalDefaultCaseSensitive), Core.Optional.ToNullable(globalDefaultAccentSensitive), Core.Optional.ToNullable(globalDefaultFuzzyEditDistance));
         }
     }
 }

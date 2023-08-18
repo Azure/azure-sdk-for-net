@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<float> grain = default;
-            Optional<string> grainUnit = default;
-            Optional<float> value = default;
-            Optional<string> valueUnit = default;
+            Core.Optional<float> grain = default;
+            Core.Optional<string> grainUnit = default;
+            Core.Optional<float> value = default;
+            Core.Optional<string> valueUnit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("grain"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new ReservationUtilizationAggregates(Optional.ToNullable(grain), grainUnit.Value, Optional.ToNullable(value), valueUnit.Value);
+            return new ReservationUtilizationAggregates(Core.Optional.ToNullable(grain), grainUnit.Value, Core.Optional.ToNullable(value), valueUnit.Value);
         }
     }
 }

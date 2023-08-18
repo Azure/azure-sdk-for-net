@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> keyVaultId = default;
-            Optional<Uri> keyVaultUri = default;
-            Optional<ResourceIdentifier> storageAccountId = default;
-            Optional<string> storageAccountSasSecretName = default;
-            Optional<string> serviceBusConnectionStringSecretName = default;
-            Optional<string> targetLocation = default;
-            Optional<IReadOnlyDictionary<string, int>> roleSizeToNicCountMap = default;
-            Optional<IReadOnlyList<string>> excludedSkus = default;
+            Core.Optional<ResourceIdentifier> keyVaultId = default;
+            Core.Optional<Uri> keyVaultUri = default;
+            Core.Optional<ResourceIdentifier> storageAccountId = default;
+            Core.Optional<string> storageAccountSasSecretName = default;
+            Core.Optional<string> serviceBusConnectionStringSecretName = default;
+            Core.Optional<string> targetLocation = default;
+            Core.Optional<IReadOnlyDictionary<string, int>> roleSizeToNicCountMap = default;
+            Core.Optional<IReadOnlyList<string>> excludedSkus = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new VMwareCbtProtectionContainerMappingDetails(instanceType, keyVaultId.Value, keyVaultUri.Value, storageAccountId.Value, storageAccountSasSecretName.Value, serviceBusConnectionStringSecretName.Value, targetLocation.Value, Optional.ToDictionary(roleSizeToNicCountMap), Optional.ToList(excludedSkus));
+            return new VMwareCbtProtectionContainerMappingDetails(instanceType, keyVaultId.Value, keyVaultUri.Value, storageAccountId.Value, storageAccountSasSecretName.Value, serviceBusConnectionStringSecretName.Value, targetLocation.Value, Core.Optional.ToDictionary(roleSizeToNicCountMap), Core.Optional.ToList(excludedSkus));
         }
     }
 }

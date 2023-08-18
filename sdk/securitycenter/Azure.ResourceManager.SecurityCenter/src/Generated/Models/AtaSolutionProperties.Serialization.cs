@@ -13,27 +13,27 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AtaSolutionProperties : IUtf8JsonSerializable
+    public partial class AtaSolutionProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LastEventReceived))
+            if (Core.Optional.IsDefined(LastEventReceived))
             {
                 writer.WritePropertyName("lastEventReceived"u8);
                 writer.WriteStringValue(LastEventReceived);
             }
-            if (Optional.IsDefined(DeviceVendor))
+            if (Core.Optional.IsDefined(DeviceVendor))
             {
                 writer.WritePropertyName("deviceVendor"u8);
                 writer.WriteStringValue(DeviceVendor);
             }
-            if (Optional.IsDefined(DeviceType))
+            if (Core.Optional.IsDefined(DeviceType))
             {
                 writer.WritePropertyName("deviceType"u8);
                 writer.WriteStringValue(DeviceType);
             }
-            if (Optional.IsDefined(Workspace))
+            if (Core.Optional.IsDefined(Workspace))
             {
                 writer.WritePropertyName("workspace"u8);
                 JsonSerializer.Serialize(writer, Workspace);
@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> lastEventReceived = default;
-            Optional<string> deviceVendor = default;
-            Optional<string> deviceType = default;
-            Optional<WritableSubResource> workspace = default;
+            Core.Optional<string> lastEventReceived = default;
+            Core.Optional<string> deviceVendor = default;
+            Core.Optional<string> deviceType = default;
+            Core.Optional<WritableSubResource> workspace = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

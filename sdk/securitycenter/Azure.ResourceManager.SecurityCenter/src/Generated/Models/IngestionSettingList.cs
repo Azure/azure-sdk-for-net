@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of IngestionSettingList. </summary>
         internal IngestionSettingList()
         {
-            Value = new ChangeTrackingList<IngestionSettingData>();
+            Value = new Core.ChangeTrackingList<IngestionSettingData>();
         }
 
         /// <summary> Initializes a new instance of IngestionSettingList. </summary>

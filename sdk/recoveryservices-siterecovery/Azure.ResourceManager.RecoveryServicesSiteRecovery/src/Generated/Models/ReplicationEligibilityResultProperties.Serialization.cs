@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> clientRequestId = default;
-            Optional<IReadOnlyList<ReplicationEligibilityResultErrorInfo>> errors = default;
+            Core.Optional<string> clientRequestId = default;
+            Core.Optional<IReadOnlyList<ReplicationEligibilityResultErrorInfo>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientRequestId"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new ReplicationEligibilityResultProperties(clientRequestId.Value, Optional.ToList(errors));
+            return new ReplicationEligibilityResultProperties(clientRequestId.Value, Core.Optional.ToList(errors));
         }
     }
 }

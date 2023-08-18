@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of AdaptiveNetworkHardeningData. </summary>
         public AdaptiveNetworkHardeningData()
         {
-            Rules = new ChangeTrackingList<RecommendedSecurityRule>();
-            EffectiveNetworkSecurityGroups = new ChangeTrackingList<EffectiveNetworkSecurityGroups>();
+            Rules = new Core.ChangeTrackingList<RecommendedSecurityRule>();
+            EffectiveNetworkSecurityGroups = new Core.ChangeTrackingList<EffectiveNetworkSecurityGroups>();
         }
 
         /// <summary> Initializes a new instance of AdaptiveNetworkHardeningData. </summary>

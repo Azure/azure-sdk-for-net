@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    internal partial class SignalRResourceLogCategoryListResult : IUtf8JsonSerializable
+    internal partial class SignalRResourceLogCategoryListResult : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Categories))
+            if (Core.Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<IList<SignalRResourceLogCategory>> categories = default;
+            Core.Optional<IList<SignalRResourceLogCategory>> categories = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("categories"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     continue;
                 }
             }
-            return new SignalRResourceLogCategoryListResult(Optional.ToList(categories));
+            return new SignalRResourceLogCategoryListResult(Core.Optional.ToList(categories));
         }
     }
 }

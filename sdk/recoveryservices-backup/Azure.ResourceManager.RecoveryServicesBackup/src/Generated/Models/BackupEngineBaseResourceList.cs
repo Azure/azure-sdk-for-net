@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of BackupEngineBaseResourceList. </summary>
         internal BackupEngineBaseResourceList()
         {
-            Value = new ChangeTrackingList<BackupEngineData>();
+            Value = new Core.ChangeTrackingList<BackupEngineData>();
         }
 
         /// <summary> Initializes a new instance of BackupEngineBaseResourceList. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ProviderExtendedLocation. </summary>
         internal ProviderExtendedLocation()
         {
-            ExtendedLocations = new ChangeTrackingList<string>();
+            ExtendedLocations = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ProviderExtendedLocation. </summary>

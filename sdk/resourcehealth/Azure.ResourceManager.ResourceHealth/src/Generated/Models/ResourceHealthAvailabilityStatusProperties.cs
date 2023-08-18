@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> Initializes a new instance of ResourceHealthAvailabilityStatusProperties. </summary>
         internal ResourceHealthAvailabilityStatusProperties()
         {
-            RecommendedActions = new ChangeTrackingList<ResourceHealthRecommendedAction>();
-            ServiceImpactingEvents = new ChangeTrackingList<ServiceImpactingEvent>();
+            RecommendedActions = new Core.ChangeTrackingList<ResourceHealthRecommendedAction>();
+            ServiceImpactingEvents = new Core.ChangeTrackingList<ServiceImpactingEvent>();
         }
 
         /// <summary> Initializes a new instance of ResourceHealthAvailabilityStatusProperties. </summary>

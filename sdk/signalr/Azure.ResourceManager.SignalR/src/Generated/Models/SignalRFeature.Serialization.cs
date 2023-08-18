@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    public partial class SignalRFeature : IUtf8JsonSerializable
+    public partial class SignalRFeature : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("flag"u8);
             writer.WriteStringValue(Flag.ToString());
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            if (Optional.IsCollectionDefined(Properties))
+            if (Core.Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SignalR.Models
             }
             SignalRFeatureFlag flag = default;
             string value = default;
-            Optional<IDictionary<string, string>> properties = default;
+            Core.Optional<IDictionary<string, string>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("flag"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     continue;
                 }
             }
-            return new SignalRFeature(flag, value, Optional.ToDictionary(properties));
+            return new SignalRFeature(flag, value, Core.Optional.ToDictionary(properties));
         }
     }
 }

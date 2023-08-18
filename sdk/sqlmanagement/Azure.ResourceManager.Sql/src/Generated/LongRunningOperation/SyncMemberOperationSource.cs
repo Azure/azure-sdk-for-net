@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class SyncMemberOperationSource : IOperationSource<SyncMemberResource>
+    internal class SyncMemberOperationSource : Core.IOperationSource<SyncMemberResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        SyncMemberResource IOperationSource<SyncMemberResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SyncMemberResource Core.IOperationSource<SyncMemberResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SyncMemberData.DeserializeSyncMemberData(document.RootElement);
             return new SyncMemberResource(_client, data);
         }
 
-        async ValueTask<SyncMemberResource> IOperationSource<SyncMemberResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SyncMemberResource> Core.IOperationSource<SyncMemberResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SyncMemberData.DeserializeSyncMemberData(document.RootElement);

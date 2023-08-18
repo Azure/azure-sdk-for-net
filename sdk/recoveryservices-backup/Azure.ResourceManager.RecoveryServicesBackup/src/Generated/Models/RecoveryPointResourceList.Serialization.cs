@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BackupRecoveryPointData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<BackupRecoveryPointData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new RecoveryPointResourceList(Optional.ToList(value), nextLink.Value);
+            return new RecoveryPointResourceList(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

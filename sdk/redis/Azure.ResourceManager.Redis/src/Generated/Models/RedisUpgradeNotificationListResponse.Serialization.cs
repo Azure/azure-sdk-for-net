@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RedisUpgradeNotification>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<RedisUpgradeNotification>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Redis.Models
                     continue;
                 }
             }
-            return new RedisUpgradeNotificationListResponse(Optional.ToList(value), nextLink.Value);
+            return new RedisUpgradeNotificationListResponse(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

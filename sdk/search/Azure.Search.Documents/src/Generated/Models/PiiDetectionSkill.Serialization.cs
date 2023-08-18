@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class PiiDetectionSkill : IUtf8JsonSerializable
+    public partial class PiiDetectionSkill : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultLanguageCode))
+            if (Core.Optional.IsDefined(DefaultLanguageCode))
             {
                 if (DefaultLanguageCode != null)
                 {
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultLanguageCode");
                 }
             }
-            if (Optional.IsDefined(MinimumPrecision))
+            if (Core.Optional.IsDefined(MinimumPrecision))
             {
                 if (MinimumPrecision != null)
                 {
@@ -40,12 +40,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("minimumPrecision");
                 }
             }
-            if (Optional.IsDefined(MaskingMode))
+            if (Core.Optional.IsDefined(MaskingMode))
             {
                 writer.WritePropertyName("maskingMode"u8);
                 writer.WriteStringValue(MaskingMode.Value.ToString());
             }
-            if (Optional.IsDefined(MaskingCharacter))
+            if (Core.Optional.IsDefined(MaskingCharacter))
             {
                 if (MaskingCharacter != null)
                 {
@@ -57,7 +57,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maskingCharacter");
                 }
             }
-            if (Optional.IsDefined(ModelVersion))
+            if (Core.Optional.IsDefined(ModelVersion))
             {
                 if (ModelVersion != null)
                 {
@@ -69,7 +69,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("modelVersion");
                 }
             }
-            if (Optional.IsCollectionDefined(PiiCategories))
+            if (Core.Optional.IsCollectionDefined(PiiCategories))
             {
                 writer.WritePropertyName("piiCategories"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Domain))
+            if (Core.Optional.IsDefined(Domain))
             {
                 if (Domain != null)
                 {
@@ -93,17 +93,17 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Context))
+            if (Core.Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
@@ -131,17 +131,17 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<string> defaultLanguageCode = default;
-            Optional<double?> minimumPrecision = default;
-            Optional<PiiDetectionSkillMaskingMode> maskingMode = default;
-            Optional<string> maskingCharacter = default;
-            Optional<string> modelVersion = default;
-            Optional<IList<string>> piiCategories = default;
-            Optional<string> domain = default;
+            Core.Optional<string> defaultLanguageCode = default;
+            Core.Optional<double?> minimumPrecision = default;
+            Core.Optional<PiiDetectionSkillMaskingMode> maskingMode = default;
+            Core.Optional<string> maskingCharacter = default;
+            Core.Optional<string> modelVersion = default;
+            Core.Optional<IList<string>> piiCategories = default;
+            Core.Optional<string> domain = default;
             string odataType = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> context = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
@@ -260,7 +260,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PiiDetectionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultLanguageCode.Value, Optional.ToNullable(minimumPrecision), Optional.ToNullable(maskingMode), maskingCharacter.Value, modelVersion.Value, Optional.ToList(piiCategories), domain.Value);
+            return new PiiDetectionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultLanguageCode.Value, Core.Optional.ToNullable(minimumPrecision), Core.Optional.ToNullable(maskingMode), maskingCharacter.Value, modelVersion.Value, Core.Optional.ToList(piiCategories), domain.Value);
         }
     }
 }

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ReservationPurchaseContent> purchaseProperties = default;
-            Optional<RenewPropertiesPricingCurrencyTotal> pricingCurrencyTotal = default;
-            Optional<RenewPropertiesBillingCurrencyTotal> billingCurrencyTotal = default;
+            Core.Optional<ReservationPurchaseContent> purchaseProperties = default;
+            Core.Optional<RenewPropertiesPricingCurrencyTotal> pricingCurrencyTotal = default;
+            Core.Optional<RenewPropertiesBillingCurrencyTotal> billingCurrencyTotal = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("purchaseProperties"u8))

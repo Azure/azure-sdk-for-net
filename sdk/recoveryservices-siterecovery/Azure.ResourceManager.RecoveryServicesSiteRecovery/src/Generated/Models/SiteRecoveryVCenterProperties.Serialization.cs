@@ -21,17 +21,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<string> internalId = default;
-            Optional<DateTimeOffset> lastHeartbeat = default;
-            Optional<string> discoveryStatus = default;
-            Optional<Guid> processServerId = default;
-            Optional<IPAddress> ipAddress = default;
-            Optional<string> infrastructureId = default;
-            Optional<string> port = default;
-            Optional<string> runAsAccountId = default;
-            Optional<string> fabricArmResourceName = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
+            Core.Optional<string> friendlyName = default;
+            Core.Optional<string> internalId = default;
+            Core.Optional<DateTimeOffset> lastHeartbeat = default;
+            Core.Optional<string> discoveryStatus = default;
+            Core.Optional<Guid> processServerId = default;
+            Core.Optional<IPAddress> ipAddress = default;
+            Core.Optional<string> infrastructureId = default;
+            Core.Optional<string> port = default;
+            Core.Optional<string> runAsAccountId = default;
+            Core.Optional<string> fabricArmResourceName = default;
+            Core.Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryVCenterProperties(friendlyName.Value, internalId.Value, Optional.ToNullable(lastHeartbeat), discoveryStatus.Value, Optional.ToNullable(processServerId), ipAddress.Value, infrastructureId.Value, port.Value, runAsAccountId.Value, fabricArmResourceName.Value, Optional.ToList(healthErrors));
+            return new SiteRecoveryVCenterProperties(friendlyName.Value, internalId.Value, Core.Optional.ToNullable(lastHeartbeat), discoveryStatus.Value, Core.Optional.ToNullable(processServerId), ipAddress.Value, infrastructureId.Value, port.Value, runAsAccountId.Value, fabricArmResourceName.Value, Core.Optional.ToList(healthErrors));
         }
     }
 }

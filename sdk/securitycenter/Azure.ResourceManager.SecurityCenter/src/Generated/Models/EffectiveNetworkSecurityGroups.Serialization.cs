@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class EffectiveNetworkSecurityGroups : IUtf8JsonSerializable
+    public partial class EffectiveNetworkSecurityGroups : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(NetworkInterface))
+            if (Core.Optional.IsDefined(NetworkInterface))
             {
                 writer.WritePropertyName("networkInterface"u8);
                 writer.WriteStringValue(NetworkInterface);
             }
-            if (Optional.IsCollectionDefined(NetworkSecurityGroups))
+            if (Core.Optional.IsCollectionDefined(NetworkSecurityGroups))
             {
                 writer.WritePropertyName("networkSecurityGroups"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> networkInterface = default;
-            Optional<IList<string>> networkSecurityGroups = default;
+            Core.Optional<string> networkInterface = default;
+            Core.Optional<IList<string>> networkSecurityGroups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkInterface"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new EffectiveNetworkSecurityGroups(networkInterface.Value, Optional.ToList(networkSecurityGroups));
+            return new EffectiveNetworkSecurityGroups(networkInterface.Value, Core.Optional.ToList(networkSecurityGroups));
         }
     }
 }

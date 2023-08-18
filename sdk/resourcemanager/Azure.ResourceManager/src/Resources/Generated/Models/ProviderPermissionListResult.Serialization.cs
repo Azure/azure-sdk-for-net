@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProviderPermission>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<ProviderPermission>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ProviderPermissionListResult(Optional.ToList(value), nextLink.Value);
+            return new ProviderPermissionListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

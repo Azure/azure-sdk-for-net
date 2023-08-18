@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> Initializes a new instance of RequiredForResourcesList. </summary>
         internal RequiredForResourcesList()
         {
-            SourceIds = new ChangeTrackingList<string>();
+            SourceIds = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of RequiredForResourcesList. </summary>

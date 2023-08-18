@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="location"> The location. </param>
         public TrafficControllerData(AzureLocation location) : base(location)
         {
-            ConfigurationEndpoints = new ChangeTrackingList<string>();
-            Frontends = new ChangeTrackingList<SubResource>();
-            Associations = new ChangeTrackingList<SubResource>();
+            ConfigurationEndpoints = new Core.ChangeTrackingList<string>();
+            Frontends = new Core.ChangeTrackingList<SubResource>();
+            Associations = new Core.ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of TrafficControllerData. </summary>

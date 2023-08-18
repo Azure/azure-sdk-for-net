@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class RecoveryPointMoveReadinessInfo : IUtf8JsonSerializable
+    public partial class RecoveryPointMoveReadinessInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsReadyForMove))
+            if (Core.Optional.IsDefined(IsReadyForMove))
             {
                 writer.WritePropertyName("isReadyForMove"u8);
                 writer.WriteBooleanValue(IsReadyForMove.Value);
             }
-            if (Optional.IsDefined(AdditionalInfo))
+            if (Core.Optional.IsDefined(AdditionalInfo))
             {
                 writer.WritePropertyName("additionalInfo"u8);
                 writer.WriteStringValue(AdditionalInfo);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<bool> isReadyForMove = default;
-            Optional<string> additionalInfo = default;
+            Core.Optional<bool> isReadyForMove = default;
+            Core.Optional<string> additionalInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isReadyForMove"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new RecoveryPointMoveReadinessInfo(Optional.ToNullable(isReadyForMove), additionalInfo.Value);
+            return new RecoveryPointMoveReadinessInfo(Core.Optional.ToNullable(isReadyForMove), additionalInfo.Value);
         }
     }
 }

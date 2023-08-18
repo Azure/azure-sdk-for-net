@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageEnableProtectionContent : IUtf8JsonSerializable
+    public partial class InMageEnableProtectionContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(VmFriendlyName))
+            if (Core.Optional.IsDefined(VmFriendlyName))
             {
                 writer.WritePropertyName("vmFriendlyName"u8);
                 writer.WriteStringValue(VmFriendlyName);
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(ProcessServerId);
             writer.WritePropertyName("retentionDrive"u8);
             writer.WriteStringValue(RetentionDrive);
-            if (Optional.IsDefined(RunAsAccountId))
+            if (Core.Optional.IsDefined(RunAsAccountId))
             {
                 writer.WritePropertyName("runAsAccountId"u8);
                 writer.WriteStringValue(RunAsAccountId);
@@ -35,17 +35,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(MultiVmGroupId);
             writer.WritePropertyName("multiVmGroupName"u8);
             writer.WriteStringValue(MultiVmGroupName);
-            if (Optional.IsDefined(DatastoreName))
+            if (Core.Optional.IsDefined(DatastoreName))
             {
                 writer.WritePropertyName("datastoreName"u8);
                 writer.WriteStringValue(DatastoreName);
             }
-            if (Optional.IsDefined(DiskExclusionContent))
+            if (Core.Optional.IsDefined(DiskExclusionContent))
             {
                 writer.WritePropertyName("diskExclusionInput"u8);
                 writer.WriteObjectValue(DiskExclusionContent);
             }
-            if (Optional.IsCollectionDefined(DisksToInclude))
+            if (Core.Optional.IsCollectionDefined(DisksToInclude))
             {
                 writer.WritePropertyName("disksToInclude"u8);
                 writer.WriteStartArray();

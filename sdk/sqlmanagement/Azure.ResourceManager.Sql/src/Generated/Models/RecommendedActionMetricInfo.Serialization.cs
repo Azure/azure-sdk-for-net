@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> metricName = default;
-            Optional<string> unit = default;
-            Optional<string> timeGrain = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<double> value = default;
+            Core.Optional<string> metricName = default;
+            Core.Optional<string> unit = default;
+            Core.Optional<string> timeGrain = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<double> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metricName"u8))
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new RecommendedActionMetricInfo(metricName.Value, unit.Value, timeGrain.Value, Optional.ToNullable(startTime), Optional.ToNullable(value));
+            return new RecommendedActionMetricInfo(metricName.Value, unit.Value, timeGrain.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(value));
         }
     }
 }

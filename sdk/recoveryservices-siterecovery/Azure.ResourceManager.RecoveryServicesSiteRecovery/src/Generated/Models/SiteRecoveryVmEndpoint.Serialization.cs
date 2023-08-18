@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> endpointName = default;
-            Optional<int> privatePort = default;
-            Optional<int> publicPort = default;
-            Optional<string> protocol = default;
+            Core.Optional<string> endpointName = default;
+            Core.Optional<int> privatePort = default;
+            Core.Optional<int> publicPort = default;
+            Core.Optional<string> protocol = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointName"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryVmEndpoint(endpointName.Value, Optional.ToNullable(privatePort), Optional.ToNullable(publicPort), protocol.Value);
+            return new SiteRecoveryVmEndpoint(endpointName.Value, Core.Optional.ToNullable(privatePort), Core.Optional.ToNullable(publicPort), protocol.Value);
         }
     }
 }

@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
-            Optional<string> primaryConnectionString = default;
-            Optional<string> secondaryConnectionString = default;
+            Core.Optional<string> primaryKey = default;
+            Core.Optional<string> secondaryKey = default;
+            Core.Optional<string> primaryConnectionString = default;
+            Core.Optional<string> secondaryConnectionString = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryKey"u8))

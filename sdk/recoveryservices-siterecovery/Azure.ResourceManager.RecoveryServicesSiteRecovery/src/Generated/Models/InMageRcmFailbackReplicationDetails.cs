@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of InMageRcmFailbackReplicationDetails. </summary>
         internal InMageRcmFailbackReplicationDetails()
         {
-            ProtectedDisks = new ChangeTrackingList<InMageRcmFailbackProtectedDiskDetails>();
-            VmNics = new ChangeTrackingList<InMageRcmFailbackNicDetails>();
+            ProtectedDisks = new Core.ChangeTrackingList<InMageRcmFailbackProtectedDiskDetails>();
+            VmNics = new Core.ChangeTrackingList<InMageRcmFailbackNicDetails>();
             InstanceType = "InMageRcmFailback";
         }
 

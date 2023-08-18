@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<double> limit = default;
-            Optional<PerformanceLevelUnit> unit = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            Core.Optional<double> limit = default;
+            Core.Optional<PerformanceLevelUnit> unit = default;
+            Core.Optional<SqlCapabilityStatus> status = default;
+            Core.Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("limit"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ElasticPoolPerDatabaseMinPerformanceLevelCapability(Optional.ToNullable(limit), Optional.ToNullable(unit), Optional.ToNullable(status), reason.Value);
+            return new ElasticPoolPerDatabaseMinPerformanceLevelCapability(Core.Optional.ToNullable(limit), Core.Optional.ToNullable(unit), Core.Optional.ToNullable(status), reason.Value);
         }
     }
 }

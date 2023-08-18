@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SignalR
             try
             {
                 var response = await _signalRCustomCertificateRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SignalRArmOperation<SignalRCustomCertificateResource>(new SignalRCustomCertificateOperationSource(Client), _signalRCustomCertificateClientDiagnostics, Pipeline, _signalRCustomCertificateRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SignalRArmOperation<SignalRCustomCertificateResource>(new SignalRCustomCertificateOperationSource(Client), _signalRCustomCertificateClientDiagnostics, Pipeline, _signalRCustomCertificateRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SignalR
             try
             {
                 var response = _signalRCustomCertificateRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, cancellationToken);
-                var operation = new SignalRArmOperation<SignalRCustomCertificateResource>(new SignalRCustomCertificateOperationSource(Client), _signalRCustomCertificateClientDiagnostics, Pipeline, _signalRCustomCertificateRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SignalRArmOperation<SignalRCustomCertificateResource>(new SignalRCustomCertificateOperationSource(Client), _signalRCustomCertificateClientDiagnostics, Pipeline, _signalRCustomCertificateRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.SignalR
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRCustomCertificateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _signalRCustomCertificateRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SignalRCustomCertificateResource(Client, SignalRCustomCertificateData.DeserializeSignalRCustomCertificateData(e)), _signalRCustomCertificateClientDiagnostics, Pipeline, "SignalRCustomCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SignalRCustomCertificateResource(Client, SignalRCustomCertificateData.DeserializeSignalRCustomCertificateData(e)), _signalRCustomCertificateClientDiagnostics, Pipeline, "SignalRCustomCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.SignalR
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRCustomCertificateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _signalRCustomCertificateRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SignalRCustomCertificateResource(Client, SignalRCustomCertificateData.DeserializeSignalRCustomCertificateData(e)), _signalRCustomCertificateClientDiagnostics, Pipeline, "SignalRCustomCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SignalRCustomCertificateResource(Client, SignalRCustomCertificateData.DeserializeSignalRCustomCertificateData(e)), _signalRCustomCertificateClientDiagnostics, Pipeline, "SignalRCustomCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ServiceFabricClusterData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<ServiceFabricClusterData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     continue;
                 }
             }
-            return new ServiceFabricClusterListResult(Optional.ToList(value), nextLink.Value);
+            return new ServiceFabricClusterListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

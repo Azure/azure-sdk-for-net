@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BekDetails : IUtf8JsonSerializable
+    public partial class BekDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SecretUri))
+            if (Core.Optional.IsDefined(SecretUri))
             {
                 writer.WritePropertyName("secretUrl"u8);
                 writer.WriteStringValue(SecretUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(SecretVaultId))
+            if (Core.Optional.IsDefined(SecretVaultId))
             {
                 writer.WritePropertyName("secretVaultId"u8);
                 writer.WriteStringValue(SecretVaultId);
             }
-            if (Optional.IsDefined(SecretData))
+            if (Core.Optional.IsDefined(SecretData))
             {
                 writer.WritePropertyName("secretData"u8);
                 writer.WriteStringValue(SecretData);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<Uri> secretUrl = default;
-            Optional<ResourceIdentifier> secretVaultId = default;
-            Optional<string> secretData = default;
+            Core.Optional<Uri> secretUrl = default;
+            Core.Optional<ResourceIdentifier> secretVaultId = default;
+            Core.Optional<string> secretData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secretUrl"u8))

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<string> atlasKafkaPrimaryEndpoint = default;
-            Optional<string> atlasKafkaSecondaryEndpoint = default;
+            Core.Optional<string> atlasKafkaPrimaryEndpoint = default;
+            Core.Optional<string> atlasKafkaSecondaryEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("atlasKafkaPrimaryEndpoint"u8))

@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Sphere.Models
             {
                 return null;
             }
-            Optional<string> certificate = default;
-            Optional<SphereCertificateStatus> status = default;
-            Optional<string> subject = default;
-            Optional<string> thumbprint = default;
-            Optional<DateTimeOffset> expiryUtc = default;
-            Optional<DateTimeOffset> notBeforeUtc = default;
-            Optional<SphereProvisioningState> provisioningState = default;
+            Core.Optional<string> certificate = default;
+            Core.Optional<SphereCertificateStatus> status = default;
+            Core.Optional<string> subject = default;
+            Core.Optional<string> thumbprint = default;
+            Core.Optional<DateTimeOffset> expiryUtc = default;
+            Core.Optional<DateTimeOffset> notBeforeUtc = default;
+            Core.Optional<SphereProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificate"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sphere.Models
                     continue;
                 }
             }
-            return new ProofOfPossessionNonceResponse(certificate.Value, Optional.ToNullable(status), subject.Value, thumbprint.Value, Optional.ToNullable(expiryUtc), Optional.ToNullable(notBeforeUtc), Optional.ToNullable(provisioningState));
+            return new ProofOfPossessionNonceResponse(certificate.Value, Core.Optional.ToNullable(status), subject.Value, thumbprint.Value, Core.Optional.ToNullable(expiryUtc), Core.Optional.ToNullable(notBeforeUtc), Core.Optional.ToNullable(provisioningState));
         }
     }
 }

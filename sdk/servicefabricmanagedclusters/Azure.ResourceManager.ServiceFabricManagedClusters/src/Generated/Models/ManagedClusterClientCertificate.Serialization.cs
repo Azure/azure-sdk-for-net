@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ManagedClusterClientCertificate : IUtf8JsonSerializable
+    public partial class ManagedClusterClientCertificate : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("isAdmin"u8);
             writer.WriteBooleanValue(IsAdmin);
-            if (Optional.IsDefined(Thumbprint))
+            if (Core.Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
 #if NET6_0_OR_GREATER
@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Thumbprint.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(CommonName))
+            if (Core.Optional.IsDefined(CommonName))
             {
                 writer.WritePropertyName("commonName"u8);
                 writer.WriteStringValue(CommonName);
             }
-            if (Optional.IsDefined(IssuerThumbprint))
+            if (Core.Optional.IsDefined(IssuerThumbprint))
             {
                 writer.WritePropertyName("issuerThumbprint"u8);
 #if NET6_0_OR_GREATER
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 return null;
             }
             bool isAdmin = default;
-            Optional<BinaryData> thumbprint = default;
-            Optional<string> commonName = default;
-            Optional<BinaryData> issuerThumbprint = default;
+            Core.Optional<BinaryData> thumbprint = default;
+            Core.Optional<string> commonName = default;
+            Core.Optional<BinaryData> issuerThumbprint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isAdmin"u8))

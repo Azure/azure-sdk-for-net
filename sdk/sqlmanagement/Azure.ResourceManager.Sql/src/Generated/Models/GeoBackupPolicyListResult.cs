@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of GeoBackupPolicyListResult. </summary>
         internal GeoBackupPolicyListResult()
         {
-            Value = new ChangeTrackingList<GeoBackupPolicyData>();
+            Value = new Core.ChangeTrackingList<GeoBackupPolicyData>();
         }
 
         /// <summary> Initializes a new instance of GeoBackupPolicyListResult. </summary>

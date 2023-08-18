@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         /// <summary> Initializes a new instance of AzureDevOpsRepoListResponse. </summary>
         internal AzureDevOpsRepoListResponse()
         {
-            Value = new ChangeTrackingList<AzureDevOpsRepoData>();
+            Value = new Core.ChangeTrackingList<AzureDevOpsRepoData>();
         }
 
         /// <summary> Initializes a new instance of AzureDevOpsRepoListResponse. </summary>

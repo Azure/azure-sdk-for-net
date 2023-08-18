@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of MabBackupJob. </summary>
         public MabBackupJob()
         {
-            ActionsInfo = new ChangeTrackingList<JobSupportedAction>();
-            ErrorDetails = new ChangeTrackingList<MabErrorInfo>();
+            ActionsInfo = new Core.ChangeTrackingList<JobSupportedAction>();
+            ErrorDetails = new Core.ChangeTrackingList<MabErrorInfo>();
             JobType = "MabJob";
         }
 

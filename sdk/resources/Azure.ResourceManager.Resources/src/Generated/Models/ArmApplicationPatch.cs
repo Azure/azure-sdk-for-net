@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="location"> The location. </param>
         public ArmApplicationPatch(AzureLocation location) : base(location)
         {
-            Authorizations = new ChangeTrackingList<ArmApplicationAuthorization>();
-            Artifacts = new ChangeTrackingList<ArmApplicationArtifact>();
+            Authorizations = new Core.ChangeTrackingList<ArmApplicationAuthorization>();
+            Artifacts = new Core.ChangeTrackingList<ArmApplicationArtifact>();
         }
 
         /// <summary> Initializes a new instance of ArmApplicationPatch. </summary>

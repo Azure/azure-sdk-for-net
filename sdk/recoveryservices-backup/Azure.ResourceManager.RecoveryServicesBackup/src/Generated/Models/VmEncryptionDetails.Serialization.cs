@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class VmEncryptionDetails : IUtf8JsonSerializable
+    public partial class VmEncryptionDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEncryptionEnabled))
+            if (Core.Optional.IsDefined(IsEncryptionEnabled))
             {
                 writer.WritePropertyName("encryptionEnabled"u8);
                 writer.WriteBooleanValue(IsEncryptionEnabled.Value);
             }
-            if (Optional.IsDefined(KekUri))
+            if (Core.Optional.IsDefined(KekUri))
             {
                 writer.WritePropertyName("kekUrl"u8);
                 writer.WriteStringValue(KekUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(SecretKeyUri))
+            if (Core.Optional.IsDefined(SecretKeyUri))
             {
                 writer.WritePropertyName("secretKeyUrl"u8);
                 writer.WriteStringValue(SecretKeyUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(KekVaultId))
+            if (Core.Optional.IsDefined(KekVaultId))
             {
                 writer.WritePropertyName("kekVaultId"u8);
                 writer.WriteStringValue(KekVaultId);
             }
-            if (Optional.IsDefined(SecretKeyVaultId))
+            if (Core.Optional.IsDefined(SecretKeyVaultId))
             {
                 writer.WritePropertyName("secretKeyVaultId"u8);
                 writer.WriteStringValue(SecretKeyVaultId);
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<bool> encryptionEnabled = default;
-            Optional<Uri> kekUrl = default;
-            Optional<Uri> secretKeyUrl = default;
-            Optional<ResourceIdentifier> kekVaultId = default;
-            Optional<ResourceIdentifier> secretKeyVaultId = default;
+            Core.Optional<bool> encryptionEnabled = default;
+            Core.Optional<Uri> kekUrl = default;
+            Core.Optional<Uri> secretKeyUrl = default;
+            Core.Optional<ResourceIdentifier> kekVaultId = default;
+            Core.Optional<ResourceIdentifier> secretKeyVaultId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encryptionEnabled"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new VmEncryptionDetails(Optional.ToNullable(encryptionEnabled), kekUrl.Value, secretKeyUrl.Value, kekVaultId.Value, secretKeyVaultId.Value);
+            return new VmEncryptionDetails(Core.Optional.ToNullable(encryptionEnabled), kekUrl.Value, secretKeyUrl.Value, kekVaultId.Value, secretKeyVaultId.Value);
         }
     }
 }

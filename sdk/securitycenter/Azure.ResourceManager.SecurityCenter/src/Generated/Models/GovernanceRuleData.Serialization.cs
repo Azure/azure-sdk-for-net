@@ -14,54 +14,54 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class GovernanceRuleData : IUtf8JsonSerializable
+    public partial class GovernanceRuleData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(RemediationTimeframe))
+            if (Core.Optional.IsDefined(RemediationTimeframe))
             {
                 writer.WritePropertyName("remediationTimeframe"u8);
                 writer.WriteStringValue(RemediationTimeframe);
             }
-            if (Optional.IsDefined(IsGracePeriod))
+            if (Core.Optional.IsDefined(IsGracePeriod))
             {
                 writer.WritePropertyName("isGracePeriod"u8);
                 writer.WriteBooleanValue(IsGracePeriod.Value);
             }
-            if (Optional.IsDefined(RulePriority))
+            if (Core.Optional.IsDefined(RulePriority))
             {
                 writer.WritePropertyName("rulePriority"u8);
                 writer.WriteNumberValue(RulePriority.Value);
             }
-            if (Optional.IsDefined(IsDisabled))
+            if (Core.Optional.IsDefined(IsDisabled))
             {
                 writer.WritePropertyName("isDisabled"u8);
                 writer.WriteBooleanValue(IsDisabled.Value);
             }
-            if (Optional.IsDefined(RuleType))
+            if (Core.Optional.IsDefined(RuleType))
             {
                 writer.WritePropertyName("ruleType"u8);
                 writer.WriteStringValue(RuleType.Value.ToString());
             }
-            if (Optional.IsDefined(SourceResourceType))
+            if (Core.Optional.IsDefined(SourceResourceType))
             {
                 writer.WritePropertyName("sourceResourceType"u8);
                 writer.WriteStringValue(SourceResourceType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ExcludedScopes))
+            if (Core.Optional.IsCollectionDefined(ExcludedScopes))
             {
                 writer.WritePropertyName("excludedScopes"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ConditionSets))
+            if (Core.Optional.IsCollectionDefined(ConditionSets))
             {
                 writer.WritePropertyName("conditionSets"u8);
                 writer.WriteStartArray();
@@ -90,22 +90,22 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IncludeMemberScopes))
+            if (Core.Optional.IsDefined(IncludeMemberScopes))
             {
                 writer.WritePropertyName("includeMemberScopes"u8);
                 writer.WriteBooleanValue(IncludeMemberScopes.Value);
             }
-            if (Optional.IsDefined(OwnerSource))
+            if (Core.Optional.IsDefined(OwnerSource))
             {
                 writer.WritePropertyName("ownerSource"u8);
                 writer.WriteObjectValue(OwnerSource);
             }
-            if (Optional.IsDefined(GovernanceEmailNotification))
+            if (Core.Optional.IsDefined(GovernanceEmailNotification))
             {
                 writer.WritePropertyName("governanceEmailNotification"u8);
                 writer.WriteObjectValue(GovernanceEmailNotification);
             }
-            if (Optional.IsDefined(Metadata))
+            if (Core.Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
@@ -123,22 +123,22 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> remediationTimeframe = default;
-            Optional<bool> isGracePeriod = default;
-            Optional<int> rulePriority = default;
-            Optional<bool> isDisabled = default;
-            Optional<GovernanceRuleType> ruleType = default;
-            Optional<GovernanceRuleSourceResourceType> sourceResourceType = default;
-            Optional<IList<string>> excludedScopes = default;
-            Optional<IList<BinaryData>> conditionSets = default;
-            Optional<bool> includeMemberScopes = default;
-            Optional<GovernanceRuleOwnerSource> ownerSource = default;
-            Optional<GovernanceRuleEmailNotification> governanceEmailNotification = default;
-            Optional<GovernanceRuleMetadata> metadata = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<Guid> tenantId = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> remediationTimeframe = default;
+            Core.Optional<bool> isGracePeriod = default;
+            Core.Optional<int> rulePriority = default;
+            Core.Optional<bool> isDisabled = default;
+            Core.Optional<GovernanceRuleType> ruleType = default;
+            Core.Optional<GovernanceRuleSourceResourceType> sourceResourceType = default;
+            Core.Optional<IList<string>> excludedScopes = default;
+            Core.Optional<IList<BinaryData>> conditionSets = default;
+            Core.Optional<bool> includeMemberScopes = default;
+            Core.Optional<GovernanceRuleOwnerSource> ownerSource = default;
+            Core.Optional<GovernanceRuleEmailNotification> governanceEmailNotification = default;
+            Core.Optional<GovernanceRuleMetadata> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     continue;
                 }
             }
-            return new GovernanceRuleData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), displayName.Value, description.Value, remediationTimeframe.Value, Optional.ToNullable(isGracePeriod), Optional.ToNullable(rulePriority), Optional.ToNullable(isDisabled), Optional.ToNullable(ruleType), Optional.ToNullable(sourceResourceType), Optional.ToList(excludedScopes), Optional.ToList(conditionSets), Optional.ToNullable(includeMemberScopes), ownerSource.Value, governanceEmailNotification.Value, metadata.Value);
+            return new GovernanceRuleData(id, name, type, systemData.Value, Core.Optional.ToNullable(tenantId), displayName.Value, description.Value, remediationTimeframe.Value, Core.Optional.ToNullable(isGracePeriod), Core.Optional.ToNullable(rulePriority), Core.Optional.ToNullable(isDisabled), Core.Optional.ToNullable(ruleType), Core.Optional.ToNullable(sourceResourceType), Core.Optional.ToList(excludedScopes), Core.Optional.ToList(conditionSets), Core.Optional.ToNullable(includeMemberScopes), ownerSource.Value, governanceEmailNotification.Value, metadata.Value);
         }
     }
 }

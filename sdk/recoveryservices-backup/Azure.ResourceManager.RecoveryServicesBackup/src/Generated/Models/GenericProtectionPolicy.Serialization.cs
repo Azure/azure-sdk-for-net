@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class GenericProtectionPolicy : IUtf8JsonSerializable
+    public partial class GenericProtectionPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SubProtectionPolicy))
+            if (Core.Optional.IsCollectionDefined(SubProtectionPolicy))
             {
                 writer.WritePropertyName("subProtectionPolicy"u8);
                 writer.WriteStartArray();
@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TimeZone))
+            if (Core.Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Optional.IsDefined(FabricName))
+            if (Core.Optional.IsDefined(FabricName))
             {
                 writer.WritePropertyName("fabricName"u8);
                 writer.WriteStringValue(FabricName);
             }
-            if (Optional.IsDefined(ProtectedItemsCount))
+            if (Core.Optional.IsDefined(ProtectedItemsCount))
             {
                 writer.WritePropertyName("protectedItemsCount"u8);
                 writer.WriteNumberValue(ProtectedItemsCount.Value);
             }
             writer.WritePropertyName("backupManagementType"u8);
             writer.WriteStringValue(BackupManagementType);
-            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
+            if (Core.Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {
                 writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<IList<SubProtectionPolicy>> subProtectionPolicy = default;
-            Optional<string> timeZone = default;
-            Optional<string> fabricName = default;
-            Optional<int> protectedItemsCount = default;
+            Core.Optional<IList<SubProtectionPolicy>> subProtectionPolicy = default;
+            Core.Optional<string> timeZone = default;
+            Core.Optional<string> fabricName = default;
+            Core.Optional<int> protectedItemsCount = default;
             string backupManagementType = default;
-            Optional<IList<string>> resourceGuardOperationRequests = default;
+            Core.Optional<IList<string>> resourceGuardOperationRequests = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subProtectionPolicy"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new GenericProtectionPolicy(Optional.ToNullable(protectedItemsCount), backupManagementType, Optional.ToList(resourceGuardOperationRequests), Optional.ToList(subProtectionPolicy), timeZone.Value, fabricName.Value);
+            return new GenericProtectionPolicy(Core.Optional.ToNullable(protectedItemsCount), backupManagementType, Core.Optional.ToList(resourceGuardOperationRequests), Core.Optional.ToList(subProtectionPolicy), timeZone.Value, fabricName.Value);
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    internal partial class SqlWorkloadTypeUpdateSettings : IUtf8JsonSerializable
+    internal partial class SqlWorkloadTypeUpdateSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SqlWorkloadType))
+            if (Core.Optional.IsDefined(SqlWorkloadType))
             {
                 writer.WritePropertyName("sqlWorkloadType"u8);
                 writer.WriteStringValue(SqlWorkloadType.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<SqlWorkloadType> sqlWorkloadType = default;
+            Core.Optional<SqlWorkloadType> sqlWorkloadType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sqlWorkloadType"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     continue;
                 }
             }
-            return new SqlWorkloadTypeUpdateSettings(Optional.ToNullable(sqlWorkloadType));
+            return new SqlWorkloadTypeUpdateSettings(Core.Optional.ToNullable(sqlWorkloadType));
         }
     }
 }

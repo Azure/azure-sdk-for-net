@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of WeeklyRetentionFormat. </summary>
         public WeeklyRetentionFormat()
         {
-            DaysOfTheWeek = new ChangeTrackingList<BackupDayOfWeek>();
-            WeeksOfTheMonth = new ChangeTrackingList<BackupWeekOfMonth>();
+            DaysOfTheWeek = new Core.ChangeTrackingList<BackupDayOfWeek>();
+            WeeksOfTheMonth = new Core.ChangeTrackingList<BackupWeekOfMonth>();
         }
 
         /// <summary> Initializes a new instance of WeeklyRetentionFormat. </summary>

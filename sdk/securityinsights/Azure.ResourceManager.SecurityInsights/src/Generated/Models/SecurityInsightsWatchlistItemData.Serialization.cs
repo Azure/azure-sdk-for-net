@@ -14,59 +14,59 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    public partial class SecurityInsightsWatchlistItemData : IUtf8JsonSerializable
+    public partial class SecurityInsightsWatchlistItemData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(WatchlistItemType))
+            if (Core.Optional.IsDefined(WatchlistItemType))
             {
                 writer.WritePropertyName("watchlistItemType"u8);
                 writer.WriteStringValue(WatchlistItemType);
             }
-            if (Optional.IsDefined(WatchlistItemId))
+            if (Core.Optional.IsDefined(WatchlistItemId))
             {
                 writer.WritePropertyName("watchlistItemId"u8);
                 writer.WriteStringValue(WatchlistItemId);
             }
-            if (Optional.IsDefined(TenantId))
+            if (Core.Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(IsDeleted))
+            if (Core.Optional.IsDefined(IsDeleted))
             {
                 writer.WritePropertyName("isDeleted"u8);
                 writer.WriteBooleanValue(IsDeleted.Value);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (Core.Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(UpdatedOn))
+            if (Core.Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (Optional.IsDefined(CreatedBy))
+            if (Core.Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteObjectValue(CreatedBy);
             }
-            if (Optional.IsDefined(UpdatedBy))
+            if (Core.Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
                 writer.WriteObjectValue(UpdatedBy);
             }
-            if (Optional.IsDefined(ItemsKeyValue))
+            if (Core.Optional.IsDefined(ItemsKeyValue))
             {
                 writer.WritePropertyName("itemsKeyValue"u8);
 #if NET6_0_OR_GREATER
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(ItemsKeyValue.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(EntityMapping))
+            if (Core.Optional.IsDefined(EntityMapping))
             {
                 writer.WritePropertyName("entityMapping"u8);
 #if NET6_0_OR_GREATER
@@ -94,21 +94,21 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            Core.Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> watchlistItemType = default;
-            Optional<string> watchlistItemId = default;
-            Optional<Guid> tenantId = default;
-            Optional<bool> isDeleted = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> updated = default;
-            Optional<SecurityInsightsUserInfo> createdBy = default;
-            Optional<SecurityInsightsUserInfo> updatedBy = default;
-            Optional<BinaryData> itemsKeyValue = default;
-            Optional<BinaryData> entityMapping = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> watchlistItemType = default;
+            Core.Optional<string> watchlistItemId = default;
+            Core.Optional<Guid> tenantId = default;
+            Core.Optional<bool> isDeleted = default;
+            Core.Optional<DateTimeOffset> created = default;
+            Core.Optional<DateTimeOffset> updated = default;
+            Core.Optional<SecurityInsightsUserInfo> createdBy = default;
+            Core.Optional<SecurityInsightsUserInfo> updatedBy = default;
+            Core.Optional<BinaryData> itemsKeyValue = default;
+            Core.Optional<BinaryData> entityMapping = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     continue;
                 }
             }
-            return new SecurityInsightsWatchlistItemData(id, name, type, systemData.Value, watchlistItemType.Value, watchlistItemId.Value, Optional.ToNullable(tenantId), Optional.ToNullable(isDeleted), Optional.ToNullable(created), Optional.ToNullable(updated), createdBy.Value, updatedBy.Value, itemsKeyValue.Value, entityMapping.Value, Optional.ToNullable(etag));
+            return new SecurityInsightsWatchlistItemData(id, name, type, systemData.Value, watchlistItemType.Value, watchlistItemId.Value, Core.Optional.ToNullable(tenantId), Core.Optional.ToNullable(isDeleted), Core.Optional.ToNullable(created), Core.Optional.ToNullable(updated), createdBy.Value, updatedBy.Value, itemsKeyValue.Value, entityMapping.Value, Core.Optional.ToNullable(etag));
         }
     }
 }

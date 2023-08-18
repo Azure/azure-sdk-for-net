@@ -12,42 +12,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityInformationTypeInfo : IUtf8JsonSerializable
+    public partial class SecurityInformationTypeInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Order))
+            if (Core.Optional.IsDefined(Order))
             {
                 writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
-            if (Optional.IsDefined(RecommendedLabelId))
+            if (Core.Optional.IsDefined(RecommendedLabelId))
             {
                 writer.WritePropertyName("recommendedLabelId"u8);
                 writer.WriteStringValue(RecommendedLabelId.Value);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (Core.Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(Custom))
+            if (Core.Optional.IsDefined(Custom))
             {
                 writer.WritePropertyName("custom"u8);
                 writer.WriteBooleanValue(Custom.Value);
             }
-            if (Optional.IsCollectionDefined(Keywords))
+            if (Core.Optional.IsCollectionDefined(Keywords))
             {
                 writer.WritePropertyName("keywords"u8);
                 writer.WriteStartArray();
@@ -66,13 +66,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<int> order = default;
-            Optional<Guid> recommendedLabelId = default;
-            Optional<bool> enabled = default;
-            Optional<bool> custom = default;
-            Optional<IList<InformationProtectionKeyword>> keywords = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> description = default;
+            Core.Optional<int> order = default;
+            Core.Optional<Guid> recommendedLabelId = default;
+            Core.Optional<bool> enabled = default;
+            Core.Optional<bool> custom = default;
+            Core.Optional<IList<InformationProtectionKeyword>> keywords = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new SecurityInformationTypeInfo(displayName.Value, description.Value, Optional.ToNullable(order), Optional.ToNullable(recommendedLabelId), Optional.ToNullable(enabled), Optional.ToNullable(custom), Optional.ToList(keywords));
+            return new SecurityInformationTypeInfo(displayName.Value, description.Value, Core.Optional.ToNullable(order), Core.Optional.ToNullable(recommendedLabelId), Core.Optional.ToNullable(enabled), Core.Optional.ToNullable(custom), Core.Optional.ToList(keywords));
         }
     }
 }

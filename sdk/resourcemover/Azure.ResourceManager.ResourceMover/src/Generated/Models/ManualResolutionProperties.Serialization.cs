@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> targetId = default;
+            Core.Optional<ResourceIdentifier> targetId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetId"u8))

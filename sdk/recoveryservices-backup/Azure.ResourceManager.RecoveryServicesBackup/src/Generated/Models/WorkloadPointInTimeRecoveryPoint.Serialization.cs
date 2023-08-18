@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadPointInTimeRecoveryPoint : IUtf8JsonSerializable
+    public partial class WorkloadPointInTimeRecoveryPoint : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TimeRanges))
+            if (Core.Optional.IsCollectionDefined(TimeRanges))
             {
                 writer.WritePropertyName("timeRanges"u8);
                 writer.WriteStartArray();
@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RecoveryPointCreatedOn))
+            if (Core.Optional.IsDefined(RecoveryPointCreatedOn))
             {
                 writer.WritePropertyName("recoveryPointTimeInUTC"u8);
                 writer.WriteStringValue(RecoveryPointCreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(RestorePointType))
+            if (Core.Optional.IsDefined(RestorePointType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RestorePointType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(RecoveryPointTierDetails))
+            if (Core.Optional.IsCollectionDefined(RecoveryPointTierDetails))
             {
                 writer.WritePropertyName("recoveryPointTierDetails"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RecoveryPointMoveReadinessInfo))
+            if (Core.Optional.IsCollectionDefined(RecoveryPointMoveReadinessInfo))
             {
                 writer.WritePropertyName("recoveryPointMoveReadinessInfo"u8);
                 writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(RecoveryPointProperties))
+            if (Core.Optional.IsDefined(RecoveryPointProperties))
             {
                 writer.WritePropertyName("recoveryPointProperties"u8);
                 writer.WriteObjectValue(RecoveryPointProperties);
@@ -81,12 +81,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "AzureWorkloadSAPHanaPointInTimeRecoveryPoint": return WorkloadSapHanaPointInTimeRecoveryPoint.DeserializeWorkloadSapHanaPointInTimeRecoveryPoint(element);
                 }
             }
-            Optional<IList<PointInTimeRange>> timeRanges = default;
-            Optional<DateTimeOffset> recoveryPointTimeInUTC = default;
-            Optional<RestorePointType> type = default;
-            Optional<IList<RecoveryPointTierInformationV2>> recoveryPointTierDetails = default;
-            Optional<IDictionary<string, RecoveryPointMoveReadinessInfo>> recoveryPointMoveReadinessInfo = default;
-            Optional<RecoveryPointProperties> recoveryPointProperties = default;
+            Core.Optional<IList<PointInTimeRange>> timeRanges = default;
+            Core.Optional<DateTimeOffset> recoveryPointTimeInUTC = default;
+            Core.Optional<RestorePointType> type = default;
+            Core.Optional<IList<RecoveryPointTierInformationV2>> recoveryPointTierDetails = default;
+            Core.Optional<IDictionary<string, RecoveryPointMoveReadinessInfo>> recoveryPointMoveReadinessInfo = default;
+            Core.Optional<RecoveryPointProperties> recoveryPointProperties = default;
             string objectType = "AzureWorkloadPointInTimeRecoveryPoint";
             foreach (var property in element.EnumerateObject())
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new WorkloadPointInTimeRecoveryPoint(objectType, Optional.ToNullable(recoveryPointTimeInUTC), Optional.ToNullable(type), Optional.ToList(recoveryPointTierDetails), Optional.ToDictionary(recoveryPointMoveReadinessInfo), recoveryPointProperties.Value, Optional.ToList(timeRanges));
+            return new WorkloadPointInTimeRecoveryPoint(objectType, Core.Optional.ToNullable(recoveryPointTimeInUTC), Core.Optional.ToNullable(type), Core.Optional.ToList(recoveryPointTierDetails), Core.Optional.ToDictionary(recoveryPointMoveReadinessInfo), recoveryPointProperties.Value, Core.Optional.ToList(timeRanges));
         }
     }
 }

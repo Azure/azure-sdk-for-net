@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> link = default;
+            Core.Optional<string> title = default;
+            Core.Optional<string> link = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("title"u8))

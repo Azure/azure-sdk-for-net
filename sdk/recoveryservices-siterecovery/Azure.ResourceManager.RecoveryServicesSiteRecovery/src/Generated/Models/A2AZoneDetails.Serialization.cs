@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> source = default;
-            Optional<string> target = default;
+            Core.Optional<string> source = default;
+            Core.Optional<string> target = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"u8))

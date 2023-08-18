@@ -11,37 +11,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedInstanceExternalAdministrator : IUtf8JsonSerializable
+    public partial class ManagedInstanceExternalAdministrator : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AdministratorType))
+            if (Core.Optional.IsDefined(AdministratorType))
             {
                 writer.WritePropertyName("administratorType"u8);
                 writer.WriteStringValue(AdministratorType.Value.ToString());
             }
-            if (Optional.IsDefined(PrincipalType))
+            if (Core.Optional.IsDefined(PrincipalType))
             {
                 writer.WritePropertyName("principalType"u8);
                 writer.WriteStringValue(PrincipalType.Value.ToString());
             }
-            if (Optional.IsDefined(Login))
+            if (Core.Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
                 writer.WriteStringValue(Login);
             }
-            if (Optional.IsDefined(Sid))
+            if (Core.Optional.IsDefined(Sid))
             {
                 writer.WritePropertyName("sid"u8);
                 writer.WriteStringValue(Sid.Value);
             }
-            if (Optional.IsDefined(TenantId))
+            if (Core.Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(IsAzureADOnlyAuthenticationEnabled))
+            if (Core.Optional.IsDefined(IsAzureADOnlyAuthenticationEnabled))
             {
                 writer.WritePropertyName("azureADOnlyAuthentication"u8);
                 writer.WriteBooleanValue(IsAzureADOnlyAuthenticationEnabled.Value);
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<SqlAdministratorType> administratorType = default;
-            Optional<SqlServerPrincipalType> principalType = default;
-            Optional<string> login = default;
-            Optional<Guid> sid = default;
-            Optional<Guid> tenantId = default;
-            Optional<bool> azureADOnlyAuthentication = default;
+            Core.Optional<SqlAdministratorType> administratorType = default;
+            Core.Optional<SqlServerPrincipalType> principalType = default;
+            Core.Optional<string> login = default;
+            Core.Optional<Guid> sid = default;
+            Core.Optional<Guid> tenantId = default;
+            Core.Optional<bool> azureADOnlyAuthentication = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("administratorType"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ManagedInstanceExternalAdministrator(Optional.ToNullable(administratorType), Optional.ToNullable(principalType), login.Value, Optional.ToNullable(sid), Optional.ToNullable(tenantId), Optional.ToNullable(azureADOnlyAuthentication));
+            return new ManagedInstanceExternalAdministrator(Core.Optional.ToNullable(administratorType), Core.Optional.ToNullable(principalType), login.Value, Core.Optional.ToNullable(sid), Core.Optional.ToNullable(tenantId), Core.Optional.ToNullable(azureADOnlyAuthentication));
         }
     }
 }

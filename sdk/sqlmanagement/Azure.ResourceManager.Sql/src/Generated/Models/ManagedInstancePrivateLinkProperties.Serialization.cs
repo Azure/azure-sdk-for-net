@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> groupId = default;
-            Optional<IReadOnlyList<string>> requiredMembers = default;
+            Core.Optional<string> groupId = default;
+            Core.Optional<IReadOnlyList<string>> requiredMembers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupId"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ManagedInstancePrivateLinkProperties(groupId.Value, Optional.ToList(requiredMembers));
+            return new ManagedInstancePrivateLinkProperties(groupId.Value, Core.Optional.ToList(requiredMembers));
         }
     }
 }

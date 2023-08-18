@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of ReservationProperties. </summary>
         internal ReservationProperties()
         {
-            AppliedScopes = new ChangeTrackingList<string>();
+            AppliedScopes = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ReservationProperties. </summary>

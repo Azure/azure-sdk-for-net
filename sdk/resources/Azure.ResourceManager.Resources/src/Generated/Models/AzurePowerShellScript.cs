@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Resources.Models
         {
             Argument.AssertNotNull(azPowerShellVersion, nameof(azPowerShellVersion));
 
-            SupportingScriptUris = new ChangeTrackingList<Uri>();
-            EnvironmentVariables = new ChangeTrackingList<ScriptEnvironmentVariable>();
+            SupportingScriptUris = new Core.ChangeTrackingList<Uri>();
+            EnvironmentVariables = new Core.ChangeTrackingList<ScriptEnvironmentVariable>();
             RetentionInterval = retentionInterval;
             AzPowerShellVersion = azPowerShellVersion;
             Kind = ScriptType.AzurePowerShell;

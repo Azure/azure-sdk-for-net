@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            PlacementProperties = new ChangeTrackingDictionary<string, string>();
-            Capacities = new ChangeTrackingDictionary<string, string>();
+            PlacementProperties = new Core.ChangeTrackingDictionary<string, string>();
+            Capacities = new Core.ChangeTrackingDictionary<string, string>();
             ClientConnectionEndpointPort = clientConnectionEndpointPort;
             HttpGatewayEndpointPort = httpGatewayEndpointPort;
             IsPrimary = isPrimary;

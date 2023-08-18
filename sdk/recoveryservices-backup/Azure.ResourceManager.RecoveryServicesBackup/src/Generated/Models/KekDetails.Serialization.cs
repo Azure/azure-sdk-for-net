@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class KekDetails : IUtf8JsonSerializable
+    public partial class KekDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyUri))
+            if (Core.Optional.IsDefined(KeyUri))
             {
                 writer.WritePropertyName("keyUrl"u8);
                 writer.WriteStringValue(KeyUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(KeyVaultId))
+            if (Core.Optional.IsDefined(KeyVaultId))
             {
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
             }
-            if (Optional.IsDefined(KeyBackupData))
+            if (Core.Optional.IsDefined(KeyBackupData))
             {
                 writer.WritePropertyName("keyBackupData"u8);
                 writer.WriteStringValue(KeyBackupData);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<Uri> keyUrl = default;
-            Optional<ResourceIdentifier> keyVaultId = default;
-            Optional<string> keyBackupData = default;
+            Core.Optional<Uri> keyUrl = default;
+            Core.Optional<ResourceIdentifier> keyVaultId = default;
+            Core.Optional<string> keyBackupData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyUrl"u8))

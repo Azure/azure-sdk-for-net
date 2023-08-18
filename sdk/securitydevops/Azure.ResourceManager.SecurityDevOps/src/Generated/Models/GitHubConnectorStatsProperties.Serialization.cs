@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
-    public partial class GitHubConnectorStatsProperties : IUtf8JsonSerializable
+    public partial class GitHubConnectorStatsProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (Core.Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(OwnersCount))
+            if (Core.Optional.IsDefined(OwnersCount))
             {
                 writer.WritePropertyName("ownersCount"u8);
                 writer.WriteNumberValue(OwnersCount.Value);
             }
-            if (Optional.IsDefined(ReposCount))
+            if (Core.Optional.IsDefined(ReposCount))
             {
                 writer.WritePropertyName("reposCount"u8);
                 writer.WriteNumberValue(ReposCount.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<long> ownersCount = default;
-            Optional<long> reposCount = default;
+            Core.Optional<ProvisioningState> provisioningState = default;
+            Core.Optional<long> ownersCount = default;
+            Core.Optional<long> reposCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     continue;
                 }
             }
-            return new GitHubConnectorStatsProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(ownersCount), Optional.ToNullable(reposCount));
+            return new GitHubConnectorStatsProperties(Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(ownersCount), Core.Optional.ToNullable(reposCount));
         }
     }
 }

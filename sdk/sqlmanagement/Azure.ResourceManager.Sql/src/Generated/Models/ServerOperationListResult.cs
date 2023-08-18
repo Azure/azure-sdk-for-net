@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ServerOperationListResult. </summary>
         internal ServerOperationListResult()
         {
-            Value = new ChangeTrackingList<ServerOperationData>();
+            Value = new Core.ChangeTrackingList<ServerOperationData>();
         }
 
         /// <summary> Initializes a new instance of ServerOperationListResult. </summary>

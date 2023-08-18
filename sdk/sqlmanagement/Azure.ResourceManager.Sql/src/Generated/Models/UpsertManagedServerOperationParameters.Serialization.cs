@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> family = default;
-            Optional<string> tier = default;
-            Optional<int> vCores = default;
-            Optional<int> storageSizeInGB = default;
+            Core.Optional<string> family = default;
+            Core.Optional<string> tier = default;
+            Core.Optional<int> vCores = default;
+            Core.Optional<int> storageSizeInGB = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("family"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new UpsertManagedServerOperationParameters(family.Value, tier.Value, Optional.ToNullable(vCores), Optional.ToNullable(storageSizeInGB));
+            return new UpsertManagedServerOperationParameters(family.Value, tier.Value, Core.Optional.ToNullable(vCores), Core.Optional.ToNullable(storageSizeInGB));
         }
     }
 }

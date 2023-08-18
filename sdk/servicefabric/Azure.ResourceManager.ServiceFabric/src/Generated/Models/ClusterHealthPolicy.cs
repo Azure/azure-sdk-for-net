@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> Initializes a new instance of ClusterHealthPolicy. </summary>
         public ClusterHealthPolicy()
         {
-            ApplicationHealthPolicies = new ChangeTrackingDictionary<string, ApplicationHealthPolicy>();
+            ApplicationHealthPolicies = new Core.ChangeTrackingDictionary<string, ApplicationHealthPolicy>();
         }
 
         /// <summary> Initializes a new instance of ClusterHealthPolicy. </summary>

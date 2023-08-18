@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of SecurityAssessmentCreateOrUpdateContent. </summary>
         public SecurityAssessmentCreateOrUpdateContent()
         {
-            AdditionalData = new ChangeTrackingDictionary<string, string>();
+            AdditionalData = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of SecurityAssessmentCreateOrUpdateContent. </summary>

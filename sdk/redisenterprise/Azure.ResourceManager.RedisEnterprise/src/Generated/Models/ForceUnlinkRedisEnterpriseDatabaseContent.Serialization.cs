@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    public partial class ForceUnlinkRedisEnterpriseDatabaseContent : IUtf8JsonSerializable
+    public partial class ForceUnlinkRedisEnterpriseDatabaseContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("ids"u8);

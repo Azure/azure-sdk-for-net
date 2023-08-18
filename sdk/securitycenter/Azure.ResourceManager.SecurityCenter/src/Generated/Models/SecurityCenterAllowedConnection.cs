@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of SecurityCenterAllowedConnection. </summary>
         public SecurityCenterAllowedConnection()
         {
-            ConnectableResources = new ChangeTrackingList<ConnectableResourceInfo>();
+            ConnectableResources = new Core.ChangeTrackingList<ConnectableResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of SecurityCenterAllowedConnection. </summary>

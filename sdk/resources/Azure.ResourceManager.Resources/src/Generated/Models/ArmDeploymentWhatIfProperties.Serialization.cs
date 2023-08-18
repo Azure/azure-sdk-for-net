@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmDeploymentWhatIfProperties : IUtf8JsonSerializable
+    public partial class ArmDeploymentWhatIfProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(WhatIfSettings))
+            if (Core.Optional.IsDefined(WhatIfSettings))
             {
                 writer.WritePropertyName("whatIfSettings"u8);
                 writer.WriteObjectValue(WhatIfSettings);
             }
-            if (Optional.IsDefined(Template))
+            if (Core.Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
 #if NET6_0_OR_GREATER
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Resources.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Template.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(TemplateLink))
+            if (Core.Optional.IsDefined(TemplateLink))
             {
                 writer.WritePropertyName("templateLink"u8);
                 writer.WriteObjectValue(TemplateLink);
             }
-            if (Optional.IsDefined(Parameters))
+            if (Core.Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
 #if NET6_0_OR_GREATER
@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.Resources.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Parameters.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(ParametersLink))
+            if (Core.Optional.IsDefined(ParametersLink))
             {
                 writer.WritePropertyName("parametersLink"u8);
                 writer.WriteObjectValue(ParametersLink);
             }
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToSerialString());
-            if (Optional.IsDefined(DebugSetting))
+            if (Core.Optional.IsDefined(DebugSetting))
             {
                 writer.WritePropertyName("debugSetting"u8);
                 writer.WriteObjectValue(DebugSetting);
             }
-            if (Optional.IsDefined(ErrorDeployment))
+            if (Core.Optional.IsDefined(ErrorDeployment))
             {
                 writer.WritePropertyName("onErrorDeployment"u8);
                 writer.WriteObjectValue(ErrorDeployment);
             }
-            if (Optional.IsDefined(ExpressionEvaluation))
+            if (Core.Optional.IsDefined(ExpressionEvaluation))
             {
                 writer.WritePropertyName("expressionEvaluationOptions"u8);
                 writer.WriteObjectValue(ExpressionEvaluation);

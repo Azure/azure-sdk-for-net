@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of SecurityAssessmentList. </summary>
         internal SecurityAssessmentList()
         {
-            Value = new ChangeTrackingList<SecurityAssessmentData>();
+            Value = new Core.ChangeTrackingList<SecurityAssessmentData>();
         }
 
         /// <summary> Initializes a new instance of SecurityAssessmentList. </summary>

@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AwsAssumeRoleAuthenticationDetailsProperties : IUtf8JsonSerializable
+    public partial class AwsAssumeRoleAuthenticationDetailsProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("awsAssumeRoleArn"u8);
@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> accountId = default;
+            Core.Optional<string> accountId = default;
             string awsAssumeRoleArn = default;
             Guid awsExternalId = default;
-            Optional<AuthenticationProvisioningState> authenticationProvisioningState = default;
-            Optional<IReadOnlyList<SecurityCenterCloudPermission>> grantedPermissions = default;
+            Core.Optional<AuthenticationProvisioningState> authenticationProvisioningState = default;
+            Core.Optional<IReadOnlyList<SecurityCenterCloudPermission>> grantedPermissions = default;
             AuthenticationType authenticationType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new AwsAssumeRoleAuthenticationDetailsProperties(Optional.ToNullable(authenticationProvisioningState), Optional.ToList(grantedPermissions), authenticationType, accountId.Value, awsAssumeRoleArn, awsExternalId);
+            return new AwsAssumeRoleAuthenticationDetailsProperties(Core.Optional.ToNullable(authenticationProvisioningState), Core.Optional.ToList(grantedPermissions), authenticationType, accountId.Value, awsAssumeRoleArn, awsExternalId);
         }
     }
 }

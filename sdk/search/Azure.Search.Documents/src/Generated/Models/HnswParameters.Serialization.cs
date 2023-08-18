@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class HnswParameters : IUtf8JsonSerializable
+    public partial class HnswParameters : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(M))
+            if (Core.Optional.IsDefined(M))
             {
                 if (M != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("m");
                 }
             }
-            if (Optional.IsDefined(EfConstruction))
+            if (Core.Optional.IsDefined(EfConstruction))
             {
                 if (EfConstruction != null)
                 {
@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("efConstruction");
                 }
             }
-            if (Optional.IsDefined(EfSearch))
+            if (Core.Optional.IsDefined(EfSearch))
             {
                 if (EfSearch != null)
                 {
@@ -51,7 +51,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("efSearch");
                 }
             }
-            if (Optional.IsDefined(Metric))
+            if (Core.Optional.IsDefined(Metric))
             {
                 if (Metric != null)
                 {
@@ -72,10 +72,10 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<int?> m = default;
-            Optional<int?> efConstruction = default;
-            Optional<int?> efSearch = default;
-            Optional<VectorSearchAlgorithmMetric?> metric = default;
+            Core.Optional<int?> m = default;
+            Core.Optional<int?> efConstruction = default;
+            Core.Optional<int?> efSearch = default;
+            Core.Optional<VectorSearchAlgorithmMetric?> metric = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("m"u8))
@@ -119,7 +119,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new HnswParameters(Optional.ToNullable(m), Optional.ToNullable(efConstruction), Optional.ToNullable(efSearch), Optional.ToNullable(metric));
+            return new HnswParameters(Core.Optional.ToNullable(m), Core.Optional.ToNullable(efConstruction), Core.Optional.ToNullable(efSearch), Core.Optional.ToNullable(metric));
         }
     }
 }

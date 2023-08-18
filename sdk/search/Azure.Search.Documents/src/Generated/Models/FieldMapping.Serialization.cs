@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class FieldMapping : IUtf8JsonSerializable
+    public partial class FieldMapping : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sourceFieldName"u8);
             writer.WriteStringValue(SourceFieldName);
-            if (Optional.IsDefined(TargetFieldName))
+            if (Core.Optional.IsDefined(TargetFieldName))
             {
                 writer.WritePropertyName("targetFieldName"u8);
                 writer.WriteStringValue(TargetFieldName);
             }
-            if (Optional.IsDefined(MappingFunction))
+            if (Core.Optional.IsDefined(MappingFunction))
             {
                 if (MappingFunction != null)
                 {
@@ -44,8 +44,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string sourceFieldName = default;
-            Optional<string> targetFieldName = default;
-            Optional<FieldMappingFunction> mappingFunction = default;
+            Core.Optional<string> targetFieldName = default;
+            Core.Optional<FieldMappingFunction> mappingFunction = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceFieldName"u8))

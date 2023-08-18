@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of AutomationRulePropertyValuesChangedCondition. </summary>
         public AutomationRulePropertyValuesChangedCondition()
         {
-            PropertyValues = new ChangeTrackingList<string>();
+            PropertyValues = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AutomationRulePropertyValuesChangedCondition. </summary>

@@ -12,29 +12,29 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class DatabaseColumnData : IUtf8JsonSerializable
+    public partial class DatabaseColumnData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ColumnType))
+            if (Core.Optional.IsDefined(ColumnType))
             {
                 writer.WritePropertyName("columnType"u8);
                 writer.WriteStringValue(ColumnType.Value.ToString());
             }
-            if (Optional.IsDefined(TemporalType))
+            if (Core.Optional.IsDefined(TemporalType))
             {
                 writer.WritePropertyName("temporalType"u8);
                 writer.WriteStringValue(TemporalType.Value.ToString());
             }
-            if (Optional.IsDefined(IsMemoryOptimized))
+            if (Core.Optional.IsDefined(IsMemoryOptimized))
             {
                 writer.WritePropertyName("memoryOptimized"u8);
                 writer.WriteBooleanValue(IsMemoryOptimized.Value);
             }
-            if (Optional.IsDefined(IsComputed))
+            if (Core.Optional.IsDefined(IsComputed))
             {
                 writer.WritePropertyName("isComputed"u8);
                 writer.WriteBooleanValue(IsComputed.Value);
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SqlColumnDataType> columnType = default;
-            Optional<TableTemporalType> temporalType = default;
-            Optional<bool> memoryOptimized = default;
-            Optional<bool> isComputed = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<SqlColumnDataType> columnType = default;
+            Core.Optional<TableTemporalType> temporalType = default;
+            Core.Optional<bool> memoryOptimized = default;
+            Core.Optional<bool> isComputed = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new DatabaseColumnData(id, name, type, systemData.Value, Optional.ToNullable(columnType), Optional.ToNullable(temporalType), Optional.ToNullable(memoryOptimized), Optional.ToNullable(isComputed));
+            return new DatabaseColumnData(id, name, type, systemData.Value, Core.Optional.ToNullable(columnType), Core.Optional.ToNullable(temporalType), Core.Optional.ToNullable(memoryOptimized), Core.Optional.ToNullable(isComputed));
         }
     }
 }

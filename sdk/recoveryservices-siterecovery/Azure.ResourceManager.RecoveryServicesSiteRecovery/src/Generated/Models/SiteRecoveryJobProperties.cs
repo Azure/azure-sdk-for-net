@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of SiteRecoveryJobProperties. </summary>
         internal SiteRecoveryJobProperties()
         {
-            Tasks = new ChangeTrackingList<AsrTask>();
-            Errors = new ChangeTrackingList<SiteRecoveryJobErrorDetails>();
-            AllowedActions = new ChangeTrackingList<string>();
+            Tasks = new Core.ChangeTrackingList<AsrTask>();
+            Errors = new Core.ChangeTrackingList<SiteRecoveryJobErrorDetails>();
+            AllowedActions = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryJobProperties. </summary>

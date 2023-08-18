@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of ReprotectAgentDetails. </summary>
         internal ReprotectAgentDetails()
         {
-            HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
-            AccessibleDatastores = new ChangeTrackingList<string>();
+            HealthErrors = new Core.ChangeTrackingList<SiteRecoveryHealthError>();
+            AccessibleDatastores = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ReprotectAgentDetails. </summary>

@@ -12,9 +12,9 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class ManagedInstancePrivateLinkData : IUtf8JsonSerializable
+    public partial class ManagedInstancePrivateLinkData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<ManagedInstancePrivateLinkProperties> properties = default;
+            Core.Optional<ManagedInstancePrivateLinkProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))

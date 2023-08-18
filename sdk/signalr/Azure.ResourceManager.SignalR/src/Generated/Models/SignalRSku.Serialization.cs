@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<ResourceType> resourceType = default;
-            Optional<SignalRResourceSku> sku = default;
-            Optional<SignalRSkuCapacity> capacity = default;
+            Core.Optional<ResourceType> resourceType = default;
+            Core.Optional<SignalRResourceSku> sku = default;
+            Core.Optional<SignalRSkuCapacity> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     continue;
                 }
             }
-            return new SignalRSku(Optional.ToNullable(resourceType), sku.Value, capacity.Value);
+            return new SignalRSku(Core.Optional.ToNullable(resourceType), sku.Value, capacity.Value);
         }
     }
 }

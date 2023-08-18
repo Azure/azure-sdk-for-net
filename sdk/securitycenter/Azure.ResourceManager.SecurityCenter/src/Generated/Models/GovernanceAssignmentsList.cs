@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of GovernanceAssignmentsList. </summary>
         internal GovernanceAssignmentsList()
         {
-            Value = new ChangeTrackingList<GovernanceAssignmentData>();
+            Value = new Core.ChangeTrackingList<GovernanceAssignmentData>();
         }
 
         /// <summary> Initializes a new instance of GovernanceAssignmentsList. </summary>

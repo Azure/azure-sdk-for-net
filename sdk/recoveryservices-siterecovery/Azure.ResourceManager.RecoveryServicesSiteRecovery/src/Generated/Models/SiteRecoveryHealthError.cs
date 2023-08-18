@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of SiteRecoveryHealthError. </summary>
         internal SiteRecoveryHealthError()
         {
-            InnerHealthErrors = new ChangeTrackingList<SiteRecoveryInnerHealthError>();
+            InnerHealthErrors = new Core.ChangeTrackingList<SiteRecoveryInnerHealthError>();
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryHealthError. </summary>

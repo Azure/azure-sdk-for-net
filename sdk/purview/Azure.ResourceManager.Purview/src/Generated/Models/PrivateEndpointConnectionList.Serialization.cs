@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<long> count = default;
-            Optional<string> nextLink = default;
+            Core.Optional<long> count = default;
+            Core.Optional<string> nextLink = default;
             IReadOnlyList<PurviewPrivateEndpointConnectionData> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Purview.Models
                     continue;
                 }
             }
-            return new PrivateEndpointConnectionList(Optional.ToNullable(count), nextLink.Value, value);
+            return new PrivateEndpointConnectionList(Core.Optional.ToNullable(count), nextLink.Value, value);
         }
     }
 }

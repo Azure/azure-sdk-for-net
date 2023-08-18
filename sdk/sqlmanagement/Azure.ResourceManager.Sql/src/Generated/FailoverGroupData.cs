@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of FailoverGroupData. </summary>
         public FailoverGroupData()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            PartnerServers = new ChangeTrackingList<PartnerServerInfo>();
-            FailoverDatabases = new ChangeTrackingList<ResourceIdentifier>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            PartnerServers = new Core.ChangeTrackingList<PartnerServerInfo>();
+            FailoverDatabases = new Core.ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of FailoverGroupData. </summary>

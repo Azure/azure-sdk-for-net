@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<IReadOnlyList<RedisEnterpriseCapability>> capabilities = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<IReadOnlyList<RedisEnterpriseCapability>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     continue;
                 }
             }
-            return new RedisEnterpriseLocationInfo(Optional.ToNullable(location), Optional.ToList(capabilities));
+            return new RedisEnterpriseLocationInfo(Core.Optional.ToNullable(location), Core.Optional.ToList(capabilities));
         }
     }
 }

@@ -14,14 +14,14 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    public partial class TemplateSpecData : IUtf8JsonSerializable
+    public partial class TemplateSpecData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.Resources
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Metadata))
+            if (Core.Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -64,15 +64,15 @@ namespace Azure.ResourceManager.Resources
                 return null;
             }
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> displayName = default;
-            Optional<BinaryData> metadata = default;
-            Optional<IReadOnlyDictionary<string, TemplateSpecVersionInfo>> versions = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<BinaryData> metadata = default;
+            Core.Optional<IReadOnlyDictionary<string, TemplateSpecVersionInfo>> versions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new TemplateSpecData(id, name, type, systemData.Value, location, Optional.ToDictionary(tags), description.Value, displayName.Value, metadata.Value, Optional.ToDictionary(versions));
+            return new TemplateSpecData(id, name, type, systemData.Value, location, Core.Optional.ToDictionary(tags), description.Value, displayName.Value, metadata.Value, Core.Optional.ToDictionary(versions));
         }
     }
 }

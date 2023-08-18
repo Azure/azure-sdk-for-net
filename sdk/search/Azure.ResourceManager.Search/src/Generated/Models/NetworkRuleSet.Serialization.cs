@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    internal partial class NetworkRuleSet : IUtf8JsonSerializable
+    internal partial class NetworkRuleSet : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IPRules))
+            if (Core.Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<IList<SearchServiceIPRule>> ipRules = default;
+            Core.Optional<IList<SearchServiceIPRule>> ipRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipRules"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Search.Models
                     continue;
                 }
             }
-            return new NetworkRuleSet(Optional.ToList(ipRules));
+            return new NetworkRuleSet(Core.Optional.ToList(ipRules));
         }
     }
 }

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<VaultMonitoringSummary> monitoringSummary = default;
-            Optional<ReplicationJobSummary> jobsSummary = default;
-            Optional<int> protectedItemCount = default;
-            Optional<int> recoveryPlanCount = default;
-            Optional<int> registeredServersCount = default;
-            Optional<int> recoveryServicesProviderAuthType = default;
+            Core.Optional<VaultMonitoringSummary> monitoringSummary = default;
+            Core.Optional<ReplicationJobSummary> jobsSummary = default;
+            Core.Optional<int> protectedItemCount = default;
+            Core.Optional<int> recoveryPlanCount = default;
+            Core.Optional<int> registeredServersCount = default;
+            Core.Optional<int> recoveryServicesProviderAuthType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("monitoringSummary"u8))
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     continue;
                 }
             }
-            return new ReplicationUsage(monitoringSummary.Value, jobsSummary.Value, Optional.ToNullable(protectedItemCount), Optional.ToNullable(recoveryPlanCount), Optional.ToNullable(registeredServersCount), Optional.ToNullable(recoveryServicesProviderAuthType));
+            return new ReplicationUsage(monitoringSummary.Value, jobsSummary.Value, Core.Optional.ToNullable(protectedItemCount), Core.Optional.ToNullable(recoveryPlanCount), Core.Optional.ToNullable(registeredServersCount), Core.Optional.ToNullable(recoveryServicesProviderAuthType));
         }
     }
 }

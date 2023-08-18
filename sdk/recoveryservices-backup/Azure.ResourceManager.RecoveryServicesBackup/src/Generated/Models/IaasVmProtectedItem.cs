@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of IaasVmProtectedItem. </summary>
         public IaasVmProtectedItem()
         {
-            HealthDetails = new ChangeTrackingList<IaasVmHealthDetails>();
-            KpisHealths = new ChangeTrackingDictionary<string, KpiResourceHealthDetails>();
+            HealthDetails = new Core.ChangeTrackingList<IaasVmHealthDetails>();
+            KpisHealths = new Core.ChangeTrackingDictionary<string, KpiResourceHealthDetails>();
             ProtectedItemType = "AzureIaaSVMProtectedItem";
         }
 

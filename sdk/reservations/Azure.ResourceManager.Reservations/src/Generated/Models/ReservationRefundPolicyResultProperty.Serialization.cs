@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<PurchasePrice> consumedRefundsTotal = default;
-            Optional<PurchasePrice> maxRefundLimit = default;
-            Optional<IReadOnlyList<ReservationRefundPolicyError>> policyErrors = default;
+            Core.Optional<PurchasePrice> consumedRefundsTotal = default;
+            Core.Optional<PurchasePrice> maxRefundLimit = default;
+            Core.Optional<IReadOnlyList<ReservationRefundPolicyError>> policyErrors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("consumedRefundsTotal"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new ReservationRefundPolicyResultProperty(consumedRefundsTotal.Value, maxRefundLimit.Value, Optional.ToList(policyErrors));
+            return new ReservationRefundPolicyResultProperty(consumedRefundsTotal.Value, maxRefundLimit.Value, Core.Optional.ToList(policyErrors));
         }
     }
 }

@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsIncidentOwnerInfo : IUtf8JsonSerializable
+    public partial class SecurityInsightsIncidentOwnerInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Email))
+            if (Core.Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (Optional.IsDefined(AssignedTo))
+            if (Core.Optional.IsDefined(AssignedTo))
             {
                 writer.WritePropertyName("assignedTo"u8);
                 writer.WriteStringValue(AssignedTo);
             }
-            if (Optional.IsDefined(ObjectId))
+            if (Core.Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId.Value);
             }
-            if (Optional.IsDefined(UserPrincipalName))
+            if (Core.Optional.IsDefined(UserPrincipalName))
             {
                 writer.WritePropertyName("userPrincipalName"u8);
                 writer.WriteStringValue(UserPrincipalName);
             }
-            if (Optional.IsDefined(OwnerType))
+            if (Core.Optional.IsDefined(OwnerType))
             {
                 writer.WritePropertyName("ownerType"u8);
                 writer.WriteStringValue(OwnerType.Value.ToString());
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> email = default;
-            Optional<string> assignedTo = default;
-            Optional<Guid> objectId = default;
-            Optional<string> userPrincipalName = default;
-            Optional<SecurityInsightsIncidentOwnerType> ownerType = default;
+            Core.Optional<string> email = default;
+            Core.Optional<string> assignedTo = default;
+            Core.Optional<Guid> objectId = default;
+            Core.Optional<string> userPrincipalName = default;
+            Core.Optional<SecurityInsightsIncidentOwnerType> ownerType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("email"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsIncidentOwnerInfo(email.Value, assignedTo.Value, Optional.ToNullable(objectId), userPrincipalName.Value, Optional.ToNullable(ownerType));
+            return new SecurityInsightsIncidentOwnerInfo(email.Value, assignedTo.Value, Core.Optional.ToNullable(objectId), userPrincipalName.Value, Core.Optional.ToNullable(ownerType));
         }
     }
 }

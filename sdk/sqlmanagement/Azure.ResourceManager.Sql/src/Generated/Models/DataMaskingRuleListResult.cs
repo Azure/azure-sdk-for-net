@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of DataMaskingRuleListResult. </summary>
         internal DataMaskingRuleListResult()
         {
-            Value = new ChangeTrackingList<DataMaskingRule>();
+            Value = new Core.ChangeTrackingList<DataMaskingRule>();
         }
 
         /// <summary> Initializes a new instance of DataMaskingRuleListResult. </summary>

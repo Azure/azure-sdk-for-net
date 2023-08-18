@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            Functions = new ChangeTrackingList<ScoringFunction>();
+            Functions = new Core.ChangeTrackingList<ScoringFunction>();
         }
 
         /// <summary> Initializes a new instance of ScoringProfile. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> Initializes a new instance of UpgradableVersionPathResult. </summary>
         internal UpgradableVersionPathResult()
         {
-            SupportedPath = new ChangeTrackingList<string>();
+            SupportedPath = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of UpgradableVersionPathResult. </summary>

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of SqlServerJobTargetGroupData. </summary>
         public SqlServerJobTargetGroupData()
         {
-            Members = new ChangeTrackingList<JobTarget>();
+            Members = new Core.ChangeTrackingList<JobTarget>();
         }
 
         /// <summary> Initializes a new instance of SqlServerJobTargetGroupData. </summary>

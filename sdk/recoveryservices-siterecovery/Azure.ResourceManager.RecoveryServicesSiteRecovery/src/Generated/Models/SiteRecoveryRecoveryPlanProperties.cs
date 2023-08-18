@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of SiteRecoveryRecoveryPlanProperties. </summary>
         internal SiteRecoveryRecoveryPlanProperties()
         {
-            ReplicationProviders = new ChangeTrackingList<string>();
-            AllowedOperations = new ChangeTrackingList<string>();
-            Groups = new ChangeTrackingList<SiteRecoveryPlanGroup>();
-            ProviderSpecificDetails = new ChangeTrackingList<RecoveryPlanProviderSpecificDetails>();
+            ReplicationProviders = new Core.ChangeTrackingList<string>();
+            AllowedOperations = new Core.ChangeTrackingList<string>();
+            Groups = new Core.ChangeTrackingList<SiteRecoveryPlanGroup>();
+            ProviderSpecificDetails = new Core.ChangeTrackingList<RecoveryPlanProviderSpecificDetails>();
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryRecoveryPlanProperties. </summary>

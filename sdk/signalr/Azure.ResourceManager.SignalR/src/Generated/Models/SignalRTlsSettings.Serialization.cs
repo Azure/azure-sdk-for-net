@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    internal partial class SignalRTlsSettings : IUtf8JsonSerializable
+    internal partial class SignalRTlsSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsClientCertEnabled))
+            if (Core.Optional.IsDefined(IsClientCertEnabled))
             {
                 writer.WritePropertyName("clientCertEnabled"u8);
                 writer.WriteBooleanValue(IsClientCertEnabled.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<bool> clientCertEnabled = default;
+            Core.Optional<bool> clientCertEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientCertEnabled"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     continue;
                 }
             }
-            return new SignalRTlsSettings(Optional.ToNullable(clientCertEnabled));
+            return new SignalRTlsSettings(Core.Optional.ToNullable(clientCertEnabled));
         }
     }
 }

@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of A2AReplicationDetails. </summary>
         internal A2AReplicationDetails()
         {
-            ProtectedDisks = new ChangeTrackingList<A2AProtectedDiskDetails>();
-            UnprotectedDisks = new ChangeTrackingList<A2AUnprotectedDiskDetails>();
-            ProtectedManagedDisks = new ChangeTrackingList<A2AProtectedManagedDiskDetails>();
-            VmNics = new ChangeTrackingList<VmNicDetails>();
+            ProtectedDisks = new Core.ChangeTrackingList<A2AProtectedDiskDetails>();
+            UnprotectedDisks = new Core.ChangeTrackingList<A2AUnprotectedDiskDetails>();
+            ProtectedManagedDisks = new Core.ChangeTrackingList<A2AProtectedManagedDiskDetails>();
+            VmNics = new Core.ChangeTrackingList<VmNicDetails>();
             InstanceType = "A2A";
         }
 

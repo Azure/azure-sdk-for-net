@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of InMageRcmFabricSwitchProviderBlockingErrorDetails. </summary>
         internal InMageRcmFabricSwitchProviderBlockingErrorDetails()
         {
-            ErrorMessageParameters = new ChangeTrackingDictionary<string, string>();
-            ErrorTags = new ChangeTrackingDictionary<string, string>();
+            ErrorMessageParameters = new Core.ChangeTrackingDictionary<string, string>();
+            ErrorTags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of InMageRcmFabricSwitchProviderBlockingErrorDetails. </summary>

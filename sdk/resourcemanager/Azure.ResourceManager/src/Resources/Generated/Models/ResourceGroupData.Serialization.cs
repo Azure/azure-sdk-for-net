@@ -13,22 +13,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    public partial class ResourceGroupData : IUtf8JsonSerializable
+    public partial class ResourceGroupData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsDefined(ManagedBy))
+            if (Core.Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -50,14 +50,14 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<ResourceGroupProperties> properties = default;
-            Optional<string> managedBy = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ResourceGroupProperties> properties = default;
+            Core.Optional<string> managedBy = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new ResourceGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, managedBy.Value);
+            return new ResourceGroupData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, properties.Value, managedBy.Value);
         }
     }
 }

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Relay.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RelayNamespaceData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<RelayNamespaceData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Relay.Models
                     continue;
                 }
             }
-            return new RelayNamespaceListResult(Optional.ToList(value), nextLink.Value);
+            return new RelayNamespaceListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<Guid> id = default;
-            Optional<string> name = default;
-            Optional<bool> isSucceeded = default;
-            Optional<string> error = default;
+            Core.Optional<Guid> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<bool> isSucceeded = default;
+            Core.Optional<string> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new ChangeDirectoryResult(Optional.ToNullable(id), name.Value, Optional.ToNullable(isSucceeded), error.Value);
+            return new ChangeDirectoryResult(Core.Optional.ToNullable(id), name.Value, Core.Optional.ToNullable(isSucceeded), error.Value);
         }
     }
 }

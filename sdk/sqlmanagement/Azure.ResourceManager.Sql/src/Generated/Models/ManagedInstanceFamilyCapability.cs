@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedInstanceFamilyCapability. </summary>
         internal ManagedInstanceFamilyCapability()
         {
-            SupportedLicenseTypes = new ChangeTrackingList<LicenseTypeCapability>();
-            SupportedVcoresValues = new ChangeTrackingList<ManagedInstanceVcoresCapability>();
+            SupportedLicenseTypes = new Core.ChangeTrackingList<LicenseTypeCapability>();
+            SupportedVcoresValues = new Core.ChangeTrackingList<ManagedInstanceVcoresCapability>();
         }
 
         /// <summary> Initializes a new instance of ManagedInstanceFamilyCapability. </summary>

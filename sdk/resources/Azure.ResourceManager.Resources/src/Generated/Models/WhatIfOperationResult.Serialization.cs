@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<ResponseError> error = default;
-            Optional<IReadOnlyList<WhatIfChange>> changes = default;
+            Core.Optional<string> status = default;
+            Core.Optional<ResponseError> error = default;
+            Core.Optional<IReadOnlyList<WhatIfChange>> changes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new WhatIfOperationResult(status.Value, error.Value, Optional.ToList(changes));
+            return new WhatIfOperationResult(status.Value, error.Value, Core.Optional.ToList(changes));
         }
     }
 }

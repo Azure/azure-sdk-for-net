@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of KnowledgeStoreProjectionSelector. </summary>
         public KnowledgeStoreProjectionSelector()
         {
-            Inputs = new ChangeTrackingList<InputFieldMappingEntry>();
+            Inputs = new Core.ChangeTrackingList<InputFieldMappingEntry>();
         }
 
         /// <summary> Initializes a new instance of KnowledgeStoreProjectionSelector. </summary>

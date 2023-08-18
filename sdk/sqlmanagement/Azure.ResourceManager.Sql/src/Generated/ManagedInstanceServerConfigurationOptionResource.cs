@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _managedInstanceServerConfigurationOptionServerConfigurationOptionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ManagedInstanceServerConfigurationOptionResource>(new ManagedInstanceServerConfigurationOptionOperationSource(Client), _managedInstanceServerConfigurationOptionServerConfigurationOptionsClientDiagnostics, Pipeline, _managedInstanceServerConfigurationOptionServerConfigurationOptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ManagedInstanceServerConfigurationOptionResource>(new ManagedInstanceServerConfigurationOptionOperationSource(Client), _managedInstanceServerConfigurationOptionServerConfigurationOptionsClientDiagnostics, Pipeline, _managedInstanceServerConfigurationOptionServerConfigurationOptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedInstanceServerConfigurationOptionServerConfigurationOptionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SqlArmOperation<ManagedInstanceServerConfigurationOptionResource>(new ManagedInstanceServerConfigurationOptionOperationSource(Client), _managedInstanceServerConfigurationOptionServerConfigurationOptionsClientDiagnostics, Pipeline, _managedInstanceServerConfigurationOptionServerConfigurationOptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ManagedInstanceServerConfigurationOptionResource>(new ManagedInstanceServerConfigurationOptionOperationSource(Client), _managedInstanceServerConfigurationOptionServerConfigurationOptionsClientDiagnostics, Pipeline, _managedInstanceServerConfigurationOptionServerConfigurationOptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

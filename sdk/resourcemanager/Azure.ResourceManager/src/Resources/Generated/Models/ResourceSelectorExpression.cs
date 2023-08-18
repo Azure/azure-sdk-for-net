@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ResourceSelectorExpression. </summary>
         public ResourceSelectorExpression()
         {
-            In = new ChangeTrackingList<string>();
-            NotIn = new ChangeTrackingList<string>();
+            In = new Core.ChangeTrackingList<string>();
+            NotIn = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ResourceSelectorExpression. </summary>

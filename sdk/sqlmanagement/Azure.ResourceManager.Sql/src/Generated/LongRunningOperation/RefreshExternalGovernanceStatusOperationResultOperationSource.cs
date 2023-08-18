@@ -14,15 +14,15 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class RefreshExternalGovernanceStatusOperationResultOperationSource : IOperationSource<RefreshExternalGovernanceStatusOperationResult>
+    internal class RefreshExternalGovernanceStatusOperationResultOperationSource : Core.IOperationSource<RefreshExternalGovernanceStatusOperationResult>
     {
-        RefreshExternalGovernanceStatusOperationResult IOperationSource<RefreshExternalGovernanceStatusOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        RefreshExternalGovernanceStatusOperationResult Core.IOperationSource<RefreshExternalGovernanceStatusOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return RefreshExternalGovernanceStatusOperationResult.DeserializeRefreshExternalGovernanceStatusOperationResult(document.RootElement);
         }
 
-        async ValueTask<RefreshExternalGovernanceStatusOperationResult> IOperationSource<RefreshExternalGovernanceStatusOperationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<RefreshExternalGovernanceStatusOperationResult> Core.IOperationSource<RefreshExternalGovernanceStatusOperationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return RefreshExternalGovernanceStatusOperationResult.DeserializeRefreshExternalGovernanceStatusOperationResult(document.RootElement);

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> Initializes a new instance of MoverOperationsDiscoveryList. </summary>
         internal MoverOperationsDiscoveryList()
         {
-            Value = new ChangeTrackingList<MoverOperationsDiscovery>();
+            Value = new Core.ChangeTrackingList<MoverOperationsDiscovery>();
         }
 
         /// <summary> Initializes a new instance of MoverOperationsDiscoveryList. </summary>

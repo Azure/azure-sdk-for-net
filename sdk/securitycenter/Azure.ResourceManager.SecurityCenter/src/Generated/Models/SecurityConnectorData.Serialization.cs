@@ -15,22 +15,22 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class SecurityConnectorData : IUtf8JsonSerializable
+    public partial class SecurityConnectorData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.SecurityCenter
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(HierarchyIdentifier))
+            if (Core.Optional.IsDefined(HierarchyIdentifier))
             {
                 writer.WritePropertyName("hierarchyIdentifier"u8);
                 writer.WriteStringValue(HierarchyIdentifier);
             }
-            if (Optional.IsDefined(EnvironmentName))
+            if (Core.Optional.IsDefined(EnvironmentName))
             {
                 writer.WritePropertyName("environmentName"u8);
                 writer.WriteStringValue(EnvironmentName.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Offerings))
+            if (Core.Optional.IsCollectionDefined(Offerings))
             {
                 writer.WritePropertyName("offerings"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnvironmentData))
+            if (Core.Optional.IsDefined(EnvironmentData))
             {
                 writer.WritePropertyName("environmentData"u8);
                 writer.WriteObjectValue(EnvironmentData);
@@ -80,19 +80,19 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<string> kind = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> hierarchyIdentifier = default;
-            Optional<DateTimeOffset> hierarchyIdentifierTrialEndDate = default;
-            Optional<SecurityCenterCloudName> environmentName = default;
-            Optional<IList<SecurityCenterCloudOffering>> offerings = default;
-            Optional<SecurityConnectorEnvironment> environmentData = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> hierarchyIdentifier = default;
+            Core.Optional<DateTimeOffset> hierarchyIdentifierTrialEndDate = default;
+            Core.Optional<SecurityCenterCloudName> environmentName = default;
+            Core.Optional<IList<SecurityCenterCloudOffering>> offerings = default;
+            Core.Optional<SecurityConnectorEnvironment> environmentData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     continue;
                 }
             }
-            return new SecurityConnectorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, hierarchyIdentifier.Value, Optional.ToNullable(hierarchyIdentifierTrialEndDate), Optional.ToNullable(environmentName), Optional.ToList(offerings), environmentData.Value, kind.Value, Optional.ToNullable(etag));
+            return new SecurityConnectorData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, hierarchyIdentifier.Value, Core.Optional.ToNullable(hierarchyIdentifierTrialEndDate), Core.Optional.ToNullable(environmentName), Core.Optional.ToList(offerings), environmentData.Value, kind.Value, Core.Optional.ToNullable(etag));
         }
     }
 }

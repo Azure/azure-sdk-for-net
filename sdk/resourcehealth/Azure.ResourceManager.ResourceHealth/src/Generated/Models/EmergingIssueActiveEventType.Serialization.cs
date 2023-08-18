@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> description = default;
-            Optional<string> trackingId = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> cloud = default;
-            Optional<ResourceHealthEventSeverityLevel> severity = default;
-            Optional<ResourceHealthEventStageValue> stage = default;
-            Optional<bool> published = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<IReadOnlyList<EmergingIssueImpact>> impacts = default;
+            Core.Optional<string> title = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> trackingId = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<string> cloud = default;
+            Core.Optional<ResourceHealthEventSeverityLevel> severity = default;
+            Core.Optional<ResourceHealthEventStageValue> stage = default;
+            Core.Optional<bool> published = default;
+            Core.Optional<DateTimeOffset> lastModifiedTime = default;
+            Core.Optional<IReadOnlyList<EmergingIssueImpact>> impacts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("title"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     continue;
                 }
             }
-            return new EmergingIssueActiveEventType(title.Value, description.Value, trackingId.Value, Optional.ToNullable(startTime), cloud.Value, Optional.ToNullable(severity), Optional.ToNullable(stage), Optional.ToNullable(published), Optional.ToNullable(lastModifiedTime), Optional.ToList(impacts));
+            return new EmergingIssueActiveEventType(title.Value, description.Value, trackingId.Value, Core.Optional.ToNullable(startTime), cloud.Value, Core.Optional.ToNullable(severity), Core.Optional.ToNullable(stage), Core.Optional.ToNullable(published), Core.Optional.ToNullable(lastModifiedTime), Core.Optional.ToList(impacts));
         }
     }
 }

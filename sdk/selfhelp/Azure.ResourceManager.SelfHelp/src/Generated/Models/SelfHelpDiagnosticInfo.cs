@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Initializes a new instance of SelfHelpDiagnosticInfo. </summary>
         internal SelfHelpDiagnosticInfo()
         {
-            Insights = new ChangeTrackingList<SelfHelpDiagnosticInsight>();
+            Insights = new Core.ChangeTrackingList<SelfHelpDiagnosticInsight>();
         }
 
         /// <summary> Initializes a new instance of SelfHelpDiagnosticInfo. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of SecurityTaskList. </summary>
         internal SecurityTaskList()
         {
-            Value = new ChangeTrackingList<SecurityTaskData>();
+            Value = new Core.ChangeTrackingList<SecurityTaskData>();
         }
 
         /// <summary> Initializes a new instance of SecurityTaskList. </summary>

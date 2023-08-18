@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of DistributedAvailabilityGroupsListResult. </summary>
         internal DistributedAvailabilityGroupsListResult()
         {
-            Value = new ChangeTrackingList<DistributedAvailabilityGroupData>();
+            Value = new Core.ChangeTrackingList<DistributedAvailabilityGroupData>();
         }
 
         /// <summary> Initializes a new instance of DistributedAvailabilityGroupsListResult. </summary>

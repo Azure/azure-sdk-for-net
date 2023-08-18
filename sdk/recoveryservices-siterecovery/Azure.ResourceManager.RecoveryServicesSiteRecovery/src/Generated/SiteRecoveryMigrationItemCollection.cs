@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, migrationItemName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(new SiteRecoveryMigrationItemOperationSource(Client), _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, migrationItemName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(new SiteRecoveryMigrationItemOperationSource(Client), _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, migrationItemName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, migrationItemName, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(new SiteRecoveryMigrationItemOperationSource(Client), _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, migrationItemName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(new SiteRecoveryMigrationItemOperationSource(Client), _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, migrationItemName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateListByReplicationProtectionContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skipToken, takeToken, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateListByReplicationProtectionContainersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skipToken, takeToken, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryMigrationItemResource(Client, SiteRecoveryMigrationItemData.DeserializeSiteRecoveryMigrationItemData(e)), _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, "SiteRecoveryMigrationItemCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryMigrationItemResource(Client, SiteRecoveryMigrationItemData.DeserializeSiteRecoveryMigrationItemData(e)), _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, "SiteRecoveryMigrationItemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateListByReplicationProtectionContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skipToken, takeToken, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryMigrationItemReplicationMigrationItemsRestClient.CreateListByReplicationProtectionContainersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skipToken, takeToken, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryMigrationItemResource(Client, SiteRecoveryMigrationItemData.DeserializeSiteRecoveryMigrationItemData(e)), _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, "SiteRecoveryMigrationItemCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryMigrationItemResource(Client, SiteRecoveryMigrationItemData.DeserializeSiteRecoveryMigrationItemData(e)), _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, "SiteRecoveryMigrationItemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

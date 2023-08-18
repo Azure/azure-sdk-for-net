@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> providerType = default;
-            Optional<string> company = default;
-            Optional<string> defaultEndpoint = default;
-            Optional<ProviderPropertiesAad> aad = default;
-            Optional<ProviderPropertiesManagedApplication> managedApplication = default;
-            Optional<IReadOnlyList<TargetDescription>> targets = default;
-            Optional<IReadOnlyList<SkuDescription>> skus = default;
-            Optional<IReadOnlyList<QuotaDimension>> quotaDimensions = default;
-            Optional<IReadOnlyList<PricingDimension>> pricingDimensions = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> providerType = default;
+            Core.Optional<string> company = default;
+            Core.Optional<string> defaultEndpoint = default;
+            Core.Optional<ProviderPropertiesAad> aad = default;
+            Core.Optional<ProviderPropertiesManagedApplication> managedApplication = default;
+            Core.Optional<IReadOnlyList<TargetDescription>> targets = default;
+            Core.Optional<IReadOnlyList<SkuDescription>> skus = default;
+            Core.Optional<IReadOnlyList<QuotaDimension>> quotaDimensions = default;
+            Core.Optional<IReadOnlyList<PricingDimension>> pricingDimensions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     continue;
                 }
             }
-            return new ProviderProperties(description.Value, providerType.Value, company.Value, defaultEndpoint.Value, aad.Value, managedApplication.Value, Optional.ToList(targets), Optional.ToList(skus), Optional.ToList(quotaDimensions), Optional.ToList(pricingDimensions));
+            return new ProviderProperties(description.Value, providerType.Value, company.Value, defaultEndpoint.Value, aad.Value, managedApplication.Value, Core.Optional.ToList(targets), Core.Optional.ToList(skus), Core.Optional.ToList(quotaDimensions), Core.Optional.ToList(pricingDimensions));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of RecoveryPointTierInformation. </summary>
         public RecoveryPointTierInformation()
         {
-            ExtendedInfo = new ChangeTrackingDictionary<string, string>();
+            ExtendedInfo = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of RecoveryPointTierInformation. </summary>

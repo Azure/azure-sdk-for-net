@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            ProtectedWords = new ChangeTrackingList<string>();
+            ProtectedWords = new Core.ChangeTrackingList<string>();
             ODataType = "#Microsoft.Azure.Search.WordDelimiterTokenFilter";
         }
 

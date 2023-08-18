@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         {
             ConsiderWarningAsError = considerWarningAsError;
             MaxPercentUnhealthyDeployedApplications = maxPercentUnhealthyDeployedApplications;
-            ServiceTypeHealthPolicyMap = new ChangeTrackingDictionary<string, ServiceTypeHealthPolicy>();
+            ServiceTypeHealthPolicyMap = new Core.ChangeTrackingDictionary<string, ServiceTypeHealthPolicy>();
         }
 
         /// <summary> Initializes a new instance of ApplicationHealthPolicy. </summary>

@@ -11,37 +11,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ApplicationUpgradePolicy : IUtf8JsonSerializable
+    public partial class ApplicationUpgradePolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(UpgradeReplicaSetCheckTimeout))
+            if (Core.Optional.IsDefined(UpgradeReplicaSetCheckTimeout))
             {
                 writer.WritePropertyName("upgradeReplicaSetCheckTimeout"u8);
                 writer.WriteStringValue(UpgradeReplicaSetCheckTimeout.Value, "c");
             }
-            if (Optional.IsDefined(ForceRestart))
+            if (Core.Optional.IsDefined(ForceRestart))
             {
                 writer.WritePropertyName("forceRestart"u8);
                 writer.WriteBooleanValue(ForceRestart.Value);
             }
-            if (Optional.IsDefined(RollingUpgradeMonitoringPolicy))
+            if (Core.Optional.IsDefined(RollingUpgradeMonitoringPolicy))
             {
                 writer.WritePropertyName("rollingUpgradeMonitoringPolicy"u8);
                 writer.WriteObjectValue(RollingUpgradeMonitoringPolicy);
             }
-            if (Optional.IsDefined(ApplicationHealthPolicy))
+            if (Core.Optional.IsDefined(ApplicationHealthPolicy))
             {
                 writer.WritePropertyName("applicationHealthPolicy"u8);
                 writer.WriteObjectValue(ApplicationHealthPolicy);
             }
-            if (Optional.IsDefined(UpgradeMode))
+            if (Core.Optional.IsDefined(UpgradeMode))
             {
                 writer.WritePropertyName("upgradeMode"u8);
                 writer.WriteStringValue(UpgradeMode.Value.ToString());
             }
-            if (Optional.IsDefined(RecreateApplication))
+            if (Core.Optional.IsDefined(RecreateApplication))
             {
                 writer.WritePropertyName("recreateApplication"u8);
                 writer.WriteBooleanValue(RecreateApplication.Value);
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<TimeSpan> upgradeReplicaSetCheckTimeout = default;
-            Optional<bool> forceRestart = default;
-            Optional<ArmRollingUpgradeMonitoringPolicy> rollingUpgradeMonitoringPolicy = default;
-            Optional<ArmApplicationHealthPolicy> applicationHealthPolicy = default;
-            Optional<ApplicationRollingUpgradeMode> upgradeMode = default;
-            Optional<bool> recreateApplication = default;
+            Core.Optional<TimeSpan> upgradeReplicaSetCheckTimeout = default;
+            Core.Optional<bool> forceRestart = default;
+            Core.Optional<ArmRollingUpgradeMonitoringPolicy> rollingUpgradeMonitoringPolicy = default;
+            Core.Optional<ArmApplicationHealthPolicy> applicationHealthPolicy = default;
+            Core.Optional<ApplicationRollingUpgradeMode> upgradeMode = default;
+            Core.Optional<bool> recreateApplication = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("upgradeReplicaSetCheckTimeout"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     continue;
                 }
             }
-            return new ApplicationUpgradePolicy(Optional.ToNullable(upgradeReplicaSetCheckTimeout), Optional.ToNullable(forceRestart), rollingUpgradeMonitoringPolicy.Value, applicationHealthPolicy.Value, Optional.ToNullable(upgradeMode), Optional.ToNullable(recreateApplication));
+            return new ApplicationUpgradePolicy(Core.Optional.ToNullable(upgradeReplicaSetCheckTimeout), Core.Optional.ToNullable(forceRestart), rollingUpgradeMonitoringPolicy.Value, applicationHealthPolicy.Value, Core.Optional.ToNullable(upgradeMode), Core.Optional.ToNullable(recreateApplication));
         }
     }
 }

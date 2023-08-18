@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of RestorableDroppedManagedDatabaseListResult. </summary>
         internal RestorableDroppedManagedDatabaseListResult()
         {
-            Value = new ChangeTrackingList<RestorableDroppedManagedDatabaseData>();
+            Value = new Core.ChangeTrackingList<RestorableDroppedManagedDatabaseData>();
         }
 
         /// <summary> Initializes a new instance of RestorableDroppedManagedDatabaseListResult. </summary>

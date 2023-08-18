@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             try
             {
                 var response = await _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedApplicationTypeVersionResource>(new ServiceFabricManagedApplicationTypeVersionOperationSource(Client), _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedApplicationTypeVersionResource>(new ServiceFabricManagedApplicationTypeVersionOperationSource(Client), _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             try
             {
                 var response = _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data, cancellationToken);
-                var operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedApplicationTypeVersionResource>(new ServiceFabricManagedApplicationTypeVersionOperationSource(Client), _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedApplicationTypeVersionResource>(new ServiceFabricManagedApplicationTypeVersionOperationSource(Client), _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsRestClient.CreateListByApplicationTypesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsRestClient.CreateListByApplicationTypesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricManagedApplicationTypeVersionResource(Client, ServiceFabricManagedApplicationTypeVersionData.DeserializeServiceFabricManagedApplicationTypeVersionData(e)), _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, "ServiceFabricManagedApplicationTypeVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricManagedApplicationTypeVersionResource(Client, ServiceFabricManagedApplicationTypeVersionData.DeserializeServiceFabricManagedApplicationTypeVersionData(e)), _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, "ServiceFabricManagedApplicationTypeVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsRestClient.CreateListByApplicationTypesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsRestClient.CreateListByApplicationTypesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricManagedApplicationTypeVersionResource(Client, ServiceFabricManagedApplicationTypeVersionData.DeserializeServiceFabricManagedApplicationTypeVersionData(e)), _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, "ServiceFabricManagedApplicationTypeVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricManagedApplicationTypeVersionResource(Client, ServiceFabricManagedApplicationTypeVersionData.DeserializeServiceFabricManagedApplicationTypeVersionData(e)), _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, "ServiceFabricManagedApplicationTypeVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

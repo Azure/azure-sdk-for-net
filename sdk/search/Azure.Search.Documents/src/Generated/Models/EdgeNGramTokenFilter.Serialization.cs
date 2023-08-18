@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class EdgeNGramTokenFilter : IUtf8JsonSerializable
+    public partial class EdgeNGramTokenFilter : Core.IUtf8JsonSerializable
     {
     }
 }

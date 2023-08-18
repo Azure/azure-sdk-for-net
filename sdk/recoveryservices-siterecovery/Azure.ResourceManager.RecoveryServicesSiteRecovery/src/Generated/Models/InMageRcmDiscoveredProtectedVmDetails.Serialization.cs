@@ -21,18 +21,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> vCenterId = default;
-            Optional<string> vCenterFqdn = default;
-            Optional<IReadOnlyList<string>> datastores = default;
-            Optional<IReadOnlyList<IPAddress>> ipAddresses = default;
-            Optional<string> vmwareToolsStatus = default;
-            Optional<string> powerStatus = default;
-            Optional<string> vmFqdn = default;
-            Optional<string> osName = default;
-            Optional<DateTimeOffset> createdTimestamp = default;
-            Optional<DateTimeOffset> updatedTimestamp = default;
-            Optional<bool> isDeleted = default;
-            Optional<DateTimeOffset> lastDiscoveryTimeInUtc = default;
+            Core.Optional<string> vCenterId = default;
+            Core.Optional<string> vCenterFqdn = default;
+            Core.Optional<IReadOnlyList<string>> datastores = default;
+            Core.Optional<IReadOnlyList<IPAddress>> ipAddresses = default;
+            Core.Optional<string> vmwareToolsStatus = default;
+            Core.Optional<string> powerStatus = default;
+            Core.Optional<string> vmFqdn = default;
+            Core.Optional<string> osName = default;
+            Core.Optional<DateTimeOffset> createdTimestamp = default;
+            Core.Optional<DateTimeOffset> updatedTimestamp = default;
+            Core.Optional<bool> isDeleted = default;
+            Core.Optional<DateTimeOffset> lastDiscoveryTimeInUtc = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vCenterId"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new InMageRcmDiscoveredProtectedVmDetails(vCenterId.Value, vCenterFqdn.Value, Optional.ToList(datastores), Optional.ToList(ipAddresses), vmwareToolsStatus.Value, powerStatus.Value, vmFqdn.Value, osName.Value, Optional.ToNullable(createdTimestamp), Optional.ToNullable(updatedTimestamp), Optional.ToNullable(isDeleted), Optional.ToNullable(lastDiscoveryTimeInUtc));
+            return new InMageRcmDiscoveredProtectedVmDetails(vCenterId.Value, vCenterFqdn.Value, Core.Optional.ToList(datastores), Core.Optional.ToList(ipAddresses), vmwareToolsStatus.Value, powerStatus.Value, vmFqdn.Value, osName.Value, Core.Optional.ToNullable(createdTimestamp), Core.Optional.ToNullable(updatedTimestamp), Core.Optional.ToNullable(isDeleted), Core.Optional.ToNullable(lastDiscoveryTimeInUtc));
         }
     }
 }

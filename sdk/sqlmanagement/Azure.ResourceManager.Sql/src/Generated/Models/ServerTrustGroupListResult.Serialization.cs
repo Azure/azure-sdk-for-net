@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SqlServerTrustGroupData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<SqlServerTrustGroupData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ServerTrustGroupListResult(Optional.ToList(value), nextLink.Value);
+            return new ServerTrustGroupListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

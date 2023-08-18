@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of ApplicationsList. </summary>
         internal ApplicationsList()
         {
-            Value = new ChangeTrackingList<SecurityApplicationData>();
+            Value = new Core.ChangeTrackingList<SecurityApplicationData>();
         }
 
         /// <summary> Initializes a new instance of ApplicationsList. </summary>

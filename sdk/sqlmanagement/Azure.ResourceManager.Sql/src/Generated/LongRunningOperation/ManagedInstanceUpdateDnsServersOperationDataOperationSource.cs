@@ -14,15 +14,15 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ManagedInstanceUpdateDnsServersOperationDataOperationSource : IOperationSource<ManagedInstanceUpdateDnsServersOperationData>
+    internal class ManagedInstanceUpdateDnsServersOperationDataOperationSource : Core.IOperationSource<ManagedInstanceUpdateDnsServersOperationData>
     {
-        ManagedInstanceUpdateDnsServersOperationData IOperationSource<ManagedInstanceUpdateDnsServersOperationData>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedInstanceUpdateDnsServersOperationData Core.IOperationSource<ManagedInstanceUpdateDnsServersOperationData>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return ManagedInstanceUpdateDnsServersOperationData.DeserializeManagedInstanceUpdateDnsServersOperationData(document.RootElement);
         }
 
-        async ValueTask<ManagedInstanceUpdateDnsServersOperationData> IOperationSource<ManagedInstanceUpdateDnsServersOperationData>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedInstanceUpdateDnsServersOperationData> Core.IOperationSource<ManagedInstanceUpdateDnsServersOperationData>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return ManagedInstanceUpdateDnsServersOperationData.DeserializeManagedInstanceUpdateDnsServersOperationData(document.RootElement);

@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> version = default;
-            Optional<string> latestVersion = default;
-            Optional<string> latestAgentReleaseDate = default;
-            Optional<string> driverVersion = default;
-            Optional<string> latestUpgradableVersionWithoutReboot = default;
-            Optional<DateTimeOffset> agentVersionExpireOn = default;
-            Optional<DateTimeOffset> driverVersionExpireOn = default;
-            Optional<DateTimeOffset> lastHeartbeatUtc = default;
-            Optional<IReadOnlyList<AgentUpgradeBlockedReason>> reasonsBlockingUpgrade = default;
-            Optional<string> isUpgradeable = default;
+            Core.Optional<string> version = default;
+            Core.Optional<string> latestVersion = default;
+            Core.Optional<string> latestAgentReleaseDate = default;
+            Core.Optional<string> driverVersion = default;
+            Core.Optional<string> latestUpgradableVersionWithoutReboot = default;
+            Core.Optional<DateTimeOffset> agentVersionExpireOn = default;
+            Core.Optional<DateTimeOffset> driverVersionExpireOn = default;
+            Core.Optional<DateTimeOffset> lastHeartbeatUtc = default;
+            Core.Optional<IReadOnlyList<AgentUpgradeBlockedReason>> reasonsBlockingUpgrade = default;
+            Core.Optional<string> isUpgradeable = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("version"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new InMageRcmMobilityAgentDetails(version.Value, latestVersion.Value, latestAgentReleaseDate.Value, driverVersion.Value, latestUpgradableVersionWithoutReboot.Value, Optional.ToNullable(agentVersionExpireOn), Optional.ToNullable(driverVersionExpireOn), Optional.ToNullable(lastHeartbeatUtc), Optional.ToList(reasonsBlockingUpgrade), isUpgradeable.Value);
+            return new InMageRcmMobilityAgentDetails(version.Value, latestVersion.Value, latestAgentReleaseDate.Value, driverVersion.Value, latestUpgradableVersionWithoutReboot.Value, Core.Optional.ToNullable(agentVersionExpireOn), Core.Optional.ToNullable(driverVersionExpireOn), Core.Optional.ToNullable(lastHeartbeatUtc), Core.Optional.ToList(reasonsBlockingUpgrade), isUpgradeable.Value);
         }
     }
 }

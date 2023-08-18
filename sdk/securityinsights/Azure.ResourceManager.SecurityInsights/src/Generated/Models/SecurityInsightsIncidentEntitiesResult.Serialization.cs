@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecurityInsightsEntity>> entities = default;
-            Optional<IReadOnlyList<SecurityInsightsIncidentEntitiesMetadata>> metaData = default;
+            Core.Optional<IReadOnlyList<SecurityInsightsEntity>> entities = default;
+            Core.Optional<IReadOnlyList<SecurityInsightsIncidentEntitiesMetadata>> metaData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("entities"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsIncidentEntitiesResult(Optional.ToList(entities), Optional.ToList(metaData));
+            return new SecurityInsightsIncidentEntitiesResult(Core.Optional.ToList(entities), Core.Optional.ToList(metaData));
         }
     }
 }

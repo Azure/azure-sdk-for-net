@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ProviderResourceType. </summary>
         internal ProviderResourceType()
         {
-            Locations = new ChangeTrackingList<string>();
-            LocationMappings = new ChangeTrackingList<ProviderExtendedLocation>();
-            Aliases = new ChangeTrackingList<ResourceTypeAlias>();
-            ApiVersions = new ChangeTrackingList<string>();
-            ZoneMappings = new ChangeTrackingList<ZoneMapping>();
-            ApiProfiles = new ChangeTrackingList<ApiProfile>();
-            Properties = new ChangeTrackingDictionary<string, string>();
+            Locations = new Core.ChangeTrackingList<string>();
+            LocationMappings = new Core.ChangeTrackingList<ProviderExtendedLocation>();
+            Aliases = new Core.ChangeTrackingList<ResourceTypeAlias>();
+            ApiVersions = new Core.ChangeTrackingList<string>();
+            ZoneMappings = new Core.ChangeTrackingList<ZoneMapping>();
+            ApiProfiles = new Core.ChangeTrackingList<ApiProfile>();
+            Properties = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ProviderResourceType. </summary>

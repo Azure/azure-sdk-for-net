@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class JitNetworkAccessPolicyVirtualMachine : IUtf8JsonSerializable
+    public partial class JitNetworkAccessPolicyVirtualMachine : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(PublicIPAddress))
+            if (Core.Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIpAddress"u8);
                 writer.WriteStringValue(PublicIPAddress);
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             ResourceIdentifier id = default;
             IList<JitNetworkAccessPortRule> ports = default;
-            Optional<string> publicIPAddress = default;
+            Core.Optional<string> publicIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         /// <summary> Initializes a new instance of AzureDevOpsOrgListResponse. </summary>
         internal AzureDevOpsOrgListResponse()
         {
-            Value = new ChangeTrackingList<AzureDevOpsOrgData>();
+            Value = new Core.ChangeTrackingList<AzureDevOpsOrgData>();
         }
 
         /// <summary> Initializes a new instance of AzureDevOpsOrgListResponse. </summary>

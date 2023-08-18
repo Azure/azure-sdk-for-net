@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Relay.Models
         /// <summary> Initializes a new instance of HybridConnectionListResult. </summary>
         internal HybridConnectionListResult()
         {
-            Value = new ChangeTrackingList<RelayHybridConnectionData>();
+            Value = new Core.ChangeTrackingList<RelayHybridConnectionData>();
         }
 
         /// <summary> Initializes a new instance of HybridConnectionListResult. </summary>

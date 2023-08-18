@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ArmApplicationDefinitionListResult. </summary>
         internal ArmApplicationDefinitionListResult()
         {
-            Value = new ChangeTrackingList<ArmApplicationDefinitionData>();
+            Value = new Core.ChangeTrackingList<ArmApplicationDefinitionData>();
         }
 
         /// <summary> Initializes a new instance of ArmApplicationDefinitionListResult. </summary>

@@ -14,15 +14,15 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ImportExportOperationResultOperationSource : IOperationSource<ImportExportOperationResult>
+    internal class ImportExportOperationResultOperationSource : Core.IOperationSource<ImportExportOperationResult>
     {
-        ImportExportOperationResult IOperationSource<ImportExportOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        ImportExportOperationResult Core.IOperationSource<ImportExportOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return ImportExportOperationResult.DeserializeImportExportOperationResult(document.RootElement);
         }
 
-        async ValueTask<ImportExportOperationResult> IOperationSource<ImportExportOperationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ImportExportOperationResult> Core.IOperationSource<ImportExportOperationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return ImportExportOperationResult.DeserializeImportExportOperationResult(document.RootElement);

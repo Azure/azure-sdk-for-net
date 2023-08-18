@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasVmBackupExtendedProperties : IUtf8JsonSerializable
+    public partial class IaasVmBackupExtendedProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiskExclusionProperties))
+            if (Core.Optional.IsDefined(DiskExclusionProperties))
             {
                 writer.WritePropertyName("diskExclusionProperties"u8);
                 writer.WriteObjectValue(DiskExclusionProperties);
             }
-            if (Optional.IsDefined(LinuxVmApplicationName))
+            if (Core.Optional.IsDefined(LinuxVmApplicationName))
             {
                 writer.WritePropertyName("linuxVmApplicationName"u8);
                 writer.WriteStringValue(LinuxVmApplicationName);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<DiskExclusionProperties> diskExclusionProperties = default;
-            Optional<string> linuxVmApplicationName = default;
+            Core.Optional<DiskExclusionProperties> diskExclusionProperties = default;
+            Core.Optional<string> linuxVmApplicationName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskExclusionProperties"u8))

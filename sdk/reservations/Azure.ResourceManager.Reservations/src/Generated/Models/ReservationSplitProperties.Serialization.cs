@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> splitDestinations = default;
-            Optional<string> splitSource = default;
+            Core.Optional<IReadOnlyList<string>> splitDestinations = default;
+            Core.Optional<string> splitSource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("splitDestinations"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new ReservationSplitProperties(Optional.ToList(splitDestinations), splitSource.Value);
+            return new ReservationSplitProperties(Core.Optional.ToList(splitDestinations), splitSource.Value);
         }
     }
 }

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedInstancePairInfo : IUtf8JsonSerializable
+    public partial class ManagedInstancePairInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrimaryManagedInstanceId))
+            if (Core.Optional.IsDefined(PrimaryManagedInstanceId))
             {
                 writer.WritePropertyName("primaryManagedInstanceId"u8);
                 writer.WriteStringValue(PrimaryManagedInstanceId);
             }
-            if (Optional.IsDefined(PartnerManagedInstanceId))
+            if (Core.Optional.IsDefined(PartnerManagedInstanceId))
             {
                 writer.WritePropertyName("partnerManagedInstanceId"u8);
                 writer.WriteStringValue(PartnerManagedInstanceId);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> primaryManagedInstanceId = default;
-            Optional<ResourceIdentifier> partnerManagedInstanceId = default;
+            Core.Optional<ResourceIdentifier> primaryManagedInstanceId = default;
+            Core.Optional<ResourceIdentifier> partnerManagedInstanceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryManagedInstanceId"u8))

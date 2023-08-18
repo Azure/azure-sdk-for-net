@@ -14,14 +14,14 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class SecurityAlertData : IUtf8JsonSerializable
+    public partial class SecurityAlertData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ExtendedProperties))
+            if (Core.Optional.IsCollectionDefined(ExtendedProperties))
             {
                 writer.WritePropertyName("extendedProperties"u8);
                 writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(SupportingEvidence))
+            if (Core.Optional.IsDefined(SupportingEvidence))
             {
                 writer.WritePropertyName("supportingEvidence"u8);
                 writer.WriteObjectValue(SupportingEvidence);
@@ -50,34 +50,34 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> version = default;
-            Optional<string> alertType = default;
-            Optional<string> systemAlertId = default;
-            Optional<string> productComponentName = default;
-            Optional<string> alertDisplayName = default;
-            Optional<string> description = default;
-            Optional<SecurityAlertSeverity> severity = default;
-            Optional<KillChainIntent> intent = default;
-            Optional<DateTimeOffset> startTimeUtc = default;
-            Optional<DateTimeOffset> endTimeUtc = default;
-            Optional<IReadOnlyList<SecurityAlertResourceIdentifier>> resourceIdentifiers = default;
-            Optional<IReadOnlyList<string>> remediationSteps = default;
-            Optional<string> vendorName = default;
-            Optional<SecurityAlertStatus> status = default;
-            Optional<IReadOnlyList<IDictionary<string, string>>> extendedLinks = default;
-            Optional<Uri> alertUri = default;
-            Optional<DateTimeOffset> timeGeneratedUtc = default;
-            Optional<string> productName = default;
-            Optional<DateTimeOffset> processingEndTimeUtc = default;
-            Optional<IReadOnlyList<SecurityAlertEntity>> entities = default;
-            Optional<bool> isIncident = default;
-            Optional<string> correlationKey = default;
-            Optional<IDictionary<string, string>> extendedProperties = default;
-            Optional<string> compromisedEntity = default;
-            Optional<IReadOnlyList<string>> techniques = default;
-            Optional<IReadOnlyList<string>> subTechniques = default;
-            Optional<SecurityAlertSupportingEvidence> supportingEvidence = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> version = default;
+            Core.Optional<string> alertType = default;
+            Core.Optional<string> systemAlertId = default;
+            Core.Optional<string> productComponentName = default;
+            Core.Optional<string> alertDisplayName = default;
+            Core.Optional<string> description = default;
+            Core.Optional<SecurityAlertSeverity> severity = default;
+            Core.Optional<KillChainIntent> intent = default;
+            Core.Optional<DateTimeOffset> startTimeUtc = default;
+            Core.Optional<DateTimeOffset> endTimeUtc = default;
+            Core.Optional<IReadOnlyList<SecurityAlertResourceIdentifier>> resourceIdentifiers = default;
+            Core.Optional<IReadOnlyList<string>> remediationSteps = default;
+            Core.Optional<string> vendorName = default;
+            Core.Optional<SecurityAlertStatus> status = default;
+            Core.Optional<IReadOnlyList<IDictionary<string, string>>> extendedLinks = default;
+            Core.Optional<Uri> alertUri = default;
+            Core.Optional<DateTimeOffset> timeGeneratedUtc = default;
+            Core.Optional<string> productName = default;
+            Core.Optional<DateTimeOffset> processingEndTimeUtc = default;
+            Core.Optional<IReadOnlyList<SecurityAlertEntity>> entities = default;
+            Core.Optional<bool> isIncident = default;
+            Core.Optional<string> correlationKey = default;
+            Core.Optional<IDictionary<string, string>> extendedProperties = default;
+            Core.Optional<string> compromisedEntity = default;
+            Core.Optional<IReadOnlyList<string>> techniques = default;
+            Core.Optional<IReadOnlyList<string>> subTechniques = default;
+            Core.Optional<SecurityAlertSupportingEvidence> supportingEvidence = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     continue;
                 }
             }
-            return new SecurityAlertData(id, name, type, systemData.Value, version.Value, alertType.Value, systemAlertId.Value, productComponentName.Value, alertDisplayName.Value, description.Value, Optional.ToNullable(severity), Optional.ToNullable(intent), Optional.ToNullable(startTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToList(resourceIdentifiers), Optional.ToList(remediationSteps), vendorName.Value, Optional.ToNullable(status), Optional.ToList(extendedLinks), alertUri.Value, Optional.ToNullable(timeGeneratedUtc), productName.Value, Optional.ToNullable(processingEndTimeUtc), Optional.ToList(entities), Optional.ToNullable(isIncident), correlationKey.Value, Optional.ToDictionary(extendedProperties), compromisedEntity.Value, Optional.ToList(techniques), Optional.ToList(subTechniques), supportingEvidence.Value);
+            return new SecurityAlertData(id, name, type, systemData.Value, version.Value, alertType.Value, systemAlertId.Value, productComponentName.Value, alertDisplayName.Value, description.Value, Core.Optional.ToNullable(severity), Core.Optional.ToNullable(intent), Core.Optional.ToNullable(startTimeUtc), Core.Optional.ToNullable(endTimeUtc), Core.Optional.ToList(resourceIdentifiers), Core.Optional.ToList(remediationSteps), vendorName.Value, Core.Optional.ToNullable(status), Core.Optional.ToList(extendedLinks), alertUri.Value, Core.Optional.ToNullable(timeGeneratedUtc), productName.Value, Core.Optional.ToNullable(processingEndTimeUtc), Core.Optional.ToList(entities), Core.Optional.ToNullable(isIncident), correlationKey.Value, Core.Optional.ToDictionary(extendedProperties), compromisedEntity.Value, Core.Optional.ToList(techniques), Core.Optional.ToList(subTechniques), supportingEvidence.Value);
         }
     }
 }

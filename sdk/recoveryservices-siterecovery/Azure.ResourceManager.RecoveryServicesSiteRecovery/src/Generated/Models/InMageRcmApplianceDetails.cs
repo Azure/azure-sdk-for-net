@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of InMageRcmApplianceDetails. </summary>
         internal InMageRcmApplianceDetails()
         {
-            SwitchProviderBlockingErrorDetails = new ChangeTrackingList<InMageRcmFabricSwitchProviderBlockingErrorDetails>();
+            SwitchProviderBlockingErrorDetails = new Core.ChangeTrackingList<InMageRcmFabricSwitchProviderBlockingErrorDetails>();
         }
 
         /// <summary> Initializes a new instance of InMageRcmApplianceDetails. </summary>

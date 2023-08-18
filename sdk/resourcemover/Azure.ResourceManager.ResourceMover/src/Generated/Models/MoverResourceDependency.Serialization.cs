@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> resolutionStatus = default;
-            Optional<MoverResourceResolutionType> resolutionType = default;
-            Optional<MoverDependencyType> dependencyType = default;
-            Optional<ManualResolutionProperties> manualResolution = default;
-            Optional<AutomaticResolutionProperties> automaticResolution = default;
-            Optional<bool> isOptional = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> resolutionStatus = default;
+            Core.Optional<MoverResourceResolutionType> resolutionType = default;
+            Core.Optional<MoverDependencyType> dependencyType = default;
+            Core.Optional<ManualResolutionProperties> manualResolution = default;
+            Core.Optional<AutomaticResolutionProperties> automaticResolution = default;
+            Core.Optional<bool> isOptional = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new MoverResourceDependency(id.Value, resolutionStatus.Value, Optional.ToNullable(resolutionType), Optional.ToNullable(dependencyType), manualResolution.Value, automaticResolution.Value, Optional.ToNullable(isOptional));
+            return new MoverResourceDependency(id.Value, resolutionStatus.Value, Core.Optional.ToNullable(resolutionType), Core.Optional.ToNullable(dependencyType), manualResolution.Value, automaticResolution.Value, Core.Optional.ToNullable(isOptional));
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SignalR
         /// <summary> Initializes a new instance of SignalRPrivateEndpointConnectionData. </summary>
         public SignalRPrivateEndpointConnectionData()
         {
-            GroupIds = new ChangeTrackingList<string>();
+            GroupIds = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SignalRPrivateEndpointConnectionData. </summary>

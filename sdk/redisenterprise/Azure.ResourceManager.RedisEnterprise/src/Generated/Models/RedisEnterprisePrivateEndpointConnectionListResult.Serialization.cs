@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData>> value = default;
+            Core.Optional<IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     continue;
                 }
             }
-            return new RedisEnterprisePrivateEndpointConnectionListResult(Optional.ToList(value));
+            return new RedisEnterprisePrivateEndpointConnectionListResult(Core.Optional.ToList(value));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedInstanceLongTermRetentionPolicyListResult. </summary>
         internal ManagedInstanceLongTermRetentionPolicyListResult()
         {
-            Value = new ChangeTrackingList<ManagedInstanceLongTermRetentionPolicyData>();
+            Value = new Core.ChangeTrackingList<ManagedInstanceLongTermRetentionPolicyData>();
         }
 
         /// <summary> Initializes a new instance of ManagedInstanceLongTermRetentionPolicyListResult. </summary>

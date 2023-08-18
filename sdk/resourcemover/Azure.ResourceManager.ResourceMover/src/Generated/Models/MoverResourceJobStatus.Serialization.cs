@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<MoverResourceJobName> jobName = default;
-            Optional<string> jobProgress = default;
+            Core.Optional<MoverResourceJobName> jobName = default;
+            Core.Optional<string> jobProgress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobName"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new MoverResourceJobStatus(Optional.ToNullable(jobName), jobProgress.Value);
+            return new MoverResourceJobStatus(Core.Optional.ToNullable(jobName), jobProgress.Value);
         }
     }
 }

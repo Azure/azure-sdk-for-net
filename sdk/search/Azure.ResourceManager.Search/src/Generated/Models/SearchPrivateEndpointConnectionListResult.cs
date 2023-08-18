@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> Initializes a new instance of SearchPrivateEndpointConnectionListResult. </summary>
         internal SearchPrivateEndpointConnectionListResult()
         {
-            Value = new ChangeTrackingList<SearchPrivateEndpointConnectionData>();
+            Value = new Core.ChangeTrackingList<SearchPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of SearchPrivateEndpointConnectionListResult. </summary>

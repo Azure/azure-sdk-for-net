@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<string> catalog = default;
-            Optional<string> guardian = default;
-            Optional<string> scan = default;
+            Core.Optional<string> catalog = default;
+            Core.Optional<string> guardian = default;
+            Core.Optional<string> scan = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("catalog"u8))

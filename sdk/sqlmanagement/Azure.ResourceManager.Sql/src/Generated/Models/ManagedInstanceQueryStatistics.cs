@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedInstanceQueryStatistics. </summary>
         internal ManagedInstanceQueryStatistics()
         {
-            Value = new ChangeTrackingList<QueryStatistics>();
+            Value = new Core.ChangeTrackingList<QueryStatistics>();
         }
 
         /// <summary> Initializes a new instance of ManagedInstanceQueryStatistics. </summary>

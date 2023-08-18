@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of SqlDatabaseAutomaticTuningData. </summary>
         public SqlDatabaseAutomaticTuningData()
         {
-            Options = new ChangeTrackingDictionary<string, AutomaticTuningOptions>();
+            Options = new Core.ChangeTrackingDictionary<string, AutomaticTuningOptions>();
         }
 
         /// <summary> Initializes a new instance of SqlDatabaseAutomaticTuningData. </summary>

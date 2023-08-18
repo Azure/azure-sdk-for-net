@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class DictionaryDecompounderTokenFilter : IUtf8JsonSerializable
+    public partial class DictionaryDecompounderTokenFilter : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("wordList"u8);
@@ -23,22 +23,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(MinWordSize))
+            if (Core.Optional.IsDefined(MinWordSize))
             {
                 writer.WritePropertyName("minWordSize"u8);
                 writer.WriteNumberValue(MinWordSize.Value);
             }
-            if (Optional.IsDefined(MinSubwordSize))
+            if (Core.Optional.IsDefined(MinSubwordSize))
             {
                 writer.WritePropertyName("minSubwordSize"u8);
                 writer.WriteNumberValue(MinSubwordSize.Value);
             }
-            if (Optional.IsDefined(MaxSubwordSize))
+            if (Core.Optional.IsDefined(MaxSubwordSize))
             {
                 writer.WritePropertyName("maxSubwordSize"u8);
                 writer.WriteNumberValue(MaxSubwordSize.Value);
             }
-            if (Optional.IsDefined(OnlyLongestMatch))
+            if (Core.Optional.IsDefined(OnlyLongestMatch))
             {
                 writer.WritePropertyName("onlyLongestMatch"u8);
                 writer.WriteBooleanValue(OnlyLongestMatch.Value);
@@ -57,10 +57,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IList<string> wordList = default;
-            Optional<int> minWordSize = default;
-            Optional<int> minSubwordSize = default;
-            Optional<int> maxSubwordSize = default;
-            Optional<bool> onlyLongestMatch = default;
+            Core.Optional<int> minWordSize = default;
+            Core.Optional<int> minSubwordSize = default;
+            Core.Optional<int> maxSubwordSize = default;
+            Core.Optional<bool> onlyLongestMatch = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new DictionaryDecompounderTokenFilter(odataType, name, wordList, Optional.ToNullable(minWordSize), Optional.ToNullable(minSubwordSize), Optional.ToNullable(maxSubwordSize), Optional.ToNullable(onlyLongestMatch));
+            return new DictionaryDecompounderTokenFilter(odataType, name, wordList, Core.Optional.ToNullable(minWordSize), Core.Optional.ToNullable(minSubwordSize), Core.Optional.ToNullable(maxSubwordSize), Core.Optional.ToNullable(onlyLongestMatch));
         }
     }
 }

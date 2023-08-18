@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> title = default;
-            Optional<string> results = default;
-            Optional<SelfHelpImportanceLevel> importanceLevel = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> title = default;
+            Core.Optional<string> results = default;
+            Core.Optional<SelfHelpImportanceLevel> importanceLevel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     continue;
                 }
             }
-            return new SelfHelpDiagnosticInsight(id.Value, title.Value, results.Value, Optional.ToNullable(importanceLevel));
+            return new SelfHelpDiagnosticInsight(id.Value, title.Value, results.Value, Core.Optional.ToNullable(importanceLevel));
         }
     }
 }

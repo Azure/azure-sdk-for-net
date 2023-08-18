@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> Initializes a new instance of NicIPConfigurationResourceSettings. </summary>
         public NicIPConfigurationResourceSettings()
         {
-            LoadBalancerBackendAddressPools = new ChangeTrackingList<LoadBalancerBackendAddressPoolReferenceInfo>();
-            LoadBalancerNatRules = new ChangeTrackingList<LoadBalancerNatRuleReferenceInfo>();
+            LoadBalancerBackendAddressPools = new Core.ChangeTrackingList<LoadBalancerBackendAddressPoolReferenceInfo>();
+            LoadBalancerNatRules = new Core.ChangeTrackingList<LoadBalancerNatRuleReferenceInfo>();
         }
 
         /// <summary> Initializes a new instance of NicIPConfigurationResourceSettings. </summary>

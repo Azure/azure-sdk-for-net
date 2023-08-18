@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of AutomationRulesList. </summary>
         internal AutomationRulesList()
         {
-            Value = new ChangeTrackingList<SecurityInsightsAutomationRuleData>();
+            Value = new Core.ChangeTrackingList<SecurityInsightsAutomationRuleData>();
         }
 
         /// <summary> Initializes a new instance of AutomationRulesList. </summary>

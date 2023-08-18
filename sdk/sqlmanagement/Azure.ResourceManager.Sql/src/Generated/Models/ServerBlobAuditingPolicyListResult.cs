@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ServerBlobAuditingPolicyListResult. </summary>
         internal ServerBlobAuditingPolicyListResult()
         {
-            Value = new ChangeTrackingList<SqlServerBlobAuditingPolicyData>();
+            Value = new Core.ChangeTrackingList<SqlServerBlobAuditingPolicyData>();
         }
 
         /// <summary> Initializes a new instance of ServerBlobAuditingPolicyListResult. </summary>

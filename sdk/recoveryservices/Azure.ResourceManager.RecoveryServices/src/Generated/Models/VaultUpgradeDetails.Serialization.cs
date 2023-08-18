@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class VaultUpgradeDetails : IUtf8JsonSerializable
+    public partial class VaultUpgradeDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<string> operationId = default;
-            Optional<DateTimeOffset> startTimeUtc = default;
-            Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
-            Optional<DateTimeOffset> endTimeUtc = default;
-            Optional<VaultUpgradeState> status = default;
-            Optional<string> message = default;
-            Optional<VaultUpgradeTriggerType> triggerType = default;
-            Optional<ResourceIdentifier> upgradedResourceId = default;
-            Optional<ResourceIdentifier> previousResourceId = default;
+            Core.Optional<string> operationId = default;
+            Core.Optional<DateTimeOffset> startTimeUtc = default;
+            Core.Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
+            Core.Optional<DateTimeOffset> endTimeUtc = default;
+            Core.Optional<VaultUpgradeState> status = default;
+            Core.Optional<string> message = default;
+            Core.Optional<VaultUpgradeTriggerType> triggerType = default;
+            Core.Optional<ResourceIdentifier> upgradedResourceId = default;
+            Core.Optional<ResourceIdentifier> previousResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationId"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     continue;
                 }
             }
-            return new VaultUpgradeDetails(operationId.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(status), message.Value, Optional.ToNullable(triggerType), upgradedResourceId.Value, previousResourceId.Value);
+            return new VaultUpgradeDetails(operationId.Value, Core.Optional.ToNullable(startTimeUtc), Core.Optional.ToNullable(lastUpdatedTimeUtc), Core.Optional.ToNullable(endTimeUtc), Core.Optional.ToNullable(status), message.Value, Core.Optional.ToNullable(triggerType), upgradedResourceId.Value, previousResourceId.Value);
         }
     }
 }

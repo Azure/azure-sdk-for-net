@@ -13,9 +13,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SecurityEvent : IUtf8JsonSerializable
+    public partial class SecurityEvent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -33,16 +33,16 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> eventTime = default;
-            Optional<SecurityEventType> securityEventType = default;
-            Optional<string> subscription = default;
-            Optional<string> server = default;
-            Optional<string> database = default;
-            Optional<IPAddress> clientIP = default;
-            Optional<string> applicationName = default;
-            Optional<string> principalName = default;
-            Optional<SecurityEventSqlInjectionAdditionalProperties> securityEventSqlInjectionAdditionalProperties = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DateTimeOffset> eventTime = default;
+            Core.Optional<SecurityEventType> securityEventType = default;
+            Core.Optional<string> subscription = default;
+            Core.Optional<string> server = default;
+            Core.Optional<string> database = default;
+            Core.Optional<IPAddress> clientIP = default;
+            Core.Optional<string> applicationName = default;
+            Core.Optional<string> principalName = default;
+            Core.Optional<SecurityEventSqlInjectionAdditionalProperties> securityEventSqlInjectionAdditionalProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SecurityEvent(id, name, type, systemData.Value, Optional.ToNullable(eventTime), Optional.ToNullable(securityEventType), subscription.Value, server.Value, database.Value, clientIP.Value, applicationName.Value, principalName.Value, securityEventSqlInjectionAdditionalProperties.Value);
+            return new SecurityEvent(id, name, type, systemData.Value, Core.Optional.ToNullable(eventTime), Core.Optional.ToNullable(securityEventType), subscription.Value, server.Value, database.Value, clientIP.Value, applicationName.Value, principalName.Value, securityEventSqlInjectionAdditionalProperties.Value);
         }
     }
 }

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> migrationSolutionId = default;
-            Optional<string> vmwareToAzureProviderType = default;
+            Core.Optional<ResourceIdentifier> migrationSolutionId = default;
+            Core.Optional<string> vmwareToAzureProviderType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("migrationSolutionId"u8))

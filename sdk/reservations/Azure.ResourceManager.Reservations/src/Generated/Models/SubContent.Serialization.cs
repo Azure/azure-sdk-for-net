@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<int> limit = default;
-            Optional<ReservationResourceName> name = default;
-            Optional<string> resourceType = default;
-            Optional<string> unit = default;
-            Optional<QuotaRequestState> provisioningState = default;
-            Optional<string> message = default;
-            Optional<Guid> subRequestId = default;
+            Core.Optional<int> limit = default;
+            Core.Optional<ReservationResourceName> name = default;
+            Core.Optional<string> resourceType = default;
+            Core.Optional<string> unit = default;
+            Core.Optional<QuotaRequestState> provisioningState = default;
+            Core.Optional<string> message = default;
+            Core.Optional<Guid> subRequestId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("limit"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new SubContent(Optional.ToNullable(limit), name.Value, resourceType.Value, unit.Value, Optional.ToNullable(provisioningState), message.Value, Optional.ToNullable(subRequestId));
+            return new SubContent(Core.Optional.ToNullable(limit), name.Value, resourceType.Value, unit.Value, Core.Optional.ToNullable(provisioningState), message.Value, Core.Optional.ToNullable(subRequestId));
         }
     }
 }

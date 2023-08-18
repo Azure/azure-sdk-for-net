@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Relay.Models
 {
-    public partial class RelaySku : IUtf8JsonSerializable
+    public partial class RelaySku : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
-            if (Optional.IsDefined(Tier))
+            if (Core.Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Relay.Models
                 return null;
             }
             RelaySkuName name = default;
-            Optional<RelaySkuTier> tier = default;
+            Core.Optional<RelaySkuTier> tier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Relay.Models
                     continue;
                 }
             }
-            return new RelaySku(name, Optional.ToNullable(tier));
+            return new RelaySku(name, Core.Optional.ToNullable(tier));
         }
     }
 }

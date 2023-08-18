@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class SqlServerCommunicationLinkOperationSource : IOperationSource<SqlServerCommunicationLinkResource>
+    internal class SqlServerCommunicationLinkOperationSource : Core.IOperationSource<SqlServerCommunicationLinkResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        SqlServerCommunicationLinkResource IOperationSource<SqlServerCommunicationLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SqlServerCommunicationLinkResource Core.IOperationSource<SqlServerCommunicationLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SqlServerCommunicationLinkData.DeserializeSqlServerCommunicationLinkData(document.RootElement);
             return new SqlServerCommunicationLinkResource(_client, data);
         }
 
-        async ValueTask<SqlServerCommunicationLinkResource> IOperationSource<SqlServerCommunicationLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SqlServerCommunicationLinkResource> Core.IOperationSource<SqlServerCommunicationLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SqlServerCommunicationLinkData.DeserializeSqlServerCommunicationLinkData(document.RootElement);

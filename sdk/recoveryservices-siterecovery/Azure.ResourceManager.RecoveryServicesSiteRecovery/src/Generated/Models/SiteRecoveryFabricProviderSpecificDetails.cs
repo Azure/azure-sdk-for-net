@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of SiteRecoveryFabricProviderSpecificDetails. </summary>
         internal SiteRecoveryFabricProviderSpecificDetails()
         {
-            ContainerIds = new ChangeTrackingList<ResourceIdentifier>();
-            Zones = new ChangeTrackingList<A2AZoneDetails>();
-            ExtendedLocations = new ChangeTrackingList<A2AExtendedLocationDetails>();
-            LocationDetails = new ChangeTrackingList<A2AFabricSpecificLocationDetails>();
+            ContainerIds = new Core.ChangeTrackingList<ResourceIdentifier>();
+            Zones = new Core.ChangeTrackingList<A2AZoneDetails>();
+            ExtendedLocations = new Core.ChangeTrackingList<A2AExtendedLocationDetails>();
+            LocationDetails = new Core.ChangeTrackingList<A2AFabricSpecificLocationDetails>();
             InstanceType = "Azure";
         }
 

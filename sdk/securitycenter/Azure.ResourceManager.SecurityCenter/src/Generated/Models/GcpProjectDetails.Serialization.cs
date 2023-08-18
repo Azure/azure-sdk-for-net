@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class GcpProjectDetails : IUtf8JsonSerializable
+    public partial class GcpProjectDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProjectNumber))
+            if (Core.Optional.IsDefined(ProjectNumber))
             {
                 writer.WritePropertyName("projectNumber"u8);
                 writer.WriteStringValue(ProjectNumber);
             }
-            if (Optional.IsDefined(ProjectId))
+            if (Core.Optional.IsDefined(ProjectId))
             {
                 writer.WritePropertyName("projectId"u8);
                 writer.WriteStringValue(ProjectId);
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> projectNumber = default;
-            Optional<string> projectId = default;
-            Optional<string> workloadIdentityPoolId = default;
+            Core.Optional<string> projectNumber = default;
+            Core.Optional<string> projectId = default;
+            Core.Optional<string> workloadIdentityPoolId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("projectNumber"u8))

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityAlertSimulatorBundlesRequestProperties : IUtf8JsonSerializable
+    public partial class SecurityAlertSimulatorBundlesRequestProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Bundles))
+            if (Core.Optional.IsCollectionDefined(Bundles))
             {
                 writer.WritePropertyName("bundles"u8);
                 writer.WriteStartArray();

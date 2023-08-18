@@ -11,39 +11,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class CustomAssessmentAutomationCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class CustomAssessmentAutomationCreateOrUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CompressedQuery))
+            if (Core.Optional.IsDefined(CompressedQuery))
             {
                 writer.WritePropertyName("compressedQuery"u8);
                 writer.WriteStringValue(CompressedQuery);
             }
-            if (Optional.IsDefined(SupportedCloud))
+            if (Core.Optional.IsDefined(SupportedCloud))
             {
                 writer.WritePropertyName("supportedCloud"u8);
                 writer.WriteStringValue(SupportedCloud.Value.ToString());
             }
-            if (Optional.IsDefined(Severity))
+            if (Core.Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(RemediationDescription))
+            if (Core.Optional.IsDefined(RemediationDescription))
             {
                 writer.WritePropertyName("remediationDescription"u8);
                 writer.WriteStringValue(RemediationDescription);
@@ -61,13 +61,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> compressedQuery = default;
-            Optional<CustomAssessmentAutomationSupportedCloud> supportedCloud = default;
-            Optional<CustomAssessmentSeverity> severity = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> remediationDescription = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> compressedQuery = default;
+            Core.Optional<CustomAssessmentAutomationSupportedCloud> supportedCloud = default;
+            Core.Optional<CustomAssessmentSeverity> severity = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> remediationDescription = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new CustomAssessmentAutomationCreateOrUpdateContent(id, name, type, systemData.Value, compressedQuery.Value, Optional.ToNullable(supportedCloud), Optional.ToNullable(severity), displayName.Value, description.Value, remediationDescription.Value);
+            return new CustomAssessmentAutomationCreateOrUpdateContent(id, name, type, systemData.Value, compressedQuery.Value, Core.Optional.ToNullable(supportedCloud), Core.Optional.ToNullable(severity), displayName.Value, description.Value, remediationDescription.Value);
         }
     }
 }

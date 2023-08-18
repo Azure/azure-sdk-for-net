@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 return null;
             }
             string authType = "Unknown";
-            Optional<byte[]> certificate = default;
-            Optional<string> friendlyName = default;
-            Optional<string> issuer = default;
-            Optional<long> resourceId = default;
-            Optional<string> subject = default;
-            Optional<BinaryData> thumbprint = default;
-            Optional<DateTimeOffset> validFrom = default;
-            Optional<DateTimeOffset> validTo = default;
+            Core.Optional<byte[]> certificate = default;
+            Core.Optional<string> friendlyName = default;
+            Core.Optional<string> issuer = default;
+            Core.Optional<long> resourceId = default;
+            Core.Optional<string> subject = default;
+            Core.Optional<BinaryData> thumbprint = default;
+            Core.Optional<DateTimeOffset> validFrom = default;
+            Core.Optional<DateTimeOffset> validTo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authType"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     continue;
                 }
             }
-            return new UnknownResourceCertificateDetails(authType, certificate.Value, friendlyName.Value, issuer.Value, Optional.ToNullable(resourceId), subject.Value, thumbprint.Value, Optional.ToNullable(validFrom), Optional.ToNullable(validTo));
+            return new UnknownResourceCertificateDetails(authType, certificate.Value, friendlyName.Value, issuer.Value, Core.Optional.ToNullable(resourceId), subject.Value, thumbprint.Value, Core.Optional.ToNullable(validFrom), Core.Optional.ToNullable(validTo));
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class A2ARemoveDisksContent : IUtf8JsonSerializable
+    public partial class A2ARemoveDisksContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(VmDisksUris))
+            if (Core.Optional.IsCollectionDefined(VmDisksUris))
             {
                 writer.WritePropertyName("vmDisksUris"u8);
                 writer.WriteStartArray();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VmManagedDisksIds))
+            if (Core.Optional.IsCollectionDefined(VmManagedDisksIds))
             {
                 writer.WritePropertyName("vmManagedDisksIds"u8);
                 writer.WriteStartArray();

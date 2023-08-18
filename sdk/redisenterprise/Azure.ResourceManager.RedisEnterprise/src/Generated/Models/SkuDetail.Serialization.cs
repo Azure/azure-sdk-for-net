@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Optional<RedisEnterpriseSkuName> name = default;
+            Core.Optional<RedisEnterpriseSkuName> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     continue;
                 }
             }
-            return new SkuDetail(Optional.ToNullable(name));
+            return new SkuDetail(Core.Optional.ToNullable(name));
         }
     }
 }

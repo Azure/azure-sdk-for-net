@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> deviceId = default;
-            Optional<long> alertsCount = default;
-            Optional<string> lastOccurrence = default;
+            Core.Optional<string> deviceId = default;
+            Core.Optional<long> alertsCount = default;
+            Core.Optional<string> lastOccurrence = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new IotSecurityAggregatedAlertTopDevice(deviceId.Value, Optional.ToNullable(alertsCount), lastOccurrence.Value);
+            return new IotSecurityAggregatedAlertTopDevice(deviceId.Value, Core.Optional.ToNullable(alertsCount), lastOccurrence.Value);
         }
     }
 }

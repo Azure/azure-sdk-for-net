@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<TenantData>> value = default;
+            Core.Optional<IReadOnlyList<TenantData>> value = default;
             string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new TenantListResult(Optional.ToList(value), nextLink);
+            return new TenantListResult(Core.Optional.ToList(value), nextLink);
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    internal partial class ManagedIdentitySettings : IUtf8JsonSerializable
+    internal partial class ManagedIdentitySettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Resource))
+            if (Core.Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
                 writer.WriteStringValue(Resource);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<string> resource = default;
+            Core.Optional<string> resource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resource"u8))

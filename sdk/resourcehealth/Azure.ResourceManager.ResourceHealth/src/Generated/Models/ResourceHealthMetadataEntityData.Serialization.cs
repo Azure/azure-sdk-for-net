@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.ResourceHealth
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<IReadOnlyList<string>> dependsOn = default;
-            Optional<IReadOnlyList<MetadataEntityScenario>> applicableScenarios = default;
-            Optional<IReadOnlyList<MetadataSupportedValueDetail>> supportedValues = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<IReadOnlyList<string>> dependsOn = default;
+            Core.Optional<IReadOnlyList<MetadataEntityScenario>> applicableScenarios = default;
+            Core.Optional<IReadOnlyList<MetadataSupportedValueDetail>> supportedValues = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ResourceHealth
                     continue;
                 }
             }
-            return new ResourceHealthMetadataEntityData(id, name, type, systemData.Value, displayName.Value, Optional.ToList(dependsOn), Optional.ToList(applicableScenarios), Optional.ToList(supportedValues));
+            return new ResourceHealthMetadataEntityData(id, name, type, systemData.Value, displayName.Value, Core.Optional.ToList(dependsOn), Core.Optional.ToList(applicableScenarios), Core.Optional.ToList(supportedValues));
         }
     }
 }

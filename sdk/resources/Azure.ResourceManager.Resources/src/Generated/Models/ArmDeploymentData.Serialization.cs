@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<ArmDeploymentPropertiesExtended> properties = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<ArmDeploymentPropertiesExtended> properties = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new ArmDeploymentData(id, name, type, systemData.Value, Optional.ToNullable(location), properties.Value, Optional.ToDictionary(tags));
+            return new ArmDeploymentData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), properties.Value, Core.Optional.ToDictionary(tags));
         }
     }
 }

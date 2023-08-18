@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageVolumeExclusionOptions : IUtf8JsonSerializable
+    public partial class InMageVolumeExclusionOptions : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(VolumeLabel))
+            if (Core.Optional.IsDefined(VolumeLabel))
             {
                 writer.WritePropertyName("volumeLabel"u8);
                 writer.WriteStringValue(VolumeLabel);
             }
-            if (Optional.IsDefined(OnlyExcludeIfSingleVolume))
+            if (Core.Optional.IsDefined(OnlyExcludeIfSingleVolume))
             {
                 writer.WritePropertyName("onlyExcludeIfSingleVolume"u8);
                 writer.WriteStringValue(OnlyExcludeIfSingleVolume);

@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
             Argument.AssertNotNull(recoveryAvailabilityType, nameof(recoveryAvailabilityType));
 
-            VmDisks = new ChangeTrackingList<A2AProtectionIntentDiskDetails>();
-            VmManagedDisks = new ChangeTrackingList<A2AProtectionIntentManagedDiskDetails>();
+            VmDisks = new Core.ChangeTrackingList<A2AProtectionIntentDiskDetails>();
+            VmManagedDisks = new Core.ChangeTrackingList<A2AProtectionIntentManagedDiskDetails>();
             RecoveryAvailabilityType = recoveryAvailabilityType;
             InstanceType = "A2A";
         }

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _managedInstanceServerTrustCertificateServerTrustCertificatesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ManagedInstanceServerTrustCertificateResource>(new ManagedInstanceServerTrustCertificateOperationSource(Client), _managedInstanceServerTrustCertificateServerTrustCertificatesClientDiagnostics, Pipeline, _managedInstanceServerTrustCertificateServerTrustCertificatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ManagedInstanceServerTrustCertificateResource>(new ManagedInstanceServerTrustCertificateOperationSource(Client), _managedInstanceServerTrustCertificateServerTrustCertificatesClientDiagnostics, Pipeline, _managedInstanceServerTrustCertificateServerTrustCertificatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedInstanceServerTrustCertificateServerTrustCertificatesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, cancellationToken);
-                var operation = new SqlArmOperation<ManagedInstanceServerTrustCertificateResource>(new ManagedInstanceServerTrustCertificateOperationSource(Client), _managedInstanceServerTrustCertificateServerTrustCertificatesClientDiagnostics, Pipeline, _managedInstanceServerTrustCertificateServerTrustCertificatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ManagedInstanceServerTrustCertificateResource>(new ManagedInstanceServerTrustCertificateOperationSource(Client), _managedInstanceServerTrustCertificateServerTrustCertificatesClientDiagnostics, Pipeline, _managedInstanceServerTrustCertificateServerTrustCertificatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceServerTrustCertificateServerTrustCertificatesRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceServerTrustCertificateServerTrustCertificatesRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceServerTrustCertificateResource(Client, ServerTrustCertificateData.DeserializeServerTrustCertificateData(e)), _managedInstanceServerTrustCertificateServerTrustCertificatesClientDiagnostics, Pipeline, "ManagedInstanceServerTrustCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceServerTrustCertificateResource(Client, ServerTrustCertificateData.DeserializeServerTrustCertificateData(e)), _managedInstanceServerTrustCertificateServerTrustCertificatesClientDiagnostics, Pipeline, "ManagedInstanceServerTrustCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceServerTrustCertificateServerTrustCertificatesRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceServerTrustCertificateServerTrustCertificatesRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceServerTrustCertificateResource(Client, ServerTrustCertificateData.DeserializeServerTrustCertificateData(e)), _managedInstanceServerTrustCertificateServerTrustCertificatesClientDiagnostics, Pipeline, "ManagedInstanceServerTrustCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceServerTrustCertificateResource(Client, ServerTrustCertificateData.DeserializeServerTrustCertificateData(e)), _managedInstanceServerTrustCertificateServerTrustCertificatesClientDiagnostics, Pipeline, "ManagedInstanceServerTrustCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

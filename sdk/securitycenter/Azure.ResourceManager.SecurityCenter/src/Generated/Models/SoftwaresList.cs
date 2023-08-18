@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of SoftwaresList. </summary>
         internal SoftwaresList()
         {
-            Value = new ChangeTrackingList<SoftwareInventoryData>();
+            Value = new Core.ChangeTrackingList<SoftwareInventoryData>();
         }
 
         /// <summary> Initializes a new instance of SoftwaresList. </summary>

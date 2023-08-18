@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class MoverResourceProperties : IUtf8JsonSerializable
+    public partial class MoverResourceProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sourceId"u8);
             writer.WriteStringValue(SourceId);
-            if (Optional.IsDefined(ExistingTargetId))
+            if (Core.Optional.IsDefined(ExistingTargetId))
             {
                 if (ExistingTargetId != null)
                 {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("existingTargetId");
                 }
             }
-            if (Optional.IsDefined(ResourceSettings))
+            if (Core.Optional.IsDefined(ResourceSettings))
             {
                 if (ResourceSettings != null)
                 {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("resourceSettings");
                 }
             }
-            if (Optional.IsCollectionDefined(DependsOnOverrides))
+            if (Core.Optional.IsCollectionDefined(DependsOnOverrides))
             {
                 writer.WritePropertyName("dependsOnOverrides"u8);
                 writer.WriteStartArray();
@@ -61,17 +61,17 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<MoverProvisioningState> provisioningState = default;
+            Core.Optional<MoverProvisioningState> provisioningState = default;
             ResourceIdentifier sourceId = default;
-            Optional<ResourceIdentifier> targetId = default;
-            Optional<ResourceIdentifier> existingTargetId = default;
-            Optional<MoverResourceSettings> resourceSettings = default;
-            Optional<MoverResourceSettings> sourceResourceSettings = default;
-            Optional<MoverResourcePropertiesMoveStatus> moveStatus = default;
-            Optional<IReadOnlyList<MoverResourceDependency>> dependsOn = default;
-            Optional<IList<MoverResourceDependencyOverride>> dependsOnOverrides = default;
-            Optional<bool> isResolveRequired = default;
-            Optional<MoveResourcePropertiesErrors> errors = default;
+            Core.Optional<ResourceIdentifier> targetId = default;
+            Core.Optional<ResourceIdentifier> existingTargetId = default;
+            Core.Optional<MoverResourceSettings> resourceSettings = default;
+            Core.Optional<MoverResourceSettings> sourceResourceSettings = default;
+            Core.Optional<MoverResourcePropertiesMoveStatus> moveStatus = default;
+            Core.Optional<IReadOnlyList<MoverResourceDependency>> dependsOn = default;
+            Core.Optional<IList<MoverResourceDependencyOverride>> dependsOnOverrides = default;
+            Core.Optional<bool> isResolveRequired = default;
+            Core.Optional<MoveResourcePropertiesErrors> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new MoverResourceProperties(Optional.ToNullable(provisioningState), sourceId, targetId.Value, existingTargetId.Value, resourceSettings.Value, sourceResourceSettings.Value, moveStatus.Value, Optional.ToList(dependsOn), Optional.ToList(dependsOnOverrides), Optional.ToNullable(isResolveRequired), errors.Value);
+            return new MoverResourceProperties(Core.Optional.ToNullable(provisioningState), sourceId, targetId.Value, existingTargetId.Value, resourceSettings.Value, sourceResourceSettings.Value, moveStatus.Value, Core.Optional.ToList(dependsOn), Core.Optional.ToList(dependsOnOverrides), Core.Optional.ToNullable(isResolveRequired), errors.Value);
         }
     }
 }

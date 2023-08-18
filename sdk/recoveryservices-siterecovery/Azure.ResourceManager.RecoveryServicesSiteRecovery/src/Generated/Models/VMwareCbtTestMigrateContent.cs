@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
             RecoveryPointId = recoveryPointId;
             NetworkId = networkId;
-            VmNics = new ChangeTrackingList<VMwareCbtNicContent>();
+            VmNics = new Core.ChangeTrackingList<VMwareCbtNicContent>();
             InstanceType = "VMwareCbt";
         }
 

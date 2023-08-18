@@ -14,19 +14,19 @@ using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
-    public partial class SphereDeploymentData : IUtf8JsonSerializable
+    public partial class SphereDeploymentData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DeploymentId))
+            if (Core.Optional.IsDefined(DeploymentId))
             {
                 writer.WritePropertyName("deploymentId"u8);
                 writer.WriteStringValue(DeploymentId);
             }
-            if (Optional.IsCollectionDefined(DeployedImages))
+            if (Core.Optional.IsCollectionDefined(DeployedImages))
             {
                 writer.WritePropertyName("deployedImages"u8);
                 writer.WriteStartArray();
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Sphere
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> deploymentId = default;
-            Optional<IList<SphereImageData>> deployedImages = default;
-            Optional<DateTimeOffset> deploymentDateUtc = default;
-            Optional<SphereProvisioningState> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> deploymentId = default;
+            Core.Optional<IList<SphereImageData>> deployedImages = default;
+            Core.Optional<DateTimeOffset> deploymentDateUtc = default;
+            Core.Optional<SphereProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Sphere
                     continue;
                 }
             }
-            return new SphereDeploymentData(id, name, type, systemData.Value, deploymentId.Value, Optional.ToList(deployedImages), Optional.ToNullable(deploymentDateUtc), Optional.ToNullable(provisioningState));
+            return new SphereDeploymentData(id, name, type, systemData.Value, deploymentId.Value, Core.Optional.ToList(deployedImages), Core.Optional.ToNullable(deploymentDateUtc), Core.Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<ManagedInstanceEditionCapability>> supportedEditions = default;
-            Optional<IReadOnlyList<InstancePoolEditionCapability>> supportedInstancePoolEditions = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            Core.Optional<string> name = default;
+            Core.Optional<IReadOnlyList<ManagedInstanceEditionCapability>> supportedEditions = default;
+            Core.Optional<IReadOnlyList<InstancePoolEditionCapability>> supportedInstancePoolEditions = default;
+            Core.Optional<SqlCapabilityStatus> status = default;
+            Core.Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ManagedInstanceVersionCapability(name.Value, Optional.ToList(supportedEditions), Optional.ToList(supportedInstancePoolEditions), Optional.ToNullable(status), reason.Value);
+            return new ManagedInstanceVersionCapability(name.Value, Core.Optional.ToList(supportedEditions), Core.Optional.ToList(supportedInstancePoolEditions), Core.Optional.ToNullable(status), reason.Value);
         }
     }
 }

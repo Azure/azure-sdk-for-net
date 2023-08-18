@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class TargetRestoreInfo : IUtf8JsonSerializable
+    public partial class TargetRestoreInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(OverwriteOption))
+            if (Core.Optional.IsDefined(OverwriteOption))
             {
                 writer.WritePropertyName("overwriteOption"u8);
                 writer.WriteStringValue(OverwriteOption.Value.ToString());
             }
-            if (Optional.IsDefined(ContainerId))
+            if (Core.Optional.IsDefined(ContainerId))
             {
                 writer.WritePropertyName("containerId"u8);
                 writer.WriteStringValue(ContainerId);
             }
-            if (Optional.IsDefined(DatabaseName))
+            if (Core.Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (Optional.IsDefined(TargetDirectoryForFileRestore))
+            if (Core.Optional.IsDefined(TargetDirectoryForFileRestore))
             {
                 writer.WritePropertyName("targetDirectoryForFileRestore"u8);
                 writer.WriteStringValue(TargetDirectoryForFileRestore);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<RestoreOverwriteOption> overwriteOption = default;
-            Optional<string> containerId = default;
-            Optional<string> databaseName = default;
-            Optional<string> targetDirectoryForFileRestore = default;
+            Core.Optional<RestoreOverwriteOption> overwriteOption = default;
+            Core.Optional<string> containerId = default;
+            Core.Optional<string> databaseName = default;
+            Core.Optional<string> targetDirectoryForFileRestore = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("overwriteOption"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new TargetRestoreInfo(Optional.ToNullable(overwriteOption), containerId.Value, databaseName.Value, targetDirectoryForFileRestore.Value);
+            return new TargetRestoreInfo(Core.Optional.ToNullable(overwriteOption), containerId.Value, databaseName.Value, targetDirectoryForFileRestore.Value);
         }
     }
 }

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class AutomationRulePropertyArrayChangedValuesCondition : IUtf8JsonSerializable
+    public partial class AutomationRulePropertyArrayChangedValuesCondition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ArrayType))
+            if (Core.Optional.IsDefined(ArrayType))
             {
                 writer.WritePropertyName("arrayType"u8);
                 writer.WriteStringValue(ArrayType.Value.ToString());
             }
-            if (Optional.IsDefined(ChangeType))
+            if (Core.Optional.IsDefined(ChangeType))
             {
                 writer.WritePropertyName("changeType"u8);
                 writer.WriteStringValue(ChangeType.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<AutomationRulePropertyArrayChangedConditionSupportedArrayType> arrayType = default;
-            Optional<AutomationRulePropertyArrayChangedConditionSupportedChangeType> changeType = default;
+            Core.Optional<AutomationRulePropertyArrayChangedConditionSupportedArrayType> arrayType = default;
+            Core.Optional<AutomationRulePropertyArrayChangedConditionSupportedChangeType> changeType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("arrayType"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new AutomationRulePropertyArrayChangedValuesCondition(Optional.ToNullable(arrayType), Optional.ToNullable(changeType));
+            return new AutomationRulePropertyArrayChangedValuesCondition(Core.Optional.ToNullable(arrayType), Core.Optional.ToNullable(changeType));
         }
     }
 }

@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> service = default;
-            Optional<string> region = default;
-            Optional<string> incidentType = default;
+            Core.Optional<string> title = default;
+            Core.Optional<string> service = default;
+            Core.Optional<string> region = default;
+            Core.Optional<string> incidentType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("title"u8))

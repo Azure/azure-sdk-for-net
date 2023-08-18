@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForContainersGcpOfferingNativeCloudConnection : IUtf8JsonSerializable
+    public partial class DefenderForContainersGcpOfferingNativeCloudConnection : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceAccountEmailAddress))
+            if (Core.Optional.IsDefined(ServiceAccountEmailAddress))
             {
                 writer.WritePropertyName("serviceAccountEmailAddress"u8);
                 writer.WriteStringValue(ServiceAccountEmailAddress);
             }
-            if (Optional.IsDefined(WorkloadIdentityProviderId))
+            if (Core.Optional.IsDefined(WorkloadIdentityProviderId))
             {
                 writer.WritePropertyName("workloadIdentityProviderId"u8);
                 writer.WriteStringValue(WorkloadIdentityProviderId);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> serviceAccountEmailAddress = default;
-            Optional<string> workloadIdentityProviderId = default;
+            Core.Optional<string> serviceAccountEmailAddress = default;
+            Core.Optional<string> workloadIdentityProviderId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceAccountEmailAddress"u8))

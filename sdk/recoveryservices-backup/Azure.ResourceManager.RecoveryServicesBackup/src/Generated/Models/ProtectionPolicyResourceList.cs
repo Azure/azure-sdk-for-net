@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of ProtectionPolicyResourceList. </summary>
         internal ProtectionPolicyResourceList()
         {
-            Value = new ChangeTrackingList<BackupProtectionPolicyData>();
+            Value = new Core.ChangeTrackingList<BackupProtectionPolicyData>();
         }
 
         /// <summary> Initializes a new instance of ProtectionPolicyResourceList. </summary>

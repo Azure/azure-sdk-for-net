@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class ServiceBusClientAffineProperties : IUtf8JsonSerializable
+    public partial class ServiceBusClientAffineProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientId))
+            if (Core.Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (Optional.IsDefined(IsDurable))
+            if (Core.Optional.IsDefined(IsDurable))
             {
                 writer.WritePropertyName("isDurable"u8);
                 writer.WriteBooleanValue(IsDurable.Value);
             }
-            if (Optional.IsDefined(IsShared))
+            if (Core.Optional.IsDefined(IsShared))
             {
                 writer.WritePropertyName("isShared"u8);
                 writer.WriteBooleanValue(IsShared.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Optional<string> clientId = default;
-            Optional<bool> isDurable = default;
-            Optional<bool> isShared = default;
+            Core.Optional<string> clientId = default;
+            Core.Optional<bool> isDurable = default;
+            Core.Optional<bool> isShared = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientId"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     continue;
                 }
             }
-            return new ServiceBusClientAffineProperties(clientId.Value, Optional.ToNullable(isDurable), Optional.ToNullable(isShared));
+            return new ServiceBusClientAffineProperties(clientId.Value, Core.Optional.ToNullable(isDurable), Core.Optional.ToNullable(isShared));
         }
     }
 }

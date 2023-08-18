@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<Guid> workspaceId = default;
-            Optional<string> workspaceSubscriptionId = default;
-            Optional<string> workspaceResourceGroup = default;
-            Optional<Guid> agentId = default;
+            Core.Optional<Guid> workspaceId = default;
+            Core.Optional<string> workspaceSubscriptionId = default;
+            Core.Optional<string> workspaceResourceGroup = default;
+            Core.Optional<Guid> agentId = default;
             ResourceIdentifierType type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new LogAnalyticsIdentifier(type, Optional.ToNullable(workspaceId), workspaceSubscriptionId.Value, workspaceResourceGroup.Value, Optional.ToNullable(agentId));
+            return new LogAnalyticsIdentifier(type, Core.Optional.ToNullable(workspaceId), workspaceSubscriptionId.Value, workspaceResourceGroup.Value, Core.Optional.ToNullable(agentId));
         }
     }
 }

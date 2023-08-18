@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of InMageRcmUpdateReplicationProtectedItemContent. </summary>
         public InMageRcmUpdateReplicationProtectedItemContent()
         {
-            VmNics = new ChangeTrackingList<InMageRcmNicContent>();
+            VmNics = new Core.ChangeTrackingList<InMageRcmNicContent>();
             InstanceType = "InMageRcm";
         }
 

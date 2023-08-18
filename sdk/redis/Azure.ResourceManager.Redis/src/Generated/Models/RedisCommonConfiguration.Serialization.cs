@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    public partial class RedisCommonConfiguration : IUtf8JsonSerializable
+    public partial class RedisCommonConfiguration : Core.IUtf8JsonSerializable
     {
     }
 }

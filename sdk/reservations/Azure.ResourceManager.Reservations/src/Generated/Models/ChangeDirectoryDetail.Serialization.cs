@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ChangeDirectoryResult> reservationOrder = default;
-            Optional<IReadOnlyList<ChangeDirectoryResult>> reservations = default;
+            Core.Optional<ChangeDirectoryResult> reservationOrder = default;
+            Core.Optional<IReadOnlyList<ChangeDirectoryResult>> reservations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("reservationOrder"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new ChangeDirectoryDetail(reservationOrder.Value, Optional.ToList(reservations));
+            return new ChangeDirectoryDetail(reservationOrder.Value, Core.Optional.ToList(reservations));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of SecurityMLAnalyticsSettingsDataSource. </summary>
         public SecurityMLAnalyticsSettingsDataSource()
         {
-            DataTypes = new ChangeTrackingList<string>();
+            DataTypes = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SecurityMLAnalyticsSettingsDataSource. </summary>

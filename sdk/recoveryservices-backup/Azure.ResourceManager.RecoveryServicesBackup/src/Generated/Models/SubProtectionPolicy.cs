@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of SubProtectionPolicy. </summary>
         public SubProtectionPolicy()
         {
-            TieringPolicy = new ChangeTrackingDictionary<string, BackupTieringPolicy>();
+            TieringPolicy = new Core.ChangeTrackingDictionary<string, BackupTieringPolicy>();
         }
 
         /// <summary> Initializes a new instance of SubProtectionPolicy. </summary>

@@ -12,17 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmApplicationManagedIdentity : IUtf8JsonSerializable
+    public partial class ArmApplicationManagedIdentity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IdentityType))
+            if (Core.Optional.IsDefined(IdentityType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IdentityType.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(UserAssignedIdentities))
+            if (Core.Optional.IsCollectionDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartObject();
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<Guid> principalId = default;
-            Optional<Guid> tenantId = default;
-            Optional<ArmApplicationManagedIdentityType> type = default;
-            Optional<IDictionary<string, ArmApplicationUserAssignedIdentity>> userAssignedIdentities = default;
+            Core.Optional<Guid> principalId = default;
+            Core.Optional<Guid> tenantId = default;
+            Core.Optional<ArmApplicationManagedIdentityType> type = default;
+            Core.Optional<IDictionary<string, ArmApplicationUserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ArmApplicationManagedIdentity(Optional.ToNullable(principalId), Optional.ToNullable(tenantId), Optional.ToNullable(type), Optional.ToDictionary(userAssignedIdentities));
+            return new ArmApplicationManagedIdentity(Core.Optional.ToNullable(principalId), Core.Optional.ToNullable(tenantId), Core.Optional.ToNullable(type), Core.Optional.ToDictionary(userAssignedIdentities));
         }
     }
 }

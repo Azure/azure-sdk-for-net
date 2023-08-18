@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SqlServerConfigurationsManagementSettings : IUtf8JsonSerializable
+    public partial class SqlServerConfigurationsManagementSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SqlConnectivityUpdateSettings))
+            if (Core.Optional.IsDefined(SqlConnectivityUpdateSettings))
             {
                 writer.WritePropertyName("sqlConnectivityUpdateSettings"u8);
                 writer.WriteObjectValue(SqlConnectivityUpdateSettings);
             }
-            if (Optional.IsDefined(SqlWorkloadTypeUpdateSettings))
+            if (Core.Optional.IsDefined(SqlWorkloadTypeUpdateSettings))
             {
                 writer.WritePropertyName("sqlWorkloadTypeUpdateSettings"u8);
                 writer.WriteObjectValue(SqlWorkloadTypeUpdateSettings);
             }
-            if (Optional.IsDefined(SqlStorageUpdateSettings))
+            if (Core.Optional.IsDefined(SqlStorageUpdateSettings))
             {
                 writer.WritePropertyName("sqlStorageUpdateSettings"u8);
                 writer.WriteObjectValue(SqlStorageUpdateSettings);
             }
-            if (Optional.IsDefined(AdditionalFeaturesServerConfigurations))
+            if (Core.Optional.IsDefined(AdditionalFeaturesServerConfigurations))
             {
                 writer.WritePropertyName("additionalFeaturesServerConfigurations"u8);
                 writer.WriteObjectValue(AdditionalFeaturesServerConfigurations);
             }
-            if (Optional.IsDefined(SqlInstanceSettings))
+            if (Core.Optional.IsDefined(SqlInstanceSettings))
             {
                 writer.WritePropertyName("sqlInstanceSettings"u8);
                 writer.WriteObjectValue(SqlInstanceSettings);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<SqlConnectivityUpdateSettings> sqlConnectivityUpdateSettings = default;
-            Optional<SqlWorkloadTypeUpdateSettings> sqlWorkloadTypeUpdateSettings = default;
-            Optional<SqlStorageUpdateSettings> sqlStorageUpdateSettings = default;
-            Optional<AdditionalFeaturesServerConfigurations> additionalFeaturesServerConfigurations = default;
-            Optional<SqlInstanceSettings> sqlInstanceSettings = default;
+            Core.Optional<SqlConnectivityUpdateSettings> sqlConnectivityUpdateSettings = default;
+            Core.Optional<SqlWorkloadTypeUpdateSettings> sqlWorkloadTypeUpdateSettings = default;
+            Core.Optional<SqlStorageUpdateSettings> sqlStorageUpdateSettings = default;
+            Core.Optional<AdditionalFeaturesServerConfigurations> additionalFeaturesServerConfigurations = default;
+            Core.Optional<SqlInstanceSettings> sqlInstanceSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sqlConnectivityUpdateSettings"u8))

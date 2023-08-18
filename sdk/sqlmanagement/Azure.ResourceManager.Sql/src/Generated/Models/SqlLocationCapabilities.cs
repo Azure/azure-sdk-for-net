@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SqlLocationCapabilities. </summary>
         internal SqlLocationCapabilities()
         {
-            SupportedServerVersions = new ChangeTrackingList<SqlServerVersionCapability>();
-            SupportedManagedInstanceVersions = new ChangeTrackingList<ManagedInstanceVersionCapability>();
+            SupportedServerVersions = new Core.ChangeTrackingList<SqlServerVersionCapability>();
+            SupportedManagedInstanceVersions = new Core.ChangeTrackingList<ManagedInstanceVersionCapability>();
         }
 
         /// <summary> Initializes a new instance of SqlLocationCapabilities. </summary>

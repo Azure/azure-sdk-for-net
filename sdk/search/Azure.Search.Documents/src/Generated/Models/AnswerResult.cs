@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of AnswerResult. </summary>
         internal AnswerResult()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new Core.ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of AnswerResult. </summary>

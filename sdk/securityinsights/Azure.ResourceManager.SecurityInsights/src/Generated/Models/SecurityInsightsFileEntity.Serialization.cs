@@ -13,9 +13,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsFileEntity : IUtf8JsonSerializable
+    public partial class SecurityInsightsFileEntity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<string> directory = default;
-            Optional<IReadOnlyList<string>> fileHashEntityIds = default;
-            Optional<string> fileName = default;
-            Optional<string> hostEntityId = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            Core.Optional<string> friendlyName = default;
+            Core.Optional<string> directory = default;
+            Core.Optional<IReadOnlyList<string>> fileHashEntityIds = default;
+            Core.Optional<string> fileName = default;
+            Core.Optional<string> hostEntityId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsFileEntity(id, name, type, systemData.Value, kind, Optional.ToDictionary(additionalData), friendlyName.Value, directory.Value, Optional.ToList(fileHashEntityIds), fileName.Value, hostEntityId.Value);
+            return new SecurityInsightsFileEntity(id, name, type, systemData.Value, kind, Core.Optional.ToDictionary(additionalData), friendlyName.Value, directory.Value, Core.Optional.ToList(fileHashEntityIds), fileName.Value, hostEntityId.Value);
         }
     }
 }

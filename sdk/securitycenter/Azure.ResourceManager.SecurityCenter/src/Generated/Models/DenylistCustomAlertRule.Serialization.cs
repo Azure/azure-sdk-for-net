@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DenylistCustomAlertRule : IUtf8JsonSerializable
+    public partial class DenylistCustomAlertRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("denylistValues"u8);
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             IList<string> denylistValues = default;
-            Optional<SecurityValueType> valueType = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
+            Core.Optional<SecurityValueType> valueType = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> description = default;
             bool isEnabled = default;
             string ruleType = default;
             foreach (var property in element.EnumerateObject())
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new DenylistCustomAlertRule(displayName.Value, description.Value, isEnabled, ruleType, Optional.ToNullable(valueType), denylistValues);
+            return new DenylistCustomAlertRule(displayName.Value, description.Value, isEnabled, ruleType, Core.Optional.ToNullable(valueType), denylistValues);
         }
     }
 }

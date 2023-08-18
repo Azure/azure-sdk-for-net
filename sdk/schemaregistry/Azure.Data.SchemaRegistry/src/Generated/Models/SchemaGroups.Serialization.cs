@@ -19,8 +19,8 @@ namespace Azure.Data.SchemaRegistry.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> schemaGroups = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<string>> schemaGroups = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaGroups"u8))
@@ -43,7 +43,7 @@ namespace Azure.Data.SchemaRegistry.Models
                     continue;
                 }
             }
-            return new SchemaGroups(Optional.ToList(schemaGroups), nextLink.Value);
+            return new SchemaGroups(Core.Optional.ToList(schemaGroups), nextLink.Value);
         }
     }
 }

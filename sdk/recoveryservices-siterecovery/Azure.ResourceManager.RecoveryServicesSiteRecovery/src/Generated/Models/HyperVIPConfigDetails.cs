@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of HyperVIPConfigDetails. </summary>
         internal HyperVIPConfigDetails()
         {
-            RecoveryLBBackendAddressPoolIds = new ChangeTrackingList<string>();
-            TfoLBBackendAddressPoolIds = new ChangeTrackingList<string>();
+            RecoveryLBBackendAddressPoolIds = new Core.ChangeTrackingList<string>();
+            TfoLBBackendAddressPoolIds = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of HyperVIPConfigDetails. </summary>

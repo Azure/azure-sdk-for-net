@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sphere
             try
             {
                 var response = await _sphereProductProductsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, productName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SphereArmOperation<SphereProductResource>(new SphereProductOperationSource(Client), _sphereProductProductsClientDiagnostics, Pipeline, _sphereProductProductsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, productName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SphereArmOperation<SphereProductResource>(new SphereProductOperationSource(Client), _sphereProductProductsClientDiagnostics, Pipeline, _sphereProductProductsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, productName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Sphere
             try
             {
                 var response = _sphereProductProductsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, productName, data, cancellationToken);
-                var operation = new SphereArmOperation<SphereProductResource>(new SphereProductOperationSource(Client), _sphereProductProductsClientDiagnostics, Pipeline, _sphereProductProductsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, productName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SphereArmOperation<SphereProductResource>(new SphereProductOperationSource(Client), _sphereProductProductsClientDiagnostics, Pipeline, _sphereProductProductsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, productName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Sphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereProductProductsRestClient.CreateListByCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereProductProductsRestClient.CreateListByCatalogNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SphereProductResource(Client, SphereProductData.DeserializeSphereProductData(e)), _sphereProductProductsClientDiagnostics, Pipeline, "SphereProductCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SphereProductResource(Client, SphereProductData.DeserializeSphereProductData(e)), _sphereProductProductsClientDiagnostics, Pipeline, "SphereProductCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Sphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereProductProductsRestClient.CreateListByCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereProductProductsRestClient.CreateListByCatalogNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SphereProductResource(Client, SphereProductData.DeserializeSphereProductData(e)), _sphereProductProductsClientDiagnostics, Pipeline, "SphereProductCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SphereProductResource(Client, SphereProductData.DeserializeSphereProductData(e)), _sphereProductProductsClientDiagnostics, Pipeline, "SphereProductCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

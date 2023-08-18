@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class AzureKeyVaultProperties : IUtf8JsonSerializable
+    public partial class AzureKeyVaultProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DoesConnectAsKubernetesCsiDriver))
+            if (Core.Optional.IsDefined(DoesConnectAsKubernetesCsiDriver))
             {
                 if (DoesConnectAsKubernetesCsiDriver != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Optional<bool?> connectAsKubernetesCsiDriver = default;
+            Core.Optional<bool?> connectAsKubernetesCsiDriver = default;
             AzureResourceType type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     continue;
                 }
             }
-            return new AzureKeyVaultProperties(type, Optional.ToNullable(connectAsKubernetesCsiDriver));
+            return new AzureKeyVaultProperties(type, Core.Optional.ToNullable(connectAsKubernetesCsiDriver));
         }
     }
 }

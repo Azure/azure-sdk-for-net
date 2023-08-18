@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 return null;
             }
             IReadOnlyList<SphereDeviceInsight> value = default;
-            Optional<Uri> nextLink = default;
+            Core.Optional<Uri> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))

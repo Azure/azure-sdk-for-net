@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ClusterServerCertificateCommonNames : IUtf8JsonSerializable
+    public partial class ClusterServerCertificateCommonNames : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(CommonNames))
+            if (Core.Optional.IsCollectionDefined(CommonNames))
             {
                 writer.WritePropertyName("commonNames"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(X509StoreName))
+            if (Core.Optional.IsDefined(X509StoreName))
             {
                 writer.WritePropertyName("x509StoreName"u8);
                 writer.WriteStringValue(X509StoreName.Value.ToString());
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<IList<ClusterServerCertificateCommonName>> commonNames = default;
-            Optional<ClusterCertificateStoreName> x509StoreName = default;
+            Core.Optional<IList<ClusterServerCertificateCommonName>> commonNames = default;
+            Core.Optional<ClusterCertificateStoreName> x509StoreName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("commonNames"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     continue;
                 }
             }
-            return new ClusterServerCertificateCommonNames(Optional.ToList(commonNames), Optional.ToNullable(x509StoreName));
+            return new ClusterServerCertificateCommonNames(Core.Optional.ToList(commonNames), Core.Optional.ToNullable(x509StoreName));
         }
     }
 }

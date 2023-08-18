@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Relay.Models
         /// <summary> Initializes a new instance of AuthorizationRuleListResult. </summary>
         internal AuthorizationRuleListResult()
         {
-            Value = new ChangeTrackingList<RelayAuthorizationRuleData>();
+            Value = new Core.ChangeTrackingList<RelayAuthorizationRuleData>();
         }
 
         /// <summary> Initializes a new instance of AuthorizationRuleListResult. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of JobVersionListResult. </summary>
         internal JobVersionListResult()
         {
-            Value = new ChangeTrackingList<SqlServerJobVersionData>();
+            Value = new Core.ChangeTrackingList<SqlServerJobVersionData>();
         }
 
         /// <summary> Initializes a new instance of JobVersionListResult. </summary>

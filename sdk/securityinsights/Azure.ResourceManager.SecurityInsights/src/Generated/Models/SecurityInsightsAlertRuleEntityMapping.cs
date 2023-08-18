@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of SecurityInsightsAlertRuleEntityMapping. </summary>
         public SecurityInsightsAlertRuleEntityMapping()
         {
-            FieldMappings = new ChangeTrackingList<SecurityInsightsFieldMapping>();
+            FieldMappings = new Core.ChangeTrackingList<SecurityInsightsFieldMapping>();
         }
 
         /// <summary> Initializes a new instance of SecurityInsightsAlertRuleEntityMapping. </summary>

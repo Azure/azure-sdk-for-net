@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of SiteRecoveryGroupTaskDetails. </summary>
         protected SiteRecoveryGroupTaskDetails()
         {
-            ChildTasks = new ChangeTrackingList<AsrTask>();
+            ChildTasks = new Core.ChangeTrackingList<AsrTask>();
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryGroupTaskDetails. </summary>

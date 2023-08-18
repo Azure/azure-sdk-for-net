@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class ThresholdCustomAlertRule : IUtf8JsonSerializable
+    public partial class ThresholdCustomAlertRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("minThreshold"u8);
@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             int minThreshold = default;
             int maxThreshold = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> description = default;
             bool isEnabled = default;
             string ruleType = "ThresholdCustomAlertRule";
             foreach (var property in element.EnumerateObject())

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of RuleResultsProperties. </summary>
         public RuleResultsProperties()
         {
-            Results = new ChangeTrackingList<IList<string>>();
+            Results = new Core.ChangeTrackingList<IList<string>>();
         }
 
         /// <summary> Initializes a new instance of RuleResultsProperties. </summary>

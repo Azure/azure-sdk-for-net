@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of SecurityAutomationRuleSet. </summary>
         public SecurityAutomationRuleSet()
         {
-            Rules = new ChangeTrackingList<SecurityAutomationTriggeringRule>();
+            Rules = new Core.ChangeTrackingList<SecurityAutomationTriggeringRule>();
         }
 
         /// <summary> Initializes a new instance of SecurityAutomationRuleSet. </summary>

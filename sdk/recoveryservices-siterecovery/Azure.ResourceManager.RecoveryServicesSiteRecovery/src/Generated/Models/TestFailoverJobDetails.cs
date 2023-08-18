@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of TestFailoverJobDetails. </summary>
         internal TestFailoverJobDetails()
         {
-            ProtectedItemDetails = new ChangeTrackingList<FailoverReplicationProtectedItemDetails>();
+            ProtectedItemDetails = new Core.ChangeTrackingList<FailoverReplicationProtectedItemDetails>();
             InstanceType = "TestFailoverJobDetails";
         }
 

@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryPlanGroup : IUtf8JsonSerializable
+    public partial class SiteRecoveryPlanGroup : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("groupType"u8);
             writer.WriteStringValue(GroupType.ToString());
-            if (Optional.IsCollectionDefined(ReplicationProtectedItems))
+            if (Core.Optional.IsCollectionDefined(ReplicationProtectedItems))
             {
                 writer.WritePropertyName("replicationProtectedItems"u8);
                 writer.WriteStartArray();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(StartGroupActions))
+            if (Core.Optional.IsCollectionDefined(StartGroupActions))
             {
                 writer.WritePropertyName("startGroupActions"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EndGroupActions))
+            if (Core.Optional.IsCollectionDefined(EndGroupActions))
             {
                 writer.WritePropertyName("endGroupActions"u8);
                 writer.WriteStartArray();
@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             RecoveryPlanGroupType groupType = default;
-            Optional<IList<RecoveryPlanProtectedItem>> replicationProtectedItems = default;
-            Optional<IList<RecoveryPlanAction>> startGroupActions = default;
-            Optional<IList<RecoveryPlanAction>> endGroupActions = default;
+            Core.Optional<IList<RecoveryPlanProtectedItem>> replicationProtectedItems = default;
+            Core.Optional<IList<RecoveryPlanAction>> startGroupActions = default;
+            Core.Optional<IList<RecoveryPlanAction>> endGroupActions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupType"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryPlanGroup(groupType, Optional.ToList(replicationProtectedItems), Optional.ToList(startGroupActions), Optional.ToList(endGroupActions));
+            return new SiteRecoveryPlanGroup(groupType, Core.Optional.ToList(replicationProtectedItems), Core.Optional.ToList(startGroupActions), Core.Optional.ToList(endGroupActions));
         }
     }
 }

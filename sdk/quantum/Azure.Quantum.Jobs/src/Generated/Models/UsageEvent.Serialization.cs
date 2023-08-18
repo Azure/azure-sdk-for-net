@@ -18,12 +18,12 @@ namespace Azure.Quantum.Jobs.Models
             {
                 return null;
             }
-            Optional<string> dimensionId = default;
-            Optional<string> dimensionName = default;
-            Optional<string> measureUnit = default;
-            Optional<float> amountBilled = default;
-            Optional<float> amountConsumed = default;
-            Optional<float> unitPrice = default;
+            Core.Optional<string> dimensionId = default;
+            Core.Optional<string> dimensionName = default;
+            Core.Optional<string> measureUnit = default;
+            Core.Optional<float> amountBilled = default;
+            Core.Optional<float> amountConsumed = default;
+            Core.Optional<float> unitPrice = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dimensionId"u8))
@@ -69,7 +69,7 @@ namespace Azure.Quantum.Jobs.Models
                     continue;
                 }
             }
-            return new UsageEvent(dimensionId.Value, dimensionName.Value, measureUnit.Value, Optional.ToNullable(amountBilled), Optional.ToNullable(amountConsumed), Optional.ToNullable(unitPrice));
+            return new UsageEvent(dimensionId.Value, dimensionName.Value, measureUnit.Value, Core.Optional.ToNullable(amountBilled), Core.Optional.ToNullable(amountConsumed), Core.Optional.ToNullable(unitPrice));
         }
     }
 }

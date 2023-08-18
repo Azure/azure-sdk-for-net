@@ -12,19 +12,19 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class BackupShortTermRetentionPolicyData : IUtf8JsonSerializable
+    public partial class BackupShortTermRetentionPolicyData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RetentionDays))
+            if (Core.Optional.IsDefined(RetentionDays))
             {
                 writer.WritePropertyName("retentionDays"u8);
                 writer.WriteNumberValue(RetentionDays.Value);
             }
-            if (Optional.IsDefined(DiffBackupIntervalInHours))
+            if (Core.Optional.IsDefined(DiffBackupIntervalInHours))
             {
                 writer.WritePropertyName("diffBackupIntervalInHours"u8);
                 writer.WriteNumberValue(DiffBackupIntervalInHours.Value.ToSerialInt32());
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> retentionDays = default;
-            Optional<DiffBackupIntervalInHours> diffBackupIntervalInHours = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<int> retentionDays = default;
+            Core.Optional<DiffBackupIntervalInHours> diffBackupIntervalInHours = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new BackupShortTermRetentionPolicyData(id, name, type, systemData.Value, Optional.ToNullable(retentionDays), Optional.ToNullable(diffBackupIntervalInHours));
+            return new BackupShortTermRetentionPolicyData(id, name, type, systemData.Value, Core.Optional.ToNullable(retentionDays), Core.Optional.ToNullable(diffBackupIntervalInHours));
         }
     }
 }

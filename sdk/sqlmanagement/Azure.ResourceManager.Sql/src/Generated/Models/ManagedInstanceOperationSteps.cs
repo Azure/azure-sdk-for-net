@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ManagedInstanceOperationSteps. </summary>
         internal ManagedInstanceOperationSteps()
         {
-            StepsList = new ChangeTrackingList<UpsertManagedServerOperationStep>();
+            StepsList = new Core.ChangeTrackingList<UpsertManagedServerOperationStep>();
         }
 
         /// <summary> Initializes a new instance of ManagedInstanceOperationSteps. </summary>

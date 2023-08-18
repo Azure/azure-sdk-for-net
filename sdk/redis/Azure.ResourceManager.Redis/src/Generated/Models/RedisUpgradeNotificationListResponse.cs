@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <summary> Initializes a new instance of RedisUpgradeNotificationListResponse. </summary>
         internal RedisUpgradeNotificationListResponse()
         {
-            Value = new ChangeTrackingList<RedisUpgradeNotification>();
+            Value = new Core.ChangeTrackingList<RedisUpgradeNotification>();
         }
 
         /// <summary> Initializes a new instance of RedisUpgradeNotificationListResponse. </summary>

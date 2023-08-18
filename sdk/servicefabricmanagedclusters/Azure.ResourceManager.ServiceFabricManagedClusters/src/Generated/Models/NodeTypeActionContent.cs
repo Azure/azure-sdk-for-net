@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Initializes a new instance of NodeTypeActionContent. </summary>
         public NodeTypeActionContent()
         {
-            Nodes = new ChangeTrackingList<string>();
+            Nodes = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> List of node names from the node type. </summary>

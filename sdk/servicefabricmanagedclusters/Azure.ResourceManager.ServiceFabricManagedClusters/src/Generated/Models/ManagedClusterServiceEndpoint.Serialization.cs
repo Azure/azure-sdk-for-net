@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ManagedClusterServiceEndpoint : IUtf8JsonSerializable
+    public partial class ManagedClusterServiceEndpoint : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("service"u8);
             writer.WriteStringValue(Service);
-            if (Optional.IsCollectionDefined(Locations))
+            if (Core.Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 return null;
             }
             string service = default;
-            Optional<IList<AzureLocation>> locations = default;
+            Core.Optional<IList<AzureLocation>> locations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("service"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     continue;
                 }
             }
-            return new ManagedClusterServiceEndpoint(service, Optional.ToList(locations));
+            return new ManagedClusterServiceEndpoint(service, Core.Optional.ToList(locations));
         }
     }
 }

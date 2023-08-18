@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of A2AVmSyncedConfigDetails. </summary>
         internal A2AVmSyncedConfigDetails()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            VmEndpoints = new ChangeTrackingList<SiteRecoveryVmEndpoint>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            VmEndpoints = new Core.ChangeTrackingList<SiteRecoveryVmEndpoint>();
         }
 
         /// <summary> Initializes a new instance of A2AVmSyncedConfigDetails. </summary>

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="location"> The location. </param>
         public ServiceFabricServicePatch(AzureLocation location) : base(location)
         {
-            CorrelationScheme = new ChangeTrackingList<ServiceCorrelationDescription>();
-            ServiceLoadMetrics = new ChangeTrackingList<ServiceLoadMetricDescription>();
-            ServicePlacementPolicies = new ChangeTrackingList<ServicePlacementPolicyDescription>();
+            CorrelationScheme = new Core.ChangeTrackingList<ServiceCorrelationDescription>();
+            ServiceLoadMetrics = new Core.ChangeTrackingList<ServiceLoadMetricDescription>();
+            ServicePlacementPolicies = new Core.ChangeTrackingList<ServicePlacementPolicyDescription>();
         }
 
         /// <summary> Initializes a new instance of ServiceFabricServicePatch. </summary>

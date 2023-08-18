@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> jobName = default;
-            Optional<ResourceIdentifier> jobId = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> jobStatus = default;
+            Core.Optional<string> jobName = default;
+            Core.Optional<ResourceIdentifier> jobId = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<string> jobStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobName"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new CriticalJobHistoryDetails(jobName.Value, jobId.Value, Optional.ToNullable(startTime), jobStatus.Value);
+            return new CriticalJobHistoryDetails(jobName.Value, jobId.Value, Core.Optional.ToNullable(startTime), jobStatus.Value);
         }
     }
 }

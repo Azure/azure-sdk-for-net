@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecureScoreControlDetails>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<SecureScoreControlDetails>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new SecureScoreControlList(Optional.ToList(value), nextLink.Value);
+            return new SecureScoreControlList(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

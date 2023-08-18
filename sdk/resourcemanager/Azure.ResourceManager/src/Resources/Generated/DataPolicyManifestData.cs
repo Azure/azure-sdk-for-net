@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of DataPolicyManifestData. </summary>
         internal DataPolicyManifestData()
         {
-            Namespaces = new ChangeTrackingList<string>();
-            ResourceTypeAliases = new ChangeTrackingList<ResourceTypeAliases>();
-            Effects = new ChangeTrackingList<DataPolicyManifestEffect>();
-            FieldValues = new ChangeTrackingList<string>();
-            Standard = new ChangeTrackingList<string>();
-            CustomDefinitions = new ChangeTrackingList<DataManifestCustomResourceFunctionDefinition>();
+            Namespaces = new Core.ChangeTrackingList<string>();
+            ResourceTypeAliases = new Core.ChangeTrackingList<ResourceTypeAliases>();
+            Effects = new Core.ChangeTrackingList<DataPolicyManifestEffect>();
+            FieldValues = new Core.ChangeTrackingList<string>();
+            Standard = new Core.ChangeTrackingList<string>();
+            CustomDefinitions = new Core.ChangeTrackingList<DataManifestCustomResourceFunctionDefinition>();
         }
 
         /// <summary> Initializes a new instance of DataPolicyManifestData. </summary>

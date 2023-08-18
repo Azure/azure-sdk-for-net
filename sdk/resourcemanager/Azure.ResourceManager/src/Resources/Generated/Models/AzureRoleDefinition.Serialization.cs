@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<bool> isServiceRole = default;
-            Optional<IReadOnlyList<Permission>> permissions = default;
-            Optional<IReadOnlyList<string>> scopes = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<bool> isServiceRole = default;
+            Core.Optional<IReadOnlyList<Permission>> permissions = default;
+            Core.Optional<IReadOnlyList<string>> scopes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new AzureRoleDefinition(id.Value, name.Value, Optional.ToNullable(isServiceRole), Optional.ToList(permissions), Optional.ToList(scopes));
+            return new AzureRoleDefinition(id.Value, name.Value, Core.Optional.ToNullable(isServiceRole), Core.Optional.ToList(permissions), Core.Optional.ToList(scopes));
         }
     }
 }

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<UpsertManagedServerOperationParameters> currentParameters = default;
-            Optional<UpsertManagedServerOperationParameters> requestedParameters = default;
+            Core.Optional<UpsertManagedServerOperationParameters> currentParameters = default;
+            Core.Optional<UpsertManagedServerOperationParameters> requestedParameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("currentParameters"u8))

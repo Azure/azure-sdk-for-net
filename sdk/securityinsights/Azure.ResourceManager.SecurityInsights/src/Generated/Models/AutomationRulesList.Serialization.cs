@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecurityInsightsAutomationRuleData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<SecurityInsightsAutomationRuleData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new AutomationRulesList(Optional.ToList(value), nextLink.Value);
+            return new AutomationRulesList(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

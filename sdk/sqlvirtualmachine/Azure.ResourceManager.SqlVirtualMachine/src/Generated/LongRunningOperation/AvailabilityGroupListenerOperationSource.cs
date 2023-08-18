@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SqlVirtualMachine
 {
-    internal class AvailabilityGroupListenerOperationSource : IOperationSource<AvailabilityGroupListenerResource>
+    internal class AvailabilityGroupListenerOperationSource : Core.IOperationSource<AvailabilityGroupListenerResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             _client = client;
         }
 
-        AvailabilityGroupListenerResource IOperationSource<AvailabilityGroupListenerResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        AvailabilityGroupListenerResource Core.IOperationSource<AvailabilityGroupListenerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AvailabilityGroupListenerData.DeserializeAvailabilityGroupListenerData(document.RootElement);
             return new AvailabilityGroupListenerResource(_client, data);
         }
 
-        async ValueTask<AvailabilityGroupListenerResource> IOperationSource<AvailabilityGroupListenerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AvailabilityGroupListenerResource> Core.IOperationSource<AvailabilityGroupListenerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AvailabilityGroupListenerData.DeserializeAvailabilityGroupListenerData(document.RootElement);

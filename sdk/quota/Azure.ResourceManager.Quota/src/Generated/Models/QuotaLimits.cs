@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <summary> Initializes a new instance of QuotaLimits. </summary>
         internal QuotaLimits()
         {
-            Value = new ChangeTrackingList<CurrentQuotaLimitBaseData>();
+            Value = new Core.ChangeTrackingList<CurrentQuotaLimitBaseData>();
         }
 
         /// <summary> Initializes a new instance of QuotaLimits. </summary>

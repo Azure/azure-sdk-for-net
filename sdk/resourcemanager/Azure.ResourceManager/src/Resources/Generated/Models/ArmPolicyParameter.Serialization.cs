@@ -12,17 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmPolicyParameter : IUtf8JsonSerializable
+    public partial class ArmPolicyParameter : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ParameterType))
+            if (Core.Optional.IsDefined(ParameterType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ParameterType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AllowedValues))
+            if (Core.Optional.IsCollectionDefined(AllowedValues))
             {
                 writer.WritePropertyName("allowedValues"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DefaultValue))
+            if (Core.Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
 #if NET6_0_OR_GREATER
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(DefaultValue.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(Metadata))
+            if (Core.Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<ArmPolicyParameterType> type = default;
-            Optional<IList<BinaryData>> allowedValues = default;
-            Optional<BinaryData> defaultValue = default;
-            Optional<ParameterDefinitionsValueMetadata> metadata = default;
+            Core.Optional<ArmPolicyParameterType> type = default;
+            Core.Optional<IList<BinaryData>> allowedValues = default;
+            Core.Optional<BinaryData> defaultValue = default;
+            Core.Optional<ParameterDefinitionsValueMetadata> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ArmPolicyParameter(Optional.ToNullable(type), Optional.ToList(allowedValues), defaultValue.Value, metadata.Value);
+            return new ArmPolicyParameter(Core.Optional.ToNullable(type), Core.Optional.ToList(allowedValues), defaultValue.Value, metadata.Value);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ResourcesMoveContent. </summary>
         public ResourcesMoveContent()
         {
-            Resources = new ChangeTrackingList<string>();
+            Resources = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> The IDs of the resources. </summary>

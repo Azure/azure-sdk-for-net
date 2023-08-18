@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class ContainerIdentityInfo : IUtf8JsonSerializable
+    public partial class ContainerIdentityInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(UniqueName))
+            if (Core.Optional.IsDefined(UniqueName))
             {
                 writer.WritePropertyName("uniqueName"u8);
                 writer.WriteStringValue(UniqueName);
             }
-            if (Optional.IsDefined(AadTenantId))
+            if (Core.Optional.IsDefined(AadTenantId))
             {
                 writer.WritePropertyName("aadTenantId"u8);
                 writer.WriteStringValue(AadTenantId.Value);
             }
-            if (Optional.IsDefined(ServicePrincipalClientId))
+            if (Core.Optional.IsDefined(ServicePrincipalClientId))
             {
                 writer.WritePropertyName("servicePrincipalClientId"u8);
                 writer.WriteStringValue(ServicePrincipalClientId);
             }
-            if (Optional.IsDefined(Audience))
+            if (Core.Optional.IsDefined(Audience))
             {
                 writer.WritePropertyName("audience"u8);
                 writer.WriteStringValue(Audience);
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> uniqueName = default;
-            Optional<Guid> aadTenantId = default;
-            Optional<string> servicePrincipalClientId = default;
-            Optional<string> audience = default;
+            Core.Optional<string> uniqueName = default;
+            Core.Optional<Guid> aadTenantId = default;
+            Core.Optional<string> servicePrincipalClientId = default;
+            Core.Optional<string> audience = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uniqueName"u8))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new ContainerIdentityInfo(uniqueName.Value, Optional.ToNullable(aadTenantId), servicePrincipalClientId.Value, audience.Value);
+            return new ContainerIdentityInfo(uniqueName.Value, Core.Optional.ToNullable(aadTenantId), servicePrincipalClientId.Value, audience.Value);
         }
     }
 }

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sphere
 {
-    internal class SphereCatalogOperationSource : IOperationSource<SphereCatalogResource>
+    internal class SphereCatalogOperationSource : Core.IOperationSource<SphereCatalogResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sphere
             _client = client;
         }
 
-        SphereCatalogResource IOperationSource<SphereCatalogResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SphereCatalogResource Core.IOperationSource<SphereCatalogResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SphereCatalogData.DeserializeSphereCatalogData(document.RootElement);
             return new SphereCatalogResource(_client, data);
         }
 
-        async ValueTask<SphereCatalogResource> IOperationSource<SphereCatalogResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SphereCatalogResource> Core.IOperationSource<SphereCatalogResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SphereCatalogData.DeserializeSphereCatalogData(document.RootElement);

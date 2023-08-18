@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Argument.AssertNotNull(sourceId, nameof(sourceId));
 
             SourceId = sourceId;
-            DependsOn = new ChangeTrackingList<MoverResourceDependency>();
-            DependsOnOverrides = new ChangeTrackingList<MoverResourceDependencyOverride>();
+            DependsOn = new Core.ChangeTrackingList<MoverResourceDependency>();
+            DependsOnOverrides = new Core.ChangeTrackingList<MoverResourceDependencyOverride>();
         }
 
         /// <summary> Initializes a new instance of MoverResourceProperties. </summary>

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsUserInfo : IUtf8JsonSerializable
+    public partial class SecurityInsightsUserInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ObjectId))
+            if (Core.Optional.IsDefined(ObjectId))
             {
                 if (ObjectId != null)
                 {
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> email = default;
-            Optional<string> name = default;
-            Optional<Guid?> objectId = default;
+            Core.Optional<string> email = default;
+            Core.Optional<string> name = default;
+            Core.Optional<Guid?> objectId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("email"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsUserInfo(email.Value, name.Value, Optional.ToNullable(objectId));
+            return new SecurityInsightsUserInfo(email.Value, name.Value, Core.Optional.ToNullable(objectId));
         }
     }
 }

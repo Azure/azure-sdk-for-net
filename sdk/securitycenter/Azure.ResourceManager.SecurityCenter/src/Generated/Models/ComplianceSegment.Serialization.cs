@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> segmentType = default;
-            Optional<double> percentage = default;
+            Core.Optional<string> segmentType = default;
+            Core.Optional<double> percentage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("segmentType"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new ComplianceSegment(segmentType.Value, Optional.ToNullable(percentage));
+            return new ComplianceSegment(segmentType.Value, Core.Optional.ToNullable(percentage));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> Initializes a new instance of RedisEnterpriseClusterList. </summary>
         internal RedisEnterpriseClusterList()
         {
-            Value = new ChangeTrackingList<RedisEnterpriseClusterData>();
+            Value = new Core.ChangeTrackingList<RedisEnterpriseClusterData>();
         }
 
         /// <summary> Initializes a new instance of RedisEnterpriseClusterList. </summary>

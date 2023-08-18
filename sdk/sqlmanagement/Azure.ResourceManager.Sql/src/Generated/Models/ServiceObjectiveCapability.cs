@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ServiceObjectiveCapability. </summary>
         internal ServiceObjectiveCapability()
         {
-            SupportedMaxSizes = new ChangeTrackingList<MaxSizeRangeCapability>();
-            SupportedLicenseTypes = new ChangeTrackingList<LicenseTypeCapability>();
-            SupportedMinCapacities = new ChangeTrackingList<MinCapacityCapability>();
-            SupportedMaintenanceConfigurations = new ChangeTrackingList<MaintenanceConfigurationCapability>();
+            SupportedMaxSizes = new Core.ChangeTrackingList<MaxSizeRangeCapability>();
+            SupportedLicenseTypes = new Core.ChangeTrackingList<LicenseTypeCapability>();
+            SupportedMinCapacities = new Core.ChangeTrackingList<MinCapacityCapability>();
+            SupportedMaintenanceConfigurations = new Core.ChangeTrackingList<MaintenanceConfigurationCapability>();
         }
 
         /// <summary> Initializes a new instance of ServiceObjectiveCapability. </summary>

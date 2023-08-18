@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ClusterCertificateDescription : IUtf8JsonSerializable
+    public partial class ClusterCertificateDescription : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("thumbprint"u8);
@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 #else
             JsonSerializer.Serialize(writer, JsonDocument.Parse(Thumbprint.ToString()).RootElement);
 #endif
-            if (Optional.IsDefined(ThumbprintSecondary))
+            if (Core.Optional.IsDefined(ThumbprintSecondary))
             {
                 writer.WritePropertyName("thumbprintSecondary"u8);
                 writer.WriteStringValue(ThumbprintSecondary);
             }
-            if (Optional.IsDefined(X509StoreName))
+            if (Core.Optional.IsDefined(X509StoreName))
             {
                 writer.WritePropertyName("x509StoreName"u8);
                 writer.WriteStringValue(X509StoreName.Value.ToString());
@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 return null;
             }
             BinaryData thumbprint = default;
-            Optional<string> thumbprintSecondary = default;
-            Optional<ClusterCertificateStoreName> x509StoreName = default;
+            Core.Optional<string> thumbprintSecondary = default;
+            Core.Optional<ClusterCertificateStoreName> x509StoreName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("thumbprint"u8))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     continue;
                 }
             }
-            return new ClusterCertificateDescription(thumbprint, thumbprintSecondary.Value, Optional.ToNullable(x509StoreName));
+            return new ClusterCertificateDescription(thumbprint, thumbprintSecondary.Value, Core.Optional.ToNullable(x509StoreName));
         }
     }
 }

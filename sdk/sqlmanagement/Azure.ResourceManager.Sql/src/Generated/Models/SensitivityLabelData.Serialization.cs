@@ -12,34 +12,34 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SensitivityLabelData : IUtf8JsonSerializable
+    public partial class SensitivityLabelData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(LabelName))
+            if (Core.Optional.IsDefined(LabelName))
             {
                 writer.WritePropertyName("labelName"u8);
                 writer.WriteStringValue(LabelName);
             }
-            if (Optional.IsDefined(LabelId))
+            if (Core.Optional.IsDefined(LabelId))
             {
                 writer.WritePropertyName("labelId"u8);
                 writer.WriteStringValue(LabelId);
             }
-            if (Optional.IsDefined(InformationType))
+            if (Core.Optional.IsDefined(InformationType))
             {
                 writer.WritePropertyName("informationType"u8);
                 writer.WriteStringValue(InformationType);
             }
-            if (Optional.IsDefined(InformationTypeId))
+            if (Core.Optional.IsDefined(InformationTypeId))
             {
                 writer.WritePropertyName("informationTypeId"u8);
                 writer.WriteStringValue(InformationTypeId);
             }
-            if (Optional.IsDefined(Rank))
+            if (Core.Optional.IsDefined(Rank))
             {
                 writer.WritePropertyName("rank"u8);
                 writer.WriteStringValue(Rank.Value.ToSerialString());
@@ -54,20 +54,20 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            Optional<string> managedBy = default;
+            Core.Optional<string> managedBy = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> schemaName = default;
-            Optional<string> tableName = default;
-            Optional<string> columnName = default;
-            Optional<string> labelName = default;
-            Optional<string> labelId = default;
-            Optional<string> informationType = default;
-            Optional<string> informationTypeId = default;
-            Optional<bool> isDisabled = default;
-            Optional<SensitivityLabelRank> rank = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> schemaName = default;
+            Core.Optional<string> tableName = default;
+            Core.Optional<string> columnName = default;
+            Core.Optional<string> labelName = default;
+            Core.Optional<string> labelId = default;
+            Core.Optional<string> informationType = default;
+            Core.Optional<string> informationTypeId = default;
+            Core.Optional<bool> isDisabled = default;
+            Core.Optional<SensitivityLabelRank> rank = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new SensitivityLabelData(id, name, type, systemData.Value, managedBy.Value, schemaName.Value, tableName.Value, columnName.Value, labelName.Value, labelId.Value, informationType.Value, informationTypeId.Value, Optional.ToNullable(isDisabled), Optional.ToNullable(rank));
+            return new SensitivityLabelData(id, name, type, systemData.Value, managedBy.Value, schemaName.Value, tableName.Value, columnName.Value, labelName.Value, labelId.Value, informationType.Value, informationTypeId.Value, Core.Optional.ToNullable(isDisabled), Core.Optional.ToNullable(rank));
         }
     }
 }

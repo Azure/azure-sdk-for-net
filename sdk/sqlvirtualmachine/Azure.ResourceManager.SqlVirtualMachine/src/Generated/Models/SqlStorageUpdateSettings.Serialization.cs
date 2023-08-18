@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SqlStorageUpdateSettings : IUtf8JsonSerializable
+    public partial class SqlStorageUpdateSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiskCount))
+            if (Core.Optional.IsDefined(DiskCount))
             {
                 writer.WritePropertyName("diskCount"u8);
                 writer.WriteNumberValue(DiskCount.Value);
             }
-            if (Optional.IsDefined(StartingDeviceId))
+            if (Core.Optional.IsDefined(StartingDeviceId))
             {
                 writer.WritePropertyName("startingDeviceId"u8);
                 writer.WriteNumberValue(StartingDeviceId.Value);
             }
-            if (Optional.IsDefined(DiskConfigurationType))
+            if (Core.Optional.IsDefined(DiskConfigurationType))
             {
                 writer.WritePropertyName("diskConfigurationType"u8);
                 writer.WriteStringValue(DiskConfigurationType.Value.ToString());
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<int> diskCount = default;
-            Optional<int> startingDeviceId = default;
-            Optional<SqlVmDiskConfigurationType> diskConfigurationType = default;
+            Core.Optional<int> diskCount = default;
+            Core.Optional<int> startingDeviceId = default;
+            Core.Optional<SqlVmDiskConfigurationType> diskConfigurationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskCount"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     continue;
                 }
             }
-            return new SqlStorageUpdateSettings(Optional.ToNullable(diskCount), Optional.ToNullable(startingDeviceId), Optional.ToNullable(diskConfigurationType));
+            return new SqlStorageUpdateSettings(Core.Optional.ToNullable(diskCount), Core.Optional.ToNullable(startingDeviceId), Core.Optional.ToNullable(diskConfigurationType));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of ThreatIntelligenceGranularMarkingEntity. </summary>
         public ThreatIntelligenceGranularMarkingEntity()
         {
-            Selectors = new ChangeTrackingList<string>();
+            Selectors = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ThreatIntelligenceGranularMarkingEntity. </summary>

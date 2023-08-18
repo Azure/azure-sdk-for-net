@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    internal partial class DataPlaneAadOrApiKeyAuthOption : IUtf8JsonSerializable
+    internal partial class DataPlaneAadOrApiKeyAuthOption : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AadAuthFailureMode))
+            if (Core.Optional.IsDefined(AadAuthFailureMode))
             {
                 writer.WritePropertyName("aadAuthFailureMode"u8);
                 writer.WriteStringValue(AadAuthFailureMode.Value.ToSerialString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<SearchAadAuthFailureMode> aadAuthFailureMode = default;
+            Core.Optional<SearchAadAuthFailureMode> aadAuthFailureMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aadAuthFailureMode"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Search.Models
                     continue;
                 }
             }
-            return new DataPlaneAadOrApiKeyAuthOption(Optional.ToNullable(aadAuthFailureMode));
+            return new DataPlaneAadOrApiKeyAuthOption(Core.Optional.ToNullable(aadAuthFailureMode));
         }
     }
 }

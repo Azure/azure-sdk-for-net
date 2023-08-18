@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
         {
             Argument.AssertNotNull(targetResourceName, nameof(targetResourceName));
 
-            Tags = new ChangeTrackingDictionary<string, string>();
-            AddressSpace = new ChangeTrackingList<string>();
-            DnsServers = new ChangeTrackingList<string>();
-            Subnets = new ChangeTrackingList<SubnetResourceSettings>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            AddressSpace = new Core.ChangeTrackingList<string>();
+            DnsServers = new Core.ChangeTrackingList<string>();
+            Subnets = new Core.ChangeTrackingList<SubnetResourceSettings>();
             ResourceType = "Microsoft.Network/virtualNetworks";
         }
 

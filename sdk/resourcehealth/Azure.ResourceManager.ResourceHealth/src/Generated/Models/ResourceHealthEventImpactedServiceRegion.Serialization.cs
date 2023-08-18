@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> impactedRegion = default;
-            Optional<ResourceHealthEventStatusValue> status = default;
-            Optional<IReadOnlyList<string>> impactedSubscriptions = default;
-            Optional<IReadOnlyList<string>> impactedTenants = default;
-            Optional<DateTimeOffset> lastUpdateTime = default;
-            Optional<IReadOnlyList<ResourceHealthEventUpdate>> updates = default;
+            Core.Optional<string> impactedRegion = default;
+            Core.Optional<ResourceHealthEventStatusValue> status = default;
+            Core.Optional<IReadOnlyList<string>> impactedSubscriptions = default;
+            Core.Optional<IReadOnlyList<string>> impactedTenants = default;
+            Core.Optional<DateTimeOffset> lastUpdateTime = default;
+            Core.Optional<IReadOnlyList<ResourceHealthEventUpdate>> updates = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("impactedRegion"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     continue;
                 }
             }
-            return new ResourceHealthEventImpactedServiceRegion(impactedRegion.Value, Optional.ToNullable(status), Optional.ToList(impactedSubscriptions), Optional.ToList(impactedTenants), Optional.ToNullable(lastUpdateTime), Optional.ToList(updates));
+            return new ResourceHealthEventImpactedServiceRegion(impactedRegion.Value, Core.Optional.ToNullable(status), Core.Optional.ToList(impactedSubscriptions), Core.Optional.ToList(impactedTenants), Core.Optional.ToNullable(lastUpdateTime), Core.Optional.ToList(updates));
         }
     }
 }

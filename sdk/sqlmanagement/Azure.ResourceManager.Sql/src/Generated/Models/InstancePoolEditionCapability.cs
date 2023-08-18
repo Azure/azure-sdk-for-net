@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of InstancePoolEditionCapability. </summary>
         internal InstancePoolEditionCapability()
         {
-            SupportedFamilies = new ChangeTrackingList<InstancePoolFamilyCapability>();
+            SupportedFamilies = new Core.ChangeTrackingList<InstancePoolFamilyCapability>();
         }
 
         /// <summary> Initializes a new instance of InstancePoolEditionCapability. </summary>

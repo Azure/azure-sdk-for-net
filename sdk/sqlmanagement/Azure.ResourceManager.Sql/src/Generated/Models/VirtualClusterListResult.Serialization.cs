@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VirtualClusterData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<VirtualClusterData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new VirtualClusterListResult(Optional.ToList(value), nextLink.Value);
+            return new VirtualClusterListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

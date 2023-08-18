@@ -10,37 +10,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForServersAwsOffering : IUtf8JsonSerializable
+    public partial class DefenderForServersAwsOffering : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefenderForServers))
+            if (Core.Optional.IsDefined(DefenderForServers))
             {
                 writer.WritePropertyName("defenderForServers"u8);
                 writer.WriteObjectValue(DefenderForServers);
             }
-            if (Optional.IsDefined(ArcAutoProvisioning))
+            if (Core.Optional.IsDefined(ArcAutoProvisioning))
             {
                 writer.WritePropertyName("arcAutoProvisioning"u8);
                 writer.WriteObjectValue(ArcAutoProvisioning);
             }
-            if (Optional.IsDefined(VaAutoProvisioning))
+            if (Core.Optional.IsDefined(VaAutoProvisioning))
             {
                 writer.WritePropertyName("vaAutoProvisioning"u8);
                 writer.WriteObjectValue(VaAutoProvisioning);
             }
-            if (Optional.IsDefined(MdeAutoProvisioning))
+            if (Core.Optional.IsDefined(MdeAutoProvisioning))
             {
                 writer.WritePropertyName("mdeAutoProvisioning"u8);
                 writer.WriteObjectValue(MdeAutoProvisioning);
             }
-            if (Optional.IsDefined(SubPlan))
+            if (Core.Optional.IsDefined(SubPlan))
             {
                 writer.WritePropertyName("subPlan"u8);
                 writer.WriteObjectValue(SubPlan);
             }
-            if (Optional.IsDefined(VmScanners))
+            if (Core.Optional.IsDefined(VmScanners))
             {
                 writer.WritePropertyName("vmScanners"u8);
                 writer.WriteObjectValue(VmScanners);
@@ -56,14 +56,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AwsDefenderForServersInfo> defenderForServers = default;
-            Optional<DefenderForServersAwsOfferingArcAutoProvisioning> arcAutoProvisioning = default;
-            Optional<DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning> vaAutoProvisioning = default;
-            Optional<DefenderForServersAwsOfferingMdeAutoProvisioning> mdeAutoProvisioning = default;
-            Optional<DefenderForServersAwsOfferingSubPlan> subPlan = default;
-            Optional<DefenderForServersAwsOfferingVmScanners> vmScanners = default;
+            Core.Optional<AwsDefenderForServersInfo> defenderForServers = default;
+            Core.Optional<DefenderForServersAwsOfferingArcAutoProvisioning> arcAutoProvisioning = default;
+            Core.Optional<DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning> vaAutoProvisioning = default;
+            Core.Optional<DefenderForServersAwsOfferingMdeAutoProvisioning> mdeAutoProvisioning = default;
+            Core.Optional<DefenderForServersAwsOfferingSubPlan> subPlan = default;
+            Core.Optional<DefenderForServersAwsOfferingVmScanners> vmScanners = default;
             OfferingType offeringType = default;
-            Optional<string> description = default;
+            Core.Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defenderForServers"u8))

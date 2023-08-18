@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of VMwareCbtProtectionContainerMappingDetails. </summary>
         internal VMwareCbtProtectionContainerMappingDetails()
         {
-            RoleSizeToNicCountMap = new ChangeTrackingDictionary<string, int>();
-            ExcludedSkus = new ChangeTrackingList<string>();
+            RoleSizeToNicCountMap = new Core.ChangeTrackingDictionary<string, int>();
+            ExcludedSkus = new Core.ChangeTrackingList<string>();
             InstanceType = "VMwareCbt";
         }
 

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of SqlMetricDefinition. </summary>
         internal SqlMetricDefinition()
         {
-            MetricAvailabilities = new ChangeTrackingList<SqlMetricAvailability>();
+            MetricAvailabilities = new Core.ChangeTrackingList<SqlMetricAvailability>();
         }
 
         /// <summary> Initializes a new instance of SqlMetricDefinition. </summary>

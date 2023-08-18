@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class RecoveryPointProperties : IUtf8JsonSerializable
+    public partial class RecoveryPointProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExpireOn))
+            if (Core.Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(RuleName))
+            if (Core.Optional.IsDefined(RuleName))
             {
                 writer.WritePropertyName("ruleName"u8);
                 writer.WriteStringValue(RuleName);
             }
-            if (Optional.IsDefined(IsSoftDeleted))
+            if (Core.Optional.IsDefined(IsSoftDeleted))
             {
                 writer.WritePropertyName("isSoftDeleted"u8);
                 writer.WriteBooleanValue(IsSoftDeleted.Value);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> expiryTime = default;
-            Optional<string> ruleName = default;
-            Optional<bool> isSoftDeleted = default;
+            Core.Optional<DateTimeOffset> expiryTime = default;
+            Core.Optional<string> ruleName = default;
+            Core.Optional<bool> isSoftDeleted = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expiryTime"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new RecoveryPointProperties(Optional.ToNullable(expiryTime), ruleName.Value, Optional.ToNullable(isSoftDeleted));
+            return new RecoveryPointProperties(Core.Optional.ToNullable(expiryTime), ruleName.Value, Core.Optional.ToNullable(isSoftDeleted));
         }
     }
 }

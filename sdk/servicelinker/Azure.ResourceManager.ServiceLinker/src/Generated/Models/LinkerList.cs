@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Initializes a new instance of LinkerList. </summary>
         internal LinkerList()
         {
-            Value = new ChangeTrackingList<LinkerResourceData>();
+            Value = new Core.ChangeTrackingList<LinkerResourceData>();
         }
 
         /// <summary> Initializes a new instance of LinkerList. </summary>

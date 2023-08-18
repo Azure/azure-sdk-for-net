@@ -13,31 +13,31 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class MicrosoftSecurityIncidentCreationAlertRuleTemplate : IUtf8JsonSerializable
+    public partial class MicrosoftSecurityIncidentCreationAlertRuleTemplate : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AlertRulesCreatedByTemplateCount))
+            if (Core.Optional.IsDefined(AlertRulesCreatedByTemplateCount))
             {
                 writer.WritePropertyName("alertRulesCreatedByTemplateCount"u8);
                 writer.WriteNumberValue(AlertRulesCreatedByTemplateCount.Value);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(RequiredDataConnectors))
+            if (Core.Optional.IsCollectionDefined(RequiredDataConnectors))
             {
                 writer.WritePropertyName("requiredDataConnectors"u8);
                 writer.WriteStartArray();
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DisplayNamesFilter))
+            if (Core.Optional.IsCollectionDefined(DisplayNamesFilter))
             {
                 writer.WritePropertyName("displayNamesFilter"u8);
                 writer.WriteStartArray();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DisplayNamesExcludeFilter))
+            if (Core.Optional.IsCollectionDefined(DisplayNamesExcludeFilter))
             {
                 writer.WritePropertyName("displayNamesExcludeFilter"u8);
                 writer.WriteStartArray();
@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ProductFilter))
+            if (Core.Optional.IsDefined(ProductFilter))
             {
                 writer.WritePropertyName("productFilter"u8);
                 writer.WriteStringValue(ProductFilter.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(SeveritiesFilter))
+            if (Core.Optional.IsCollectionDefined(SeveritiesFilter))
             {
                 writer.WritePropertyName("severitiesFilter"u8);
                 writer.WriteStartArray();
@@ -101,18 +101,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> alertRulesCreatedByTemplateCount = default;
-            Optional<DateTimeOffset> createdDateUTC = default;
-            Optional<DateTimeOffset> lastUpdatedDateUTC = default;
-            Optional<string> description = default;
-            Optional<string> displayName = default;
-            Optional<IList<AlertRuleTemplateDataSource>> requiredDataConnectors = default;
-            Optional<SecurityInsightsAlertRuleTemplateStatus> status = default;
-            Optional<IList<string>> displayNamesFilter = default;
-            Optional<IList<string>> displayNamesExcludeFilter = default;
-            Optional<MicrosoftSecurityProductName> productFilter = default;
-            Optional<IList<SecurityInsightsAlertSeverity>> severitiesFilter = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<int> alertRulesCreatedByTemplateCount = default;
+            Core.Optional<DateTimeOffset> createdDateUTC = default;
+            Core.Optional<DateTimeOffset> lastUpdatedDateUTC = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<IList<AlertRuleTemplateDataSource>> requiredDataConnectors = default;
+            Core.Optional<SecurityInsightsAlertRuleTemplateStatus> status = default;
+            Core.Optional<IList<string>> displayNamesFilter = default;
+            Core.Optional<IList<string>> displayNamesExcludeFilter = default;
+            Core.Optional<MicrosoftSecurityProductName> productFilter = default;
+            Core.Optional<IList<SecurityInsightsAlertSeverity>> severitiesFilter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new MicrosoftSecurityIncidentCreationAlertRuleTemplate(id, name, type, systemData.Value, kind, Optional.ToNullable(alertRulesCreatedByTemplateCount), Optional.ToNullable(createdDateUTC), Optional.ToNullable(lastUpdatedDateUTC), description.Value, displayName.Value, Optional.ToList(requiredDataConnectors), Optional.ToNullable(status), Optional.ToList(displayNamesFilter), Optional.ToList(displayNamesExcludeFilter), Optional.ToNullable(productFilter), Optional.ToList(severitiesFilter));
+            return new MicrosoftSecurityIncidentCreationAlertRuleTemplate(id, name, type, systemData.Value, kind, Core.Optional.ToNullable(alertRulesCreatedByTemplateCount), Core.Optional.ToNullable(createdDateUTC), Core.Optional.ToNullable(lastUpdatedDateUTC), description.Value, displayName.Value, Core.Optional.ToList(requiredDataConnectors), Core.Optional.ToNullable(status), Core.Optional.ToList(displayNamesFilter), Core.Optional.ToList(displayNamesExcludeFilter), Core.Optional.ToNullable(productFilter), Core.Optional.ToList(severitiesFilter));
         }
     }
 }

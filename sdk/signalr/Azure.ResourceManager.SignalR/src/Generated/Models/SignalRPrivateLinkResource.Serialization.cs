@@ -12,19 +12,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    public partial class SignalRPrivateLinkResource : IUtf8JsonSerializable
+    public partial class SignalRPrivateLinkResource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroupId))
+            if (Core.Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (Optional.IsCollectionDefined(RequiredMembers))
+            if (Core.Optional.IsCollectionDefined(RequiredMembers))
             {
                 writer.WritePropertyName("requiredMembers"u8);
                 writer.WriteStartArray();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RequiredZoneNames))
+            if (Core.Optional.IsCollectionDefined(RequiredZoneNames))
             {
                 writer.WritePropertyName("requiredZoneNames"u8);
                 writer.WriteStartArray();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ShareablePrivateLinkResourceTypes))
+            if (Core.Optional.IsCollectionDefined(ShareablePrivateLinkResourceTypes))
             {
                 writer.WritePropertyName("shareablePrivateLinkResourceTypes"u8);
                 writer.WriteStartArray();
@@ -67,11 +67,11 @@ namespace Azure.ResourceManager.SignalR.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> groupId = default;
-            Optional<IList<string>> requiredMembers = default;
-            Optional<IList<string>> requiredZoneNames = default;
-            Optional<IList<ShareablePrivateLinkResourceType>> shareablePrivateLinkResourceTypes = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> groupId = default;
+            Core.Optional<IList<string>> requiredMembers = default;
+            Core.Optional<IList<string>> requiredZoneNames = default;
+            Core.Optional<IList<ShareablePrivateLinkResourceType>> shareablePrivateLinkResourceTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     continue;
                 }
             }
-            return new SignalRPrivateLinkResource(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames), Optional.ToList(shareablePrivateLinkResourceTypes));
+            return new SignalRPrivateLinkResource(id, name, type, systemData.Value, groupId.Value, Core.Optional.ToList(requiredMembers), Core.Optional.ToList(requiredZoneNames), Core.Optional.ToList(shareablePrivateLinkResourceTypes));
         }
     }
 }

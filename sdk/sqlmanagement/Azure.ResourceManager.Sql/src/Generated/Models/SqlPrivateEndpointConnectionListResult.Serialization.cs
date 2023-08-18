@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SqlPrivateEndpointConnectionData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<SqlPrivateEndpointConnectionData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SqlPrivateEndpointConnectionListResult(Optional.ToList(value), nextLink.Value);
+            return new SqlPrivateEndpointConnectionListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

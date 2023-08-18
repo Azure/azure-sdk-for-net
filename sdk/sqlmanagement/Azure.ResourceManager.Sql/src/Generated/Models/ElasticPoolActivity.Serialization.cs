@@ -12,12 +12,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ElasticPoolActivity : IUtf8JsonSerializable
+    public partial class ElasticPoolActivity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -34,31 +34,31 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            Core.Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<int> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<int> errorSeverity = default;
-            Optional<string> operation = default;
-            Optional<Guid> operationId = default;
-            Optional<int> percentComplete = default;
-            Optional<int> requestedDatabaseDtuMax = default;
-            Optional<int> requestedDatabaseDtuMin = default;
-            Optional<int> requestedDtu = default;
-            Optional<string> requestedElasticPoolName = default;
-            Optional<long> requestedStorageLimitInGB = default;
-            Optional<string> elasticPoolName = default;
-            Optional<string> serverName = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> state = default;
-            Optional<int> requestedStorageLimitInMB = default;
-            Optional<int> requestedDatabaseDtuGuarantee = default;
-            Optional<int> requestedDatabaseDtuCap = default;
-            Optional<int> requestedDtuGuarantee = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<int> errorCode = default;
+            Core.Optional<string> errorMessage = default;
+            Core.Optional<int> errorSeverity = default;
+            Core.Optional<string> operation = default;
+            Core.Optional<Guid> operationId = default;
+            Core.Optional<int> percentComplete = default;
+            Core.Optional<int> requestedDatabaseDtuMax = default;
+            Core.Optional<int> requestedDatabaseDtuMin = default;
+            Core.Optional<int> requestedDtu = default;
+            Core.Optional<string> requestedElasticPoolName = default;
+            Core.Optional<long> requestedStorageLimitInGB = default;
+            Core.Optional<string> elasticPoolName = default;
+            Core.Optional<string> serverName = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<string> state = default;
+            Core.Optional<int> requestedStorageLimitInMB = default;
+            Core.Optional<int> requestedDatabaseDtuGuarantee = default;
+            Core.Optional<int> requestedDatabaseDtuCap = default;
+            Core.Optional<int> requestedDtuGuarantee = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ElasticPoolActivity(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(endTime), Optional.ToNullable(errorCode), errorMessage.Value, Optional.ToNullable(errorSeverity), operation.Value, Optional.ToNullable(operationId), Optional.ToNullable(percentComplete), Optional.ToNullable(requestedDatabaseDtuMax), Optional.ToNullable(requestedDatabaseDtuMin), Optional.ToNullable(requestedDtu), requestedElasticPoolName.Value, Optional.ToNullable(requestedStorageLimitInGB), elasticPoolName.Value, serverName.Value, Optional.ToNullable(startTime), state.Value, Optional.ToNullable(requestedStorageLimitInMB), Optional.ToNullable(requestedDatabaseDtuGuarantee), Optional.ToNullable(requestedDatabaseDtuCap), Optional.ToNullable(requestedDtuGuarantee));
+            return new ElasticPoolActivity(id, name, type, systemData.Value, Core.Optional.ToNullable(location), Core.Optional.ToNullable(endTime), Core.Optional.ToNullable(errorCode), errorMessage.Value, Core.Optional.ToNullable(errorSeverity), operation.Value, Core.Optional.ToNullable(operationId), Core.Optional.ToNullable(percentComplete), Core.Optional.ToNullable(requestedDatabaseDtuMax), Core.Optional.ToNullable(requestedDatabaseDtuMin), Core.Optional.ToNullable(requestedDtu), requestedElasticPoolName.Value, Core.Optional.ToNullable(requestedStorageLimitInGB), elasticPoolName.Value, serverName.Value, Core.Optional.ToNullable(startTime), state.Value, Core.Optional.ToNullable(requestedStorageLimitInMB), Core.Optional.ToNullable(requestedDatabaseDtuGuarantee), Core.Optional.ToNullable(requestedDatabaseDtuCap), Core.Optional.ToNullable(requestedDtuGuarantee));
         }
     }
 }

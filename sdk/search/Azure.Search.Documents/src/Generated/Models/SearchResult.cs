@@ -18,10 +18,10 @@ namespace Azure.Search.Documents.Models
         internal SearchResult(double score)
         {
             Score = score;
-            Highlights = new ChangeTrackingDictionary<string, IList<string>>();
-            Captions = new ChangeTrackingList<CaptionResult>();
-            DocumentDebugInfo = new ChangeTrackingList<DocumentDebugInfo>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            Highlights = new Core.ChangeTrackingDictionary<string, IList<string>>();
+            Captions = new Core.ChangeTrackingList<CaptionResult>();
+            DocumentDebugInfo = new Core.ChangeTrackingList<DocumentDebugInfo>();
+            AdditionalProperties = new Core.ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of SearchResult. </summary>

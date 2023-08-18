@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of WorkloadContainerExtendedInfo. </summary>
         public WorkloadContainerExtendedInfo()
         {
-            NodesList = new ChangeTrackingList<DistributedNodesInfo>();
+            NodesList = new Core.ChangeTrackingList<DistributedNodesInfo>();
         }
 
         /// <summary> Initializes a new instance of WorkloadContainerExtendedInfo. </summary>

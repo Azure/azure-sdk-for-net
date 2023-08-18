@@ -11,14 +11,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class ServerTrustCertificateData : IUtf8JsonSerializable
+    public partial class ServerTrustCertificateData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PublicBlob))
+            if (Core.Optional.IsDefined(PublicBlob))
             {
                 writer.WritePropertyName("publicBlob"u8);
                 writer.WriteStringValue(PublicBlob);
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> publicBlob = default;
-            Optional<string> thumbprint = default;
-            Optional<string> certificateName = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> publicBlob = default;
+            Core.Optional<string> thumbprint = default;
+            Core.Optional<string> certificateName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class SqlServerAzureADOnlyAuthenticationOperationSource : IOperationSource<SqlServerAzureADOnlyAuthenticationResource>
+    internal class SqlServerAzureADOnlyAuthenticationOperationSource : Core.IOperationSource<SqlServerAzureADOnlyAuthenticationResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        SqlServerAzureADOnlyAuthenticationResource IOperationSource<SqlServerAzureADOnlyAuthenticationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SqlServerAzureADOnlyAuthenticationResource Core.IOperationSource<SqlServerAzureADOnlyAuthenticationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SqlServerAzureADOnlyAuthenticationData.DeserializeSqlServerAzureADOnlyAuthenticationData(document.RootElement);
             return new SqlServerAzureADOnlyAuthenticationResource(_client, data);
         }
 
-        async ValueTask<SqlServerAzureADOnlyAuthenticationResource> IOperationSource<SqlServerAzureADOnlyAuthenticationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SqlServerAzureADOnlyAuthenticationResource> Core.IOperationSource<SqlServerAzureADOnlyAuthenticationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SqlServerAzureADOnlyAuthenticationData.DeserializeSqlServerAzureADOnlyAuthenticationData(document.RootElement);

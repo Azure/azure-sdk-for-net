@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> sendToOwners = default;
-            Optional<IReadOnlyList<string>> customEmailAddresses = default;
-            Optional<string> locale = default;
+            Core.Optional<string> sendToOwners = default;
+            Core.Optional<IReadOnlyList<string>> customEmailAddresses = default;
+            Core.Optional<string> locale = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sendToOwners"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryAlertProperties(sendToOwners.Value, Optional.ToList(customEmailAddresses), locale.Value);
+            return new SiteRecoveryAlertProperties(sendToOwners.Value, Core.Optional.ToList(customEmailAddresses), locale.Value);
         }
     }
 }

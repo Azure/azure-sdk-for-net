@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AdaptiveApplicationControlIssue> issue = default;
-            Optional<float> numberOfVms = default;
+            Core.Optional<AdaptiveApplicationControlIssue> issue = default;
+            Core.Optional<float> numberOfVms = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("issue"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new AdaptiveApplicationControlIssueSummary(Optional.ToNullable(issue), Optional.ToNullable(numberOfVms));
+            return new AdaptiveApplicationControlIssueSummary(Core.Optional.ToNullable(issue), Core.Optional.ToNullable(numberOfVms));
         }
     }
 }

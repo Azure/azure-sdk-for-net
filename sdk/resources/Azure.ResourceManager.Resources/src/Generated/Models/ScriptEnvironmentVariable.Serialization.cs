@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ScriptEnvironmentVariable : IUtf8JsonSerializable
+    public partial class ScriptEnvironmentVariable : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Value))
+            if (Core.Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(SecureValue))
+            if (Core.Optional.IsDefined(SecureValue))
             {
                 writer.WritePropertyName("secureValue"u8);
                 writer.WriteStringValue(SecureValue);
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             string name = default;
-            Optional<string> value = default;
-            Optional<string> secureValue = default;
+            Core.Optional<string> value = default;
+            Core.Optional<string> secureValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

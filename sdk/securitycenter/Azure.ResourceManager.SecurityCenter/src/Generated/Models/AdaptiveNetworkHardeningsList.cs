@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of AdaptiveNetworkHardeningsList. </summary>
         internal AdaptiveNetworkHardeningsList()
         {
-            Value = new ChangeTrackingList<AdaptiveNetworkHardeningData>();
+            Value = new Core.ChangeTrackingList<AdaptiveNetworkHardeningData>();
         }
 
         /// <summary> Initializes a new instance of AdaptiveNetworkHardeningsList. </summary>

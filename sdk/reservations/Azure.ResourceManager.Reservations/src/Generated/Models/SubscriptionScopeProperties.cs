@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of SubscriptionScopeProperties. </summary>
         internal SubscriptionScopeProperties()
         {
-            Scopes = new ChangeTrackingList<ScopeProperties>();
+            Scopes = new Core.ChangeTrackingList<ScopeProperties>();
         }
 
         /// <summary> Initializes a new instance of SubscriptionScopeProperties. </summary>

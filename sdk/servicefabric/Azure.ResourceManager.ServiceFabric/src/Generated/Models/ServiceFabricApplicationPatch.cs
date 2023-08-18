@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="location"> The location. </param>
         public ServiceFabricApplicationPatch(AzureLocation location) : base(location)
         {
-            Parameters = new ChangeTrackingDictionary<string, string>();
-            Metrics = new ChangeTrackingList<ApplicationMetricDescription>();
-            ManagedIdentities = new ChangeTrackingList<ApplicationUserAssignedIdentity>();
+            Parameters = new Core.ChangeTrackingDictionary<string, string>();
+            Metrics = new Core.ChangeTrackingList<ApplicationMetricDescription>();
+            ManagedIdentities = new Core.ChangeTrackingList<ApplicationUserAssignedIdentity>();
         }
 
         /// <summary> Initializes a new instance of ServiceFabricApplicationPatch. </summary>

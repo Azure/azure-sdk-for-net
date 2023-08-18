@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<SqlMetricName> name = default;
-            Optional<SqlMetricPrimaryAggregationType> primaryAggregationType = default;
-            Optional<string> resourceUri = default;
-            Optional<SqlMetricDefinitionUnitType> unit = default;
-            Optional<IReadOnlyList<SqlMetricAvailability>> metricAvailabilities = default;
+            Core.Optional<SqlMetricName> name = default;
+            Core.Optional<SqlMetricPrimaryAggregationType> primaryAggregationType = default;
+            Core.Optional<string> resourceUri = default;
+            Core.Optional<SqlMetricDefinitionUnitType> unit = default;
+            Core.Optional<IReadOnlyList<SqlMetricAvailability>> metricAvailabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new SqlMetricDefinition(name.Value, Optional.ToNullable(primaryAggregationType), resourceUri.Value, Optional.ToNullable(unit), Optional.ToList(metricAvailabilities));
+            return new SqlMetricDefinition(name.Value, Core.Optional.ToNullable(primaryAggregationType), resourceUri.Value, Core.Optional.ToNullable(unit), Core.Optional.ToList(metricAvailabilities));
         }
     }
 }

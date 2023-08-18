@@ -10,21 +10,21 @@ using Azure.Core;
 
 namespace Azure.Quantum.Jobs.Models
 {
-    public partial class JsonPatchDocument : IUtf8JsonSerializable
+    public partial class JsonPatchDocument : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("op"u8);
             writer.WriteStringValue(Op.ToString());
             writer.WritePropertyName("path"u8);
             writer.WriteStringValue(Path);
-            if (Optional.IsDefined(Value))
+            if (Core.Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteObjectValue(Value);
             }
-            if (Optional.IsDefined(From))
+            if (Core.Optional.IsDefined(From))
             {
                 writer.WritePropertyName("from"u8);
                 writer.WriteStringValue(From);

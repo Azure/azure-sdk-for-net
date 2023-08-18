@@ -20,15 +20,15 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            Optional<long> odataCount = default;
-            Optional<double> searchCoverage = default;
-            Optional<IReadOnlyDictionary<string, IList<FacetResult>>> searchFacets = default;
-            Optional<IReadOnlyList<AnswerResult>> searchAnswers = default;
-            Optional<SearchOptions> searchNextPageParameters = default;
-            Optional<SemanticPartialResponseReason> searchSemanticPartialResponseReason = default;
-            Optional<SemanticPartialResponseType> searchSemanticPartialResponseType = default;
+            Core.Optional<long> odataCount = default;
+            Core.Optional<double> searchCoverage = default;
+            Core.Optional<IReadOnlyDictionary<string, IList<FacetResult>>> searchFacets = default;
+            Core.Optional<IReadOnlyList<AnswerResult>> searchAnswers = default;
+            Core.Optional<SearchOptions> searchNextPageParameters = default;
+            Core.Optional<SemanticPartialResponseReason> searchSemanticPartialResponseReason = default;
+            Core.Optional<SemanticPartialResponseType> searchSemanticPartialResponseType = default;
             IReadOnlyList<SearchResult> value = default;
-            Optional<string> odataNextLink = default;
+            Core.Optional<string> odataNextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.count"u8))
@@ -133,7 +133,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new SearchDocumentsResult(Optional.ToNullable(odataCount), Optional.ToNullable(searchCoverage), Optional.ToDictionary(searchFacets), Optional.ToList(searchAnswers), searchNextPageParameters.Value, Optional.ToNullable(searchSemanticPartialResponseReason), Optional.ToNullable(searchSemanticPartialResponseType), value, odataNextLink.Value);
+            return new SearchDocumentsResult(Core.Optional.ToNullable(odataCount), Core.Optional.ToNullable(searchCoverage), Core.Optional.ToDictionary(searchFacets), Core.Optional.ToList(searchAnswers), searchNextPageParameters.Value, Core.Optional.ToNullable(searchSemanticPartialResponseReason), Core.Optional.ToNullable(searchSemanticPartialResponseType), value, odataNextLink.Value);
         }
     }
 }

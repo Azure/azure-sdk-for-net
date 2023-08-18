@@ -13,9 +13,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsDnsEntity : IUtf8JsonSerializable
+    public partial class SecurityInsightsDnsEntity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<string> dnsServerIPEntityId = default;
-            Optional<string> domainName = default;
-            Optional<string> hostIPAddressEntityId = default;
-            Optional<IReadOnlyList<string>> ipAddressEntityIds = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            Core.Optional<string> friendlyName = default;
+            Core.Optional<string> dnsServerIPEntityId = default;
+            Core.Optional<string> domainName = default;
+            Core.Optional<string> hostIPAddressEntityId = default;
+            Core.Optional<IReadOnlyList<string>> ipAddressEntityIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsDnsEntity(id, name, type, systemData.Value, kind, Optional.ToDictionary(additionalData), friendlyName.Value, dnsServerIPEntityId.Value, domainName.Value, hostIPAddressEntityId.Value, Optional.ToList(ipAddressEntityIds));
+            return new SecurityInsightsDnsEntity(id, name, type, systemData.Value, kind, Core.Optional.ToDictionary(additionalData), friendlyName.Value, dnsServerIPEntityId.Value, domainName.Value, hostIPAddressEntityId.Value, Core.Optional.ToList(ipAddressEntityIds));
         }
     }
 }

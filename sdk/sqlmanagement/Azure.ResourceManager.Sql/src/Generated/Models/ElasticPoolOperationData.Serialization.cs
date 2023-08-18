@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ElasticPoolOperationData : IUtf8JsonSerializable
+    public partial class ElasticPoolOperationData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -32,21 +32,21 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> elasticPoolName = default;
-            Optional<string> operation = default;
-            Optional<string> operationFriendlyName = default;
-            Optional<int> percentComplete = default;
-            Optional<string> serverName = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> state = default;
-            Optional<int> errorCode = default;
-            Optional<string> errorDescription = default;
-            Optional<int> errorSeverity = default;
-            Optional<bool> isUserError = default;
-            Optional<DateTimeOffset> estimatedCompletionTime = default;
-            Optional<string> description = default;
-            Optional<bool> isCancellable = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> elasticPoolName = default;
+            Core.Optional<string> operation = default;
+            Core.Optional<string> operationFriendlyName = default;
+            Core.Optional<int> percentComplete = default;
+            Core.Optional<string> serverName = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<string> state = default;
+            Core.Optional<int> errorCode = default;
+            Core.Optional<string> errorDescription = default;
+            Core.Optional<int> errorSeverity = default;
+            Core.Optional<bool> isUserError = default;
+            Core.Optional<DateTimeOffset> estimatedCompletionTime = default;
+            Core.Optional<string> description = default;
+            Core.Optional<bool> isCancellable = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ElasticPoolOperationData(id, name, type, systemData.Value, elasticPoolName.Value, operation.Value, operationFriendlyName.Value, Optional.ToNullable(percentComplete), serverName.Value, Optional.ToNullable(startTime), state.Value, Optional.ToNullable(errorCode), errorDescription.Value, Optional.ToNullable(errorSeverity), Optional.ToNullable(isUserError), Optional.ToNullable(estimatedCompletionTime), description.Value, Optional.ToNullable(isCancellable));
+            return new ElasticPoolOperationData(id, name, type, systemData.Value, elasticPoolName.Value, operation.Value, operationFriendlyName.Value, Core.Optional.ToNullable(percentComplete), serverName.Value, Core.Optional.ToNullable(startTime), state.Value, Core.Optional.ToNullable(errorCode), errorDescription.Value, Core.Optional.ToNullable(errorSeverity), Core.Optional.ToNullable(isUserError), Core.Optional.ToNullable(estimatedCompletionTime), description.Value, Core.Optional.ToNullable(isCancellable));
         }
     }
 }

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> accountId = default;
-            Optional<string> accountName = default;
+            Core.Optional<string> accountId = default;
+            Core.Optional<string> accountName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountId"u8))

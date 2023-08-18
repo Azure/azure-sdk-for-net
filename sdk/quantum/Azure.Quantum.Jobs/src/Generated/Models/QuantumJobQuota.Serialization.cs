@@ -18,13 +18,13 @@ namespace Azure.Quantum.Jobs.Models
             {
                 return null;
             }
-            Optional<string> dimension = default;
-            Optional<DimensionScope> scope = default;
-            Optional<string> providerId = default;
-            Optional<float> utilization = default;
-            Optional<float> holds = default;
-            Optional<float> limit = default;
-            Optional<MeterPeriod> period = default;
+            Core.Optional<string> dimension = default;
+            Core.Optional<DimensionScope> scope = default;
+            Core.Optional<string> providerId = default;
+            Core.Optional<float> utilization = default;
+            Core.Optional<float> holds = default;
+            Core.Optional<float> limit = default;
+            Core.Optional<MeterPeriod> period = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dimension"u8))
@@ -83,7 +83,7 @@ namespace Azure.Quantum.Jobs.Models
                     continue;
                 }
             }
-            return new QuantumJobQuota(dimension.Value, Optional.ToNullable(scope), providerId.Value, Optional.ToNullable(utilization), Optional.ToNullable(holds), Optional.ToNullable(limit), Optional.ToNullable(period));
+            return new QuantumJobQuota(dimension.Value, Core.Optional.ToNullable(scope), providerId.Value, Core.Optional.ToNullable(utilization), Core.Optional.ToNullable(holds), Core.Optional.ToNullable(limit), Core.Optional.ToNullable(period));
         }
     }
 }

@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of DpmBackupJob. </summary>
         public DpmBackupJob()
         {
-            ActionsInfo = new ChangeTrackingList<JobSupportedAction>();
-            ErrorDetails = new ChangeTrackingList<DpmErrorInfo>();
+            ActionsInfo = new Core.ChangeTrackingList<JobSupportedAction>();
+            ErrorDetails = new Core.ChangeTrackingList<DpmErrorInfo>();
             JobType = "DpmJob";
         }
 

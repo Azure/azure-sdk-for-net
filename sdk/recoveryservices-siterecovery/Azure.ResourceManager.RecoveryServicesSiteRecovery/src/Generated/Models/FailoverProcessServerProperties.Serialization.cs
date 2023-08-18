@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class FailoverProcessServerProperties : IUtf8JsonSerializable
+    public partial class FailoverProcessServerProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContainerName))
+            if (Core.Optional.IsDefined(ContainerName))
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (Optional.IsDefined(SourceProcessServerId))
+            if (Core.Optional.IsDefined(SourceProcessServerId))
             {
                 writer.WritePropertyName("sourceProcessServerId"u8);
                 writer.WriteStringValue(SourceProcessServerId.Value);
             }
-            if (Optional.IsDefined(TargetProcessServerId))
+            if (Core.Optional.IsDefined(TargetProcessServerId))
             {
                 writer.WritePropertyName("targetProcessServerId"u8);
                 writer.WriteStringValue(TargetProcessServerId.Value);
             }
-            if (Optional.IsCollectionDefined(VmsToMigrate))
+            if (Core.Optional.IsCollectionDefined(VmsToMigrate))
             {
                 writer.WritePropertyName("vmsToMigrate"u8);
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(UpdateType))
+            if (Core.Optional.IsDefined(UpdateType))
             {
                 writer.WritePropertyName("updateType"u8);
                 writer.WriteStringValue(UpdateType);
