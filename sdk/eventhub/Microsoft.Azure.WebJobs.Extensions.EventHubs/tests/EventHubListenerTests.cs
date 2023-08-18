@@ -112,10 +112,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 Times.Exactly(expected));
         }
 
-        [TestCase(1, 29)]
-        [TestCase(5, 5)]
-        [TestCase(10, 2)]
-        [TestCase(30, 0)]
+        [TestCase(1, 30)]
+        [TestCase(5, 6)]
+        [TestCase(10, 3)]
+        [TestCase(30, 1)]
         [TestCase(35, 0)]
         public async Task ProcessEvents_MultipleDispatch_MinBatch_CheckpointsCorrectly_NoCheckpoint(int batchCheckpointFrequency, int expected)
         {
@@ -221,10 +221,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 Times.AtLeastOnce);
         }
 
-        [TestCase(1, 29)]
-        [TestCase(5, 5)]
-        [TestCase(10, 2)]
-        [TestCase(30, 0)]
+        [TestCase(1, 30)]
+        [TestCase(5, 6)]
+        [TestCase(10, 3)]
+        [TestCase(30, 1)]
         [TestCase(35, 0)]
         public async Task ProcessEvents_MultipleDispatch_MinBatch_CheckpointsCorrectly_OldCheckpoint(int batchCheckpointFrequency, int expected)
         {
