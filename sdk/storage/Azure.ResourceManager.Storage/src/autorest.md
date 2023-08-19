@@ -34,7 +34,7 @@ format-by-name-rules:
   '*Guid': 'uuid'
   'ifMatch': 'etag'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

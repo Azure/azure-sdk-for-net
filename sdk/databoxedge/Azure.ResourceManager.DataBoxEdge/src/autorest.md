@@ -186,7 +186,7 @@ format-by-name-rules:
   'servicePrincipalObjectId': 'uuid'
   'servicePrincipalClientId': 'uuid'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

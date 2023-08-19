@@ -108,7 +108,7 @@ format-by-name-rules:
   'certificate': 'any'
   'UserAssignedIdentity': 'arm-id'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

@@ -66,7 +66,7 @@ format-by-name-rules:
 keep-plural-enums:
   - ScriptCleanupOptions
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
