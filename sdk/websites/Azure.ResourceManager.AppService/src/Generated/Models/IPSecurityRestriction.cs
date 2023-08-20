@@ -11,15 +11,15 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> IP security restriction on an app. </summary>
-    public partial class AppServiceIPSecurityRestriction
+    public partial class IPSecurityRestriction
     {
-        /// <summary> Initializes a new instance of AppServiceIPSecurityRestriction. </summary>
-        public AppServiceIPSecurityRestriction()
+        /// <summary> Initializes a new instance of IPSecurityRestriction. </summary>
+        public IPSecurityRestriction()
         {
             Headers = new ChangeTrackingDictionary<string, IList<string>>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceIPSecurityRestriction. </summary>
+        /// <summary> Initializes a new instance of IPSecurityRestriction. </summary>
         /// <param name="ipAddressOrCidr">
         /// IP address the security restriction is valid for.
         /// It can be in form of pure ipv4 address (required SubnetMask property) or
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// X-Azure-FDID and X-FD-HealthProbe.
         /// The matching logic is exact match.
         /// </param>
-        internal AppServiceIPSecurityRestriction(string ipAddressOrCidr, string subnetMask, ResourceIdentifier vnetSubnetResourceId, int? vnetTrafficTag, int? subnetTrafficTag, string action, AppServiceIPFilterTag? tag, int? priority, string name, string description, IDictionary<string, IList<string>> headers)
+        internal IPSecurityRestriction(string ipAddressOrCidr, string subnetMask, ResourceIdentifier vnetSubnetResourceId, int? vnetTrafficTag, int? subnetTrafficTag, string action, IPFilterTag? tag, int? priority, string name, string description, IDictionary<string, IList<string>> headers)
         {
             IPAddressOrCidr = ipAddressOrCidr;
             SubnetMask = subnetMask;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Allow or Deny access for this IP range. </summary>
         public string Action { get; set; }
         /// <summary> Defines what this IP filter will be used for. This is to support IP filtering on proxies. </summary>
-        public AppServiceIPFilterTag? Tag { get; set; }
+        public IPFilterTag? Tag { get; set; }
         /// <summary> Priority of IP restriction rule. </summary>
         public int? Priority { get; set; }
         /// <summary> IP restriction rule name. </summary>

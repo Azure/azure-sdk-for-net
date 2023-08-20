@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             Nodes = new ChangeTrackingList<SynapseManagedIntegrationRuntimeNode>();
             OtherErrors = new ChangeTrackingList<SynapseManagedIntegrationRuntimeError>();
-            RuntimeType = IntegrationRuntimeType.Managed;
+            IntegrationRuntimeType = IntegrationRuntimeType.Managed;
         }
 
         /// <summary> Initializes a new instance of SynapseManagedIntegrationRuntimeStatus. </summary>
-        /// <param name="runtimeType"> Type of integration runtime. </param>
+        /// <param name="integrationRuntimeType"> Type of integration runtime. </param>
         /// <param name="dataFactoryName"> The workspace name which the integration runtime belong to. </param>
         /// <param name="state"> The state of integration runtime. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="nodes"> The list of nodes for managed integration runtime. </param>
         /// <param name="otherErrors"> The errors that occurred on this integration runtime. </param>
         /// <param name="lastOperation"> The last operation result that occurred on this integration runtime. </param>
-        internal SynapseManagedIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, SynapseIntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties, DateTimeOffset? createOn, IReadOnlyList<SynapseManagedIntegrationRuntimeNode> nodes, IReadOnlyList<SynapseManagedIntegrationRuntimeError> otherErrors, SynapseManagedIntegrationRuntimeOperationResult lastOperation) : base(runtimeType, dataFactoryName, state, additionalProperties)
+        internal SynapseManagedIntegrationRuntimeStatus(IntegrationRuntimeType integrationRuntimeType, string dataFactoryName, SynapseIntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties, DateTimeOffset? createOn, IReadOnlyList<SynapseManagedIntegrationRuntimeNode> nodes, IReadOnlyList<SynapseManagedIntegrationRuntimeError> otherErrors, SynapseManagedIntegrationRuntimeOperationResult lastOperation) : base(integrationRuntimeType, dataFactoryName, state, additionalProperties)
         {
             CreateOn = createOn;
             Nodes = nodes;
             OtherErrors = otherErrors;
             LastOperation = lastOperation;
-            RuntimeType = runtimeType;
+            IntegrationRuntimeType = integrationRuntimeType;
         }
 
         /// <summary> The time at which the integration runtime was created, in ISO8601 format. </summary>
