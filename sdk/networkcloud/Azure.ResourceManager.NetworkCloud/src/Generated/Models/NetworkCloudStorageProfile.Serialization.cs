@@ -42,13 +42,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            NetworkCloudOSDisk osDisk = default;
+            OSDisk osDisk = default;
             Optional<IList<ResourceIdentifier>> volumeAttachments = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osDisk"u8))
                 {
-                    osDisk = NetworkCloudOSDisk.DeserializeNetworkCloudOSDisk(property.Value);
+                    osDisk = OSDisk.DeserializeOSDisk(property.Value);
                     continue;
                 }
                 if (property.NameEquals("volumeAttachments"u8))

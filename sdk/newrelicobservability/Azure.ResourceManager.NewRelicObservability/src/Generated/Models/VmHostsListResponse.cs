@@ -13,29 +13,29 @@ using Azure.Core;
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> Response of a list VM Host Operation. </summary>
-    internal partial class NewRelicObservabilityVmHostsListResponse
+    internal partial class VmHostsListResponse
     {
-        /// <summary> Initializes a new instance of NewRelicObservabilityVmHostsListResponse. </summary>
+        /// <summary> Initializes a new instance of VmHostsListResponse. </summary>
         /// <param name="value"> The VMInfo items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal NewRelicObservabilityVmHostsListResponse(IEnumerable<NewRelicObservabilityVmInfo> value)
+        internal VmHostsListResponse(IEnumerable<VmInfo> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of NewRelicObservabilityVmHostsListResponse. </summary>
+        /// <summary> Initializes a new instance of VmHostsListResponse. </summary>
         /// <param name="value"> The VMInfo items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal NewRelicObservabilityVmHostsListResponse(IReadOnlyList<NewRelicObservabilityVmInfo> value, Uri nextLink)
+        internal VmHostsListResponse(IReadOnlyList<VmInfo> value, Uri nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The VMInfo items on this page. </summary>
-        public IReadOnlyList<NewRelicObservabilityVmInfo> Value { get; }
+        public IReadOnlyList<VmInfo> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

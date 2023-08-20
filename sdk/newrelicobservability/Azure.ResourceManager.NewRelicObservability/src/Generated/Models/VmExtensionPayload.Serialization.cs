@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class NewRelicObservabilityVmExtensionPayload
+    public partial class VmExtensionPayload
     {
-        internal static NewRelicObservabilityVmExtensionPayload DeserializeNewRelicObservabilityVmExtensionPayload(JsonElement element)
+        internal static VmExtensionPayload DeserializeVmExtensionPayload(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     continue;
                 }
             }
-            return new NewRelicObservabilityVmExtensionPayload(ingestionKey.Value);
+            return new VmExtensionPayload(ingestionKey.Value);
         }
     }
 }
