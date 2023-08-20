@@ -14,19 +14,19 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class DataFactoryGlobalParameterProperties
     {
         /// <summary> Initializes a new instance of DataFactoryGlobalParameterProperties. </summary>
-        /// <param name="globalParameterType"> Global Parameter type. </param>
+        /// <param name="parameterType"> Global Parameter type. </param>
         /// <param name="value"> Value of parameter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataFactoryGlobalParameterProperties(DataFactoryGlobalParameterType globalParameterType, BinaryData value)
+        public DataFactoryGlobalParameterProperties(DataFactoryGlobalParameterType parameterType, BinaryData value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
-            GlobalParameterType = globalParameterType;
+            ParameterType = parameterType;
             Value = value;
         }
 
         /// <summary> Global Parameter type. </summary>
-        public DataFactoryGlobalParameterType GlobalParameterType { get; set; }
+        public DataFactoryGlobalParameterType ParameterType { get; set; }
         /// <summary>
         /// Value of parameter.
         /// <para>
