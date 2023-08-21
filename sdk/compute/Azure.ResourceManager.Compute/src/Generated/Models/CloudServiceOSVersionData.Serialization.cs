@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            Core.Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> family = default;
-            Optional<string> familyLabel = default;
-            Optional<string> version = default;
-            Optional<string> label = default;
-            Optional<bool> isDefault = default;
-            Optional<bool> isActive = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> family = default;
+            Core.Optional<string> familyLabel = default;
+            Core.Optional<string> version = default;
+            Core.Optional<string> label = default;
+            Core.Optional<bool> isDefault = default;
+            Core.Optional<bool> isActive = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new CloudServiceOSVersionData(id, name, type, systemData.Value, Optional.ToNullable(location), family.Value, familyLabel.Value, version.Value, label.Value, Optional.ToNullable(isDefault), Optional.ToNullable(isActive));
+            return new CloudServiceOSVersionData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), family.Value, familyLabel.Value, version.Value, label.Value, Core.Optional.ToNullable(isDefault), Core.Optional.ToNullable(isActive));
         }
     }
 }

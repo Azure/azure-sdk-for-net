@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppJobScale : IUtf8JsonSerializable
+    public partial class ContainerAppJobScale : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PollingIntervalInSeconds))
+            if (Core.Optional.IsDefined(PollingIntervalInSeconds))
             {
                 writer.WritePropertyName("pollingInterval"u8);
                 writer.WriteNumberValue(PollingIntervalInSeconds.Value);
             }
-            if (Optional.IsDefined(MinExecutions))
+            if (Core.Optional.IsDefined(MinExecutions))
             {
                 writer.WritePropertyName("minExecutions"u8);
                 writer.WriteNumberValue(MinExecutions.Value);
             }
-            if (Optional.IsDefined(MaxExecutions))
+            if (Core.Optional.IsDefined(MaxExecutions))
             {
                 writer.WritePropertyName("maxExecutions"u8);
                 writer.WriteNumberValue(MaxExecutions.Value);
             }
-            if (Optional.IsCollectionDefined(Rules))
+            if (Core.Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<int> pollingInterval = default;
-            Optional<int> minExecutions = default;
-            Optional<int> maxExecutions = default;
-            Optional<IList<ContainerAppJobScaleRule>> rules = default;
+            Core.Optional<int> pollingInterval = default;
+            Core.Optional<int> minExecutions = default;
+            Core.Optional<int> maxExecutions = default;
+            Core.Optional<IList<ContainerAppJobScaleRule>> rules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pollingInterval"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppJobScale(Optional.ToNullable(pollingInterval), Optional.ToNullable(minExecutions), Optional.ToNullable(maxExecutions), Optional.ToList(rules));
+            return new ContainerAppJobScale(Core.Optional.ToNullable(pollingInterval), Core.Optional.ToNullable(minExecutions), Core.Optional.ToNullable(maxExecutions), Core.Optional.ToList(rules));
         }
     }
 }

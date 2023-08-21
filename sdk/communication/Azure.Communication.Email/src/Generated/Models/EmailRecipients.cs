@@ -23,8 +23,8 @@ namespace Azure.Communication.Email
             Argument.AssertNotNull(to, nameof(to));
 
             To = to.ToList();
-            CC = new ChangeTrackingList<EmailAddress>();
-            BCC = new ChangeTrackingList<EmailAddress>();
+            CC = new Core.ChangeTrackingList<EmailAddress>();
+            BCC = new Core.ChangeTrackingList<EmailAddress>();
         }
 
         /// <summary> Email To recipients. </summary>

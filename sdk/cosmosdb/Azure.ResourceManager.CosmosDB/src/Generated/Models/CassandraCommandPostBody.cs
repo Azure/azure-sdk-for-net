@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Argument.AssertNotNull(host, nameof(host));
 
             Command = command;
-            Arguments = new ChangeTrackingDictionary<string, string>();
+            Arguments = new Core.ChangeTrackingDictionary<string, string>();
             Host = host;
         }
 

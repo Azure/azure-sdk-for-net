@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class QueueSelectorAttachment : IUtf8JsonSerializable
+    public partial class QueueSelectorAttachment : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);

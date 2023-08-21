@@ -11,9 +11,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeIotAddon : IUtf8JsonSerializable
+    public partial class EdgeIotAddon : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -38,13 +38,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             EdgeIotDeviceInfo iotDeviceDetails = default;
             EdgeIotDeviceInfo iotEdgeDeviceDetails = default;
-            Optional<string> version = default;
-            Optional<DataBoxEdgeOSPlatformType> hostPlatform = default;
-            Optional<HostPlatformType> hostPlatformType = default;
-            Optional<DataBoxEdgeRoleAddonProvisioningState> provisioningState = default;
+            Core.Optional<string> version = default;
+            Core.Optional<DataBoxEdgeOSPlatformType> hostPlatform = default;
+            Core.Optional<HostPlatformType> hostPlatformType = default;
+            Core.Optional<DataBoxEdgeRoleAddonProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new EdgeIotAddon(id, name, type, systemData.Value, kind, iotDeviceDetails, iotEdgeDeviceDetails, version.Value, Optional.ToNullable(hostPlatform), Optional.ToNullable(hostPlatformType), Optional.ToNullable(provisioningState));
+            return new EdgeIotAddon(id, name, type, systemData.Value, kind, iotDeviceDetails, iotEdgeDeviceDetails, version.Value, Core.Optional.ToNullable(hostPlatform), Core.Optional.ToNullable(hostPlatformType), Core.Optional.ToNullable(provisioningState));
         }
     }
 }

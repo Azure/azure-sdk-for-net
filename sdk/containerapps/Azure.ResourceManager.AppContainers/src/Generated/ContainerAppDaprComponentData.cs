@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Initializes a new instance of ContainerAppDaprComponentData. </summary>
         public ContainerAppDaprComponentData()
         {
-            Secrets = new ChangeTrackingList<ContainerAppWritableSecret>();
-            Metadata = new ChangeTrackingList<ContainerAppDaprMetadata>();
-            Scopes = new ChangeTrackingList<string>();
+            Secrets = new Core.ChangeTrackingList<ContainerAppWritableSecret>();
+            Metadata = new Core.ChangeTrackingList<ContainerAppDaprMetadata>();
+            Scopes = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppDaprComponentData. </summary>

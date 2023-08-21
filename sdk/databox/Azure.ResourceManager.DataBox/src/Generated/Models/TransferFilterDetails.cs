@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBox.Models
         public TransferFilterDetails(DataAccountType dataAccountType)
         {
             DataAccountType = dataAccountType;
-            FilterFileDetails = new ChangeTrackingList<FilterFileDetails>();
+            FilterFileDetails = new Core.ChangeTrackingList<FilterFileDetails>();
         }
 
         /// <summary> Initializes a new instance of TransferFilterDetails. </summary>

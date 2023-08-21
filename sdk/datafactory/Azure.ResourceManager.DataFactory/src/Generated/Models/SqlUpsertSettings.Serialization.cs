@@ -12,22 +12,22 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SqlUpsertSettings : IUtf8JsonSerializable
+    public partial class SqlUpsertSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(UseTempDB))
+            if (Core.Optional.IsDefined(UseTempDB))
             {
                 writer.WritePropertyName("useTempDB"u8);
                 JsonSerializer.Serialize(writer, UseTempDB);
             }
-            if (Optional.IsDefined(InterimSchemaName))
+            if (Core.Optional.IsDefined(InterimSchemaName))
             {
                 writer.WritePropertyName("interimSchemaName"u8);
                 JsonSerializer.Serialize(writer, InterimSchemaName);
             }
-            if (Optional.IsDefined(Keys))
+            if (Core.Optional.IsDefined(Keys))
             {
                 writer.WritePropertyName("keys"u8);
                 JsonSerializer.Serialize(writer, Keys);
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<bool>> useTempDB = default;
-            Optional<DataFactoryElement<string>> interimSchemaName = default;
-            Optional<DataFactoryElement<IList<string>>> keys = default;
+            Core.Optional<DataFactoryElement<bool>> useTempDB = default;
+            Core.Optional<DataFactoryElement<string>> interimSchemaName = default;
+            Core.Optional<DataFactoryElement<IList<string>>> keys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("useTempDB"u8))

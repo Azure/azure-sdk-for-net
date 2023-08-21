@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(dataset, nameof(dataset));
 
             Dataset = dataset;
-            FieldList = new ChangeTrackingList<BinaryData>();
+            FieldList = new Core.ChangeTrackingList<BinaryData>();
             ActivityType = "GetMetadata";
         }
 

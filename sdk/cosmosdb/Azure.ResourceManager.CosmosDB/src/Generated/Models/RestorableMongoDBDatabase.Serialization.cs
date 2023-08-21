@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ExtendedRestorableMongoDBDatabaseResourceInfo> resource = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ExtendedRestorableMongoDBDatabaseResourceInfo> resource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

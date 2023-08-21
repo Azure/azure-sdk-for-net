@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of ContainerRegistryTokenCredentials. </summary>
         public ContainerRegistryTokenCredentials()
         {
-            Certificates = new ChangeTrackingList<ContainerRegistryTokenCertificate>();
-            Passwords = new ChangeTrackingList<ContainerRegistryTokenPassword>();
+            Certificates = new Core.ChangeTrackingList<ContainerRegistryTokenCertificate>();
+            Passwords = new Core.ChangeTrackingList<ContainerRegistryTokenPassword>();
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryTokenCredentials. </summary>

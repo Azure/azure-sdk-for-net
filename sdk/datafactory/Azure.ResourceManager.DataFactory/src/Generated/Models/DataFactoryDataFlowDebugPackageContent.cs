@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of DataFactoryDataFlowDebugPackageContent. </summary>
         public DataFactoryDataFlowDebugPackageContent()
         {
-            DataFlows = new ChangeTrackingList<DataFactoryDataFlowDebugInfo>();
-            Datasets = new ChangeTrackingList<DataFactoryDatasetDebugInfo>();
-            LinkedServices = new ChangeTrackingList<DataFactoryLinkedServiceDebugInfo>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            DataFlows = new Core.ChangeTrackingList<DataFactoryDataFlowDebugInfo>();
+            Datasets = new Core.ChangeTrackingList<DataFactoryDatasetDebugInfo>();
+            LinkedServices = new Core.ChangeTrackingList<DataFactoryLinkedServiceDebugInfo>();
+            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> The ID of data flow debug session. </summary>

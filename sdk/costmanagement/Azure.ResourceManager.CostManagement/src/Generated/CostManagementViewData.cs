@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.CostManagement
         /// <summary> Initializes a new instance of CostManagementViewData. </summary>
         public CostManagementViewData()
         {
-            Kpis = new ChangeTrackingList<ViewKpiProperties>();
-            Pivots = new ChangeTrackingList<ViewPivotProperties>();
+            Kpis = new Core.ChangeTrackingList<ViewKpiProperties>();
+            Pivots = new Core.ChangeTrackingList<ViewPivotProperties>();
         }
 
         /// <summary> Initializes a new instance of CostManagementViewData. </summary>

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Argument.AssertNotNull(fqdn, nameof(fqdn));
 
             Fqdn = fqdn;
-            Statuses = new ChangeTrackingList<ResourceStatus>();
+            Statuses = new Core.ChangeTrackingList<ResourceStatus>();
         }
 
         /// <summary> Initializes a new instance of VCenterData. </summary>

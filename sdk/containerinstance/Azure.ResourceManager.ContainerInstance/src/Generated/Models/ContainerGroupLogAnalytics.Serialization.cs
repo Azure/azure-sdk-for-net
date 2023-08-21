@@ -11,21 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerGroupLogAnalytics : IUtf8JsonSerializable
+    public partial class ContainerGroupLogAnalytics : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("workspaceId"u8);
             writer.WriteStringValue(WorkspaceId);
             writer.WritePropertyName("workspaceKey"u8);
             writer.WriteStringValue(WorkspaceKey);
-            if (Optional.IsDefined(LogType))
+            if (Core.Optional.IsDefined(LogType))
             {
                 writer.WritePropertyName("logType"u8);
                 writer.WriteStringValue(LogType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (Core.Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(WorkspaceResourceId))
+            if (Core.Optional.IsDefined(WorkspaceResourceId))
             {
                 writer.WritePropertyName("workspaceResourceId"u8);
                 writer.WriteStringValue(WorkspaceResourceId);
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             string workspaceId = default;
             string workspaceKey = default;
-            Optional<ContainerGroupLogAnalyticsLogType> logType = default;
-            Optional<IDictionary<string, string>> metadata = default;
-            Optional<ResourceIdentifier> workspaceResourceId = default;
+            Core.Optional<ContainerGroupLogAnalyticsLogType> logType = default;
+            Core.Optional<IDictionary<string, string>> metadata = default;
+            Core.Optional<ResourceIdentifier> workspaceResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workspaceId"u8))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new ContainerGroupLogAnalytics(workspaceId, workspaceKey, Optional.ToNullable(logType), Optional.ToDictionary(metadata), workspaceResourceId.Value);
+            return new ContainerGroupLogAnalytics(workspaceId, workspaceKey, Core.Optional.ToNullable(logType), Core.Optional.ToDictionary(metadata), workspaceResourceId.Value);
         }
     }
 }

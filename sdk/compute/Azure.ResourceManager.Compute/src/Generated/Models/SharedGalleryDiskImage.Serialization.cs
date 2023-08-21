@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<int> diskSizeGB = default;
-            Optional<SharedGalleryHostCaching> hostCaching = default;
+            Core.Optional<int> diskSizeGB = default;
+            Core.Optional<SharedGalleryHostCaching> hostCaching = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskSizeGB"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new SharedGalleryDiskImage(Optional.ToNullable(diskSizeGB), Optional.ToNullable(hostCaching));
+            return new SharedGalleryDiskImage(Core.Optional.ToNullable(diskSizeGB), Core.Optional.ToNullable(hostCaching));
         }
     }
 }

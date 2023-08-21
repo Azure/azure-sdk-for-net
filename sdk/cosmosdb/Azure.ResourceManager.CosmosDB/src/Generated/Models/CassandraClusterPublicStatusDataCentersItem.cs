@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CassandraClusterPublicStatusDataCentersItem. </summary>
         internal CassandraClusterPublicStatusDataCentersItem()
         {
-            SeedNodes = new ChangeTrackingList<string>();
-            Nodes = new ChangeTrackingList<CassandraClusterDataCenterNodeItem>();
+            SeedNodes = new Core.ChangeTrackingList<string>();
+            Nodes = new Core.ChangeTrackingList<CassandraClusterDataCenterNodeItem>();
         }
 
         /// <summary> Initializes a new instance of CassandraClusterPublicStatusDataCentersItem. </summary>

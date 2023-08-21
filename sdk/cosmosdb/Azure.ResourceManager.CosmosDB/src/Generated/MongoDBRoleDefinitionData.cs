@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Initializes a new instance of MongoDBRoleDefinitionData. </summary>
         public MongoDBRoleDefinitionData()
         {
-            Privileges = new ChangeTrackingList<MongoDBPrivilege>();
-            Roles = new ChangeTrackingList<MongoDBRole>();
+            Privileges = new Core.ChangeTrackingList<MongoDBPrivilege>();
+            Roles = new Core.ChangeTrackingList<MongoDBRole>();
         }
 
         /// <summary> Initializes a new instance of MongoDBRoleDefinitionData. </summary>

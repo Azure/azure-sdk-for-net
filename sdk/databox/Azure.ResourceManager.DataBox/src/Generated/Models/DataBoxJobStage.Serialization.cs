@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<DataBoxStageName> stageName = default;
-            Optional<string> displayName = default;
-            Optional<DataBoxStageStatus> stageStatus = default;
-            Optional<DateTimeOffset> stageTime = default;
-            Optional<BinaryData> jobStageDetails = default;
+            Core.Optional<DataBoxStageName> stageName = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<DataBoxStageStatus> stageStatus = default;
+            Core.Optional<DateTimeOffset> stageTime = default;
+            Core.Optional<BinaryData> jobStageDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("stageName"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataBoxJobStage(Optional.ToNullable(stageName), displayName.Value, Optional.ToNullable(stageStatus), Optional.ToNullable(stageTime), jobStageDetails.Value);
+            return new DataBoxJobStage(Core.Optional.ToNullable(stageName), displayName.Value, Core.Optional.ToNullable(stageStatus), Core.Optional.ToNullable(stageTime), jobStageDetails.Value);
         }
     }
 }

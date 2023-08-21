@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class ReportConfigDataset : IUtf8JsonSerializable
+    public partial class ReportConfigDataset : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Granularity))
+            if (Core.Optional.IsDefined(Granularity))
             {
                 writer.WritePropertyName("granularity"u8);
                 writer.WriteStringValue(Granularity.Value.ToString());
             }
-            if (Optional.IsDefined(Configuration))
+            if (Core.Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
             }
-            if (Optional.IsCollectionDefined(Aggregation))
+            if (Core.Optional.IsCollectionDefined(Aggregation))
             {
                 writer.WritePropertyName("aggregation"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Grouping))
+            if (Core.Optional.IsCollectionDefined(Grouping))
             {
                 writer.WritePropertyName("grouping"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Sorting))
+            if (Core.Optional.IsCollectionDefined(Sorting))
             {
                 writer.WritePropertyName("sorting"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Filter))
+            if (Core.Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<ReportGranularityType> granularity = default;
-            Optional<ReportConfigDatasetConfiguration> configuration = default;
-            Optional<IDictionary<string, ReportConfigAggregation>> aggregation = default;
-            Optional<IList<ReportConfigGrouping>> grouping = default;
-            Optional<IList<ReportConfigSorting>> sorting = default;
-            Optional<ReportConfigFilter> filter = default;
+            Core.Optional<ReportGranularityType> granularity = default;
+            Core.Optional<ReportConfigDatasetConfiguration> configuration = default;
+            Core.Optional<IDictionary<string, ReportConfigAggregation>> aggregation = default;
+            Core.Optional<IList<ReportConfigGrouping>> grouping = default;
+            Core.Optional<IList<ReportConfigSorting>> sorting = default;
+            Core.Optional<ReportConfigFilter> filter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("granularity"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new ReportConfigDataset(Optional.ToNullable(granularity), configuration.Value, Optional.ToDictionary(aggregation), Optional.ToList(grouping), Optional.ToList(sorting), filter.Value);
+            return new ReportConfigDataset(Core.Optional.ToNullable(granularity), configuration.Value, Core.Optional.ToDictionary(aggregation), Core.Optional.ToList(grouping), Core.Optional.ToList(sorting), filter.Value);
         }
     }
 }

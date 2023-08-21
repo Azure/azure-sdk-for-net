@@ -12,17 +12,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterNatGatewayProfile : IUtf8JsonSerializable
+    public partial class ManagedClusterNatGatewayProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ManagedOutboundIPProfile))
+            if (Core.Optional.IsDefined(ManagedOutboundIPProfile))
             {
                 writer.WritePropertyName("managedOutboundIPProfile"u8);
                 writer.WriteObjectValue(ManagedOutboundIPProfile);
             }
-            if (Optional.IsCollectionDefined(EffectiveOutboundIPs))
+            if (Core.Optional.IsCollectionDefined(EffectiveOutboundIPs))
             {
                 writer.WritePropertyName("effectiveOutboundIPs"u8);
                 writer.WriteStartArray();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IdleTimeoutInMinutes))
+            if (Core.Optional.IsDefined(IdleTimeoutInMinutes))
             {
                 writer.WritePropertyName("idleTimeoutInMinutes"u8);
                 writer.WriteNumberValue(IdleTimeoutInMinutes.Value);
@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ManagedClusterManagedOutboundIPProfile> managedOutboundIPProfile = default;
-            Optional<IList<WritableSubResource>> effectiveOutboundIPs = default;
-            Optional<int> idleTimeoutInMinutes = default;
+            Core.Optional<ManagedClusterManagedOutboundIPProfile> managedOutboundIPProfile = default;
+            Core.Optional<IList<WritableSubResource>> effectiveOutboundIPs = default;
+            Core.Optional<int> idleTimeoutInMinutes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedOutboundIPProfile"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterNatGatewayProfile(managedOutboundIPProfile.Value, Optional.ToList(effectiveOutboundIPs), Optional.ToNullable(idleTimeoutInMinutes));
+            return new ManagedClusterNatGatewayProfile(managedOutboundIPProfile.Value, Core.Optional.ToList(effectiveOutboundIPs), Core.Optional.ToNullable(idleTimeoutInMinutes));
         }
     }
 }

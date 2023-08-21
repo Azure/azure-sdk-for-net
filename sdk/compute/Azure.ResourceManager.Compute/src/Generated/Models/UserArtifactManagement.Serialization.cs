@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class UserArtifactManagement : IUtf8JsonSerializable
+    public partial class UserArtifactManagement : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("install"u8);
             writer.WriteStringValue(Install);
             writer.WritePropertyName("remove"u8);
             writer.WriteStringValue(Remove);
-            if (Optional.IsDefined(Update))
+            if (Core.Optional.IsDefined(Update))
             {
                 writer.WritePropertyName("update"u8);
                 writer.WriteStringValue(Update);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string install = default;
             string @remove = default;
-            Optional<string> update = default;
+            Core.Optional<string> update = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("install"u8))

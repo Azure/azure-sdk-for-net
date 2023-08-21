@@ -17,7 +17,7 @@ namespace Azure.Communication.ShortCodes.Models
         /// <summary> Initializes a new instance of ShortCode. </summary>
         internal ShortCode()
         {
-            ProgramBriefIds = new ChangeTrackingList<string>();
+            ProgramBriefIds = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ShortCode. </summary>

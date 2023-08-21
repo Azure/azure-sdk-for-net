@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 return null;
             }
-            Optional<DomainVerificationStatusRecord> domain = default;
-            Optional<DomainVerificationStatusRecord> spf = default;
-            Optional<DomainVerificationStatusRecord> dkim = default;
-            Optional<DomainVerificationStatusRecord> dkiM2 = default;
-            Optional<DomainVerificationStatusRecord> dmarc = default;
+            Core.Optional<DomainVerificationStatusRecord> domain = default;
+            Core.Optional<DomainVerificationStatusRecord> spf = default;
+            Core.Optional<DomainVerificationStatusRecord> dkim = default;
+            Core.Optional<DomainVerificationStatusRecord> dkiM2 = default;
+            Core.Optional<DomainVerificationStatusRecord> dmarc = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Domain"u8))

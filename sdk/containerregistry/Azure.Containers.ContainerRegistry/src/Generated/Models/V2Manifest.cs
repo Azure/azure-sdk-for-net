@@ -16,7 +16,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Initializes a new instance of V2Manifest. </summary>
         internal V2Manifest()
         {
-            Layers = new ChangeTrackingList<OciDescriptor>();
+            Layers = new Core.ChangeTrackingList<OciDescriptor>();
         }
 
         /// <summary> Initializes a new instance of V2Manifest. </summary>

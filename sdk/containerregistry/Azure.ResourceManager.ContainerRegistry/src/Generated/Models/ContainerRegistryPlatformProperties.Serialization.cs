@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryPlatformProperties : IUtf8JsonSerializable
+    public partial class ContainerRegistryPlatformProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("os"u8);
             writer.WriteStringValue(OS.ToString());
-            if (Optional.IsDefined(Architecture))
+            if (Core.Optional.IsDefined(Architecture))
             {
                 writer.WritePropertyName("architecture"u8);
                 writer.WriteStringValue(Architecture.Value.ToString());
             }
-            if (Optional.IsDefined(Variant))
+            if (Core.Optional.IsDefined(Variant))
             {
                 writer.WritePropertyName("variant"u8);
                 writer.WriteStringValue(Variant.Value.ToString());
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             ContainerRegistryOS os = default;
-            Optional<ContainerRegistryOSArchitecture> architecture = default;
-            Optional<ContainerRegistryCpuVariant> variant = default;
+            Core.Optional<ContainerRegistryOSArchitecture> architecture = default;
+            Core.Optional<ContainerRegistryCpuVariant> variant = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("os"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryPlatformProperties(os, Optional.ToNullable(architecture), Optional.ToNullable(variant));
+            return new ContainerRegistryPlatformProperties(os, Core.Optional.ToNullable(architecture), Core.Optional.ToNullable(variant));
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Azure.Communication.Identity.Models
 
             Code = code;
             Message = message;
-            Details = new ChangeTrackingList<CommunicationError>();
+            Details = new Core.ChangeTrackingList<CommunicationError>();
         }
 
         /// <summary> Initializes a new instance of CommunicationError. </summary>

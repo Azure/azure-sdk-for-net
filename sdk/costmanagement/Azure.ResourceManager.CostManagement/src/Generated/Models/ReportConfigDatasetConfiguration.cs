@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of ReportConfigDatasetConfiguration. </summary>
         public ReportConfigDatasetConfiguration()
         {
-            Columns = new ChangeTrackingList<string>();
+            Columns = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ReportConfigDatasetConfiguration. </summary>

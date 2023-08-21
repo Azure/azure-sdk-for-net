@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeKubernetesRoleResources : IUtf8JsonSerializable
+    public partial class EdgeKubernetesRoleResources : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Storage))
+            if (Core.Optional.IsDefined(Storage))
             {
                 writer.WritePropertyName("storage"u8);
                 writer.WriteObjectValue(Storage);
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<EdgeKubernetesRoleStorage> storage = default;
+            Core.Optional<EdgeKubernetesRoleStorage> storage = default;
             EdgeKubernetesRoleCompute compute = default;
-            Optional<EdgeKubernetesRoleNetwork> network = default;
+            Core.Optional<EdgeKubernetesRoleNetwork> network = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storage"u8))

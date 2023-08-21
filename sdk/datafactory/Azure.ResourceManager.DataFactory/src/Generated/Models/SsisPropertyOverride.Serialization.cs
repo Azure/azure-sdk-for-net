@@ -11,14 +11,14 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SsisPropertyOverride : IUtf8JsonSerializable
+    public partial class SsisPropertyOverride : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             JsonSerializer.Serialize(writer, Value);
-            if (Optional.IsDefined(IsSensitive))
+            if (Core.Optional.IsDefined(IsSensitive))
             {
                 writer.WritePropertyName("isSensitive"u8);
                 writer.WriteBooleanValue(IsSensitive.Value);
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> value = default;
-            Optional<bool> isSensitive = default;
+            Core.Optional<bool> isSensitive = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new SsisPropertyOverride(value, Optional.ToNullable(isSensitive));
+            return new SsisPropertyOverride(value, Core.Optional.ToNullable(isSensitive));
         }
     }
 }

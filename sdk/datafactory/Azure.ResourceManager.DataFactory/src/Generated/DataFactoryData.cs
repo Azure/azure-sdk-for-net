@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="location"> The location. </param>
         public DataFactoryData(AzureLocation location) : base(location)
         {
-            GlobalParameters = new ChangeTrackingDictionary<string, DataFactoryGlobalParameterProperties>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            GlobalParameters = new Core.ChangeTrackingDictionary<string, DataFactoryGlobalParameterProperties>();
+            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of DataFactoryData. </summary>

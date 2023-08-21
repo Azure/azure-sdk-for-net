@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    internal partial class ManagedEnvironmentPropertiesPeerAuthentication : IUtf8JsonSerializable
+    internal partial class ManagedEnvironmentPropertiesPeerAuthentication : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Mtls))
+            if (Core.Optional.IsDefined(Mtls))
             {
                 writer.WritePropertyName("mtls"u8);
                 writer.WriteObjectValue(Mtls);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<Mtls> mtls = default;
+            Core.Optional<Mtls> mtls = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mtls"u8))

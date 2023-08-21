@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of ManagedClusterSnapshotListResult. </summary>
         internal ManagedClusterSnapshotListResult()
         {
-            Value = new ChangeTrackingList<ManagedClusterSnapshotData>();
+            Value = new Core.ChangeTrackingList<ManagedClusterSnapshotData>();
         }
 
         /// <summary> Initializes a new instance of ManagedClusterSnapshotListResult. </summary>

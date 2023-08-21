@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 return null;
             }
             DataBoxEdgeOrderState status = default;
-            Optional<DateTimeOffset> updateDateTime = default;
-            Optional<string> comments = default;
-            Optional<DataBoxEdgeTrackingInfo> trackingInformation = default;
-            Optional<IReadOnlyDictionary<string, string>> additionalOrderDetails = default;
+            Core.Optional<DateTimeOffset> updateDateTime = default;
+            Core.Optional<string> comments = default;
+            Core.Optional<DataBoxEdgeTrackingInfo> trackingInformation = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> additionalOrderDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new DataBoxEdgeOrderStatus(status, Optional.ToNullable(updateDateTime), comments.Value, trackingInformation.Value, Optional.ToDictionary(additionalOrderDetails));
+            return new DataBoxEdgeOrderStatus(status, Core.Optional.ToNullable(updateDateTime), comments.Value, trackingInformation.Value, Core.Optional.ToDictionary(additionalOrderDetails));
         }
     }
 }

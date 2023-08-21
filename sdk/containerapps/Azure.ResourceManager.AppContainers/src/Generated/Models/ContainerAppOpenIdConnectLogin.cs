@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppOpenIdConnectLogin. </summary>
         public ContainerAppOpenIdConnectLogin()
         {
-            Scopes = new ChangeTrackingList<string>();
+            Scopes = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppOpenIdConnectLogin. </summary>

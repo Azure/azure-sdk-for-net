@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppIngressConfiguration. </summary>
         public ContainerAppIngressConfiguration()
         {
-            Traffic = new ChangeTrackingList<ContainerAppRevisionTrafficWeight>();
-            CustomDomains = new ChangeTrackingList<ContainerAppCustomDomain>();
-            IPSecurityRestrictions = new ChangeTrackingList<ContainerAppIPSecurityRestrictionRule>();
+            Traffic = new Core.ChangeTrackingList<ContainerAppRevisionTrafficWeight>();
+            CustomDomains = new Core.ChangeTrackingList<ContainerAppCustomDomain>();
+            IPSecurityRestrictions = new Core.ChangeTrackingList<ContainerAppIPSecurityRestrictionRule>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppIngressConfiguration. </summary>

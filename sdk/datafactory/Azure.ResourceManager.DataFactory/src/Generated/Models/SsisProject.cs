@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of SsisProject. </summary>
         internal SsisProject()
         {
-            EnvironmentRefs = new ChangeTrackingList<SsisEnvironmentReference>();
-            Parameters = new ChangeTrackingList<SsisParameterInfo>();
+            EnvironmentRefs = new Core.ChangeTrackingList<SsisEnvironmentReference>();
+            Parameters = new Core.ChangeTrackingList<SsisParameterInfo>();
             MetadataType = SsisObjectMetadataType.Project;
         }
 

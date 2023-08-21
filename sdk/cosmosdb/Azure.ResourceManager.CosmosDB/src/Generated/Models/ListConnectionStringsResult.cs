@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of ListConnectionStringsResult. </summary>
         internal ListConnectionStringsResult()
         {
-            ConnectionStrings = new ChangeTrackingList<CosmosDBConnectionString>();
+            ConnectionStrings = new Core.ChangeTrackingList<CosmosDBConnectionString>();
         }
 
         /// <summary> Initializes a new instance of ListConnectionStringsResult. </summary>

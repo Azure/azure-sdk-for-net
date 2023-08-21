@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    internal class ContainerServiceFleetOperationSource : IOperationSource<ContainerServiceFleetResource>
+    internal class ContainerServiceFleetOperationSource : Core.IOperationSource<ContainerServiceFleetResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ContainerService
             _client = client;
         }
 
-        ContainerServiceFleetResource IOperationSource<ContainerServiceFleetResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ContainerServiceFleetResource Core.IOperationSource<ContainerServiceFleetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ContainerServiceFleetData.DeserializeContainerServiceFleetData(document.RootElement);
             return new ContainerServiceFleetResource(_client, data);
         }
 
-        async ValueTask<ContainerServiceFleetResource> IOperationSource<ContainerServiceFleetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ContainerServiceFleetResource> Core.IOperationSource<ContainerServiceFleetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ContainerServiceFleetData.DeserializeContainerServiceFleetData(document.RootElement);

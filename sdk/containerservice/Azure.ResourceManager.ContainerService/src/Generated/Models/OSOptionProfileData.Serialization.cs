@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ContainerService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             IReadOnlyList<ContainerServiceOSOptionProperty> osOptionPropertyList = default;
             foreach (var property in element.EnumerateObject())
             {

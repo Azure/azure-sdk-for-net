@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
-            VirtualMachines = new ChangeTrackingList<SubResource>();
+            VirtualMachines = new Core.ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of DedicatedHostData. </summary>

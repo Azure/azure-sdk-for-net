@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppRevisionTrafficWeight : IUtf8JsonSerializable
+    public partial class ContainerAppRevisionTrafficWeight : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RevisionName))
+            if (Core.Optional.IsDefined(RevisionName))
             {
                 writer.WritePropertyName("revisionName"u8);
                 writer.WriteStringValue(RevisionName);
             }
-            if (Optional.IsDefined(Weight))
+            if (Core.Optional.IsDefined(Weight))
             {
                 writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
-            if (Optional.IsDefined(IsLatestRevision))
+            if (Core.Optional.IsDefined(IsLatestRevision))
             {
                 writer.WritePropertyName("latestRevision"u8);
                 writer.WriteBooleanValue(IsLatestRevision.Value);
             }
-            if (Optional.IsDefined(Label))
+            if (Core.Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> revisionName = default;
-            Optional<int> weight = default;
-            Optional<bool> latestRevision = default;
-            Optional<string> label = default;
+            Core.Optional<string> revisionName = default;
+            Core.Optional<int> weight = default;
+            Core.Optional<bool> latestRevision = default;
+            Core.Optional<string> label = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("revisionName"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppRevisionTrafficWeight(revisionName.Value, Optional.ToNullable(weight), Optional.ToNullable(latestRevision), label.Value);
+            return new ContainerAppRevisionTrafficWeight(revisionName.Value, Core.Optional.ToNullable(weight), Core.Optional.ToNullable(latestRevision), label.Value);
         }
     }
 }

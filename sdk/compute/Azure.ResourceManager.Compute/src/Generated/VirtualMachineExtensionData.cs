@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location. </param>
         public VirtualMachineExtensionData(AzureLocation location) : base(location)
         {
-            ProvisionAfterExtensions = new ChangeTrackingList<string>();
+            ProvisionAfterExtensions = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineExtensionData. </summary>

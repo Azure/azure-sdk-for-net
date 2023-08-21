@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<string> logLink = default;
-            Optional<string> logArtifactLink = default;
+            Core.Optional<string> logLink = default;
+            Core.Optional<string> logArtifactLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logLink"u8))

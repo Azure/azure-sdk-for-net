@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CosmosDBIncludedPath. </summary>
         public CosmosDBIncludedPath()
         {
-            Indexes = new ChangeTrackingList<CosmosDBPathIndexes>();
+            Indexes = new Core.ChangeTrackingList<CosmosDBPathIndexes>();
         }
 
         /// <summary> Initializes a new instance of CosmosDBIncludedPath. </summary>

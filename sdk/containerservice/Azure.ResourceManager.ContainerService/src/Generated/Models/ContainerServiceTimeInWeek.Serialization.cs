@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ContainerServiceTimeInWeek : IUtf8JsonSerializable
+    public partial class ContainerServiceTimeInWeek : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Day))
+            if (Core.Optional.IsDefined(Day))
             {
                 writer.WritePropertyName("day"u8);
                 writer.WriteStringValue(Day.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(HourSlots))
+            if (Core.Optional.IsCollectionDefined(HourSlots))
             {
                 writer.WritePropertyName("hourSlots"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ContainerServiceWeekDay> day = default;
-            Optional<IList<int>> hourSlots = default;
+            Core.Optional<ContainerServiceWeekDay> day = default;
+            Core.Optional<IList<int>> hourSlots = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("day"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ContainerServiceTimeInWeek(Optional.ToNullable(day), Optional.ToList(hourSlots));
+            return new ContainerServiceTimeInWeek(Core.Optional.ToNullable(day), Core.Optional.ToList(hourSlots));
         }
     }
 }

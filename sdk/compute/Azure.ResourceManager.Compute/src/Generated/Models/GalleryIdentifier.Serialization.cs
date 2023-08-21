@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class GalleryIdentifier : IUtf8JsonSerializable
+    internal partial class GalleryIdentifier : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> uniqueName = default;
+            Core.Optional<string> uniqueName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uniqueName"u8))

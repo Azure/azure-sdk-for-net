@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class ManifestWriteableProperties : IUtf8JsonSerializable
+    internal partial class ManifestWriteableProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CanDelete))
+            if (Core.Optional.IsDefined(CanDelete))
             {
                 writer.WritePropertyName("deleteEnabled"u8);
                 writer.WriteBooleanValue(CanDelete.Value);
             }
-            if (Optional.IsDefined(CanWrite))
+            if (Core.Optional.IsDefined(CanWrite))
             {
                 writer.WritePropertyName("writeEnabled"u8);
                 writer.WriteBooleanValue(CanWrite.Value);
             }
-            if (Optional.IsDefined(CanList))
+            if (Core.Optional.IsDefined(CanList))
             {
                 writer.WritePropertyName("listEnabled"u8);
                 writer.WriteBooleanValue(CanList.Value);
             }
-            if (Optional.IsDefined(CanRead))
+            if (Core.Optional.IsDefined(CanRead))
             {
                 writer.WritePropertyName("readEnabled"u8);
                 writer.WriteBooleanValue(CanRead.Value);

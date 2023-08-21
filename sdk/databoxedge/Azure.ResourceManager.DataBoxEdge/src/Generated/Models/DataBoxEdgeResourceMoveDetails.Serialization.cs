@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<DataBoxEdgeResourceMoveStatus> operationInProgress = default;
-            Optional<DateTimeOffset> operationInProgressLockTimeoutInUtc = default;
+            Core.Optional<DataBoxEdgeResourceMoveStatus> operationInProgress = default;
+            Core.Optional<DateTimeOffset> operationInProgressLockTimeoutInUtc = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationInProgress"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new DataBoxEdgeResourceMoveDetails(Optional.ToNullable(operationInProgress), Optional.ToNullable(operationInProgressLockTimeoutInUtc));
+            return new DataBoxEdgeResourceMoveDetails(Core.Optional.ToNullable(operationInProgress), Core.Optional.ToNullable(operationInProgressLockTimeoutInUtc));
         }
     }
 }

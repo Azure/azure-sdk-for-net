@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContainerServiceFleetData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<ContainerServiceFleetData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new FleetListResult(Optional.ToList(value), nextLink.Value);
+            return new FleetListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

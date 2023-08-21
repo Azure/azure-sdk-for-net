@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
 {
-    public partial class MessageExample : IUtf8JsonSerializable
+    public partial class MessageExample : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Direction))
+            if (Core.Optional.IsDefined(Direction))
             {
                 writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction.Value.ToString());
             }
-            if (Optional.IsDefined(Text))
+            if (Core.Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
                 writer.WriteStringValue(Text);
@@ -34,8 +34,8 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<MessageDirection> direction = default;
-            Optional<string> text = default;
+            Core.Optional<MessageDirection> direction = default;
+            Core.Optional<string> text = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("direction"u8))
@@ -53,7 +53,7 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new MessageExample(Optional.ToNullable(direction), text.Value);
+            return new MessageExample(Core.Optional.ToNullable(direction), text.Value);
         }
     }
 }

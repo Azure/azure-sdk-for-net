@@ -12,12 +12,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class VirtualMachineExtensionImageData : IUtf8JsonSerializable
+    public partial class VirtualMachineExtensionImageData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -32,27 +32,27 @@ namespace Azure.ResourceManager.Compute
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(OperatingSystem))
+            if (Core.Optional.IsDefined(OperatingSystem))
             {
                 writer.WritePropertyName("operatingSystem"u8);
                 writer.WriteStringValue(OperatingSystem);
             }
-            if (Optional.IsDefined(ComputeRole))
+            if (Core.Optional.IsDefined(ComputeRole))
             {
                 writer.WritePropertyName("computeRole"u8);
                 writer.WriteStringValue(ComputeRole);
             }
-            if (Optional.IsDefined(HandlerSchema))
+            if (Core.Optional.IsDefined(HandlerSchema))
             {
                 writer.WritePropertyName("handlerSchema"u8);
                 writer.WriteStringValue(HandlerSchema);
             }
-            if (Optional.IsDefined(VirtualMachineScaleSetEnabled))
+            if (Core.Optional.IsDefined(VirtualMachineScaleSetEnabled))
             {
                 writer.WritePropertyName("vmScaleSetEnabled"u8);
                 writer.WriteBooleanValue(VirtualMachineScaleSetEnabled.Value);
             }
-            if (Optional.IsDefined(SupportsMultipleExtensions))
+            if (Core.Optional.IsDefined(SupportsMultipleExtensions))
             {
                 writer.WritePropertyName("supportsMultipleExtensions"u8);
                 writer.WriteBooleanValue(SupportsMultipleExtensions.Value);
@@ -67,17 +67,17 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> operatingSystem = default;
-            Optional<string> computeRole = default;
-            Optional<string> handlerSchema = default;
-            Optional<bool> virtualMachineScaleSetEnabled = default;
-            Optional<bool> supportsMultipleExtensions = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> operatingSystem = default;
+            Core.Optional<string> computeRole = default;
+            Core.Optional<string> handlerSchema = default;
+            Core.Optional<bool> virtualMachineScaleSetEnabled = default;
+            Core.Optional<bool> supportsMultipleExtensions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new VirtualMachineExtensionImageData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, operatingSystem.Value, computeRole.Value, handlerSchema.Value, Optional.ToNullable(virtualMachineScaleSetEnabled), Optional.ToNullable(supportsMultipleExtensions));
+            return new VirtualMachineExtensionImageData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, operatingSystem.Value, computeRole.Value, handlerSchema.Value, Core.Optional.ToNullable(virtualMachineScaleSetEnabled), Core.Optional.ToNullable(supportsMultipleExtensions));
         }
     }
 }

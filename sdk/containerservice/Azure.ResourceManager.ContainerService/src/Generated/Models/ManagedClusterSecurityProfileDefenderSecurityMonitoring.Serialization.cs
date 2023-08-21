@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    internal partial class ManagedClusterSecurityProfileDefenderSecurityMonitoring : IUtf8JsonSerializable
+    internal partial class ManagedClusterSecurityProfileDefenderSecurityMonitoring : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsSecurityMonitoringEnabled))
+            if (Core.Optional.IsDefined(IsSecurityMonitoringEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsSecurityMonitoringEnabled.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
+            Core.Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterSecurityProfileDefenderSecurityMonitoring(Optional.ToNullable(enabled));
+            return new ManagedClusterSecurityProfileDefenderSecurityMonitoring(Core.Optional.ToNullable(enabled));
         }
     }
 }

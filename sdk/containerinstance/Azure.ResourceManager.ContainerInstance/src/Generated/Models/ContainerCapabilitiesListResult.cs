@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Initializes a new instance of ContainerCapabilitiesListResult. </summary>
         internal ContainerCapabilitiesListResult()
         {
-            Value = new ChangeTrackingList<ContainerCapabilities>();
+            Value = new Core.ChangeTrackingList<ContainerCapabilities>();
         }
 
         /// <summary> Initializes a new instance of ContainerCapabilitiesListResult. </summary>

@@ -14,15 +14,15 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal class VirtualMachineCaptureResultOperationSource : IOperationSource<VirtualMachineCaptureResult>
+    internal class VirtualMachineCaptureResultOperationSource : Core.IOperationSource<VirtualMachineCaptureResult>
     {
-        VirtualMachineCaptureResult IOperationSource<VirtualMachineCaptureResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualMachineCaptureResult Core.IOperationSource<VirtualMachineCaptureResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return VirtualMachineCaptureResult.DeserializeVirtualMachineCaptureResult(document.RootElement);
         }
 
-        async ValueTask<VirtualMachineCaptureResult> IOperationSource<VirtualMachineCaptureResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualMachineCaptureResult> Core.IOperationSource<VirtualMachineCaptureResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return VirtualMachineCaptureResult.DeserializeVirtualMachineCaptureResult(document.RootElement);

@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             Argument.AssertNotNull(contactDetails, nameof(contactDetails));
 
-            PreferredDisks = new ChangeTrackingDictionary<string, int>();
-            CopyProgress = new ChangeTrackingList<DataBoxDiskCopyProgress>();
-            GranularCopyProgress = new ChangeTrackingList<DataBoxDiskGranularCopyProgress>();
-            GranularCopyLogDetails = new ChangeTrackingList<DataBoxDiskGranularCopyLogDetails>();
-            DisksAndSizeDetails = new ChangeTrackingDictionary<string, int>();
+            PreferredDisks = new Core.ChangeTrackingDictionary<string, int>();
+            CopyProgress = new Core.ChangeTrackingList<DataBoxDiskCopyProgress>();
+            GranularCopyProgress = new Core.ChangeTrackingList<DataBoxDiskGranularCopyProgress>();
+            GranularCopyLogDetails = new Core.ChangeTrackingList<DataBoxDiskGranularCopyLogDetails>();
+            DisksAndSizeDetails = new Core.ChangeTrackingDictionary<string, int>();
             JobDetailsType = DataBoxOrderType.DataBoxDisk;
         }
 

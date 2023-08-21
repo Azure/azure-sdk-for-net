@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CassandraClusterDataCenterNodeItem. </summary>
         internal CassandraClusterDataCenterNodeItem()
         {
-            Tokens = new ChangeTrackingList<string>();
+            Tokens = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of CassandraClusterDataCenterNodeItem. </summary>

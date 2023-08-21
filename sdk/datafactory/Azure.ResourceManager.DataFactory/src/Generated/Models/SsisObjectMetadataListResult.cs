@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of SsisObjectMetadataListResult. </summary>
         internal SsisObjectMetadataListResult()
         {
-            Value = new ChangeTrackingList<SsisObjectMetadata>();
+            Value = new Core.ChangeTrackingList<SsisObjectMetadata>();
         }
 
         /// <summary> Initializes a new instance of SsisObjectMetadataListResult. </summary>

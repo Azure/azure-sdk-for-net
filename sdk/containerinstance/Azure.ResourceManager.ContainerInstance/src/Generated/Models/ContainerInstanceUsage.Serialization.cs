@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> unit = default;
-            Optional<int> currentValue = default;
-            Optional<int> limit = default;
-            Optional<ContainerInstanceUsageName> name = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> unit = default;
+            Core.Optional<int> currentValue = default;
+            Core.Optional<int> limit = default;
+            Core.Optional<ContainerInstanceUsageName> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new ContainerInstanceUsage(id.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value);
+            return new ContainerInstanceUsage(id.Value, unit.Value, Core.Optional.ToNullable(currentValue), Core.Optional.ToNullable(limit), name.Value);
         }
     }
 }

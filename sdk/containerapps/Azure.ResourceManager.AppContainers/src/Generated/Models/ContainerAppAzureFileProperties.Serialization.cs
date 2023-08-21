@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppAzureFileProperties : IUtf8JsonSerializable
+    public partial class ContainerAppAzureFileProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AccountName))
+            if (Core.Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (Optional.IsDefined(AccountKey))
+            if (Core.Optional.IsDefined(AccountKey))
             {
                 writer.WritePropertyName("accountKey"u8);
                 writer.WriteStringValue(AccountKey);
             }
-            if (Optional.IsDefined(AccessMode))
+            if (Core.Optional.IsDefined(AccessMode))
             {
                 writer.WritePropertyName("accessMode"u8);
                 writer.WriteStringValue(AccessMode.Value.ToString());
             }
-            if (Optional.IsDefined(ShareName))
+            if (Core.Optional.IsDefined(ShareName))
             {
                 writer.WritePropertyName("shareName"u8);
                 writer.WriteStringValue(ShareName);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> accountName = default;
-            Optional<string> accountKey = default;
-            Optional<ContainerAppAccessMode> accessMode = default;
-            Optional<string> shareName = default;
+            Core.Optional<string> accountName = default;
+            Core.Optional<string> accountKey = default;
+            Core.Optional<ContainerAppAccessMode> accessMode = default;
+            Core.Optional<string> shareName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountName"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppAzureFileProperties(accountName.Value, accountKey.Value, Optional.ToNullable(accessMode), shareName.Value);
+            return new ContainerAppAzureFileProperties(accountName.Value, accountKey.Value, Core.Optional.ToNullable(accessMode), shareName.Value);
         }
     }
 }

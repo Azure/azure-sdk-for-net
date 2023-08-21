@@ -25,7 +25,7 @@ namespace Azure.Communication.Chat
 
             Code = code;
             Message = message;
-            Details = new ChangeTrackingList<ChatError>();
+            Details = new Core.ChangeTrackingList<ChatError>();
         }
 
         /// <summary> Initializes a new instance of ChatError. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of RecommendationUsageDetails. </summary>
         public RecommendationUsageDetails()
         {
-            Charges = new ChangeTrackingList<decimal>();
+            Charges = new Core.ChangeTrackingList<decimal>();
         }
 
         /// <summary> Initializes a new instance of RecommendationUsageDetails. </summary>

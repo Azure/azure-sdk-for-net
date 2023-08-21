@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppDiagnosticsMetadata. </summary>
         public ContainerAppDiagnosticsMetadata()
         {
-            SupportTopicList = new ChangeTrackingList<ContainerAppDiagnosticSupportTopic>();
-            AnalysisTypes = new ChangeTrackingList<string>();
+            SupportTopicList = new Core.ChangeTrackingList<ContainerAppDiagnosticSupportTopic>();
+            AnalysisTypes = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppDiagnosticsMetadata. </summary>

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    internal class DataBoxEdgeShareOperationSource : IOperationSource<DataBoxEdgeShareResource>
+    internal class DataBoxEdgeShareOperationSource : Core.IOperationSource<DataBoxEdgeShareResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DataBoxEdge
             _client = client;
         }
 
-        DataBoxEdgeShareResource IOperationSource<DataBoxEdgeShareResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DataBoxEdgeShareResource Core.IOperationSource<DataBoxEdgeShareResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DataBoxEdgeShareData.DeserializeDataBoxEdgeShareData(document.RootElement);
             return new DataBoxEdgeShareResource(_client, data);
         }
 
-        async ValueTask<DataBoxEdgeShareResource> IOperationSource<DataBoxEdgeShareResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DataBoxEdgeShareResource> Core.IOperationSource<DataBoxEdgeShareResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DataBoxEdgeShareData.DeserializeDataBoxEdgeShareData(document.RootElement);

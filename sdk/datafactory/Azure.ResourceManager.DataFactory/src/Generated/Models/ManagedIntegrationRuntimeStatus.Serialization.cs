@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             IntegrationRuntimeType type = default;
-            Optional<string> dataFactoryName = default;
-            Optional<IntegrationRuntimeState> state = default;
-            Optional<DateTimeOffset> createTime = default;
-            Optional<IReadOnlyList<ManagedIntegrationRuntimeNode>> nodes = default;
-            Optional<IReadOnlyList<ManagedIntegrationRuntimeError>> otherErrors = default;
-            Optional<ManagedIntegrationRuntimeOperationResult> lastOperation = default;
+            Core.Optional<string> dataFactoryName = default;
+            Core.Optional<IntegrationRuntimeState> state = default;
+            Core.Optional<DateTimeOffset> createTime = default;
+            Core.Optional<IReadOnlyList<ManagedIntegrationRuntimeNode>> nodes = default;
+            Core.Optional<IReadOnlyList<ManagedIntegrationRuntimeError>> otherErrors = default;
+            Core.Optional<ManagedIntegrationRuntimeOperationResult> lastOperation = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ManagedIntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties, Optional.ToNullable(createTime), Optional.ToList(nodes), Optional.ToList(otherErrors), lastOperation.Value);
+            return new ManagedIntegrationRuntimeStatus(type, dataFactoryName.Value, Core.Optional.ToNullable(state), additionalProperties, Core.Optional.ToNullable(createTime), Core.Optional.ToList(nodes), Core.Optional.ToList(otherErrors), lastOperation.Value);
         }
     }
 }

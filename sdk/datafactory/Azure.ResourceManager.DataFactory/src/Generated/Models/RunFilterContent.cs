@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             LastUpdatedAfter = lastUpdatedAfter;
             LastUpdatedBefore = lastUpdatedBefore;
-            Filters = new ChangeTrackingList<RunQueryFilter>();
-            OrderBy = new ChangeTrackingList<RunQueryOrderBy>();
+            Filters = new Core.ChangeTrackingList<RunQueryFilter>();
+            OrderBy = new Core.ChangeTrackingList<RunQueryOrderBy>();
         }
 
         /// <summary> The continuation token for getting the next page of results. Null for first page. </summary>

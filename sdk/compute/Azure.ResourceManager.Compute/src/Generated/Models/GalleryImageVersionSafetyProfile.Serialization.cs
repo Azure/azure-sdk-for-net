@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GalleryImageVersionSafetyProfile : IUtf8JsonSerializable
+    public partial class GalleryImageVersionSafetyProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AllowDeletionOfReplicatedLocations))
+            if (Core.Optional.IsDefined(AllowDeletionOfReplicatedLocations))
             {
                 writer.WritePropertyName("allowDeletionOfReplicatedLocations"u8);
                 writer.WriteBooleanValue(AllowDeletionOfReplicatedLocations.Value);
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> reportedForPolicyViolation = default;
-            Optional<IReadOnlyList<GalleryImageVersionPolicyViolation>> policyViolations = default;
-            Optional<bool> allowDeletionOfReplicatedLocations = default;
+            Core.Optional<bool> reportedForPolicyViolation = default;
+            Core.Optional<IReadOnlyList<GalleryImageVersionPolicyViolation>> policyViolations = default;
+            Core.Optional<bool> allowDeletionOfReplicatedLocations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("reportedForPolicyViolation"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new GalleryImageVersionSafetyProfile(Optional.ToNullable(allowDeletionOfReplicatedLocations), Optional.ToNullable(reportedForPolicyViolation), Optional.ToList(policyViolations));
+            return new GalleryImageVersionSafetyProfile(Core.Optional.ToNullable(allowDeletionOfReplicatedLocations), Core.Optional.ToNullable(reportedForPolicyViolation), Core.Optional.ToList(policyViolations));
         }
     }
 }

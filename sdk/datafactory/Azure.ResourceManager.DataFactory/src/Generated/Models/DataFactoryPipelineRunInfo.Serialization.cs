@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<Guid> runId = default;
-            Optional<string> runGroupId = default;
-            Optional<bool> isLatest = default;
-            Optional<string> pipelineName = default;
-            Optional<IReadOnlyDictionary<string, string>> parameters = default;
-            Optional<IReadOnlyDictionary<string, string>> runDimensions = default;
-            Optional<DataFactoryPipelineRunEntityInfo> invokedBy = default;
-            Optional<DateTimeOffset> lastUpdated = default;
-            Optional<DateTimeOffset> runStart = default;
-            Optional<DateTimeOffset> runEnd = default;
-            Optional<int> durationInMs = default;
-            Optional<string> status = default;
-            Optional<string> message = default;
+            Core.Optional<Guid> runId = default;
+            Core.Optional<string> runGroupId = default;
+            Core.Optional<bool> isLatest = default;
+            Core.Optional<string> pipelineName = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> parameters = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> runDimensions = default;
+            Core.Optional<DataFactoryPipelineRunEntityInfo> invokedBy = default;
+            Core.Optional<DateTimeOffset> lastUpdated = default;
+            Core.Optional<DateTimeOffset> runStart = default;
+            Core.Optional<DateTimeOffset> runEnd = default;
+            Core.Optional<int> durationInMs = default;
+            Core.Optional<string> status = default;
+            Core.Optional<string> message = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryPipelineRunInfo(Optional.ToNullable(runId), runGroupId.Value, Optional.ToNullable(isLatest), pipelineName.Value, Optional.ToDictionary(parameters), Optional.ToDictionary(runDimensions), invokedBy.Value, Optional.ToNullable(lastUpdated), Optional.ToNullable(runStart), Optional.ToNullable(runEnd), Optional.ToNullable(durationInMs), status.Value, message.Value, additionalProperties);
+            return new DataFactoryPipelineRunInfo(Core.Optional.ToNullable(runId), runGroupId.Value, Core.Optional.ToNullable(isLatest), pipelineName.Value, Core.Optional.ToDictionary(parameters), Core.Optional.ToDictionary(runDimensions), invokedBy.Value, Core.Optional.ToNullable(lastUpdated), Core.Optional.ToNullable(runStart), Core.Optional.ToNullable(runEnd), Core.Optional.ToNullable(durationInMs), status.Value, message.Value, additionalProperties);
         }
     }
 }

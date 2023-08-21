@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> databaseName = default;
-            Optional<IReadOnlyList<string>> collectionNames = default;
+            Core.Optional<string> databaseName = default;
+            Core.Optional<IReadOnlyList<string>> collectionNames = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseName"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new RestorableSqlResourceData(id, name, type, systemData.Value, databaseName.Value, Optional.ToList(collectionNames));
+            return new RestorableSqlResourceData(id, name, type, systemData.Value, databaseName.Value, Core.Optional.ToList(collectionNames));
         }
     }
 }

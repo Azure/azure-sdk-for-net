@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <summary> Initializes a new instance of SuggestRelationshipLinksResponse. </summary>
         internal SuggestRelationshipLinksResponse()
         {
-            SuggestedRelationships = new ChangeTrackingList<RelationshipsLookup>();
+            SuggestedRelationships = new Core.ChangeTrackingList<RelationshipsLookup>();
         }
 
         /// <summary> Initializes a new instance of SuggestRelationshipLinksResponse. </summary>

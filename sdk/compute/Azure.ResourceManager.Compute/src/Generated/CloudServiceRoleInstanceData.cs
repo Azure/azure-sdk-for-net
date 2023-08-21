@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of CloudServiceRoleInstanceData. </summary>
         internal CloudServiceRoleInstanceData()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of CloudServiceRoleInstanceData. </summary>

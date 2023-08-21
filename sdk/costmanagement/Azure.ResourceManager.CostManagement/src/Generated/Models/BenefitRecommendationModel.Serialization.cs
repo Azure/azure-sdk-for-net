@@ -11,17 +11,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class BenefitRecommendationModel : IUtf8JsonSerializable
+    public partial class BenefitRecommendationModel : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<BenefitRecommendationProperties> properties = default;
-            Optional<BillingAccountBenefitKind> kind = default;
+            Core.Optional<BenefitRecommendationProperties> properties = default;
+            Core.Optional<BillingAccountBenefitKind> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new BenefitRecommendationModel(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(kind));
+            return new BenefitRecommendationModel(id, name, type, systemData.Value, properties.Value, Core.Optional.ToNullable(kind));
         }
     }
 }

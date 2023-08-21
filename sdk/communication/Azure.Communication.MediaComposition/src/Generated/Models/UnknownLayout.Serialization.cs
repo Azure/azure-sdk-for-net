@@ -11,24 +11,24 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    internal partial class UnknownLayout : IUtf8JsonSerializable
+    internal partial class UnknownLayout : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(Resolution))
+            if (Core.Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
                 writer.WriteObjectValue(Resolution);
             }
-            if (Optional.IsDefined(PlaceholderImageUri))
+            if (Core.Optional.IsDefined(PlaceholderImageUri))
             {
                 writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
             }
-            if (Optional.IsDefined(ScalingMode))
+            if (Core.Optional.IsDefined(ScalingMode))
             {
                 writer.WritePropertyName("scalingMode"u8);
                 writer.WriteStringValue(ScalingMode.Value.ToString());
@@ -43,9 +43,9 @@ namespace Azure.Communication.MediaComposition
                 return null;
             }
             LayoutType kind = "Unknown";
-            Optional<LayoutResolution> resolution = default;
-            Optional<string> placeholderImageUri = default;
-            Optional<ScalingMode> scalingMode = default;
+            Core.Optional<LayoutResolution> resolution = default;
+            Core.Optional<string> placeholderImageUri = default;
+            Core.Optional<ScalingMode> scalingMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -77,7 +77,7 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new UnknownLayout(kind, resolution.Value, placeholderImageUri.Value, Optional.ToNullable(scalingMode));
+            return new UnknownLayout(kind, resolution.Value, placeholderImageUri.Value, Core.Optional.ToNullable(scalingMode));
         }
     }
 }

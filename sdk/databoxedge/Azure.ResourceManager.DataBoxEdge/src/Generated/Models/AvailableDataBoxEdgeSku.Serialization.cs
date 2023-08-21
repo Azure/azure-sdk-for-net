@@ -19,21 +19,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<DataBoxEdgeSkuName> name = default;
-            Optional<string> kind = default;
-            Optional<DataBoxEdgeSkuTier> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Optional<IReadOnlyList<string>> apiVersions = default;
-            Optional<IReadOnlyList<DataBoxEdgeSkuLocationInfo>> locationInfo = default;
-            Optional<IReadOnlyList<DataBoxEdgeSkuCost>> costs = default;
-            Optional<DataBoxEdgeSkuSignupOption> signupOption = default;
-            Optional<DataBoxEdgeSkuVersion> version = default;
-            Optional<DataBoxEdgeSkuAvailability> availability = default;
-            Optional<IReadOnlyList<DataBoxEdgeShipmentType>> shipmentTypes = default;
-            Optional<IReadOnlyList<DataBoxEdgeSkuCapability>> capabilities = default;
+            Core.Optional<string> resourceType = default;
+            Core.Optional<DataBoxEdgeSkuName> name = default;
+            Core.Optional<string> kind = default;
+            Core.Optional<DataBoxEdgeSkuTier> tier = default;
+            Core.Optional<string> size = default;
+            Core.Optional<string> family = default;
+            Core.Optional<IReadOnlyList<AzureLocation>> locations = default;
+            Core.Optional<IReadOnlyList<string>> apiVersions = default;
+            Core.Optional<IReadOnlyList<DataBoxEdgeSkuLocationInfo>> locationInfo = default;
+            Core.Optional<IReadOnlyList<DataBoxEdgeSkuCost>> costs = default;
+            Core.Optional<DataBoxEdgeSkuSignupOption> signupOption = default;
+            Core.Optional<DataBoxEdgeSkuVersion> version = default;
+            Core.Optional<DataBoxEdgeSkuAvailability> availability = default;
+            Core.Optional<IReadOnlyList<DataBoxEdgeShipmentType>> shipmentTypes = default;
+            Core.Optional<IReadOnlyList<DataBoxEdgeSkuCapability>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new AvailableDataBoxEdgeSku(resourceType.Value, Optional.ToNullable(name), kind.Value, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToList(locations), Optional.ToList(apiVersions), Optional.ToList(locationInfo), Optional.ToList(costs), Optional.ToNullable(signupOption), Optional.ToNullable(version), Optional.ToNullable(availability), Optional.ToList(shipmentTypes), Optional.ToList(capabilities));
+            return new AvailableDataBoxEdgeSku(resourceType.Value, Core.Optional.ToNullable(name), kind.Value, Core.Optional.ToNullable(tier), size.Value, family.Value, Core.Optional.ToList(locations), Core.Optional.ToList(apiVersions), Core.Optional.ToList(locationInfo), Core.Optional.ToList(costs), Core.Optional.ToNullable(signupOption), Core.Optional.ToNullable(version), Core.Optional.ToNullable(availability), Core.Optional.ToList(shipmentTypes), Core.Optional.ToList(capabilities));
         }
     }
 }

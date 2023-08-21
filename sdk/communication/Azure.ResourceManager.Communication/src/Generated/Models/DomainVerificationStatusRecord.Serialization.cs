@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 return null;
             }
-            Optional<DomainRecordVerificationStatus> status = default;
-            Optional<string> errorCode = default;
+            Core.Optional<DomainRecordVerificationStatus> status = default;
+            Core.Optional<string> errorCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Communication.Models
                     continue;
                 }
             }
-            return new DomainVerificationStatusRecord(Optional.ToNullable(status), errorCode.Value);
+            return new DomainVerificationStatusRecord(Core.Optional.ToNullable(status), errorCode.Value);
         }
     }
 }

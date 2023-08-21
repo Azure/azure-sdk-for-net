@@ -11,17 +11,17 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ExecuteDataFlowActivityComputeType : IUtf8JsonSerializable
+    public partial class ExecuteDataFlowActivityComputeType : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComputeType))
+            if (Core.Optional.IsDefined(ComputeType))
             {
                 writer.WritePropertyName("computeType"u8);
                 JsonSerializer.Serialize(writer, ComputeType);
             }
-            if (Optional.IsDefined(CoreCount))
+            if (Core.Optional.IsDefined(CoreCount))
             {
                 writer.WritePropertyName("coreCount"u8);
                 JsonSerializer.Serialize(writer, CoreCount);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> computeType = default;
-            Optional<DataFactoryElement<int>> coreCount = default;
+            Core.Optional<DataFactoryElement<string>> computeType = default;
+            Core.Optional<DataFactoryElement<int>> coreCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeType"u8))

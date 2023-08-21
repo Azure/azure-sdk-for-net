@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of UserList. </summary>
         internal UserList()
         {
-            Value = new ChangeTrackingList<DataBoxEdgeUserData>();
+            Value = new Core.ChangeTrackingList<DataBoxEdgeUserData>();
         }
 
         /// <summary> Initializes a new instance of UserList. </summary>

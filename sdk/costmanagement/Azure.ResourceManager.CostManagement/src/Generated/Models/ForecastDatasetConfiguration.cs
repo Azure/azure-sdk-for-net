@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of ForecastDatasetConfiguration. </summary>
         public ForecastDatasetConfiguration()
         {
-            Columns = new ChangeTrackingList<string>();
+            Columns = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Array of column names to be included in the forecast. Any valid forecast column name is allowed. If not provided, then forecast includes all columns. </summary>

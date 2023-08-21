@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Argument.AssertNotNull(serviceUri, nameof(serviceUri));
 
             ServiceUri = serviceUri;
-            CustomHeaders = new ChangeTrackingDictionary<string, string>();
+            CustomHeaders = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryWebhookCallbackConfig. </summary>

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeClusterStorageViewInfo : IUtf8JsonSerializable
+    public partial class EdgeClusterStorageViewInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClusterTotalStorageInMB))
+            if (Core.Optional.IsDefined(ClusterTotalStorageInMB))
             {
                 writer.WritePropertyName("clusterTotalStorageMb"u8);
                 writer.WriteNumberValue(ClusterTotalStorageInMB.Value);
             }
-            if (Optional.IsDefined(ClusterFreeStorageInMB))
+            if (Core.Optional.IsDefined(ClusterFreeStorageInMB))
             {
                 writer.WritePropertyName("clusterFreeStorageMb"u8);
                 writer.WriteNumberValue(ClusterFreeStorageInMB.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<double> clusterTotalStorageMb = default;
-            Optional<double> clusterFreeStorageMb = default;
+            Core.Optional<double> clusterTotalStorageMb = default;
+            Core.Optional<double> clusterFreeStorageMb = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterTotalStorageMb"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new EdgeClusterStorageViewInfo(Optional.ToNullable(clusterTotalStorageMb), Optional.ToNullable(clusterFreeStorageMb));
+            return new EdgeClusterStorageViewInfo(Core.Optional.ToNullable(clusterTotalStorageMb), Core.Optional.ToNullable(clusterFreeStorageMb));
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContainerServicePrivateLinkResourceData>> value = default;
+            Core.Optional<IReadOnlyList<ContainerServicePrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ContainerServicePrivateLinkResourcesListResult(Optional.ToList(value));
+            return new ContainerServicePrivateLinkResourcesListResult(Core.Optional.ToList(value));
         }
     }
 }

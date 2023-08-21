@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public ContainerRegistryNetworkRuleSet(ContainerRegistryNetworkRuleDefaultAction defaultAction)
         {
             DefaultAction = defaultAction;
-            IPRules = new ChangeTrackingList<ContainerRegistryIPRule>();
+            IPRules = new Core.ChangeTrackingList<ContainerRegistryIPRule>();
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryNetworkRuleSet. </summary>

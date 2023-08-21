@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> publicKey = default;
-            Optional<string> privateKey = default;
-            Optional<DateTimeOffset> expiryTimeInUtc = default;
+            Core.Optional<string> publicKey = default;
+            Core.Optional<string> privateKey = default;
+            Core.Optional<DateTimeOffset> expiryTimeInUtc = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicKey"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new GenerateCertResult(publicKey.Value, privateKey.Value, Optional.ToNullable(expiryTimeInUtc));
+            return new GenerateCertResult(publicKey.Value, privateKey.Value, Core.Optional.ToNullable(expiryTimeInUtc));
         }
     }
 }

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of GalleryImagePatch. </summary>
         public GalleryImagePatch()
         {
-            Features = new ChangeTrackingList<GalleryImageFeature>();
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Features = new Core.ChangeTrackingList<GalleryImageFeature>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The description of this gallery image definition resource. This property is updatable. </summary>

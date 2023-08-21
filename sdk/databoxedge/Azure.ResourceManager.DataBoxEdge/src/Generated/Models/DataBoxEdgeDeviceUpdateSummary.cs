@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of DataBoxEdgeDeviceUpdateSummary. </summary>
         public DataBoxEdgeDeviceUpdateSummary()
         {
-            UpdateTitles = new ChangeTrackingList<string>();
-            Updates = new ChangeTrackingList<DataBoxEdgeUpdateDetails>();
+            UpdateTitles = new Core.ChangeTrackingList<string>();
+            Updates = new Core.ChangeTrackingList<DataBoxEdgeUpdateDetails>();
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeDeviceUpdateSummary. </summary>

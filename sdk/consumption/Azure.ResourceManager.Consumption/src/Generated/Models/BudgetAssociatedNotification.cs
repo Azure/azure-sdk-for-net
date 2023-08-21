@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Consumption.Models
             Operator = @operator;
             Threshold = threshold;
             ContactEmails = contactEmails.ToList();
-            ContactRoles = new ChangeTrackingList<string>();
-            ContactGroups = new ChangeTrackingList<string>();
+            ContactRoles = new Core.ChangeTrackingList<string>();
+            ContactGroups = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of BudgetAssociatedNotification. </summary>

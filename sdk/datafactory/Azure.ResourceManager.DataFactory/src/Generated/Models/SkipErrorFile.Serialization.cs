@@ -11,17 +11,17 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SkipErrorFile : IUtf8JsonSerializable
+    public partial class SkipErrorFile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FileMissing))
+            if (Core.Optional.IsDefined(FileMissing))
             {
                 writer.WritePropertyName("fileMissing"u8);
                 JsonSerializer.Serialize(writer, FileMissing);
             }
-            if (Optional.IsDefined(DataInconsistency))
+            if (Core.Optional.IsDefined(DataInconsistency))
             {
                 writer.WritePropertyName("dataInconsistency"u8);
                 JsonSerializer.Serialize(writer, DataInconsistency);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<bool>> fileMissing = default;
-            Optional<DataFactoryElement<bool>> dataInconsistency = default;
+            Core.Optional<DataFactoryElement<bool>> fileMissing = default;
+            Core.Optional<DataFactoryElement<bool>> dataInconsistency = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileMissing"u8))

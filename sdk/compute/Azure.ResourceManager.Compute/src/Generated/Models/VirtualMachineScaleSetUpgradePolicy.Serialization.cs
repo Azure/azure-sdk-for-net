@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineScaleSetUpgradePolicy : IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetUpgradePolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Mode))
+            if (Core.Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToSerialString());
             }
-            if (Optional.IsDefined(RollingUpgradePolicy))
+            if (Core.Optional.IsDefined(RollingUpgradePolicy))
             {
                 writer.WritePropertyName("rollingUpgradePolicy"u8);
                 writer.WriteObjectValue(RollingUpgradePolicy);
             }
-            if (Optional.IsDefined(AutomaticOSUpgradePolicy))
+            if (Core.Optional.IsDefined(AutomaticOSUpgradePolicy))
             {
                 writer.WritePropertyName("automaticOSUpgradePolicy"u8);
                 writer.WriteObjectValue(AutomaticOSUpgradePolicy);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<VirtualMachineScaleSetUpgradeMode> mode = default;
-            Optional<RollingUpgradePolicy> rollingUpgradePolicy = default;
-            Optional<AutomaticOSUpgradePolicy> automaticOSUpgradePolicy = default;
+            Core.Optional<VirtualMachineScaleSetUpgradeMode> mode = default;
+            Core.Optional<RollingUpgradePolicy> rollingUpgradePolicy = default;
+            Core.Optional<AutomaticOSUpgradePolicy> automaticOSUpgradePolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mode"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetUpgradePolicy(Optional.ToNullable(mode), rollingUpgradePolicy.Value, automaticOSUpgradePolicy.Value);
+            return new VirtualMachineScaleSetUpgradePolicy(Core.Optional.ToNullable(mode), rollingUpgradePolicy.Value, automaticOSUpgradePolicy.Value);
         }
     }
 }

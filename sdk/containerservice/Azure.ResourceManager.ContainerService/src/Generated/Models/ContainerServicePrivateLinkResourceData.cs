@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of ContainerServicePrivateLinkResourceData. </summary>
         public ContainerServicePrivateLinkResourceData()
         {
-            RequiredMembers = new ChangeTrackingList<string>();
+            RequiredMembers = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ContainerServicePrivateLinkResourceData. </summary>

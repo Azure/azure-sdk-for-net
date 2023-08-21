@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ComputeApiError. </summary>
         internal ComputeApiError()
         {
-            Details = new ChangeTrackingList<ComputeApiErrorBase>();
+            Details = new Core.ChangeTrackingList<ComputeApiErrorBase>();
         }
 
         /// <summary> Initializes a new instance of ComputeApiError. </summary>

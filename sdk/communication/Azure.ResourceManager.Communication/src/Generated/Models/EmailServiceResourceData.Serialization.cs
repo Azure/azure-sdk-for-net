@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Communication
 {
-    public partial class EmailServiceResourceData : IUtf8JsonSerializable
+    public partial class EmailServiceResourceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Communication
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataLocation))
+            if (Core.Optional.IsDefined(DataLocation))
             {
                 writer.WritePropertyName("dataLocation"u8);
                 writer.WriteStringValue(DataLocation);
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.Communication
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EmailServicesProvisioningState> provisioningState = default;
-            Optional<string> dataLocation = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<EmailServicesProvisioningState> provisioningState = default;
+            Core.Optional<string> dataLocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Communication
                     continue;
                 }
             }
-            return new EmailServiceResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), dataLocation.Value);
+            return new EmailServiceResourceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(provisioningState), dataLocation.Value);
         }
     }
 }

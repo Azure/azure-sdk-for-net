@@ -11,21 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class InitContainerDefinitionContent : IUtf8JsonSerializable
+    public partial class InitContainerDefinitionContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Image))
+            if (Core.Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
                 writer.WriteStringValue(Image);
             }
-            if (Optional.IsCollectionDefined(Command))
+            if (Core.Optional.IsCollectionDefined(Command))
             {
                 writer.WritePropertyName("command"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EnvironmentVariables))
+            if (Core.Optional.IsCollectionDefined(EnvironmentVariables))
             {
                 writer.WritePropertyName("environmentVariables"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VolumeMounts))
+            if (Core.Optional.IsCollectionDefined(VolumeMounts))
             {
                 writer.WritePropertyName("volumeMounts"u8);
                 writer.WriteStartArray();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SecurityContext))
+            if (Core.Optional.IsDefined(SecurityContext))
             {
                 writer.WritePropertyName("securityContext"u8);
                 writer.WriteObjectValue(SecurityContext);
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return null;
             }
             string name = default;
-            Optional<string> image = default;
-            Optional<IList<string>> command = default;
-            Optional<IList<ContainerEnvironmentVariable>> environmentVariables = default;
-            Optional<InitContainerPropertiesDefinitionInstanceView> instanceView = default;
-            Optional<IList<ContainerVolumeMount>> volumeMounts = default;
-            Optional<ContainerSecurityContextDefinition> securityContext = default;
+            Core.Optional<string> image = default;
+            Core.Optional<IList<string>> command = default;
+            Core.Optional<IList<ContainerEnvironmentVariable>> environmentVariables = default;
+            Core.Optional<InitContainerPropertiesDefinitionInstanceView> instanceView = default;
+            Core.Optional<IList<ContainerVolumeMount>> volumeMounts = default;
+            Core.Optional<ContainerSecurityContextDefinition> securityContext = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new InitContainerDefinitionContent(name, image.Value, Optional.ToList(command), Optional.ToList(environmentVariables), instanceView.Value, Optional.ToList(volumeMounts), securityContext.Value);
+            return new InitContainerDefinitionContent(name, image.Value, Core.Optional.ToList(command), Core.Optional.ToList(environmentVariables), instanceView.Value, Core.Optional.ToList(volumeMounts), securityContext.Value);
         }
     }
 }

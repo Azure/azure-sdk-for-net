@@ -16,7 +16,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Initializes a new instance of AcrManifests. </summary>
         internal AcrManifests()
         {
-            Manifests = new ChangeTrackingList<ManifestAttributesBase>();
+            Manifests = new Core.ChangeTrackingList<ManifestAttributesBase>();
         }
 
         /// <summary> Initializes a new instance of AcrManifests. </summary>

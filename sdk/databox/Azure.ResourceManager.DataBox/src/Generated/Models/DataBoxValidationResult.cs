@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of DataBoxValidationResult. </summary>
         internal DataBoxValidationResult()
         {
-            IndividualResponseDetails = new ChangeTrackingList<DataBoxValidationInputResult>();
+            IndividualResponseDetails = new Core.ChangeTrackingList<DataBoxValidationInputResult>();
         }
 
         /// <summary> Initializes a new instance of DataBoxValidationResult. </summary>

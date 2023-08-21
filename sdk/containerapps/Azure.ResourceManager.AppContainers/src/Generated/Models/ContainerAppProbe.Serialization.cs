@@ -10,52 +10,52 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppProbe : IUtf8JsonSerializable
+    public partial class ContainerAppProbe : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FailureThreshold))
+            if (Core.Optional.IsDefined(FailureThreshold))
             {
                 writer.WritePropertyName("failureThreshold"u8);
                 writer.WriteNumberValue(FailureThreshold.Value);
             }
-            if (Optional.IsDefined(HttpGet))
+            if (Core.Optional.IsDefined(HttpGet))
             {
                 writer.WritePropertyName("httpGet"u8);
                 writer.WriteObjectValue(HttpGet);
             }
-            if (Optional.IsDefined(InitialDelaySeconds))
+            if (Core.Optional.IsDefined(InitialDelaySeconds))
             {
                 writer.WritePropertyName("initialDelaySeconds"u8);
                 writer.WriteNumberValue(InitialDelaySeconds.Value);
             }
-            if (Optional.IsDefined(PeriodSeconds))
+            if (Core.Optional.IsDefined(PeriodSeconds))
             {
                 writer.WritePropertyName("periodSeconds"u8);
                 writer.WriteNumberValue(PeriodSeconds.Value);
             }
-            if (Optional.IsDefined(SuccessThreshold))
+            if (Core.Optional.IsDefined(SuccessThreshold))
             {
                 writer.WritePropertyName("successThreshold"u8);
                 writer.WriteNumberValue(SuccessThreshold.Value);
             }
-            if (Optional.IsDefined(TcpSocket))
+            if (Core.Optional.IsDefined(TcpSocket))
             {
                 writer.WritePropertyName("tcpSocket"u8);
                 writer.WriteObjectValue(TcpSocket);
             }
-            if (Optional.IsDefined(TerminationGracePeriodSeconds))
+            if (Core.Optional.IsDefined(TerminationGracePeriodSeconds))
             {
                 writer.WritePropertyName("terminationGracePeriodSeconds"u8);
                 writer.WriteNumberValue(TerminationGracePeriodSeconds.Value);
             }
-            if (Optional.IsDefined(TimeoutSeconds))
+            if (Core.Optional.IsDefined(TimeoutSeconds))
             {
                 writer.WritePropertyName("timeoutSeconds"u8);
                 writer.WriteNumberValue(TimeoutSeconds.Value);
             }
-            if (Optional.IsDefined(ProbeType))
+            if (Core.Optional.IsDefined(ProbeType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ProbeType.Value.ToString());
@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<int> failureThreshold = default;
-            Optional<ContainerAppHttpRequestInfo> httpGet = default;
-            Optional<int> initialDelaySeconds = default;
-            Optional<int> periodSeconds = default;
-            Optional<int> successThreshold = default;
-            Optional<ContainerAppTcpSocketRequestInfo> tcpSocket = default;
-            Optional<long> terminationGracePeriodSeconds = default;
-            Optional<int> timeoutSeconds = default;
-            Optional<ContainerAppProbeType> type = default;
+            Core.Optional<int> failureThreshold = default;
+            Core.Optional<ContainerAppHttpRequestInfo> httpGet = default;
+            Core.Optional<int> initialDelaySeconds = default;
+            Core.Optional<int> periodSeconds = default;
+            Core.Optional<int> successThreshold = default;
+            Core.Optional<ContainerAppTcpSocketRequestInfo> tcpSocket = default;
+            Core.Optional<long> terminationGracePeriodSeconds = default;
+            Core.Optional<int> timeoutSeconds = default;
+            Core.Optional<ContainerAppProbeType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("failureThreshold"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppProbe(Optional.ToNullable(failureThreshold), httpGet.Value, Optional.ToNullable(initialDelaySeconds), Optional.ToNullable(periodSeconds), Optional.ToNullable(successThreshold), tcpSocket.Value, Optional.ToNullable(terminationGracePeriodSeconds), Optional.ToNullable(timeoutSeconds), Optional.ToNullable(type));
+            return new ContainerAppProbe(Core.Optional.ToNullable(failureThreshold), httpGet.Value, Core.Optional.ToNullable(initialDelaySeconds), Core.Optional.ToNullable(periodSeconds), Core.Optional.ToNullable(successThreshold), tcpSocket.Value, Core.Optional.ToNullable(terminationGracePeriodSeconds), Core.Optional.ToNullable(timeoutSeconds), Core.Optional.ToNullable(type));
         }
     }
 }

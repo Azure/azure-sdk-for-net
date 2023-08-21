@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
             KubernetesVersion = kubernetesVersion;
             OSType = osType;
-            Upgrades = new ChangeTrackingList<ManagedClusterPoolUpgradeProfileUpgradesItem>();
+            Upgrades = new Core.ChangeTrackingList<ManagedClusterPoolUpgradeProfileUpgradesItem>();
         }
 
         /// <summary> Initializes a new instance of ManagedClusterPoolUpgradeProfile. </summary>

@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> serialNumber = default;
-            Optional<string> carrierName = default;
-            Optional<string> trackingId = default;
-            Optional<Uri> trackingUrl = default;
+            Core.Optional<string> serialNumber = default;
+            Core.Optional<string> carrierName = default;
+            Core.Optional<string> trackingId = default;
+            Core.Optional<Uri> trackingUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serialNumber"u8))

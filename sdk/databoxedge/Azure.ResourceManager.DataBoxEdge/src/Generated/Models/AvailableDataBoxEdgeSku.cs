@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of AvailableDataBoxEdgeSku. </summary>
         internal AvailableDataBoxEdgeSku()
         {
-            Locations = new ChangeTrackingList<AzureLocation>();
-            ApiVersions = new ChangeTrackingList<string>();
-            LocationInfo = new ChangeTrackingList<DataBoxEdgeSkuLocationInfo>();
-            Costs = new ChangeTrackingList<DataBoxEdgeSkuCost>();
-            ShipmentTypes = new ChangeTrackingList<DataBoxEdgeShipmentType>();
-            Capabilities = new ChangeTrackingList<DataBoxEdgeSkuCapability>();
+            Locations = new Core.ChangeTrackingList<AzureLocation>();
+            ApiVersions = new Core.ChangeTrackingList<string>();
+            LocationInfo = new Core.ChangeTrackingList<DataBoxEdgeSkuLocationInfo>();
+            Costs = new Core.ChangeTrackingList<DataBoxEdgeSkuCost>();
+            ShipmentTypes = new Core.ChangeTrackingList<DataBoxEdgeShipmentType>();
+            Capabilities = new Core.ChangeTrackingList<DataBoxEdgeSkuCapability>();
         }
 
         /// <summary> Initializes a new instance of AvailableDataBoxEdgeSku. </summary>

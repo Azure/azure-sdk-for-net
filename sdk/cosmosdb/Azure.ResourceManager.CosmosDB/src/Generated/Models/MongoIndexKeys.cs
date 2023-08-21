@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of MongoIndexKeys. </summary>
         public MongoIndexKeys()
         {
-            Keys = new ChangeTrackingList<string>();
+            Keys = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of MongoIndexKeys. </summary>

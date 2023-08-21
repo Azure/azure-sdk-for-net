@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
-    internal class CosmosDBForPostgreSqlPrivateEndpointConnectionOperationSource : IOperationSource<CosmosDBForPostgreSqlPrivateEndpointConnectionResource>
+    internal class CosmosDBForPostgreSqlPrivateEndpointConnectionOperationSource : Core.IOperationSource<CosmosDBForPostgreSqlPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             _client = client;
         }
 
-        CosmosDBForPostgreSqlPrivateEndpointConnectionResource IOperationSource<CosmosDBForPostgreSqlPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CosmosDBForPostgreSqlPrivateEndpointConnectionResource Core.IOperationSource<CosmosDBForPostgreSqlPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CosmosDBForPostgreSqlPrivateEndpointConnectionData.DeserializeCosmosDBForPostgreSqlPrivateEndpointConnectionData(document.RootElement);
             return new CosmosDBForPostgreSqlPrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<CosmosDBForPostgreSqlPrivateEndpointConnectionResource> IOperationSource<CosmosDBForPostgreSqlPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CosmosDBForPostgreSqlPrivateEndpointConnectionResource> Core.IOperationSource<CosmosDBForPostgreSqlPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CosmosDBForPostgreSqlPrivateEndpointConnectionData.DeserializeCosmosDBForPostgreSqlPrivateEndpointConnectionData(document.RootElement);

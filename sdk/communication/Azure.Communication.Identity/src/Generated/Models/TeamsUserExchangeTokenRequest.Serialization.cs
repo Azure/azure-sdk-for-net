@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.Identity.Models
 {
-    internal partial class TeamsUserExchangeTokenRequest : IUtf8JsonSerializable
+    internal partial class TeamsUserExchangeTokenRequest : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("token"u8);

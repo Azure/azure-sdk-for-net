@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <summary> Initializes a new instance of CosmosDBForPostgreSqlPrivateLinkResourceListResult. </summary>
         internal CosmosDBForPostgreSqlPrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<CosmosDBForPostgreSqlPrivateLinkResourceData>();
+            Value = new Core.ChangeTrackingList<CosmosDBForPostgreSqlPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of CosmosDBForPostgreSqlPrivateLinkResourceListResult. </summary>

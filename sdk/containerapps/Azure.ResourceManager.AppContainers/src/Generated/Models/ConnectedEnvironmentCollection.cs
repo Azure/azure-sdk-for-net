@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ConnectedEnvironmentCollection. </summary>
         internal ConnectedEnvironmentCollection()
         {
-            Value = new ChangeTrackingList<ContainerAppConnectedEnvironmentData>();
+            Value = new Core.ChangeTrackingList<ContainerAppConnectedEnvironmentData>();
         }
 
         /// <summary> Initializes a new instance of ConnectedEnvironmentCollection. </summary>

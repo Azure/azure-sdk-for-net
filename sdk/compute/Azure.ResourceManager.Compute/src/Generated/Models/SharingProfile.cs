@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of SharingProfile. </summary>
         public SharingProfile()
         {
-            Groups = new ChangeTrackingList<SharingProfileGroup>();
+            Groups = new Core.ChangeTrackingList<SharingProfileGroup>();
         }
 
         /// <summary> Initializes a new instance of SharingProfile. </summary>

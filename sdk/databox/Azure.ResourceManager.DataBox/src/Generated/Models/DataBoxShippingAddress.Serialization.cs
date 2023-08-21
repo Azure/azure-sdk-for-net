@@ -10,29 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxShippingAddress : IUtf8JsonSerializable
+    public partial class DataBoxShippingAddress : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("streetAddress1"u8);
             writer.WriteStringValue(StreetAddress1);
-            if (Optional.IsDefined(StreetAddress2))
+            if (Core.Optional.IsDefined(StreetAddress2))
             {
                 writer.WritePropertyName("streetAddress2"u8);
                 writer.WriteStringValue(StreetAddress2);
             }
-            if (Optional.IsDefined(StreetAddress3))
+            if (Core.Optional.IsDefined(StreetAddress3))
             {
                 writer.WritePropertyName("streetAddress3"u8);
                 writer.WriteStringValue(StreetAddress3);
             }
-            if (Optional.IsDefined(City))
+            if (Core.Optional.IsDefined(City))
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (Optional.IsDefined(StateOrProvince))
+            if (Core.Optional.IsDefined(StateOrProvince))
             {
                 writer.WritePropertyName("stateOrProvince"u8);
                 writer.WriteStringValue(StateOrProvince);
@@ -41,27 +41,27 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStringValue(Country);
             writer.WritePropertyName("postalCode"u8);
             writer.WriteStringValue(PostalCode);
-            if (Optional.IsDefined(ZipExtendedCode))
+            if (Core.Optional.IsDefined(ZipExtendedCode))
             {
                 writer.WritePropertyName("zipExtendedCode"u8);
                 writer.WriteStringValue(ZipExtendedCode);
             }
-            if (Optional.IsDefined(CompanyName))
+            if (Core.Optional.IsDefined(CompanyName))
             {
                 writer.WritePropertyName("companyName"u8);
                 writer.WriteStringValue(CompanyName);
             }
-            if (Optional.IsDefined(AddressType))
+            if (Core.Optional.IsDefined(AddressType))
             {
                 writer.WritePropertyName("addressType"u8);
                 writer.WriteStringValue(AddressType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(SkipAddressValidation))
+            if (Core.Optional.IsDefined(SkipAddressValidation))
             {
                 writer.WritePropertyName("skipAddressValidation"u8);
                 writer.WriteBooleanValue(SkipAddressValidation.Value);
             }
-            if (Optional.IsDefined(TaxIdentificationNumber))
+            if (Core.Optional.IsDefined(TaxIdentificationNumber))
             {
                 writer.WritePropertyName("taxIdentificationNumber"u8);
                 writer.WriteStringValue(TaxIdentificationNumber);
@@ -76,17 +76,17 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             string streetAddress1 = default;
-            Optional<string> streetAddress2 = default;
-            Optional<string> streetAddress3 = default;
-            Optional<string> city = default;
-            Optional<string> stateOrProvince = default;
+            Core.Optional<string> streetAddress2 = default;
+            Core.Optional<string> streetAddress3 = default;
+            Core.Optional<string> city = default;
+            Core.Optional<string> stateOrProvince = default;
             string country = default;
             string postalCode = default;
-            Optional<string> zipExtendedCode = default;
-            Optional<string> companyName = default;
-            Optional<DataBoxShippingAddressType> addressType = default;
-            Optional<bool> skipAddressValidation = default;
-            Optional<string> taxIdentificationNumber = default;
+            Core.Optional<string> zipExtendedCode = default;
+            Core.Optional<string> companyName = default;
+            Core.Optional<DataBoxShippingAddressType> addressType = default;
+            Core.Optional<bool> skipAddressValidation = default;
+            Core.Optional<string> taxIdentificationNumber = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streetAddress1"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataBoxShippingAddress(streetAddress1, streetAddress2.Value, streetAddress3.Value, city.Value, stateOrProvince.Value, country, postalCode, zipExtendedCode.Value, companyName.Value, Optional.ToNullable(addressType), Optional.ToNullable(skipAddressValidation), taxIdentificationNumber.Value);
+            return new DataBoxShippingAddress(streetAddress1, streetAddress2.Value, streetAddress3.Value, city.Value, stateOrProvince.Value, country, postalCode, zipExtendedCode.Value, companyName.Value, Core.Optional.ToNullable(addressType), Core.Optional.ToNullable(skipAddressValidation), taxIdentificationNumber.Value);
         }
     }
 }

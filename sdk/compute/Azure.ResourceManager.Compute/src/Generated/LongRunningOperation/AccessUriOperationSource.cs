@@ -14,15 +14,15 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal class AccessUriOperationSource : IOperationSource<AccessUri>
+    internal class AccessUriOperationSource : Core.IOperationSource<AccessUri>
     {
-        AccessUri IOperationSource<AccessUri>.CreateResult(Response response, CancellationToken cancellationToken)
+        AccessUri Core.IOperationSource<AccessUri>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return AccessUri.DeserializeAccessUri(document.RootElement);
         }
 
-        async ValueTask<AccessUri> IOperationSource<AccessUri>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AccessUri> Core.IOperationSource<AccessUri>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return AccessUri.DeserializeAccessUri(document.RootElement);

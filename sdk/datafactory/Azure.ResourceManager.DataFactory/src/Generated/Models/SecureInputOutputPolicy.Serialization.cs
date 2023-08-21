@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SecureInputOutputPolicy : IUtf8JsonSerializable
+    public partial class SecureInputOutputPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsSecureInputEnabled))
+            if (Core.Optional.IsDefined(IsSecureInputEnabled))
             {
                 writer.WritePropertyName("secureInput"u8);
                 writer.WriteBooleanValue(IsSecureInputEnabled.Value);
             }
-            if (Optional.IsDefined(IsSecureOutputEnabled))
+            if (Core.Optional.IsDefined(IsSecureOutputEnabled))
             {
                 writer.WritePropertyName("secureOutput"u8);
                 writer.WriteBooleanValue(IsSecureOutputEnabled.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<bool> secureInput = default;
-            Optional<bool> secureOutput = default;
+            Core.Optional<bool> secureInput = default;
+            Core.Optional<bool> secureOutput = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secureInput"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new SecureInputOutputPolicy(Optional.ToNullable(secureInput), Optional.ToNullable(secureOutput));
+            return new SecureInputOutputPolicy(Core.Optional.ToNullable(secureInput), Core.Optional.ToNullable(secureOutput));
         }
     }
 }

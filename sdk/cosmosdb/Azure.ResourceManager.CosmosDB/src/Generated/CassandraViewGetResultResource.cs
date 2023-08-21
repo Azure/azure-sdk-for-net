@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cassandraViewGetResultCassandraResourcesRestClient.DeleteCassandraViewAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation(_cassandraViewGetResultCassandraResourcesClientDiagnostics, Pipeline, _cassandraViewGetResultCassandraResourcesRestClient.CreateDeleteCassandraViewRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_cassandraViewGetResultCassandraResourcesClientDiagnostics, Pipeline, _cassandraViewGetResultCassandraResourcesRestClient.CreateDeleteCassandraViewRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cassandraViewGetResultCassandraResourcesRestClient.DeleteCassandraView(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation(_cassandraViewGetResultCassandraResourcesClientDiagnostics, Pipeline, _cassandraViewGetResultCassandraResourcesRestClient.CreateDeleteCassandraViewRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation(_cassandraViewGetResultCassandraResourcesClientDiagnostics, Pipeline, _cassandraViewGetResultCassandraResourcesRestClient.CreateDeleteCassandraViewRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cassandraViewGetResultCassandraResourcesRestClient.CreateUpdateCassandraViewAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CassandraViewGetResultResource>(new CassandraViewGetResultOperationSource(Client), _cassandraViewGetResultCassandraResourcesClientDiagnostics, Pipeline, _cassandraViewGetResultCassandraResourcesRestClient.CreateCreateUpdateCassandraViewRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CassandraViewGetResultResource>(new CassandraViewGetResultOperationSource(Client), _cassandraViewGetResultCassandraResourcesClientDiagnostics, Pipeline, _cassandraViewGetResultCassandraResourcesRestClient.CreateCreateUpdateCassandraViewRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cassandraViewGetResultCassandraResourcesRestClient.CreateUpdateCassandraView(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<CassandraViewGetResultResource>(new CassandraViewGetResultOperationSource(Client), _cassandraViewGetResultCassandraResourcesClientDiagnostics, Pipeline, _cassandraViewGetResultCassandraResourcesRestClient.CreateCreateUpdateCassandraViewRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CassandraViewGetResultResource>(new CassandraViewGetResultOperationSource(Client), _cassandraViewGetResultCassandraResourcesClientDiagnostics, Pipeline, _cassandraViewGetResultCassandraResourcesRestClient.CreateCreateUpdateCassandraViewRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

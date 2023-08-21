@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <summary> Initializes a new instance of KpiGroupByMetadata. </summary>
         internal KpiGroupByMetadata()
         {
-            DisplayName = new ChangeTrackingDictionary<string, string>();
+            DisplayName = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of KpiGroupByMetadata. </summary>

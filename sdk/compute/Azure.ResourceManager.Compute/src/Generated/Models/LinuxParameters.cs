@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of LinuxParameters. </summary>
         public LinuxParameters()
         {
-            ClassificationsToInclude = new ChangeTrackingList<VmGuestPatchClassificationForLinux>();
-            PackageNameMasksToInclude = new ChangeTrackingList<string>();
-            PackageNameMasksToExclude = new ChangeTrackingList<string>();
+            ClassificationsToInclude = new Core.ChangeTrackingList<VmGuestPatchClassificationForLinux>();
+            PackageNameMasksToInclude = new Core.ChangeTrackingList<string>();
+            PackageNameMasksToExclude = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> The update classifications to select when installing patches for Linux. </summary>

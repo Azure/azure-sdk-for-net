@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<EdgeProfileSubscription> subscription = default;
+            Core.Optional<EdgeProfileSubscription> subscription = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subscription"u8))

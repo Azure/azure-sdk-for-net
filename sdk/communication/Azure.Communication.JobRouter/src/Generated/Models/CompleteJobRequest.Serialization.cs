@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    internal partial class CompleteJobRequest : IUtf8JsonSerializable
+    internal partial class CompleteJobRequest : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("assignmentId"u8);
             writer.WriteStringValue(AssignmentId);
-            if (Optional.IsDefined(Note))
+            if (Core.Optional.IsDefined(Note))
             {
                 writer.WritePropertyName("note"u8);
                 writer.WriteStringValue(Note);

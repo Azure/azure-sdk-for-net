@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RestorePointSourceVmStorageProfile : IUtf8JsonSerializable
+    public partial class RestorePointSourceVmStorageProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(OSDisk))
+            if (Core.Optional.IsDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
                 writer.WriteObjectValue(OSDisk);
             }
-            if (Optional.IsCollectionDefined(DataDiskList))
+            if (Core.Optional.IsCollectionDefined(DataDiskList))
             {
                 writer.WritePropertyName("dataDisks"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<RestorePointSourceVmOSDisk> osDisk = default;
-            Optional<IList<RestorePointSourceVmDataDisk>> dataDisks = default;
+            Core.Optional<RestorePointSourceVmOSDisk> osDisk = default;
+            Core.Optional<IList<RestorePointSourceVmDataDisk>> dataDisks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osDisk"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new RestorePointSourceVmStorageProfile(osDisk.Value, Optional.ToList(dataDisks));
+            return new RestorePointSourceVmStorageProfile(osDisk.Value, Core.Optional.ToList(dataDisks));
         }
     }
 }

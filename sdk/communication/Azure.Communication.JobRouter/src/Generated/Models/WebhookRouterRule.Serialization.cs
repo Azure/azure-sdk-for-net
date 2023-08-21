@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class WebhookRouterRule : IUtf8JsonSerializable
+    public partial class WebhookRouterRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AuthorizationServerUri))
+            if (Core.Optional.IsDefined(AuthorizationServerUri))
             {
                 writer.WritePropertyName("authorizationServerUri"u8);
                 writer.WriteStringValue(AuthorizationServerUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ClientCredential))
+            if (Core.Optional.IsDefined(ClientCredential))
             {
                 writer.WritePropertyName("clientCredential"u8);
                 writer.WriteObjectValue(ClientCredential);
             }
-            if (Optional.IsDefined(WebhookUri))
+            if (Core.Optional.IsDefined(WebhookUri))
             {
                 writer.WritePropertyName("webhookUri"u8);
                 writer.WriteStringValue(WebhookUri.AbsoluteUri);
@@ -42,9 +42,9 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Optional<Uri> authorizationServerUri = default;
-            Optional<Oauth2ClientCredential> clientCredential = default;
-            Optional<Uri> webhookUri = default;
+            Core.Optional<Uri> authorizationServerUri = default;
+            Core.Optional<Oauth2ClientCredential> clientCredential = default;
+            Core.Optional<Uri> webhookUri = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {

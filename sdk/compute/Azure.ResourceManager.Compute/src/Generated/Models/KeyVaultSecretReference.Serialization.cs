@@ -14,9 +14,9 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     [JsonConverter(typeof(KeyVaultSecretReferenceConverter))]
-    public partial class KeyVaultSecretReference : IUtf8JsonSerializable
+    public partial class KeyVaultSecretReference : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("secretUrl"u8);

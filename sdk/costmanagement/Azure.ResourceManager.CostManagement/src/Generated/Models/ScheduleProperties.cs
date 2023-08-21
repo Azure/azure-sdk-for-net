@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         public ScheduleProperties(ScheduleFrequency frequency, DateTimeOffset startOn, DateTimeOffset endOn)
         {
             Frequency = frequency;
-            DaysOfWeek = new ChangeTrackingList<ScheduledActionDaysOfWeek>();
-            WeeksOfMonth = new ChangeTrackingList<ScheduledActionWeeksOfMonth>();
+            DaysOfWeek = new Core.ChangeTrackingList<ScheduledActionDaysOfWeek>();
+            WeeksOfMonth = new Core.ChangeTrackingList<ScheduledActionWeeksOfMonth>();
             StartOn = startOn;
             EndOn = endOn;
         }

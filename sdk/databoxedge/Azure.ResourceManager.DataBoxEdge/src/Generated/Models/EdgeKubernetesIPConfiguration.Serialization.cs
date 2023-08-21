@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> port = default;
-            Optional<string> ipAddress = default;
+            Core.Optional<string> port = default;
+            Core.Optional<string> ipAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("port"u8))

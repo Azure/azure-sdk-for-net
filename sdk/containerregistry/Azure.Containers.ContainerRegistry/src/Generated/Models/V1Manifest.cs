@@ -16,9 +16,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Initializes a new instance of V1Manifest. </summary>
         internal V1Manifest()
         {
-            FsLayers = new ChangeTrackingList<FsLayer>();
-            History = new ChangeTrackingList<History>();
-            Signatures = new ChangeTrackingList<ImageSignature>();
+            FsLayers = new Core.ChangeTrackingList<FsLayer>();
+            History = new Core.ChangeTrackingList<History>();
+            Signatures = new Core.ChangeTrackingList<ImageSignature>();
         }
 
         /// <summary> Initializes a new instance of V1Manifest. </summary>

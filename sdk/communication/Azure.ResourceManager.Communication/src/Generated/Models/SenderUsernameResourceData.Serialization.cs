@@ -12,19 +12,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Communication
 {
-    public partial class SenderUsernameResourceData : IUtf8JsonSerializable
+    public partial class SenderUsernameResourceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Username))
+            if (Core.Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.Communication
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> dataLocation = default;
-            Optional<string> username = default;
-            Optional<string> displayName = default;
-            Optional<CommunicationServiceProvisioningState> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> dataLocation = default;
+            Core.Optional<string> username = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<CommunicationServiceProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Communication
                     continue;
                 }
             }
-            return new SenderUsernameResourceData(id, name, type, systemData.Value, dataLocation.Value, username.Value, displayName.Value, Optional.ToNullable(provisioningState));
+            return new SenderUsernameResourceData(id, name, type, systemData.Value, dataLocation.Value, username.Value, displayName.Value, Core.Optional.ToNullable(provisioningState));
         }
     }
 }

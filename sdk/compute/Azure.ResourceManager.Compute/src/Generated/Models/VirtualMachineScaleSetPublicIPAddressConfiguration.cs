@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            IPTags = new ChangeTrackingList<VirtualMachineScaleSetIPTag>();
+            IPTags = new Core.ChangeTrackingList<VirtualMachineScaleSetIPTag>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetPublicIPAddressConfiguration. </summary>

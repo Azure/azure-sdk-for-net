@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
 
             Name = name;
             Script = script;
-            Parameters = new ChangeTrackingList<GalleryApplicationCustomActionParameter>();
+            Parameters = new Core.ChangeTrackingList<GalleryApplicationCustomActionParameter>();
         }
 
         /// <summary> Initializes a new instance of GalleryApplicationCustomAction. </summary>

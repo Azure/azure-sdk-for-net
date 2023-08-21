@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class AdditionalCapabilities : IUtf8JsonSerializable
+    public partial class AdditionalCapabilities : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(UltraSsdEnabled))
+            if (Core.Optional.IsDefined(UltraSsdEnabled))
             {
                 writer.WritePropertyName("ultraSSDEnabled"u8);
                 writer.WriteBooleanValue(UltraSsdEnabled.Value);
             }
-            if (Optional.IsDefined(HibernationEnabled))
+            if (Core.Optional.IsDefined(HibernationEnabled))
             {
                 writer.WritePropertyName("hibernationEnabled"u8);
                 writer.WriteBooleanValue(HibernationEnabled.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> ultraSsdEnabled = default;
-            Optional<bool> hibernationEnabled = default;
+            Core.Optional<bool> ultraSsdEnabled = default;
+            Core.Optional<bool> hibernationEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ultraSSDEnabled"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new AdditionalCapabilities(Optional.ToNullable(ultraSsdEnabled), Optional.ToNullable(hibernationEnabled));
+            return new AdditionalCapabilities(Core.Optional.ToNullable(ultraSsdEnabled), Core.Optional.ToNullable(hibernationEnabled));
         }
     }
 }

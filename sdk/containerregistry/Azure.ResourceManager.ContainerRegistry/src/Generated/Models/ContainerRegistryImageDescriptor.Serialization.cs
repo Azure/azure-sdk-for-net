@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryImageDescriptor : IUtf8JsonSerializable
+    public partial class ContainerRegistryImageDescriptor : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Registry))
+            if (Core.Optional.IsDefined(Registry))
             {
                 writer.WritePropertyName("registry"u8);
                 writer.WriteStringValue(Registry);
             }
-            if (Optional.IsDefined(Repository))
+            if (Core.Optional.IsDefined(Repository))
             {
                 writer.WritePropertyName("repository"u8);
                 writer.WriteStringValue(Repository);
             }
-            if (Optional.IsDefined(Tag))
+            if (Core.Optional.IsDefined(Tag))
             {
                 writer.WritePropertyName("tag"u8);
                 writer.WriteStringValue(Tag);
             }
-            if (Optional.IsDefined(Digest))
+            if (Core.Optional.IsDefined(Digest))
             {
                 writer.WritePropertyName("digest"u8);
                 writer.WriteStringValue(Digest);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<string> registry = default;
-            Optional<string> repository = default;
-            Optional<string> tag = default;
-            Optional<string> digest = default;
+            Core.Optional<string> registry = default;
+            Core.Optional<string> repository = default;
+            Core.Optional<string> tag = default;
+            Core.Optional<string> digest = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registry"u8))

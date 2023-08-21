@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="location"> The location. </param>
         public ContainerRegistryWebhookData(AzureLocation location) : base(location)
         {
-            Actions = new ChangeTrackingList<ContainerRegistryWebhookAction>();
+            Actions = new Core.ChangeTrackingList<ContainerRegistryWebhookAction>();
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryWebhookData. </summary>

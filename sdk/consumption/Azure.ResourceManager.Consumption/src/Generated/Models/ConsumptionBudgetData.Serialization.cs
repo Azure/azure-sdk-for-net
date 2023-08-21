@@ -14,44 +14,44 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption
 {
-    public partial class ConsumptionBudgetData : IUtf8JsonSerializable
+    public partial class ConsumptionBudgetData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Category))
+            if (Core.Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (Optional.IsDefined(Amount))
+            if (Core.Optional.IsDefined(Amount))
             {
                 writer.WritePropertyName("amount"u8);
                 writer.WriteNumberValue(Amount.Value);
             }
-            if (Optional.IsDefined(TimeGrain))
+            if (Core.Optional.IsDefined(TimeGrain))
             {
                 writer.WritePropertyName("timeGrain"u8);
                 writer.WriteStringValue(TimeGrain.Value.ToString());
             }
-            if (Optional.IsDefined(TimePeriod))
+            if (Core.Optional.IsDefined(TimePeriod))
             {
                 writer.WritePropertyName("timePeriod"u8);
                 writer.WriteObjectValue(TimePeriod);
             }
-            if (Optional.IsDefined(Filter))
+            if (Core.Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
             }
-            if (Optional.IsCollectionDefined(Notifications))
+            if (Core.Optional.IsCollectionDefined(Notifications))
             {
                 writer.WritePropertyName("notifications"u8);
                 writer.WriteStartObject();
@@ -72,19 +72,19 @@ namespace Azure.ResourceManager.Consumption
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            Core.Optional<ETag> eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<BudgetCategory> category = default;
-            Optional<decimal> amount = default;
-            Optional<BudgetTimeGrainType> timeGrain = default;
-            Optional<BudgetTimePeriod> timePeriod = default;
-            Optional<ConsumptionBudgetFilter> filter = default;
-            Optional<BudgetCurrentSpend> currentSpend = default;
-            Optional<IDictionary<string, BudgetAssociatedNotification>> notifications = default;
-            Optional<BudgetForecastSpend> forecastSpend = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<BudgetCategory> category = default;
+            Core.Optional<decimal> amount = default;
+            Core.Optional<BudgetTimeGrainType> timeGrain = default;
+            Core.Optional<BudgetTimePeriod> timePeriod = default;
+            Core.Optional<ConsumptionBudgetFilter> filter = default;
+            Core.Optional<BudgetCurrentSpend> currentSpend = default;
+            Core.Optional<IDictionary<string, BudgetAssociatedNotification>> notifications = default;
+            Core.Optional<BudgetForecastSpend> forecastSpend = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Consumption
                     continue;
                 }
             }
-            return new ConsumptionBudgetData(id, name, type, systemData.Value, Optional.ToNullable(category), Optional.ToNullable(amount), Optional.ToNullable(timeGrain), timePeriod.Value, filter.Value, currentSpend.Value, Optional.ToDictionary(notifications), forecastSpend.Value, Optional.ToNullable(eTag));
+            return new ConsumptionBudgetData(id, name, type, systemData.Value, Core.Optional.ToNullable(category), Core.Optional.ToNullable(amount), Core.Optional.ToNullable(timeGrain), timePeriod.Value, filter.Value, currentSpend.Value, Core.Optional.ToDictionary(notifications), forecastSpend.Value, Core.Optional.ToNullable(eTag));
         }
     }
 }

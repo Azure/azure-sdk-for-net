@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of ContainerRegistryImageUpdateTrigger. </summary>
         public ContainerRegistryImageUpdateTrigger()
         {
-            Images = new ChangeTrackingList<ContainerRegistryImageDescriptor>();
+            Images = new Core.ChangeTrackingList<ContainerRegistryImageDescriptor>();
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryImageUpdateTrigger. </summary>

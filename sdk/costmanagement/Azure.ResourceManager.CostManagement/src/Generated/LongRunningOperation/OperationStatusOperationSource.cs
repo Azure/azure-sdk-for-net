@@ -14,15 +14,15 @@ using Azure.ResourceManager.CostManagement.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
-    internal class OperationStatusOperationSource : IOperationSource<OperationStatus>
+    internal class OperationStatusOperationSource : Core.IOperationSource<OperationStatus>
     {
-        OperationStatus IOperationSource<OperationStatus>.CreateResult(Response response, CancellationToken cancellationToken)
+        OperationStatus Core.IOperationSource<OperationStatus>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return OperationStatus.DeserializeOperationStatus(document.RootElement);
         }
 
-        async ValueTask<OperationStatus> IOperationSource<OperationStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<OperationStatus> Core.IOperationSource<OperationStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return OperationStatus.DeserializeOperationStatus(document.RootElement);

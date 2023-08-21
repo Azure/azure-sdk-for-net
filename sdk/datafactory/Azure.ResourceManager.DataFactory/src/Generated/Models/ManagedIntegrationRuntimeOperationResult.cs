@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of ManagedIntegrationRuntimeOperationResult. </summary>
         internal ManagedIntegrationRuntimeOperationResult()
         {
-            Parameters = new ChangeTrackingList<string>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            Parameters = new Core.ChangeTrackingList<string>();
+            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ManagedIntegrationRuntimeOperationResult. </summary>

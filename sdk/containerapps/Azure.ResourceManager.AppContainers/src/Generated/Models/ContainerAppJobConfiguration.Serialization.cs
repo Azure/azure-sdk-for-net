@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppJobConfiguration : IUtf8JsonSerializable
+    public partial class ContainerAppJobConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Secrets))
+            if (Core.Optional.IsCollectionDefined(Secrets))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
@@ -30,27 +30,27 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStringValue(TriggerType.ToString());
             writer.WritePropertyName("replicaTimeout"u8);
             writer.WriteNumberValue(ReplicaTimeout);
-            if (Optional.IsDefined(ReplicaRetryLimit))
+            if (Core.Optional.IsDefined(ReplicaRetryLimit))
             {
                 writer.WritePropertyName("replicaRetryLimit"u8);
                 writer.WriteNumberValue(ReplicaRetryLimit.Value);
             }
-            if (Optional.IsDefined(ManualTriggerConfig))
+            if (Core.Optional.IsDefined(ManualTriggerConfig))
             {
                 writer.WritePropertyName("manualTriggerConfig"u8);
                 writer.WriteObjectValue(ManualTriggerConfig);
             }
-            if (Optional.IsDefined(ScheduleTriggerConfig))
+            if (Core.Optional.IsDefined(ScheduleTriggerConfig))
             {
                 writer.WritePropertyName("scheduleTriggerConfig"u8);
                 writer.WriteObjectValue(ScheduleTriggerConfig);
             }
-            if (Optional.IsDefined(EventTriggerConfig))
+            if (Core.Optional.IsDefined(EventTriggerConfig))
             {
                 writer.WritePropertyName("eventTriggerConfig"u8);
                 writer.WriteObjectValue(EventTriggerConfig);
             }
-            if (Optional.IsCollectionDefined(Registries))
+            if (Core.Optional.IsCollectionDefined(Registries))
             {
                 writer.WritePropertyName("registries"u8);
                 writer.WriteStartArray();
@@ -69,14 +69,14 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<IList<ContainerAppWritableSecret>> secrets = default;
+            Core.Optional<IList<ContainerAppWritableSecret>> secrets = default;
             ContainerAppJobTriggerType triggerType = default;
             int replicaTimeout = default;
-            Optional<int> replicaRetryLimit = default;
-            Optional<JobConfigurationManualTriggerConfig> manualTriggerConfig = default;
-            Optional<JobConfigurationScheduleTriggerConfig> scheduleTriggerConfig = default;
-            Optional<EventTriggerConfiguration> eventTriggerConfig = default;
-            Optional<IList<ContainerAppRegistryCredentials>> registries = default;
+            Core.Optional<int> replicaRetryLimit = default;
+            Core.Optional<JobConfigurationManualTriggerConfig> manualTriggerConfig = default;
+            Core.Optional<JobConfigurationScheduleTriggerConfig> scheduleTriggerConfig = default;
+            Core.Optional<EventTriggerConfiguration> eventTriggerConfig = default;
+            Core.Optional<IList<ContainerAppRegistryCredentials>> registries = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secrets"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppJobConfiguration(Optional.ToList(secrets), triggerType, replicaTimeout, Optional.ToNullable(replicaRetryLimit), manualTriggerConfig.Value, scheduleTriggerConfig.Value, eventTriggerConfig.Value, Optional.ToList(registries));
+            return new ContainerAppJobConfiguration(Core.Optional.ToList(secrets), triggerType, replicaTimeout, Core.Optional.ToNullable(replicaRetryLimit), manualTriggerConfig.Value, scheduleTriggerConfig.Value, eventTriggerConfig.Value, Core.Optional.ToList(registries));
         }
     }
 }

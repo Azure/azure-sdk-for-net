@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             EntityType entityType = default;
             string entityTypeName = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> kpiName = default;
-            Optional<IReadOnlyDictionary<string, string>> displayName = default;
-            Optional<IReadOnlyDictionary<string, string>> description = default;
+            Core.Optional<Guid> tenantId = default;
+            Core.Optional<string> kpiName = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> displayName = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> description = default;
             CalculationWindowType calculationWindow = default;
-            Optional<string> calculationWindowFieldName = default;
+            Core.Optional<string> calculationWindowFieldName = default;
             KpiFunction function = default;
             string expression = default;
-            Optional<string> unit = default;
-            Optional<string> filter = default;
-            Optional<IReadOnlyList<string>> groupBy = default;
-            Optional<IReadOnlyList<KpiGroupByMetadata>> groupByMetadata = default;
-            Optional<IReadOnlyList<KpiParticipantProfilesMetadata>> participantProfilesMetadata = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<KpiThresholds> thresHolds = default;
-            Optional<IReadOnlyList<KpiAlias>> aliases = default;
-            Optional<IReadOnlyList<KpiExtract>> extracts = default;
+            Core.Optional<string> unit = default;
+            Core.Optional<string> filter = default;
+            Core.Optional<IReadOnlyList<string>> groupBy = default;
+            Core.Optional<IReadOnlyList<KpiGroupByMetadata>> groupByMetadata = default;
+            Core.Optional<IReadOnlyList<KpiParticipantProfilesMetadata>> participantProfilesMetadata = default;
+            Core.Optional<ProvisioningState> provisioningState = default;
+            Core.Optional<KpiThresholds> thresHolds = default;
+            Core.Optional<IReadOnlyList<KpiAlias>> aliases = default;
+            Core.Optional<IReadOnlyList<KpiExtract>> extracts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("entityType"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new KpiDefinition(entityType, entityTypeName, Optional.ToNullable(tenantId), kpiName.Value, Optional.ToDictionary(displayName), Optional.ToDictionary(description), calculationWindow, calculationWindowFieldName.Value, function, expression, unit.Value, filter.Value, Optional.ToList(groupBy), Optional.ToList(groupByMetadata), Optional.ToList(participantProfilesMetadata), Optional.ToNullable(provisioningState), thresHolds.Value, Optional.ToList(aliases), Optional.ToList(extracts));
+            return new KpiDefinition(entityType, entityTypeName, Core.Optional.ToNullable(tenantId), kpiName.Value, Core.Optional.ToDictionary(displayName), Core.Optional.ToDictionary(description), calculationWindow, calculationWindowFieldName.Value, function, expression, unit.Value, filter.Value, Core.Optional.ToList(groupBy), Core.Optional.ToList(groupByMetadata), Core.Optional.ToList(participantProfilesMetadata), Core.Optional.ToNullable(provisioningState), thresHolds.Value, Core.Optional.ToList(aliases), Core.Optional.ToList(extracts));
         }
     }
 }

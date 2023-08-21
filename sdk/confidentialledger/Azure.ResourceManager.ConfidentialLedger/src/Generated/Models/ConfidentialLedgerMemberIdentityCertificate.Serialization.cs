@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    public partial class ConfidentialLedgerMemberIdentityCertificate : IUtf8JsonSerializable
+    public partial class ConfidentialLedgerMemberIdentityCertificate : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Certificate))
+            if (Core.Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteStringValue(Certificate);
             }
-            if (Optional.IsDefined(Encryptionkey))
+            if (Core.Optional.IsDefined(Encryptionkey))
             {
                 writer.WritePropertyName("encryptionkey"u8);
                 writer.WriteStringValue(Encryptionkey);
             }
-            if (Optional.IsDefined(Tags))
+            if (Core.Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
 #if NET6_0_OR_GREATER
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             {
                 return null;
             }
-            Optional<string> certificate = default;
-            Optional<string> encryptionkey = default;
-            Optional<BinaryData> tags = default;
+            Core.Optional<string> certificate = default;
+            Core.Optional<string> encryptionkey = default;
+            Core.Optional<BinaryData> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificate"u8))

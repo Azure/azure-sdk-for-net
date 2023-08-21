@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of CloudServiceVaultSecretGroup. </summary>
         public CloudServiceVaultSecretGroup()
         {
-            VaultCertificates = new ChangeTrackingList<CloudServiceVaultCertificate>();
+            VaultCertificates = new Core.ChangeTrackingList<CloudServiceVaultCertificate>();
         }
 
         /// <summary> Initializes a new instance of CloudServiceVaultSecretGroup. </summary>

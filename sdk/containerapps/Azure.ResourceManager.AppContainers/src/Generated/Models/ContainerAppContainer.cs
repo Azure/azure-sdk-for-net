@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppContainer. </summary>
         public ContainerAppContainer()
         {
-            Probes = new ChangeTrackingList<ContainerAppProbe>();
+            Probes = new Core.ChangeTrackingList<ContainerAppProbe>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppContainer. </summary>

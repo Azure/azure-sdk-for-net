@@ -17,8 +17,8 @@ namespace Azure.Communication.MediaComposition
         /// <summary> Initializes a new instance of MediaComposition. </summary>
         public MediaComposition()
         {
-            Inputs = new ChangeTrackingDictionary<string, MediaInput>();
-            Outputs = new ChangeTrackingDictionary<string, MediaOutput>();
+            Inputs = new Core.ChangeTrackingDictionary<string, MediaInput>();
+            Outputs = new Core.ChangeTrackingDictionary<string, MediaOutput>();
         }
 
         /// <summary> Initializes a new instance of MediaComposition. </summary>

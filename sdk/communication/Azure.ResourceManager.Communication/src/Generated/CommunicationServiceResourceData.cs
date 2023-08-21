@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="location"> The location. </param>
         public CommunicationServiceResourceData(AzureLocation location) : base(location)
         {
-            LinkedDomains = new ChangeTrackingList<string>();
+            LinkedDomains = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of CommunicationServiceResourceData. </summary>

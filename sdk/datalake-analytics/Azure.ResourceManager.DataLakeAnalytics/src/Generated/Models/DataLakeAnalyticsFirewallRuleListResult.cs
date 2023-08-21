@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// <summary> Initializes a new instance of DataLakeAnalyticsFirewallRuleListResult. </summary>
         internal DataLakeAnalyticsFirewallRuleListResult()
         {
-            Value = new ChangeTrackingList<DataLakeAnalyticsFirewallRuleData>();
+            Value = new Core.ChangeTrackingList<DataLakeAnalyticsFirewallRuleData>();
         }
 
         /// <summary> Initializes a new instance of DataLakeAnalyticsFirewallRuleListResult. </summary>

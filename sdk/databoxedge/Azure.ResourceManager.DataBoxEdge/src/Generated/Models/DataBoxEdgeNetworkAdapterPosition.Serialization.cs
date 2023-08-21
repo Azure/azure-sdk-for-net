@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<DataBoxEdgeNetworkGroup> networkGroup = default;
-            Optional<int> port = default;
+            Core.Optional<DataBoxEdgeNetworkGroup> networkGroup = default;
+            Core.Optional<int> port = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkGroup"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new DataBoxEdgeNetworkAdapterPosition(Optional.ToNullable(networkGroup), Optional.ToNullable(port));
+            return new DataBoxEdgeNetworkAdapterPosition(Core.Optional.ToNullable(networkGroup), Core.Optional.ToNullable(port));
         }
     }
 }

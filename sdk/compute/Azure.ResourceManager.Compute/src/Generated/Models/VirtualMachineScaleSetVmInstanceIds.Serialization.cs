@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineScaleSetVmInstanceIds : IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetVmInstanceIds : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(InstanceIds))
+            if (Core.Optional.IsCollectionDefined(InstanceIds))
             {
                 writer.WritePropertyName("instanceIds"u8);
                 writer.WriteStartArray();

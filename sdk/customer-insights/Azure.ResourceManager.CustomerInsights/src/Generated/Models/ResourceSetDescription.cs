@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <summary> Initializes a new instance of ResourceSetDescription. </summary>
         public ResourceSetDescription()
         {
-            Elements = new ChangeTrackingList<string>();
-            Exceptions = new ChangeTrackingList<string>();
+            Elements = new Core.ChangeTrackingList<string>();
+            Exceptions = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ResourceSetDescription. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of CloudServiceRoleProfile. </summary>
         public CloudServiceRoleProfile()
         {
-            Roles = new ChangeTrackingList<CloudServiceRoleProfileProperties>();
+            Roles = new Core.ChangeTrackingList<CloudServiceRoleProfileProperties>();
         }
 
         /// <summary> Initializes a new instance of CloudServiceRoleProfile. </summary>

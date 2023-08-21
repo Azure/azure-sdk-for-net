@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class FactoryGitHubClientSecret : IUtf8JsonSerializable
+    public partial class FactoryGitHubClientSecret : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ByoaSecretAkvUri))
+            if (Core.Optional.IsDefined(ByoaSecretAkvUri))
             {
                 writer.WritePropertyName("byoaSecretAkvUrl"u8);
                 writer.WriteStringValue(ByoaSecretAkvUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ByoaSecretName))
+            if (Core.Optional.IsDefined(ByoaSecretName))
             {
                 writer.WritePropertyName("byoaSecretName"u8);
                 writer.WriteStringValue(ByoaSecretName);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<Uri> byoaSecretAkvUrl = default;
-            Optional<string> byoaSecretName = default;
+            Core.Optional<Uri> byoaSecretAkvUrl = default;
+            Core.Optional<string> byoaSecretName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("byoaSecretAkvUrl"u8))

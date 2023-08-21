@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="transferType"> Type of the transfer. </param>
         public DataTransferDetailsValidationContent(DataBoxSkuName deviceType, DataBoxJobTransferType transferType)
         {
-            DataExportDetails = new ChangeTrackingList<DataExportDetails>();
-            DataImportDetails = new ChangeTrackingList<DataImportDetails>();
+            DataExportDetails = new Core.ChangeTrackingList<DataExportDetails>();
+            DataImportDetails = new Core.ChangeTrackingList<DataImportDetails>();
             DeviceType = deviceType;
             TransferType = transferType;
             ValidationType = DataBoxValidationInputDiscriminator.ValidateDataTransferDetails;

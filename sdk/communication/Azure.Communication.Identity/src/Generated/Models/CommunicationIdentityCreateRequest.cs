@@ -17,7 +17,7 @@ namespace Azure.Communication.Identity.Models
         /// <summary> Initializes a new instance of CommunicationIdentityCreateRequest. </summary>
         public CommunicationIdentityCreateRequest()
         {
-            CreateTokenWithScopes = new ChangeTrackingList<CommunicationTokenScope>();
+            CreateTokenWithScopes = new Core.ChangeTrackingList<CommunicationTokenScope>();
         }
 
         /// <summary> Also create access token for the created identity. </summary>

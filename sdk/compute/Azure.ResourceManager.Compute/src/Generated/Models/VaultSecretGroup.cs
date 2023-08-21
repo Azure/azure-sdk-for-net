@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VaultSecretGroup. </summary>
         public VaultSecretGroup()
         {
-            VaultCertificates = new ChangeTrackingList<VaultCertificate>();
+            VaultCertificates = new Core.ChangeTrackingList<VaultCertificate>();
         }
 
         /// <summary> Initializes a new instance of VaultSecretGroup. </summary>

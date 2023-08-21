@@ -10,29 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class TargetRegion : IUtf8JsonSerializable
+    public partial class TargetRegion : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(RegionalReplicaCount))
+            if (Core.Optional.IsDefined(RegionalReplicaCount))
             {
                 writer.WritePropertyName("regionalReplicaCount"u8);
                 writer.WriteNumberValue(RegionalReplicaCount.Value);
             }
-            if (Optional.IsDefined(StorageAccountType))
+            if (Core.Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
             }
-            if (Optional.IsDefined(Encryption))
+            if (Core.Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsDefined(IsExcludedFromLatest))
+            if (Core.Optional.IsDefined(IsExcludedFromLatest))
             {
                 writer.WritePropertyName("excludeFromLatest"u8);
                 writer.WriteBooleanValue(IsExcludedFromLatest.Value);
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string name = default;
-            Optional<int> regionalReplicaCount = default;
-            Optional<ImageStorageAccountType> storageAccountType = default;
-            Optional<EncryptionImages> encryption = default;
-            Optional<bool> excludeFromLatest = default;
+            Core.Optional<int> regionalReplicaCount = default;
+            Core.Optional<ImageStorageAccountType> storageAccountType = default;
+            Core.Optional<EncryptionImages> encryption = default;
+            Core.Optional<bool> excludeFromLatest = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new TargetRegion(name, Optional.ToNullable(regionalReplicaCount), Optional.ToNullable(storageAccountType), encryption.Value, Optional.ToNullable(excludeFromLatest));
+            return new TargetRegion(name, Core.Optional.ToNullable(regionalReplicaCount), Core.Optional.ToNullable(storageAccountType), encryption.Value, Core.Optional.ToNullable(excludeFromLatest));
         }
     }
 }

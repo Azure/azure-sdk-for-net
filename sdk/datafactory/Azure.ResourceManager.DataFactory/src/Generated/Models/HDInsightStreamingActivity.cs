@@ -33,15 +33,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(output, nameof(output));
             Argument.AssertNotNull(filePaths, nameof(filePaths));
 
-            StorageLinkedServices = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
-            Arguments = new ChangeTrackingList<BinaryData>();
+            StorageLinkedServices = new Core.ChangeTrackingList<DataFactoryLinkedServiceReference>();
+            Arguments = new Core.ChangeTrackingList<BinaryData>();
             Mapper = mapper;
             Reducer = reducer;
             Input = input;
             Output = output;
             FilePaths = filePaths.ToList();
-            CommandEnvironment = new ChangeTrackingList<BinaryData>();
-            Defines = new ChangeTrackingDictionary<string, BinaryData>();
+            CommandEnvironment = new Core.ChangeTrackingList<BinaryData>();
+            Defines = new Core.ChangeTrackingDictionary<string, BinaryData>();
             ActivityType = "HDInsightStreaming";
         }
 

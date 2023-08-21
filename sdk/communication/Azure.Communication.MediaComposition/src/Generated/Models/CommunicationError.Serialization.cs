@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition.Models
 {
-    internal partial class CommunicationError : IUtf8JsonSerializable
+    internal partial class CommunicationError : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("code"u8);
@@ -31,9 +31,9 @@ namespace Azure.Communication.MediaComposition.Models
             }
             string code = default;
             string message = default;
-            Optional<string> target = default;
-            Optional<IReadOnlyList<CommunicationError>> details = default;
-            Optional<CommunicationError> innererror = default;
+            Core.Optional<string> target = default;
+            Core.Optional<IReadOnlyList<CommunicationError>> details = default;
+            Core.Optional<CommunicationError> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -75,7 +75,7 @@ namespace Azure.Communication.MediaComposition.Models
                     continue;
                 }
             }
-            return new CommunicationError(code, message, target.Value, Optional.ToList(details), innererror.Value);
+            return new CommunicationError(code, message, target.Value, Core.Optional.ToList(details), innererror.Value);
         }
     }
 }

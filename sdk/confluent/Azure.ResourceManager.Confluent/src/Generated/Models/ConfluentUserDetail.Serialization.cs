@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    public partial class ConfluentUserDetail : IUtf8JsonSerializable
+    public partial class ConfluentUserDetail : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FirstName))
+            if (Core.Optional.IsDefined(FirstName))
             {
                 writer.WritePropertyName("firstName"u8);
                 writer.WriteStringValue(FirstName);
             }
-            if (Optional.IsDefined(LastName))
+            if (Core.Optional.IsDefined(LastName))
             {
                 writer.WritePropertyName("lastName"u8);
                 writer.WriteStringValue(LastName);
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<string> firstName = default;
-            Optional<string> lastName = default;
+            Core.Optional<string> firstName = default;
+            Core.Optional<string> lastName = default;
             string emailAddress = default;
             foreach (var property in element.EnumerateObject())
             {

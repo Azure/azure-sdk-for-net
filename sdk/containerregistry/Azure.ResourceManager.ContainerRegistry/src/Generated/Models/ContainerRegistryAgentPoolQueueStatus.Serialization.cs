@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<int> count = default;
+            Core.Optional<int> count = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryAgentPoolQueueStatus(Optional.ToNullable(count));
+            return new ContainerRegistryAgentPoolQueueStatus(Core.Optional.ToNullable(count));
         }
     }
 }

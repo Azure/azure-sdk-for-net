@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<float> maxMemoryInGB = default;
-            Optional<float> maxCpu = default;
-            Optional<float> maxGpuCount = default;
+            Core.Optional<float> maxMemoryInGB = default;
+            Core.Optional<float> maxCpu = default;
+            Core.Optional<float> maxGpuCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxMemoryInGB"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new ContainerSupportedCapabilities(Optional.ToNullable(maxMemoryInGB), Optional.ToNullable(maxCpu), Optional.ToNullable(maxGpuCount));
+            return new ContainerSupportedCapabilities(Core.Optional.ToNullable(maxMemoryInGB), Core.Optional.ToNullable(maxCpu), Core.Optional.ToNullable(maxGpuCount));
         }
     }
 }

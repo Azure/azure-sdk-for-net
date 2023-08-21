@@ -12,12 +12,12 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    internal partial class ManagedClusterLoadBalancerProfileOutboundIPPrefixes : IUtf8JsonSerializable
+    internal partial class ManagedClusterLoadBalancerProfileOutboundIPPrefixes : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PublicIPPrefixes))
+            if (Core.Optional.IsCollectionDefined(PublicIPPrefixes))
             {
                 writer.WritePropertyName("publicIPPrefixes"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IList<WritableSubResource>> publicIPPrefixes = default;
+            Core.Optional<IList<WritableSubResource>> publicIPPrefixes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicIPPrefixes"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterLoadBalancerProfileOutboundIPPrefixes(Optional.ToList(publicIPPrefixes));
+            return new ManagedClusterLoadBalancerProfileOutboundIPPrefixes(Core.Optional.ToList(publicIPPrefixes));
         }
     }
 }

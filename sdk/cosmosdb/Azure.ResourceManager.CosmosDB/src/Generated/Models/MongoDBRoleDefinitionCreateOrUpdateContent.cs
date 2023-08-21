@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of MongoDBRoleDefinitionCreateOrUpdateContent. </summary>
         public MongoDBRoleDefinitionCreateOrUpdateContent()
         {
-            Privileges = new ChangeTrackingList<MongoDBPrivilege>();
-            Roles = new ChangeTrackingList<MongoDBRole>();
+            Privileges = new Core.ChangeTrackingList<MongoDBPrivilege>();
+            Roles = new Core.ChangeTrackingList<MongoDBRole>();
         }
 
         /// <summary> A user-friendly name for the Role Definition. Must be unique for the database account. </summary>

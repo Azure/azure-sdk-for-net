@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DWCopyCommandSettings : IUtf8JsonSerializable
+    public partial class DWCopyCommandSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DefaultValues))
+            if (Core.Optional.IsCollectionDefined(DefaultValues))
             {
                 writer.WritePropertyName("defaultValues"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AdditionalOptions))
+            if (Core.Optional.IsCollectionDefined(AdditionalOptions))
             {
                 writer.WritePropertyName("additionalOptions"u8);
                 writer.WriteStartObject();
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IList<DWCopyCommandDefaultValue>> defaultValues = default;
-            Optional<IDictionary<string, string>> additionalOptions = default;
+            Core.Optional<IList<DWCopyCommandDefaultValue>> defaultValues = default;
+            Core.Optional<IDictionary<string, string>> additionalOptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultValues"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new DWCopyCommandSettings(Optional.ToList(defaultValues), Optional.ToDictionary(additionalOptions));
+            return new DWCopyCommandSettings(Core.Optional.ToList(defaultValues), Core.Optional.ToDictionary(additionalOptions));
         }
     }
 }

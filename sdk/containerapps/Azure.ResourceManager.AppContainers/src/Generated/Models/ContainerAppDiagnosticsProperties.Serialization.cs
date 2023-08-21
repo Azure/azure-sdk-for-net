@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppDiagnosticsProperties : IUtf8JsonSerializable
+    public partial class ContainerAppDiagnosticsProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Metadata))
+            if (Core.Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
-            if (Optional.IsCollectionDefined(Dataset))
+            if (Core.Optional.IsCollectionDefined(Dataset))
             {
                 writer.WritePropertyName("dataset"u8);
                 writer.WriteStartArray();
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (Optional.IsDefined(DataProviderMetadata))
+            if (Core.Optional.IsDefined(DataProviderMetadata))
             {
                 writer.WritePropertyName("dataProviderMetadata"u8);
                 writer.WriteObjectValue(DataProviderMetadata);
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ContainerAppDiagnosticsMetadata> metadata = default;
-            Optional<IList<ContainerAppDiagnosticsDataApiResult>> dataset = default;
-            Optional<ContainerAppDiagnosticsStatus> status = default;
-            Optional<ContainerAppDiagnosticDataProviderMetadata> dataProviderMetadata = default;
+            Core.Optional<ContainerAppDiagnosticsMetadata> metadata = default;
+            Core.Optional<IList<ContainerAppDiagnosticsDataApiResult>> dataset = default;
+            Core.Optional<ContainerAppDiagnosticsStatus> status = default;
+            Core.Optional<ContainerAppDiagnosticDataProviderMetadata> dataProviderMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metadata"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppDiagnosticsProperties(metadata.Value, Optional.ToList(dataset), status.Value, dataProviderMetadata.Value);
+            return new ContainerAppDiagnosticsProperties(metadata.Value, Core.Optional.ToList(dataset), status.Value, dataProviderMetadata.Value);
         }
     }
 }

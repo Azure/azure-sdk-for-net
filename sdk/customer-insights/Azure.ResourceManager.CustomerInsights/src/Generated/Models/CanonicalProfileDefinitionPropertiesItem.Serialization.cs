@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<string> profileName = default;
-            Optional<string> profilePropertyName = default;
-            Optional<int> rank = default;
-            Optional<CanonicalPropertyValueType> type = default;
-            Optional<string> value = default;
+            Core.Optional<string> profileName = default;
+            Core.Optional<string> profilePropertyName = default;
+            Core.Optional<int> rank = default;
+            Core.Optional<CanonicalPropertyValueType> type = default;
+            Core.Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("profileName"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new CanonicalProfileDefinitionPropertiesItem(profileName.Value, profilePropertyName.Value, Optional.ToNullable(rank), Optional.ToNullable(type), value.Value);
+            return new CanonicalProfileDefinitionPropertiesItem(profileName.Value, profilePropertyName.Value, Core.Optional.ToNullable(rank), Core.Optional.ToNullable(type), value.Value);
         }
     }
 }

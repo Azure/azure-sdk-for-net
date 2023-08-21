@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SelfDependencyTumblingWindowTriggerReference : IUtf8JsonSerializable
+    public partial class SelfDependencyTumblingWindowTriggerReference : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("offset"u8);
             writer.WriteStringValue(Offset);
-            if (Optional.IsDefined(Size))
+            if (Core.Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string offset = default;
-            Optional<string> size = default;
+            Core.Optional<string> size = default;
             string type = default;
             foreach (var property in element.EnumerateObject())
             {

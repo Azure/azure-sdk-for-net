@@ -17,8 +17,8 @@ namespace Azure.Communication.ShortCodes.Models
         /// <summary> Initializes a new instance of ProgramDetails. </summary>
         public ProgramDetails()
         {
-            PreferredVanityNumbers = new ChangeTrackingList<string>();
-            SignUpTypes = new ChangeTrackingList<ProgramSignUpType>();
+            PreferredVanityNumbers = new Core.ChangeTrackingList<string>();
+            SignUpTypes = new Core.ChangeTrackingList<ProgramSignUpType>();
         }
 
         /// <summary> Initializes a new instance of ProgramDetails. </summary>

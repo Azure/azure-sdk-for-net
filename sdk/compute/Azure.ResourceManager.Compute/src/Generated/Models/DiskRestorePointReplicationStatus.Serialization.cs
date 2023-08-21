@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<InstanceViewStatus> status = default;
-            Optional<int> completionPercent = default;
+            Core.Optional<InstanceViewStatus> status = default;
+            Core.Optional<int> completionPercent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new DiskRestorePointReplicationStatus(status.Value, Optional.ToNullable(completionPercent));
+            return new DiskRestorePointReplicationStatus(status.Value, Core.Optional.ToNullable(completionPercent));
         }
     }
 }

@@ -18,8 +18,8 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Optional<JWKHeader> jwk = default;
-            Optional<string> alg = default;
+            Core.Optional<JWKHeader> jwk = default;
+            Core.Optional<string> alg = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jwk"u8))

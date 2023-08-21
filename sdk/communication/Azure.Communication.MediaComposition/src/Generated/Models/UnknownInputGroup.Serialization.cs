@@ -11,34 +11,34 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    internal partial class UnknownInputGroup : IUtf8JsonSerializable
+    internal partial class UnknownInputGroup : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(Position))
+            if (Core.Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
                 writer.WriteObjectValue(Position);
             }
-            if (Optional.IsDefined(Width))
+            if (Core.Optional.IsDefined(Width))
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteStringValue(Width);
             }
-            if (Optional.IsDefined(Height))
+            if (Core.Optional.IsDefined(Height))
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteStringValue(Height);
             }
-            if (Optional.IsDefined(Layer))
+            if (Core.Optional.IsDefined(Layer))
             {
                 writer.WritePropertyName("layer"u8);
                 writer.WriteStringValue(Layer);
             }
-            if (Optional.IsDefined(ScalingMode))
+            if (Core.Optional.IsDefined(ScalingMode))
             {
                 writer.WritePropertyName("scalingMode"u8);
                 writer.WriteStringValue(ScalingMode.Value.ToString());
@@ -53,11 +53,11 @@ namespace Azure.Communication.MediaComposition
                 return null;
             }
             InputGroupType kind = "Unknown";
-            Optional<InputPosition> position = default;
-            Optional<string> width = default;
-            Optional<string> height = default;
-            Optional<string> layer = default;
-            Optional<ScalingMode> scalingMode = default;
+            Core.Optional<InputPosition> position = default;
+            Core.Optional<string> width = default;
+            Core.Optional<string> height = default;
+            Core.Optional<string> layer = default;
+            Core.Optional<ScalingMode> scalingMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -99,7 +99,7 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new UnknownInputGroup(kind, position.Value, width.Value, height.Value, layer.Value, Optional.ToNullable(scalingMode));
+            return new UnknownInputGroup(kind, position.Value, width.Value, height.Value, layer.Value, Core.Optional.ToNullable(scalingMode));
         }
     }
 }

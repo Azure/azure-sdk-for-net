@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ExecutionState> executionState = default;
-            Optional<string> executionMessage = default;
-            Optional<int> exitCode = default;
-            Optional<string> output = default;
-            Optional<string> error = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            Core.Optional<ExecutionState> executionState = default;
+            Core.Optional<string> executionMessage = default;
+            Core.Optional<int> exitCode = default;
+            Core.Optional<string> output = default;
+            Core.Optional<string> error = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("executionState"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineRunCommandInstanceView(Optional.ToNullable(executionState), executionMessage.Value, Optional.ToNullable(exitCode), output.Value, error.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(statuses));
+            return new VirtualMachineRunCommandInstanceView(Core.Optional.ToNullable(executionState), executionMessage.Value, Core.Optional.ToNullable(exitCode), output.Value, error.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToList(statuses));
         }
     }
 }

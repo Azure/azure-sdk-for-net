@@ -13,9 +13,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    public partial class ContainerServiceTrustedAccessRoleBindingData : IUtf8JsonSerializable
+    public partial class ContainerServiceTrustedAccessRoleBindingData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.ContainerService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerServiceTrustedAccessRoleBindingProvisioningState> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ContainerServiceTrustedAccessRoleBindingProvisioningState> provisioningState = default;
             ResourceIdentifier sourceResourceId = default;
             IList<string> roles = default;
             foreach (var property in element.EnumerateObject())
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ContainerService
                     continue;
                 }
             }
-            return new ContainerServiceTrustedAccessRoleBindingData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), sourceResourceId, roles);
+            return new ContainerServiceTrustedAccessRoleBindingData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), sourceResourceId, roles);
         }
     }
 }

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CassandraKeyspacePropertiesConfig : IUtf8JsonSerializable
+    public partial class CassandraKeyspacePropertiesConfig : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Throughput))
+            if (Core.Optional.IsDefined(Throughput))
             {
                 writer.WritePropertyName("throughput"u8);
                 writer.WriteNumberValue(Throughput.Value);
             }
-            if (Optional.IsDefined(AutoscaleSettings))
+            if (Core.Optional.IsDefined(AutoscaleSettings))
             {
                 writer.WritePropertyName("autoscaleSettings"u8);
                 writer.WriteObjectValue(AutoscaleSettings);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<int> throughput = default;
-            Optional<AutoscaleSettings> autoscaleSettings = default;
+            Core.Optional<int> throughput = default;
+            Core.Optional<AutoscaleSettings> autoscaleSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("throughput"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CassandraKeyspacePropertiesConfig(Optional.ToNullable(throughput), autoscaleSettings.Value);
+            return new CassandraKeyspacePropertiesConfig(Core.Optional.ToNullable(throughput), autoscaleSettings.Value);
         }
     }
 }

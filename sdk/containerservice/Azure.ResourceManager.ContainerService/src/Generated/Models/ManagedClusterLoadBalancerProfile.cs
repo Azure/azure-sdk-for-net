@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of ManagedClusterLoadBalancerProfile. </summary>
         public ManagedClusterLoadBalancerProfile()
         {
-            EffectiveOutboundIPs = new ChangeTrackingList<WritableSubResource>();
+            EffectiveOutboundIPs = new Core.ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of ManagedClusterLoadBalancerProfile. </summary>

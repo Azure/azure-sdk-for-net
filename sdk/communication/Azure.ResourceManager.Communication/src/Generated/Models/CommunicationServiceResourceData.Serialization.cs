@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Communication
 {
-    public partial class CommunicationServiceResourceData : IUtf8JsonSerializable
+    public partial class CommunicationServiceResourceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Communication
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataLocation))
+            if (Core.Optional.IsDefined(DataLocation))
             {
                 writer.WritePropertyName("dataLocation"u8);
                 writer.WriteStringValue(DataLocation);
             }
-            if (Optional.IsCollectionDefined(LinkedDomains))
+            if (Core.Optional.IsCollectionDefined(LinkedDomains))
             {
                 writer.WritePropertyName("linkedDomains"u8);
                 writer.WriteStartArray();
@@ -59,19 +59,19 @@ namespace Azure.ResourceManager.Communication
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<CommunicationServicesProvisioningState> provisioningState = default;
-            Optional<string> hostName = default;
-            Optional<string> dataLocation = default;
-            Optional<ResourceIdentifier> notificationHubId = default;
-            Optional<string> version = default;
-            Optional<Guid> immutableResourceId = default;
-            Optional<IList<string>> linkedDomains = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<CommunicationServicesProvisioningState> provisioningState = default;
+            Core.Optional<string> hostName = default;
+            Core.Optional<string> dataLocation = default;
+            Core.Optional<ResourceIdentifier> notificationHubId = default;
+            Core.Optional<string> version = default;
+            Core.Optional<Guid> immutableResourceId = default;
+            Core.Optional<IList<string>> linkedDomains = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Communication
                     continue;
                 }
             }
-            return new CommunicationServiceResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), hostName.Value, dataLocation.Value, notificationHubId.Value, version.Value, Optional.ToNullable(immutableResourceId), Optional.ToList(linkedDomains));
+            return new CommunicationServiceResourceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(provisioningState), hostName.Value, dataLocation.Value, notificationHubId.Value, version.Value, Core.Optional.ToNullable(immutableResourceId), Core.Optional.ToList(linkedDomains));
         }
     }
 }

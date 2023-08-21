@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             Argument.AssertNotNull(containers, nameof(containers));
 
-            Zones = new ChangeTrackingList<string>();
+            Zones = new Core.ChangeTrackingList<string>();
             Containers = containers.ToList();
-            ImageRegistryCredentials = new ChangeTrackingList<ContainerGroupImageRegistryCredential>();
+            ImageRegistryCredentials = new Core.ChangeTrackingList<ContainerGroupImageRegistryCredential>();
             OSType = osType;
-            Volumes = new ChangeTrackingList<ContainerVolume>();
-            SubnetIds = new ChangeTrackingList<ContainerGroupSubnetId>();
-            InitContainers = new ChangeTrackingList<InitContainerDefinitionContent>();
-            Extensions = new ChangeTrackingList<DeploymentExtensionSpec>();
+            Volumes = new Core.ChangeTrackingList<ContainerVolume>();
+            SubnetIds = new Core.ChangeTrackingList<ContainerGroupSubnetId>();
+            InitContainers = new Core.ChangeTrackingList<InitContainerDefinitionContent>();
+            Extensions = new Core.ChangeTrackingList<DeploymentExtensionSpec>();
         }
 
         /// <summary> Initializes a new instance of ContainerGroupData. </summary>

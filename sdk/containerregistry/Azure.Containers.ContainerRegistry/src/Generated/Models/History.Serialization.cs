@@ -18,7 +18,7 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Optional<string> v1Compatibility = default;
+            Core.Optional<string> v1Compatibility = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("v1Compatibility"u8))

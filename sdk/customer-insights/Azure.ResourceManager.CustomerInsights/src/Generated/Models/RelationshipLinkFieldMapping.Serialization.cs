@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class RelationshipLinkFieldMapping : IUtf8JsonSerializable
+    public partial class RelationshipLinkFieldMapping : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("interactionFieldName"u8);
             writer.WriteStringValue(InteractionFieldName);
-            if (Optional.IsDefined(LinkType))
+            if (Core.Optional.IsDefined(LinkType))
             {
                 writer.WritePropertyName("linkType"u8);
                 writer.WriteStringValue(LinkType.Value.ToSerialString());
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 return null;
             }
             string interactionFieldName = default;
-            Optional<LinkType> linkType = default;
+            Core.Optional<LinkType> linkType = default;
             string relationshipFieldName = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new RelationshipLinkFieldMapping(interactionFieldName, Optional.ToNullable(linkType), relationshipFieldName);
+            return new RelationshipLinkFieldMapping(interactionFieldName, Core.Optional.ToNullable(linkType), relationshipFieldName);
         }
     }
 }

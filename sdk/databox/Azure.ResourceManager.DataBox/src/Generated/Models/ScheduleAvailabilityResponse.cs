@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of ScheduleAvailabilityResponse. </summary>
         internal ScheduleAvailabilityResponse()
         {
-            AvailableDates = new ChangeTrackingList<DateTimeOffset>();
+            AvailableDates = new Core.ChangeTrackingList<DateTimeOffset>();
         }
 
         /// <summary> Initializes a new instance of ScheduleAvailabilityResponse. </summary>

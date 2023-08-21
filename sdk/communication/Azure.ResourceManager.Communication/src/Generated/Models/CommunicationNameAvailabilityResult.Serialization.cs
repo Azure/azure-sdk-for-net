@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 return null;
             }
-            Optional<bool> nameAvailable = default;
-            Optional<CommunicationNameAvailabilityReason> reason = default;
-            Optional<string> message = default;
+            Core.Optional<bool> nameAvailable = default;
+            Core.Optional<CommunicationNameAvailabilityReason> reason = default;
+            Core.Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameAvailable"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Communication.Models
                     continue;
                 }
             }
-            return new CommunicationNameAvailabilityResult(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value);
+            return new CommunicationNameAvailabilityResult(Core.Optional.ToNullable(nameAvailable), Core.Optional.ToNullable(reason), message.Value);
         }
     }
 }

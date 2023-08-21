@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location. </param>
         public CapacityReservationGroupData(AzureLocation location) : base(location)
         {
-            Zones = new ChangeTrackingList<string>();
-            CapacityReservations = new ChangeTrackingList<SubResource>();
-            VirtualMachinesAssociated = new ChangeTrackingList<SubResource>();
+            Zones = new Core.ChangeTrackingList<string>();
+            CapacityReservations = new Core.ChangeTrackingList<SubResource>();
+            VirtualMachinesAssociated = new Core.ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of CapacityReservationGroupData. </summary>

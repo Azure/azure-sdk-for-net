@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <summary> Initializes a new instance of RelationshipsLookup. </summary>
         internal RelationshipsLookup()
         {
-            ProfilePropertyReferences = new ChangeTrackingList<ParticipantProfilePropertyReference>();
-            RelatedProfilePropertyReferences = new ChangeTrackingList<ParticipantProfilePropertyReference>();
+            ProfilePropertyReferences = new Core.ChangeTrackingList<ParticipantProfilePropertyReference>();
+            RelatedProfilePropertyReferences = new Core.ChangeTrackingList<ParticipantProfilePropertyReference>();
         }
 
         /// <summary> Initializes a new instance of RelationshipsLookup. </summary>

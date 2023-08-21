@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppDiagnosticsStatus : IUtf8JsonSerializable
+    public partial class ContainerAppDiagnosticsStatus : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Message))
+            if (Core.Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(StatusId))
+            if (Core.Optional.IsDefined(StatusId))
             {
                 writer.WritePropertyName("statusId"u8);
                 writer.WriteNumberValue(StatusId.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> message = default;
-            Optional<int> statusId = default;
+            Core.Optional<string> message = default;
+            Core.Optional<int> statusId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppDiagnosticsStatus(message.Value, Optional.ToNullable(statusId));
+            return new ContainerAppDiagnosticsStatus(message.Value, Core.Optional.ToNullable(statusId));
         }
     }
 }

@@ -13,24 +13,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    public partial class CosmosDBSqlRoleDefinitionData : IUtf8JsonSerializable
+    public partial class CosmosDBSqlRoleDefinitionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RoleName))
+            if (Core.Optional.IsDefined(RoleName))
             {
                 writer.WritePropertyName("roleName"u8);
                 writer.WriteStringValue(RoleName);
             }
-            if (Optional.IsDefined(RoleDefinitionType))
+            if (Core.Optional.IsDefined(RoleDefinitionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RoleDefinitionType.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(AssignableScopes))
+            if (Core.Optional.IsCollectionDefined(AssignableScopes))
             {
                 writer.WritePropertyName("assignableScopes"u8);
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Permissions))
+            if (Core.Optional.IsCollectionDefined(Permissions))
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStartArray();
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.CosmosDB
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> roleName = default;
-            Optional<CosmosDBSqlRoleDefinitionType> type0 = default;
-            Optional<IList<string>> assignableScopes = default;
-            Optional<IList<CosmosDBSqlRolePermission>> permissions = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> roleName = default;
+            Core.Optional<CosmosDBSqlRoleDefinitionType> type0 = default;
+            Core.Optional<IList<string>> assignableScopes = default;
+            Core.Optional<IList<CosmosDBSqlRolePermission>> permissions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB
                     continue;
                 }
             }
-            return new CosmosDBSqlRoleDefinitionData(id, name, type, systemData.Value, roleName.Value, Optional.ToNullable(type0), Optional.ToList(assignableScopes), Optional.ToList(permissions));
+            return new CosmosDBSqlRoleDefinitionData(id, name, type, systemData.Value, roleName.Value, Core.Optional.ToNullable(type0), Core.Optional.ToList(assignableScopes), Core.Optional.ToList(permissions));
         }
     }
 }

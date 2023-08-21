@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<string> invokedByType = default;
-            Optional<string> pipelineName = default;
-            Optional<Guid> pipelineRunId = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> invokedByType = default;
+            Core.Optional<string> pipelineName = default;
+            Core.Optional<Guid> pipelineRunId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new DataFactoryPipelineRunEntityInfo(name.Value, id.Value, invokedByType.Value, pipelineName.Value, Optional.ToNullable(pipelineRunId));
+            return new DataFactoryPipelineRunEntityInfo(name.Value, id.Value, invokedByType.Value, pipelineName.Value, Core.Optional.ToNullable(pipelineRunId));
         }
     }
 }

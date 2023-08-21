@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class PassThroughWorkerSelectorAttachment : IUtf8JsonSerializable
+    public partial class PassThroughWorkerSelectorAttachment : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
             writer.WritePropertyName("labelOperator"u8);
             writer.WriteStringValue(LabelOperator.ToString());
-            if (Optional.IsDefined(_expiresAfterSeconds))
+            if (Core.Optional.IsDefined(_expiresAfterSeconds))
             {
                 writer.WritePropertyName("expiresAfterSeconds"u8);
                 writer.WriteNumberValue(_expiresAfterSeconds.Value);
@@ -37,7 +37,7 @@ namespace Azure.Communication.JobRouter
             }
             string key = default;
             LabelOperator labelOperator = default;
-            Optional<double> expiresAfterSeconds = default;
+            Core.Optional<double> expiresAfterSeconds = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -66,7 +66,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new PassThroughWorkerSelectorAttachment(kind, key, labelOperator, Optional.ToNullable(expiresAfterSeconds));
+            return new PassThroughWorkerSelectorAttachment(kind, key, labelOperator, Core.Optional.ToNullable(expiresAfterSeconds));
         }
     }
 }

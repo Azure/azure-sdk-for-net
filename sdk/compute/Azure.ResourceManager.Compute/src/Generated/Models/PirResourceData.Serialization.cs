@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
+            Core.Optional<string> name = default;
+            Core.Optional<AzureLocation> location = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new PirResourceData(name.Value, Optional.ToNullable(location));
+            return new PirResourceData(name.Value, Core.Optional.ToNullable(location));
         }
     }
 }

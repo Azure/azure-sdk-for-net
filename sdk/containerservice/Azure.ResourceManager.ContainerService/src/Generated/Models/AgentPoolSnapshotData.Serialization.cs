@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    public partial class AgentPoolSnapshotData : IUtf8JsonSerializable
+    public partial class AgentPoolSnapshotData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.ContainerService
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreationData))
+            if (Core.Optional.IsDefined(CreationData))
             {
                 writer.WritePropertyName("creationData"u8);
                 writer.WriteObjectValue(CreationData);
             }
-            if (Optional.IsDefined(SnapshotType))
+            if (Core.Optional.IsDefined(SnapshotType))
             {
                 writer.WritePropertyName("snapshotType"u8);
                 writer.WriteStringValue(SnapshotType.Value.ToString());
@@ -53,20 +53,20 @@ namespace Azure.ResourceManager.ContainerService
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerServiceCreationData> creationData = default;
-            Optional<SnapshotType> snapshotType = default;
-            Optional<string> kubernetesVersion = default;
-            Optional<string> nodeImageVersion = default;
-            Optional<ContainerServiceOSType> osType = default;
-            Optional<ContainerServiceOSSku> osSku = default;
-            Optional<string> vmSize = default;
-            Optional<bool> enableFIPS = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ContainerServiceCreationData> creationData = default;
+            Core.Optional<SnapshotType> snapshotType = default;
+            Core.Optional<string> kubernetesVersion = default;
+            Core.Optional<string> nodeImageVersion = default;
+            Core.Optional<ContainerServiceOSType> osType = default;
+            Core.Optional<ContainerServiceOSSku> osSku = default;
+            Core.Optional<string> vmSize = default;
+            Core.Optional<bool> enableFIPS = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ContainerService
                     continue;
                 }
             }
-            return new AgentPoolSnapshotData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, creationData.Value, Optional.ToNullable(snapshotType), kubernetesVersion.Value, nodeImageVersion.Value, Optional.ToNullable(osType), Optional.ToNullable(osSku), vmSize.Value, Optional.ToNullable(enableFIPS));
+            return new AgentPoolSnapshotData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, creationData.Value, Core.Optional.ToNullable(snapshotType), kubernetesVersion.Value, nodeImageVersion.Value, Core.Optional.ToNullable(osType), Core.Optional.ToNullable(osSku), vmSize.Value, Core.Optional.ToNullable(enableFIPS));
         }
     }
 }

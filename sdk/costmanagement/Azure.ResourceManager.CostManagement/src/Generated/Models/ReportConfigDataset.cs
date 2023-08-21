@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of ReportConfigDataset. </summary>
         public ReportConfigDataset()
         {
-            Aggregation = new ChangeTrackingDictionary<string, ReportConfigAggregation>();
-            Grouping = new ChangeTrackingList<ReportConfigGrouping>();
-            Sorting = new ChangeTrackingList<ReportConfigSorting>();
+            Aggregation = new Core.ChangeTrackingDictionary<string, ReportConfigAggregation>();
+            Grouping = new Core.ChangeTrackingList<ReportConfigGrouping>();
+            Sorting = new Core.ChangeTrackingList<ReportConfigSorting>();
         }
 
         /// <summary> Initializes a new instance of ReportConfigDataset. </summary>

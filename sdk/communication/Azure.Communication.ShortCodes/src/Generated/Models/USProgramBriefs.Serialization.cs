@@ -19,8 +19,8 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<USProgramBrief>> programBriefs = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<USProgramBrief>> programBriefs = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("programBriefs"u8))
@@ -43,7 +43,7 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new USProgramBriefs(Optional.ToList(programBriefs), nextLink.Value);
+            return new USProgramBriefs(Core.Optional.ToList(programBriefs), nextLink.Value);
         }
     }
 }

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class AzureFileFilterDetails : IUtf8JsonSerializable
+    public partial class AzureFileFilterDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(FilePrefixList))
+            if (Core.Optional.IsCollectionDefined(FilePrefixList))
             {
                 writer.WritePropertyName("filePrefixList"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FilePathList))
+            if (Core.Optional.IsCollectionDefined(FilePathList))
             {
                 writer.WritePropertyName("filePathList"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FileShareList))
+            if (Core.Optional.IsCollectionDefined(FileShareList))
             {
                 writer.WritePropertyName("fileShareList"u8);
                 writer.WriteStartArray();
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<IList<string>> filePrefixList = default;
-            Optional<IList<string>> filePathList = default;
-            Optional<IList<string>> fileShareList = default;
+            Core.Optional<IList<string>> filePrefixList = default;
+            Core.Optional<IList<string>> filePathList = default;
+            Core.Optional<IList<string>> fileShareList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filePrefixList"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new AzureFileFilterDetails(Optional.ToList(filePrefixList), Optional.ToList(filePathList), Optional.ToList(fileShareList));
+            return new AzureFileFilterDetails(Core.Optional.ToList(filePrefixList), Core.Optional.ToList(filePathList), Core.Optional.ToList(fileShareList));
         }
     }
 }

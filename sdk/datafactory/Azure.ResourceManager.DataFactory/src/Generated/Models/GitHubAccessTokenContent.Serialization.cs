@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class GitHubAccessTokenContent : IUtf8JsonSerializable
+    public partial class GitHubAccessTokenContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("gitHubAccessCode"u8);
             writer.WriteStringValue(GitHubAccessCode);
-            if (Optional.IsDefined(GitHubClientId))
+            if (Core.Optional.IsDefined(GitHubClientId))
             {
                 writer.WritePropertyName("gitHubClientId"u8);
                 writer.WriteStringValue(GitHubClientId);
             }
-            if (Optional.IsDefined(GitHubClientSecret))
+            if (Core.Optional.IsDefined(GitHubClientSecret))
             {
                 writer.WritePropertyName("gitHubClientSecret"u8);
                 writer.WriteObjectValue(GitHubClientSecret);

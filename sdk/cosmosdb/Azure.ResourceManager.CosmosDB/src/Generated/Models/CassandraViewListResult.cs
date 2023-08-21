@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CassandraViewListResult. </summary>
         internal CassandraViewListResult()
         {
-            Value = new ChangeTrackingList<CassandraViewGetResultData>();
+            Value = new Core.ChangeTrackingList<CassandraViewGetResultData>();
         }
 
         /// <summary> Initializes a new instance of CassandraViewListResult. </summary>

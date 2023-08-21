@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.Core.TestFramework.Models
 {
-    public partial class ProxyOptionsTransport : IUtf8JsonSerializable
+    public partial class ProxyOptionsTransport : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AllowAutoRedirect))
+            if (Core.Optional.IsDefined(AllowAutoRedirect))
             {
                 writer.WritePropertyName("AllowAutoRedirect"u8);
                 writer.WriteBooleanValue(AllowAutoRedirect.Value);
             }
-            if (Optional.IsDefined(TLSValidationCert))
+            if (Core.Optional.IsDefined(TLSValidationCert))
             {
                 writer.WritePropertyName("TLSValidationCert"u8);
                 writer.WriteStringValue(TLSValidationCert);
             }
-            if (Optional.IsCollectionDefined(Certificates))
+            if (Core.Optional.IsCollectionDefined(Certificates))
             {
                 writer.WritePropertyName("Certificates"u8);
                 writer.WriteStartArray();

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineRunCommandUpdate : IUtf8JsonSerializable
+    public partial class VirtualMachineRunCommandUpdate : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Source))
+            if (Core.Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (Core.Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ProtectedParameters))
+            if (Core.Optional.IsCollectionDefined(ProtectedParameters))
             {
                 writer.WritePropertyName("protectedParameters"u8);
                 writer.WriteStartArray();
@@ -53,47 +53,47 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AsyncExecution))
+            if (Core.Optional.IsDefined(AsyncExecution))
             {
                 writer.WritePropertyName("asyncExecution"u8);
                 writer.WriteBooleanValue(AsyncExecution.Value);
             }
-            if (Optional.IsDefined(RunAsUser))
+            if (Core.Optional.IsDefined(RunAsUser))
             {
                 writer.WritePropertyName("runAsUser"u8);
                 writer.WriteStringValue(RunAsUser);
             }
-            if (Optional.IsDefined(RunAsPassword))
+            if (Core.Optional.IsDefined(RunAsPassword))
             {
                 writer.WritePropertyName("runAsPassword"u8);
                 writer.WriteStringValue(RunAsPassword);
             }
-            if (Optional.IsDefined(TimeoutInSeconds))
+            if (Core.Optional.IsDefined(TimeoutInSeconds))
             {
                 writer.WritePropertyName("timeoutInSeconds"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
-            if (Optional.IsDefined(OutputBlobUri))
+            if (Core.Optional.IsDefined(OutputBlobUri))
             {
                 writer.WritePropertyName("outputBlobUri"u8);
                 writer.WriteStringValue(OutputBlobUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ErrorBlobUri))
+            if (Core.Optional.IsDefined(ErrorBlobUri))
             {
                 writer.WritePropertyName("errorBlobUri"u8);
                 writer.WriteStringValue(ErrorBlobUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(OutputBlobManagedIdentity))
+            if (Core.Optional.IsDefined(OutputBlobManagedIdentity))
             {
                 writer.WritePropertyName("outputBlobManagedIdentity"u8);
                 writer.WriteObjectValue(OutputBlobManagedIdentity);
             }
-            if (Optional.IsDefined(ErrorBlobManagedIdentity))
+            if (Core.Optional.IsDefined(ErrorBlobManagedIdentity))
             {
                 writer.WritePropertyName("errorBlobManagedIdentity"u8);
                 writer.WriteObjectValue(ErrorBlobManagedIdentity);
             }
-            if (Optional.IsDefined(TreatFailureAsDeploymentFailure))
+            if (Core.Optional.IsDefined(TreatFailureAsDeploymentFailure))
             {
                 writer.WritePropertyName("treatFailureAsDeploymentFailure"u8);
                 writer.WriteBooleanValue(TreatFailureAsDeploymentFailure.Value);

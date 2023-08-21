@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of RestorableMongoDBResourceData. </summary>
         internal RestorableMongoDBResourceData()
         {
-            CollectionNames = new ChangeTrackingList<string>();
+            CollectionNames = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of RestorableMongoDBResourceData. </summary>

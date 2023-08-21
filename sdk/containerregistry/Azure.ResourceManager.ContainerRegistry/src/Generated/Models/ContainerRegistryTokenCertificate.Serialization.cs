@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryTokenCertificate : IUtf8JsonSerializable
+    public partial class ContainerRegistryTokenCertificate : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name.Value.ToString());
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (Core.Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiry"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(Thumbprint))
+            if (Core.Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (Optional.IsDefined(EncodedPemCertificate))
+            if (Core.Optional.IsDefined(EncodedPemCertificate))
             {
                 writer.WritePropertyName("encodedPemCertificate"u8);
                 writer.WriteStringValue(EncodedPemCertificate);
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ContainerRegistryTokenCertificateName> name = default;
-            Optional<DateTimeOffset> expiry = default;
-            Optional<string> thumbprint = default;
-            Optional<string> encodedPemCertificate = default;
+            Core.Optional<ContainerRegistryTokenCertificateName> name = default;
+            Core.Optional<DateTimeOffset> expiry = default;
+            Core.Optional<string> thumbprint = default;
+            Core.Optional<string> encodedPemCertificate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryTokenCertificate(Optional.ToNullable(name), Optional.ToNullable(expiry), thumbprint.Value, encodedPemCertificate.Value);
+            return new ContainerRegistryTokenCertificate(Core.Optional.ToNullable(name), Core.Optional.ToNullable(expiry), thumbprint.Value, encodedPemCertificate.Value);
         }
     }
 }

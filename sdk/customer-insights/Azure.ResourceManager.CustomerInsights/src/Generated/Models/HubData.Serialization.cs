@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    public partial class HubData : IUtf8JsonSerializable
+    public partial class HubData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.CustomerInsights
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TenantFeatures))
+            if (Core.Optional.IsDefined(TenantFeatures))
             {
                 writer.WritePropertyName("tenantFeatures"u8);
                 writer.WriteNumberValue(TenantFeatures.Value);
             }
-            if (Optional.IsDefined(HubBillingInfo))
+            if (Core.Optional.IsDefined(HubBillingInfo))
             {
                 writer.WritePropertyName("hubBillingInfo"u8);
                 writer.WriteObjectValue(HubBillingInfo);
@@ -53,17 +53,17 @@ namespace Azure.ResourceManager.CustomerInsights
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> apiEndpoint = default;
-            Optional<string> webEndpoint = default;
-            Optional<string> provisioningState = default;
-            Optional<int> tenantFeatures = default;
-            Optional<HubBillingInfoFormat> hubBillingInfo = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> apiEndpoint = default;
+            Core.Optional<string> webEndpoint = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<int> tenantFeatures = default;
+            Core.Optional<HubBillingInfoFormat> hubBillingInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CustomerInsights
                     continue;
                 }
             }
-            return new HubData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, apiEndpoint.Value, webEndpoint.Value, provisioningState.Value, Optional.ToNullable(tenantFeatures), hubBillingInfo.Value);
+            return new HubData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, apiEndpoint.Value, webEndpoint.Value, provisioningState.Value, Core.Optional.ToNullable(tenantFeatures), hubBillingInfo.Value);
         }
     }
 }

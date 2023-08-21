@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             SsisObjectMetadataType type = default;
-            Optional<long> id = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
+            Core.Optional<long> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new SsisFolder(type, Optional.ToNullable(id), name.Value, description.Value);
+            return new SsisFolder(type, Core.Optional.ToNullable(id), name.Value, description.Value);
         }
     }
 }

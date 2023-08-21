@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<AgentPoolAvailableVersion>> agentPoolVersions = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IReadOnlyList<AgentPoolAvailableVersion>> agentPoolVersions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new AgentPoolAvailableVersions(id, name, type, systemData.Value, Optional.ToList(agentPoolVersions));
+            return new AgentPoolAvailableVersions(id, name, type, systemData.Value, Core.Optional.ToList(agentPoolVersions));
         }
     }
 }

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class ProximityPlacementGroupPropertiesIntent : IUtf8JsonSerializable
+    internal partial class ProximityPlacementGroupPropertiesIntent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(VmSizes))
+            if (Core.Optional.IsCollectionDefined(VmSizes))
             {
                 writer.WritePropertyName("vmSizes"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<string>> vmSizes = default;
+            Core.Optional<IList<string>> vmSizes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmSizes"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ProximityPlacementGroupPropertiesIntent(Optional.ToList(vmSizes));
+            return new ProximityPlacementGroupPropertiesIntent(Core.Optional.ToList(vmSizes));
         }
     }
 }

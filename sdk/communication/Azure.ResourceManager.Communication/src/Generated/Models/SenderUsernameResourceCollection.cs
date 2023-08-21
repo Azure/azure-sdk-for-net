@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <summary> Initializes a new instance of SenderUsernameResourceCollection. </summary>
         internal SenderUsernameResourceCollection()
         {
-            Value = new ChangeTrackingList<SenderUsernameResourceData>();
+            Value = new Core.ChangeTrackingList<SenderUsernameResourceData>();
         }
 
         /// <summary> Initializes a new instance of SenderUsernameResourceCollection. </summary>

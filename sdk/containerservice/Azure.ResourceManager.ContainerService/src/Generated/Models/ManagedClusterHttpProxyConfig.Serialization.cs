@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterHttpProxyConfig : IUtf8JsonSerializable
+    public partial class ManagedClusterHttpProxyConfig : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(HttpProxy))
+            if (Core.Optional.IsDefined(HttpProxy))
             {
                 writer.WritePropertyName("httpProxy"u8);
                 writer.WriteStringValue(HttpProxy);
             }
-            if (Optional.IsDefined(HttpsProxy))
+            if (Core.Optional.IsDefined(HttpsProxy))
             {
                 writer.WritePropertyName("httpsProxy"u8);
                 writer.WriteStringValue(HttpsProxy);
             }
-            if (Optional.IsCollectionDefined(NoProxy))
+            if (Core.Optional.IsCollectionDefined(NoProxy))
             {
                 writer.WritePropertyName("noProxy"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TrustedCA))
+            if (Core.Optional.IsDefined(TrustedCA))
             {
                 writer.WritePropertyName("trustedCa"u8);
                 writer.WriteStringValue(TrustedCA);
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> httpProxy = default;
-            Optional<string> httpsProxy = default;
-            Optional<IList<string>> noProxy = default;
-            Optional<IReadOnlyList<string>> effectiveNoProxy = default;
-            Optional<string> trustedCA = default;
+            Core.Optional<string> httpProxy = default;
+            Core.Optional<string> httpsProxy = default;
+            Core.Optional<IList<string>> noProxy = default;
+            Core.Optional<IReadOnlyList<string>> effectiveNoProxy = default;
+            Core.Optional<string> trustedCA = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("httpProxy"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterHttpProxyConfig(httpProxy.Value, httpsProxy.Value, Optional.ToList(noProxy), Optional.ToList(effectiveNoProxy), trustedCA.Value);
+            return new ManagedClusterHttpProxyConfig(httpProxy.Value, httpsProxy.Value, Core.Optional.ToList(noProxy), Core.Optional.ToList(effectiveNoProxy), trustedCA.Value);
         }
     }
 }

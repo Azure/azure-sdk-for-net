@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of CapacityReservationGroupInstanceView. </summary>
         internal CapacityReservationGroupInstanceView()
         {
-            CapacityReservations = new ChangeTrackingList<CapacityReservationInstanceViewWithName>();
+            CapacityReservations = new Core.ChangeTrackingList<CapacityReservationInstanceViewWithName>();
         }
 
         /// <summary> Initializes a new instance of CapacityReservationGroupInstanceView. </summary>

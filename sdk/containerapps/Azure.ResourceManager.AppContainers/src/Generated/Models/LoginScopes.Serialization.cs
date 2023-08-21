@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    internal partial class LoginScopes : IUtf8JsonSerializable
+    internal partial class LoginScopes : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Scopes))
+            if (Core.Optional.IsCollectionDefined(Scopes))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<IList<string>> scopes = default;
+            Core.Optional<IList<string>> scopes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scopes"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new LoginScopes(Optional.ToList(scopes));
+            return new LoginScopes(Core.Optional.ToList(scopes));
         }
     }
 }

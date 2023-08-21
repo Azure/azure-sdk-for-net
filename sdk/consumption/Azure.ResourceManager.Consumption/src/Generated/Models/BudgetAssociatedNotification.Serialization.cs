@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class BudgetAssociatedNotification : IUtf8JsonSerializable
+    public partial class BudgetAssociatedNotification : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(ContactRoles))
+            if (Core.Optional.IsCollectionDefined(ContactRoles))
             {
                 writer.WritePropertyName("contactRoles"u8);
                 writer.WriteStartArray();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ContactGroups))
+            if (Core.Optional.IsCollectionDefined(ContactGroups))
             {
                 writer.WritePropertyName("contactGroups"u8);
                 writer.WriteStartArray();
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ThresholdType))
+            if (Core.Optional.IsDefined(ThresholdType))
             {
                 writer.WritePropertyName("thresholdType"u8);
                 writer.WriteStringValue(ThresholdType.Value.ToString());
             }
-            if (Optional.IsDefined(Locale))
+            if (Core.Optional.IsDefined(Locale))
             {
                 writer.WritePropertyName("locale"u8);
                 writer.WriteStringValue(Locale.Value.ToString());
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.Consumption.Models
             NotificationAlertTriggerType @operator = default;
             decimal threshold = default;
             IList<string> contactEmails = default;
-            Optional<IList<string>> contactRoles = default;
-            Optional<IList<string>> contactGroups = default;
-            Optional<NotificationThresholdType> thresholdType = default;
-            Optional<RecipientNotificationLanguageCode> locale = default;
+            Core.Optional<IList<string>> contactRoles = default;
+            Core.Optional<IList<string>> contactGroups = default;
+            Core.Optional<NotificationThresholdType> thresholdType = default;
+            Core.Optional<RecipientNotificationLanguageCode> locale = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new BudgetAssociatedNotification(enabled, @operator, threshold, contactEmails, Optional.ToList(contactRoles), Optional.ToList(contactGroups), Optional.ToNullable(thresholdType), Optional.ToNullable(locale));
+            return new BudgetAssociatedNotification(enabled, @operator, threshold, contactEmails, Core.Optional.ToList(contactRoles), Core.Optional.ToList(contactGroups), Core.Optional.ToNullable(thresholdType), Core.Optional.ToNullable(locale));
         }
     }
 }

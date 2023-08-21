@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> vmAgentVersion = default;
-            Optional<IReadOnlyList<VirtualMachineExtensionHandlerInstanceView>> extensionHandlers = default;
-            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            Core.Optional<string> vmAgentVersion = default;
+            Core.Optional<IReadOnlyList<VirtualMachineExtensionHandlerInstanceView>> extensionHandlers = default;
+            Core.Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmAgentVersion"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineAgentInstanceView(vmAgentVersion.Value, Optional.ToList(extensionHandlers), Optional.ToList(statuses));
+            return new VirtualMachineAgentInstanceView(vmAgentVersion.Value, Core.Optional.ToList(extensionHandlers), Core.Optional.ToList(statuses));
         }
     }
 }

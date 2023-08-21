@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class BootDiagnostics : IUtf8JsonSerializable
+    public partial class BootDiagnostics : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Core.Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Optional.IsDefined(StorageUri))
+            if (Core.Optional.IsDefined(StorageUri))
             {
                 writer.WritePropertyName("storageUri"u8);
                 writer.WriteStringValue(StorageUri.AbsoluteUri);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<Uri> storageUri = default;
+            Core.Optional<bool> enabled = default;
+            Core.Optional<Uri> storageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new BootDiagnostics(Optional.ToNullable(enabled), storageUri.Value);
+            return new BootDiagnostics(Core.Optional.ToNullable(enabled), storageUri.Value);
         }
     }
 }

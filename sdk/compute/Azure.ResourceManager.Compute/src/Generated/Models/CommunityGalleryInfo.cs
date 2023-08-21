@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of CommunityGalleryInfo. </summary>
         public CommunityGalleryInfo()
         {
-            PublicNames = new ChangeTrackingList<string>();
+            PublicNames = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of CommunityGalleryInfo. </summary>

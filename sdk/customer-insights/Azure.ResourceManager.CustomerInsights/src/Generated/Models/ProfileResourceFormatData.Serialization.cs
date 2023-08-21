@@ -14,14 +14,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    public partial class ProfileResourceFormatData : IUtf8JsonSerializable
+    public partial class ProfileResourceFormatData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Attributes))
+            if (Core.Optional.IsCollectionDefined(Attributes))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Description))
+            if (Core.Optional.IsCollectionDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(DisplayName))
+            if (Core.Optional.IsCollectionDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(LocalizedAttributes))
+            if (Core.Optional.IsCollectionDefined(LocalizedAttributes))
             {
                 writer.WritePropertyName("localizedAttributes"u8);
                 writer.WriteStartObject();
@@ -86,32 +86,32 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(SmallImage))
+            if (Core.Optional.IsDefined(SmallImage))
             {
                 writer.WritePropertyName("smallImage"u8);
                 writer.WriteStringValue(SmallImage);
             }
-            if (Optional.IsDefined(MediumImage))
+            if (Core.Optional.IsDefined(MediumImage))
             {
                 writer.WritePropertyName("mediumImage"u8);
                 writer.WriteStringValue(MediumImage);
             }
-            if (Optional.IsDefined(LargeImage))
+            if (Core.Optional.IsDefined(LargeImage))
             {
                 writer.WritePropertyName("largeImage"u8);
                 writer.WriteStringValue(LargeImage);
             }
-            if (Optional.IsDefined(ApiEntitySetName))
+            if (Core.Optional.IsDefined(ApiEntitySetName))
             {
                 writer.WritePropertyName("apiEntitySetName"u8);
                 writer.WriteStringValue(ApiEntitySetName);
             }
-            if (Optional.IsDefined(EntityType))
+            if (Core.Optional.IsDefined(EntityType))
             {
                 writer.WritePropertyName("entityType"u8);
                 writer.WriteStringValue(EntityType.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(Fields))
+            if (Core.Optional.IsCollectionDefined(Fields))
             {
                 writer.WritePropertyName("fields"u8);
                 writer.WriteStartArray();
@@ -121,27 +121,27 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(InstancesCount))
+            if (Core.Optional.IsDefined(InstancesCount))
             {
                 writer.WritePropertyName("instancesCount"u8);
                 writer.WriteNumberValue(InstancesCount.Value);
             }
-            if (Optional.IsDefined(SchemaItemTypeLink))
+            if (Core.Optional.IsDefined(SchemaItemTypeLink))
             {
                 writer.WritePropertyName("schemaItemTypeLink"u8);
                 writer.WriteStringValue(SchemaItemTypeLink);
             }
-            if (Optional.IsDefined(TimestampFieldName))
+            if (Core.Optional.IsDefined(TimestampFieldName))
             {
                 writer.WritePropertyName("timestampFieldName"u8);
                 writer.WriteStringValue(TimestampFieldName);
             }
-            if (Optional.IsDefined(TypeName))
+            if (Core.Optional.IsDefined(TypeName))
             {
                 writer.WritePropertyName("typeName"u8);
                 writer.WriteStringValue(TypeName);
             }
-            if (Optional.IsCollectionDefined(StrongIds))
+            if (Core.Optional.IsCollectionDefined(StrongIds))
             {
                 writer.WritePropertyName("strongIds"u8);
                 writer.WriteStartArray();
@@ -164,25 +164,25 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IDictionary<string, IList<string>>> attributes = default;
-            Optional<IDictionary<string, string>> description = default;
-            Optional<IDictionary<string, string>> displayName = default;
-            Optional<IDictionary<string, IDictionary<string, string>>> localizedAttributes = default;
-            Optional<string> smallImage = default;
-            Optional<string> mediumImage = default;
-            Optional<string> largeImage = default;
-            Optional<string> apiEntitySetName = default;
-            Optional<EntityType> entityType = default;
-            Optional<IList<PropertyDefinition>> fields = default;
-            Optional<int> instancesCount = default;
-            Optional<DateTimeOffset> lastChangedUtc = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> schemaItemTypeLink = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> timestampFieldName = default;
-            Optional<string> typeName = default;
-            Optional<IList<StrongId>> strongIds = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IDictionary<string, IList<string>>> attributes = default;
+            Core.Optional<IDictionary<string, string>> description = default;
+            Core.Optional<IDictionary<string, string>> displayName = default;
+            Core.Optional<IDictionary<string, IDictionary<string, string>>> localizedAttributes = default;
+            Core.Optional<string> smallImage = default;
+            Core.Optional<string> mediumImage = default;
+            Core.Optional<string> largeImage = default;
+            Core.Optional<string> apiEntitySetName = default;
+            Core.Optional<EntityType> entityType = default;
+            Core.Optional<IList<PropertyDefinition>> fields = default;
+            Core.Optional<int> instancesCount = default;
+            Core.Optional<DateTimeOffset> lastChangedUtc = default;
+            Core.Optional<ProvisioningState> provisioningState = default;
+            Core.Optional<string> schemaItemTypeLink = default;
+            Core.Optional<Guid> tenantId = default;
+            Core.Optional<string> timestampFieldName = default;
+            Core.Optional<string> typeName = default;
+            Core.Optional<IList<StrongId>> strongIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.CustomerInsights
                     continue;
                 }
             }
-            return new ProfileResourceFormatData(id, name, type, systemData.Value, Optional.ToDictionary(attributes), Optional.ToDictionary(description), Optional.ToDictionary(displayName), Optional.ToDictionary(localizedAttributes), smallImage.Value, mediumImage.Value, largeImage.Value, apiEntitySetName.Value, Optional.ToNullable(entityType), Optional.ToList(fields), Optional.ToNullable(instancesCount), Optional.ToNullable(lastChangedUtc), Optional.ToNullable(provisioningState), schemaItemTypeLink.Value, Optional.ToNullable(tenantId), timestampFieldName.Value, typeName.Value, Optional.ToList(strongIds));
+            return new ProfileResourceFormatData(id, name, type, systemData.Value, Core.Optional.ToDictionary(attributes), Core.Optional.ToDictionary(description), Core.Optional.ToDictionary(displayName), Core.Optional.ToDictionary(localizedAttributes), smallImage.Value, mediumImage.Value, largeImage.Value, apiEntitySetName.Value, Core.Optional.ToNullable(entityType), Core.Optional.ToList(fields), Core.Optional.ToNullable(instancesCount), Core.Optional.ToNullable(lastChangedUtc), Core.Optional.ToNullable(provisioningState), schemaItemTypeLink.Value, Core.Optional.ToNullable(tenantId), timestampFieldName.Value, typeName.Value, Core.Optional.ToList(strongIds));
         }
     }
 }

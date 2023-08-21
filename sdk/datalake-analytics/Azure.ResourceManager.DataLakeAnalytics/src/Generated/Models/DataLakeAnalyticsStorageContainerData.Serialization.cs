@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DateTimeOffset> lastModifiedTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                     continue;
                 }
             }
-            return new DataLakeAnalyticsStorageContainerData(id, name, type, systemData.Value, Optional.ToNullable(lastModifiedTime));
+            return new DataLakeAnalyticsStorageContainerData(id, name, type, systemData.Value, Core.Optional.ToNullable(lastModifiedTime));
         }
     }
 }

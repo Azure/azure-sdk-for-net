@@ -14,15 +14,15 @@ using Azure.ResourceManager.AppContainers.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    internal class ContainerAppJobExecutionBaseOperationSource : IOperationSource<ContainerAppJobExecutionBase>
+    internal class ContainerAppJobExecutionBaseOperationSource : Core.IOperationSource<ContainerAppJobExecutionBase>
     {
-        ContainerAppJobExecutionBase IOperationSource<ContainerAppJobExecutionBase>.CreateResult(Response response, CancellationToken cancellationToken)
+        ContainerAppJobExecutionBase Core.IOperationSource<ContainerAppJobExecutionBase>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return ContainerAppJobExecutionBase.DeserializeContainerAppJobExecutionBase(document.RootElement);
         }
 
-        async ValueTask<ContainerAppJobExecutionBase> IOperationSource<ContainerAppJobExecutionBase>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ContainerAppJobExecutionBase> Core.IOperationSource<ContainerAppJobExecutionBase>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return ContainerAppJobExecutionBase.DeserializeContainerAppJobExecutionBase(document.RootElement);

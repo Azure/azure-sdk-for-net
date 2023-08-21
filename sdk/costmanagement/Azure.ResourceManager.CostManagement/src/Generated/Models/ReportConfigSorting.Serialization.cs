@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class ReportConfigSorting : IUtf8JsonSerializable
+    public partial class ReportConfigSorting : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Direction))
+            if (Core.Optional.IsDefined(Direction))
             {
                 writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction.Value.ToString());
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<ReportConfigSortingType> direction = default;
+            Core.Optional<ReportConfigSortingType> direction = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new ReportConfigSorting(Optional.ToNullable(direction), name);
+            return new ReportConfigSorting(Core.Optional.ToNullable(direction), name);
         }
     }
 }

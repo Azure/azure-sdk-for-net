@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class ProfileEnumValidValuesFormat : IUtf8JsonSerializable
+    public partial class ProfileEnumValidValuesFormat : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
+            if (Core.Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
             }
-            if (Optional.IsCollectionDefined(LocalizedValueNames))
+            if (Core.Optional.IsCollectionDefined(LocalizedValueNames))
             {
                 writer.WritePropertyName("localizedValueNames"u8);
                 writer.WriteStartObject();
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<int> value = default;
-            Optional<IDictionary<string, string>> localizedValueNames = default;
+            Core.Optional<int> value = default;
+            Core.Optional<IDictionary<string, string>> localizedValueNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new ProfileEnumValidValuesFormat(Optional.ToNullable(value), Optional.ToDictionary(localizedValueNames));
+            return new ProfileEnumValidValuesFormat(Core.Optional.ToNullable(value), Core.Optional.ToDictionary(localizedValueNames));
         }
     }
 }

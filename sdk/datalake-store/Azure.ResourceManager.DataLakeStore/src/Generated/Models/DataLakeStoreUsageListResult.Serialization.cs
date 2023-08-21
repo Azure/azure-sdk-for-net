@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataLakeStoreUsage>> value = default;
+            Core.Optional<IReadOnlyList<DataLakeStoreUsage>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     continue;
                 }
             }
-            return new DataLakeStoreUsageListResult(Optional.ToList(value));
+            return new DataLakeStoreUsageListResult(Core.Optional.ToList(value));
         }
     }
 }

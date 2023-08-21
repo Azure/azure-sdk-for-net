@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <summary> Initializes a new instance of PredictionResourceFormatData. </summary>
         public PredictionResourceFormatData()
         {
-            Description = new ChangeTrackingDictionary<string, string>();
-            DisplayName = new ChangeTrackingDictionary<string, string>();
-            InvolvedInteractionTypes = new ChangeTrackingList<string>();
-            InvolvedKpiTypes = new ChangeTrackingList<string>();
-            InvolvedRelationships = new ChangeTrackingList<string>();
-            Grades = new ChangeTrackingList<PredictionGradesItem>();
+            Description = new Core.ChangeTrackingDictionary<string, string>();
+            DisplayName = new Core.ChangeTrackingDictionary<string, string>();
+            InvolvedInteractionTypes = new Core.ChangeTrackingList<string>();
+            InvolvedKpiTypes = new Core.ChangeTrackingList<string>();
+            InvolvedRelationships = new Core.ChangeTrackingList<string>();
+            Grades = new Core.ChangeTrackingList<PredictionGradesItem>();
         }
 
         /// <summary> Initializes a new instance of PredictionResourceFormatData. </summary>

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class DataFactoryPurviewConfiguration : IUtf8JsonSerializable
+    internal partial class DataFactoryPurviewConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PurviewResourceId))
+            if (Core.Optional.IsDefined(PurviewResourceId))
             {
                 writer.WritePropertyName("purviewResourceId"u8);
                 writer.WriteStringValue(PurviewResourceId);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> purviewResourceId = default;
+            Core.Optional<ResourceIdentifier> purviewResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("purviewResourceId"u8))

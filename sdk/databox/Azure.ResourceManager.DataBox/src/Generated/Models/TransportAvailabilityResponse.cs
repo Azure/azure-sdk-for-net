@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of TransportAvailabilityResponse. </summary>
         internal TransportAvailabilityResponse()
         {
-            TransportAvailabilityDetails = new ChangeTrackingList<TransportAvailabilityDetails>();
+            TransportAvailabilityDetails = new Core.ChangeTrackingList<TransportAvailabilityDetails>();
         }
 
         /// <summary> Initializes a new instance of TransportAvailabilityResponse. </summary>

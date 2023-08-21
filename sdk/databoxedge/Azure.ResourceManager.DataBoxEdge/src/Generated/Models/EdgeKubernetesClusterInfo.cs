@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             Argument.AssertNotNull(version, nameof(version));
 
-            Nodes = new ChangeTrackingList<EdgeKubernetesNodeInfo>();
+            Nodes = new Core.ChangeTrackingList<EdgeKubernetesNodeInfo>();
             Version = version;
         }
 

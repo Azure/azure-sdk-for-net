@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CassandraClusterPublicStatus. </summary>
         internal CassandraClusterPublicStatus()
         {
-            ConnectionErrors = new ChangeTrackingList<CassandraConnectionError>();
-            Errors = new ChangeTrackingList<CassandraError>();
-            DataCenters = new ChangeTrackingList<CassandraClusterPublicStatusDataCentersItem>();
+            ConnectionErrors = new Core.ChangeTrackingList<CassandraConnectionError>();
+            Errors = new Core.ChangeTrackingList<CassandraError>();
+            DataCenters = new Core.ChangeTrackingList<CassandraClusterPublicStatusDataCentersItem>();
         }
 
         /// <summary> Initializes a new instance of CassandraClusterPublicStatus. </summary>

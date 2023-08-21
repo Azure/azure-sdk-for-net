@@ -10,21 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeIotDeviceInfo : IUtf8JsonSerializable
+    public partial class EdgeIotDeviceInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("deviceId"u8);
             writer.WriteStringValue(DeviceId);
             writer.WritePropertyName("ioTHostHub"u8);
             writer.WriteStringValue(IotHostHub);
-            if (Optional.IsDefined(IotHostHubId))
+            if (Core.Optional.IsDefined(IotHostHubId))
             {
                 writer.WritePropertyName("ioTHostHubId"u8);
                 writer.WriteStringValue(IotHostHubId);
             }
-            if (Optional.IsDefined(Authentication))
+            if (Core.Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             string deviceId = default;
             string iotHostHub = default;
-            Optional<ResourceIdentifier> iotHostHubId = default;
-            Optional<Authentication> authentication = default;
+            Core.Optional<ResourceIdentifier> iotHostHubId = default;
+            Core.Optional<Authentication> authentication = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"u8))

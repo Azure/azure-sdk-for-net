@@ -12,16 +12,16 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineImage : IUtf8JsonSerializable
+    public partial class VirtualMachineImage : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -32,29 +32,29 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ExtendedLocation))
+            if (Core.Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Plan))
+            if (Core.Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 writer.WriteObjectValue(Plan);
             }
-            if (Optional.IsDefined(OSDiskImage))
+            if (Core.Optional.IsDefined(OSDiskImage))
             {
                 writer.WritePropertyName("osDiskImage"u8);
                 writer.WriteObjectValue(OSDiskImage);
             }
-            if (Optional.IsCollectionDefined(DataDiskImages))
+            if (Core.Optional.IsCollectionDefined(DataDiskImages))
             {
                 writer.WritePropertyName("dataDiskImages"u8);
                 writer.WriteStartArray();
@@ -64,22 +64,22 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AutomaticOSUpgradeProperties))
+            if (Core.Optional.IsDefined(AutomaticOSUpgradeProperties))
             {
                 writer.WritePropertyName("automaticOSUpgradeProperties"u8);
                 writer.WriteObjectValue(AutomaticOSUpgradeProperties);
             }
-            if (Optional.IsDefined(HyperVGeneration))
+            if (Core.Optional.IsDefined(HyperVGeneration))
             {
                 writer.WritePropertyName("hyperVGeneration"u8);
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
             }
-            if (Optional.IsDefined(Disallowed))
+            if (Core.Optional.IsDefined(Disallowed))
             {
                 writer.WritePropertyName("disallowed"u8);
                 writer.WriteObjectValue(Disallowed);
             }
-            if (Optional.IsCollectionDefined(Features))
+            if (Core.Optional.IsCollectionDefined(Features))
             {
                 writer.WritePropertyName("features"u8);
                 writer.WriteStartArray();
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Architecture))
+            if (Core.Optional.IsDefined(Architecture))
             {
                 writer.WritePropertyName("architecture"u8);
                 writer.WriteStringValue(Architecture.Value.ToString());
             }
-            if (Optional.IsDefined(ImageDeprecationStatus))
+            if (Core.Optional.IsDefined(ImageDeprecationStatus))
             {
                 writer.WritePropertyName("imageDeprecationStatus"u8);
                 writer.WriteObjectValue(ImageDeprecationStatus);
@@ -111,18 +111,18 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string name = default;
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<PurchasePlan> plan = default;
-            Optional<OSDiskImage> osDiskImage = default;
-            Optional<IList<DataDiskImage>> dataDiskImages = default;
-            Optional<AutomaticOSUpgradeProperties> automaticOSUpgradeProperties = default;
-            Optional<HyperVGeneration> hyperVGeneration = default;
-            Optional<DisallowedConfiguration> disallowed = default;
-            Optional<IList<VirtualMachineImageFeature>> features = default;
-            Optional<ArchitectureType> architecture = default;
-            Optional<ImageDeprecationStatus> imageDeprecationStatus = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ExtendedLocation> extendedLocation = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<PurchasePlan> plan = default;
+            Core.Optional<OSDiskImage> osDiskImage = default;
+            Core.Optional<IList<DataDiskImage>> dataDiskImages = default;
+            Core.Optional<AutomaticOSUpgradeProperties> automaticOSUpgradeProperties = default;
+            Core.Optional<HyperVGeneration> hyperVGeneration = default;
+            Core.Optional<DisallowedConfiguration> disallowed = default;
+            Core.Optional<IList<VirtualMachineImageFeature>> features = default;
+            Core.Optional<ArchitectureType> architecture = default;
+            Core.Optional<ImageDeprecationStatus> imageDeprecationStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineImage(id.Value, name, location, Optional.ToDictionary(tags), extendedLocation, plan.Value, osDiskImage.Value, Optional.ToList(dataDiskImages), automaticOSUpgradeProperties.Value, Optional.ToNullable(hyperVGeneration), disallowed.Value, Optional.ToList(features), Optional.ToNullable(architecture), imageDeprecationStatus.Value);
+            return new VirtualMachineImage(id.Value, name, location, Core.Optional.ToDictionary(tags), extendedLocation, plan.Value, osDiskImage.Value, Core.Optional.ToList(dataDiskImages), automaticOSUpgradeProperties.Value, Core.Optional.ToNullable(hyperVGeneration), disallowed.Value, Core.Optional.ToList(features), Core.Optional.ToNullable(architecture), imageDeprecationStatus.Value);
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ContainerServiceFleetHubProfile : IUtf8JsonSerializable
+    public partial class ContainerServiceFleetHubProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DnsPrefix))
+            if (Core.Optional.IsDefined(DnsPrefix))
             {
                 writer.WritePropertyName("dnsPrefix"u8);
                 writer.WriteStringValue(DnsPrefix);
@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> dnsPrefix = default;
-            Optional<string> fqdn = default;
-            Optional<string> kubernetesVersion = default;
+            Core.Optional<string> dnsPrefix = default;
+            Core.Optional<string> fqdn = default;
+            Core.Optional<string> kubernetesVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dnsPrefix"u8))

@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class MongoDBPrivilege : IUtf8JsonSerializable
+    public partial class MongoDBPrivilege : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Resource))
+            if (Core.Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
                 writer.WriteObjectValue(Resource);
             }
-            if (Optional.IsCollectionDefined(Actions))
+            if (Core.Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<MongoDBPrivilegeResourceInfo> resource = default;
-            Optional<IList<string>> actions = default;
+            Core.Optional<MongoDBPrivilegeResourceInfo> resource = default;
+            Core.Optional<IList<string>> actions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resource"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new MongoDBPrivilege(resource.Value, Optional.ToList(actions));
+            return new MongoDBPrivilege(resource.Value, Core.Optional.ToList(actions));
         }
     }
 }

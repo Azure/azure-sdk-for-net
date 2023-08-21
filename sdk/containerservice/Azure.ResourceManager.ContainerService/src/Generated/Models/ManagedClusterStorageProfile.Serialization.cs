@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterStorageProfile : IUtf8JsonSerializable
+    public partial class ManagedClusterStorageProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiskCsiDriver))
+            if (Core.Optional.IsDefined(DiskCsiDriver))
             {
                 writer.WritePropertyName("diskCSIDriver"u8);
                 writer.WriteObjectValue(DiskCsiDriver);
             }
-            if (Optional.IsDefined(FileCsiDriver))
+            if (Core.Optional.IsDefined(FileCsiDriver))
             {
                 writer.WritePropertyName("fileCSIDriver"u8);
                 writer.WriteObjectValue(FileCsiDriver);
             }
-            if (Optional.IsDefined(SnapshotController))
+            if (Core.Optional.IsDefined(SnapshotController))
             {
                 writer.WritePropertyName("snapshotController"u8);
                 writer.WriteObjectValue(SnapshotController);
             }
-            if (Optional.IsDefined(BlobCsiDriver))
+            if (Core.Optional.IsDefined(BlobCsiDriver))
             {
                 writer.WritePropertyName("blobCSIDriver"u8);
                 writer.WriteObjectValue(BlobCsiDriver);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ManagedClusterStorageProfileDiskCsiDriver> diskCsiDriver = default;
-            Optional<ManagedClusterStorageProfileFileCsiDriver> fileCsiDriver = default;
-            Optional<ManagedClusterStorageProfileSnapshotController> snapshotController = default;
-            Optional<ManagedClusterStorageProfileBlobCsiDriver> blobCsiDriver = default;
+            Core.Optional<ManagedClusterStorageProfileDiskCsiDriver> diskCsiDriver = default;
+            Core.Optional<ManagedClusterStorageProfileFileCsiDriver> fileCsiDriver = default;
+            Core.Optional<ManagedClusterStorageProfileSnapshotController> snapshotController = default;
+            Core.Optional<ManagedClusterStorageProfileBlobCsiDriver> blobCsiDriver = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskCSIDriver"u8))

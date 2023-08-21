@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Initializes a new instance of CosmosDBSqlRoleDefinitionData. </summary>
         public CosmosDBSqlRoleDefinitionData()
         {
-            AssignableScopes = new ChangeTrackingList<string>();
-            Permissions = new ChangeTrackingList<CosmosDBSqlRolePermission>();
+            AssignableScopes = new Core.ChangeTrackingList<string>();
+            Permissions = new Core.ChangeTrackingList<CosmosDBSqlRolePermission>();
         }
 
         /// <summary> Initializes a new instance of CosmosDBSqlRoleDefinitionData. </summary>

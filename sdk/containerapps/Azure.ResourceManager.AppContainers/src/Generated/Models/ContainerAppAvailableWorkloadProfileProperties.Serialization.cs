@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppAvailableWorkloadProfileProperties : IUtf8JsonSerializable
+    public partial class ContainerAppAvailableWorkloadProfileProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Category))
+            if (Core.Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Optional.IsDefined(Applicability))
+            if (Core.Optional.IsDefined(Applicability))
             {
                 writer.WritePropertyName("applicability"u8);
                 writer.WriteStringValue(Applicability.Value.ToString());
             }
-            if (Optional.IsDefined(Cores))
+            if (Core.Optional.IsDefined(Cores))
             {
                 writer.WritePropertyName("cores"u8);
                 writer.WriteNumberValue(Cores.Value);
             }
-            if (Optional.IsDefined(MemoryInGiB))
+            if (Core.Optional.IsDefined(MemoryInGiB))
             {
                 writer.WritePropertyName("memoryGiB"u8);
                 writer.WriteNumberValue(MemoryInGiB.Value);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> category = default;
-            Optional<ContainerAppAvailableWorkloadProfileApplicability> applicability = default;
-            Optional<int> cores = default;
-            Optional<int> memoryGiB = default;
-            Optional<string> displayName = default;
+            Core.Optional<string> category = default;
+            Core.Optional<ContainerAppAvailableWorkloadProfileApplicability> applicability = default;
+            Core.Optional<int> cores = default;
+            Core.Optional<int> memoryGiB = default;
+            Core.Optional<string> displayName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("category"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppAvailableWorkloadProfileProperties(category.Value, Optional.ToNullable(applicability), Optional.ToNullable(cores), Optional.ToNullable(memoryGiB), displayName.Value);
+            return new ContainerAppAvailableWorkloadProfileProperties(category.Value, Core.Optional.ToNullable(applicability), Core.Optional.ToNullable(cores), Core.Optional.ToNullable(memoryGiB), displayName.Value);
         }
     }
 }

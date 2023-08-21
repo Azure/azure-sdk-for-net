@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> shareName = default;
-            Optional<ShareDestinationFormatType> shareType = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
-            Optional<IReadOnlyList<DataBoxAccessProtocol>> supportedAccessProtocols = default;
+            Core.Optional<string> shareName = default;
+            Core.Optional<ShareDestinationFormatType> shareType = default;
+            Core.Optional<string> userName = default;
+            Core.Optional<string> password = default;
+            Core.Optional<IReadOnlyList<DataBoxAccessProtocol>> supportedAccessProtocols = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("shareName"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new ShareCredentialDetails(shareName.Value, Optional.ToNullable(shareType), userName.Value, password.Value, Optional.ToList(supportedAccessProtocols));
+            return new ShareCredentialDetails(shareName.Value, Core.Optional.ToNullable(shareType), userName.Value, password.Value, Core.Optional.ToList(supportedAccessProtocols));
         }
     }
 }

@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ContainerServiceTimeSpan : IUtf8JsonSerializable
+    public partial class ContainerServiceTimeSpan : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartOn))
+            if (Core.Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("start"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Core.Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("end"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> start = default;
-            Optional<DateTimeOffset> end = default;
+            Core.Optional<DateTimeOffset> start = default;
+            Core.Optional<DateTimeOffset> end = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("start"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ContainerServiceTimeSpan(Optional.ToNullable(start), Optional.ToNullable(end));
+            return new ContainerServiceTimeSpan(Core.Optional.ToNullable(start), Core.Optional.ToNullable(end));
         }
     }
 }

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cosmosDBSqlTriggerSqlResourcesRestClient.CreateUpdateSqlTriggerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CosmosDBSqlTriggerResource>(new CosmosDBSqlTriggerOperationSource(Client), _cosmosDBSqlTriggerSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlTriggerSqlResourcesRestClient.CreateCreateUpdateSqlTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CosmosDBSqlTriggerResource>(new CosmosDBSqlTriggerOperationSource(Client), _cosmosDBSqlTriggerSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlTriggerSqlResourcesRestClient.CreateCreateUpdateSqlTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cosmosDBSqlTriggerSqlResourcesRestClient.CreateUpdateSqlTrigger(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<CosmosDBSqlTriggerResource>(new CosmosDBSqlTriggerOperationSource(Client), _cosmosDBSqlTriggerSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlTriggerSqlResourcesRestClient.CreateCreateUpdateSqlTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CosmosDBSqlTriggerResource>(new CosmosDBSqlTriggerOperationSource(Client), _cosmosDBSqlTriggerSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlTriggerSqlResourcesRestClient.CreateCreateUpdateSqlTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CosmosDBSqlTriggerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlTriggerSqlResourcesRestClient.CreateListSqlTriggersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBSqlTriggerResource(Client, CosmosDBSqlTriggerData.DeserializeCosmosDBSqlTriggerData(e)), _cosmosDBSqlTriggerSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlTriggerCollection.GetAll", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBSqlTriggerResource(Client, CosmosDBSqlTriggerData.DeserializeCosmosDBSqlTriggerData(e)), _cosmosDBSqlTriggerSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlTriggerCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CosmosDBSqlTriggerResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlTriggerSqlResourcesRestClient.CreateListSqlTriggersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBSqlTriggerResource(Client, CosmosDBSqlTriggerData.DeserializeCosmosDBSqlTriggerData(e)), _cosmosDBSqlTriggerSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlTriggerCollection.GetAll", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBSqlTriggerResource(Client, CosmosDBSqlTriggerData.DeserializeCosmosDBSqlTriggerData(e)), _cosmosDBSqlTriggerSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlTriggerCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

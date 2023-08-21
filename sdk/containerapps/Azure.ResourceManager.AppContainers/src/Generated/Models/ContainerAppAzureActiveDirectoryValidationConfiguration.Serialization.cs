@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppAzureActiveDirectoryValidationConfiguration : IUtf8JsonSerializable
+    public partial class ContainerAppAzureActiveDirectoryValidationConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(JwtClaimChecks))
+            if (Core.Optional.IsDefined(JwtClaimChecks))
             {
                 writer.WritePropertyName("jwtClaimChecks"u8);
                 writer.WriteObjectValue(JwtClaimChecks);
             }
-            if (Optional.IsCollectionDefined(AllowedAudiences))
+            if (Core.Optional.IsCollectionDefined(AllowedAudiences))
             {
                 writer.WritePropertyName("allowedAudiences"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DefaultAuthorizationPolicy))
+            if (Core.Optional.IsDefined(DefaultAuthorizationPolicy))
             {
                 writer.WritePropertyName("defaultAuthorizationPolicy"u8);
                 writer.WriteObjectValue(DefaultAuthorizationPolicy);
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ContainerAppJwtClaimChecks> jwtClaimChecks = default;
-            Optional<IList<string>> allowedAudiences = default;
-            Optional<ContainerAppDefaultAuthorizationPolicy> defaultAuthorizationPolicy = default;
+            Core.Optional<ContainerAppJwtClaimChecks> jwtClaimChecks = default;
+            Core.Optional<IList<string>> allowedAudiences = default;
+            Core.Optional<ContainerAppDefaultAuthorizationPolicy> defaultAuthorizationPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jwtClaimChecks"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppAzureActiveDirectoryValidationConfiguration(jwtClaimChecks.Value, Optional.ToList(allowedAudiences), defaultAuthorizationPolicy.Value);
+            return new ContainerAppAzureActiveDirectoryValidationConfiguration(jwtClaimChecks.Value, Core.Optional.ToList(allowedAudiences), defaultAuthorizationPolicy.Value);
         }
     }
 }

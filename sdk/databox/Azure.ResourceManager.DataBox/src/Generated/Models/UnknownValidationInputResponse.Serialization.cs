@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             DataBoxValidationInputDiscriminator validationType = default;
-            Optional<ResponseError> error = default;
+            Core.Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validationType"u8))

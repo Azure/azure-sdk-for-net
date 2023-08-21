@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of ShareList. </summary>
         internal ShareList()
         {
-            Value = new ChangeTrackingList<DataBoxEdgeShareData>();
+            Value = new Core.ChangeTrackingList<DataBoxEdgeShareData>();
         }
 
         /// <summary> Initializes a new instance of ShareList. </summary>

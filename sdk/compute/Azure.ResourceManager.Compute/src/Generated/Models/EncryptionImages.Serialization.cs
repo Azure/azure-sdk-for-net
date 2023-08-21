@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class EncryptionImages : IUtf8JsonSerializable
+    public partial class EncryptionImages : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(OSDiskImage))
+            if (Core.Optional.IsDefined(OSDiskImage))
             {
                 writer.WritePropertyName("osDiskImage"u8);
                 writer.WriteObjectValue(OSDiskImage);
             }
-            if (Optional.IsCollectionDefined(DataDiskImages))
+            if (Core.Optional.IsCollectionDefined(DataDiskImages))
             {
                 writer.WritePropertyName("dataDiskImages"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<OSDiskImageEncryption> osDiskImage = default;
-            Optional<IList<DataDiskImageEncryption>> dataDiskImages = default;
+            Core.Optional<OSDiskImageEncryption> osDiskImage = default;
+            Core.Optional<IList<DataDiskImageEncryption>> dataDiskImages = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osDiskImage"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new EncryptionImages(osDiskImage.Value, Optional.ToList(dataDiskImages));
+            return new EncryptionImages(osDiskImage.Value, Core.Optional.ToList(dataDiskImages));
         }
     }
 }

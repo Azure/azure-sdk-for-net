@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <summary> Initializes a new instance of ConfluentAgreementListResult. </summary>
         internal ConfluentAgreementListResult()
         {
-            Value = new ChangeTrackingList<ConfluentAgreement>();
+            Value = new Core.ChangeTrackingList<ConfluentAgreement>();
         }
 
         /// <summary> Initializes a new instance of ConfluentAgreementListResult. </summary>

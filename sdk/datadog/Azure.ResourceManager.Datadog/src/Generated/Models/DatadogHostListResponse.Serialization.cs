@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DatadogHost>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<DatadogHost>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     continue;
                 }
             }
-            return new DatadogHostListResponse(Optional.ToList(value), nextLink.Value);
+            return new DatadogHostListResponse(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

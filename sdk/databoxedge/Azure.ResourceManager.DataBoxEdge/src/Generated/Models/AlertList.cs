@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of AlertList. </summary>
         internal AlertList()
         {
-            Value = new ChangeTrackingList<DataBoxEdgeAlertData>();
+            Value = new Core.ChangeTrackingList<DataBoxEdgeAlertData>();
         }
 
         /// <summary> Initializes a new instance of AlertList. </summary>

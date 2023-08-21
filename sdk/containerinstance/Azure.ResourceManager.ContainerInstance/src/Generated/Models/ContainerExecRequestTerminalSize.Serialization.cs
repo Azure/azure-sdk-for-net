@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerExecRequestTerminalSize : IUtf8JsonSerializable
+    public partial class ContainerExecRequestTerminalSize : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Rows))
+            if (Core.Optional.IsDefined(Rows))
             {
                 writer.WritePropertyName("rows"u8);
                 writer.WriteNumberValue(Rows.Value);
             }
-            if (Optional.IsDefined(Cols))
+            if (Core.Optional.IsDefined(Cols))
             {
                 writer.WritePropertyName("cols"u8);
                 writer.WriteNumberValue(Cols.Value);

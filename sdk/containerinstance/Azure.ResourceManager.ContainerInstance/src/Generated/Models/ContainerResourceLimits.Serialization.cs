@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerResourceLimits : IUtf8JsonSerializable
+    public partial class ContainerResourceLimits : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MemoryInGB))
+            if (Core.Optional.IsDefined(MemoryInGB))
             {
                 writer.WritePropertyName("memoryInGB"u8);
                 writer.WriteNumberValue(MemoryInGB.Value);
             }
-            if (Optional.IsDefined(Cpu))
+            if (Core.Optional.IsDefined(Cpu))
             {
                 writer.WritePropertyName("cpu"u8);
                 writer.WriteNumberValue(Cpu.Value);
             }
-            if (Optional.IsDefined(Gpu))
+            if (Core.Optional.IsDefined(Gpu))
             {
                 writer.WritePropertyName("gpu"u8);
                 writer.WriteObjectValue(Gpu);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<double> memoryInGB = default;
-            Optional<double> cpu = default;
-            Optional<ContainerGpuResourceInfo> gpu = default;
+            Core.Optional<double> memoryInGB = default;
+            Core.Optional<double> cpu = default;
+            Core.Optional<ContainerGpuResourceInfo> gpu = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("memoryInGB"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new ContainerResourceLimits(Optional.ToNullable(memoryInGB), Optional.ToNullable(cpu), gpu.Value);
+            return new ContainerResourceLimits(Core.Optional.ToNullable(memoryInGB), Core.Optional.ToNullable(cpu), gpu.Value);
         }
     }
 }

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> name = default;
-            Optional<IReadOnlyList<ComputeResourceSkuCapabilities>> capabilities = default;
+            Core.Optional<IReadOnlyList<string>> name = default;
+            Core.Optional<IReadOnlyList<ComputeResourceSkuCapabilities>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ComputeResourceSkuZoneDetails(Optional.ToList(name), Optional.ToList(capabilities));
+            return new ComputeResourceSkuZoneDetails(Core.Optional.ToList(name), Core.Optional.ToList(capabilities));
         }
     }
 }

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class SrtOutput : IUtf8JsonSerializable
+    public partial class SrtOutput : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("resolution"u8);

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineScaleSetPriorityMixPolicy : IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetPriorityMixPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BaseRegularPriorityCount))
+            if (Core.Optional.IsDefined(BaseRegularPriorityCount))
             {
                 writer.WritePropertyName("baseRegularPriorityCount"u8);
                 writer.WriteNumberValue(BaseRegularPriorityCount.Value);
             }
-            if (Optional.IsDefined(RegularPriorityPercentageAboveBase))
+            if (Core.Optional.IsDefined(RegularPriorityPercentageAboveBase))
             {
                 writer.WritePropertyName("regularPriorityPercentageAboveBase"u8);
                 writer.WriteNumberValue(RegularPriorityPercentageAboveBase.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<int> baseRegularPriorityCount = default;
-            Optional<int> regularPriorityPercentageAboveBase = default;
+            Core.Optional<int> baseRegularPriorityCount = default;
+            Core.Optional<int> regularPriorityPercentageAboveBase = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("baseRegularPriorityCount"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetPriorityMixPolicy(Optional.ToNullable(baseRegularPriorityCount), Optional.ToNullable(regularPriorityPercentageAboveBase));
+            return new VirtualMachineScaleSetPriorityMixPolicy(Core.Optional.ToNullable(baseRegularPriorityCount), Core.Optional.ToNullable(regularPriorityPercentageAboveBase));
         }
     }
 }

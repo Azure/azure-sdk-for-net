@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<AggregatedReplicationState> aggregatedState = default;
-            Optional<IReadOnlyList<RegionalReplicationStatus>> summary = default;
+            Core.Optional<AggregatedReplicationState> aggregatedState = default;
+            Core.Optional<IReadOnlyList<RegionalReplicationStatus>> summary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aggregatedState"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ReplicationStatus(Optional.ToNullable(aggregatedState), Optional.ToList(summary));
+            return new ReplicationStatus(Core.Optional.ToNullable(aggregatedState), Core.Optional.ToList(summary));
         }
     }
 }

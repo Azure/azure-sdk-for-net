@@ -21,18 +21,18 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> accountId = default;
-            Optional<DataLakeAnalyticsAccountStatus> provisioningState = default;
-            Optional<DataLakeAnalyticsAccountState> state = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> endpoint = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<Guid> accountId = default;
+            Core.Optional<DataLakeAnalyticsAccountStatus> provisioningState = default;
+            Core.Optional<DataLakeAnalyticsAccountState> state = default;
+            Core.Optional<DateTimeOffset> creationTime = default;
+            Core.Optional<DateTimeOffset> lastModifiedTime = default;
+            Core.Optional<string> endpoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                     continue;
                 }
             }
-            return new DataLakeAnalyticsAccountBasic(id, name, type, systemData.Value, Optional.ToNullable(accountId), Optional.ToNullable(provisioningState), Optional.ToNullable(state), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), endpoint.Value, Optional.ToNullable(location), Optional.ToDictionary(tags));
+            return new DataLakeAnalyticsAccountBasic(id, name, type, systemData.Value, Core.Optional.ToNullable(accountId), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(state), Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(lastModifiedTime), endpoint.Value, Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags));
         }
     }
 }

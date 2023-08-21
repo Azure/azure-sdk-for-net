@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class AutomaticOSUpgradePolicy : IUtf8JsonSerializable
+    public partial class AutomaticOSUpgradePolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableAutomaticOSUpgrade))
+            if (Core.Optional.IsDefined(EnableAutomaticOSUpgrade))
             {
                 writer.WritePropertyName("enableAutomaticOSUpgrade"u8);
                 writer.WriteBooleanValue(EnableAutomaticOSUpgrade.Value);
             }
-            if (Optional.IsDefined(DisableAutomaticRollback))
+            if (Core.Optional.IsDefined(DisableAutomaticRollback))
             {
                 writer.WritePropertyName("disableAutomaticRollback"u8);
                 writer.WriteBooleanValue(DisableAutomaticRollback.Value);
             }
-            if (Optional.IsDefined(UseRollingUpgradePolicy))
+            if (Core.Optional.IsDefined(UseRollingUpgradePolicy))
             {
                 writer.WritePropertyName("useRollingUpgradePolicy"u8);
                 writer.WriteBooleanValue(UseRollingUpgradePolicy.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> enableAutomaticOSUpgrade = default;
-            Optional<bool> disableAutomaticRollback = default;
-            Optional<bool> useRollingUpgradePolicy = default;
+            Core.Optional<bool> enableAutomaticOSUpgrade = default;
+            Core.Optional<bool> disableAutomaticRollback = default;
+            Core.Optional<bool> useRollingUpgradePolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableAutomaticOSUpgrade"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new AutomaticOSUpgradePolicy(Optional.ToNullable(enableAutomaticOSUpgrade), Optional.ToNullable(disableAutomaticRollback), Optional.ToNullable(useRollingUpgradePolicy));
+            return new AutomaticOSUpgradePolicy(Core.Optional.ToNullable(enableAutomaticOSUpgrade), Core.Optional.ToNullable(disableAutomaticRollback), Core.Optional.ToNullable(useRollingUpgradePolicy));
         }
     }
 }

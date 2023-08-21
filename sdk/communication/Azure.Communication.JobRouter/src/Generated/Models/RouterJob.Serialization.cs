@@ -13,42 +13,42 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter.Models
 {
-    public partial class RouterJob : IUtf8JsonSerializable
+    public partial class RouterJob : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ChannelReference))
+            if (Core.Optional.IsDefined(ChannelReference))
             {
                 writer.WritePropertyName("channelReference"u8);
                 writer.WriteStringValue(ChannelReference);
             }
-            if (Optional.IsDefined(ChannelId))
+            if (Core.Optional.IsDefined(ChannelId))
             {
                 writer.WritePropertyName("channelId"u8);
                 writer.WriteStringValue(ChannelId);
             }
-            if (Optional.IsDefined(ClassificationPolicyId))
+            if (Core.Optional.IsDefined(ClassificationPolicyId))
             {
                 writer.WritePropertyName("classificationPolicyId"u8);
                 writer.WriteStringValue(ClassificationPolicyId);
             }
-            if (Optional.IsDefined(QueueId))
+            if (Core.Optional.IsDefined(QueueId))
             {
                 writer.WritePropertyName("queueId"u8);
                 writer.WriteStringValue(QueueId);
             }
-            if (Optional.IsDefined(Priority))
+            if (Core.Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Optional.IsDefined(DispositionCode))
+            if (Core.Optional.IsDefined(DispositionCode))
             {
                 writer.WritePropertyName("dispositionCode"u8);
                 writer.WriteStringValue(DispositionCode);
             }
-            if (Optional.IsCollectionDefined(_requestedWorkerSelectors))
+            if (Core.Optional.IsCollectionDefined(_requestedWorkerSelectors))
             {
                 writer.WritePropertyName("requestedWorkerSelectors"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.Communication.JobRouter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(_labels))
+            if (Core.Optional.IsCollectionDefined(_labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.Communication.JobRouter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(_tags))
+            if (Core.Optional.IsCollectionDefined(_tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -90,7 +90,7 @@ namespace Azure.Communication.JobRouter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(_notes))
+            if (Core.Optional.IsCollectionDefined(_notes))
             {
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStartObject();
@@ -101,7 +101,7 @@ namespace Azure.Communication.JobRouter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(MatchingMode))
+            if (Core.Optional.IsDefined(MatchingMode))
             {
                 writer.WritePropertyName("matchingMode"u8);
                 writer.WriteObjectValue(MatchingMode);
@@ -115,23 +115,23 @@ namespace Azure.Communication.JobRouter.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> channelReference = default;
-            Optional<RouterJobStatus> status = default;
-            Optional<DateTimeOffset> enqueuedAt = default;
-            Optional<string> channelId = default;
-            Optional<string> classificationPolicyId = default;
-            Optional<string> queueId = default;
-            Optional<int> priority = default;
-            Optional<string> dispositionCode = default;
-            Optional<IList<RouterWorkerSelector>> requestedWorkerSelectors = default;
-            Optional<IReadOnlyList<RouterWorkerSelector>> attachedWorkerSelectors = default;
-            Optional<IDictionary<string, object>> labels = default;
-            Optional<IReadOnlyDictionary<string, RouterJobAssignment>> assignments = default;
-            Optional<IDictionary<string, object>> tags = default;
-            Optional<IDictionary<string, string>> notes = default;
-            Optional<DateTimeOffset> scheduledAt = default;
-            Optional<JobMatchingMode> matchingMode = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> channelReference = default;
+            Core.Optional<RouterJobStatus> status = default;
+            Core.Optional<DateTimeOffset> enqueuedAt = default;
+            Core.Optional<string> channelId = default;
+            Core.Optional<string> classificationPolicyId = default;
+            Core.Optional<string> queueId = default;
+            Core.Optional<int> priority = default;
+            Core.Optional<string> dispositionCode = default;
+            Core.Optional<IList<RouterWorkerSelector>> requestedWorkerSelectors = default;
+            Core.Optional<IReadOnlyList<RouterWorkerSelector>> attachedWorkerSelectors = default;
+            Core.Optional<IDictionary<string, object>> labels = default;
+            Core.Optional<IReadOnlyDictionary<string, RouterJobAssignment>> assignments = default;
+            Core.Optional<IDictionary<string, object>> tags = default;
+            Core.Optional<IDictionary<string, string>> notes = default;
+            Core.Optional<DateTimeOffset> scheduledAt = default;
+            Core.Optional<JobMatchingMode> matchingMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -308,7 +308,7 @@ namespace Azure.Communication.JobRouter.Models
                     continue;
                 }
             }
-            return new RouterJob(id.Value, channelReference.Value, Optional.ToNullable(status), Optional.ToNullable(enqueuedAt), channelId.Value, classificationPolicyId.Value, queueId.Value, Optional.ToNullable(priority), dispositionCode.Value, Optional.ToList(requestedWorkerSelectors), Optional.ToList(attachedWorkerSelectors), Optional.ToDictionary(labels), Optional.ToDictionary(assignments), Optional.ToDictionary(tags), Optional.ToDictionary(notes), Optional.ToNullable(scheduledAt), matchingMode.Value);
+            return new RouterJob(id.Value, channelReference.Value, Core.Optional.ToNullable(status), Core.Optional.ToNullable(enqueuedAt), channelId.Value, classificationPolicyId.Value, queueId.Value, Core.Optional.ToNullable(priority), dispositionCode.Value, Core.Optional.ToList(requestedWorkerSelectors), Core.Optional.ToList(attachedWorkerSelectors), Core.Optional.ToDictionary(labels), Core.Optional.ToDictionary(assignments), Core.Optional.ToDictionary(tags), Core.Optional.ToDictionary(notes), Core.Optional.ToNullable(scheduledAt), matchingMode.Value);
         }
     }
 }

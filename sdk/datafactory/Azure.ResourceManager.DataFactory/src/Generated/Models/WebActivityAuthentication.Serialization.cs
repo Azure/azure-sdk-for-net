@@ -11,42 +11,42 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class WebActivityAuthentication : IUtf8JsonSerializable
+    public partial class WebActivityAuthentication : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(WebActivityAuthenticationType))
+            if (Core.Optional.IsDefined(WebActivityAuthenticationType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(WebActivityAuthenticationType);
             }
-            if (Optional.IsDefined(Pfx))
+            if (Core.Optional.IsDefined(Pfx))
             {
                 writer.WritePropertyName("pfx"u8);
                 JsonSerializer.Serialize(writer, Pfx);
             }
-            if (Optional.IsDefined(Username))
+            if (Core.Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 JsonSerializer.Serialize(writer, Username);
             }
-            if (Optional.IsDefined(Password))
+            if (Core.Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 JsonSerializer.Serialize(writer, Password);
             }
-            if (Optional.IsDefined(Resource))
+            if (Core.Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
                 JsonSerializer.Serialize(writer, Resource);
             }
-            if (Optional.IsDefined(UserTenant))
+            if (Core.Optional.IsDefined(UserTenant))
             {
                 writer.WritePropertyName("userTenant"u8);
                 JsonSerializer.Serialize(writer, UserTenant);
             }
-            if (Optional.IsDefined(Credential))
+            if (Core.Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential);
@@ -60,13 +60,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<DataFactorySecretBaseDefinition> pfx = default;
-            Optional<DataFactoryElement<string>> username = default;
-            Optional<DataFactorySecretBaseDefinition> password = default;
-            Optional<DataFactoryElement<string>> resource = default;
-            Optional<DataFactoryElement<string>> userTenant = default;
-            Optional<DataFactoryCredentialReference> credential = default;
+            Core.Optional<string> type = default;
+            Core.Optional<DataFactorySecretBaseDefinition> pfx = default;
+            Core.Optional<DataFactoryElement<string>> username = default;
+            Core.Optional<DataFactorySecretBaseDefinition> password = default;
+            Core.Optional<DataFactoryElement<string>> resource = default;
+            Core.Optional<DataFactoryElement<string>> userTenant = default;
+            Core.Optional<DataFactoryCredentialReference> credential = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))

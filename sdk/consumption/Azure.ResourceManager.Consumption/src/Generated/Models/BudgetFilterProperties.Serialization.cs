@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class BudgetFilterProperties : IUtf8JsonSerializable
+    public partial class BudgetFilterProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Dimensions))
+            if (Core.Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteObjectValue(Dimensions);
             }
-            if (Optional.IsDefined(Tags))
+            if (Core.Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteObjectValue(Tags);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<BudgetComparisonExpression> dimensions = default;
-            Optional<BudgetComparisonExpression> tags = default;
+            Core.Optional<BudgetComparisonExpression> dimensions = default;
+            Core.Optional<BudgetComparisonExpression> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dimensions"u8))

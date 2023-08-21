@@ -15,14 +15,14 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class DedicatedHostData : IUtf8JsonSerializable
+    public partial class DedicatedHostData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.Compute
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PlatformFaultDomain))
+            if (Core.Optional.IsDefined(PlatformFaultDomain))
             {
                 writer.WritePropertyName("platformFaultDomain"u8);
                 writer.WriteNumberValue(PlatformFaultDomain.Value);
             }
-            if (Optional.IsDefined(AutoReplaceOnFailure))
+            if (Core.Optional.IsDefined(AutoReplaceOnFailure))
             {
                 writer.WritePropertyName("autoReplaceOnFailure"u8);
                 writer.WriteBooleanValue(AutoReplaceOnFailure.Value);
             }
-            if (Optional.IsDefined(LicenseType))
+            if (Core.Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToSerialString());
@@ -63,21 +63,21 @@ namespace Azure.ResourceManager.Compute
                 return null;
             }
             ComputeSku sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> platformFaultDomain = default;
-            Optional<bool> autoReplaceOnFailure = default;
-            Optional<string> hostId = default;
-            Optional<IReadOnlyList<SubResource>> virtualMachines = default;
-            Optional<DedicatedHostLicenseType> licenseType = default;
-            Optional<DateTimeOffset> provisioningTime = default;
-            Optional<string> provisioningState = default;
-            Optional<DedicatedHostInstanceView> instanceView = default;
-            Optional<DateTimeOffset> timeCreated = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<int> platformFaultDomain = default;
+            Core.Optional<bool> autoReplaceOnFailure = default;
+            Core.Optional<string> hostId = default;
+            Core.Optional<IReadOnlyList<SubResource>> virtualMachines = default;
+            Core.Optional<DedicatedHostLicenseType> licenseType = default;
+            Core.Optional<DateTimeOffset> provisioningTime = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<DedicatedHostInstanceView> instanceView = default;
+            Core.Optional<DateTimeOffset> timeCreated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new DedicatedHostData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToNullable(platformFaultDomain), Optional.ToNullable(autoReplaceOnFailure), hostId.Value, Optional.ToList(virtualMachines), Optional.ToNullable(licenseType), Optional.ToNullable(provisioningTime), provisioningState.Value, instanceView.Value, Optional.ToNullable(timeCreated));
+            return new DedicatedHostData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku, Core.Optional.ToNullable(platformFaultDomain), Core.Optional.ToNullable(autoReplaceOnFailure), hostId.Value, Core.Optional.ToList(virtualMachines), Core.Optional.ToNullable(licenseType), Core.Optional.ToNullable(provisioningTime), provisioningState.Value, instanceView.Value, Core.Optional.ToNullable(timeCreated));
         }
     }
 }

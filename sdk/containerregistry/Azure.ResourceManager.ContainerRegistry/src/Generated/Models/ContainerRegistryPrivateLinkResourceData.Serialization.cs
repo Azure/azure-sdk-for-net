@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.ContainerRegistry
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> groupId = default;
-            Optional<IReadOnlyList<string>> requiredMembers = default;
-            Optional<IReadOnlyList<string>> requiredZoneNames = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> groupId = default;
+            Core.Optional<IReadOnlyList<string>> requiredMembers = default;
+            Core.Optional<IReadOnlyList<string>> requiredZoneNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     continue;
                 }
             }
-            return new ContainerRegistryPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames));
+            return new ContainerRegistryPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, Core.Optional.ToList(requiredMembers), Core.Optional.ToList(requiredZoneNames));
         }
     }
 }

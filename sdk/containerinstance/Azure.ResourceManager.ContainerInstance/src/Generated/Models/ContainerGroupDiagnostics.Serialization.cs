@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    internal partial class ContainerGroupDiagnostics : IUtf8JsonSerializable
+    internal partial class ContainerGroupDiagnostics : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LogAnalytics))
+            if (Core.Optional.IsDefined(LogAnalytics))
             {
                 writer.WritePropertyName("logAnalytics"u8);
                 writer.WriteObjectValue(LogAnalytics);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<ContainerGroupLogAnalytics> logAnalytics = default;
+            Core.Optional<ContainerGroupLogAnalytics> logAnalytics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logAnalytics"u8))

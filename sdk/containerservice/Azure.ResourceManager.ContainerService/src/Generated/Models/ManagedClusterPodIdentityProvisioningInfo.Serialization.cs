@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ManagedClusterPodIdentityProvisioningError> error = default;
+            Core.Optional<ManagedClusterPodIdentityProvisioningError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))

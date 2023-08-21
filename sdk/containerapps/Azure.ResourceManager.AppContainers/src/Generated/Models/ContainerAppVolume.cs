@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppVolume. </summary>
         public ContainerAppVolume()
         {
-            Secrets = new ChangeTrackingList<SecretVolumeItem>();
+            Secrets = new Core.ChangeTrackingList<SecretVolumeItem>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppVolume. </summary>

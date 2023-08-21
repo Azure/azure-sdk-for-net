@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
 {
-    public partial class CustomerCareInformation : IUtf8JsonSerializable
+    public partial class CustomerCareInformation : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TollFreeNumber))
+            if (Core.Optional.IsDefined(TollFreeNumber))
             {
                 writer.WritePropertyName("tollFreeNumber"u8);
                 writer.WriteStringValue(TollFreeNumber);
             }
-            if (Optional.IsDefined(Email))
+            if (Core.Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
@@ -34,8 +34,8 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<string> tollFreeNumber = default;
-            Optional<string> email = default;
+            Core.Optional<string> tollFreeNumber = default;
+            Core.Optional<string> email = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tollFreeNumber"u8))

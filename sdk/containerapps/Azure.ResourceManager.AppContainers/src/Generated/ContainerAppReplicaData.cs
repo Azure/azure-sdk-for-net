@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Initializes a new instance of ContainerAppReplicaData. </summary>
         public ContainerAppReplicaData()
         {
-            Containers = new ChangeTrackingList<ContainerAppReplicaContainer>();
-            InitContainers = new ChangeTrackingList<ContainerAppReplicaContainer>();
+            Containers = new Core.ChangeTrackingList<ContainerAppReplicaContainer>();
+            InitContainers = new Core.ChangeTrackingList<ContainerAppReplicaContainer>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppReplicaData. </summary>

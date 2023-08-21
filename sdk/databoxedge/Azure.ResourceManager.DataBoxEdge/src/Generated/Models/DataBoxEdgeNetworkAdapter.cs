@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of DataBoxEdgeNetworkAdapter. </summary>
         internal DataBoxEdgeNetworkAdapter()
         {
-            DnsServers = new ChangeTrackingList<string>();
+            DnsServers = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeNetworkAdapter. </summary>

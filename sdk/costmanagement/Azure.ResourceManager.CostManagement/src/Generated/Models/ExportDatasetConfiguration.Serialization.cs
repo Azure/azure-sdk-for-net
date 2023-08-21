@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    internal partial class ExportDatasetConfiguration : IUtf8JsonSerializable
+    internal partial class ExportDatasetConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Columns))
+            if (Core.Optional.IsCollectionDefined(Columns))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<IList<string>> columns = default;
+            Core.Optional<IList<string>> columns = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("columns"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new ExportDatasetConfiguration(Optional.ToList(columns));
+            return new ExportDatasetConfiguration(Core.Optional.ToList(columns));
         }
     }
 }

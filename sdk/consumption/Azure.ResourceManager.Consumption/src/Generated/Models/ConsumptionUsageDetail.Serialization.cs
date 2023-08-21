@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             UsageDetailsKind kind = default;
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ConsumptionUsageDetail(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToDictionary(tags));
+            return new ConsumptionUsageDetail(id, name, type, systemData.Value, kind, Core.Optional.ToNullable(etag), Core.Optional.ToDictionary(tags));
         }
     }
 }

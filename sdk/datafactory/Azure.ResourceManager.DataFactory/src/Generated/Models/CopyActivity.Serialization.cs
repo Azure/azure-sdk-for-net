@@ -13,12 +13,12 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class CopyActivity : IUtf8JsonSerializable
+    public partial class CopyActivity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Inputs))
+            if (Core.Optional.IsCollectionDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Outputs))
+            if (Core.Optional.IsCollectionDefined(Outputs))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LinkedServiceName))
+            if (Core.Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 JsonSerializer.Serialize(writer, LinkedServiceName);
             }
-            if (Optional.IsDefined(Policy))
+            if (Core.Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -52,22 +52,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(OnInactiveMarkAs))
+            if (Core.Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (Core.Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserProperties))
+            if (Core.Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteObjectValue(Source);
             writer.WritePropertyName("sink"u8);
             writer.WriteObjectValue(Sink);
-            if (Optional.IsDefined(Translator))
+            if (Core.Optional.IsDefined(Translator))
             {
                 writer.WritePropertyName("translator"u8);
 #if NET6_0_OR_GREATER
@@ -102,47 +102,47 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Translator.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(EnableStaging))
+            if (Core.Optional.IsDefined(EnableStaging))
             {
                 writer.WritePropertyName("enableStaging"u8);
                 JsonSerializer.Serialize(writer, EnableStaging);
             }
-            if (Optional.IsDefined(StagingSettings))
+            if (Core.Optional.IsDefined(StagingSettings))
             {
                 writer.WritePropertyName("stagingSettings"u8);
                 writer.WriteObjectValue(StagingSettings);
             }
-            if (Optional.IsDefined(ParallelCopies))
+            if (Core.Optional.IsDefined(ParallelCopies))
             {
                 writer.WritePropertyName("parallelCopies"u8);
                 JsonSerializer.Serialize(writer, ParallelCopies);
             }
-            if (Optional.IsDefined(DataIntegrationUnits))
+            if (Core.Optional.IsDefined(DataIntegrationUnits))
             {
                 writer.WritePropertyName("dataIntegrationUnits"u8);
                 JsonSerializer.Serialize(writer, DataIntegrationUnits);
             }
-            if (Optional.IsDefined(EnableSkipIncompatibleRow))
+            if (Core.Optional.IsDefined(EnableSkipIncompatibleRow))
             {
                 writer.WritePropertyName("enableSkipIncompatibleRow"u8);
                 JsonSerializer.Serialize(writer, EnableSkipIncompatibleRow);
             }
-            if (Optional.IsDefined(RedirectIncompatibleRowSettings))
+            if (Core.Optional.IsDefined(RedirectIncompatibleRowSettings))
             {
                 writer.WritePropertyName("redirectIncompatibleRowSettings"u8);
                 writer.WriteObjectValue(RedirectIncompatibleRowSettings);
             }
-            if (Optional.IsDefined(LogStorageSettings))
+            if (Core.Optional.IsDefined(LogStorageSettings))
             {
                 writer.WritePropertyName("logStorageSettings"u8);
                 writer.WriteObjectValue(LogStorageSettings);
             }
-            if (Optional.IsDefined(LogSettings))
+            if (Core.Optional.IsDefined(LogSettings))
             {
                 writer.WritePropertyName("logSettings"u8);
                 writer.WriteObjectValue(LogSettings);
             }
-            if (Optional.IsCollectionDefined(PreserveRules))
+            if (Core.Optional.IsCollectionDefined(PreserveRules))
             {
                 writer.WritePropertyName("preserveRules"u8);
                 writer.WriteStartArray();
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Preserve))
+            if (Core.Optional.IsCollectionDefined(Preserve))
             {
                 writer.WritePropertyName("preserve"u8);
                 writer.WriteStartArray();
@@ -180,12 +180,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ValidateDataConsistency))
+            if (Core.Optional.IsDefined(ValidateDataConsistency))
             {
                 writer.WritePropertyName("validateDataConsistency"u8);
                 JsonSerializer.Serialize(writer, ValidateDataConsistency);
             }
-            if (Optional.IsDefined(SkipErrorFile))
+            if (Core.Optional.IsDefined(SkipErrorFile))
             {
                 writer.WritePropertyName("skipErrorFile"u8);
                 writer.WriteObjectValue(SkipErrorFile);
@@ -209,32 +209,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IList<DatasetReference>> inputs = default;
-            Optional<IList<DatasetReference>> outputs = default;
-            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<PipelineActivityPolicy> policy = default;
+            Core.Optional<IList<DatasetReference>> inputs = default;
+            Core.Optional<IList<DatasetReference>> outputs = default;
+            Core.Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
+            Core.Optional<PipelineActivityPolicy> policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            Core.Optional<string> description = default;
+            Core.Optional<PipelineActivityState> state = default;
+            Core.Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            Core.Optional<IList<PipelineActivityDependency>> dependsOn = default;
+            Core.Optional<IList<PipelineActivityUserProperty>> userProperties = default;
             CopyActivitySource source = default;
             CopySink sink = default;
-            Optional<BinaryData> translator = default;
-            Optional<DataFactoryElement<bool>> enableStaging = default;
-            Optional<StagingSettings> stagingSettings = default;
-            Optional<DataFactoryElement<int>> parallelCopies = default;
-            Optional<DataFactoryElement<int>> dataIntegrationUnits = default;
-            Optional<DataFactoryElement<bool>> enableSkipIncompatibleRow = default;
-            Optional<RedirectIncompatibleRowSettings> redirectIncompatibleRowSettings = default;
-            Optional<LogStorageSettings> logStorageSettings = default;
-            Optional<DataFactoryLogSettings> logSettings = default;
-            Optional<IList<BinaryData>> preserveRules = default;
-            Optional<IList<BinaryData>> preserve = default;
-            Optional<DataFactoryElement<bool>> validateDataConsistency = default;
-            Optional<SkipErrorFile> skipErrorFile = default;
+            Core.Optional<BinaryData> translator = default;
+            Core.Optional<DataFactoryElement<bool>> enableStaging = default;
+            Core.Optional<StagingSettings> stagingSettings = default;
+            Core.Optional<DataFactoryElement<int>> parallelCopies = default;
+            Core.Optional<DataFactoryElement<int>> dataIntegrationUnits = default;
+            Core.Optional<DataFactoryElement<bool>> enableSkipIncompatibleRow = default;
+            Core.Optional<RedirectIncompatibleRowSettings> redirectIncompatibleRowSettings = default;
+            Core.Optional<LogStorageSettings> logStorageSettings = default;
+            Core.Optional<DataFactoryLogSettings> logSettings = default;
+            Core.Optional<IList<BinaryData>> preserveRules = default;
+            Core.Optional<IList<BinaryData>> preserve = default;
+            Core.Optional<DataFactoryElement<bool>> validateDataConsistency = default;
+            Core.Optional<SkipErrorFile> skipErrorFile = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CopyActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, Optional.ToList(inputs), Optional.ToList(outputs), source, sink, translator.Value, enableStaging.Value, stagingSettings.Value, parallelCopies.Value, dataIntegrationUnits.Value, enableSkipIncompatibleRow.Value, redirectIncompatibleRowSettings.Value, logStorageSettings.Value, logSettings.Value, Optional.ToList(preserveRules), Optional.ToList(preserve), validateDataConsistency.Value, skipErrorFile.Value);
+            return new CopyActivity(name, type, description.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(onInactiveMarkAs), Core.Optional.ToList(dependsOn), Core.Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, Core.Optional.ToList(inputs), Core.Optional.ToList(outputs), source, sink, translator.Value, enableStaging.Value, stagingSettings.Value, parallelCopies.Value, dataIntegrationUnits.Value, enableSkipIncompatibleRow.Value, redirectIncompatibleRowSettings.Value, logStorageSettings.Value, logSettings.Value, Core.Optional.ToList(preserveRules), Core.Optional.ToList(preserve), validateDataConsistency.Value, skipErrorFile.Value);
         }
     }
 }

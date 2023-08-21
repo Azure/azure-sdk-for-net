@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataLakeStoreVirtualNetworkRuleData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<DataLakeStoreVirtualNetworkRuleData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     continue;
                 }
             }
-            return new DataLakeStoreVirtualNetworkRuleListResult(Optional.ToList(value), nextLink.Value);
+            return new DataLakeStoreVirtualNetworkRuleListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

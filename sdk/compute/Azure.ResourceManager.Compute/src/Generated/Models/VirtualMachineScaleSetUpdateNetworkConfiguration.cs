@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateNetworkConfiguration. </summary>
         public VirtualMachineScaleSetUpdateNetworkConfiguration()
         {
-            IPConfigurations = new ChangeTrackingList<VirtualMachineScaleSetUpdateIPConfiguration>();
+            IPConfigurations = new Core.ChangeTrackingList<VirtualMachineScaleSetUpdateIPConfiguration>();
         }
 
         /// <summary> The network configuration name. </summary>

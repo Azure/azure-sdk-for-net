@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = await _scopeMapRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeMapName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerRegistryArmOperation<ScopeMapResource>(new ScopeMapOperationSource(Client), _scopeMapClientDiagnostics, Pipeline, _scopeMapRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeMapName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ContainerRegistryArmOperation<ScopeMapResource>(new ScopeMapOperationSource(Client), _scopeMapClientDiagnostics, Pipeline, _scopeMapRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeMapName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = _scopeMapRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeMapName, data, cancellationToken);
-                var operation = new ContainerRegistryArmOperation<ScopeMapResource>(new ScopeMapOperationSource(Client), _scopeMapClientDiagnostics, Pipeline, _scopeMapRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeMapName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ContainerRegistryArmOperation<ScopeMapResource>(new ScopeMapOperationSource(Client), _scopeMapClientDiagnostics, Pipeline, _scopeMapRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopeMapName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scopeMapRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scopeMapRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScopeMapResource(Client, ScopeMapData.DeserializeScopeMapData(e)), _scopeMapClientDiagnostics, Pipeline, "ScopeMapCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScopeMapResource(Client, ScopeMapData.DeserializeScopeMapData(e)), _scopeMapClientDiagnostics, Pipeline, "ScopeMapCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scopeMapRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scopeMapRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScopeMapResource(Client, ScopeMapData.DeserializeScopeMapData(e)), _scopeMapClientDiagnostics, Pipeline, "ScopeMapCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScopeMapResource(Client, ScopeMapData.DeserializeScopeMapData(e)), _scopeMapClientDiagnostics, Pipeline, "ScopeMapCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

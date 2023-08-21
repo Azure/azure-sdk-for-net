@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of MongoDBUserDefinitionCreateOrUpdateContent. </summary>
         public MongoDBUserDefinitionCreateOrUpdateContent()
         {
-            Roles = new ChangeTrackingList<MongoDBRole>();
+            Roles = new Core.ChangeTrackingList<MongoDBRole>();
         }
 
         /// <summary> The user name for User Definition. </summary>

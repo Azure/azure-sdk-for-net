@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppBillingMeterProperties : IUtf8JsonSerializable
+    public partial class ContainerAppBillingMeterProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(WorkloadProfileCategory))
+            if (Core.Optional.IsDefined(WorkloadProfileCategory))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(WorkloadProfileCategory);
             }
-            if (Optional.IsDefined(MeterType))
+            if (Core.Optional.IsDefined(MeterType))
             {
                 writer.WritePropertyName("meterType"u8);
                 writer.WriteStringValue(MeterType);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> category = default;
-            Optional<string> meterType = default;
-            Optional<string> displayName = default;
+            Core.Optional<string> category = default;
+            Core.Optional<string> meterType = default;
+            Core.Optional<string> displayName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("category"u8))

@@ -21,34 +21,34 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> tags = default;
+            Core.Optional<IReadOnlyList<string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> eventDate = default;
-            Optional<string> reservationOrderId = default;
-            Optional<string> description = default;
-            Optional<string> eventType = default;
-            Optional<decimal> quantity = default;
-            Optional<decimal> amount = default;
-            Optional<string> currency = default;
-            Optional<string> reservationOrderName = default;
-            Optional<string> purchasingEnrollment = default;
-            Optional<Guid> purchasingSubscriptionGuid = default;
-            Optional<string> purchasingSubscriptionName = default;
-            Optional<string> armSkuName = default;
-            Optional<string> term = default;
-            Optional<string> region = default;
-            Optional<string> accountName = default;
-            Optional<string> accountOwnerEmail = default;
-            Optional<string> departmentName = default;
-            Optional<string> costCenter = default;
-            Optional<string> currentEnrollment = default;
-            Optional<string> billingFrequency = default;
-            Optional<int> billingMonth = default;
-            Optional<decimal> monetaryCommitment = default;
-            Optional<decimal> overage = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DateTimeOffset> eventDate = default;
+            Core.Optional<string> reservationOrderId = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> eventType = default;
+            Core.Optional<decimal> quantity = default;
+            Core.Optional<decimal> amount = default;
+            Core.Optional<string> currency = default;
+            Core.Optional<string> reservationOrderName = default;
+            Core.Optional<string> purchasingEnrollment = default;
+            Core.Optional<Guid> purchasingSubscriptionGuid = default;
+            Core.Optional<string> purchasingSubscriptionName = default;
+            Core.Optional<string> armSkuName = default;
+            Core.Optional<string> term = default;
+            Core.Optional<string> region = default;
+            Core.Optional<string> accountName = default;
+            Core.Optional<string> accountOwnerEmail = default;
+            Core.Optional<string> departmentName = default;
+            Core.Optional<string> costCenter = default;
+            Core.Optional<string> currentEnrollment = default;
+            Core.Optional<string> billingFrequency = default;
+            Core.Optional<int> billingMonth = default;
+            Core.Optional<decimal> monetaryCommitment = default;
+            Core.Optional<decimal> overage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ConsumptionReservationTransaction(id, name, type, systemData.Value, Optional.ToNullable(eventDate), reservationOrderId.Value, description.Value, eventType.Value, Optional.ToNullable(quantity), Optional.ToNullable(amount), currency.Value, reservationOrderName.Value, purchasingEnrollment.Value, Optional.ToNullable(purchasingSubscriptionGuid), purchasingSubscriptionName.Value, armSkuName.Value, term.Value, region.Value, accountName.Value, accountOwnerEmail.Value, departmentName.Value, costCenter.Value, currentEnrollment.Value, billingFrequency.Value, Optional.ToNullable(billingMonth), Optional.ToNullable(monetaryCommitment), Optional.ToNullable(overage), Optional.ToList(tags));
+            return new ConsumptionReservationTransaction(id, name, type, systemData.Value, Core.Optional.ToNullable(eventDate), reservationOrderId.Value, description.Value, eventType.Value, Core.Optional.ToNullable(quantity), Core.Optional.ToNullable(amount), currency.Value, reservationOrderName.Value, purchasingEnrollment.Value, Core.Optional.ToNullable(purchasingSubscriptionGuid), purchasingSubscriptionName.Value, armSkuName.Value, term.Value, region.Value, accountName.Value, accountOwnerEmail.Value, departmentName.Value, costCenter.Value, currentEnrollment.Value, billingFrequency.Value, Core.Optional.ToNullable(billingMonth), Core.Optional.ToNullable(monetaryCommitment), Core.Optional.ToNullable(overage), Core.Optional.ToList(tags));
         }
     }
 }

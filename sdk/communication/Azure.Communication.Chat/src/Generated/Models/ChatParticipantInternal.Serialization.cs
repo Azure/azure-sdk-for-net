@@ -12,19 +12,19 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    internal partial class ChatParticipantInternal : IUtf8JsonSerializable
+    internal partial class ChatParticipantInternal : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("communicationIdentifier"u8);
             writer.WriteObjectValue(CommunicationIdentifier);
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(ShareHistoryTime))
+            if (Core.Optional.IsDefined(ShareHistoryTime))
             {
                 writer.WritePropertyName("shareHistoryTime"u8);
                 writer.WriteStringValue(ShareHistoryTime.Value, "O");
@@ -39,8 +39,8 @@ namespace Azure.Communication.Chat
                 return null;
             }
             CommunicationIdentifierModel communicationIdentifier = default;
-            Optional<string> displayName = default;
-            Optional<DateTimeOffset> shareHistoryTime = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<DateTimeOffset> shareHistoryTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("communicationIdentifier"u8))
@@ -63,7 +63,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatParticipantInternal(communicationIdentifier, displayName.Value, Optional.ToNullable(shareHistoryTime));
+            return new ChatParticipantInternal(communicationIdentifier, displayName.Value, Core.Optional.ToNullable(shareHistoryTime));
         }
     }
 }

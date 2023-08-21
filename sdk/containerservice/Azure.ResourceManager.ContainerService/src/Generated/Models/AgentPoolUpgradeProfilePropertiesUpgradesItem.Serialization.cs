@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> kubernetesVersion = default;
-            Optional<bool> isPreview = default;
+            Core.Optional<string> kubernetesVersion = default;
+            Core.Optional<bool> isPreview = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kubernetesVersion"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new AgentPoolUpgradeProfilePropertiesUpgradesItem(kubernetesVersion.Value, Optional.ToNullable(isPreview));
+            return new AgentPoolUpgradeProfilePropertiesUpgradesItem(kubernetesVersion.Value, Core.Optional.ToNullable(isPreview));
         }
     }
 }

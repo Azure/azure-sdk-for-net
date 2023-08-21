@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeMountPointMap : IUtf8JsonSerializable
+    public partial class DataBoxEdgeMountPointMap : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("shareId"u8);
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 return null;
             }
             ResourceIdentifier shareId = default;
-            Optional<ResourceIdentifier> roleId = default;
-            Optional<string> mountPoint = default;
-            Optional<DataBoxEdgeMountType> mountType = default;
-            Optional<DataBoxEdgeRoleType> roleType = default;
+            Core.Optional<ResourceIdentifier> roleId = default;
+            Core.Optional<string> mountPoint = default;
+            Core.Optional<DataBoxEdgeMountType> mountType = default;
+            Core.Optional<DataBoxEdgeRoleType> roleType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("shareId"u8))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new DataBoxEdgeMountPointMap(shareId, roleId.Value, mountPoint.Value, Optional.ToNullable(mountType), Optional.ToNullable(roleType));
+            return new DataBoxEdgeMountPointMap(shareId, roleId.Value, mountPoint.Value, Core.Optional.ToNullable(mountType), Core.Optional.ToNullable(roleType));
         }
     }
 }

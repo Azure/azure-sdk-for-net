@@ -19,22 +19,22 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> contactPersonName = default;
-            Optional<string> company = default;
-            Optional<string> street1 = default;
-            Optional<string> street2 = default;
-            Optional<string> street3 = default;
-            Optional<string> city = default;
-            Optional<string> state = default;
-            Optional<string> zip = default;
-            Optional<string> country = default;
-            Optional<string> phone = default;
-            Optional<string> phoneExtension = default;
-            Optional<string> addressType = default;
-            Optional<string> additionalShippingInformation = default;
+            Core.Optional<string> contactPersonName = default;
+            Core.Optional<string> company = default;
+            Core.Optional<string> street1 = default;
+            Core.Optional<string> street2 = default;
+            Core.Optional<string> street3 = default;
+            Core.Optional<string> city = default;
+            Core.Optional<string> state = default;
+            Core.Optional<string> zip = default;
+            Core.Optional<string> country = default;
+            Core.Optional<string> phone = default;
+            Core.Optional<string> phoneExtension = default;
+            Core.Optional<string> addressType = default;
+            Core.Optional<string> additionalShippingInformation = default;
             DataCenterAddressType dataCenterAddressType = default;
-            Optional<IReadOnlyList<string>> supportedCarriersForReturnShipment = default;
-            Optional<AzureLocation> dataCenterAzureLocation = default;
+            Core.Optional<IReadOnlyList<string>> supportedCarriersForReturnShipment = default;
+            Core.Optional<AzureLocation> dataCenterAzureLocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contactPersonName"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataCenterAddressLocationResult(dataCenterAddressType, Optional.ToList(supportedCarriersForReturnShipment), Optional.ToNullable(dataCenterAzureLocation), contactPersonName.Value, company.Value, street1.Value, street2.Value, street3.Value, city.Value, state.Value, zip.Value, country.Value, phone.Value, phoneExtension.Value, addressType.Value, additionalShippingInformation.Value);
+            return new DataCenterAddressLocationResult(dataCenterAddressType, Core.Optional.ToList(supportedCarriersForReturnShipment), Core.Optional.ToNullable(dataCenterAzureLocation), contactPersonName.Value, company.Value, street1.Value, street2.Value, street3.Value, city.Value, state.Value, zip.Value, country.Value, phone.Value, phoneExtension.Value, addressType.Value, additionalShippingInformation.Value);
         }
     }
 }

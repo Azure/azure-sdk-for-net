@@ -20,21 +20,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> adapterId = default;
-            Optional<DataBoxEdgeNetworkAdapterPosition> adapterPosition = default;
-            Optional<int> index = default;
-            Optional<Guid> nodeId = default;
-            Optional<string> networkAdapterName = default;
-            Optional<string> label = default;
-            Optional<string> macAddress = default;
-            Optional<long> linkSpeed = default;
-            Optional<DataBoxEdgeNetworkAdapterStatus> status = default;
-            Optional<DataBoxEdgeNetworkAdapterRdmaStatus> rdmaStatus = default;
-            Optional<DataBoxEdgeNetworkAdapterDhcpStatus> dhcpStatus = default;
-            Optional<DataBoxEdgeIPv4Config> ipv4Configuration = default;
-            Optional<DataBoxEdgeIPv6Config> ipv6Configuration = default;
-            Optional<string> ipv6LinkLocalAddress = default;
-            Optional<IReadOnlyList<string>> dnsServers = default;
+            Core.Optional<string> adapterId = default;
+            Core.Optional<DataBoxEdgeNetworkAdapterPosition> adapterPosition = default;
+            Core.Optional<int> index = default;
+            Core.Optional<Guid> nodeId = default;
+            Core.Optional<string> networkAdapterName = default;
+            Core.Optional<string> label = default;
+            Core.Optional<string> macAddress = default;
+            Core.Optional<long> linkSpeed = default;
+            Core.Optional<DataBoxEdgeNetworkAdapterStatus> status = default;
+            Core.Optional<DataBoxEdgeNetworkAdapterRdmaStatus> rdmaStatus = default;
+            Core.Optional<DataBoxEdgeNetworkAdapterDhcpStatus> dhcpStatus = default;
+            Core.Optional<DataBoxEdgeIPv4Config> ipv4Configuration = default;
+            Core.Optional<DataBoxEdgeIPv6Config> ipv6Configuration = default;
+            Core.Optional<string> ipv6LinkLocalAddress = default;
+            Core.Optional<IReadOnlyList<string>> dnsServers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("adapterId"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new DataBoxEdgeNetworkAdapter(adapterId.Value, adapterPosition.Value, Optional.ToNullable(index), Optional.ToNullable(nodeId), networkAdapterName.Value, label.Value, macAddress.Value, Optional.ToNullable(linkSpeed), Optional.ToNullable(status), Optional.ToNullable(rdmaStatus), Optional.ToNullable(dhcpStatus), ipv4Configuration.Value, ipv6Configuration.Value, ipv6LinkLocalAddress.Value, Optional.ToList(dnsServers));
+            return new DataBoxEdgeNetworkAdapter(adapterId.Value, adapterPosition.Value, Core.Optional.ToNullable(index), Core.Optional.ToNullable(nodeId), networkAdapterName.Value, label.Value, macAddress.Value, Core.Optional.ToNullable(linkSpeed), Core.Optional.ToNullable(status), Core.Optional.ToNullable(rdmaStatus), Core.Optional.ToNullable(dhcpStatus), ipv4Configuration.Value, ipv6Configuration.Value, ipv6LinkLocalAddress.Value, Core.Optional.ToList(dnsServers));
         }
     }
 }

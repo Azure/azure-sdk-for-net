@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class ConnectorMappingCompleteOperation : IUtf8JsonSerializable
+    public partial class ConnectorMappingCompleteOperation : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CompletionOperationType))
+            if (Core.Optional.IsDefined(CompletionOperationType))
             {
                 writer.WritePropertyName("completionOperationType"u8);
                 writer.WriteStringValue(CompletionOperationType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(DestinationFolder))
+            if (Core.Optional.IsDefined(DestinationFolder))
             {
                 writer.WritePropertyName("destinationFolder"u8);
                 writer.WriteStringValue(DestinationFolder);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<CompletionOperationType> completionOperationType = default;
-            Optional<string> destinationFolder = default;
+            Core.Optional<CompletionOperationType> completionOperationType = default;
+            Core.Optional<string> destinationFolder = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("completionOperationType"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new ConnectorMappingCompleteOperation(Optional.ToNullable(completionOperationType), destinationFolder.Value);
+            return new ConnectorMappingCompleteOperation(Core.Optional.ToNullable(completionOperationType), destinationFolder.Value);
         }
     }
 }

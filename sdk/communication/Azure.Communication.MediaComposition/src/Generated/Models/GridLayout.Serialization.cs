@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class GridLayout : IUtf8JsonSerializable
+    public partial class GridLayout : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("rows"u8);
@@ -40,17 +40,17 @@ namespace Azure.Communication.MediaComposition
             writer.WriteEndArray();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(Resolution))
+            if (Core.Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
                 writer.WriteObjectValue(Resolution);
             }
-            if (Optional.IsDefined(PlaceholderImageUri))
+            if (Core.Optional.IsDefined(PlaceholderImageUri))
             {
                 writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
             }
-            if (Optional.IsDefined(ScalingMode))
+            if (Core.Optional.IsDefined(ScalingMode))
             {
                 writer.WritePropertyName("scalingMode"u8);
                 writer.WriteStringValue(ScalingMode.Value.ToString());
@@ -68,9 +68,9 @@ namespace Azure.Communication.MediaComposition
             int columns = default;
             IList<IList<string>> inputIds = default;
             LayoutType kind = default;
-            Optional<LayoutResolution> resolution = default;
-            Optional<string> placeholderImageUri = default;
-            Optional<ScalingMode> scalingMode = default;
+            Core.Optional<LayoutResolution> resolution = default;
+            Core.Optional<string> placeholderImageUri = default;
+            Core.Optional<ScalingMode> scalingMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rows"u8))
@@ -134,7 +134,7 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new GridLayout(kind, resolution.Value, placeholderImageUri.Value, Optional.ToNullable(scalingMode), rows, columns, inputIds);
+            return new GridLayout(kind, resolution.Value, placeholderImageUri.Value, Core.Optional.ToNullable(scalingMode), rows, columns, inputIds);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of RestorableTableResourcesListResult. </summary>
         internal RestorableTableResourcesListResult()
         {
-            Value = new ChangeTrackingList<RestorableTableResourceData>();
+            Value = new Core.ChangeTrackingList<RestorableTableResourceData>();
         }
 
         /// <summary> Initializes a new instance of RestorableTableResourcesListResult. </summary>

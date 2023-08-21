@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class MongoDBRoleDefinitionOperationSource : IOperationSource<MongoDBRoleDefinitionResource>
+    internal class MongoDBRoleDefinitionOperationSource : Core.IOperationSource<MongoDBRoleDefinitionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.CosmosDB
             _client = client;
         }
 
-        MongoDBRoleDefinitionResource IOperationSource<MongoDBRoleDefinitionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        MongoDBRoleDefinitionResource Core.IOperationSource<MongoDBRoleDefinitionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MongoDBRoleDefinitionData.DeserializeMongoDBRoleDefinitionData(document.RootElement);
             return new MongoDBRoleDefinitionResource(_client, data);
         }
 
-        async ValueTask<MongoDBRoleDefinitionResource> IOperationSource<MongoDBRoleDefinitionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MongoDBRoleDefinitionResource> Core.IOperationSource<MongoDBRoleDefinitionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MongoDBRoleDefinitionData.DeserializeMongoDBRoleDefinitionData(document.RootElement);

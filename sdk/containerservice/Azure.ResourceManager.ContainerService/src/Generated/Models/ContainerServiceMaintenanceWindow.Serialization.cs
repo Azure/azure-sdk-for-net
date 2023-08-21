@@ -11,28 +11,28 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ContainerServiceMaintenanceWindow : IUtf8JsonSerializable
+    public partial class ContainerServiceMaintenanceWindow : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("schedule"u8);
             writer.WriteObjectValue(Schedule);
             writer.WritePropertyName("durationHours"u8);
             writer.WriteNumberValue(DurationHours);
-            if (Optional.IsDefined(UtcOffset))
+            if (Core.Optional.IsDefined(UtcOffset))
             {
                 writer.WritePropertyName("utcOffset"u8);
                 writer.WriteStringValue(UtcOffset);
             }
-            if (Optional.IsDefined(StartDate))
+            if (Core.Optional.IsDefined(StartDate))
             {
                 writer.WritePropertyName("startDate"u8);
                 writer.WriteStringValue(StartDate);
             }
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime);
-            if (Optional.IsCollectionDefined(NotAllowedDates))
+            if (Core.Optional.IsCollectionDefined(NotAllowedDates))
             {
                 writer.WritePropertyName("notAllowedDates"u8);
                 writer.WriteStartArray();
@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             ContainerServiceMaintenanceSchedule schedule = default;
             int durationHours = default;
-            Optional<string> utcOffset = default;
-            Optional<string> startDate = default;
+            Core.Optional<string> utcOffset = default;
+            Core.Optional<string> startDate = default;
             string startTime = default;
-            Optional<IList<ContainerServiceDateSpan>> notAllowedDates = default;
+            Core.Optional<IList<ContainerServiceDateSpan>> notAllowedDates = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schedule"u8))
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ContainerServiceMaintenanceWindow(schedule, durationHours, utcOffset.Value, startDate.Value, startTime, Optional.ToList(notAllowedDates));
+            return new ContainerServiceMaintenanceWindow(schedule, durationHours, utcOffset.Value, startDate.Value, startTime, Core.Optional.ToList(notAllowedDates));
         }
     }
 }

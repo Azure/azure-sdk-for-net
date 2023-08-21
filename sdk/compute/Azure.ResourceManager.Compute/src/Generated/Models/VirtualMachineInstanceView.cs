@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineInstanceView. </summary>
         internal VirtualMachineInstanceView()
         {
-            Disks = new ChangeTrackingList<DiskInstanceView>();
-            Extensions = new ChangeTrackingList<VirtualMachineExtensionInstanceView>();
-            Statuses = new ChangeTrackingList<InstanceViewStatus>();
+            Disks = new Core.ChangeTrackingList<DiskInstanceView>();
+            Extensions = new Core.ChangeTrackingList<VirtualMachineExtensionInstanceView>();
+            Statuses = new Core.ChangeTrackingList<InstanceViewStatus>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineInstanceView. </summary>

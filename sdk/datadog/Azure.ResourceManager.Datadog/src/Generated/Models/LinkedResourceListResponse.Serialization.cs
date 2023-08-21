@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SubResource>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<SubResource>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     continue;
                 }
             }
-            return new LinkedResourceListResponse(Optional.ToList(value), nextLink.Value);
+            return new LinkedResourceListResponse(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

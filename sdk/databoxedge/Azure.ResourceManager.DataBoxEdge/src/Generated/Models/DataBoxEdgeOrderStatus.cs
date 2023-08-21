@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal DataBoxEdgeOrderStatus(DataBoxEdgeOrderState status)
         {
             Status = status;
-            AdditionalOrderDetails = new ChangeTrackingDictionary<string, string>();
+            AdditionalOrderDetails = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeOrderStatus. </summary>

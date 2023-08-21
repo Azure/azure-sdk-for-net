@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<ScsiControllerType> type = default;
-            Optional<int> controllerKey = default;
-            Optional<int> busNumber = default;
-            Optional<int> scsiCtlrUnitNumber = default;
-            Optional<VirtualScsiSharing> sharing = default;
+            Core.Optional<ScsiControllerType> type = default;
+            Core.Optional<int> controllerKey = default;
+            Core.Optional<int> busNumber = default;
+            Core.Optional<int> scsiCtlrUnitNumber = default;
+            Core.Optional<VirtualScsiSharing> sharing = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     continue;
                 }
             }
-            return new VirtualScsiController(Optional.ToNullable(type), Optional.ToNullable(controllerKey), Optional.ToNullable(busNumber), Optional.ToNullable(scsiCtlrUnitNumber), Optional.ToNullable(sharing));
+            return new VirtualScsiController(Core.Optional.ToNullable(type), Core.Optional.ToNullable(controllerKey), Core.Optional.ToNullable(busNumber), Core.Optional.ToNullable(scsiCtlrUnitNumber), Core.Optional.ToNullable(sharing));
         }
     }
 }

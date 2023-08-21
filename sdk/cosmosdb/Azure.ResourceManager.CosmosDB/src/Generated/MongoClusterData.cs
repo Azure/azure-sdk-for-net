@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> The location. </param>
         public MongoClusterData(AzureLocation location) : base(location)
         {
-            NodeGroupSpecs = new ChangeTrackingList<NodeGroupSpec>();
+            NodeGroupSpecs = new Core.ChangeTrackingList<NodeGroupSpec>();
         }
 
         /// <summary> Initializes a new instance of MongoClusterData. </summary>

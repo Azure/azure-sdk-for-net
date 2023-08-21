@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MonitoringTagRuleData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<MonitoringTagRuleData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     continue;
                 }
             }
-            return new MonitoringTagRulesListResponse(Optional.ToList(value), nextLink.Value);
+            return new MonitoringTagRulesListResponse(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

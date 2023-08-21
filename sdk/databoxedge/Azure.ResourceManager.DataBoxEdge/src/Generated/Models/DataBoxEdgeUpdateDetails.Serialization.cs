@@ -18,15 +18,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> updateTitle = default;
-            Optional<double> updateSize = default;
-            Optional<DataBoxEdgeUpdateType> updateType = default;
-            Optional<string> targetVersion = default;
-            Optional<string> friendlyVersionNumber = default;
-            Optional<int> estimatedInstallTimeInMins = default;
-            Optional<InstallRebootBehavior> rebootBehavior = default;
-            Optional<InstallationImpact> installationImpact = default;
-            Optional<DataBoxEdgeUpdateStatus> status = default;
+            Core.Optional<string> updateTitle = default;
+            Core.Optional<double> updateSize = default;
+            Core.Optional<DataBoxEdgeUpdateType> updateType = default;
+            Core.Optional<string> targetVersion = default;
+            Core.Optional<string> friendlyVersionNumber = default;
+            Core.Optional<int> estimatedInstallTimeInMins = default;
+            Core.Optional<InstallRebootBehavior> rebootBehavior = default;
+            Core.Optional<InstallationImpact> installationImpact = default;
+            Core.Optional<DataBoxEdgeUpdateStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("updateTitle"u8))
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new DataBoxEdgeUpdateDetails(updateTitle.Value, Optional.ToNullable(updateSize), Optional.ToNullable(updateType), targetVersion.Value, friendlyVersionNumber.Value, Optional.ToNullable(estimatedInstallTimeInMins), Optional.ToNullable(rebootBehavior), Optional.ToNullable(installationImpact), Optional.ToNullable(status));
+            return new DataBoxEdgeUpdateDetails(updateTitle.Value, Core.Optional.ToNullable(updateSize), Core.Optional.ToNullable(updateType), targetVersion.Value, friendlyVersionNumber.Value, Core.Optional.ToNullable(estimatedInstallTimeInMins), Core.Optional.ToNullable(rebootBehavior), Core.Optional.ToNullable(installationImpact), Core.Optional.ToNullable(status));
         }
     }
 }

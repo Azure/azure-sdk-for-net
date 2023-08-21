@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService
 
             KubernetesVersion = kubernetesVersion;
             OSType = osType;
-            Upgrades = new ChangeTrackingList<AgentPoolUpgradeProfilePropertiesUpgradesItem>();
+            Upgrades = new Core.ChangeTrackingList<AgentPoolUpgradeProfilePropertiesUpgradesItem>();
         }
 
         /// <summary> Initializes a new instance of AgentPoolUpgradeProfileData. </summary>

@@ -13,9 +13,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    public partial class ContainerAppRevisionData : IUtf8JsonSerializable
+    public partial class ContainerAppRevisionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -33,18 +33,18 @@ namespace Azure.ResourceManager.AppContainers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> lastActiveTime = default;
-            Optional<string> fqdn = default;
-            Optional<ContainerAppTemplate> template = default;
-            Optional<bool> active = default;
-            Optional<int> replicas = default;
-            Optional<int> trafficWeight = default;
-            Optional<string> provisioningError = default;
-            Optional<ContainerAppRevisionHealthState> healthState = default;
-            Optional<ContainerAppRevisionProvisioningState> provisioningState = default;
-            Optional<RevisionRunningState> runningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DateTimeOffset> createdTime = default;
+            Core.Optional<DateTimeOffset> lastActiveTime = default;
+            Core.Optional<string> fqdn = default;
+            Core.Optional<ContainerAppTemplate> template = default;
+            Core.Optional<bool> active = default;
+            Core.Optional<int> replicas = default;
+            Core.Optional<int> trafficWeight = default;
+            Core.Optional<string> provisioningError = default;
+            Core.Optional<ContainerAppRevisionHealthState> healthState = default;
+            Core.Optional<ContainerAppRevisionProvisioningState> provisioningState = default;
+            Core.Optional<RevisionRunningState> runningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.AppContainers
                     continue;
                 }
             }
-            return new ContainerAppRevisionData(id, name, type, systemData.Value, Optional.ToNullable(createdTime), Optional.ToNullable(lastActiveTime), fqdn.Value, template.Value, Optional.ToNullable(active), Optional.ToNullable(replicas), Optional.ToNullable(trafficWeight), provisioningError.Value, Optional.ToNullable(healthState), Optional.ToNullable(provisioningState), Optional.ToNullable(runningState));
+            return new ContainerAppRevisionData(id, name, type, systemData.Value, Core.Optional.ToNullable(createdTime), Core.Optional.ToNullable(lastActiveTime), fqdn.Value, template.Value, Core.Optional.ToNullable(active), Core.Optional.ToNullable(replicas), Core.Optional.ToNullable(trafficWeight), provisioningError.Value, Core.Optional.ToNullable(healthState), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(runningState));
         }
     }
 }

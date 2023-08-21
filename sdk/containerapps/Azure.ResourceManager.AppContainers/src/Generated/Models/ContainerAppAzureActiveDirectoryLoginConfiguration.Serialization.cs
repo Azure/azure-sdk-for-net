@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppAzureActiveDirectoryLoginConfiguration : IUtf8JsonSerializable
+    public partial class ContainerAppAzureActiveDirectoryLoginConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(LoginParameters))
+            if (Core.Optional.IsCollectionDefined(LoginParameters))
             {
                 writer.WritePropertyName("loginParameters"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsWwwAuthenticationDisabled))
+            if (Core.Optional.IsDefined(IsWwwAuthenticationDisabled))
             {
                 writer.WritePropertyName("disableWWWAuthenticate"u8);
                 writer.WriteBooleanValue(IsWwwAuthenticationDisabled.Value);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<IList<string>> loginParameters = default;
-            Optional<bool> disableWWWAuthenticate = default;
+            Core.Optional<IList<string>> loginParameters = default;
+            Core.Optional<bool> disableWWWAuthenticate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("loginParameters"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppAzureActiveDirectoryLoginConfiguration(Optional.ToList(loginParameters), Optional.ToNullable(disableWWWAuthenticate));
+            return new ContainerAppAzureActiveDirectoryLoginConfiguration(Core.Optional.ToList(loginParameters), Core.Optional.ToNullable(disableWWWAuthenticate));
         }
     }
 }

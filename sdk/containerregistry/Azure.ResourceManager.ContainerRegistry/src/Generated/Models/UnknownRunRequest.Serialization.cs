@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    internal partial class UnknownRunRequest : IUtf8JsonSerializable
+    internal partial class UnknownRunRequest : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RunRequestType);
-            if (Optional.IsDefined(IsArchiveEnabled))
+            if (Core.Optional.IsDefined(IsArchiveEnabled))
             {
                 writer.WritePropertyName("isArchiveEnabled"u8);
                 writer.WriteBooleanValue(IsArchiveEnabled.Value);
             }
-            if (Optional.IsDefined(AgentPoolName))
+            if (Core.Optional.IsDefined(AgentPoolName))
             {
                 writer.WritePropertyName("agentPoolName"u8);
                 writer.WriteStringValue(AgentPoolName);
             }
-            if (Optional.IsDefined(LogTemplate))
+            if (Core.Optional.IsDefined(LogTemplate))
             {
                 writer.WritePropertyName("logTemplate"u8);
                 writer.WriteStringValue(LogTemplate);
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             string type = "Unknown";
-            Optional<bool> isArchiveEnabled = default;
-            Optional<string> agentPoolName = default;
-            Optional<string> logTemplate = default;
+            Core.Optional<bool> isArchiveEnabled = default;
+            Core.Optional<string> agentPoolName = default;
+            Core.Optional<string> logTemplate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new UnknownRunRequest(type, Optional.ToNullable(isArchiveEnabled), agentPoolName.Value, logTemplate.Value);
+            return new UnknownRunRequest(type, Core.Optional.ToNullable(isArchiveEnabled), agentPoolName.Value, logTemplate.Value);
         }
     }
 }

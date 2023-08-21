@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.Sms.Models
 {
-    internal partial class SendMessageRequest : IUtf8JsonSerializable
+    internal partial class SendMessageRequest : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("from"u8);
@@ -26,7 +26,7 @@ namespace Azure.Communication.Sms.Models
             writer.WriteEndArray();
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (Optional.IsDefined(SmsSendOptions))
+            if (Core.Optional.IsDefined(SmsSendOptions))
             {
                 writer.WritePropertyName("smsSendOptions"u8);
                 writer.WriteObjectValue(SmsSendOptions);

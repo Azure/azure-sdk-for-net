@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class MongoDBIndexConfig : IUtf8JsonSerializable
+    public partial class MongoDBIndexConfig : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExpireAfterSeconds))
+            if (Core.Optional.IsDefined(ExpireAfterSeconds))
             {
                 writer.WritePropertyName("expireAfterSeconds"u8);
                 writer.WriteNumberValue(ExpireAfterSeconds.Value);
             }
-            if (Optional.IsDefined(IsUnique))
+            if (Core.Optional.IsDefined(IsUnique))
             {
                 writer.WritePropertyName("unique"u8);
                 writer.WriteBooleanValue(IsUnique.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<int> expireAfterSeconds = default;
-            Optional<bool> unique = default;
+            Core.Optional<int> expireAfterSeconds = default;
+            Core.Optional<bool> unique = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expireAfterSeconds"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new MongoDBIndexConfig(Optional.ToNullable(expireAfterSeconds), Optional.ToNullable(unique));
+            return new MongoDBIndexConfig(Core.Optional.ToNullable(expireAfterSeconds), Core.Optional.ToNullable(unique));
         }
     }
 }

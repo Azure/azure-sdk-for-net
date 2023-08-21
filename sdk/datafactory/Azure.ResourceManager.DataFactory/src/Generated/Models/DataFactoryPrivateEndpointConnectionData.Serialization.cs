@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    public partial class DataFactoryPrivateEndpointConnectionData : IUtf8JsonSerializable
+    public partial class DataFactoryPrivateEndpointConnectionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.DataFactory
             {
                 return null;
             }
-            Optional<DataFactoryPrivateEndpointConnectionProperties> properties = default;
-            Optional<ETag> etag = default;
+            Core.Optional<DataFactoryPrivateEndpointConnectionProperties> properties = default;
+            Core.Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory
                     continue;
                 }
             }
-            return new DataFactoryPrivateEndpointConnectionData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(etag));
+            return new DataFactoryPrivateEndpointConnectionData(id, name, type, systemData.Value, properties.Value, Core.Optional.ToNullable(etag));
         }
     }
 }

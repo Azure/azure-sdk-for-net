@@ -14,18 +14,18 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    public partial class GraphResourceGetResultData : IUtf8JsonSerializable
+    public partial class GraphResourceGetResultData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.CosmosDB
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Resource))
+            if (Core.Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
                 JsonSerializer.Serialize(writer, Resource);
             }
-            if (Optional.IsDefined(Options))
+            if (Core.Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteObjectValue(Options);
@@ -60,15 +60,15 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<WritableSubResource> resource = default;
-            Optional<GraphResourceGetPropertiesOptions> options = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<WritableSubResource> resource = default;
+            Core.Optional<GraphResourceGetPropertiesOptions> options = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CosmosDB
                     continue;
                 }
             }
-            return new GraphResourceGetResultData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, resource, options.Value, identity);
+            return new GraphResourceGetResultData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, resource, options.Value, identity);
         }
     }
 }

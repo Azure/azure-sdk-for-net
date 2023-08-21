@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ComputePrivateLinkResourceData>> value = default;
+            Core.Optional<IReadOnlyList<ComputePrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ComputePrivateLinkResourceListResult(Optional.ToList(value));
+            return new ComputePrivateLinkResourceListResult(Core.Optional.ToList(value));
         }
     }
 }

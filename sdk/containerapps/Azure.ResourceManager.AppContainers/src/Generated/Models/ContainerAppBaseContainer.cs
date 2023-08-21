@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppBaseContainer. </summary>
         public ContainerAppBaseContainer()
         {
-            Command = new ChangeTrackingList<string>();
-            Args = new ChangeTrackingList<string>();
-            Env = new ChangeTrackingList<ContainerAppEnvironmentVariable>();
-            VolumeMounts = new ChangeTrackingList<ContainerAppVolumeMount>();
+            Command = new Core.ChangeTrackingList<string>();
+            Args = new Core.ChangeTrackingList<string>();
+            Env = new Core.ChangeTrackingList<ContainerAppEnvironmentVariable>();
+            VolumeMounts = new Core.ChangeTrackingList<ContainerAppVolumeMount>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppBaseContainer. </summary>

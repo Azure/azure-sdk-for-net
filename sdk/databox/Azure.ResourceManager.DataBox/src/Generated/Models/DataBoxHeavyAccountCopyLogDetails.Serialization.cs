@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> accountName = default;
-            Optional<IReadOnlyList<string>> copyLogLink = default;
-            Optional<IReadOnlyList<string>> copyVerboseLogLink = default;
+            Core.Optional<string> accountName = default;
+            Core.Optional<IReadOnlyList<string>> copyLogLink = default;
+            Core.Optional<IReadOnlyList<string>> copyVerboseLogLink = default;
             DataBoxOrderType copyLogDetailsType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataBoxHeavyAccountCopyLogDetails(copyLogDetailsType, accountName.Value, Optional.ToList(copyLogLink), Optional.ToList(copyVerboseLogLink));
+            return new DataBoxHeavyAccountCopyLogDetails(copyLogDetailsType, accountName.Value, Core.Optional.ToList(copyLogLink), Core.Optional.ToList(copyVerboseLogLink));
         }
     }
 }

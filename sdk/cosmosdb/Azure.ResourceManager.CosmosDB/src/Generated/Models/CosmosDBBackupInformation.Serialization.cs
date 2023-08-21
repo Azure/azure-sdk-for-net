@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<ContinuousBackupInformation> continuousBackupInformation = default;
+            Core.Optional<ContinuousBackupInformation> continuousBackupInformation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("continuousBackupInformation"u8))

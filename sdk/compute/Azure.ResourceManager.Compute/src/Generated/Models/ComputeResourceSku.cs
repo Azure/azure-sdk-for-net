@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ComputeResourceSku. </summary>
         internal ComputeResourceSku()
         {
-            Locations = new ChangeTrackingList<AzureLocation>();
-            LocationInfo = new ChangeTrackingList<ComputeResourceSkuLocationInfo>();
-            ApiVersions = new ChangeTrackingList<string>();
-            Costs = new ChangeTrackingList<ResourceSkuCosts>();
-            Capabilities = new ChangeTrackingList<ComputeResourceSkuCapabilities>();
-            Restrictions = new ChangeTrackingList<ComputeResourceSkuRestrictions>();
+            Locations = new Core.ChangeTrackingList<AzureLocation>();
+            LocationInfo = new Core.ChangeTrackingList<ComputeResourceSkuLocationInfo>();
+            ApiVersions = new Core.ChangeTrackingList<string>();
+            Costs = new Core.ChangeTrackingList<ResourceSkuCosts>();
+            Capabilities = new Core.ChangeTrackingList<ComputeResourceSkuCapabilities>();
+            Restrictions = new Core.ChangeTrackingList<ComputeResourceSkuRestrictions>();
         }
 
         /// <summary> Initializes a new instance of ComputeResourceSku. </summary>

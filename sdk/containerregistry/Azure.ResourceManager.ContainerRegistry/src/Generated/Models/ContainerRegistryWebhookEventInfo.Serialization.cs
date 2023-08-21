@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<Guid> id = default;
+            Core.Optional<Guid> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryWebhookEventInfo(Optional.ToNullable(id));
+            return new ContainerRegistryWebhookEventInfo(Core.Optional.ToNullable(id));
         }
     }
 }

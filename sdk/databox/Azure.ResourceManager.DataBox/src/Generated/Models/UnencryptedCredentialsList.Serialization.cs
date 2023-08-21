@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<UnencryptedCredentials>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<UnencryptedCredentials>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new UnencryptedCredentialsList(Optional.ToList(value), nextLink.Value);
+            return new UnencryptedCredentialsList(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

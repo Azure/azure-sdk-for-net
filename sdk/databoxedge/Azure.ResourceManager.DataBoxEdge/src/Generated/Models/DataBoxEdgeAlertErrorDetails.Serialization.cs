@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<int> occurrences = default;
+            Core.Optional<string> errorCode = default;
+            Core.Optional<string> errorMessage = default;
+            Core.Optional<int> occurrences = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorCode"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new DataBoxEdgeAlertErrorDetails(errorCode.Value, errorMessage.Value, Optional.ToNullable(occurrences));
+            return new DataBoxEdgeAlertErrorDetails(errorCode.Value, errorMessage.Value, Core.Optional.ToNullable(occurrences));
         }
     }
 }

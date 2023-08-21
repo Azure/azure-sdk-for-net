@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerInstanceGitRepoVolume : IUtf8JsonSerializable
+    public partial class ContainerInstanceGitRepoVolume : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Directory))
+            if (Core.Optional.IsDefined(Directory))
             {
                 writer.WritePropertyName("directory"u8);
                 writer.WriteStringValue(Directory);
             }
             writer.WritePropertyName("repository"u8);
             writer.WriteStringValue(Repository);
-            if (Optional.IsDefined(Revision))
+            if (Core.Optional.IsDefined(Revision))
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteStringValue(Revision);
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<string> directory = default;
+            Core.Optional<string> directory = default;
             string repository = default;
-            Optional<string> revision = default;
+            Core.Optional<string> revision = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("directory"u8))

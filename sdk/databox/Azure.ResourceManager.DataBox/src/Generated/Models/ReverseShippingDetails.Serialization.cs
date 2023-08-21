@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class ReverseShippingDetails : IUtf8JsonSerializable
+    public partial class ReverseShippingDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContactDetails))
+            if (Core.Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
                 writer.WriteObjectValue(ContactDetails);
             }
-            if (Optional.IsDefined(ShippingAddress))
+            if (Core.Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
                 writer.WriteObjectValue(ShippingAddress);
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<ContactInfo> contactDetails = default;
-            Optional<DataBoxShippingAddress> shippingAddress = default;
-            Optional<bool> isUpdated = default;
+            Core.Optional<ContactInfo> contactDetails = default;
+            Core.Optional<DataBoxShippingAddress> shippingAddress = default;
+            Core.Optional<bool> isUpdated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contactDetails"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new ReverseShippingDetails(contactDetails.Value, shippingAddress.Value, Optional.ToNullable(isUpdated));
+            return new ReverseShippingDetails(contactDetails.Value, shippingAddress.Value, Core.Optional.ToNullable(isUpdated));
         }
     }
 }

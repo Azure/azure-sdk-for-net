@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ResourceRestoreParameters : IUtf8JsonSerializable
+    public partial class ResourceRestoreParameters : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RestoreSource))
+            if (Core.Optional.IsDefined(RestoreSource))
             {
                 writer.WritePropertyName("restoreSource"u8);
                 writer.WriteStringValue(RestoreSource);
             }
-            if (Optional.IsDefined(RestoreTimestampInUtc))
+            if (Core.Optional.IsDefined(RestoreTimestampInUtc))
             {
                 writer.WritePropertyName("restoreTimestampInUtc"u8);
                 writer.WriteStringValue(RestoreTimestampInUtc.Value, "O");
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> restoreSource = default;
-            Optional<DateTimeOffset> restoreTimestampInUtc = default;
+            Core.Optional<string> restoreSource = default;
+            Core.Optional<DateTimeOffset> restoreTimestampInUtc = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("restoreSource"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ResourceRestoreParameters(restoreSource.Value, Optional.ToNullable(restoreTimestampInUtc));
+            return new ResourceRestoreParameters(restoreSource.Value, Core.Optional.ToNullable(restoreTimestampInUtc));
         }
     }
 }

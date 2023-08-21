@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of TriggerPipelineReference. </summary>
         public TriggerPipelineReference()
         {
-            Parameters = new ChangeTrackingDictionary<string, BinaryData>();
+            Parameters = new Core.ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of TriggerPipelineReference. </summary>

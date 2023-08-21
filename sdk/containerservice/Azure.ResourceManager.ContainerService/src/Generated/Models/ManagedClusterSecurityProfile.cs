@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of ManagedClusterSecurityProfile. </summary>
         public ManagedClusterSecurityProfile()
         {
-            CustomCATrustCertificates = new ChangeTrackingList<byte[]>();
+            CustomCATrustCertificates = new Core.ChangeTrackingList<byte[]>();
         }
 
         /// <summary> Initializes a new instance of ManagedClusterSecurityProfile. </summary>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<WritableSubResource>> networkInterfaces = default;
+            Core.Optional<IReadOnlyList<WritableSubResource>> networkInterfaces = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkInterfaces"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new RoleInstanceNetworkProfile(Optional.ToList(networkInterfaces));
+            return new RoleInstanceNetworkProfile(Core.Optional.ToList(networkInterfaces));
         }
     }
 }

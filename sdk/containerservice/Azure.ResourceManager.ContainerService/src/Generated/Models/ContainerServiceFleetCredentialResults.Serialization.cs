@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContainerServiceFleetCredentialResult>> kubeconfigs = default;
+            Core.Optional<IReadOnlyList<ContainerServiceFleetCredentialResult>> kubeconfigs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kubeconfigs"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ContainerServiceFleetCredentialResults(Optional.ToList(kubeconfigs));
+            return new ContainerServiceFleetCredentialResults(Core.Optional.ToList(kubeconfigs));
         }
     }
 }

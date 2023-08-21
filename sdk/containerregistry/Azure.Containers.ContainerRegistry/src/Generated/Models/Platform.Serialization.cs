@@ -19,12 +19,12 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Optional<string> architecture = default;
-            Optional<string> os = default;
-            Optional<string> osVersion = default;
-            Optional<IReadOnlyList<string>> osFeatures = default;
-            Optional<string> variant = default;
-            Optional<IReadOnlyList<string>> features = default;
+            Core.Optional<string> architecture = default;
+            Core.Optional<string> os = default;
+            Core.Optional<string> osVersion = default;
+            Core.Optional<IReadOnlyList<string>> osFeatures = default;
+            Core.Optional<string> variant = default;
+            Core.Optional<IReadOnlyList<string>> features = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("architecture"u8))
@@ -76,7 +76,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new Platform(architecture.Value, os.Value, osVersion.Value, Optional.ToList(osFeatures), variant.Value, Optional.ToList(features));
+            return new Platform(architecture.Value, os.Value, osVersion.Value, Core.Optional.ToList(osFeatures), variant.Value, Core.Optional.ToList(features));
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    internal partial class ContainerServiceCreationData : IUtf8JsonSerializable
+    internal partial class ContainerServiceCreationData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceResourceId))
+            if (Core.Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> sourceResourceId = default;
+            Core.Optional<ResourceIdentifier> sourceResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceResourceId"u8))

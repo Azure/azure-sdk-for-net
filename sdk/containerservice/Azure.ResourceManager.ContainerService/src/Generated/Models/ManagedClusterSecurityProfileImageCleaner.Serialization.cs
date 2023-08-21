@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterSecurityProfileImageCleaner : IUtf8JsonSerializable
+    public partial class ManagedClusterSecurityProfileImageCleaner : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (Core.Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(IntervalHours))
+            if (Core.Optional.IsDefined(IntervalHours))
             {
                 writer.WritePropertyName("intervalHours"u8);
                 writer.WriteNumberValue(IntervalHours.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<int> intervalHours = default;
+            Core.Optional<bool> enabled = default;
+            Core.Optional<int> intervalHours = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterSecurityProfileImageCleaner(Optional.ToNullable(enabled), Optional.ToNullable(intervalHours));
+            return new ManagedClusterSecurityProfileImageCleaner(Core.Optional.ToNullable(enabled), Core.Optional.ToNullable(intervalHours));
         }
     }
 }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class JobMatchingMode : IUtf8JsonSerializable
+    public partial class JobMatchingMode : Core.IUtf8JsonSerializable
     {
         internal static JobMatchingMode DeserializeJobMatchingMode(JsonElement element)
         {
@@ -18,10 +18,10 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Optional<JobMatchModeType> modeType = default;
-            Optional<object> queueAndMatchMode = default;
-            Optional<ScheduleAndSuspendMode> scheduleAndSuspendMode = default;
-            Optional<object> suspendMode = default;
+            Core.Optional<JobMatchModeType> modeType = default;
+            Core.Optional<object> queueAndMatchMode = default;
+            Core.Optional<ScheduleAndSuspendMode> scheduleAndSuspendMode = default;
+            Core.Optional<object> suspendMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modeType"u8))
@@ -61,7 +61,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new JobMatchingMode(Optional.ToNullable(modeType), queueAndMatchMode.Value, scheduleAndSuspendMode.Value, suspendMode.Value);
+            return new JobMatchingMode(Core.Optional.ToNullable(modeType), queueAndMatchMode.Value, scheduleAndSuspendMode.Value, suspendMode.Value);
         }
     }
 }

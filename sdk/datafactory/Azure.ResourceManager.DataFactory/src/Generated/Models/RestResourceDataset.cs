@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
 
-            AdditionalHeaders = new ChangeTrackingDictionary<string, BinaryData>();
-            PaginationRules = new ChangeTrackingDictionary<string, BinaryData>();
+            AdditionalHeaders = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            PaginationRules = new Core.ChangeTrackingDictionary<string, BinaryData>();
             DatasetType = "RestResource";
         }
 

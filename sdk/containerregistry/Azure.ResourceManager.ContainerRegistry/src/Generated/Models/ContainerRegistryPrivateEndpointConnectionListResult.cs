@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of ContainerRegistryPrivateEndpointConnectionListResult. </summary>
         internal ContainerRegistryPrivateEndpointConnectionListResult()
         {
-            Value = new ChangeTrackingList<ContainerRegistryPrivateEndpointConnectionData>();
+            Value = new Core.ChangeTrackingList<ContainerRegistryPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryPrivateEndpointConnectionListResult. </summary>

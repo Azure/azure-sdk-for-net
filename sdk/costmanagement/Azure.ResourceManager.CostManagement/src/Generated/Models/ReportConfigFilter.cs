@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of ReportConfigFilter. </summary>
         public ReportConfigFilter()
         {
-            And = new ChangeTrackingList<ReportConfigFilter>();
-            Or = new ChangeTrackingList<ReportConfigFilter>();
+            And = new Core.ChangeTrackingList<ReportConfigFilter>();
+            Or = new Core.ChangeTrackingList<ReportConfigFilter>();
         }
 
         /// <summary> Initializes a new instance of ReportConfigFilter. </summary>

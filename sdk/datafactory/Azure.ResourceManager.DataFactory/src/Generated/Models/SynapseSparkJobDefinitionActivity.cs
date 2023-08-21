@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(sparkJob, nameof(sparkJob));
 
             SparkJob = sparkJob;
-            Arguments = new ChangeTrackingList<BinaryData>();
-            Files = new ChangeTrackingList<BinaryData>();
-            PythonCodeReference = new ChangeTrackingList<BinaryData>();
-            FilesV2 = new ChangeTrackingList<BinaryData>();
-            SparkConfig = new ChangeTrackingDictionary<string, BinaryData>();
+            Arguments = new Core.ChangeTrackingList<BinaryData>();
+            Files = new Core.ChangeTrackingList<BinaryData>();
+            PythonCodeReference = new Core.ChangeTrackingList<BinaryData>();
+            FilesV2 = new Core.ChangeTrackingList<BinaryData>();
+            SparkConfig = new Core.ChangeTrackingDictionary<string, BinaryData>();
             ActivityType = "SparkJob";
         }
 

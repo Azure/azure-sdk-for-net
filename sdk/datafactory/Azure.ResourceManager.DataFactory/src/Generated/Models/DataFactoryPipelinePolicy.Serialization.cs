@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class DataFactoryPipelinePolicy : IUtf8JsonSerializable
+    internal partial class DataFactoryPipelinePolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ElapsedTimeMetric))
+            if (Core.Optional.IsDefined(ElapsedTimeMetric))
             {
                 writer.WritePropertyName("elapsedTimeMetric"u8);
                 writer.WriteObjectValue(ElapsedTimeMetric);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<PipelineElapsedTimeMetricPolicy> elapsedTimeMetric = default;
+            Core.Optional<PipelineElapsedTimeMetricPolicy> elapsedTimeMetric = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("elapsedTimeMetric"u8))

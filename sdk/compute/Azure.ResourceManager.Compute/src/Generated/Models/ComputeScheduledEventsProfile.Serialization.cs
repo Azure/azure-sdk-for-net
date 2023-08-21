@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ComputeScheduledEventsProfile : IUtf8JsonSerializable
+    public partial class ComputeScheduledEventsProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TerminateNotificationProfile))
+            if (Core.Optional.IsDefined(TerminateNotificationProfile))
             {
                 writer.WritePropertyName("terminateNotificationProfile"u8);
                 writer.WriteObjectValue(TerminateNotificationProfile);
             }
-            if (Optional.IsDefined(OSImageNotificationProfile))
+            if (Core.Optional.IsDefined(OSImageNotificationProfile))
             {
                 writer.WritePropertyName("osImageNotificationProfile"u8);
                 writer.WriteObjectValue(OSImageNotificationProfile);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<TerminateNotificationProfile> terminateNotificationProfile = default;
-            Optional<OSImageNotificationProfile> osImageNotificationProfile = default;
+            Core.Optional<TerminateNotificationProfile> terminateNotificationProfile = default;
+            Core.Optional<OSImageNotificationProfile> osImageNotificationProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("terminateNotificationProfile"u8))

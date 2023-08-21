@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ContainerRegistryWebhookEventContent> content = default;
-            Optional<IReadOnlyDictionary<string, string>> headers = default;
-            Optional<string> method = default;
-            Optional<Uri> requestUri = default;
-            Optional<string> version = default;
+            Core.Optional<ContainerRegistryWebhookEventContent> content = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> headers = default;
+            Core.Optional<string> method = default;
+            Core.Optional<Uri> requestUri = default;
+            Core.Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("content"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryWebhookEventRequestMessage(content.Value, Optional.ToDictionary(headers), method.Value, requestUri.Value, version.Value);
+            return new ContainerRegistryWebhookEventRequestMessage(content.Value, Core.Optional.ToDictionary(headers), method.Value, requestUri.Value, version.Value);
         }
     }
 }

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterLoadBalancerProfileManagedOutboundIPs : IUtf8JsonSerializable
+    public partial class ManagedClusterLoadBalancerProfileManagedOutboundIPs : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Count))
+            if (Core.Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(CountIPv6))
+            if (Core.Optional.IsDefined(CountIPv6))
             {
                 writer.WritePropertyName("countIPv6"u8);
                 writer.WriteNumberValue(CountIPv6.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<int> count = default;
-            Optional<int> countIPv6 = default;
+            Core.Optional<int> count = default;
+            Core.Optional<int> countIPv6 = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterLoadBalancerProfileManagedOutboundIPs(Optional.ToNullable(count), Optional.ToNullable(countIPv6));
+            return new ManagedClusterLoadBalancerProfileManagedOutboundIPs(Core.Optional.ToNullable(count), Core.Optional.ToNullable(countIPv6));
         }
     }
 }

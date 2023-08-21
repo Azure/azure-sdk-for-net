@@ -22,7 +22,7 @@ namespace Azure.Communication.Chat
             Argument.AssertNotNull(topic, nameof(topic));
 
             Topic = topic;
-            Participants = new ChangeTrackingList<ChatParticipantInternal>();
+            Participants = new Core.ChangeTrackingList<ChatParticipantInternal>();
         }
 
         /// <summary> The chat thread topic. </summary>

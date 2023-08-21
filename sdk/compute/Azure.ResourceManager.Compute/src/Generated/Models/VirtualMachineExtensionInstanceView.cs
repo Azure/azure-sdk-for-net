@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineExtensionInstanceView. </summary>
         public VirtualMachineExtensionInstanceView()
         {
-            Substatuses = new ChangeTrackingList<InstanceViewStatus>();
-            Statuses = new ChangeTrackingList<InstanceViewStatus>();
+            Substatuses = new Core.ChangeTrackingList<InstanceViewStatus>();
+            Statuses = new Core.ChangeTrackingList<InstanceViewStatus>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineExtensionInstanceView. </summary>

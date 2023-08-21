@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    internal class ContainerAppSourceControlOperationSource : IOperationSource<ContainerAppSourceControlResource>
+    internal class ContainerAppSourceControlOperationSource : Core.IOperationSource<ContainerAppSourceControlResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.AppContainers
             _client = client;
         }
 
-        ContainerAppSourceControlResource IOperationSource<ContainerAppSourceControlResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ContainerAppSourceControlResource Core.IOperationSource<ContainerAppSourceControlResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ContainerAppSourceControlData.DeserializeContainerAppSourceControlData(document.RootElement);
             return new ContainerAppSourceControlResource(_client, data);
         }
 
-        async ValueTask<ContainerAppSourceControlResource> IOperationSource<ContainerAppSourceControlResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ContainerAppSourceControlResource> Core.IOperationSource<ContainerAppSourceControlResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ContainerAppSourceControlData.DeserializeContainerAppSourceControlData(document.RootElement);

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of AgentPoolSnapshotListResult. </summary>
         internal AgentPoolSnapshotListResult()
         {
-            Value = new ChangeTrackingList<AgentPoolSnapshotData>();
+            Value = new Core.ChangeTrackingList<AgentPoolSnapshotData>();
         }
 
         /// <summary> Initializes a new instance of AgentPoolSnapshotListResult. </summary>

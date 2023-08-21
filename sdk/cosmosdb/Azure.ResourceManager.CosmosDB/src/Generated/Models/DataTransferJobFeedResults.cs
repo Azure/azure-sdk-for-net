@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of DataTransferJobFeedResults. </summary>
         internal DataTransferJobFeedResults()
         {
-            Value = new ChangeTrackingList<DataTransferJobGetResultData>();
+            Value = new Core.ChangeTrackingList<DataTransferJobGetResultData>();
         }
 
         /// <summary> Initializes a new instance of DataTransferJobFeedResults. </summary>

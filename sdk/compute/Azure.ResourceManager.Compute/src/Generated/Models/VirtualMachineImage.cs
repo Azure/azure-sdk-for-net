@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            DataDiskImages = new ChangeTrackingList<DataDiskImage>();
-            Features = new ChangeTrackingList<VirtualMachineImageFeature>();
+            DataDiskImages = new Core.ChangeTrackingList<DataDiskImage>();
+            Features = new Core.ChangeTrackingList<VirtualMachineImageFeature>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineImage. </summary>

@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<AzureLocation> locationName = default;
-            Optional<string> regionalDatabaseAccountInstanceId = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> deletionTime = default;
+            Core.Optional<AzureLocation> locationName = default;
+            Core.Optional<string> regionalDatabaseAccountInstanceId = default;
+            Core.Optional<DateTimeOffset> creationTime = default;
+            Core.Optional<DateTimeOffset> deletionTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("locationName"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new RestorableLocationResourceInfo(Optional.ToNullable(locationName), regionalDatabaseAccountInstanceId.Value, Optional.ToNullable(creationTime), Optional.ToNullable(deletionTime));
+            return new RestorableLocationResourceInfo(Core.Optional.ToNullable(locationName), regionalDatabaseAccountInstanceId.Value, Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(deletionTime));
         }
     }
 }

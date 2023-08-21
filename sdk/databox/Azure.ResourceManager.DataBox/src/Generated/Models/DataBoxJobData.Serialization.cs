@@ -15,19 +15,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBox
 {
-    public partial class DataBoxJobData : IUtf8JsonSerializable
+    public partial class DataBoxJobData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,17 +44,17 @@ namespace Azure.ResourceManager.DataBox
             writer.WriteStartObject();
             writer.WritePropertyName("transferType"u8);
             writer.WriteStringValue(TransferType.ToSerialString());
-            if (Optional.IsDefined(Details))
+            if (Core.Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteObjectValue(Details);
             }
-            if (Optional.IsDefined(DeliveryType))
+            if (Core.Optional.IsDefined(DeliveryType))
             {
                 writer.WritePropertyName("deliveryType"u8);
                 writer.WriteStringValue(DeliveryType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(DeliveryInfo))
+            if (Core.Optional.IsDefined(DeliveryInfo))
             {
                 writer.WritePropertyName("deliveryInfo"u8);
                 writer.WriteObjectValue(DeliveryInfo);
@@ -70,28 +70,28 @@ namespace Azure.ResourceManager.DataBox
                 return null;
             }
             DataBoxSku sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             DataBoxJobTransferType transferType = default;
-            Optional<bool> isCancellable = default;
-            Optional<bool> isDeletable = default;
-            Optional<bool> isShippingAddressEditable = default;
-            Optional<ReverseShippingDetailsEditStatus> reverseShippingDetailsUpdate = default;
-            Optional<ReverseTransportPreferenceEditStatus> reverseTransportPreferenceUpdate = default;
-            Optional<bool> isPrepareToShipEnabled = default;
-            Optional<DataBoxStageName> status = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<ResponseError> error = default;
-            Optional<DataBoxBasicJobDetails> details = default;
-            Optional<string> cancellationReason = default;
-            Optional<JobDeliveryType> deliveryType = default;
-            Optional<JobDeliveryInfo> deliveryInfo = default;
-            Optional<bool> isCancellableWithoutFee = default;
+            Core.Optional<bool> isCancellable = default;
+            Core.Optional<bool> isDeletable = default;
+            Core.Optional<bool> isShippingAddressEditable = default;
+            Core.Optional<ReverseShippingDetailsEditStatus> reverseShippingDetailsUpdate = default;
+            Core.Optional<ReverseTransportPreferenceEditStatus> reverseTransportPreferenceUpdate = default;
+            Core.Optional<bool> isPrepareToShipEnabled = default;
+            Core.Optional<DataBoxStageName> status = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<ResponseError> error = default;
+            Core.Optional<DataBoxBasicJobDetails> details = default;
+            Core.Optional<string> cancellationReason = default;
+            Core.Optional<JobDeliveryType> deliveryType = default;
+            Core.Optional<JobDeliveryInfo> deliveryInfo = default;
+            Core.Optional<bool> isCancellableWithoutFee = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DataBox
                     continue;
                 }
             }
-            return new DataBoxJobData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, transferType, Optional.ToNullable(isCancellable), Optional.ToNullable(isDeletable), Optional.ToNullable(isShippingAddressEditable), Optional.ToNullable(reverseShippingDetailsUpdate), Optional.ToNullable(reverseTransportPreferenceUpdate), Optional.ToNullable(isPrepareToShipEnabled), Optional.ToNullable(status), Optional.ToNullable(startTime), error.Value, details.Value, cancellationReason.Value, Optional.ToNullable(deliveryType), deliveryInfo.Value, Optional.ToNullable(isCancellableWithoutFee), sku, identity);
+            return new DataBoxJobData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, transferType, Core.Optional.ToNullable(isCancellable), Core.Optional.ToNullable(isDeletable), Core.Optional.ToNullable(isShippingAddressEditable), Core.Optional.ToNullable(reverseShippingDetailsUpdate), Core.Optional.ToNullable(reverseTransportPreferenceUpdate), Core.Optional.ToNullable(isPrepareToShipEnabled), Core.Optional.ToNullable(status), Core.Optional.ToNullable(startTime), error.Value, details.Value, cancellationReason.Value, Core.Optional.ToNullable(deliveryType), deliveryInfo.Value, Core.Optional.ToNullable(isCancellableWithoutFee), sku, identity);
         }
     }
 }

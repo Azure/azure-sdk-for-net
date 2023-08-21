@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class CosmosDBSqlRoleAssignmentOperationSource : IOperationSource<CosmosDBSqlRoleAssignmentResource>
+    internal class CosmosDBSqlRoleAssignmentOperationSource : Core.IOperationSource<CosmosDBSqlRoleAssignmentResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.CosmosDB
             _client = client;
         }
 
-        CosmosDBSqlRoleAssignmentResource IOperationSource<CosmosDBSqlRoleAssignmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CosmosDBSqlRoleAssignmentResource Core.IOperationSource<CosmosDBSqlRoleAssignmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CosmosDBSqlRoleAssignmentData.DeserializeCosmosDBSqlRoleAssignmentData(document.RootElement);
             return new CosmosDBSqlRoleAssignmentResource(_client, data);
         }
 
-        async ValueTask<CosmosDBSqlRoleAssignmentResource> IOperationSource<CosmosDBSqlRoleAssignmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CosmosDBSqlRoleAssignmentResource> Core.IOperationSource<CosmosDBSqlRoleAssignmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CosmosDBSqlRoleAssignmentData.DeserializeCosmosDBSqlRoleAssignmentData(document.RootElement);

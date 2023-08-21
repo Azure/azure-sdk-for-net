@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of SelfHostedIntegrationRuntimeStatus. </summary>
         internal SelfHostedIntegrationRuntimeStatus()
         {
-            Nodes = new ChangeTrackingList<SelfHostedIntegrationRuntimeNode>();
-            Capabilities = new ChangeTrackingDictionary<string, string>();
-            ServiceUriStringList = new ChangeTrackingList<string>();
-            Links = new ChangeTrackingList<LinkedIntegrationRuntime>();
+            Nodes = new Core.ChangeTrackingList<SelfHostedIntegrationRuntimeNode>();
+            Capabilities = new Core.ChangeTrackingDictionary<string, string>();
+            ServiceUriStringList = new Core.ChangeTrackingList<string>();
+            Links = new Core.ChangeTrackingList<LinkedIntegrationRuntime>();
             RuntimeType = IntegrationRuntimeType.SelfHosted;
         }
 

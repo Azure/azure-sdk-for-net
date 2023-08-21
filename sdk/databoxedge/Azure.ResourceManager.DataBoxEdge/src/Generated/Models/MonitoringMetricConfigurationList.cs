@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of MonitoringMetricConfigurationList. </summary>
         internal MonitoringMetricConfigurationList()
         {
-            Value = new ChangeTrackingList<MonitoringMetricConfigurationData>();
+            Value = new Core.ChangeTrackingList<MonitoringMetricConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of MonitoringMetricConfigurationList. </summary>

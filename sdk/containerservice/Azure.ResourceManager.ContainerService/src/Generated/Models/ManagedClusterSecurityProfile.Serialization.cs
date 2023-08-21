@@ -12,37 +12,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterSecurityProfile : IUtf8JsonSerializable
+    public partial class ManagedClusterSecurityProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Defender))
+            if (Core.Optional.IsDefined(Defender))
             {
                 writer.WritePropertyName("defender"u8);
                 writer.WriteObjectValue(Defender);
             }
-            if (Optional.IsDefined(AzureKeyVaultKms))
+            if (Core.Optional.IsDefined(AzureKeyVaultKms))
             {
                 writer.WritePropertyName("azureKeyVaultKms"u8);
                 writer.WriteObjectValue(AzureKeyVaultKms);
             }
-            if (Optional.IsDefined(WorkloadIdentity))
+            if (Core.Optional.IsDefined(WorkloadIdentity))
             {
                 writer.WritePropertyName("workloadIdentity"u8);
                 writer.WriteObjectValue(WorkloadIdentity);
             }
-            if (Optional.IsDefined(ImageCleaner))
+            if (Core.Optional.IsDefined(ImageCleaner))
             {
                 writer.WritePropertyName("imageCleaner"u8);
                 writer.WriteObjectValue(ImageCleaner);
             }
-            if (Optional.IsDefined(NodeRestriction))
+            if (Core.Optional.IsDefined(NodeRestriction))
             {
                 writer.WritePropertyName("nodeRestriction"u8);
                 writer.WriteObjectValue(NodeRestriction);
             }
-            if (Optional.IsCollectionDefined(CustomCATrustCertificates))
+            if (Core.Optional.IsCollectionDefined(CustomCATrustCertificates))
             {
                 writer.WritePropertyName("customCATrustCertificates"u8);
                 writer.WriteStartArray();
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ManagedClusterSecurityProfileDefender> defender = default;
-            Optional<ManagedClusterSecurityProfileKeyVaultKms> azureKeyVaultKms = default;
-            Optional<ManagedClusterSecurityProfileWorkloadIdentity> workloadIdentity = default;
-            Optional<ManagedClusterSecurityProfileImageCleaner> imageCleaner = default;
-            Optional<ManagedClusterSecurityProfileNodeRestriction> nodeRestriction = default;
-            Optional<IList<byte[]>> customCATrustCertificates = default;
+            Core.Optional<ManagedClusterSecurityProfileDefender> defender = default;
+            Core.Optional<ManagedClusterSecurityProfileKeyVaultKms> azureKeyVaultKms = default;
+            Core.Optional<ManagedClusterSecurityProfileWorkloadIdentity> workloadIdentity = default;
+            Core.Optional<ManagedClusterSecurityProfileImageCleaner> imageCleaner = default;
+            Core.Optional<ManagedClusterSecurityProfileNodeRestriction> nodeRestriction = default;
+            Core.Optional<IList<byte[]>> customCATrustCertificates = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defender"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterSecurityProfile(defender.Value, azureKeyVaultKms.Value, workloadIdentity.Value, imageCleaner.Value, nodeRestriction.Value, Optional.ToList(customCATrustCertificates));
+            return new ManagedClusterSecurityProfile(defender.Value, azureKeyVaultKms.Value, workloadIdentity.Value, imageCleaner.Value, nodeRestriction.Value, Core.Optional.ToList(customCATrustCertificates));
         }
     }
 }

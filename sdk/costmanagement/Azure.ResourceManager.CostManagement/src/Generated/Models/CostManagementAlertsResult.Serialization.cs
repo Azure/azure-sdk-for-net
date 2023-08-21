@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CostManagementAlertData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<CostManagementAlertData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new CostManagementAlertsResult(Optional.ToList(value), nextLink.Value);
+            return new CostManagementAlertsResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

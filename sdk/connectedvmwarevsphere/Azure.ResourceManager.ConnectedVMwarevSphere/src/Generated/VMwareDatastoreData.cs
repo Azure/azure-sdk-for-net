@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="location"> The location. </param>
         public VMwareDatastoreData(AzureLocation location) : base(location)
         {
-            Statuses = new ChangeTrackingList<ResourceStatus>();
+            Statuses = new Core.ChangeTrackingList<ResourceStatus>();
         }
 
         /// <summary> Initializes a new instance of VMwareDatastoreData. </summary>

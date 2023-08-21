@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MongoClusterData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<MongoClusterData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new MongoClusterListResult(Optional.ToList(value), nextLink.Value);
+            return new MongoClusterListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

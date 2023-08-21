@@ -18,8 +18,8 @@ namespace Azure.Communication.JobRouter.Models
             {
                 return null;
             }
-            Optional<ClassificationPolicy> classificationPolicy = default;
-            Optional<string> etag = default;
+            Core.Optional<ClassificationPolicy> classificationPolicy = default;
+            Core.Optional<string> etag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("classificationPolicy"u8))

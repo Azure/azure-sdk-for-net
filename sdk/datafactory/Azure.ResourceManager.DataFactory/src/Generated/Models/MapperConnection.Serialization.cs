@@ -12,29 +12,29 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class MapperConnection : IUtf8JsonSerializable
+    public partial class MapperConnection : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedService))
+            if (Core.Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
                 JsonSerializer.Serialize(writer, LinkedService);
             }
-            if (Optional.IsDefined(LinkedServiceType))
+            if (Core.Optional.IsDefined(LinkedServiceType))
             {
                 writer.WritePropertyName("linkedServiceType"u8);
                 writer.WriteStringValue(LinkedServiceType);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ConnectionType.ToString());
-            if (Optional.IsDefined(IsInlineDataset))
+            if (Core.Optional.IsDefined(IsInlineDataset))
             {
                 writer.WritePropertyName("isInlineDataset"u8);
                 writer.WriteBooleanValue(IsInlineDataset.Value);
             }
-            if (Optional.IsCollectionDefined(CommonDslConnectorProperties))
+            if (Core.Optional.IsCollectionDefined(CommonDslConnectorProperties))
             {
                 writer.WritePropertyName("commonDslConnectorProperties"u8);
                 writer.WriteStartArray();
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryLinkedServiceReference> linkedService = default;
-            Optional<string> linkedServiceType = default;
+            Core.Optional<DataFactoryLinkedServiceReference> linkedService = default;
+            Core.Optional<string> linkedServiceType = default;
             MapperConnectionType type = default;
-            Optional<bool> isInlineDataset = default;
-            Optional<IList<MapperDslConnectorProperties>> commonDslConnectorProperties = default;
+            Core.Optional<bool> isInlineDataset = default;
+            Core.Optional<IList<MapperDslConnectorProperties>> commonDslConnectorProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedService"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new MapperConnection(linkedService, linkedServiceType.Value, type, Optional.ToNullable(isInlineDataset), Optional.ToList(commonDslConnectorProperties));
+            return new MapperConnection(linkedService, linkedServiceType.Value, type, Core.Optional.ToNullable(isInlineDataset), Core.Optional.ToList(commonDslConnectorProperties));
         }
     }
 }

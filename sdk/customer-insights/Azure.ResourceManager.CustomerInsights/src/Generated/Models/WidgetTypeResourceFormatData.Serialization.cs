@@ -13,24 +13,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    public partial class WidgetTypeResourceFormatData : IUtf8JsonSerializable
+    public partial class WidgetTypeResourceFormatData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Definition))
+            if (Core.Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
                 writer.WriteStringValue(Definition);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(DisplayName))
+            if (Core.Optional.IsCollectionDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ImageUri))
+            if (Core.Optional.IsDefined(ImageUri))
             {
                 writer.WritePropertyName("imageUrl"u8);
                 writer.WriteStringValue(ImageUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(WidgetVersion))
+            if (Core.Optional.IsDefined(WidgetVersion))
             {
                 writer.WritePropertyName("widgetVersion"u8);
                 writer.WriteStringValue(WidgetVersion);
@@ -64,16 +64,16 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> widgetTypeName = default;
-            Optional<string> definition = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, string>> displayName = default;
-            Optional<Uri> imageUrl = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> widgetVersion = default;
-            Optional<DateTimeOffset> changed = default;
-            Optional<DateTimeOffset> created = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> widgetTypeName = default;
+            Core.Optional<string> definition = default;
+            Core.Optional<string> description = default;
+            Core.Optional<IDictionary<string, string>> displayName = default;
+            Core.Optional<Uri> imageUrl = default;
+            Core.Optional<Guid> tenantId = default;
+            Core.Optional<string> widgetVersion = default;
+            Core.Optional<DateTimeOffset> changed = default;
+            Core.Optional<DateTimeOffset> created = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.CustomerInsights
                     continue;
                 }
             }
-            return new WidgetTypeResourceFormatData(id, name, type, systemData.Value, widgetTypeName.Value, definition.Value, description.Value, Optional.ToDictionary(displayName), imageUrl.Value, Optional.ToNullable(tenantId), widgetVersion.Value, Optional.ToNullable(changed), Optional.ToNullable(created));
+            return new WidgetTypeResourceFormatData(id, name, type, systemData.Value, widgetTypeName.Value, definition.Value, description.Value, Core.Optional.ToDictionary(displayName), imageUrl.Value, Core.Optional.ToNullable(tenantId), widgetVersion.Value, Core.Optional.ToNullable(changed), Core.Optional.ToNullable(created));
         }
     }
 }

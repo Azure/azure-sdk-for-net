@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(dataFlow, nameof(dataFlow));
 
             DataFlow = dataFlow;
-            Sinks = new ChangeTrackingDictionary<string, PowerQuerySink>();
-            Queries = new ChangeTrackingList<PowerQuerySinkMapping>();
+            Sinks = new Core.ChangeTrackingDictionary<string, PowerQuerySink>();
+            Queries = new Core.ChangeTrackingList<PowerQuerySinkMapping>();
             ActivityType = "ExecuteWranglingDataflow";
         }
 

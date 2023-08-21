@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryTrustPolicy : IUtf8JsonSerializable
+    public partial class ContainerRegistryTrustPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PolicyType))
+            if (Core.Optional.IsDefined(PolicyType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(PolicyType.Value.ToString());
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ContainerRegistryTrustPolicyType> type = default;
-            Optional<ContainerRegistryPolicyStatus> status = default;
+            Core.Optional<ContainerRegistryTrustPolicyType> type = default;
+            Core.Optional<ContainerRegistryPolicyStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryTrustPolicy(Optional.ToNullable(type), Optional.ToNullable(status));
+            return new ContainerRegistryTrustPolicy(Core.Optional.ToNullable(type), Core.Optional.ToNullable(status));
         }
     }
 }

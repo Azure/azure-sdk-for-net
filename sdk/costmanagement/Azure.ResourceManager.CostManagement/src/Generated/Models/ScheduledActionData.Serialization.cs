@@ -13,54 +13,54 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
-    public partial class ScheduledActionData : IUtf8JsonSerializable
+    public partial class ScheduledActionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(FileDestination))
+            if (Core.Optional.IsDefined(FileDestination))
             {
                 writer.WritePropertyName("fileDestination"u8);
                 writer.WriteObjectValue(FileDestination);
             }
-            if (Optional.IsDefined(Notification))
+            if (Core.Optional.IsDefined(Notification))
             {
                 writer.WritePropertyName("notification"u8);
                 writer.WriteObjectValue(Notification);
             }
-            if (Optional.IsDefined(NotificationEmail))
+            if (Core.Optional.IsDefined(NotificationEmail))
             {
                 writer.WritePropertyName("notificationEmail"u8);
                 writer.WriteStringValue(NotificationEmail);
             }
-            if (Optional.IsDefined(Schedule))
+            if (Core.Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteObjectValue(Schedule);
             }
-            if (Optional.IsDefined(Scope))
+            if (Core.Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(ViewId))
+            if (Core.Optional.IsDefined(ViewId))
             {
                 writer.WritePropertyName("viewId"u8);
                 writer.WriteStringValue(ViewId);
@@ -75,20 +75,20 @@ namespace Azure.ResourceManager.CostManagement
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
-            Optional<ScheduledActionKind> kind = default;
+            Core.Optional<ETag> eTag = default;
+            Core.Optional<ScheduledActionKind> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<FileDestination> fileDestination = default;
-            Optional<NotificationProperties> notification = default;
-            Optional<string> notificationEmail = default;
-            Optional<ScheduleProperties> schedule = default;
-            Optional<ResourceIdentifier> scope = default;
-            Optional<ScheduledActionStatus> status = default;
-            Optional<ResourceIdentifier> viewId = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<FileDestination> fileDestination = default;
+            Core.Optional<NotificationProperties> notification = default;
+            Core.Optional<string> notificationEmail = default;
+            Core.Optional<ScheduleProperties> schedule = default;
+            Core.Optional<ResourceIdentifier> scope = default;
+            Core.Optional<ScheduledActionStatus> status = default;
+            Core.Optional<ResourceIdentifier> viewId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.CostManagement
                     continue;
                 }
             }
-            return new ScheduledActionData(id, name, type, systemData.Value, displayName.Value, fileDestination.Value, notification.Value, notificationEmail.Value, schedule.Value, scope.Value, Optional.ToNullable(status), viewId.Value, Optional.ToNullable(eTag), Optional.ToNullable(kind));
+            return new ScheduledActionData(id, name, type, systemData.Value, displayName.Value, fileDestination.Value, notification.Value, notificationEmail.Value, schedule.Value, scope.Value, Core.Optional.ToNullable(status), viewId.Value, Core.Optional.ToNullable(eTag), Core.Optional.ToNullable(kind));
         }
     }
 }

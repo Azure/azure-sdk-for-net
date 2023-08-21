@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class JobConfigurationScheduleTriggerConfig : IUtf8JsonSerializable
+    public partial class JobConfigurationScheduleTriggerConfig : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReplicaCompletionCount))
+            if (Core.Optional.IsDefined(ReplicaCompletionCount))
             {
                 writer.WritePropertyName("replicaCompletionCount"u8);
                 writer.WriteNumberValue(ReplicaCompletionCount.Value);
             }
             writer.WritePropertyName("cronExpression"u8);
             writer.WriteStringValue(CronExpression);
-            if (Optional.IsDefined(Parallelism))
+            if (Core.Optional.IsDefined(Parallelism))
             {
                 writer.WritePropertyName("parallelism"u8);
                 writer.WriteNumberValue(Parallelism.Value);
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<int> replicaCompletionCount = default;
+            Core.Optional<int> replicaCompletionCount = default;
             string cronExpression = default;
-            Optional<int> parallelism = default;
+            Core.Optional<int> parallelism = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("replicaCompletionCount"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new JobConfigurationScheduleTriggerConfig(Optional.ToNullable(replicaCompletionCount), cronExpression, Optional.ToNullable(parallelism));
+            return new JobConfigurationScheduleTriggerConfig(Core.Optional.ToNullable(replicaCompletionCount), cronExpression, Core.Optional.ToNullable(parallelism));
         }
     }
 }

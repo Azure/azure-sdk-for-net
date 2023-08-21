@@ -15,7 +15,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class GremlinGraphThroughputSettingOperationSource : IOperationSource<GremlinGraphThroughputSettingResource>
+    internal class GremlinGraphThroughputSettingOperationSource : Core.IOperationSource<GremlinGraphThroughputSettingResource>
     {
         private readonly ArmClient _client;
         private readonly Dictionary<string, string> _idMappings = new Dictionary<string, string>()
@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.CosmosDB
             _client = client;
         }
 
-        GremlinGraphThroughputSettingResource IOperationSource<GremlinGraphThroughputSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        GremlinGraphThroughputSettingResource Core.IOperationSource<GremlinGraphThroughputSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ScrubId(ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement));
             return new GremlinGraphThroughputSettingResource(_client, data);
         }
 
-        async ValueTask<GremlinGraphThroughputSettingResource> IOperationSource<GremlinGraphThroughputSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<GremlinGraphThroughputSettingResource> Core.IOperationSource<GremlinGraphThroughputSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ScrubId(ThroughputSettingData.DeserializeThroughputSettingData(document.RootElement));

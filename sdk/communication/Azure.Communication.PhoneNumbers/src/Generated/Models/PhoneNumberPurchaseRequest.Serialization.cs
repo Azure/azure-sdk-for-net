@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    internal partial class PhoneNumberPurchaseRequest : IUtf8JsonSerializable
+    internal partial class PhoneNumberPurchaseRequest : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SearchId))
+            if (Core.Optional.IsDefined(SearchId))
             {
                 writer.WritePropertyName("searchId"u8);
                 writer.WriteStringValue(SearchId);

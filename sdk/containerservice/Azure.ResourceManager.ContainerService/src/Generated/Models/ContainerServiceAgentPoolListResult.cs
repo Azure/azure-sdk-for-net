@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of ContainerServiceAgentPoolListResult. </summary>
         internal ContainerServiceAgentPoolListResult()
         {
-            Value = new ChangeTrackingList<ContainerServiceAgentPoolData>();
+            Value = new Core.ChangeTrackingList<ContainerServiceAgentPoolData>();
         }
 
         /// <summary> Initializes a new instance of ContainerServiceAgentPoolListResult. </summary>

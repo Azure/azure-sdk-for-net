@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBUniqueKey : IUtf8JsonSerializable
+    public partial class CosmosDBUniqueKey : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Paths))
+            if (Core.Optional.IsCollectionDefined(Paths))
             {
                 writer.WritePropertyName("paths"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IList<string>> paths = default;
+            Core.Optional<IList<string>> paths = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("paths"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CosmosDBUniqueKey(Optional.ToList(paths));
+            return new CosmosDBUniqueKey(Core.Optional.ToList(paths));
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Argument.AssertNotNull(vmPlacementQuery, nameof(vmPlacementQuery));
 
             VmPlacementQuery = vmPlacementQuery.ToList();
-            VmPlacementResults = new ChangeTrackingList<VmPlacementRequestResult>();
+            VmPlacementResults = new Core.ChangeTrackingList<VmPlacementRequestResult>();
         }
 
         /// <summary> Array containing the sizes of the VMs for checking if its feasible to create them on the appliance. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Initializes a new instance of CachedImagesListResult. </summary>
         internal CachedImagesListResult()
         {
-            Value = new ChangeTrackingList<CachedImages>();
+            Value = new Core.ChangeTrackingList<CachedImages>();
         }
 
         /// <summary> Initializes a new instance of CachedImagesListResult. </summary>

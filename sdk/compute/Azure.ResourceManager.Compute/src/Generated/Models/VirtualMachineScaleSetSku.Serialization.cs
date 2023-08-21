@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ResourceType> resourceType = default;
-            Optional<ComputeSku> sku = default;
-            Optional<VirtualMachineScaleSetSkuCapacity> capacity = default;
+            Core.Optional<ResourceType> resourceType = default;
+            Core.Optional<ComputeSku> sku = default;
+            Core.Optional<VirtualMachineScaleSetSkuCapacity> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetSku(Optional.ToNullable(resourceType), sku.Value, capacity.Value);
+            return new VirtualMachineScaleSetSku(Core.Optional.ToNullable(resourceType), sku.Value, capacity.Value);
         }
     }
 }

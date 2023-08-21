@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<Uri> vmUri = default;
+            Core.Optional<Uri> vmUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmUri"u8))

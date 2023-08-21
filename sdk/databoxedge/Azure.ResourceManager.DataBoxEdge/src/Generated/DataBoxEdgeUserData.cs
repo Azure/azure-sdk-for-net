@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="userType"> Type of the user. </param>
         public DataBoxEdgeUserData(DataBoxEdgeUserType userType)
         {
-            ShareAccessRights = new ChangeTrackingList<ShareAccessRight>();
+            ShareAccessRights = new Core.ChangeTrackingList<ShareAccessRight>();
             UserType = userType;
         }
 

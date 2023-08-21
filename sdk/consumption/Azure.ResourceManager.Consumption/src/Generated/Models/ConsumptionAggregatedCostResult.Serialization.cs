@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> billingPeriodId = default;
-            Optional<DateTimeOffset> usageStart = default;
-            Optional<DateTimeOffset> usageEnd = default;
-            Optional<decimal> azureCharges = default;
-            Optional<decimal> marketplaceCharges = default;
-            Optional<decimal> chargesBilledSeparately = default;
-            Optional<string> currency = default;
-            Optional<IReadOnlyList<ConsumptionAggregatedCostResult>> children = default;
-            Optional<IReadOnlyList<string>> includedSubscriptions = default;
-            Optional<IReadOnlyList<string>> excludedSubscriptions = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> billingPeriodId = default;
+            Core.Optional<DateTimeOffset> usageStart = default;
+            Core.Optional<DateTimeOffset> usageEnd = default;
+            Core.Optional<decimal> azureCharges = default;
+            Core.Optional<decimal> marketplaceCharges = default;
+            Core.Optional<decimal> chargesBilledSeparately = default;
+            Core.Optional<string> currency = default;
+            Core.Optional<IReadOnlyList<ConsumptionAggregatedCostResult>> children = default;
+            Core.Optional<IReadOnlyList<string>> includedSubscriptions = default;
+            Core.Optional<IReadOnlyList<string>> excludedSubscriptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ConsumptionAggregatedCostResult(id, name, type, systemData.Value, billingPeriodId.Value, Optional.ToNullable(usageStart), Optional.ToNullable(usageEnd), Optional.ToNullable(azureCharges), Optional.ToNullable(marketplaceCharges), Optional.ToNullable(chargesBilledSeparately), currency.Value, Optional.ToList(children), Optional.ToList(includedSubscriptions), Optional.ToList(excludedSubscriptions), Optional.ToNullable(etag), Optional.ToDictionary(tags));
+            return new ConsumptionAggregatedCostResult(id, name, type, systemData.Value, billingPeriodId.Value, Core.Optional.ToNullable(usageStart), Core.Optional.ToNullable(usageEnd), Core.Optional.ToNullable(azureCharges), Core.Optional.ToNullable(marketplaceCharges), Core.Optional.ToNullable(chargesBilledSeparately), currency.Value, Core.Optional.ToList(children), Core.Optional.ToList(includedSubscriptions), Core.Optional.ToList(excludedSubscriptions), Core.Optional.ToNullable(etag), Core.Optional.ToDictionary(tags));
         }
     }
 }

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    public partial class ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             writer.WriteStringValue(ObjectId);
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType.ToString());
-            if (Optional.IsDefined(MaxDegreeOfParallelismPerJob))
+            if (Core.Optional.IsDefined(MaxDegreeOfParallelismPerJob))
             {
                 writer.WritePropertyName("maxDegreeOfParallelismPerJob"u8);
                 writer.WriteNumberValue(MaxDegreeOfParallelismPerJob.Value);
             }
-            if (Optional.IsDefined(MinPriorityPerJob))
+            if (Core.Optional.IsDefined(MinPriorityPerJob))
             {
                 writer.WritePropertyName("minPriorityPerJob"u8);
                 writer.WriteNumberValue(MinPriorityPerJob.Value);

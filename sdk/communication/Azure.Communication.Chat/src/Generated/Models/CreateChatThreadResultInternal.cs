@@ -16,7 +16,7 @@ namespace Azure.Communication.Chat
         /// <summary> Initializes a new instance of CreateChatThreadResultInternal. </summary>
         internal CreateChatThreadResultInternal()
         {
-            InvalidParticipants = new ChangeTrackingList<ChatError>();
+            InvalidParticipants = new Core.ChangeTrackingList<ChatError>();
         }
 
         /// <summary> Initializes a new instance of CreateChatThreadResultInternal. </summary>

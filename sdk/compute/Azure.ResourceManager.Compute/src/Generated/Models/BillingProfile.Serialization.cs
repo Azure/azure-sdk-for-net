@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class BillingProfile : IUtf8JsonSerializable
+    internal partial class BillingProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxPrice))
+            if (Core.Optional.IsDefined(MaxPrice))
             {
                 writer.WritePropertyName("maxPrice"u8);
                 writer.WriteNumberValue(MaxPrice.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<double> maxPrice = default;
+            Core.Optional<double> maxPrice = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxPrice"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new BillingProfile(Optional.ToNullable(maxPrice));
+            return new BillingProfile(Core.Optional.ToNullable(maxPrice));
         }
     }
 }

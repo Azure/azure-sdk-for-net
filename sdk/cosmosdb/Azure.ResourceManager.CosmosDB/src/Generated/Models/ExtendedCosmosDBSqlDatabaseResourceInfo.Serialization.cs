@@ -11,29 +11,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ExtendedCosmosDBSqlDatabaseResourceInfo : IUtf8JsonSerializable
+    public partial class ExtendedCosmosDBSqlDatabaseResourceInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Colls))
+            if (Core.Optional.IsDefined(Colls))
             {
                 writer.WritePropertyName("_colls"u8);
                 writer.WriteStringValue(Colls);
             }
-            if (Optional.IsDefined(Users))
+            if (Core.Optional.IsDefined(Users))
             {
                 writer.WritePropertyName("_users"u8);
                 writer.WriteStringValue(Users);
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(DatabaseName);
-            if (Optional.IsDefined(RestoreParameters))
+            if (Core.Optional.IsDefined(RestoreParameters))
             {
                 writer.WritePropertyName("restoreParameters"u8);
                 writer.WriteObjectValue(RestoreParameters);
             }
-            if (Optional.IsDefined(CreateMode))
+            if (Core.Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> colls = default;
-            Optional<string> users = default;
-            Optional<string> rid = default;
-            Optional<float> ts = default;
-            Optional<ETag> etag = default;
+            Core.Optional<string> colls = default;
+            Core.Optional<string> users = default;
+            Core.Optional<string> rid = default;
+            Core.Optional<float> ts = default;
+            Core.Optional<ETag> etag = default;
             string id = default;
-            Optional<ResourceRestoreParameters> restoreParameters = default;
-            Optional<CosmosDBAccountCreateMode> createMode = default;
+            Core.Optional<ResourceRestoreParameters> restoreParameters = default;
+            Core.Optional<CosmosDBAccountCreateMode> createMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_colls"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ExtendedCosmosDBSqlDatabaseResourceInfo(id, restoreParameters.Value, Optional.ToNullable(createMode), colls.Value, users.Value, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            return new ExtendedCosmosDBSqlDatabaseResourceInfo(id, restoreParameters.Value, Core.Optional.ToNullable(createMode), colls.Value, users.Value, rid.Value, Core.Optional.ToNullable(ts), Core.Optional.ToNullable(etag));
         }
     }
 }

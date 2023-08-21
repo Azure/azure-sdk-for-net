@@ -13,47 +13,47 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SqlDWSink : IUtf8JsonSerializable
+    public partial class SqlDWSink : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PreCopyScript))
+            if (Core.Optional.IsDefined(PreCopyScript))
             {
                 writer.WritePropertyName("preCopyScript"u8);
                 JsonSerializer.Serialize(writer, PreCopyScript);
             }
-            if (Optional.IsDefined(AllowPolyBase))
+            if (Core.Optional.IsDefined(AllowPolyBase))
             {
                 writer.WritePropertyName("allowPolyBase"u8);
                 JsonSerializer.Serialize(writer, AllowPolyBase);
             }
-            if (Optional.IsDefined(PolyBaseSettings))
+            if (Core.Optional.IsDefined(PolyBaseSettings))
             {
                 writer.WritePropertyName("polyBaseSettings"u8);
                 writer.WriteObjectValue(PolyBaseSettings);
             }
-            if (Optional.IsDefined(AllowCopyCommand))
+            if (Core.Optional.IsDefined(AllowCopyCommand))
             {
                 writer.WritePropertyName("allowCopyCommand"u8);
                 JsonSerializer.Serialize(writer, AllowCopyCommand);
             }
-            if (Optional.IsDefined(CopyCommandSettings))
+            if (Core.Optional.IsDefined(CopyCommandSettings))
             {
                 writer.WritePropertyName("copyCommandSettings"u8);
                 writer.WriteObjectValue(CopyCommandSettings);
             }
-            if (Optional.IsDefined(TableOption))
+            if (Core.Optional.IsDefined(TableOption))
             {
                 writer.WritePropertyName("tableOption"u8);
                 JsonSerializer.Serialize(writer, TableOption);
             }
-            if (Optional.IsDefined(SqlWriterUseTableLock))
+            if (Core.Optional.IsDefined(SqlWriterUseTableLock))
             {
                 writer.WritePropertyName("sqlWriterUseTableLock"u8);
                 JsonSerializer.Serialize(writer, SqlWriterUseTableLock);
             }
-            if (Optional.IsDefined(WriteBehavior))
+            if (Core.Optional.IsDefined(WriteBehavior))
             {
                 writer.WritePropertyName("writeBehavior"u8);
 #if NET6_0_OR_GREATER
@@ -62,39 +62,39 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(WriteBehavior.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(UpsertSettings))
+            if (Core.Optional.IsDefined(UpsertSettings))
             {
                 writer.WritePropertyName("upsertSettings"u8);
                 writer.WriteObjectValue(UpsertSettings);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);
-            if (Optional.IsDefined(WriteBatchSize))
+            if (Core.Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize"u8);
                 JsonSerializer.Serialize(writer, WriteBatchSize);
             }
-            if (Optional.IsDefined(WriteBatchTimeout))
+            if (Core.Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
                 JsonSerializer.Serialize(writer, WriteBatchTimeout);
             }
-            if (Optional.IsDefined(SinkRetryCount))
+            if (Core.Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
                 JsonSerializer.Serialize(writer, SinkRetryCount);
             }
-            if (Optional.IsDefined(SinkRetryWait))
+            if (Core.Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
                 JsonSerializer.Serialize(writer, SinkRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (Core.Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Optional.IsDefined(DisableMetricsCollection))
+            if (Core.Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -117,22 +117,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> preCopyScript = default;
-            Optional<DataFactoryElement<bool>> allowPolyBase = default;
-            Optional<PolybaseSettings> polyBaseSettings = default;
-            Optional<DataFactoryElement<bool>> allowCopyCommand = default;
-            Optional<DWCopyCommandSettings> copyCommandSettings = default;
-            Optional<DataFactoryElement<string>> tableOption = default;
-            Optional<DataFactoryElement<bool>> sqlWriterUseTableLock = default;
-            Optional<BinaryData> writeBehavior = default;
-            Optional<SqlDWUpsertSettings> upsertSettings = default;
+            Core.Optional<DataFactoryElement<string>> preCopyScript = default;
+            Core.Optional<DataFactoryElement<bool>> allowPolyBase = default;
+            Core.Optional<PolybaseSettings> polyBaseSettings = default;
+            Core.Optional<DataFactoryElement<bool>> allowCopyCommand = default;
+            Core.Optional<DWCopyCommandSettings> copyCommandSettings = default;
+            Core.Optional<DataFactoryElement<string>> tableOption = default;
+            Core.Optional<DataFactoryElement<bool>> sqlWriterUseTableLock = default;
+            Core.Optional<BinaryData> writeBehavior = default;
+            Core.Optional<SqlDWUpsertSettings> upsertSettings = default;
             string type = default;
-            Optional<DataFactoryElement<int>> writeBatchSize = default;
-            Optional<DataFactoryElement<string>> writeBatchTimeout = default;
-            Optional<DataFactoryElement<int>> sinkRetryCount = default;
-            Optional<DataFactoryElement<string>> sinkRetryWait = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            Core.Optional<DataFactoryElement<int>> writeBatchSize = default;
+            Core.Optional<DataFactoryElement<string>> writeBatchTimeout = default;
+            Core.Optional<DataFactoryElement<int>> sinkRetryCount = default;
+            Core.Optional<DataFactoryElement<string>> sinkRetryWait = default;
+            Core.Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
+            Core.Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

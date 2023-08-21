@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class GalleryData : IUtf8JsonSerializable
+    public partial class GalleryData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,22 +33,22 @@ namespace Azure.ResourceManager.Compute
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Identifier))
+            if (Core.Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
                 writer.WriteObjectValue(Identifier);
             }
-            if (Optional.IsDefined(SharingProfile))
+            if (Core.Optional.IsDefined(SharingProfile))
             {
                 writer.WritePropertyName("sharingProfile"u8);
                 writer.WriteObjectValue(SharingProfile);
             }
-            if (Optional.IsDefined(SoftDeletePolicy))
+            if (Core.Optional.IsDefined(SoftDeletePolicy))
             {
                 writer.WritePropertyName("softDeletePolicy"u8);
                 writer.WriteObjectValue(SoftDeletePolicy);
@@ -63,18 +63,18 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<GalleryIdentifier> identifier = default;
-            Optional<GalleryProvisioningState> provisioningState = default;
-            Optional<SharingProfile> sharingProfile = default;
-            Optional<SoftDeletePolicy> softDeletePolicy = default;
-            Optional<SharingStatus> sharingStatus = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> description = default;
+            Core.Optional<GalleryIdentifier> identifier = default;
+            Core.Optional<GalleryProvisioningState> provisioningState = default;
+            Core.Optional<SharingProfile> sharingProfile = default;
+            Core.Optional<SoftDeletePolicy> softDeletePolicy = default;
+            Core.Optional<SharingStatus> sharingStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new GalleryData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, identifier.Value, Optional.ToNullable(provisioningState), sharingProfile.Value, softDeletePolicy.Value, sharingStatus.Value);
+            return new GalleryData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, description.Value, identifier.Value, Core.Optional.ToNullable(provisioningState), sharingProfile.Value, softDeletePolicy.Value, sharingStatus.Value);
         }
     }
 }

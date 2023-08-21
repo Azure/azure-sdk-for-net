@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CosmosDBSqlUserDefinedFunctionData>> value = default;
+            Core.Optional<IReadOnlyList<CosmosDBSqlUserDefinedFunctionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CosmosDBSqlUserDefinedFunctionListResult(Optional.ToList(value));
+            return new CosmosDBSqlUserDefinedFunctionListResult(Core.Optional.ToList(value));
         }
     }
 }

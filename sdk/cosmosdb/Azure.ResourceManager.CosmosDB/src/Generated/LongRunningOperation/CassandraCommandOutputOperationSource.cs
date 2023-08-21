@@ -14,15 +14,15 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class CassandraCommandOutputOperationSource : IOperationSource<CassandraCommandOutput>
+    internal class CassandraCommandOutputOperationSource : Core.IOperationSource<CassandraCommandOutput>
     {
-        CassandraCommandOutput IOperationSource<CassandraCommandOutput>.CreateResult(Response response, CancellationToken cancellationToken)
+        CassandraCommandOutput Core.IOperationSource<CassandraCommandOutput>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return CassandraCommandOutput.DeserializeCassandraCommandOutput(document.RootElement);
         }
 
-        async ValueTask<CassandraCommandOutput> IOperationSource<CassandraCommandOutput>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CassandraCommandOutput> Core.IOperationSource<CassandraCommandOutput>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return CassandraCommandOutput.DeserializeCassandraCommandOutput(document.RootElement);

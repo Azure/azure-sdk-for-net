@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppOpenIdConnectConfig : IUtf8JsonSerializable
+    public partial class ContainerAppOpenIdConnectConfig : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AuthorizationEndpoint))
+            if (Core.Optional.IsDefined(AuthorizationEndpoint))
             {
                 writer.WritePropertyName("authorizationEndpoint"u8);
                 writer.WriteStringValue(AuthorizationEndpoint);
             }
-            if (Optional.IsDefined(TokenEndpoint))
+            if (Core.Optional.IsDefined(TokenEndpoint))
             {
                 writer.WritePropertyName("tokenEndpoint"u8);
                 writer.WriteStringValue(TokenEndpoint);
             }
-            if (Optional.IsDefined(Issuer))
+            if (Core.Optional.IsDefined(Issuer))
             {
                 writer.WritePropertyName("issuer"u8);
                 writer.WriteStringValue(Issuer);
             }
-            if (Optional.IsDefined(CertificationUri))
+            if (Core.Optional.IsDefined(CertificationUri))
             {
                 writer.WritePropertyName("certificationUri"u8);
                 writer.WriteStringValue(CertificationUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(WellKnownOpenIdConfiguration))
+            if (Core.Optional.IsDefined(WellKnownOpenIdConfiguration))
             {
                 writer.WritePropertyName("wellKnownOpenIdConfiguration"u8);
                 writer.WriteStringValue(WellKnownOpenIdConfiguration);
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> authorizationEndpoint = default;
-            Optional<string> tokenEndpoint = default;
-            Optional<string> issuer = default;
-            Optional<Uri> certificationUri = default;
-            Optional<string> wellKnownOpenIdConfiguration = default;
+            Core.Optional<string> authorizationEndpoint = default;
+            Core.Optional<string> tokenEndpoint = default;
+            Core.Optional<string> issuer = default;
+            Core.Optional<Uri> certificationUri = default;
+            Core.Optional<string> wellKnownOpenIdConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authorizationEndpoint"u8))

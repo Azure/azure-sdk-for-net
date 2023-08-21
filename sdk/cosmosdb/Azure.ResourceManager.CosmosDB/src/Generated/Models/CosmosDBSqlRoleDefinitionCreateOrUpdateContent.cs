@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CosmosDBSqlRoleDefinitionCreateOrUpdateContent. </summary>
         public CosmosDBSqlRoleDefinitionCreateOrUpdateContent()
         {
-            AssignableScopes = new ChangeTrackingList<string>();
-            Permissions = new ChangeTrackingList<CosmosDBSqlRolePermission>();
+            AssignableScopes = new Core.ChangeTrackingList<string>();
+            Permissions = new Core.ChangeTrackingList<CosmosDBSqlRolePermission>();
         }
 
         /// <summary> A user-friendly name for the Role Definition. Must be unique for the database account. </summary>

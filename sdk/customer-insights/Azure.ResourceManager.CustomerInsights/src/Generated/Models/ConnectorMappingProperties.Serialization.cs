@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class ConnectorMappingProperties : IUtf8JsonSerializable
+    public partial class ConnectorMappingProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FolderPath))
+            if (Core.Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
-            if (Optional.IsDefined(FileFilter))
+            if (Core.Optional.IsDefined(FileFilter))
             {
                 writer.WritePropertyName("fileFilter"u8);
                 writer.WriteStringValue(FileFilter);
             }
-            if (Optional.IsDefined(HasHeader))
+            if (Core.Optional.IsDefined(HasHeader))
             {
                 writer.WritePropertyName("hasHeader"u8);
                 writer.WriteBooleanValue(HasHeader.Value);
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<string> folderPath = default;
-            Optional<string> fileFilter = default;
-            Optional<bool> hasHeader = default;
+            Core.Optional<string> folderPath = default;
+            Core.Optional<string> fileFilter = default;
+            Core.Optional<bool> hasHeader = default;
             ConnectorMappingErrorManagement errorManagement = default;
             ConnectorMappingFormat format = default;
             ConnectorMappingAvailability availability = default;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new ConnectorMappingProperties(folderPath.Value, fileFilter.Value, Optional.ToNullable(hasHeader), errorManagement, format, availability, structure, completeOperation);
+            return new ConnectorMappingProperties(folderPath.Value, fileFilter.Value, Core.Optional.ToNullable(hasHeader), errorManagement, format, availability, structure, completeOperation);
         }
     }
 }

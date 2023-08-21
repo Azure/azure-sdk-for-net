@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of ContainerServiceTrustedAccessRoleRule. </summary>
         internal ContainerServiceTrustedAccessRoleRule()
         {
-            Verbs = new ChangeTrackingList<string>();
-            ApiGroups = new ChangeTrackingList<string>();
-            Resources = new ChangeTrackingList<string>();
-            ResourceNames = new ChangeTrackingList<string>();
-            NonResourceUrls = new ChangeTrackingList<string>();
+            Verbs = new Core.ChangeTrackingList<string>();
+            ApiGroups = new Core.ChangeTrackingList<string>();
+            Resources = new Core.ChangeTrackingList<string>();
+            ResourceNames = new Core.ChangeTrackingList<string>();
+            NonResourceUrls = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ContainerServiceTrustedAccessRoleRule. </summary>

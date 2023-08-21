@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class MergeParameters : IUtf8JsonSerializable
+    public partial class MergeParameters : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsDryRun))
+            if (Core.Optional.IsDefined(IsDryRun))
             {
                 writer.WritePropertyName("isDryRun"u8);
                 writer.WriteBooleanValue(IsDryRun.Value);

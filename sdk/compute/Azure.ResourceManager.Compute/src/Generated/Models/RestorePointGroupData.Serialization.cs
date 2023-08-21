@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class RestorePointGroupData : IUtf8JsonSerializable
+    public partial class RestorePointGroupData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Source))
+            if (Core.Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
@@ -48,16 +48,16 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<RestorePointGroupSource> source = default;
-            Optional<string> provisioningState = default;
-            Optional<string> restorePointGroupId = default;
-            Optional<IReadOnlyList<RestorePointData>> restorePoints = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<RestorePointGroupSource> source = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<string> restorePointGroupId = default;
+            Core.Optional<IReadOnlyList<RestorePointData>> restorePoints = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new RestorePointGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, source.Value, provisioningState.Value, restorePointGroupId.Value, Optional.ToList(restorePoints));
+            return new RestorePointGroupData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, source.Value, provisioningState.Value, restorePointGroupId.Value, Core.Optional.ToList(restorePoints));
         }
     }
 }

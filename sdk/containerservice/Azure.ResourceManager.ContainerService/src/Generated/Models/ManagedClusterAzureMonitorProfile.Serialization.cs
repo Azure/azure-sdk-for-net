@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    internal partial class ManagedClusterAzureMonitorProfile : IUtf8JsonSerializable
+    internal partial class ManagedClusterAzureMonitorProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Metrics))
+            if (Core.Optional.IsDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteObjectValue(Metrics);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ManagedClusterMonitorProfileMetrics> metrics = default;
+            Core.Optional<ManagedClusterMonitorProfileMetrics> metrics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metrics"u8))

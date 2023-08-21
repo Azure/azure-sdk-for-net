@@ -12,27 +12,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class CommunityGalleryInfo : IUtf8JsonSerializable
+    public partial class CommunityGalleryInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PublisherUri))
+            if (Core.Optional.IsDefined(PublisherUri))
             {
                 writer.WritePropertyName("publisherUri"u8);
                 writer.WriteStringValue(PublisherUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(PublisherContact))
+            if (Core.Optional.IsDefined(PublisherContact))
             {
                 writer.WritePropertyName("publisherContact"u8);
                 writer.WriteStringValue(PublisherContact);
             }
-            if (Optional.IsDefined(Eula))
+            if (Core.Optional.IsDefined(Eula))
             {
                 writer.WritePropertyName("eula"u8);
                 writer.WriteStringValue(Eula);
             }
-            if (Optional.IsDefined(PublicNamePrefix))
+            if (Core.Optional.IsDefined(PublicNamePrefix))
             {
                 writer.WritePropertyName("publicNamePrefix"u8);
                 writer.WriteStringValue(PublicNamePrefix);
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<Uri> publisherUri = default;
-            Optional<string> publisherContact = default;
-            Optional<string> eula = default;
-            Optional<string> publicNamePrefix = default;
-            Optional<bool> communityGalleryEnabled = default;
-            Optional<IReadOnlyList<string>> publicNames = default;
+            Core.Optional<Uri> publisherUri = default;
+            Core.Optional<string> publisherContact = default;
+            Core.Optional<string> eula = default;
+            Core.Optional<string> publicNamePrefix = default;
+            Core.Optional<bool> communityGalleryEnabled = default;
+            Core.Optional<IReadOnlyList<string>> publicNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publisherUri"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new CommunityGalleryInfo(publisherUri.Value, publisherContact.Value, eula.Value, publicNamePrefix.Value, Optional.ToNullable(communityGalleryEnabled), Optional.ToList(publicNames));
+            return new CommunityGalleryInfo(publisherUri.Value, publisherContact.Value, eula.Value, publicNamePrefix.Value, Core.Optional.ToNullable(communityGalleryEnabled), Core.Optional.ToList(publicNames));
         }
     }
 }

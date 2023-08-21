@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CassandraCertificate : IUtf8JsonSerializable
+    public partial class CassandraCertificate : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Pem))
+            if (Core.Optional.IsDefined(Pem))
             {
                 writer.WritePropertyName("pem"u8);
                 writer.WriteStringValue(Pem);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> pem = default;
+            Core.Optional<string> pem = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pem"u8))

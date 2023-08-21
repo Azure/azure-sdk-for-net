@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of MapperSourceConnectionsInfo. </summary>
         public MapperSourceConnectionsInfo()
         {
-            SourceEntities = new ChangeTrackingList<MapperTable>();
+            SourceEntities = new Core.ChangeTrackingList<MapperTable>();
         }
 
         /// <summary> Initializes a new instance of MapperSourceConnectionsInfo. </summary>

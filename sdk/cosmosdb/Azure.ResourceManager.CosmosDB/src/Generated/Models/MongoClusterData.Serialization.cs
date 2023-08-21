@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    public partial class MongoClusterData : IUtf8JsonSerializable
+    public partial class MongoClusterData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,32 +33,32 @@ namespace Azure.ResourceManager.CosmosDB
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreateMode))
+            if (Core.Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (Optional.IsDefined(RestoreParameters))
+            if (Core.Optional.IsDefined(RestoreParameters))
             {
                 writer.WritePropertyName("restoreParameters"u8);
                 writer.WriteObjectValue(RestoreParameters);
             }
-            if (Optional.IsDefined(AdministratorLogin))
+            if (Core.Optional.IsDefined(AdministratorLogin))
             {
                 writer.WritePropertyName("administratorLogin"u8);
                 writer.WriteStringValue(AdministratorLogin);
             }
-            if (Optional.IsDefined(AdministratorLoginPassword))
+            if (Core.Optional.IsDefined(AdministratorLoginPassword))
             {
                 writer.WritePropertyName("administratorLoginPassword"u8);
                 writer.WriteStringValue(AdministratorLoginPassword);
             }
-            if (Optional.IsDefined(ServerVersion))
+            if (Core.Optional.IsDefined(ServerVersion))
             {
                 writer.WritePropertyName("serverVersion"u8);
                 writer.WriteStringValue(ServerVersion);
             }
-            if (Optional.IsCollectionDefined(NodeGroupSpecs))
+            if (Core.Optional.IsCollectionDefined(NodeGroupSpecs))
             {
                 writer.WritePropertyName("nodeGroupSpecs"u8);
                 writer.WriteStartArray();
@@ -78,22 +78,22 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<CosmosDBAccountCreateMode> createMode = default;
-            Optional<MongoClusterRestoreParameters> restoreParameters = default;
-            Optional<string> administratorLogin = default;
-            Optional<string> administratorLoginPassword = default;
-            Optional<string> serverVersion = default;
-            Optional<string> connectionString = default;
-            Optional<string> earliestRestoreTime = default;
-            Optional<CosmosDBProvisioningState> provisioningState = default;
-            Optional<MongoClusterStatus> clusterStatus = default;
-            Optional<IList<NodeGroupSpec>> nodeGroupSpecs = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<CosmosDBAccountCreateMode> createMode = default;
+            Core.Optional<MongoClusterRestoreParameters> restoreParameters = default;
+            Core.Optional<string> administratorLogin = default;
+            Core.Optional<string> administratorLoginPassword = default;
+            Core.Optional<string> serverVersion = default;
+            Core.Optional<string> connectionString = default;
+            Core.Optional<string> earliestRestoreTime = default;
+            Core.Optional<CosmosDBProvisioningState> provisioningState = default;
+            Core.Optional<MongoClusterStatus> clusterStatus = default;
+            Core.Optional<IList<NodeGroupSpec>> nodeGroupSpecs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CosmosDB
                     continue;
                 }
             }
-            return new MongoClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(createMode), restoreParameters.Value, administratorLogin.Value, administratorLoginPassword.Value, serverVersion.Value, connectionString.Value, earliestRestoreTime.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(clusterStatus), Optional.ToList(nodeGroupSpecs));
+            return new MongoClusterData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(createMode), restoreParameters.Value, administratorLogin.Value, administratorLoginPassword.Value, serverVersion.Value, connectionString.Value, earliestRestoreTime.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(clusterStatus), Core.Optional.ToList(nodeGroupSpecs));
         }
     }
 }

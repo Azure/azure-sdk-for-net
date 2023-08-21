@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<InstanceViewStatusesSummary> roleInstance = default;
-            Optional<string> sdkVersion = default;
-            Optional<IReadOnlyList<string>> privateIds = default;
-            Optional<IReadOnlyList<ResourceInstanceViewStatus>> statuses = default;
+            Core.Optional<InstanceViewStatusesSummary> roleInstance = default;
+            Core.Optional<string> sdkVersion = default;
+            Core.Optional<IReadOnlyList<string>> privateIds = default;
+            Core.Optional<IReadOnlyList<ResourceInstanceViewStatus>> statuses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("roleInstance"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new CloudServiceInstanceView(roleInstance.Value, sdkVersion.Value, Optional.ToList(privateIds), Optional.ToList(statuses));
+            return new CloudServiceInstanceView(roleInstance.Value, sdkVersion.Value, Core.Optional.ToList(privateIds), Core.Optional.ToList(statuses));
         }
     }
 }

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataLakeAnalyticsStorageContainerData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<DataLakeAnalyticsStorageContainerData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                     continue;
                 }
             }
-            return new DataLakeAnalyticsStorageContainerListResult(Optional.ToList(value), nextLink.Value);
+            return new DataLakeAnalyticsStorageContainerListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

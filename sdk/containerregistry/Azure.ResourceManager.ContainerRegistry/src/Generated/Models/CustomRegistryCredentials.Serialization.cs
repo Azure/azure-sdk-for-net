@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class CustomRegistryCredentials : IUtf8JsonSerializable
+    public partial class CustomRegistryCredentials : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserName))
+            if (Core.Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteObjectValue(UserName);
             }
-            if (Optional.IsDefined(Password))
+            if (Core.Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteObjectValue(Password);
             }
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteStringValue(Identity);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ContainerRegistrySecretObject> userName = default;
-            Optional<ContainerRegistrySecretObject> password = default;
-            Optional<string> identity = default;
+            Core.Optional<ContainerRegistrySecretObject> userName = default;
+            Core.Optional<ContainerRegistrySecretObject> password = default;
+            Core.Optional<string> identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userName"u8))

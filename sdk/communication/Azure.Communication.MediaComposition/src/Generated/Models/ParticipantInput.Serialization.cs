@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition.Models
 {
-    public partial class ParticipantInput : IUtf8JsonSerializable
+    public partial class ParticipantInput : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
@@ -23,7 +23,7 @@ namespace Azure.Communication.MediaComposition.Models
             writer.WriteStringValue(Call);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(PlaceholderImageUri))
+            if (Core.Optional.IsDefined(PlaceholderImageUri))
             {
                 writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
@@ -40,7 +40,7 @@ namespace Azure.Communication.MediaComposition.Models
             CommunicationIdentifierModel id = default;
             string call = default;
             MediaInputType kind = default;
-            Optional<string> placeholderImageUri = default;
+            Core.Optional<string> placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<string> version = default;
-            Optional<string> podSubnet = default;
-            Optional<string> serviceSubnet = default;
+            Core.Optional<string> type = default;
+            Core.Optional<string> version = default;
+            Core.Optional<string> podSubnet = default;
+            Core.Optional<string> serviceSubnet = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))

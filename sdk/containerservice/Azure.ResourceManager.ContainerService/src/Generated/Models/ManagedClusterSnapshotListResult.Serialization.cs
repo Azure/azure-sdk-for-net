@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManagedClusterSnapshotData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<ManagedClusterSnapshotData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterSnapshotListResult(Optional.ToList(value), nextLink.Value);
+            return new ManagedClusterSnapshotListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

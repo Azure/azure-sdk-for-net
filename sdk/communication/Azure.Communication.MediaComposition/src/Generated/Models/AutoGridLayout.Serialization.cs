@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class AutoGridLayout : IUtf8JsonSerializable
+    public partial class AutoGridLayout : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("inputIds"u8);
@@ -24,24 +24,24 @@ namespace Azure.Communication.MediaComposition
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(HighlightDominantSpeaker))
+            if (Core.Optional.IsDefined(HighlightDominantSpeaker))
             {
                 writer.WritePropertyName("highlightDominantSpeaker"u8);
                 writer.WriteBooleanValue(HighlightDominantSpeaker.Value);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(Resolution))
+            if (Core.Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
                 writer.WriteObjectValue(Resolution);
             }
-            if (Optional.IsDefined(PlaceholderImageUri))
+            if (Core.Optional.IsDefined(PlaceholderImageUri))
             {
                 writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
             }
-            if (Optional.IsDefined(ScalingMode))
+            if (Core.Optional.IsDefined(ScalingMode))
             {
                 writer.WritePropertyName("scalingMode"u8);
                 writer.WriteStringValue(ScalingMode.Value.ToString());
@@ -56,11 +56,11 @@ namespace Azure.Communication.MediaComposition
                 return null;
             }
             IList<string> inputIds = default;
-            Optional<bool> highlightDominantSpeaker = default;
+            Core.Optional<bool> highlightDominantSpeaker = default;
             LayoutType kind = default;
-            Optional<LayoutResolution> resolution = default;
-            Optional<string> placeholderImageUri = default;
-            Optional<ScalingMode> scalingMode = default;
+            Core.Optional<LayoutResolution> resolution = default;
+            Core.Optional<string> placeholderImageUri = default;
+            Core.Optional<ScalingMode> scalingMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inputIds"u8))
@@ -111,7 +111,7 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new AutoGridLayout(kind, resolution.Value, placeholderImageUri.Value, Optional.ToNullable(scalingMode), inputIds, Optional.ToNullable(highlightDominantSpeaker));
+            return new AutoGridLayout(kind, resolution.Value, placeholderImageUri.Value, Core.Optional.ToNullable(scalingMode), inputIds, Core.Optional.ToNullable(highlightDominantSpeaker));
         }
     }
 }

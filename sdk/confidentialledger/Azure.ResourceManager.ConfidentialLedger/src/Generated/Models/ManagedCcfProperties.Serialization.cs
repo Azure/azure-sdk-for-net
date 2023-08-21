@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    public partial class ManagedCcfProperties : IUtf8JsonSerializable
+    public partial class ManagedCcfProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(MemberIdentityCertificates))
+            if (Core.Optional.IsCollectionDefined(MemberIdentityCertificates))
             {
                 writer.WritePropertyName("memberIdentityCertificates"u8);
                 writer.WriteStartArray();
@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DeploymentType))
+            if (Core.Optional.IsDefined(DeploymentType))
             {
                 writer.WritePropertyName("deploymentType"u8);
                 writer.WriteObjectValue(DeploymentType);
             }
-            if (Optional.IsDefined(NodeCount))
+            if (Core.Optional.IsDefined(NodeCount))
             {
                 writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             {
                 return null;
             }
-            Optional<string> appName = default;
-            Optional<Uri> appUri = default;
-            Optional<Uri> identityServiceUri = default;
-            Optional<IList<ConfidentialLedgerMemberIdentityCertificate>> memberIdentityCertificates = default;
-            Optional<ConfidentialLedgerDeploymentType> deploymentType = default;
-            Optional<ConfidentialLedgerProvisioningState> provisioningState = default;
-            Optional<int> nodeCount = default;
+            Core.Optional<string> appName = default;
+            Core.Optional<Uri> appUri = default;
+            Core.Optional<Uri> identityServiceUri = default;
+            Core.Optional<IList<ConfidentialLedgerMemberIdentityCertificate>> memberIdentityCertificates = default;
+            Core.Optional<ConfidentialLedgerDeploymentType> deploymentType = default;
+            Core.Optional<ConfidentialLedgerProvisioningState> provisioningState = default;
+            Core.Optional<int> nodeCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appName"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     continue;
                 }
             }
-            return new ManagedCcfProperties(appName.Value, appUri.Value, identityServiceUri.Value, Optional.ToList(memberIdentityCertificates), deploymentType.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(nodeCount));
+            return new ManagedCcfProperties(appName.Value, appUri.Value, identityServiceUri.Value, Core.Optional.ToList(memberIdentityCertificates), deploymentType.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(nodeCount));
         }
     }
 }

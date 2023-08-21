@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <summary> Initializes a new instance of LinkedResourceListResponse. </summary>
         internal LinkedResourceListResponse()
         {
-            Value = new ChangeTrackingList<SubResource>();
+            Value = new Core.ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of LinkedResourceListResponse. </summary>

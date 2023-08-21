@@ -13,32 +13,32 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class IntegrationRuntimeSsisCatalogInfo : IUtf8JsonSerializable
+    public partial class IntegrationRuntimeSsisCatalogInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CatalogServerEndpoint))
+            if (Core.Optional.IsDefined(CatalogServerEndpoint))
             {
                 writer.WritePropertyName("catalogServerEndpoint"u8);
                 writer.WriteStringValue(CatalogServerEndpoint);
             }
-            if (Optional.IsDefined(CatalogAdminUserName))
+            if (Core.Optional.IsDefined(CatalogAdminUserName))
             {
                 writer.WritePropertyName("catalogAdminUserName"u8);
                 writer.WriteStringValue(CatalogAdminUserName);
             }
-            if (Optional.IsDefined(CatalogAdminPassword))
+            if (Core.Optional.IsDefined(CatalogAdminPassword))
             {
                 writer.WritePropertyName("catalogAdminPassword"u8);
                 JsonSerializer.Serialize(writer, CatalogAdminPassword);
             }
-            if (Optional.IsDefined(CatalogPricingTier))
+            if (Core.Optional.IsDefined(CatalogPricingTier))
             {
                 writer.WritePropertyName("catalogPricingTier"u8);
                 writer.WriteStringValue(CatalogPricingTier.Value.ToString());
             }
-            if (Optional.IsDefined(DualStandbyPairName))
+            if (Core.Optional.IsDefined(DualStandbyPairName))
             {
                 writer.WritePropertyName("dualStandbyPairName"u8);
                 writer.WriteStringValue(DualStandbyPairName);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> catalogServerEndpoint = default;
-            Optional<string> catalogAdminUserName = default;
-            Optional<DataFactorySecretString> catalogAdminPassword = default;
-            Optional<IntegrationRuntimeSsisCatalogPricingTier> catalogPricingTier = default;
-            Optional<string> dualStandbyPairName = default;
+            Core.Optional<string> catalogServerEndpoint = default;
+            Core.Optional<string> catalogAdminUserName = default;
+            Core.Optional<DataFactorySecretString> catalogAdminPassword = default;
+            Core.Optional<IntegrationRuntimeSsisCatalogPricingTier> catalogPricingTier = default;
+            Core.Optional<string> dualStandbyPairName = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeSsisCatalogInfo(catalogServerEndpoint.Value, catalogAdminUserName.Value, catalogAdminPassword, Optional.ToNullable(catalogPricingTier), dualStandbyPairName.Value, additionalProperties);
+            return new IntegrationRuntimeSsisCatalogInfo(catalogServerEndpoint.Value, catalogAdminUserName.Value, catalogAdminPassword, Core.Optional.ToNullable(catalogPricingTier), dualStandbyPairName.Value, additionalProperties);
         }
     }
 }

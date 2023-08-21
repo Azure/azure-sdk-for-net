@@ -14,14 +14,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    public partial class RelationshipLinkResourceFormatData : IUtf8JsonSerializable
+    public partial class RelationshipLinkResourceFormatData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DisplayName))
+            if (Core.Optional.IsCollectionDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Description))
+            if (Core.Optional.IsCollectionDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(InteractionType))
+            if (Core.Optional.IsDefined(InteractionType))
             {
                 writer.WritePropertyName("interactionType"u8);
                 writer.WriteStringValue(InteractionType);
             }
-            if (Optional.IsCollectionDefined(Mappings))
+            if (Core.Optional.IsCollectionDefined(Mappings))
             {
                 writer.WritePropertyName("mappings"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ProfilePropertyReferences))
+            if (Core.Optional.IsCollectionDefined(ProfilePropertyReferences))
             {
                 writer.WritePropertyName("profilePropertyReferences"u8);
                 writer.WriteStartArray();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RelatedProfilePropertyReferences))
+            if (Core.Optional.IsCollectionDefined(RelatedProfilePropertyReferences))
             {
                 writer.WritePropertyName("relatedProfilePropertyReferences"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RelationshipName))
+            if (Core.Optional.IsDefined(RelationshipName))
             {
                 writer.WritePropertyName("relationshipName"u8);
                 writer.WriteStringValue(RelationshipName);
@@ -96,18 +96,18 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IDictionary<string, string>> displayName = default;
-            Optional<IDictionary<string, string>> description = default;
-            Optional<string> interactionType = default;
-            Optional<string> linkName = default;
-            Optional<IList<RelationshipLinkFieldMapping>> mappings = default;
-            Optional<IList<ParticipantProfilePropertyReference>> profilePropertyReferences = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<IList<ParticipantProfilePropertyReference>> relatedProfilePropertyReferences = default;
-            Optional<string> relationshipName = default;
-            Optional<string> relationshipGuidId = default;
-            Optional<Guid> tenantId = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IDictionary<string, string>> displayName = default;
+            Core.Optional<IDictionary<string, string>> description = default;
+            Core.Optional<string> interactionType = default;
+            Core.Optional<string> linkName = default;
+            Core.Optional<IList<RelationshipLinkFieldMapping>> mappings = default;
+            Core.Optional<IList<ParticipantProfilePropertyReference>> profilePropertyReferences = default;
+            Core.Optional<ProvisioningState> provisioningState = default;
+            Core.Optional<IList<ParticipantProfilePropertyReference>> relatedProfilePropertyReferences = default;
+            Core.Optional<string> relationshipName = default;
+            Core.Optional<string> relationshipGuidId = default;
+            Core.Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.CustomerInsights
                     continue;
                 }
             }
-            return new RelationshipLinkResourceFormatData(id, name, type, systemData.Value, Optional.ToDictionary(displayName), Optional.ToDictionary(description), interactionType.Value, linkName.Value, Optional.ToList(mappings), Optional.ToList(profilePropertyReferences), Optional.ToNullable(provisioningState), Optional.ToList(relatedProfilePropertyReferences), relationshipName.Value, relationshipGuidId.Value, Optional.ToNullable(tenantId));
+            return new RelationshipLinkResourceFormatData(id, name, type, systemData.Value, Core.Optional.ToDictionary(displayName), Core.Optional.ToDictionary(description), interactionType.Value, linkName.Value, Core.Optional.ToList(mappings), Core.Optional.ToList(profilePropertyReferences), Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(relatedProfilePropertyReferences), relationshipName.Value, relationshipGuidId.Value, Core.Optional.ToNullable(tenantId));
         }
     }
 }

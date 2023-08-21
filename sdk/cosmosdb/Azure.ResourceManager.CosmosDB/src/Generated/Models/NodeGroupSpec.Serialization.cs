@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class NodeGroupSpec : IUtf8JsonSerializable
+    public partial class NodeGroupSpec : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsDefined(NodeCount))
+            if (Core.Optional.IsDefined(NodeCount))
             {
                 writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
             }
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (Optional.IsDefined(DiskSizeInGB))
+            if (Core.Optional.IsDefined(DiskSizeInGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeInGB.Value);
             }
-            if (Optional.IsDefined(EnableHa))
+            if (Core.Optional.IsDefined(EnableHa))
             {
                 writer.WritePropertyName("enableHa"u8);
                 writer.WriteBooleanValue(EnableHa.Value);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<NodeKind> kind = default;
-            Optional<int> nodeCount = default;
-            Optional<string> sku = default;
-            Optional<long> diskSizeGB = default;
-            Optional<bool> enableHa = default;
+            Core.Optional<NodeKind> kind = default;
+            Core.Optional<int> nodeCount = default;
+            Core.Optional<string> sku = default;
+            Core.Optional<long> diskSizeGB = default;
+            Core.Optional<bool> enableHa = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new NodeGroupSpec(sku.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(enableHa), Optional.ToNullable(kind), Optional.ToNullable(nodeCount));
+            return new NodeGroupSpec(sku.Value, Core.Optional.ToNullable(diskSizeGB), Core.Optional.ToNullable(enableHa), Core.Optional.ToNullable(kind), Core.Optional.ToNullable(nodeCount));
         }
     }
 }

@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.DataBox.Models
             Argument.AssertNotNull(contactDetails, nameof(contactDetails));
             Argument.AssertNotNull(returnToCustomerPackageDetails, nameof(returnToCustomerPackageDetails));
 
-            ImportDiskDetails = new ChangeTrackingDictionary<string, ImportDiskDetails>();
-            ExportDiskDetails = new ChangeTrackingDictionary<string, ExportDiskDetails>();
-            CopyProgress = new ChangeTrackingList<DataBoxCustomerDiskCopyProgress>();
+            ImportDiskDetails = new Core.ChangeTrackingDictionary<string, ImportDiskDetails>();
+            ExportDiskDetails = new Core.ChangeTrackingDictionary<string, ExportDiskDetails>();
+            CopyProgress = new Core.ChangeTrackingList<DataBoxCustomerDiskCopyProgress>();
             ReturnToCustomerPackageDetails = returnToCustomerPackageDetails;
             JobDetailsType = DataBoxOrderType.DataBoxCustomerDisk;
         }

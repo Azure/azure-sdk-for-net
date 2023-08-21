@@ -19,11 +19,11 @@ namespace Azure.Communication.Sms
                 return null;
             }
             string to = default;
-            Optional<string> messageId = default;
+            Core.Optional<string> messageId = default;
             int httpStatusCode = default;
-            Optional<SmsSendResponseItemRepeatabilityResult> repeatabilityResult = default;
+            Core.Optional<SmsSendResponseItemRepeatabilityResult> repeatabilityResult = default;
             bool successful = default;
-            Optional<string> errorMessage = default;
+            Core.Optional<string> errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("to"u8))
@@ -61,7 +61,7 @@ namespace Azure.Communication.Sms
                     continue;
                 }
             }
-            return new SmsSendResult(to, messageId.Value, httpStatusCode, Optional.ToNullable(repeatabilityResult), successful, errorMessage.Value);
+            return new SmsSendResult(to, messageId.Value, httpStatusCode, Core.Optional.ToNullable(repeatabilityResult), successful, errorMessage.Value);
         }
     }
 }

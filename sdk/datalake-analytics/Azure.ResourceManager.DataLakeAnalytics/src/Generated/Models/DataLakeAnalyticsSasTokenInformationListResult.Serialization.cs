@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataLakeAnalyticsSasTokenInformation>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<DataLakeAnalyticsSasTokenInformation>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                     continue;
                 }
             }
-            return new DataLakeAnalyticsSasTokenInformationListResult(Optional.ToList(value), nextLink.Value);
+            return new DataLakeAnalyticsSasTokenInformationListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -12,17 +12,17 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter.Models
 {
-    public partial class ScoringRuleOptions : IUtf8JsonSerializable
+    public partial class ScoringRuleOptions : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BatchSize))
+            if (Core.Optional.IsDefined(BatchSize))
             {
                 writer.WritePropertyName("batchSize"u8);
                 writer.WriteNumberValue(BatchSize.Value);
             }
-            if (Optional.IsCollectionDefined(ScoringParameters))
+            if (Core.Optional.IsCollectionDefined(ScoringParameters))
             {
                 writer.WritePropertyName("scoringParameters"u8);
                 writer.WriteStartArray();
@@ -32,12 +32,12 @@ namespace Azure.Communication.JobRouter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AllowScoringBatchOfWorkers))
+            if (Core.Optional.IsDefined(AllowScoringBatchOfWorkers))
             {
                 writer.WritePropertyName("allowScoringBatchOfWorkers"u8);
                 writer.WriteBooleanValue(AllowScoringBatchOfWorkers.Value);
             }
-            if (Optional.IsDefined(DescendingOrder))
+            if (Core.Optional.IsDefined(DescendingOrder))
             {
                 writer.WritePropertyName("descendingOrder"u8);
                 writer.WriteBooleanValue(DescendingOrder.Value);
@@ -51,10 +51,10 @@ namespace Azure.Communication.JobRouter.Models
             {
                 return null;
             }
-            Optional<int> batchSize = default;
-            Optional<IList<ScoringRuleParameterSelector>> scoringParameters = default;
-            Optional<bool> allowScoringBatchOfWorkers = default;
-            Optional<bool> descendingOrder = default;
+            Core.Optional<int> batchSize = default;
+            Core.Optional<IList<ScoringRuleParameterSelector>> scoringParameters = default;
+            Core.Optional<bool> allowScoringBatchOfWorkers = default;
+            Core.Optional<bool> descendingOrder = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("batchSize"u8))
@@ -99,7 +99,7 @@ namespace Azure.Communication.JobRouter.Models
                     continue;
                 }
             }
-            return new ScoringRuleOptions(Optional.ToNullable(batchSize), Optional.ToList(scoringParameters), Optional.ToNullable(allowScoringBatchOfWorkers), Optional.ToNullable(descendingOrder));
+            return new ScoringRuleOptions(Core.Optional.ToNullable(batchSize), Core.Optional.ToList(scoringParameters), Core.Optional.ToNullable(allowScoringBatchOfWorkers), Core.Optional.ToNullable(descendingOrder));
         }
     }
 }

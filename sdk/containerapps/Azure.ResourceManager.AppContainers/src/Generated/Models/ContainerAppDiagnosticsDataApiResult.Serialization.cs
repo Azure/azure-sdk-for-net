@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppDiagnosticsDataApiResult : IUtf8JsonSerializable
+    public partial class ContainerAppDiagnosticsDataApiResult : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Table))
+            if (Core.Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
                 writer.WriteObjectValue(Table);
             }
-            if (Optional.IsDefined(RenderingProperties))
+            if (Core.Optional.IsDefined(RenderingProperties))
             {
                 writer.WritePropertyName("renderingProperties"u8);
                 writer.WriteObjectValue(RenderingProperties);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ContainerAppDiagnosticDataTableResult> table = default;
-            Optional<ContainerAppDiagnosticRendering> renderingProperties = default;
+            Core.Optional<ContainerAppDiagnosticDataTableResult> table = default;
+            Core.Optional<ContainerAppDiagnosticRendering> renderingProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("table"u8))

@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <summary> Initializes a new instance of LinkResourceFormatData. </summary>
         public LinkResourceFormatData()
         {
-            DisplayName = new ChangeTrackingDictionary<string, string>();
-            Description = new ChangeTrackingDictionary<string, string>();
-            Mappings = new ChangeTrackingList<TypePropertiesMapping>();
-            ParticipantPropertyReferences = new ChangeTrackingList<ParticipantPropertyReference>();
+            DisplayName = new Core.ChangeTrackingDictionary<string, string>();
+            Description = new Core.ChangeTrackingDictionary<string, string>();
+            Mappings = new Core.ChangeTrackingList<TypePropertiesMapping>();
+            ParticipantPropertyReferences = new Core.ChangeTrackingList<ParticipantPropertyReference>();
         }
 
         /// <summary> Initializes a new instance of LinkResourceFormatData. </summary>

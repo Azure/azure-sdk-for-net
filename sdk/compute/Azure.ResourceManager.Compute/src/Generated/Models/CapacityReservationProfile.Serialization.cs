@@ -11,12 +11,12 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class CapacityReservationProfile : IUtf8JsonSerializable
+    internal partial class CapacityReservationProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CapacityReservationGroup))
+            if (Core.Optional.IsDefined(CapacityReservationGroup))
             {
                 writer.WritePropertyName("capacityReservationGroup"u8);
                 JsonSerializer.Serialize(writer, CapacityReservationGroup);
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> capacityReservationGroup = default;
+            Core.Optional<WritableSubResource> capacityReservationGroup = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("capacityReservationGroup"u8))

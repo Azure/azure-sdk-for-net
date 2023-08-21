@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppDiagnosticsProperties. </summary>
         public ContainerAppDiagnosticsProperties()
         {
-            Dataset = new ChangeTrackingList<ContainerAppDiagnosticsDataApiResult>();
+            Dataset = new Core.ChangeTrackingList<ContainerAppDiagnosticsDataApiResult>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppDiagnosticsProperties. </summary>

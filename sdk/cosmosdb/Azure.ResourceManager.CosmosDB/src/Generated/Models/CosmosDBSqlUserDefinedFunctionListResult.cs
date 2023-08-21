@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CosmosDBSqlUserDefinedFunctionListResult. </summary>
         internal CosmosDBSqlUserDefinedFunctionListResult()
         {
-            Value = new ChangeTrackingList<CosmosDBSqlUserDefinedFunctionData>();
+            Value = new Core.ChangeTrackingList<CosmosDBSqlUserDefinedFunctionData>();
         }
 
         /// <summary> Initializes a new instance of CosmosDBSqlUserDefinedFunctionListResult. </summary>

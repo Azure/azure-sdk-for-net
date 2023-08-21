@@ -21,15 +21,15 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<PriceSheetProperties>> pricesheets = default;
-            Optional<string> nextLink = default;
-            Optional<ConsumptionMeterDetails> download = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IReadOnlyList<PriceSheetProperties>> pricesheets = default;
+            Core.Optional<string> nextLink = default;
+            Core.Optional<ConsumptionMeterDetails> download = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new PriceSheetResult(id, name, type, systemData.Value, Optional.ToList(pricesheets), nextLink.Value, download.Value, Optional.ToNullable(etag), Optional.ToDictionary(tags));
+            return new PriceSheetResult(id, name, type, systemData.Value, Core.Optional.ToList(pricesheets), nextLink.Value, download.Value, Core.Optional.ToNullable(etag), Core.Optional.ToDictionary(tags));
         }
     }
 }

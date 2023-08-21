@@ -15,19 +15,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    public partial class DataFactoryChangeDataCaptureData : IUtf8JsonSerializable
+    public partial class DataFactoryChangeDataCaptureData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Folder))
+            if (Core.Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.DataFactory
             writer.WriteEndArray();
             writer.WritePropertyName("policy"u8);
             writer.WriteObjectValue(Policy);
-            if (Optional.IsDefined(AllowVnetOverride))
+            if (Core.Optional.IsDefined(AllowVnetOverride))
             {
                 writer.WritePropertyName("allowVNetOverride"u8);
                 writer.WriteBooleanValue(AllowVnetOverride.Value);
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
@@ -77,18 +77,18 @@ namespace Azure.ResourceManager.DataFactory
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            Core.Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ChangeDataCaptureFolder> folder = default;
-            Optional<string> description = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ChangeDataCaptureFolder> folder = default;
+            Core.Optional<string> description = default;
             IList<MapperSourceConnectionsInfo> sourceConnectionsInfo = default;
             IList<MapperTargetConnectionsInfo> targetConnectionsInfo = default;
             MapperPolicy policy = default;
-            Optional<bool> allowVnetOverride = default;
-            Optional<string> status = default;
+            Core.Optional<bool> allowVnetOverride = default;
+            Core.Optional<string> status = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DataFactory
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryChangeDataCaptureData(id, name, type, systemData.Value, folder.Value, description.Value, sourceConnectionsInfo, targetConnectionsInfo, policy, Optional.ToNullable(allowVnetOverride), status.Value, Optional.ToNullable(etag), additionalProperties);
+            return new DataFactoryChangeDataCaptureData(id, name, type, systemData.Value, folder.Value, description.Value, sourceConnectionsInfo, targetConnectionsInfo, policy, Core.Optional.ToNullable(allowVnetOverride), status.Value, Core.Optional.ToNullable(etag), additionalProperties);
         }
     }
 }

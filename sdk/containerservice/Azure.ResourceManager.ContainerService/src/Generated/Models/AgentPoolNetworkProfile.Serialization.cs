@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class AgentPoolNetworkProfile : IUtf8JsonSerializable
+    public partial class AgentPoolNetworkProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(NodePublicIPTags))
+            if (Core.Optional.IsCollectionDefined(NodePublicIPTags))
             {
                 writer.WritePropertyName("nodePublicIPTags"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AllowedHostPorts))
+            if (Core.Optional.IsCollectionDefined(AllowedHostPorts))
             {
                 writer.WritePropertyName("allowedHostPorts"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ApplicationSecurityGroups))
+            if (Core.Optional.IsCollectionDefined(ApplicationSecurityGroups))
             {
                 writer.WritePropertyName("applicationSecurityGroups"u8);
                 writer.WriteStartArray();
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IList<ContainerServiceIPTag>> nodePublicIPTags = default;
-            Optional<IList<AgentPoolNetworkPortRange>> allowedHostPorts = default;
-            Optional<IList<ResourceIdentifier>> applicationSecurityGroups = default;
+            Core.Optional<IList<ContainerServiceIPTag>> nodePublicIPTags = default;
+            Core.Optional<IList<AgentPoolNetworkPortRange>> allowedHostPorts = default;
+            Core.Optional<IList<ResourceIdentifier>> applicationSecurityGroups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nodePublicIPTags"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new AgentPoolNetworkProfile(Optional.ToList(nodePublicIPTags), Optional.ToList(allowedHostPorts), Optional.ToList(applicationSecurityGroups));
+            return new AgentPoolNetworkProfile(Core.Optional.ToList(nodePublicIPTags), Core.Optional.ToList(allowedHostPorts), Core.Optional.ToList(applicationSecurityGroups));
         }
     }
 }

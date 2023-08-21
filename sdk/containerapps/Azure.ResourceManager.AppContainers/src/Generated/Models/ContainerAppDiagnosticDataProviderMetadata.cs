@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppDiagnosticDataProviderMetadata. </summary>
         public ContainerAppDiagnosticDataProviderMetadata()
         {
-            PropertyBag = new ChangeTrackingList<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem>();
+            PropertyBag = new Core.ChangeTrackingList<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppDiagnosticDataProviderMetadata. </summary>

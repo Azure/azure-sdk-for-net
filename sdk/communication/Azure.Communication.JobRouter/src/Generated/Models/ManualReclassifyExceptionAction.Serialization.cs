@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class ManualReclassifyExceptionAction : IUtf8JsonSerializable
+    public partial class ManualReclassifyExceptionAction : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(QueueId))
+            if (Core.Optional.IsDefined(QueueId))
             {
                 writer.WritePropertyName("queueId"u8);
                 writer.WriteStringValue(QueueId);
             }
-            if (Optional.IsDefined(Priority))
+            if (Core.Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Optional.IsCollectionDefined(WorkerSelectors))
+            if (Core.Optional.IsCollectionDefined(WorkerSelectors))
             {
                 writer.WritePropertyName("workerSelectors"u8);
                 writer.WriteStartArray();
@@ -47,9 +47,9 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Optional<string> queueId = default;
-            Optional<int> priority = default;
-            Optional<IList<RouterWorkerSelector>> workerSelectors = default;
+            Core.Optional<string> queueId = default;
+            Core.Optional<int> priority = default;
+            Core.Optional<IList<RouterWorkerSelector>> workerSelectors = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -87,7 +87,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new ManualReclassifyExceptionAction(kind, queueId.Value, Optional.ToNullable(priority), Optional.ToList(workerSelectors));
+            return new ManualReclassifyExceptionAction(kind, queueId.Value, Core.Optional.ToNullable(priority), Core.Optional.ToList(workerSelectors));
         }
     }
 }

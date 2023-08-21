@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> jobName = default;
-            Optional<JobSecrets> jobSecrets = default;
+            Core.Optional<string> jobName = default;
+            Core.Optional<JobSecrets> jobSecrets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobName"u8))

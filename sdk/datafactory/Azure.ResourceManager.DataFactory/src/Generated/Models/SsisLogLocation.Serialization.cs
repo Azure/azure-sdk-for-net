@@ -11,9 +11,9 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SsisLogLocation : IUtf8JsonSerializable
+    public partial class SsisLogLocation : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("logPath"u8);
@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(LocationType.ToString());
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AccessCredential))
+            if (Core.Optional.IsDefined(AccessCredential))
             {
                 writer.WritePropertyName("accessCredential"u8);
                 writer.WriteObjectValue(AccessCredential);
             }
-            if (Optional.IsDefined(LogRefreshInterval))
+            if (Core.Optional.IsDefined(LogRefreshInterval))
             {
                 writer.WritePropertyName("logRefreshInterval"u8);
                 JsonSerializer.Serialize(writer, LogRefreshInterval);
@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFactoryElement<string> logPath = default;
             SsisLogLocationType type = default;
-            Optional<SsisAccessCredential> accessCredential = default;
-            Optional<DataFactoryElement<string>> logRefreshInterval = default;
+            Core.Optional<SsisAccessCredential> accessCredential = default;
+            Core.Optional<DataFactoryElement<string>> logRefreshInterval = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logPath"u8))

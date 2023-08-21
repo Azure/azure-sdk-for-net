@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of EncryptionImages. </summary>
         public EncryptionImages()
         {
-            DataDiskImages = new ChangeTrackingList<DataDiskImageEncryption>();
+            DataDiskImages = new Core.ChangeTrackingList<DataDiskImageEncryption>();
         }
 
         /// <summary> Initializes a new instance of EncryptionImages. </summary>

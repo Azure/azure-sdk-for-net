@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterMonitorProfileKubeStateMetrics : IUtf8JsonSerializable
+    public partial class ManagedClusterMonitorProfileKubeStateMetrics : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MetricLabelsAllowlist))
+            if (Core.Optional.IsDefined(MetricLabelsAllowlist))
             {
                 writer.WritePropertyName("metricLabelsAllowlist"u8);
                 writer.WriteStringValue(MetricLabelsAllowlist);
             }
-            if (Optional.IsDefined(MetricAnnotationsAllowList))
+            if (Core.Optional.IsDefined(MetricAnnotationsAllowList))
             {
                 writer.WritePropertyName("metricAnnotationsAllowList"u8);
                 writer.WriteStringValue(MetricAnnotationsAllowList);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> metricLabelsAllowlist = default;
-            Optional<string> metricAnnotationsAllowList = default;
+            Core.Optional<string> metricLabelsAllowlist = default;
+            Core.Optional<string> metricAnnotationsAllowList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metricLabelsAllowlist"u8))

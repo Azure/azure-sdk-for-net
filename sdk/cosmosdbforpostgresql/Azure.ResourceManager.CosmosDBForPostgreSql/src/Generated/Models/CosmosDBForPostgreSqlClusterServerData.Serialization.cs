@@ -12,49 +12,49 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
-    public partial class CosmosDBForPostgreSqlClusterServerData : IUtf8JsonSerializable
+    public partial class CosmosDBForPostgreSqlClusterServerData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServerEdition))
+            if (Core.Optional.IsDefined(ServerEdition))
             {
                 writer.WritePropertyName("serverEdition"u8);
                 writer.WriteStringValue(ServerEdition);
             }
-            if (Optional.IsDefined(StorageQuotaInMb))
+            if (Core.Optional.IsDefined(StorageQuotaInMb))
             {
                 writer.WritePropertyName("storageQuotaInMb"u8);
                 writer.WriteNumberValue(StorageQuotaInMb.Value);
             }
-            if (Optional.IsDefined(VCores))
+            if (Core.Optional.IsDefined(VCores))
             {
                 writer.WritePropertyName("vCores"u8);
                 writer.WriteNumberValue(VCores.Value);
             }
-            if (Optional.IsDefined(IsHAEnabled))
+            if (Core.Optional.IsDefined(IsHAEnabled))
             {
                 writer.WritePropertyName("enableHa"u8);
                 writer.WriteBooleanValue(IsHAEnabled.Value);
             }
-            if (Optional.IsDefined(Role))
+            if (Core.Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToString());
             }
-            if (Optional.IsDefined(AvailabilityZone))
+            if (Core.Optional.IsDefined(AvailabilityZone))
             {
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteStringValue(AvailabilityZone);
             }
-            if (Optional.IsDefined(PostgresqlVersion))
+            if (Core.Optional.IsDefined(PostgresqlVersion))
             {
                 writer.WritePropertyName("postgresqlVersion"u8);
                 writer.WriteStringValue(PostgresqlVersion);
             }
-            if (Optional.IsDefined(CitusVersion))
+            if (Core.Optional.IsDefined(CitusVersion))
             {
                 writer.WritePropertyName("citusVersion"u8);
                 writer.WriteStringValue(CitusVersion);
@@ -72,21 +72,21 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> serverEdition = default;
-            Optional<int> storageQuotaInMb = default;
-            Optional<int> vCores = default;
-            Optional<bool> enableHa = default;
-            Optional<bool> enablePublicIPAccess = default;
-            Optional<bool> isReadOnly = default;
-            Optional<string> administratorLogin = default;
-            Optional<string> fullyQualifiedDomainName = default;
-            Optional<CosmosDBForPostgreSqlServerRole> role = default;
-            Optional<string> state = default;
-            Optional<string> haState = default;
-            Optional<string> availabilityZone = default;
-            Optional<string> postgresqlVersion = default;
-            Optional<string> citusVersion = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> serverEdition = default;
+            Core.Optional<int> storageQuotaInMb = default;
+            Core.Optional<int> vCores = default;
+            Core.Optional<bool> enableHa = default;
+            Core.Optional<bool> enablePublicIPAccess = default;
+            Core.Optional<bool> isReadOnly = default;
+            Core.Optional<string> administratorLogin = default;
+            Core.Optional<string> fullyQualifiedDomainName = default;
+            Core.Optional<CosmosDBForPostgreSqlServerRole> role = default;
+            Core.Optional<string> state = default;
+            Core.Optional<string> haState = default;
+            Core.Optional<string> availabilityZone = default;
+            Core.Optional<string> postgresqlVersion = default;
+            Core.Optional<string> citusVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     continue;
                 }
             }
-            return new CosmosDBForPostgreSqlClusterServerData(id, name, type, systemData.Value, serverEdition.Value, Optional.ToNullable(storageQuotaInMb), Optional.ToNullable(vCores), Optional.ToNullable(enableHa), Optional.ToNullable(enablePublicIPAccess), Optional.ToNullable(isReadOnly), administratorLogin.Value, fullyQualifiedDomainName.Value, Optional.ToNullable(role), state.Value, haState.Value, availabilityZone.Value, postgresqlVersion.Value, citusVersion.Value);
+            return new CosmosDBForPostgreSqlClusterServerData(id, name, type, systemData.Value, serverEdition.Value, Core.Optional.ToNullable(storageQuotaInMb), Core.Optional.ToNullable(vCores), Core.Optional.ToNullable(enableHa), Core.Optional.ToNullable(enablePublicIPAccess), Core.Optional.ToNullable(isReadOnly), administratorLogin.Value, fullyQualifiedDomainName.Value, Core.Optional.ToNullable(role), state.Value, haState.Value, availabilityZone.Value, postgresqlVersion.Value, citusVersion.Value);
         }
     }
 }

@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppForwardProxy : IUtf8JsonSerializable
+    public partial class ContainerAppForwardProxy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Convention))
+            if (Core.Optional.IsDefined(Convention))
             {
                 writer.WritePropertyName("convention"u8);
                 writer.WriteStringValue(Convention.Value.ToSerialString());
             }
-            if (Optional.IsDefined(CustomHostHeaderName))
+            if (Core.Optional.IsDefined(CustomHostHeaderName))
             {
                 writer.WritePropertyName("customHostHeaderName"u8);
                 writer.WriteStringValue(CustomHostHeaderName);
             }
-            if (Optional.IsDefined(CustomProtoHeaderName))
+            if (Core.Optional.IsDefined(CustomProtoHeaderName))
             {
                 writer.WritePropertyName("customProtoHeaderName"u8);
                 writer.WriteStringValue(CustomProtoHeaderName);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ContainerAppForwardProxyConvention> convention = default;
-            Optional<string> customHostHeaderName = default;
-            Optional<string> customProtoHeaderName = default;
+            Core.Optional<ContainerAppForwardProxyConvention> convention = default;
+            Core.Optional<string> customHostHeaderName = default;
+            Core.Optional<string> customProtoHeaderName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("convention"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppForwardProxy(Optional.ToNullable(convention), customHostHeaderName.Value, customProtoHeaderName.Value);
+            return new ContainerAppForwardProxy(Core.Optional.ToNullable(convention), customHostHeaderName.Value, customProtoHeaderName.Value);
         }
     }
 }

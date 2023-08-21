@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ImageDeprecationStatus : IUtf8JsonSerializable
+    public partial class ImageDeprecationStatus : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ImageState))
+            if (Core.Optional.IsDefined(ImageState))
             {
                 writer.WritePropertyName("imageState"u8);
                 writer.WriteStringValue(ImageState.Value.ToString());
             }
-            if (Optional.IsDefined(ScheduledDeprecationOn))
+            if (Core.Optional.IsDefined(ScheduledDeprecationOn))
             {
                 writer.WritePropertyName("scheduledDeprecationTime"u8);
                 writer.WriteStringValue(ScheduledDeprecationOn.Value, "O");
             }
-            if (Optional.IsDefined(AlternativeOption))
+            if (Core.Optional.IsDefined(AlternativeOption))
             {
                 writer.WritePropertyName("alternativeOption"u8);
                 writer.WriteObjectValue(AlternativeOption);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ImageState> imageState = default;
-            Optional<DateTimeOffset> scheduledDeprecationTime = default;
-            Optional<ImageAlternativeOption> alternativeOption = default;
+            Core.Optional<ImageState> imageState = default;
+            Core.Optional<DateTimeOffset> scheduledDeprecationTime = default;
+            Core.Optional<ImageAlternativeOption> alternativeOption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("imageState"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ImageDeprecationStatus(Optional.ToNullable(imageState), Optional.ToNullable(scheduledDeprecationTime), alternativeOption.Value);
+            return new ImageDeprecationStatus(Core.Optional.ToNullable(imageState), Core.Optional.ToNullable(scheduledDeprecationTime), alternativeOption.Value);
         }
     }
 }

@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class ViewKpiProperties : IUtf8JsonSerializable
+    public partial class ViewKpiProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(KpiType))
+            if (Core.Optional.IsDefined(KpiType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(KpiType.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (Core.Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<ViewKpiType> type = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<bool> enabled = default;
+            Core.Optional<ViewKpiType> type = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new ViewKpiProperties(Optional.ToNullable(type), id.Value, Optional.ToNullable(enabled));
+            return new ViewKpiProperties(Core.Optional.ToNullable(type), id.Value, Core.Optional.ToNullable(enabled));
         }
     }
 }

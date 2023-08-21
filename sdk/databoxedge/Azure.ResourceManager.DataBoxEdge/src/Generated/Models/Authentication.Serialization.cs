@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    internal partial class Authentication : IUtf8JsonSerializable
+    internal partial class Authentication : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SymmetricKey))
+            if (Core.Optional.IsDefined(SymmetricKey))
             {
                 writer.WritePropertyName("symmetricKey"u8);
                 writer.WriteObjectValue(SymmetricKey);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<DataBoxEdgeSymmetricKey> symmetricKey = default;
+            Core.Optional<DataBoxEdgeSymmetricKey> symmetricKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("symmetricKey"u8))

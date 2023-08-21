@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    public partial class MonitorProperties : IUtf8JsonSerializable
+    public partial class MonitorProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MonitoringStatus))
+            if (Core.Optional.IsDefined(MonitoringStatus))
             {
                 writer.WritePropertyName("monitoringStatus"u8);
                 writer.WriteStringValue(MonitoringStatus.Value.ToString());
             }
-            if (Optional.IsDefined(DatadogOrganizationProperties))
+            if (Core.Optional.IsDefined(DatadogOrganizationProperties))
             {
                 writer.WritePropertyName("datadogOrganizationProperties"u8);
                 writer.WriteObjectValue(DatadogOrganizationProperties);
             }
-            if (Optional.IsDefined(UserInfo))
+            if (Core.Optional.IsDefined(UserInfo))
             {
                 writer.WritePropertyName("userInfo"u8);
                 writer.WriteObjectValue(UserInfo);
@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<MonitoringStatus> monitoringStatus = default;
-            Optional<MarketplaceSubscriptionStatus> marketplaceSubscriptionStatus = default;
-            Optional<DatadogOrganizationProperties> datadogOrganizationProperties = default;
-            Optional<UserInfo> userInfo = default;
-            Optional<LiftrResourceCategory> liftrResourceCategory = default;
-            Optional<int> liftrResourcePreference = default;
+            Core.Optional<ProvisioningState> provisioningState = default;
+            Core.Optional<MonitoringStatus> monitoringStatus = default;
+            Core.Optional<MarketplaceSubscriptionStatus> marketplaceSubscriptionStatus = default;
+            Core.Optional<DatadogOrganizationProperties> datadogOrganizationProperties = default;
+            Core.Optional<UserInfo> userInfo = default;
+            Core.Optional<LiftrResourceCategory> liftrResourceCategory = default;
+            Core.Optional<int> liftrResourcePreference = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     continue;
                 }
             }
-            return new MonitorProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(monitoringStatus), Optional.ToNullable(marketplaceSubscriptionStatus), datadogOrganizationProperties.Value, userInfo.Value, Optional.ToNullable(liftrResourceCategory), Optional.ToNullable(liftrResourcePreference));
+            return new MonitorProperties(Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(monitoringStatus), Core.Optional.ToNullable(marketplaceSubscriptionStatus), datadogOrganizationProperties.Value, userInfo.Value, Core.Optional.ToNullable(liftrResourceCategory), Core.Optional.ToNullable(liftrResourcePreference));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of MapperAttributeMapping. </summary>
         public MapperAttributeMapping()
         {
-            AttributeReferences = new ChangeTrackingList<MapperAttributeReference>();
+            AttributeReferences = new Core.ChangeTrackingList<MapperAttributeReference>();
         }
 
         /// <summary> Initializes a new instance of MapperAttributeMapping. </summary>

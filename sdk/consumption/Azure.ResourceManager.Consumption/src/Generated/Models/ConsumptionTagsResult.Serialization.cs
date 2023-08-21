@@ -13,19 +13,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionTagsResult : IUtf8JsonSerializable
+    public partial class ConsumptionTagsResult : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();
@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            Core.Optional<ETag> eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<ConsumptionTag>> tags = default;
-            Optional<string> nextLink = default;
-            Optional<string> previousLink = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IList<ConsumptionTag>> tags = default;
+            Core.Optional<string> nextLink = default;
+            Core.Optional<string> previousLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ConsumptionTagsResult(id, name, type, systemData.Value, Optional.ToList(tags), nextLink.Value, previousLink.Value, Optional.ToNullable(eTag));
+            return new ConsumptionTagsResult(id, name, type, systemData.Value, Core.Optional.ToList(tags), nextLink.Value, previousLink.Value, Core.Optional.ToNullable(eTag));
         }
     }
 }

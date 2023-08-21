@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class GroupCallOutput : IUtf8JsonSerializable
+    public partial class GroupCallOutput : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);

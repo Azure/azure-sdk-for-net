@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = await _roleAssignmentResourceFormatRoleAssignmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, assignmentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CustomerInsightsArmOperation<RoleAssignmentResourceFormatResource>(new RoleAssignmentResourceFormatOperationSource(Client), _roleAssignmentResourceFormatRoleAssignmentsClientDiagnostics, Pipeline, _roleAssignmentResourceFormatRoleAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, assignmentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CustomerInsightsArmOperation<RoleAssignmentResourceFormatResource>(new RoleAssignmentResourceFormatOperationSource(Client), _roleAssignmentResourceFormatRoleAssignmentsClientDiagnostics, Pipeline, _roleAssignmentResourceFormatRoleAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, assignmentName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = _roleAssignmentResourceFormatRoleAssignmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, assignmentName, data, cancellationToken);
-                var operation = new CustomerInsightsArmOperation<RoleAssignmentResourceFormatResource>(new RoleAssignmentResourceFormatOperationSource(Client), _roleAssignmentResourceFormatRoleAssignmentsClientDiagnostics, Pipeline, _roleAssignmentResourceFormatRoleAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, assignmentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CustomerInsightsArmOperation<RoleAssignmentResourceFormatResource>(new RoleAssignmentResourceFormatOperationSource(Client), _roleAssignmentResourceFormatRoleAssignmentsClientDiagnostics, Pipeline, _roleAssignmentResourceFormatRoleAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, assignmentName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentResourceFormatRoleAssignmentsRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleAssignmentResourceFormatRoleAssignmentsRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentResourceFormatResource(Client, RoleAssignmentResourceFormatData.DeserializeRoleAssignmentResourceFormatData(e)), _roleAssignmentResourceFormatRoleAssignmentsClientDiagnostics, Pipeline, "RoleAssignmentResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentResourceFormatResource(Client, RoleAssignmentResourceFormatData.DeserializeRoleAssignmentResourceFormatData(e)), _roleAssignmentResourceFormatRoleAssignmentsClientDiagnostics, Pipeline, "RoleAssignmentResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentResourceFormatRoleAssignmentsRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleAssignmentResourceFormatRoleAssignmentsRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentResourceFormatResource(Client, RoleAssignmentResourceFormatData.DeserializeRoleAssignmentResourceFormatData(e)), _roleAssignmentResourceFormatRoleAssignmentsClientDiagnostics, Pipeline, "RoleAssignmentResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentResourceFormatResource(Client, RoleAssignmentResourceFormatData.DeserializeRoleAssignmentResourceFormatData(e)), _roleAssignmentResourceFormatRoleAssignmentsClientDiagnostics, Pipeline, "RoleAssignmentResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class BenefitUtilizationSummariesContent : IUtf8JsonSerializable
+    public partial class BenefitUtilizationSummariesContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BillingAccountId))
+            if (Core.Optional.IsDefined(BillingAccountId))
             {
                 writer.WritePropertyName("billingAccountId"u8);
                 writer.WriteStringValue(BillingAccountId);
             }
-            if (Optional.IsDefined(BillingProfileId))
+            if (Core.Optional.IsDefined(BillingProfileId))
             {
                 writer.WritePropertyName("billingProfileId"u8);
                 writer.WriteStringValue(BillingProfileId);
             }
-            if (Optional.IsDefined(BenefitOrderId))
+            if (Core.Optional.IsDefined(BenefitOrderId))
             {
                 writer.WritePropertyName("benefitOrderId"u8);
                 writer.WriteStringValue(BenefitOrderId);
             }
-            if (Optional.IsDefined(BenefitId))
+            if (Core.Optional.IsDefined(BenefitId))
             {
                 writer.WritePropertyName("benefitId"u8);
                 writer.WriteStringValue(BenefitId);
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             writer.WriteStringValue(StartOn, "O");
             writer.WritePropertyName("endDate"u8);
             writer.WriteStringValue(EndOn, "O");
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
@@ -56,14 +56,14 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<string> billingAccountId = default;
-            Optional<string> billingProfileId = default;
-            Optional<string> benefitOrderId = default;
-            Optional<string> benefitId = default;
+            Core.Optional<string> billingAccountId = default;
+            Core.Optional<string> billingProfileId = default;
+            Core.Optional<string> benefitOrderId = default;
+            Core.Optional<string> benefitId = default;
             BenefitRecommendationUsageGrain grain = default;
             DateTimeOffset startDate = default;
             DateTimeOffset endDate = default;
-            Optional<BillingAccountBenefitKind> kind = default;
+            Core.Optional<BillingAccountBenefitKind> kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("billingAccountId"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new BenefitUtilizationSummariesContent(billingAccountId.Value, billingProfileId.Value, benefitOrderId.Value, benefitId.Value, grain, startDate, endDate, Optional.ToNullable(kind));
+            return new BenefitUtilizationSummariesContent(billingAccountId.Value, billingProfileId.Value, benefitOrderId.Value, benefitId.Value, grain, startDate, endDate, Core.Optional.ToNullable(kind));
         }
     }
 }

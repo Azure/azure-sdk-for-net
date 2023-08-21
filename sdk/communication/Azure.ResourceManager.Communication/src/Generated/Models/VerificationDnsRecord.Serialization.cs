@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<string> name = default;
-            Optional<string> value = default;
-            Optional<int> ttl = default;
+            Core.Optional<string> type = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> value = default;
+            Core.Optional<int> ttl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Communication.Models
                     continue;
                 }
             }
-            return new VerificationDnsRecord(type.Value, name.Value, value.Value, Optional.ToNullable(ttl));
+            return new VerificationDnsRecord(type.Value, name.Value, value.Value, Core.Optional.ToNullable(ttl));
         }
     }
 }

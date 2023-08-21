@@ -11,47 +11,47 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    public partial class DatadogAgreementProperties : IUtf8JsonSerializable
+    public partial class DatadogAgreementProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Publisher))
+            if (Core.Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Optional.IsDefined(Product))
+            if (Core.Optional.IsDefined(Product))
             {
                 writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
-            if (Optional.IsDefined(Plan))
+            if (Core.Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 writer.WriteStringValue(Plan);
             }
-            if (Optional.IsDefined(LicenseTextLink))
+            if (Core.Optional.IsDefined(LicenseTextLink))
             {
                 writer.WritePropertyName("licenseTextLink"u8);
                 writer.WriteStringValue(LicenseTextLink);
             }
-            if (Optional.IsDefined(PrivacyPolicyLink))
+            if (Core.Optional.IsDefined(PrivacyPolicyLink))
             {
                 writer.WritePropertyName("privacyPolicyLink"u8);
                 writer.WriteStringValue(PrivacyPolicyLink);
             }
-            if (Optional.IsDefined(RetrieveDatetime))
+            if (Core.Optional.IsDefined(RetrieveDatetime))
             {
                 writer.WritePropertyName("retrieveDatetime"u8);
                 writer.WriteStringValue(RetrieveDatetime.Value, "O");
             }
-            if (Optional.IsDefined(Signature))
+            if (Core.Optional.IsDefined(Signature))
             {
                 writer.WritePropertyName("signature"u8);
                 writer.WriteStringValue(Signature);
             }
-            if (Optional.IsDefined(Accepted))
+            if (Core.Optional.IsDefined(Accepted))
             {
                 writer.WritePropertyName("accepted"u8);
                 writer.WriteBooleanValue(Accepted.Value);
@@ -65,14 +65,14 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<string> publisher = default;
-            Optional<string> product = default;
-            Optional<string> plan = default;
-            Optional<string> licenseTextLink = default;
-            Optional<string> privacyPolicyLink = default;
-            Optional<DateTimeOffset> retrieveDatetime = default;
-            Optional<string> signature = default;
-            Optional<bool> accepted = default;
+            Core.Optional<string> publisher = default;
+            Core.Optional<string> product = default;
+            Core.Optional<string> plan = default;
+            Core.Optional<string> licenseTextLink = default;
+            Core.Optional<string> privacyPolicyLink = default;
+            Core.Optional<DateTimeOffset> retrieveDatetime = default;
+            Core.Optional<string> signature = default;
+            Core.Optional<bool> accepted = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publisher"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     continue;
                 }
             }
-            return new DatadogAgreementProperties(publisher.Value, product.Value, plan.Value, licenseTextLink.Value, privacyPolicyLink.Value, Optional.ToNullable(retrieveDatetime), signature.Value, Optional.ToNullable(accepted));
+            return new DatadogAgreementProperties(publisher.Value, product.Value, plan.Value, licenseTextLink.Value, privacyPolicyLink.Value, Core.Optional.ToNullable(retrieveDatetime), signature.Value, Core.Optional.ToNullable(accepted));
         }
     }
 }

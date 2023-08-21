@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IReadOnlyList<string> script = default;
-            Optional<IReadOnlyList<RunCommandParameterDefinition>> parameters = default;
+            Core.Optional<IReadOnlyList<RunCommandParameterDefinition>> parameters = default;
             string schema = default;
             string id = default;
             SupportedOperatingSystemType osType = default;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new RunCommandDocument(schema, id, osType, label, description, script, Optional.ToList(parameters));
+            return new RunCommandDocument(schema, id, osType, label, description, script, Core.Optional.ToList(parameters));
         }
     }
 }

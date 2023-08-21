@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> diskSerialNumber = default;
-            Optional<string> bitLockerKey = default;
+            Core.Optional<string> diskSerialNumber = default;
+            Core.Optional<string> bitLockerKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskSerialNumber"u8))

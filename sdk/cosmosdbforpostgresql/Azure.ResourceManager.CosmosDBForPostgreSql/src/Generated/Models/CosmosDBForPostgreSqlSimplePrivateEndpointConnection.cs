@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <summary> Initializes a new instance of CosmosDBForPostgreSqlSimplePrivateEndpointConnection. </summary>
         public CosmosDBForPostgreSqlSimplePrivateEndpointConnection()
         {
-            GroupIds = new ChangeTrackingList<string>();
+            GroupIds = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of CosmosDBForPostgreSqlSimplePrivateEndpointConnection. </summary>

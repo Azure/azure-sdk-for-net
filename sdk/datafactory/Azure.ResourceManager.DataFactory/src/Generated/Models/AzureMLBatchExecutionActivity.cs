@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            GlobalParameters = new ChangeTrackingDictionary<string, BinaryData>();
-            WebServiceOutputs = new ChangeTrackingDictionary<string, AzureMLWebServiceFile>();
-            WebServiceInputs = new ChangeTrackingDictionary<string, AzureMLWebServiceFile>();
+            GlobalParameters = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            WebServiceOutputs = new Core.ChangeTrackingDictionary<string, AzureMLWebServiceFile>();
+            WebServiceInputs = new Core.ChangeTrackingDictionary<string, AzureMLWebServiceFile>();
             ActivityType = "AzureMLBatchExecution";
         }
 

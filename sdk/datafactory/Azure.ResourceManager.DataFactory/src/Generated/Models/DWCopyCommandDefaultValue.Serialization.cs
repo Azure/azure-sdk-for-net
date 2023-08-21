@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DWCopyCommandDefaultValue : IUtf8JsonSerializable
+    public partial class DWCopyCommandDefaultValue : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ColumnName))
+            if (Core.Optional.IsDefined(ColumnName))
             {
                 writer.WritePropertyName("columnName"u8);
 #if NET6_0_OR_GREATER
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(ColumnName.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(DefaultValue))
+            if (Core.Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
 #if NET6_0_OR_GREATER
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<BinaryData> columnName = default;
-            Optional<BinaryData> defaultValue = default;
+            Core.Optional<BinaryData> columnName = default;
+            Core.Optional<BinaryData> defaultValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("columnName"u8))

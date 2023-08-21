@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <summary> Initializes a new instance of HubListResult. </summary>
         internal HubListResult()
         {
-            Value = new ChangeTrackingList<HubData>();
+            Value = new Core.ChangeTrackingList<HubData>();
         }
 
         /// <summary> Initializes a new instance of HubListResult. </summary>

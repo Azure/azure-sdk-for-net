@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryDataPlaneUserAccessPolicy> policy = default;
-            Optional<string> accessToken = default;
-            Optional<Uri> dataPlaneUrl = default;
+            Core.Optional<DataFactoryDataPlaneUserAccessPolicy> policy = default;
+            Core.Optional<string> accessToken = default;
+            Core.Optional<Uri> dataPlaneUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policy"u8))

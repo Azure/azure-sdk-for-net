@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineScaleSetOSProfile. </summary>
         public VirtualMachineScaleSetOSProfile()
         {
-            Secrets = new ChangeTrackingList<VaultSecretGroup>();
+            Secrets = new Core.ChangeTrackingList<VaultSecretGroup>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetOSProfile. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of ConsumptionBudgetFilter. </summary>
         public ConsumptionBudgetFilter()
         {
-            And = new ChangeTrackingList<BudgetFilterProperties>();
+            And = new Core.ChangeTrackingList<BudgetFilterProperties>();
         }
 
         /// <summary> Initializes a new instance of ConsumptionBudgetFilter. </summary>

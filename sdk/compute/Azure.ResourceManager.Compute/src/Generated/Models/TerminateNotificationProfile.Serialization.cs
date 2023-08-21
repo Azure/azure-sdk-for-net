@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class TerminateNotificationProfile : IUtf8JsonSerializable
+    public partial class TerminateNotificationProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(NotBeforeTimeout))
+            if (Core.Optional.IsDefined(NotBeforeTimeout))
             {
                 writer.WritePropertyName("notBeforeTimeout"u8);
                 writer.WriteStringValue(NotBeforeTimeout);
             }
-            if (Optional.IsDefined(Enable))
+            if (Core.Optional.IsDefined(Enable))
             {
                 writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(Enable.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> notBeforeTimeout = default;
-            Optional<bool> enable = default;
+            Core.Optional<string> notBeforeTimeout = default;
+            Core.Optional<bool> enable = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("notBeforeTimeout"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new TerminateNotificationProfile(notBeforeTimeout.Value, Optional.ToNullable(enable));
+            return new TerminateNotificationProfile(notBeforeTimeout.Value, Core.Optional.ToNullable(enable));
         }
     }
 }

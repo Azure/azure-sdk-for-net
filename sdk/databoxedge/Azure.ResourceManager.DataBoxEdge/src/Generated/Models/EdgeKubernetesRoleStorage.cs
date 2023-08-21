@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of EdgeKubernetesRoleStorage. </summary>
         public EdgeKubernetesRoleStorage()
         {
-            StorageClasses = new ChangeTrackingList<EdgeKubernetesRoleStorageClassInfo>();
-            Endpoints = new ChangeTrackingList<DataBoxEdgeMountPointMap>();
+            StorageClasses = new Core.ChangeTrackingList<EdgeKubernetesRoleStorageClassInfo>();
+            Endpoints = new Core.ChangeTrackingList<DataBoxEdgeMountPointMap>();
         }
 
         /// <summary> Initializes a new instance of EdgeKubernetesRoleStorage. </summary>

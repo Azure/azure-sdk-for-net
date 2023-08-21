@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<Uri> uploadUrl = default;
-            Optional<string> relativePath = default;
+            Core.Optional<Uri> uploadUrl = default;
+            Core.Optional<string> relativePath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uploadUrl"u8))

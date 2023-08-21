@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of DataBoxDiskJobSecrets. </summary>
         internal DataBoxDiskJobSecrets()
         {
-            DiskSecrets = new ChangeTrackingList<DataBoxDiskSecret>();
+            DiskSecrets = new Core.ChangeTrackingList<DataBoxDiskSecret>();
             JobSecretsType = DataBoxOrderType.DataBoxDisk;
         }
 

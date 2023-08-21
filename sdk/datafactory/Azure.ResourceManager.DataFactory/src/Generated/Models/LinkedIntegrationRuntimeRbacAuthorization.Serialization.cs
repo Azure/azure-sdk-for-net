@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class LinkedIntegrationRuntimeRbacAuthorization : IUtf8JsonSerializable
+    public partial class LinkedIntegrationRuntimeRbacAuthorization : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
-            if (Optional.IsDefined(Credential))
+            if (Core.Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential);
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             ResourceIdentifier resourceId = default;
-            Optional<DataFactoryCredentialReference> credential = default;
+            Core.Optional<DataFactoryCredentialReference> credential = default;
             string authorizationType = default;
             foreach (var property in element.EnumerateObject())
             {

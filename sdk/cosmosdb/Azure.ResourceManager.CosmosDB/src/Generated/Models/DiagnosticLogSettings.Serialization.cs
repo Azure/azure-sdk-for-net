@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    internal partial class DiagnosticLogSettings : IUtf8JsonSerializable
+    internal partial class DiagnosticLogSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableFullTextQuery))
+            if (Core.Optional.IsDefined(EnableFullTextQuery))
             {
                 writer.WritePropertyName("enableFullTextQuery"u8);
                 writer.WriteStringValue(EnableFullTextQuery.Value.ToSerialString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<EnableFullTextQuery> enableFullTextQuery = default;
+            Core.Optional<EnableFullTextQuery> enableFullTextQuery = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableFullTextQuery"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new DiagnosticLogSettings(Optional.ToNullable(enableFullTextQuery));
+            return new DiagnosticLogSettings(Core.Optional.ToNullable(enableFullTextQuery));
         }
     }
 }

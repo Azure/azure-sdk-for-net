@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppHttpScaleRule. </summary>
         public ContainerAppHttpScaleRule()
         {
-            Metadata = new ChangeTrackingDictionary<string, string>();
-            Auth = new ChangeTrackingList<ContainerAppScaleRuleAuth>();
+            Metadata = new Core.ChangeTrackingDictionary<string, string>();
+            Auth = new Core.ChangeTrackingList<ContainerAppScaleRuleAuth>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppHttpScaleRule. </summary>

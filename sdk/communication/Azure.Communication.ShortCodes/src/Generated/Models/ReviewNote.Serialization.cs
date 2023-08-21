@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
 {
-    public partial class ReviewNote : IUtf8JsonSerializable
+    public partial class ReviewNote : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Message))
+            if (Core.Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(Date))
+            if (Core.Optional.IsDefined(Date))
             {
                 writer.WritePropertyName("date"u8);
                 writer.WriteStringValue(Date.Value, "O");
@@ -35,8 +35,8 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<string> message = default;
-            Optional<DateTimeOffset> date = default;
+            Core.Optional<string> message = default;
+            Core.Optional<DateTimeOffset> date = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -54,7 +54,7 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new ReviewNote(message.Value, Optional.ToNullable(date));
+            return new ReviewNote(message.Value, Core.Optional.ToNullable(date));
         }
     }
 }

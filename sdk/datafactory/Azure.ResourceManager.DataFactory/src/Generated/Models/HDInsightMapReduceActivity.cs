@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(className, nameof(className));
             Argument.AssertNotNull(jarFilePath, nameof(jarFilePath));
 
-            StorageLinkedServices = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
-            Arguments = new ChangeTrackingList<BinaryData>();
+            StorageLinkedServices = new Core.ChangeTrackingList<DataFactoryLinkedServiceReference>();
+            Arguments = new Core.ChangeTrackingList<BinaryData>();
             ClassName = className;
             JarFilePath = jarFilePath;
-            JarLibs = new ChangeTrackingList<BinaryData>();
-            Defines = new ChangeTrackingDictionary<string, BinaryData>();
+            JarLibs = new Core.ChangeTrackingList<BinaryData>();
+            Defines = new Core.ChangeTrackingDictionary<string, BinaryData>();
             ActivityType = "HDInsightMapReduce";
         }
 

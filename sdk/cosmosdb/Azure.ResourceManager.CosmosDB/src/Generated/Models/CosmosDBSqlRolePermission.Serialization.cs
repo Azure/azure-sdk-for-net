@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBSqlRolePermission : IUtf8JsonSerializable
+    public partial class CosmosDBSqlRolePermission : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DataActions))
+            if (Core.Optional.IsCollectionDefined(DataActions))
             {
                 writer.WritePropertyName("dataActions"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NotDataActions))
+            if (Core.Optional.IsCollectionDefined(NotDataActions))
             {
                 writer.WritePropertyName("notDataActions"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IList<string>> dataActions = default;
-            Optional<IList<string>> notDataActions = default;
+            Core.Optional<IList<string>> dataActions = default;
+            Core.Optional<IList<string>> notDataActions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataActions"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CosmosDBSqlRolePermission(Optional.ToList(dataActions), Optional.ToList(notDataActions));
+            return new CosmosDBSqlRolePermission(Core.Optional.ToList(dataActions), Core.Optional.ToList(notDataActions));
         }
     }
 }

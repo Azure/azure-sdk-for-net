@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Initializes a new instance of ContainerGroupListResult. </summary>
         internal ContainerGroupListResult()
         {
-            Value = new ChangeTrackingList<ContainerGroupData>();
+            Value = new Core.ChangeTrackingList<ContainerGroupData>();
         }
 
         /// <summary> Initializes a new instance of ContainerGroupListResult. </summary>

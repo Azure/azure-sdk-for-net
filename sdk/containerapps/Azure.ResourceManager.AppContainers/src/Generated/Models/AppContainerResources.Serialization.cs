@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class AppContainerResources : IUtf8JsonSerializable
+    public partial class AppContainerResources : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Cpu))
+            if (Core.Optional.IsDefined(Cpu))
             {
                 writer.WritePropertyName("cpu"u8);
                 writer.WriteNumberValue(Cpu.Value);
             }
-            if (Optional.IsDefined(Memory))
+            if (Core.Optional.IsDefined(Memory))
             {
                 writer.WritePropertyName("memory"u8);
                 writer.WriteStringValue(Memory);
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<double> cpu = default;
-            Optional<string> memory = default;
-            Optional<string> ephemeralStorage = default;
+            Core.Optional<double> cpu = default;
+            Core.Optional<string> memory = default;
+            Core.Optional<string> ephemeralStorage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cpu"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new AppContainerResources(Optional.ToNullable(cpu), memory.Value, ephemeralStorage.Value);
+            return new AppContainerResources(Core.Optional.ToNullable(cpu), memory.Value, ephemeralStorage.Value);
         }
     }
 }

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class WinRMConfiguration : IUtf8JsonSerializable
+    internal partial class WinRMConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Listeners))
+            if (Core.Optional.IsCollectionDefined(Listeners))
             {
                 writer.WritePropertyName("listeners"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<WinRMListener>> listeners = default;
+            Core.Optional<IList<WinRMListener>> listeners = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("listeners"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new WinRMConfiguration(Optional.ToList(listeners));
+            return new WinRMConfiguration(Core.Optional.ToList(listeners));
         }
     }
 }

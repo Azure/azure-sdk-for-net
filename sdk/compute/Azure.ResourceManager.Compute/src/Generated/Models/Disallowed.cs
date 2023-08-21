@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of Disallowed. </summary>
         public Disallowed()
         {
-            DiskTypes = new ChangeTrackingList<string>();
+            DiskTypes = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of Disallowed. </summary>

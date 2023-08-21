@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class AsymmetricEncryptedSecret : IUtf8JsonSerializable
+    public partial class AsymmetricEncryptedSecret : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            if (Optional.IsDefined(EncryptionCertThumbprint))
+            if (Core.Optional.IsDefined(EncryptionCertThumbprint))
             {
                 writer.WritePropertyName("encryptionCertThumbprint"u8);
                 writer.WriteStringValue(EncryptionCertThumbprint);
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 return null;
             }
             string value = default;
-            Optional<string> encryptionCertThumbprint = default;
+            Core.Optional<string> encryptionCertThumbprint = default;
             DataBoxEdgeEncryptionAlgorithm encryptionAlgorithm = default;
             foreach (var property in element.EnumerateObject())
             {

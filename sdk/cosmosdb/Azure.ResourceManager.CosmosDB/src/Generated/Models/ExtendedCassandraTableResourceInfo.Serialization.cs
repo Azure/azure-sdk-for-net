@@ -11,24 +11,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ExtendedCassandraTableResourceInfo : IUtf8JsonSerializable
+    public partial class ExtendedCassandraTableResourceInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(TableName);
-            if (Optional.IsDefined(DefaultTtl))
+            if (Core.Optional.IsDefined(DefaultTtl))
             {
                 writer.WritePropertyName("defaultTtl"u8);
                 writer.WriteNumberValue(DefaultTtl.Value);
             }
-            if (Optional.IsDefined(Schema))
+            if (Core.Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 writer.WriteObjectValue(Schema);
             }
-            if (Optional.IsDefined(AnalyticalStorageTtl))
+            if (Core.Optional.IsDefined(AnalyticalStorageTtl))
             {
                 writer.WritePropertyName("analyticalStorageTtl"u8);
                 writer.WriteNumberValue(AnalyticalStorageTtl.Value);
@@ -42,13 +42,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> rid = default;
-            Optional<float> ts = default;
-            Optional<ETag> etag = default;
+            Core.Optional<string> rid = default;
+            Core.Optional<float> ts = default;
+            Core.Optional<ETag> etag = default;
             string id = default;
-            Optional<int> defaultTtl = default;
-            Optional<CassandraSchema> schema = default;
-            Optional<int> analyticalStorageTtl = default;
+            Core.Optional<int> defaultTtl = default;
+            Core.Optional<CassandraSchema> schema = default;
+            Core.Optional<int> analyticalStorageTtl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_rid"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ExtendedCassandraTableResourceInfo(id, Optional.ToNullable(defaultTtl), schema.Value, Optional.ToNullable(analyticalStorageTtl), rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            return new ExtendedCassandraTableResourceInfo(id, Core.Optional.ToNullable(defaultTtl), schema.Value, Core.Optional.ToNullable(analyticalStorageTtl), rid.Value, Core.Optional.ToNullable(ts), Core.Optional.ToNullable(etag));
         }
     }
 }

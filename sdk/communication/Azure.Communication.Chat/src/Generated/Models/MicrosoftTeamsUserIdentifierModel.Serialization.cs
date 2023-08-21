@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.Communication
 {
-    internal partial class MicrosoftTeamsUserIdentifierModel : IUtf8JsonSerializable
+    internal partial class MicrosoftTeamsUserIdentifierModel : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("userId"u8);
             writer.WriteStringValue(UserId);
-            if (Optional.IsDefined(IsAnonymous))
+            if (Core.Optional.IsDefined(IsAnonymous))
             {
                 writer.WritePropertyName("isAnonymous"u8);
                 writer.WriteBooleanValue(IsAnonymous.Value);
             }
-            if (Optional.IsDefined(Cloud))
+            if (Core.Optional.IsDefined(Cloud))
             {
                 writer.WritePropertyName("cloud"u8);
                 writer.WriteStringValue(Cloud.Value.ToString());
@@ -37,8 +37,8 @@ namespace Azure.Communication
                 return null;
             }
             string userId = default;
-            Optional<bool> isAnonymous = default;
-            Optional<CommunicationCloudEnvironmentModel> cloud = default;
+            Core.Optional<bool> isAnonymous = default;
+            Core.Optional<CommunicationCloudEnvironmentModel> cloud = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userId"u8))
@@ -65,7 +65,7 @@ namespace Azure.Communication
                     continue;
                 }
             }
-            return new MicrosoftTeamsUserIdentifierModel(userId, Optional.ToNullable(isAnonymous), Optional.ToNullable(cloud));
+            return new MicrosoftTeamsUserIdentifierModel(userId, Core.Optional.ToNullable(isAnonymous), Core.Optional.ToNullable(cloud));
         }
     }
 }

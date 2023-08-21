@@ -21,8 +21,8 @@ namespace Azure.Communication.JobRouter.Models
             }
             string queueId = default;
             int length = default;
-            Optional<IReadOnlyDictionary<string, double>> estimatedWaitTimeMinutes = default;
-            Optional<double> longestJobWaitTimeMinutes = default;
+            Core.Optional<IReadOnlyDictionary<string, double>> estimatedWaitTimeMinutes = default;
+            Core.Optional<double> longestJobWaitTimeMinutes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queueId"u8))
@@ -59,7 +59,7 @@ namespace Azure.Communication.JobRouter.Models
                     continue;
                 }
             }
-            return new RouterQueueStatistics(queueId, length, Optional.ToDictionary(estimatedWaitTimeMinutes), Optional.ToNullable(longestJobWaitTimeMinutes));
+            return new RouterQueueStatistics(queueId, length, Core.Optional.ToDictionary(estimatedWaitTimeMinutes), Core.Optional.ToNullable(longestJobWaitTimeMinutes));
         }
     }
 }

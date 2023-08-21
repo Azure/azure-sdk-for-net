@@ -13,17 +13,17 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureDatabricksDeltaLakeExportCommand : IUtf8JsonSerializable
+    public partial class AzureDatabricksDeltaLakeExportCommand : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DateFormat))
+            if (Core.Optional.IsDefined(DateFormat))
             {
                 writer.WritePropertyName("dateFormat"u8);
                 JsonSerializer.Serialize(writer, DateFormat);
             }
-            if (Optional.IsDefined(TimestampFormat))
+            if (Core.Optional.IsDefined(TimestampFormat))
             {
                 writer.WritePropertyName("timestampFormat"u8);
                 JsonSerializer.Serialize(writer, TimestampFormat);
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> dateFormat = default;
-            Optional<DataFactoryElement<string>> timestampFormat = default;
+            Core.Optional<DataFactoryElement<string>> dateFormat = default;
+            Core.Optional<DataFactoryElement<string>> timestampFormat = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();

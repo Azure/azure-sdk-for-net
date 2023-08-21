@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    internal partial class PhysicalPartitionThroughputInfoResultPropertiesResource : IUtf8JsonSerializable
+    internal partial class PhysicalPartitionThroughputInfoResultPropertiesResource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PhysicalPartitionThroughputInfo))
+            if (Core.Optional.IsCollectionDefined(PhysicalPartitionThroughputInfo))
             {
                 writer.WritePropertyName("physicalPartitionThroughputInfo"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IList<PhysicalPartitionThroughputInfoResource>> physicalPartitionThroughputInfo = default;
+            Core.Optional<IList<PhysicalPartitionThroughputInfoResource>> physicalPartitionThroughputInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("physicalPartitionThroughputInfo"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new PhysicalPartitionThroughputInfoResultPropertiesResource(Optional.ToList(physicalPartitionThroughputInfo));
+            return new PhysicalPartitionThroughputInfoResultPropertiesResource(Core.Optional.ToList(physicalPartitionThroughputInfo));
         }
     }
 }

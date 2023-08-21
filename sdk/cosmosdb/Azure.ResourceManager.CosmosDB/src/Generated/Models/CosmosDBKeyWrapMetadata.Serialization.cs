@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBKeyWrapMetadata : IUtf8JsonSerializable
+    public partial class CosmosDBKeyWrapMetadata : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(CosmosDBKeyWrapMetadataType))
+            if (Core.Optional.IsDefined(CosmosDBKeyWrapMetadataType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(CosmosDBKeyWrapMetadataType);
             }
-            if (Optional.IsDefined(Value))
+            if (Core.Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(Algorithm))
+            if (Core.Optional.IsDefined(Algorithm))
             {
                 writer.WritePropertyName("algorithm"u8);
                 writer.WriteStringValue(Algorithm);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> value = default;
-            Optional<string> algorithm = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> type = default;
+            Core.Optional<string> value = default;
+            Core.Optional<string> algorithm = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

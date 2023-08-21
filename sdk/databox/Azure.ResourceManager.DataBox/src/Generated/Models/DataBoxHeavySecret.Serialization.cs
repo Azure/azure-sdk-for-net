@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> deviceSerialNumber = default;
-            Optional<string> devicePassword = default;
-            Optional<IReadOnlyList<ApplianceNetworkConfiguration>> networkConfigurations = default;
-            Optional<string> encodedValidationCertPubKey = default;
-            Optional<IReadOnlyList<DataBoxAccountCredentialDetails>> accountCredentialDetails = default;
+            Core.Optional<string> deviceSerialNumber = default;
+            Core.Optional<string> devicePassword = default;
+            Core.Optional<IReadOnlyList<ApplianceNetworkConfiguration>> networkConfigurations = default;
+            Core.Optional<string> encodedValidationCertPubKey = default;
+            Core.Optional<IReadOnlyList<DataBoxAccountCredentialDetails>> accountCredentialDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceSerialNumber"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataBoxHeavySecret(deviceSerialNumber.Value, devicePassword.Value, Optional.ToList(networkConfigurations), encodedValidationCertPubKey.Value, Optional.ToList(accountCredentialDetails));
+            return new DataBoxHeavySecret(deviceSerialNumber.Value, devicePassword.Value, Core.Optional.ToList(networkConfigurations), encodedValidationCertPubKey.Value, Core.Optional.ToList(accountCredentialDetails));
         }
     }
 }

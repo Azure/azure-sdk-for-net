@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeVmMemory : IUtf8JsonSerializable
+    public partial class DataBoxEdgeVmMemory : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartupMemoryInMB))
+            if (Core.Optional.IsDefined(StartupMemoryInMB))
             {
                 writer.WritePropertyName("startupMemoryMB"u8);
                 writer.WriteNumberValue(StartupMemoryInMB.Value);
             }
-            if (Optional.IsDefined(CurrentMemoryUsageInMB))
+            if (Core.Optional.IsDefined(CurrentMemoryUsageInMB))
             {
                 writer.WritePropertyName("currentMemoryUsageMB"u8);
                 writer.WriteNumberValue(CurrentMemoryUsageInMB.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<long> startupMemoryMB = default;
-            Optional<long> currentMemoryUsageMB = default;
+            Core.Optional<long> startupMemoryMB = default;
+            Core.Optional<long> currentMemoryUsageMB = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startupMemoryMB"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new DataBoxEdgeVmMemory(Optional.ToNullable(startupMemoryMB), Optional.ToNullable(currentMemoryUsageMB));
+            return new DataBoxEdgeVmMemory(Core.Optional.ToNullable(startupMemoryMB), Core.Optional.ToNullable(currentMemoryUsageMB));
         }
     }
 }

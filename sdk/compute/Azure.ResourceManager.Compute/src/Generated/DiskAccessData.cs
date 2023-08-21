@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location. </param>
         public DiskAccessData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<ComputePrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new Core.ChangeTrackingList<ComputePrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of DiskAccessData. </summary>

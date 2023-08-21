@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerInstance
 {
-    internal class ContainerGroupOperationSource : IOperationSource<ContainerGroupResource>
+    internal class ContainerGroupOperationSource : Core.IOperationSource<ContainerGroupResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ContainerInstance
             _client = client;
         }
 
-        ContainerGroupResource IOperationSource<ContainerGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ContainerGroupResource Core.IOperationSource<ContainerGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ContainerGroupData.DeserializeContainerGroupData(document.RootElement);
             return new ContainerGroupResource(_client, data);
         }
 
-        async ValueTask<ContainerGroupResource> IOperationSource<ContainerGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ContainerGroupResource> Core.IOperationSource<ContainerGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ContainerGroupData.DeserializeContainerGroupData(document.RootElement);

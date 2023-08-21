@@ -18,8 +18,8 @@ namespace Azure.Communication.JobRouter.Models
             {
                 return null;
             }
-            Optional<RouterQueue> queue = default;
-            Optional<string> etag = default;
+            Core.Optional<RouterQueue> queue = default;
+            Core.Optional<string> etag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queue"u8))

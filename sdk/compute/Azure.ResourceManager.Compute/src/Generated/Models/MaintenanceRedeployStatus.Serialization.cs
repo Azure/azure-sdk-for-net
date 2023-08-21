@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> isCustomerInitiatedMaintenanceAllowed = default;
-            Optional<DateTimeOffset> preMaintenanceWindowStartTime = default;
-            Optional<DateTimeOffset> preMaintenanceWindowEndTime = default;
-            Optional<DateTimeOffset> maintenanceWindowStartTime = default;
-            Optional<DateTimeOffset> maintenanceWindowEndTime = default;
-            Optional<MaintenanceOperationResultCodeType> lastOperationResultCode = default;
-            Optional<string> lastOperationMessage = default;
+            Core.Optional<bool> isCustomerInitiatedMaintenanceAllowed = default;
+            Core.Optional<DateTimeOffset> preMaintenanceWindowStartTime = default;
+            Core.Optional<DateTimeOffset> preMaintenanceWindowEndTime = default;
+            Core.Optional<DateTimeOffset> maintenanceWindowStartTime = default;
+            Core.Optional<DateTimeOffset> maintenanceWindowEndTime = default;
+            Core.Optional<MaintenanceOperationResultCodeType> lastOperationResultCode = default;
+            Core.Optional<string> lastOperationMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isCustomerInitiatedMaintenanceAllowed"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new MaintenanceRedeployStatus(Optional.ToNullable(isCustomerInitiatedMaintenanceAllowed), Optional.ToNullable(preMaintenanceWindowStartTime), Optional.ToNullable(preMaintenanceWindowEndTime), Optional.ToNullable(maintenanceWindowStartTime), Optional.ToNullable(maintenanceWindowEndTime), Optional.ToNullable(lastOperationResultCode), lastOperationMessage.Value);
+            return new MaintenanceRedeployStatus(Core.Optional.ToNullable(isCustomerInitiatedMaintenanceAllowed), Core.Optional.ToNullable(preMaintenanceWindowStartTime), Core.Optional.ToNullable(preMaintenanceWindowEndTime), Core.Optional.ToNullable(maintenanceWindowStartTime), Core.Optional.ToNullable(maintenanceWindowEndTime), Core.Optional.ToNullable(lastOperationResultCode), lastOperationMessage.Value);
         }
     }
 }

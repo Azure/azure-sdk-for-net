@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    internal partial class AnalyticalStorageConfiguration : IUtf8JsonSerializable
+    internal partial class AnalyticalStorageConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SchemaType))
+            if (Core.Optional.IsDefined(SchemaType))
             {
                 writer.WritePropertyName("schemaType"u8);
                 writer.WriteStringValue(SchemaType.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<AnalyticalStorageSchemaType> schemaType = default;
+            Core.Optional<AnalyticalStorageSchemaType> schemaType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaType"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new AnalyticalStorageConfiguration(Optional.ToNullable(schemaType));
+            return new AnalyticalStorageConfiguration(Core.Optional.ToNullable(schemaType));
         }
     }
 }

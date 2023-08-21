@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryBaseImageTrigger : IUtf8JsonSerializable
+    public partial class ContainerRegistryBaseImageTrigger : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("baseImageTriggerType"u8);
             writer.WriteStringValue(BaseImageTriggerType.ToString());
-            if (Optional.IsDefined(UpdateTriggerEndpoint))
+            if (Core.Optional.IsDefined(UpdateTriggerEndpoint))
             {
                 writer.WritePropertyName("updateTriggerEndpoint"u8);
                 writer.WriteStringValue(UpdateTriggerEndpoint);
             }
-            if (Optional.IsDefined(UpdateTriggerPayloadType))
+            if (Core.Optional.IsDefined(UpdateTriggerPayloadType))
             {
                 writer.WritePropertyName("updateTriggerPayloadType"u8);
                 writer.WriteStringValue(UpdateTriggerPayloadType.Value.ToString());
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             ContainerRegistryBaseImageTriggerType baseImageTriggerType = default;
-            Optional<string> updateTriggerEndpoint = default;
-            Optional<ContainerRegistryUpdateTriggerPayloadType> updateTriggerPayloadType = default;
-            Optional<ContainerRegistryTriggerStatus> status = default;
+            Core.Optional<string> updateTriggerEndpoint = default;
+            Core.Optional<ContainerRegistryUpdateTriggerPayloadType> updateTriggerPayloadType = default;
+            Core.Optional<ContainerRegistryTriggerStatus> status = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryBaseImageTrigger(baseImageTriggerType, updateTriggerEndpoint.Value, Optional.ToNullable(updateTriggerPayloadType), Optional.ToNullable(status), name);
+            return new ContainerRegistryBaseImageTrigger(baseImageTriggerType, updateTriggerEndpoint.Value, Core.Optional.ToNullable(updateTriggerPayloadType), Core.Optional.ToNullable(status), name);
         }
     }
 }

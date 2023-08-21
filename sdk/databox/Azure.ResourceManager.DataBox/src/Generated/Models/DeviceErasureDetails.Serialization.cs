@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<DataBoxStageStatus> deviceErasureStatus = default;
-            Optional<string> erasureOrDestructionCertificateSasKey = default;
+            Core.Optional<DataBoxStageStatus> deviceErasureStatus = default;
+            Core.Optional<string> erasureOrDestructionCertificateSasKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceErasureStatus"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DeviceErasureDetails(Optional.ToNullable(deviceErasureStatus), erasureOrDestructionCertificateSasKey.Value);
+            return new DeviceErasureDetails(Core.Optional.ToNullable(deviceErasureStatus), erasureOrDestructionCertificateSasKey.Value);
         }
     }
 }

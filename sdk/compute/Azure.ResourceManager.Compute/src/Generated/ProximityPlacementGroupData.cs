@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location. </param>
         public ProximityPlacementGroupData(AzureLocation location) : base(location)
         {
-            Zones = new ChangeTrackingList<string>();
-            VirtualMachines = new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>();
-            VirtualMachineScaleSets = new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>();
-            AvailabilitySets = new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>();
+            Zones = new Core.ChangeTrackingList<string>();
+            VirtualMachines = new Core.ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>();
+            VirtualMachineScaleSets = new Core.ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>();
+            AvailabilitySets = new Core.ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>();
         }
 
         /// <summary> Initializes a new instance of ProximityPlacementGroupData. </summary>
