@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -23,7 +24,7 @@ namespace Azure.Storage.Blobs.Tests
         private ClientBuilder<BlobServiceClient, BlobClientOptions> ClientBuilder { get; }
 
         public StorageTelemetryTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, RecordedTestMode.Live /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
             ClientBuilder = ClientBuilderExtensions.GetNewBlobsClientBuilder(Tenants, serviceVersion);
         }
@@ -106,6 +107,157 @@ namespace Azure.Storage.Blobs.Tests
                 {
                     TransferOptions = transferOptions
                 });
+        }
+
+        [Test]
+        [LiveOnly]
+        public async Task ClientSideEncryption_OpenWrite(
+#pragma warning disable CS0618 // Type or member is obsolete
+            [Values(ClientSideEncryptionVersion.V2_0, ClientSideEncryptionVersion.V1_0)] ClientSideEncryptionVersion cseVersion,
+#pragma warning restore CS0618 // Type or member is obsolete
+            [Values(true, false)] bool split)
+        {
+            await using DisposingContainer disposingContainer = await ClientBuilder.GetTestContainerAsync();
+
+            AssertMessageContentsPolicy assertionPolicy = new(checkRequest: GetCheckAzFeatureUserAgent(cseVersion))
+            {
+                CheckRequest = true
+            };
+            Specialized.SpecializedBlobClientOptions clientOptions = new()
+            {
+                ClientSideEncryption = new(cseVersion)
+                {
+                    KeyEncryptionKey = this.GetIKeyEncryptionKey(default).Object,
+                    KeyWrapAlgorithm = ClientSideEncryptionTestExtensions.s_algorithmName
+                }
+            };
+            clientOptions.AddPolicy(assertionPolicy, HttpPipelinePosition.BeforeTransport);
+
+            BlobClient encryptedClient = InstrumentClient(new BlobClient(
+                disposingContainer.Container.GetBlobClient(GetNewBlobName()).Uri,
+                ClientBuilder.Tenants.GetNewSharedKeyCredentials(),
+                clientOptions));
+
+            const int dataSize = Constants.KB;
+            int chunkSize = split ? dataSize / 2 : dataSize * 2;
+            Stream writeStream = await encryptedClient.OpenWriteAsync(overwrite: true, new()
+            {
+                BufferSize = chunkSize,
+            });
+            await new MemoryStream(GetRandomBuffer(dataSize)).CopyToAsync(writeStream);
+            await writeStream.FlushAsync();
+        }
+
+        [Test]
+        [LiveOnly]
+        public async Task ClientSideEncryption_DownloadTo(
+#pragma warning disable CS0618 // Type or member is obsolete
+            [Values(ClientSideEncryptionVersion.V2_0, ClientSideEncryptionVersion.V1_0)] ClientSideEncryptionVersion cseVersion)
+#pragma warning restore CS0618 // Type or member is obsolete
+        {
+            const int dataSize = Constants.KB;
+            await using DisposingContainer disposingContainer = await ClientBuilder.GetTestContainerAsync();
+            BlobClient blobClient = disposingContainer.Container.GetBlobClient(GetNewBlobName());
+            await blobClient.UploadAsync(BinaryData.FromBytes(GetRandomBuffer(dataSize)));
+
+            AssertMessageContentsPolicy assertionPolicy = new(checkRequest: GetCheckAzFeatureUserAgent(cseVersion))
+            {
+                CheckRequest = true
+            };
+            Specialized.SpecializedBlobClientOptions clientOptions = new()
+            {
+                ClientSideEncryption = new(cseVersion)
+                {
+                    KeyEncryptionKey = this.GetIKeyEncryptionKey(default).Object,
+                    KeyWrapAlgorithm = ClientSideEncryptionTestExtensions.s_algorithmName
+                }
+            };
+            clientOptions.AddPolicy(assertionPolicy, HttpPipelinePosition.BeforeTransport);
+
+            BlobClient encryptedClient = InstrumentClient(new BlobClient(
+                blobClient.Uri,
+                ClientBuilder.Tenants.GetNewSharedKeyCredentials(),
+                clientOptions));
+
+            // Assertions are in assertionPolicy
+            await encryptedClient.DownloadToAsync(Stream.Null);
+        }
+
+        [Test]
+        [LiveOnly]
+        public async Task ClientSideEncryption_DownloadRange(
+#pragma warning disable CS0618 // Type or member is obsolete
+            [Values(ClientSideEncryptionVersion.V2_0, ClientSideEncryptionVersion.V1_0)] ClientSideEncryptionVersion cseVersion)
+#pragma warning restore CS0618 // Type or member is obsolete
+        {
+            const int dataSize = Constants.KB;
+            await using DisposingContainer disposingContainer = await ClientBuilder.GetTestContainerAsync();
+            BlobClient blobClient = disposingContainer.Container.GetBlobClient(GetNewBlobName());
+            await blobClient.UploadAsync(BinaryData.FromBytes(GetRandomBuffer(dataSize)));
+
+            AssertMessageContentsPolicy assertionPolicy = new(checkRequest: GetCheckAzFeatureUserAgent(cseVersion))
+            {
+                CheckRequest = true
+            };
+            Specialized.SpecializedBlobClientOptions clientOptions = new()
+            {
+                ClientSideEncryption = new(cseVersion)
+                {
+                    KeyEncryptionKey = this.GetIKeyEncryptionKey(default).Object,
+                    KeyWrapAlgorithm = ClientSideEncryptionTestExtensions.s_algorithmName
+                }
+            };
+            clientOptions.AddPolicy(assertionPolicy, HttpPipelinePosition.BeforeTransport);
+
+            BlobClient encryptedClient = InstrumentClient(new BlobClient(
+                blobClient.Uri,
+                ClientBuilder.Tenants.GetNewSharedKeyCredentials(),
+                clientOptions));
+
+            // Assertions are in assertionPolicy
+            await (await encryptedClient.DownloadStreamingAsync()).Value.Content.CopyToAsync(Stream.Null);
+        }
+
+        [Test]
+        [LiveOnly]
+        public async Task ClientSideEncryption_OpenRead(
+#pragma warning disable CS0618 // Type or member is obsolete
+            [Values(ClientSideEncryptionVersion.V2_0, ClientSideEncryptionVersion.V1_0)] ClientSideEncryptionVersion cseVersion,
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            [Values(true, false)] bool split)
+        {
+            const int dataSize = Constants.KB;
+            await using DisposingContainer disposingContainer = await ClientBuilder.GetTestContainerAsync();
+            BlobClient blobClient = disposingContainer.Container.GetBlobClient(GetNewBlobName());
+            await blobClient.UploadAsync(BinaryData.FromBytes(GetRandomBuffer(dataSize)));
+
+            AssertMessageContentsPolicy assertionPolicy = new(checkRequest: GetCheckAzFeatureUserAgent(cseVersion))
+            {
+                CheckRequest = true
+            };
+            Specialized.SpecializedBlobClientOptions clientOptions = new()
+            {
+                ClientSideEncryption = new(cseVersion)
+                {
+                    KeyEncryptionKey = this.GetIKeyEncryptionKey(default).Object,
+                    KeyWrapAlgorithm = ClientSideEncryptionTestExtensions.s_algorithmName
+                }
+            };
+            clientOptions.AddPolicy(assertionPolicy, HttpPipelinePosition.BeforeTransport);
+
+            BlobClient encryptedClient = InstrumentClient(new BlobClient(
+                blobClient.Uri,
+                ClientBuilder.Tenants.GetNewSharedKeyCredentials(),
+                clientOptions));
+
+            // Assertions are in assertionPolicy
+            int chunkSize = split ? dataSize / 2 : dataSize * 2;
+            Stream readStream = await encryptedClient.OpenReadAsync(new Models.BlobOpenReadOptions(false)
+            {
+                BufferSize = chunkSize,
+            });
+            await readStream.CopyToAsync(Stream.Null);
         }
     }
 }
