@@ -65,8 +65,15 @@ namespace Azure.ResourceManager.TestFramework
                         errorList.Add(type.Name);
                     }
                 }
+
+                // Remove the elements to verify there is nothing left in this list
+                if (exceptionList.Contains(type.Name))
+                {
+                    exceptionList = exceptionList.Where(val => val != type.Name).ToArray();
+                }
             }
 
+            Assert.IsEmpty(exceptionList, "InherentCheck exception list have values which is not included in current package, please check: " + string.Join(",", exceptionList));
             Assert.IsEmpty(errorList, "InherentCheck failed with Type: " + string.Join(",", errorList));
         }
     }
