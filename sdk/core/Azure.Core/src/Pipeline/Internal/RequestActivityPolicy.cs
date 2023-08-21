@@ -187,7 +187,7 @@ namespace Azure.Core.Pipeline
 #if NETCOREAPP2_1
             (s_diagnosticSource.IsEnabled() || ActivityExtensions.ActivitySourceHasListeners(s_activitySource));
 #else
-            (s_diagnosticSource.IsEnabled() || (s_activitySource.HasListeners() && ActivityExtensions.SupportsActivitySource));
+            (s_diagnosticSource.IsEnabled() || IsActivitySourceEnabled);
 #endif
 
 #if NETCOREAPP2_1
