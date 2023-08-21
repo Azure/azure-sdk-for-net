@@ -13,9 +13,9 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class BaseAdminRuleData : IUtf8JsonSerializable
+    public partial class BaseAdminRuleData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.Network
                 }
             }
             AdminRuleKind kind = default;
-            Optional<ETag> etag = default;
+            Core.Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new BaseAdminRuleData(id, name, type, systemData.Value, kind, Optional.ToNullable(etag));
+            return new BaseAdminRuleData(id, name, type, systemData.Value, kind, Core.Optional.ToNullable(etag));
         }
     }
 }

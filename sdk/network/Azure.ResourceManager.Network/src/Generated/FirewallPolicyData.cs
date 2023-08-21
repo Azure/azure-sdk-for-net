@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of FirewallPolicyData. </summary>
         public FirewallPolicyData()
         {
-            RuleCollectionGroups = new ChangeTrackingList<WritableSubResource>();
-            Firewalls = new ChangeTrackingList<WritableSubResource>();
-            ChildPolicies = new ChangeTrackingList<WritableSubResource>();
+            RuleCollectionGroups = new Core.ChangeTrackingList<WritableSubResource>();
+            Firewalls = new Core.ChangeTrackingList<WritableSubResource>();
+            ChildPolicies = new Core.ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of FirewallPolicyData. </summary>

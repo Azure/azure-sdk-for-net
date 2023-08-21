@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ActiveBaseSecurityAdminRule. </summary>
         protected ActiveBaseSecurityAdminRule()
         {
-            RuleCollectionAppliesToGroups = new ChangeTrackingList<NetworkManagerSecurityGroupItem>();
-            RuleGroups = new ChangeTrackingList<NetworkConfigurationGroup>();
+            RuleCollectionAppliesToGroups = new Core.ChangeTrackingList<NetworkManagerSecurityGroupItem>();
+            RuleGroups = new Core.ChangeTrackingList<NetworkConfigurationGroup>();
         }
 
         /// <summary> Initializes a new instance of ActiveBaseSecurityAdminRule. </summary>

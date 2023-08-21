@@ -24,8 +24,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Argument.AssertNotNull(exceptions, nameof(exceptions));
 
             Exceptions = exceptions.ToList();
-            Properties = new ChangeTrackingDictionary<string, string>();
-            Measurements = new ChangeTrackingDictionary<string, double>();
+            Properties = new Core.ChangeTrackingDictionary<string, string>();
+            Measurements = new Core.ChangeTrackingDictionary<string, double>();
         }
 
         /// <summary> Exception chain - list of inner exceptions. </summary>

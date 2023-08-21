@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    internal class PaloAltoNetworksFirewallOperationSource : IOperationSource<PaloAltoNetworksFirewallResource>
+    internal class PaloAltoNetworksFirewallOperationSource : Core.IOperationSource<PaloAltoNetworksFirewallResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             _client = client;
         }
 
-        PaloAltoNetworksFirewallResource IOperationSource<PaloAltoNetworksFirewallResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PaloAltoNetworksFirewallResource Core.IOperationSource<PaloAltoNetworksFirewallResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PaloAltoNetworksFirewallData.DeserializePaloAltoNetworksFirewallData(document.RootElement);
             return new PaloAltoNetworksFirewallResource(_client, data);
         }
 
-        async ValueTask<PaloAltoNetworksFirewallResource> IOperationSource<PaloAltoNetworksFirewallResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PaloAltoNetworksFirewallResource> Core.IOperationSource<PaloAltoNetworksFirewallResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PaloAltoNetworksFirewallData.DeserializePaloAltoNetworksFirewallData(document.RootElement);

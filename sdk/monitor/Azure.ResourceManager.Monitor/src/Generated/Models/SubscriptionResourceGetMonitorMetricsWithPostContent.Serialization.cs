@@ -10,67 +10,67 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class SubscriptionResourceGetMonitorMetricsWithPostContent : IUtf8JsonSerializable
+    public partial class SubscriptionResourceGetMonitorMetricsWithPostContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Timespan))
+            if (Core.Optional.IsDefined(Timespan))
             {
                 writer.WritePropertyName("timespan"u8);
                 writer.WriteStringValue(Timespan.Value, "T");
             }
-            if (Optional.IsDefined(Interval))
+            if (Core.Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteStringValue(Interval.Value, "P");
             }
-            if (Optional.IsDefined(MetricNames))
+            if (Core.Optional.IsDefined(MetricNames))
             {
                 writer.WritePropertyName("metricNames"u8);
                 writer.WriteStringValue(MetricNames);
             }
-            if (Optional.IsDefined(Aggregation))
+            if (Core.Optional.IsDefined(Aggregation))
             {
                 writer.WritePropertyName("aggregation"u8);
                 writer.WriteStringValue(Aggregation);
             }
-            if (Optional.IsDefined(Filter))
+            if (Core.Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteStringValue(Filter);
             }
-            if (Optional.IsDefined(Top))
+            if (Core.Optional.IsDefined(Top))
             {
                 writer.WritePropertyName("top"u8);
                 writer.WriteNumberValue(Top.Value);
             }
-            if (Optional.IsDefined(OrderBy))
+            if (Core.Optional.IsDefined(OrderBy))
             {
                 writer.WritePropertyName("orderBy"u8);
                 writer.WriteStringValue(OrderBy);
             }
-            if (Optional.IsDefined(RollUpBy))
+            if (Core.Optional.IsDefined(RollUpBy))
             {
                 writer.WritePropertyName("rollUpBy"u8);
                 writer.WriteStringValue(RollUpBy);
             }
-            if (Optional.IsDefined(ResultType))
+            if (Core.Optional.IsDefined(ResultType))
             {
                 writer.WritePropertyName("resultType"u8);
                 writer.WriteStringValue(ResultType.Value.ToString());
             }
-            if (Optional.IsDefined(MetricNamespace))
+            if (Core.Optional.IsDefined(MetricNamespace))
             {
                 writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
             }
-            if (Optional.IsDefined(AutoAdjustTimegrain))
+            if (Core.Optional.IsDefined(AutoAdjustTimegrain))
             {
                 writer.WritePropertyName("autoAdjustTimegrain"u8);
                 writer.WriteBooleanValue(AutoAdjustTimegrain.Value);
             }
-            if (Optional.IsDefined(ValidateDimensions))
+            if (Core.Optional.IsDefined(ValidateDimensions))
             {
                 writer.WritePropertyName("validateDimensions"u8);
                 writer.WriteBooleanValue(ValidateDimensions.Value);

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Argument.AssertNotNull(canary, nameof(canary));
 
             Canary = canary;
-            ResourceTypeRegistrations = new ChangeTrackingList<ResourceTypeRegistrationData>();
+            ResourceTypeRegistrations = new Core.ChangeTrackingList<ResourceTypeRegistrationData>();
         }
 
         /// <summary> Initializes a new instance of CustomRolloutSpecification. </summary>

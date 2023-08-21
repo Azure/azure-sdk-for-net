@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<string> privateDnsZoneSuffix = default;
+            Core.Optional<string> privateDnsZoneSuffix = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateDnsZoneSuffix"u8))

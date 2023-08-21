@@ -11,26 +11,26 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class UnknownHookInfo : IUtf8JsonSerializable
+    internal partial class UnknownHookInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("hookType"u8);
             writer.WriteStringValue(HookKind.ToString());
             writer.WritePropertyName("hookName"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(InternalExternalLink))
+            if (Core.Optional.IsDefined(InternalExternalLink))
             {
                 writer.WritePropertyName("externalLink"u8);
                 writer.WriteStringValue(InternalExternalLink);
             }
-            if (Optional.IsCollectionDefined(Administrators))
+            if (Core.Optional.IsCollectionDefined(Administrators))
             {
                 writer.WritePropertyName("admins"u8);
                 writer.WriteStartArray();
@@ -50,11 +50,11 @@ namespace Azure.AI.MetricsAdvisor.Models
                 return null;
             }
             NotificationHookKind hookType = "Unknown";
-            Optional<string> hookId = default;
+            Core.Optional<string> hookId = default;
             string hookName = default;
-            Optional<string> description = default;
-            Optional<string> externalLink = default;
-            Optional<IList<string>> admins = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> externalLink = default;
+            Core.Optional<IList<string>> admins = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hookType"u8))
@@ -97,7 +97,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new UnknownHookInfo(hookType, hookId.Value, hookName, description.Value, externalLink.Value, Optional.ToList(admins));
+            return new UnknownHookInfo(hookType, hookId.Value, hookName, description.Value, externalLink.Value, Core.Optional.ToList(admins));
         }
     }
 }

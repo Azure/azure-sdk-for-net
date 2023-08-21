@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of DefaultRolloutListResult. </summary>
         internal DefaultRolloutListResult()
         {
-            Value = new ChangeTrackingList<DefaultRolloutData>();
+            Value = new Core.ChangeTrackingList<DefaultRolloutData>();
         }
 
         /// <summary> Initializes a new instance of DefaultRolloutListResult. </summary>

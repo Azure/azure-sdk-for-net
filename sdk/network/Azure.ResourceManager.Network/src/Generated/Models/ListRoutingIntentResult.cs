@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ListRoutingIntentResult. </summary>
         internal ListRoutingIntentResult()
         {
-            Value = new ChangeTrackingList<RoutingIntentData>();
+            Value = new Core.ChangeTrackingList<RoutingIntentData>();
         }
 
         /// <summary> Initializes a new instance of ListRoutingIntentResult. </summary>

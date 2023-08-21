@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<NetworkConnectionState> connectionState = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<EvaluationState> evaluationState = default;
-            Optional<long> avgLatencyInMs = default;
-            Optional<long> minLatencyInMs = default;
-            Optional<long> maxLatencyInMs = default;
-            Optional<long> probesSent = default;
-            Optional<long> probesFailed = default;
-            Optional<IReadOnlyList<ConnectivityHopInfo>> hops = default;
+            Core.Optional<NetworkConnectionState> connectionState = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<EvaluationState> evaluationState = default;
+            Core.Optional<long> avgLatencyInMs = default;
+            Core.Optional<long> minLatencyInMs = default;
+            Core.Optional<long> maxLatencyInMs = default;
+            Core.Optional<long> probesSent = default;
+            Core.Optional<long> probesFailed = default;
+            Core.Optional<IReadOnlyList<ConnectivityHopInfo>> hops = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionState"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ConnectionStateSnapshot(Optional.ToNullable(connectionState), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(evaluationState), Optional.ToNullable(avgLatencyInMs), Optional.ToNullable(minLatencyInMs), Optional.ToNullable(maxLatencyInMs), Optional.ToNullable(probesSent), Optional.ToNullable(probesFailed), Optional.ToList(hops));
+            return new ConnectionStateSnapshot(Core.Optional.ToNullable(connectionState), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToNullable(evaluationState), Core.Optional.ToNullable(avgLatencyInMs), Core.Optional.ToNullable(minLatencyInMs), Core.Optional.ToNullable(maxLatencyInMs), Core.Optional.ToNullable(probesSent), Core.Optional.ToNullable(probesFailed), Core.Optional.ToList(hops));
         }
     }
 }

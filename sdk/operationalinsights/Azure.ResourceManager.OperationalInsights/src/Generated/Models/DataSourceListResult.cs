@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of DataSourceListResult. </summary>
         internal DataSourceListResult()
         {
-            Value = new ChangeTrackingList<OperationalInsightsDataSourceData>();
+            Value = new Core.ChangeTrackingList<OperationalInsightsDataSourceData>();
         }
 
         /// <summary> Initializes a new instance of DataSourceListResult. </summary>

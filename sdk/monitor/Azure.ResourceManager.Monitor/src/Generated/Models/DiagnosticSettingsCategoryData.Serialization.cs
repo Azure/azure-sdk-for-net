@@ -13,19 +13,19 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class DiagnosticSettingsCategoryData : IUtf8JsonSerializable
+    public partial class DiagnosticSettingsCategoryData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CategoryType))
+            if (Core.Optional.IsDefined(CategoryType))
             {
                 writer.WritePropertyName("categoryType"u8);
                 writer.WriteStringValue(CategoryType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(CategoryGroups))
+            if (Core.Optional.IsCollectionDefined(CategoryGroups))
             {
                 writer.WritePropertyName("categoryGroups"u8);
                 writer.WriteStartArray();
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MonitorCategoryType> categoryType = default;
-            Optional<IList<string>> categoryGroups = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<MonitorCategoryType> categoryType = default;
+            Core.Optional<IList<string>> categoryGroups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new DiagnosticSettingsCategoryData(id, name, type, systemData.Value, Optional.ToNullable(categoryType), Optional.ToList(categoryGroups));
+            return new DiagnosticSettingsCategoryData(id, name, type, systemData.Value, Core.Optional.ToNullable(categoryType), Core.Optional.ToList(categoryGroups));
         }
     }
 }

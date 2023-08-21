@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of NetworkSecurityGroupData. </summary>
         public NetworkSecurityGroupData()
         {
-            SecurityRules = new ChangeTrackingList<SecurityRuleData>();
-            DefaultSecurityRules = new ChangeTrackingList<SecurityRuleData>();
-            NetworkInterfaces = new ChangeTrackingList<NetworkInterfaceData>();
-            Subnets = new ChangeTrackingList<SubnetData>();
-            FlowLogs = new ChangeTrackingList<FlowLogData>();
+            SecurityRules = new Core.ChangeTrackingList<SecurityRuleData>();
+            DefaultSecurityRules = new Core.ChangeTrackingList<SecurityRuleData>();
+            NetworkInterfaces = new Core.ChangeTrackingList<NetworkInterfaceData>();
+            Subnets = new Core.ChangeTrackingList<SubnetData>();
+            FlowLogs = new Core.ChangeTrackingList<FlowLogData>();
         }
 
         /// <summary> Initializes a new instance of NetworkSecurityGroupData. </summary>

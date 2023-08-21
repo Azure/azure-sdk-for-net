@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BackendAddressPoolData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<BackendAddressPoolData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new LoadBalancerBackendAddressPoolListResult(Optional.ToList(value), nextLink.Value);
+            return new LoadBalancerBackendAddressPoolListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

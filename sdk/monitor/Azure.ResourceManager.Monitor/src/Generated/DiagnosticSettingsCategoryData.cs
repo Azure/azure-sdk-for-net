@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Initializes a new instance of DiagnosticSettingsCategoryData. </summary>
         public DiagnosticSettingsCategoryData()
         {
-            CategoryGroups = new ChangeTrackingList<string>();
+            CategoryGroups = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DiagnosticSettingsCategoryData. </summary>

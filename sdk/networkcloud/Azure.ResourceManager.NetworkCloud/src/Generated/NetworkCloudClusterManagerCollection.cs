@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudClusterManagerClusterManagersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterManagerName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudClusterManagerResource>(new NetworkCloudClusterManagerOperationSource(Client), _networkCloudClusterManagerClusterManagersClientDiagnostics, Pipeline, _networkCloudClusterManagerClusterManagersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterManagerName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkCloudArmOperation<NetworkCloudClusterManagerResource>(new NetworkCloudClusterManagerOperationSource(Client), _networkCloudClusterManagerClusterManagersClientDiagnostics, Pipeline, _networkCloudClusterManagerClusterManagersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterManagerName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudClusterManagerClusterManagersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, clusterManagerName, data, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudClusterManagerResource>(new NetworkCloudClusterManagerOperationSource(Client), _networkCloudClusterManagerClusterManagersClientDiagnostics, Pipeline, _networkCloudClusterManagerClusterManagersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterManagerName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkCloudArmOperation<NetworkCloudClusterManagerResource>(new NetworkCloudClusterManagerOperationSource(Client), _networkCloudClusterManagerClusterManagersClientDiagnostics, Pipeline, _networkCloudClusterManagerClusterManagersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterManagerName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudClusterManagerClusterManagersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudClusterManagerClusterManagersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudClusterManagerResource(Client, NetworkCloudClusterManagerData.DeserializeNetworkCloudClusterManagerData(e)), _networkCloudClusterManagerClusterManagersClientDiagnostics, Pipeline, "NetworkCloudClusterManagerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudClusterManagerResource(Client, NetworkCloudClusterManagerData.DeserializeNetworkCloudClusterManagerData(e)), _networkCloudClusterManagerClusterManagersClientDiagnostics, Pipeline, "NetworkCloudClusterManagerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudClusterManagerClusterManagersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudClusterManagerClusterManagersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudClusterManagerResource(Client, NetworkCloudClusterManagerData.DeserializeNetworkCloudClusterManagerData(e)), _networkCloudClusterManagerClusterManagersClientDiagnostics, Pipeline, "NetworkCloudClusterManagerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudClusterManagerResource(Client, NetworkCloudClusterManagerData.DeserializeNetworkCloudClusterManagerData(e)), _networkCloudClusterManagerClusterManagersClientDiagnostics, Pipeline, "NetworkCloudClusterManagerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

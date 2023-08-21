@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MixedReality.Models
         /// <summary> Initializes a new instance of SpatialAnchorsAccountListResult. </summary>
         internal SpatialAnchorsAccountListResult()
         {
-            Value = new ChangeTrackingList<SpatialAnchorsAccountData>();
+            Value = new Core.ChangeTrackingList<SpatialAnchorsAccountData>();
         }
 
         /// <summary> Initializes a new instance of SpatialAnchorsAccountListResult. </summary>

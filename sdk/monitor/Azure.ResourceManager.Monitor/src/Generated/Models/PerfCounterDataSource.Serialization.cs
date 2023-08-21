@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class PerfCounterDataSource : IUtf8JsonSerializable
+    public partial class PerfCounterDataSource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Streams))
+            if (Core.Optional.IsCollectionDefined(Streams))
             {
                 writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SamplingFrequencyInSeconds))
+            if (Core.Optional.IsDefined(SamplingFrequencyInSeconds))
             {
                 writer.WritePropertyName("samplingFrequencyInSeconds"u8);
                 writer.WriteNumberValue(SamplingFrequencyInSeconds.Value);
             }
-            if (Optional.IsCollectionDefined(CounterSpecifiers))
+            if (Core.Optional.IsCollectionDefined(CounterSpecifiers))
             {
                 writer.WritePropertyName("counterSpecifiers"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<PerfCounterDataSourceStream>> streams = default;
-            Optional<int> samplingFrequencyInSeconds = default;
-            Optional<IList<string>> counterSpecifiers = default;
-            Optional<string> name = default;
+            Core.Optional<IList<PerfCounterDataSourceStream>> streams = default;
+            Core.Optional<int> samplingFrequencyInSeconds = default;
+            Core.Optional<IList<string>> counterSpecifiers = default;
+            Core.Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streams"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new PerfCounterDataSource(Optional.ToList(streams), Optional.ToNullable(samplingFrequencyInSeconds), Optional.ToList(counterSpecifiers), name.Value);
+            return new PerfCounterDataSource(Core.Optional.ToList(streams), Core.Optional.ToNullable(samplingFrequencyInSeconds), Core.Optional.ToList(counterSpecifiers), name.Value);
         }
     }
 }

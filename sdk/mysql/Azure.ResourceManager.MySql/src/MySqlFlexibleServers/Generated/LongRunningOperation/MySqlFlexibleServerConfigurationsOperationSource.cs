@@ -14,15 +14,15 @@ using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    internal class MySqlFlexibleServerConfigurationsOperationSource : IOperationSource<MySqlFlexibleServerConfigurations>
+    internal class MySqlFlexibleServerConfigurationsOperationSource : Core.IOperationSource<MySqlFlexibleServerConfigurations>
     {
-        MySqlFlexibleServerConfigurations IOperationSource<MySqlFlexibleServerConfigurations>.CreateResult(Response response, CancellationToken cancellationToken)
+        MySqlFlexibleServerConfigurations Core.IOperationSource<MySqlFlexibleServerConfigurations>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return MySqlFlexibleServerConfigurations.DeserializeMySqlFlexibleServerConfigurations(document.RootElement);
         }
 
-        async ValueTask<MySqlFlexibleServerConfigurations> IOperationSource<MySqlFlexibleServerConfigurations>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MySqlFlexibleServerConfigurations> Core.IOperationSource<MySqlFlexibleServerConfigurations>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return MySqlFlexibleServerConfigurations.DeserializeMySqlFlexibleServerConfigurations(document.RootElement);

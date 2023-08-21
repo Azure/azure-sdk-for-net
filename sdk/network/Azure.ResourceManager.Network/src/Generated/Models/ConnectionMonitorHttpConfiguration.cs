@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectionMonitorHttpConfiguration. </summary>
         public ConnectionMonitorHttpConfiguration()
         {
-            RequestHeaders = new ChangeTrackingList<NetworkWatcherHttpHeader>();
-            ValidStatusCodeRanges = new ChangeTrackingList<string>();
+            RequestHeaders = new Core.ChangeTrackingList<NetworkWatcherHttpHeader>();
+            ValidStatusCodeRanges = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ConnectionMonitorHttpConfiguration. </summary>

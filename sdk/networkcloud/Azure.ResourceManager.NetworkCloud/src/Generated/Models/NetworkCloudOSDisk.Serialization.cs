@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class NetworkCloudOSDisk : IUtf8JsonSerializable
+    public partial class NetworkCloudOSDisk : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreateOption))
+            if (Core.Optional.IsDefined(CreateOption))
             {
                 writer.WritePropertyName("createOption"u8);
                 writer.WriteStringValue(CreateOption.Value.ToString());
             }
-            if (Optional.IsDefined(DeleteOption))
+            if (Core.Optional.IsDefined(DeleteOption))
             {
                 writer.WritePropertyName("deleteOption"u8);
                 writer.WriteStringValue(DeleteOption.Value.ToString());
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<OSDiskCreateOption> createOption = default;
-            Optional<OSDiskDeleteOption> deleteOption = default;
+            Core.Optional<OSDiskCreateOption> createOption = default;
+            Core.Optional<OSDiskDeleteOption> deleteOption = default;
             long diskSizeGB = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new NetworkCloudOSDisk(Optional.ToNullable(createOption), Optional.ToNullable(deleteOption), diskSizeGB);
+            return new NetworkCloudOSDisk(Core.Optional.ToNullable(createOption), Core.Optional.ToNullable(deleteOption), diskSizeGB);
         }
     }
 }

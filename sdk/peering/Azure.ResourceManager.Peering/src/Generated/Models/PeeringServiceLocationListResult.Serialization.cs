@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PeeringServiceLocation>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<PeeringServiceLocation>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Peering.Models
                     continue;
                 }
             }
-            return new PeeringServiceLocationListResult(Optional.ToList(value), nextLink.Value);
+            return new PeeringServiceLocationListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

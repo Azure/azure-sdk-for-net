@@ -26,8 +26,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             Id = id;
             Name = name;
-            Properties = new ChangeTrackingDictionary<string, string>();
-            Measurements = new ChangeTrackingDictionary<string, double>();
+            Properties = new Core.ChangeTrackingDictionary<string, string>();
+            Measurements = new Core.ChangeTrackingDictionary<string, double>();
         }
 
         /// <summary> Identifier of a page view instance. Used for correlation between page view and other telemetry items. </summary>

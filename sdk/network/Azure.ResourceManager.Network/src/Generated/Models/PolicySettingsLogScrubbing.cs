@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PolicySettingsLogScrubbing. </summary>
         public PolicySettingsLogScrubbing()
         {
-            ScrubbingRules = new ChangeTrackingList<WebApplicationFirewallScrubbingRules>();
+            ScrubbingRules = new Core.ChangeTrackingList<WebApplicationFirewallScrubbingRules>();
         }
 
         /// <summary> Initializes a new instance of PolicySettingsLogScrubbing. </summary>

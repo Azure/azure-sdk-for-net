@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of PostgreSqlMigrationPatch. </summary>
         public PostgreSqlMigrationPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            DbsToMigrate = new ChangeTrackingList<string>();
-            DbsToTriggerCutoverOn = new ChangeTrackingList<string>();
-            DbsToCancelMigrationOn = new ChangeTrackingList<string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            DbsToMigrate = new Core.ChangeTrackingList<string>();
+            DbsToTriggerCutoverOn = new Core.ChangeTrackingList<string>();
+            DbsToCancelMigrationOn = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Application-specific metadata in the form of key-value pairs. </summary>

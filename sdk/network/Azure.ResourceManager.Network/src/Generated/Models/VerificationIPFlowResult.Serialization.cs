@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<NetworkAccess> access = default;
-            Optional<string> ruleName = default;
+            Core.Optional<NetworkAccess> access = default;
+            Core.Optional<string> ruleName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("access"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VerificationIPFlowResult(Optional.ToNullable(access), ruleName.Value);
+            return new VerificationIPFlowResult(Core.Optional.ToNullable(access), ruleName.Value);
         }
     }
 }

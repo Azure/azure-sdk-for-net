@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorSmsReceiver : IUtf8JsonSerializable
+    public partial class MonitorSmsReceiver : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string name = default;
             string countryCode = default;
             string phoneNumber = default;
-            Optional<MonitorReceiverStatus> status = default;
+            Core.Optional<MonitorReceiverStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MonitorSmsReceiver(name, countryCode, phoneNumber, Optional.ToNullable(status));
+            return new MonitorSmsReceiver(name, countryCode, phoneNumber, Core.Optional.ToNullable(status));
         }
     }
 }

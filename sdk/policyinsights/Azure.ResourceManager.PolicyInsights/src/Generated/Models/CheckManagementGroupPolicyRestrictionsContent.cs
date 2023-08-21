@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Initializes a new instance of CheckManagementGroupPolicyRestrictionsContent. </summary>
         public CheckManagementGroupPolicyRestrictionsContent()
         {
-            PendingFields = new ChangeTrackingList<PendingField>();
+            PendingFields = new Core.ChangeTrackingList<PendingField>();
         }
 
         /// <summary> The information about the resource that will be evaluated. </summary>

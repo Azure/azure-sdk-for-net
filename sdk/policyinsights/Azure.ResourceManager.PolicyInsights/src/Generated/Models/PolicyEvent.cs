@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Initializes a new instance of PolicyEvent. </summary>
         internal PolicyEvent()
         {
-            Components = new ChangeTrackingList<ComponentEventDetails>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            Components = new Core.ChangeTrackingList<ComponentEventDetails>();
+            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of PolicyEvent. </summary>

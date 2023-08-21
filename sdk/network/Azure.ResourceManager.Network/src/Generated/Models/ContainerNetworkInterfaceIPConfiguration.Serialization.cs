@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<ETag> etag = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> type = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ContainerNetworkInterfaceIPConfiguration(name.Value, type.Value, Optional.ToNullable(etag), Optional.ToNullable(provisioningState));
+            return new ContainerNetworkInterfaceIPConfiguration(name.Value, type.Value, Core.Optional.ToNullable(etag), Core.Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of FirewallPolicyRuleCollectionGroupData. </summary>
         public FirewallPolicyRuleCollectionGroupData()
         {
-            RuleCollections = new ChangeTrackingList<FirewallPolicyRuleCollectionInfo>();
+            RuleCollections = new Core.ChangeTrackingList<FirewallPolicyRuleCollectionInfo>();
         }
 
         /// <summary> Initializes a new instance of FirewallPolicyRuleCollectionGroupData. </summary>

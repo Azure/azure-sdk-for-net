@@ -14,22 +14,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class IPAllocationData : IUtf8JsonSerializable
+    public partial class IPAllocationData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -42,17 +42,17 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPAllocationType))
+            if (Core.Optional.IsDefined(IPAllocationType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IPAllocationType.Value.ToString());
             }
-            if (Optional.IsDefined(Prefix))
+            if (Core.Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
-            if (Optional.IsDefined(PrefixLength))
+            if (Core.Optional.IsDefined(PrefixLength))
             {
                 if (PrefixLength != null)
                 {
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.Network
                     writer.WriteNull("prefixLength");
                 }
             }
-            if (Optional.IsDefined(PrefixType))
+            if (Core.Optional.IsDefined(PrefixType))
             {
                 writer.WritePropertyName("prefixType"u8);
                 writer.WriteStringValue(PrefixType.Value.ToString());
             }
-            if (Optional.IsDefined(IpamAllocationId))
+            if (Core.Optional.IsDefined(IpamAllocationId))
             {
                 writer.WritePropertyName("ipamAllocationId"u8);
                 writer.WriteStringValue(IpamAllocationId);
             }
-            if (Optional.IsCollectionDefined(AllocationTags))
+            if (Core.Optional.IsCollectionDefined(AllocationTags))
             {
                 writer.WritePropertyName("allocationTags"u8);
                 writer.WriteStartObject();
@@ -95,20 +95,20 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<WritableSubResource> subnet = default;
-            Optional<WritableSubResource> virtualNetwork = default;
-            Optional<NetworkIPAllocationType> type0 = default;
-            Optional<string> prefix = default;
-            Optional<int?> prefixLength = default;
-            Optional<NetworkIPVersion> prefixType = default;
-            Optional<string> ipamAllocationId = default;
-            Optional<IDictionary<string, string>> allocationTags = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceType> type = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<WritableSubResource> subnet = default;
+            Core.Optional<WritableSubResource> virtualNetwork = default;
+            Core.Optional<NetworkIPAllocationType> type0 = default;
+            Core.Optional<string> prefix = default;
+            Core.Optional<int?> prefixLength = default;
+            Core.Optional<NetworkIPVersion> prefixType = default;
+            Core.Optional<string> ipamAllocationId = default;
+            Core.Optional<IDictionary<string, string>> allocationTags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new IPAllocationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), subnet, virtualNetwork, Optional.ToNullable(type0), prefix.Value, Optional.ToNullable(prefixLength), Optional.ToNullable(prefixType), ipamAllocationId.Value, Optional.ToDictionary(allocationTags));
+            return new IPAllocationData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags), Core.Optional.ToNullable(etag), subnet, virtualNetwork, Core.Optional.ToNullable(type0), prefix.Value, Core.Optional.ToNullable(prefixLength), Core.Optional.ToNullable(prefixType), ipamAllocationId.Value, Core.Optional.ToDictionary(allocationTags));
         }
     }
 }

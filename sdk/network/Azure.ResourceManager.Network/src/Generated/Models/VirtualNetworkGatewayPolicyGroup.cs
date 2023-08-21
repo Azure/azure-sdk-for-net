@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VirtualNetworkGatewayPolicyGroup. </summary>
         public VirtualNetworkGatewayPolicyGroup()
         {
-            PolicyMembers = new ChangeTrackingList<VirtualNetworkGatewayPolicyGroupMember>();
-            VngClientConnectionConfigurations = new ChangeTrackingList<WritableSubResource>();
+            PolicyMembers = new Core.ChangeTrackingList<VirtualNetworkGatewayPolicyGroupMember>();
+            VngClientConnectionConfigurations = new Core.ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewayPolicyGroup. </summary>

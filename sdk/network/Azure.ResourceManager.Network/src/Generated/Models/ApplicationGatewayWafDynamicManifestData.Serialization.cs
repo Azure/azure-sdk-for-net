@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.Network
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<ApplicationGatewayFirewallManifestRuleSet>> availableRuleSets = default;
-            Optional<string> ruleSetType = default;
-            Optional<string> ruleSetVersion = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IReadOnlyList<ApplicationGatewayFirewallManifestRuleSet>> availableRuleSets = default;
+            Core.Optional<string> ruleSetType = default;
+            Core.Optional<string> ruleSetVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ApplicationGatewayWafDynamicManifestData(id, name, type, systemData.Value, Optional.ToList(availableRuleSets), ruleSetType.Value, ruleSetVersion.Value);
+            return new ApplicationGatewayWafDynamicManifestData(id, name, type, systemData.Value, Core.Optional.ToList(availableRuleSets), ruleSetType.Value, ruleSetVersion.Value);
         }
     }
 }

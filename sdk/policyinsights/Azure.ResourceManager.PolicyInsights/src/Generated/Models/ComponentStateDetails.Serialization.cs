@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> complianceState = default;
+            Core.Optional<DateTimeOffset> timestamp = default;
+            Core.Optional<string> complianceState = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ComponentStateDetails(id, name, type, systemData.Value, Optional.ToNullable(timestamp), complianceState.Value, additionalProperties);
+            return new ComponentStateDetails(id, name, type, systemData.Value, Core.Optional.ToNullable(timestamp), complianceState.Value, additionalProperties);
         }
     }
 }

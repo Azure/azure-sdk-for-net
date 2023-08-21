@@ -18,8 +18,8 @@ namespace Azure.Monitor.Query.Models
             {
                 return null;
             }
-            Optional<LocalizableString> name = default;
-            Optional<string> value = default;
+            Core.Optional<LocalizableString> name = default;
+            Core.Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

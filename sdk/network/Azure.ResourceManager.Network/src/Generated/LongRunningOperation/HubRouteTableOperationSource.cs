@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class HubRouteTableOperationSource : IOperationSource<HubRouteTableResource>
+    internal class HubRouteTableOperationSource : Core.IOperationSource<HubRouteTableResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        HubRouteTableResource IOperationSource<HubRouteTableResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        HubRouteTableResource Core.IOperationSource<HubRouteTableResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = HubRouteTableData.DeserializeHubRouteTableData(document.RootElement);
             return new HubRouteTableResource(_client, data);
         }
 
-        async ValueTask<HubRouteTableResource> IOperationSource<HubRouteTableResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HubRouteTableResource> Core.IOperationSource<HubRouteTableResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = HubRouteTableData.DeserializeHubRouteTableData(document.RootElement);

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PostgreSqlFlexibleServerBackupData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<PostgreSqlFlexibleServerBackupData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerBackupListResult(Optional.ToList(value), nextLink.Value);
+            return new PostgreSqlFlexibleServerBackupListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

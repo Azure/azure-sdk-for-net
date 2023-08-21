@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> policyDefinitionId = default;
-            Optional<string> policyDefinitionReferenceId = default;
-            Optional<IReadOnlyList<string>> policyDefinitionGroupNames = default;
-            Optional<string> effect = default;
-            Optional<PolicySummaryResults> results = default;
+            Core.Optional<ResourceIdentifier> policyDefinitionId = default;
+            Core.Optional<string> policyDefinitionReferenceId = default;
+            Core.Optional<IReadOnlyList<string>> policyDefinitionGroupNames = default;
+            Core.Optional<string> effect = default;
+            Core.Optional<PolicySummaryResults> results = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyDefinitionId"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     continue;
                 }
             }
-            return new PolicyDefinitionSummary(policyDefinitionId.Value, policyDefinitionReferenceId.Value, Optional.ToList(policyDefinitionGroupNames), effect.Value, results.Value);
+            return new PolicyDefinitionSummary(policyDefinitionId.Value, policyDefinitionReferenceId.Value, Core.Optional.ToList(policyDefinitionGroupNames), effect.Value, results.Value);
         }
     }
 }

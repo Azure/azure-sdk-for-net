@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Argument.AssertNotNull(state, nameof(state));
 
             State = state;
-            ActionDetails = new ChangeTrackingList<NotificationActionDetail>();
+            ActionDetails = new Core.ChangeTrackingList<NotificationActionDetail>();
         }
 
         /// <summary> Initializes a new instance of NotificationStatus. </summary>

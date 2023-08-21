@@ -12,12 +12,12 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class DirectPeeringProperties : IUtf8JsonSerializable
+    public partial class DirectPeeringProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Connections))
+            if (Core.Optional.IsCollectionDefined(Connections))
             {
                 writer.WritePropertyName("connections"u8);
                 writer.WriteStartArray();
@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PeerAsn))
+            if (Core.Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerAsn"u8);
                 JsonSerializer.Serialize(writer, PeerAsn);
             }
-            if (Optional.IsDefined(DirectPeeringType))
+            if (Core.Optional.IsDefined(DirectPeeringType))
             {
                 writer.WritePropertyName("directPeeringType"u8);
                 writer.WriteStringValue(DirectPeeringType.Value.ToString());
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<IList<PeeringDirectConnection>> connections = default;
-            Optional<bool> useForPeeringService = default;
-            Optional<WritableSubResource> peerAsn = default;
-            Optional<DirectPeeringType> directPeeringType = default;
+            Core.Optional<IList<PeeringDirectConnection>> connections = default;
+            Core.Optional<bool> useForPeeringService = default;
+            Core.Optional<WritableSubResource> peerAsn = default;
+            Core.Optional<DirectPeeringType> directPeeringType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connections"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Peering.Models
                     continue;
                 }
             }
-            return new DirectPeeringProperties(Optional.ToList(connections), Optional.ToNullable(useForPeeringService), peerAsn, Optional.ToNullable(directPeeringType));
+            return new DirectPeeringProperties(Core.Optional.ToList(connections), Core.Optional.ToNullable(useForPeeringService), peerAsn, Core.Optional.ToNullable(directPeeringType));
         }
     }
 }

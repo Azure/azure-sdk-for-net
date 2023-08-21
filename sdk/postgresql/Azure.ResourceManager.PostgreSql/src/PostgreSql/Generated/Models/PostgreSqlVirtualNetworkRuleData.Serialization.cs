@@ -12,19 +12,19 @@ using Azure.ResourceManager.PostgreSql.Models;
 
 namespace Azure.ResourceManager.PostgreSql
 {
-    public partial class PostgreSqlVirtualNetworkRuleData : IUtf8JsonSerializable
+    public partial class PostgreSqlVirtualNetworkRuleData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualNetworkSubnetId))
+            if (Core.Optional.IsDefined(VirtualNetworkSubnetId))
             {
                 writer.WritePropertyName("virtualNetworkSubnetId"u8);
                 writer.WriteStringValue(VirtualNetworkSubnetId);
             }
-            if (Optional.IsDefined(IgnoreMissingVnetServiceEndpoint))
+            if (Core.Optional.IsDefined(IgnoreMissingVnetServiceEndpoint))
             {
                 writer.WritePropertyName("ignoreMissingVnetServiceEndpoint"u8);
                 writer.WriteBooleanValue(IgnoreMissingVnetServiceEndpoint.Value);
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.PostgreSql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> virtualNetworkSubnetId = default;
-            Optional<bool> ignoreMissingVnetServiceEndpoint = default;
-            Optional<PostgreSqlVirtualNetworkRuleState> state = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ResourceIdentifier> virtualNetworkSubnetId = default;
+            Core.Optional<bool> ignoreMissingVnetServiceEndpoint = default;
+            Core.Optional<PostgreSqlVirtualNetworkRuleState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.PostgreSql
                     continue;
                 }
             }
-            return new PostgreSqlVirtualNetworkRuleData(id, name, type, systemData.Value, virtualNetworkSubnetId.Value, Optional.ToNullable(ignoreMissingVnetServiceEndpoint), Optional.ToNullable(state));
+            return new PostgreSqlVirtualNetworkRuleData(id, name, type, systemData.Value, virtualNetworkSubnetId.Value, Core.Optional.ToNullable(ignoreMissingVnetServiceEndpoint), Core.Optional.ToNullable(state));
         }
     }
 }

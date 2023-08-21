@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<string> type = default;
+            Core.Optional<string> type = default;
             IReadOnlyList<NameDescriptionObject> entry = default;
             foreach (var property in element.EnumerateObject())
             {

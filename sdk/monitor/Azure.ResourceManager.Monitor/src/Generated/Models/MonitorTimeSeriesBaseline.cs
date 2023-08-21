@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Monitor.Models
             Argument.AssertNotNull(data, nameof(data));
 
             Aggregation = aggregation;
-            Dimensions = new ChangeTrackingList<MonitorMetricSingleDimension>();
+            Dimensions = new Core.ChangeTrackingList<MonitorMetricSingleDimension>();
             Timestamps = timestamps.ToList();
             Data = data.ToList();
-            MetadataValues = new ChangeTrackingList<MonitorBaselineMetadata>();
+            MetadataValues = new Core.ChangeTrackingList<MonitorBaselineMetadata>();
         }
 
         /// <summary> Initializes a new instance of MonitorTimeSeriesBaseline. </summary>

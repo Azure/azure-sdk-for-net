@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> recordType = default;
-            Optional<string> recordSetName = default;
-            Optional<string> fqdn = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<int> ttl = default;
-            Optional<IReadOnlyList<string>> ipAddresses = default;
+            Core.Optional<string> recordType = default;
+            Core.Optional<string> recordSetName = default;
+            Core.Optional<string> fqdn = default;
+            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Core.Optional<int> ttl = default;
+            Core.Optional<IReadOnlyList<string>> ipAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recordType"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new RecordSet(recordType.Value, recordSetName.Value, fqdn.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(ttl), Optional.ToList(ipAddresses));
+            return new RecordSet(recordType.Value, recordSetName.Value, fqdn.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(ttl), Core.Optional.ToList(ipAddresses));
         }
     }
 }

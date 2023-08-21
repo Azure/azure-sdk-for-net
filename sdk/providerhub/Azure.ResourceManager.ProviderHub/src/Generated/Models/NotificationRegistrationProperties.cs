@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of NotificationRegistrationProperties. </summary>
         public NotificationRegistrationProperties()
         {
-            IncludedEvents = new ChangeTrackingList<string>();
-            NotificationEndpoints = new ChangeTrackingList<NotificationEndpoint>();
+            IncludedEvents = new Core.ChangeTrackingList<string>();
+            NotificationEndpoints = new Core.ChangeTrackingList<NotificationEndpoint>();
         }
 
         /// <summary> Initializes a new instance of NotificationRegistrationProperties. </summary>

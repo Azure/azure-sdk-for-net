@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="location"> The location. </param>
         public OperationalInsightsWorkspaceData(AzureLocation location) : base(location)
         {
-            PrivateLinkScopedResources = new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>();
+            PrivateLinkScopedResources = new Core.ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of OperationalInsightsWorkspaceData. </summary>

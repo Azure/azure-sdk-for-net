@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            Core.Optional<string> nextLink = default;
             IReadOnlyList<AnomalyAlert> value = default;
             foreach (var property in element.EnumerateObject())
             {

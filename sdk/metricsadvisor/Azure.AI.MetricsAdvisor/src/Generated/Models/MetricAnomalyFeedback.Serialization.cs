@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor
 {
-    public partial class MetricAnomalyFeedback : IUtf8JsonSerializable
+    public partial class MetricAnomalyFeedback : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("startTime"u8);
@@ -23,7 +23,7 @@ namespace Azure.AI.MetricsAdvisor
             writer.WriteStringValue(EndsOn, "O");
             writer.WritePropertyName("value"u8);
             writer.WriteObjectValue(ValueInternal);
-            if (Optional.IsDefined(DetectionConfigurationId))
+            if (Core.Optional.IsDefined(DetectionConfigurationId))
             {
                 if (DetectionConfigurationId != null)
                 {
@@ -35,7 +35,7 @@ namespace Azure.AI.MetricsAdvisor
                     writer.WriteNull("anomalyDetectionConfigurationId");
                 }
             }
-            if (Optional.IsDefined(DetectionConfigurationSnapshot))
+            if (Core.Optional.IsDefined(DetectionConfigurationSnapshot))
             {
                 if (DetectionConfigurationSnapshot != null)
                 {
@@ -65,12 +65,12 @@ namespace Azure.AI.MetricsAdvisor
             DateTimeOffset startTime = default;
             DateTimeOffset endTime = default;
             AnomalyFeedbackValue value = default;
-            Optional<string> anomalyDetectionConfigurationId = default;
-            Optional<AnomalyDetectionConfiguration> anomalyDetectionConfigurationSnapshot = default;
+            Core.Optional<string> anomalyDetectionConfigurationId = default;
+            Core.Optional<AnomalyDetectionConfiguration> anomalyDetectionConfigurationSnapshot = default;
             MetricFeedbackKind feedbackType = default;
-            Optional<string> feedbackId = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<string> userPrincipal = default;
+            Core.Optional<string> feedbackId = default;
+            Core.Optional<DateTimeOffset> createdTime = default;
+            Core.Optional<string> userPrincipal = default;
             string metricId = default;
             FeedbackFilter dimensionFilter = default;
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,7 @@ namespace Azure.AI.MetricsAdvisor
                     continue;
                 }
             }
-            return new MetricAnomalyFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, startTime, endTime, value, anomalyDetectionConfigurationId.Value, anomalyDetectionConfigurationSnapshot.Value);
+            return new MetricAnomalyFeedback(feedbackType, feedbackId.Value, Core.Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, startTime, endTime, value, anomalyDetectionConfigurationId.Value, anomalyDetectionConfigurationSnapshot.Value);
         }
     }
 }

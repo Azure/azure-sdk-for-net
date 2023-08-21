@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of KubernetesClusterList. </summary>
         internal KubernetesClusterList()
         {
-            Value = new ChangeTrackingList<NetworkCloudKubernetesClusterData>();
+            Value = new Core.ChangeTrackingList<NetworkCloudKubernetesClusterData>();
         }
 
         /// <summary> Initializes a new instance of KubernetesClusterList. </summary>

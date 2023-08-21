@@ -14,15 +14,15 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class VpnClientConnectionHealthDetailListResultOperationSource : IOperationSource<VpnClientConnectionHealthDetailListResult>
+    internal class VpnClientConnectionHealthDetailListResultOperationSource : Core.IOperationSource<VpnClientConnectionHealthDetailListResult>
     {
-        VpnClientConnectionHealthDetailListResult IOperationSource<VpnClientConnectionHealthDetailListResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        VpnClientConnectionHealthDetailListResult Core.IOperationSource<VpnClientConnectionHealthDetailListResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return VpnClientConnectionHealthDetailListResult.DeserializeVpnClientConnectionHealthDetailListResult(document.RootElement);
         }
 
-        async ValueTask<VpnClientConnectionHealthDetailListResult> IOperationSource<VpnClientConnectionHealthDetailListResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VpnClientConnectionHealthDetailListResult> Core.IOperationSource<VpnClientConnectionHealthDetailListResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return VpnClientConnectionHealthDetailListResult.DeserializeVpnClientConnectionHealthDetailListResult(document.RootElement);

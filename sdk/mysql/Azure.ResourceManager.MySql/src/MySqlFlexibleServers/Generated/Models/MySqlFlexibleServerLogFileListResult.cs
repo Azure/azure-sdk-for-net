@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <summary> Initializes a new instance of MySqlFlexibleServerLogFileListResult. </summary>
         internal MySqlFlexibleServerLogFileListResult()
         {
-            Value = new ChangeTrackingList<MySqlFlexibleServerLogFile>();
+            Value = new Core.ChangeTrackingList<MySqlFlexibleServerLogFile>();
         }
 
         /// <summary> Initializes a new instance of MySqlFlexibleServerLogFileListResult. </summary>

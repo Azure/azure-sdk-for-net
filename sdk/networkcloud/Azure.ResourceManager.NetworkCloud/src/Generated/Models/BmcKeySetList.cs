@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of BmcKeySetList. </summary>
         internal BmcKeySetList()
         {
-            Value = new ChangeTrackingList<NetworkCloudBmcKeySetData>();
+            Value = new Core.ChangeTrackingList<NetworkCloudBmcKeySetData>();
         }
 
         /// <summary> Initializes a new instance of BmcKeySetList. </summary>

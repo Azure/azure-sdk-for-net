@@ -15,22 +15,22 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    public partial class OperationalInsightsWorkspaceData : IUtf8JsonSerializable
+    public partial class OperationalInsightsWorkspaceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.OperationalInsights
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(RetentionInDays))
+            if (Core.Optional.IsDefined(RetentionInDays))
             {
                 if (RetentionInDays != null)
                 {
@@ -62,32 +62,32 @@ namespace Azure.ResourceManager.OperationalInsights
                     writer.WriteNull("retentionInDays");
                 }
             }
-            if (Optional.IsDefined(WorkspaceCapping))
+            if (Core.Optional.IsDefined(WorkspaceCapping))
             {
                 writer.WritePropertyName("workspaceCapping"u8);
                 writer.WriteObjectValue(WorkspaceCapping);
             }
-            if (Optional.IsDefined(PublicNetworkAccessForIngestion))
+            if (Core.Optional.IsDefined(PublicNetworkAccessForIngestion))
             {
                 writer.WritePropertyName("publicNetworkAccessForIngestion"u8);
                 writer.WriteStringValue(PublicNetworkAccessForIngestion.Value.ToString());
             }
-            if (Optional.IsDefined(PublicNetworkAccessForQuery))
+            if (Core.Optional.IsDefined(PublicNetworkAccessForQuery))
             {
                 writer.WritePropertyName("publicNetworkAccessForQuery"u8);
                 writer.WriteStringValue(PublicNetworkAccessForQuery.Value.ToString());
             }
-            if (Optional.IsDefined(ForceCmkForQuery))
+            if (Core.Optional.IsDefined(ForceCmkForQuery))
             {
                 writer.WritePropertyName("forceCmkForQuery"u8);
                 writer.WriteBooleanValue(ForceCmkForQuery.Value);
             }
-            if (Optional.IsDefined(Features))
+            if (Core.Optional.IsDefined(Features))
             {
                 writer.WritePropertyName("features"u8);
                 writer.WriteObjectValue(Features);
             }
-            if (Optional.IsDefined(DefaultDataCollectionRuleResourceId))
+            if (Core.Optional.IsDefined(DefaultDataCollectionRuleResourceId))
             {
                 writer.WritePropertyName("defaultDataCollectionRuleResourceId"u8);
                 writer.WriteStringValue(DefaultDataCollectionRuleResourceId);
@@ -102,27 +102,27 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<OperationalInsightsWorkspaceEntityStatus> provisioningState = default;
-            Optional<Guid> customerId = default;
-            Optional<OperationalInsightsWorkspaceSku> sku = default;
-            Optional<int?> retentionInDays = default;
-            Optional<OperationalInsightsWorkspaceCapping> workspaceCapping = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<DateTimeOffset> modifiedDate = default;
-            Optional<OperationalInsightsPublicNetworkAccessType> publicNetworkAccessForIngestion = default;
-            Optional<OperationalInsightsPublicNetworkAccessType> publicNetworkAccessForQuery = default;
-            Optional<bool> forceCmkForQuery = default;
-            Optional<IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo>> privateLinkScopedResources = default;
-            Optional<OperationalInsightsWorkspaceFeatures> features = default;
-            Optional<ResourceIdentifier> defaultDataCollectionRuleResourceId = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<OperationalInsightsWorkspaceEntityStatus> provisioningState = default;
+            Core.Optional<Guid> customerId = default;
+            Core.Optional<OperationalInsightsWorkspaceSku> sku = default;
+            Core.Optional<int?> retentionInDays = default;
+            Core.Optional<OperationalInsightsWorkspaceCapping> workspaceCapping = default;
+            Core.Optional<DateTimeOffset> createdDate = default;
+            Core.Optional<DateTimeOffset> modifiedDate = default;
+            Core.Optional<OperationalInsightsPublicNetworkAccessType> publicNetworkAccessForIngestion = default;
+            Core.Optional<OperationalInsightsPublicNetworkAccessType> publicNetworkAccessForQuery = default;
+            Core.Optional<bool> forceCmkForQuery = default;
+            Core.Optional<IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo>> privateLinkScopedResources = default;
+            Core.Optional<OperationalInsightsWorkspaceFeatures> features = default;
+            Core.Optional<ResourceIdentifier> defaultDataCollectionRuleResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     continue;
                 }
             }
-            return new OperationalInsightsWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(customerId), sku.Value, Optional.ToNullable(retentionInDays), workspaceCapping.Value, Optional.ToNullable(createdDate), Optional.ToNullable(modifiedDate), Optional.ToNullable(publicNetworkAccessForIngestion), Optional.ToNullable(publicNetworkAccessForQuery), Optional.ToNullable(forceCmkForQuery), Optional.ToList(privateLinkScopedResources), features.Value, defaultDataCollectionRuleResourceId.Value);
+            return new OperationalInsightsWorkspaceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity, Core.Optional.ToNullable(etag), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(customerId), sku.Value, Core.Optional.ToNullable(retentionInDays), workspaceCapping.Value, Core.Optional.ToNullable(createdDate), Core.Optional.ToNullable(modifiedDate), Core.Optional.ToNullable(publicNetworkAccessForIngestion), Core.Optional.ToNullable(publicNetworkAccessForQuery), Core.Optional.ToNullable(forceCmkForQuery), Core.Optional.ToList(privateLinkScopedResources), features.Value, defaultDataCollectionRuleResourceId.Value);
         }
     }
 }

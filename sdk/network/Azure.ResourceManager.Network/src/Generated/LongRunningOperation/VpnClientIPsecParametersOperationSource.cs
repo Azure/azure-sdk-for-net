@@ -14,15 +14,15 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class VpnClientIPsecParametersOperationSource : IOperationSource<VpnClientIPsecParameters>
+    internal class VpnClientIPsecParametersOperationSource : Core.IOperationSource<VpnClientIPsecParameters>
     {
-        VpnClientIPsecParameters IOperationSource<VpnClientIPsecParameters>.CreateResult(Response response, CancellationToken cancellationToken)
+        VpnClientIPsecParameters Core.IOperationSource<VpnClientIPsecParameters>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return VpnClientIPsecParameters.DeserializeVpnClientIPsecParameters(document.RootElement);
         }
 
-        async ValueTask<VpnClientIPsecParameters> IOperationSource<VpnClientIPsecParameters>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VpnClientIPsecParameters> Core.IOperationSource<VpnClientIPsecParameters>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return VpnClientIPsecParameters.DeserializeVpnClientIPsecParameters(document.RootElement);

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <summary> Initializes a new instance of PostgreSqlServerSecurityAlertPolicyListResult. </summary>
         internal PostgreSqlServerSecurityAlertPolicyListResult()
         {
-            Value = new ChangeTrackingList<PostgreSqlServerSecurityAlertPolicyData>();
+            Value = new Core.ChangeTrackingList<PostgreSqlServerSecurityAlertPolicyData>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlServerSecurityAlertPolicyListResult. </summary>

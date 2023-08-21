@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class EndpointDependency : IUtf8JsonSerializable
+    public partial class EndpointDependency : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("domainName"u8);
             writer.WriteStringValue(DomainName);
-            if (Optional.IsDefined(Port))
+            if (Core.Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             string domainName = default;
-            Optional<long> port = default;
+            Core.Optional<long> port = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainName"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new EndpointDependency(domainName, Optional.ToNullable(port));
+            return new EndpointDependency(domainName, Core.Optional.ToNullable(port));
         }
     }
 }

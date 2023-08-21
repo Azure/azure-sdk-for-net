@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of ResourceTypeRegistrationProperties. </summary>
         public ResourceTypeRegistrationProperties()
         {
-            Endpoints = new ChangeTrackingList<ResourceTypeEndpoint>();
-            SwaggerSpecifications = new ChangeTrackingList<SwaggerSpecification>();
-            AllowedUnauthorizedActions = new ChangeTrackingList<string>();
-            AuthorizationActionMappings = new ChangeTrackingList<AuthorizationActionMapping>();
-            LinkedAccessChecks = new ChangeTrackingList<LinkedAccessCheck>();
-            LoggingRules = new ChangeTrackingList<LoggingRule>();
-            ThrottlingRules = new ChangeTrackingList<ThrottlingRule>();
-            RequiredFeatures = new ChangeTrackingList<string>();
-            DisallowedActionVerbs = new ChangeTrackingList<string>();
-            ServiceTreeInfos = new ChangeTrackingList<ServiceTreeInfo>();
-            SubscriptionStateRules = new ChangeTrackingList<ProviderSubscriptionStateRule>();
-            ExtendedLocations = new ChangeTrackingList<ProviderHubExtendedLocationOptions>();
+            Endpoints = new Core.ChangeTrackingList<ResourceTypeEndpoint>();
+            SwaggerSpecifications = new Core.ChangeTrackingList<SwaggerSpecification>();
+            AllowedUnauthorizedActions = new Core.ChangeTrackingList<string>();
+            AuthorizationActionMappings = new Core.ChangeTrackingList<AuthorizationActionMapping>();
+            LinkedAccessChecks = new Core.ChangeTrackingList<LinkedAccessCheck>();
+            LoggingRules = new Core.ChangeTrackingList<LoggingRule>();
+            ThrottlingRules = new Core.ChangeTrackingList<ThrottlingRule>();
+            RequiredFeatures = new Core.ChangeTrackingList<string>();
+            DisallowedActionVerbs = new Core.ChangeTrackingList<string>();
+            ServiceTreeInfos = new Core.ChangeTrackingList<ServiceTreeInfo>();
+            SubscriptionStateRules = new Core.ChangeTrackingList<ProviderSubscriptionStateRule>();
+            ExtendedLocations = new Core.ChangeTrackingList<ProviderHubExtendedLocationOptions>();
         }
 
         /// <summary> Initializes a new instance of ResourceTypeRegistrationProperties. </summary>

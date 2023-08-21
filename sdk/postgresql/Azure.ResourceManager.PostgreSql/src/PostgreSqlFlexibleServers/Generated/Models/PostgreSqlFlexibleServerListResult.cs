@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerListResult. </summary>
         internal PostgreSqlFlexibleServerListResult()
         {
-            Value = new ChangeTrackingList<PostgreSqlFlexibleServerData>();
+            Value = new Core.ChangeTrackingList<PostgreSqlFlexibleServerData>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerListResult. </summary>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> metricNamespaceName = default;
+            Core.Optional<string> metricNamespaceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metricNamespaceName"u8))

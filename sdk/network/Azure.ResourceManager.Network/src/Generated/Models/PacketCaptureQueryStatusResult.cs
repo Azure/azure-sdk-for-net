@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PacketCaptureQueryStatusResult. </summary>
         internal PacketCaptureQueryStatusResult()
         {
-            PacketCaptureError = new ChangeTrackingList<PcError>();
+            PacketCaptureError = new Core.ChangeTrackingList<PcError>();
         }
 
         /// <summary> Initializes a new instance of PacketCaptureQueryStatusResult. </summary>

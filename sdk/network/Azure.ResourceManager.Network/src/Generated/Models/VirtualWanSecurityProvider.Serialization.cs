@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<Uri> url = default;
-            Optional<VirtualWanSecurityProviderType> type = default;
+            Core.Optional<string> name = default;
+            Core.Optional<Uri> url = default;
+            Core.Optional<VirtualWanSecurityProviderType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VirtualWanSecurityProvider(name.Value, url.Value, Optional.ToNullable(type));
+            return new VirtualWanSecurityProvider(name.Value, url.Value, Core.Optional.ToNullable(type));
         }
     }
 }

@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<long> minStorageSize = default;
-            Optional<long> maxStorageSize = default;
-            Optional<long> minBackupRetentionDays = default;
-            Optional<long> maxBackupRetentionDays = default;
+            Core.Optional<string> name = default;
+            Core.Optional<long> minStorageSize = default;
+            Core.Optional<long> maxStorageSize = default;
+            Core.Optional<long> minBackupRetentionDays = default;
+            Core.Optional<long> maxBackupRetentionDays = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new MySqlFlexibleServerStorageEditionCapability(name.Value, Optional.ToNullable(minStorageSize), Optional.ToNullable(maxStorageSize), Optional.ToNullable(minBackupRetentionDays), Optional.ToNullable(maxBackupRetentionDays));
+            return new MySqlFlexibleServerStorageEditionCapability(name.Value, Core.Optional.ToNullable(minStorageSize), Core.Optional.ToNullable(maxStorageSize), Core.Optional.ToNullable(minBackupRetentionDays), Core.Optional.ToNullable(maxBackupRetentionDays));
         }
     }
 }

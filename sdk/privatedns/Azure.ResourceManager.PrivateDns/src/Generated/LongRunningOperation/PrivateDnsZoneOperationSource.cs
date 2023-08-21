@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    internal class PrivateDnsZoneOperationSource : IOperationSource<PrivateDnsZoneResource>
+    internal class PrivateDnsZoneOperationSource : Core.IOperationSource<PrivateDnsZoneResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.PrivateDns
             _client = client;
         }
 
-        PrivateDnsZoneResource IOperationSource<PrivateDnsZoneResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PrivateDnsZoneResource Core.IOperationSource<PrivateDnsZoneResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PrivateDnsZoneData.DeserializePrivateDnsZoneData(document.RootElement);
             return new PrivateDnsZoneResource(_client, data);
         }
 
-        async ValueTask<PrivateDnsZoneResource> IOperationSource<PrivateDnsZoneResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PrivateDnsZoneResource> Core.IOperationSource<PrivateDnsZoneResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PrivateDnsZoneData.DeserializePrivateDnsZoneData(document.RootElement);

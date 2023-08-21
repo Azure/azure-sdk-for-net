@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<LldpNeighbor> lldpNeighbor = default;
-            Optional<string> macAddress = default;
-            Optional<string> name = default;
+            Core.Optional<LldpNeighbor> lldpNeighbor = default;
+            Core.Optional<string> macAddress = default;
+            Core.Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lldpNeighbor"u8))

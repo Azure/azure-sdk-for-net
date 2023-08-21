@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    internal class NetworkCloudCloudServicesNetworkOperationSource : IOperationSource<NetworkCloudCloudServicesNetworkResource>
+    internal class NetworkCloudCloudServicesNetworkOperationSource : Core.IOperationSource<NetworkCloudCloudServicesNetworkResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.NetworkCloud
             _client = client;
         }
 
-        NetworkCloudCloudServicesNetworkResource IOperationSource<NetworkCloudCloudServicesNetworkResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkCloudCloudServicesNetworkResource Core.IOperationSource<NetworkCloudCloudServicesNetworkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NetworkCloudCloudServicesNetworkData.DeserializeNetworkCloudCloudServicesNetworkData(document.RootElement);
             return new NetworkCloudCloudServicesNetworkResource(_client, data);
         }
 
-        async ValueTask<NetworkCloudCloudServicesNetworkResource> IOperationSource<NetworkCloudCloudServicesNetworkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkCloudCloudServicesNetworkResource> Core.IOperationSource<NetworkCloudCloudServicesNetworkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NetworkCloudCloudServicesNetworkData.DeserializeNetworkCloudCloudServicesNetworkData(document.RootElement);

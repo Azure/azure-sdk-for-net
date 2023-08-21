@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<bool> healthy = default;
-            Optional<NetAppRelationshipStatus> relationshipStatus = default;
-            Optional<NetAppMirrorState> mirrorState = default;
-            Optional<string> unhealthyReason = default;
-            Optional<string> errorMessage = default;
-            Optional<long> totalTransferBytes = default;
+            Core.Optional<bool> healthy = default;
+            Core.Optional<NetAppRelationshipStatus> relationshipStatus = default;
+            Core.Optional<NetAppMirrorState> mirrorState = default;
+            Core.Optional<string> unhealthyReason = default;
+            Core.Optional<string> errorMessage = default;
+            Core.Optional<long> totalTransferBytes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("healthy"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new NetAppRestoreStatus(Optional.ToNullable(healthy), Optional.ToNullable(relationshipStatus), Optional.ToNullable(mirrorState), unhealthyReason.Value, errorMessage.Value, Optional.ToNullable(totalTransferBytes));
+            return new NetAppRestoreStatus(Core.Optional.ToNullable(healthy), Core.Optional.ToNullable(relationshipStatus), Core.Optional.ToNullable(mirrorState), unhealthyReason.Value, errorMessage.Value, Core.Optional.ToNullable(totalTransferBytes));
         }
     }
 }

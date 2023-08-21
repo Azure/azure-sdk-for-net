@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of PrometheusForwarderDataSource. </summary>
         public PrometheusForwarderDataSource()
         {
-            Streams = new ChangeTrackingList<DataCollectionRuleKnownPrometheusForwarderDataSourceStream>();
-            LabelIncludeFilter = new ChangeTrackingDictionary<string, string>();
+            Streams = new Core.ChangeTrackingList<DataCollectionRuleKnownPrometheusForwarderDataSourceStream>();
+            LabelIncludeFilter = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of PrometheusForwarderDataSource. </summary>

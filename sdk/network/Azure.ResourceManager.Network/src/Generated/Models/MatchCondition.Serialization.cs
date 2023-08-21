@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class MatchCondition : IUtf8JsonSerializable
+    public partial class MatchCondition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("matchVariables"u8);
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndArray();
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(Operator.ToString());
-            if (Optional.IsDefined(NegationConditon))
+            if (Core.Optional.IsDefined(NegationConditon))
             {
                 writer.WritePropertyName("negationConditon"u8);
                 writer.WriteBooleanValue(NegationConditon.Value);
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Transforms))
+            if (Core.Optional.IsCollectionDefined(Transforms))
             {
                 writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();
@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.Network.Models
             }
             IList<MatchVariable> matchVariables = default;
             WebApplicationFirewallOperator @operator = default;
-            Optional<bool> negationConditon = default;
+            Core.Optional<bool> negationConditon = default;
             IList<string> matchValues = default;
-            Optional<IList<WebApplicationFirewallTransform>> transforms = default;
+            Core.Optional<IList<WebApplicationFirewallTransform>> transforms = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("matchVariables"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new MatchCondition(matchVariables, @operator, Optional.ToNullable(negationConditon), matchValues, Optional.ToList(transforms));
+            return new MatchCondition(matchVariables, @operator, Core.Optional.ToNullable(negationConditon), matchValues, Core.Optional.ToList(transforms));
         }
     }
 }

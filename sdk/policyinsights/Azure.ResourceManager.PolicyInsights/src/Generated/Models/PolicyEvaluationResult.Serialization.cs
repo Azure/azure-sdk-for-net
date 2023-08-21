@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<PolicyReference> policyInfo = default;
-            Optional<string> evaluationResult = default;
-            Optional<PolicyEvaluationDetails> evaluationDetails = default;
+            Core.Optional<PolicyReference> policyInfo = default;
+            Core.Optional<string> evaluationResult = default;
+            Core.Optional<PolicyEvaluationDetails> evaluationDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyInfo"u8))

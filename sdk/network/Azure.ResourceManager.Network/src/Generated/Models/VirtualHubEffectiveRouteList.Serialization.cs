@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VirtualHubEffectiveRoute>> value = default;
+            Core.Optional<IReadOnlyList<VirtualHubEffectiveRoute>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VirtualHubEffectiveRouteList(Optional.ToList(value));
+            return new VirtualHubEffectiveRouteList(Core.Optional.ToList(value));
         }
     }
 }

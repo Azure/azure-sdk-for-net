@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of MetricAlertStatusCollection. </summary>
         internal MetricAlertStatusCollection()
         {
-            Value = new ChangeTrackingList<MetricAlertStatus>();
+            Value = new Core.ChangeTrackingList<MetricAlertStatus>();
         }
 
         /// <summary> Initializes a new instance of MetricAlertStatusCollection. </summary>

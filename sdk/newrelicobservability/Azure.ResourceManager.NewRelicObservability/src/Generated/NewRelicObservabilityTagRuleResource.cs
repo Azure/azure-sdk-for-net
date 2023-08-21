@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             try
             {
                 var response = await _newRelicObservabilityTagRuleTagRulesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NewRelicObservabilityArmOperation(_newRelicObservabilityTagRuleTagRulesClientDiagnostics, Pipeline, _newRelicObservabilityTagRuleTagRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NewRelicObservabilityArmOperation(_newRelicObservabilityTagRuleTagRulesClientDiagnostics, Pipeline, _newRelicObservabilityTagRuleTagRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             try
             {
                 var response = _newRelicObservabilityTagRuleTagRulesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NewRelicObservabilityArmOperation(_newRelicObservabilityTagRuleTagRulesClientDiagnostics, Pipeline, _newRelicObservabilityTagRuleTagRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NewRelicObservabilityArmOperation(_newRelicObservabilityTagRuleTagRulesClientDiagnostics, Pipeline, _newRelicObservabilityTagRuleTagRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

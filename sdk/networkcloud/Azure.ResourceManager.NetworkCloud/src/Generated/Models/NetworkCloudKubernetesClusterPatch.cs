@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of NetworkCloudKubernetesClusterPatch. </summary>
         public NetworkCloudKubernetesClusterPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The Azure resource tags that will replace the existing ones. </summary>

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class RouteOperationSource : IOperationSource<RouteResource>
+    internal class RouteOperationSource : Core.IOperationSource<RouteResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        RouteResource IOperationSource<RouteResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        RouteResource Core.IOperationSource<RouteResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = RouteData.DeserializeRouteData(document.RootElement);
             return new RouteResource(_client, data);
         }
 
-        async ValueTask<RouteResource> IOperationSource<RouteResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<RouteResource> Core.IOperationSource<RouteResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = RouteData.DeserializeRouteData(document.RootElement);

@@ -10,82 +10,82 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppVolumeExportPolicyRule : IUtf8JsonSerializable
+    public partial class NetAppVolumeExportPolicyRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RuleIndex))
+            if (Core.Optional.IsDefined(RuleIndex))
             {
                 writer.WritePropertyName("ruleIndex"u8);
                 writer.WriteNumberValue(RuleIndex.Value);
             }
-            if (Optional.IsDefined(IsUnixReadOnly))
+            if (Core.Optional.IsDefined(IsUnixReadOnly))
             {
                 writer.WritePropertyName("unixReadOnly"u8);
                 writer.WriteBooleanValue(IsUnixReadOnly.Value);
             }
-            if (Optional.IsDefined(IsUnixReadWrite))
+            if (Core.Optional.IsDefined(IsUnixReadWrite))
             {
                 writer.WritePropertyName("unixReadWrite"u8);
                 writer.WriteBooleanValue(IsUnixReadWrite.Value);
             }
-            if (Optional.IsDefined(IsKerberos5ReadOnly))
+            if (Core.Optional.IsDefined(IsKerberos5ReadOnly))
             {
                 writer.WritePropertyName("kerberos5ReadOnly"u8);
                 writer.WriteBooleanValue(IsKerberos5ReadOnly.Value);
             }
-            if (Optional.IsDefined(IsKerberos5ReadWrite))
+            if (Core.Optional.IsDefined(IsKerberos5ReadWrite))
             {
                 writer.WritePropertyName("kerberos5ReadWrite"u8);
                 writer.WriteBooleanValue(IsKerberos5ReadWrite.Value);
             }
-            if (Optional.IsDefined(IsKerberos5iReadOnly))
+            if (Core.Optional.IsDefined(IsKerberos5iReadOnly))
             {
                 writer.WritePropertyName("kerberos5iReadOnly"u8);
                 writer.WriteBooleanValue(IsKerberos5iReadOnly.Value);
             }
-            if (Optional.IsDefined(IsKerberos5iReadWrite))
+            if (Core.Optional.IsDefined(IsKerberos5iReadWrite))
             {
                 writer.WritePropertyName("kerberos5iReadWrite"u8);
                 writer.WriteBooleanValue(IsKerberos5iReadWrite.Value);
             }
-            if (Optional.IsDefined(IsKerberos5pReadOnly))
+            if (Core.Optional.IsDefined(IsKerberos5pReadOnly))
             {
                 writer.WritePropertyName("kerberos5pReadOnly"u8);
                 writer.WriteBooleanValue(IsKerberos5pReadOnly.Value);
             }
-            if (Optional.IsDefined(IsKerberos5pReadWrite))
+            if (Core.Optional.IsDefined(IsKerberos5pReadWrite))
             {
                 writer.WritePropertyName("kerberos5pReadWrite"u8);
                 writer.WriteBooleanValue(IsKerberos5pReadWrite.Value);
             }
-            if (Optional.IsDefined(AllowCifsProtocol))
+            if (Core.Optional.IsDefined(AllowCifsProtocol))
             {
                 writer.WritePropertyName("cifs"u8);
                 writer.WriteBooleanValue(AllowCifsProtocol.Value);
             }
-            if (Optional.IsDefined(AllowNfsV3Protocol))
+            if (Core.Optional.IsDefined(AllowNfsV3Protocol))
             {
                 writer.WritePropertyName("nfsv3"u8);
                 writer.WriteBooleanValue(AllowNfsV3Protocol.Value);
             }
-            if (Optional.IsDefined(AllowNfsV41Protocol))
+            if (Core.Optional.IsDefined(AllowNfsV41Protocol))
             {
                 writer.WritePropertyName("nfsv41"u8);
                 writer.WriteBooleanValue(AllowNfsV41Protocol.Value);
             }
-            if (Optional.IsDefined(AllowedClients))
+            if (Core.Optional.IsDefined(AllowedClients))
             {
                 writer.WritePropertyName("allowedClients"u8);
                 writer.WriteStringValue(AllowedClients);
             }
-            if (Optional.IsDefined(HasRootAccess))
+            if (Core.Optional.IsDefined(HasRootAccess))
             {
                 writer.WritePropertyName("hasRootAccess"u8);
                 writer.WriteBooleanValue(HasRootAccess.Value);
             }
-            if (Optional.IsDefined(ChownMode))
+            if (Core.Optional.IsDefined(ChownMode))
             {
                 writer.WritePropertyName("chownMode"u8);
                 writer.WriteStringValue(ChownMode.Value.ToString());
@@ -99,21 +99,21 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<int> ruleIndex = default;
-            Optional<bool> unixReadOnly = default;
-            Optional<bool> unixReadWrite = default;
-            Optional<bool> kerberos5ReadOnly = default;
-            Optional<bool> kerberos5ReadWrite = default;
-            Optional<bool> kerberos5iReadOnly = default;
-            Optional<bool> kerberos5iReadWrite = default;
-            Optional<bool> kerberos5pReadOnly = default;
-            Optional<bool> kerberos5pReadWrite = default;
-            Optional<bool> cifs = default;
-            Optional<bool> nfsv3 = default;
-            Optional<bool> nfsv41 = default;
-            Optional<string> allowedClients = default;
-            Optional<bool> hasRootAccess = default;
-            Optional<NetAppChownMode> chownMode = default;
+            Core.Optional<int> ruleIndex = default;
+            Core.Optional<bool> unixReadOnly = default;
+            Core.Optional<bool> unixReadWrite = default;
+            Core.Optional<bool> kerberos5ReadOnly = default;
+            Core.Optional<bool> kerberos5ReadWrite = default;
+            Core.Optional<bool> kerberos5iReadOnly = default;
+            Core.Optional<bool> kerberos5iReadWrite = default;
+            Core.Optional<bool> kerberos5pReadOnly = default;
+            Core.Optional<bool> kerberos5pReadWrite = default;
+            Core.Optional<bool> cifs = default;
+            Core.Optional<bool> nfsv3 = default;
+            Core.Optional<bool> nfsv41 = default;
+            Core.Optional<string> allowedClients = default;
+            Core.Optional<bool> hasRootAccess = default;
+            Core.Optional<NetAppChownMode> chownMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleIndex"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new NetAppVolumeExportPolicyRule(Optional.ToNullable(ruleIndex), Optional.ToNullable(unixReadOnly), Optional.ToNullable(unixReadWrite), Optional.ToNullable(kerberos5ReadOnly), Optional.ToNullable(kerberos5ReadWrite), Optional.ToNullable(kerberos5iReadOnly), Optional.ToNullable(kerberos5iReadWrite), Optional.ToNullable(kerberos5pReadOnly), Optional.ToNullable(kerberos5pReadWrite), Optional.ToNullable(cifs), Optional.ToNullable(nfsv3), Optional.ToNullable(nfsv41), allowedClients.Value, Optional.ToNullable(hasRootAccess), Optional.ToNullable(chownMode));
+            return new NetAppVolumeExportPolicyRule(Core.Optional.ToNullable(ruleIndex), Core.Optional.ToNullable(unixReadOnly), Core.Optional.ToNullable(unixReadWrite), Core.Optional.ToNullable(kerberos5ReadOnly), Core.Optional.ToNullable(kerberos5ReadWrite), Core.Optional.ToNullable(kerberos5iReadOnly), Core.Optional.ToNullable(kerberos5iReadWrite), Core.Optional.ToNullable(kerberos5pReadOnly), Core.Optional.ToNullable(kerberos5pReadWrite), Core.Optional.ToNullable(cifs), Core.Optional.ToNullable(nfsv3), Core.Optional.ToNullable(nfsv41), allowedClients.Value, Core.Optional.ToNullable(hasRootAccess), Core.Optional.ToNullable(chownMode));
         }
     }
 }

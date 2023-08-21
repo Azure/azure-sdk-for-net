@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of LoadBalancerVipSwapContent. </summary>
         public LoadBalancerVipSwapContent()
         {
-            FrontendIPConfigurations = new ChangeTrackingList<LoadBalancerVipSwapRequestFrontendIPConfiguration>();
+            FrontendIPConfigurations = new Core.ChangeTrackingList<LoadBalancerVipSwapRequestFrontendIPConfiguration>();
         }
 
         /// <summary> A list of frontend IP configuration resources that should swap VIPs. </summary>

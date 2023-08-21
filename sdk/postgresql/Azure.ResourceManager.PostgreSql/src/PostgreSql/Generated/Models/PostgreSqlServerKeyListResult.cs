@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <summary> Initializes a new instance of PostgreSqlServerKeyListResult. </summary>
         internal PostgreSqlServerKeyListResult()
         {
-            Value = new ChangeTrackingList<PostgreSqlServerKeyData>();
+            Value = new Core.ChangeTrackingList<PostgreSqlServerKeyData>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlServerKeyListResult. </summary>

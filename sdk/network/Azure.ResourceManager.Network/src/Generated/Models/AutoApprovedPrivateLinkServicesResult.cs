@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of AutoApprovedPrivateLinkServicesResult. </summary>
         internal AutoApprovedPrivateLinkServicesResult()
         {
-            Value = new ChangeTrackingList<AutoApprovedPrivateLinkService>();
+            Value = new Core.ChangeTrackingList<AutoApprovedPrivateLinkService>();
         }
 
         /// <summary> Initializes a new instance of AutoApprovedPrivateLinkServicesResult. </summary>

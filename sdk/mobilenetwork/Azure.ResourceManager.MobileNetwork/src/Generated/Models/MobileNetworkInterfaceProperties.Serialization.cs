@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class MobileNetworkInterfaceProperties : IUtf8JsonSerializable
+    public partial class MobileNetworkInterfaceProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(IPv4Address))
+            if (Core.Optional.IsDefined(IPv4Address))
             {
                 writer.WritePropertyName("ipv4Address"u8);
                 writer.WriteStringValue(IPv4Address);
             }
-            if (Optional.IsDefined(IPv4Subnet))
+            if (Core.Optional.IsDefined(IPv4Subnet))
             {
                 writer.WritePropertyName("ipv4Subnet"u8);
                 writer.WriteStringValue(IPv4Subnet);
             }
-            if (Optional.IsDefined(IPv4Gateway))
+            if (Core.Optional.IsDefined(IPv4Gateway))
             {
                 writer.WritePropertyName("ipv4Gateway"u8);
                 writer.WriteStringValue(IPv4Gateway);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> ipv4Address = default;
-            Optional<string> ipv4Subnet = default;
-            Optional<string> ipv4Gateway = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> ipv4Address = default;
+            Core.Optional<string> ipv4Subnet = default;
+            Core.Optional<string> ipv4Gateway = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

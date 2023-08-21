@@ -18,8 +18,8 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<InnerError> innererror = default;
+            Core.Optional<string> code = default;
+            Core.Optional<InnerError> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))

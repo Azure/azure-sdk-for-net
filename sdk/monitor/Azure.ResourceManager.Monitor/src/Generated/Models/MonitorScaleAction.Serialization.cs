@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorScaleAction : IUtf8JsonSerializable
+    public partial class MonitorScaleAction : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("direction"u8);
             writer.WriteStringValue(Direction.ToSerialString());
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ScaleType.ToSerialString());
-            if (Optional.IsDefined(Value))
+            if (Core.Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             MonitorScaleDirection direction = default;
             MonitorScaleType type = default;
-            Optional<string> value = default;
+            Core.Optional<string> value = default;
             TimeSpan cooldown = default;
             foreach (var property in element.EnumerateObject())
             {

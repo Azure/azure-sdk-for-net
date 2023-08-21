@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of PacketCaptureData. </summary>
         internal PacketCaptureData()
         {
-            Filters = new ChangeTrackingList<PacketCaptureFilter>();
+            Filters = new Core.ChangeTrackingList<PacketCaptureFilter>();
         }
 
         /// <summary> Initializes a new instance of PacketCaptureData. </summary>

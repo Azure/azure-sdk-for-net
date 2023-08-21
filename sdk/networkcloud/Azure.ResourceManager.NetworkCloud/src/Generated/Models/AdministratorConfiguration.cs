@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of AdministratorConfiguration. </summary>
         public AdministratorConfiguration()
         {
-            SshPublicKeys = new ChangeTrackingList<NetworkCloudSshPublicKey>();
+            SshPublicKeys = new Core.ChangeTrackingList<NetworkCloudSshPublicKey>();
         }
 
         /// <summary> Initializes a new instance of AdministratorConfiguration. </summary>

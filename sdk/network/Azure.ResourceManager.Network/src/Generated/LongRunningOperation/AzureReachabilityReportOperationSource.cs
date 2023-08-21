@@ -14,15 +14,15 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class AzureReachabilityReportOperationSource : IOperationSource<AzureReachabilityReport>
+    internal class AzureReachabilityReportOperationSource : Core.IOperationSource<AzureReachabilityReport>
     {
-        AzureReachabilityReport IOperationSource<AzureReachabilityReport>.CreateResult(Response response, CancellationToken cancellationToken)
+        AzureReachabilityReport Core.IOperationSource<AzureReachabilityReport>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return AzureReachabilityReport.DeserializeAzureReachabilityReport(document.RootElement);
         }
 
-        async ValueTask<AzureReachabilityReport> IOperationSource<AzureReachabilityReport>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AzureReachabilityReport> Core.IOperationSource<AzureReachabilityReport>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return AzureReachabilityReport.DeserializeAzureReachabilityReport(document.RootElement);

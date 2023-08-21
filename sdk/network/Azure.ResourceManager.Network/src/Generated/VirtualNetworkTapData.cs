@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of VirtualNetworkTapData. </summary>
         public VirtualNetworkTapData()
         {
-            NetworkInterfaceTapConfigurations = new ChangeTrackingList<NetworkInterfaceTapConfigurationData>();
+            NetworkInterfaceTapConfigurations = new Core.ChangeTrackingList<NetworkInterfaceTapConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkTapData. </summary>

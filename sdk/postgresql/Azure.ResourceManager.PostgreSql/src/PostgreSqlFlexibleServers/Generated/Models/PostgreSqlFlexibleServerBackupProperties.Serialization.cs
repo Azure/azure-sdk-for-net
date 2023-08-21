@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServerBackupProperties : IUtf8JsonSerializable
+    public partial class PostgreSqlFlexibleServerBackupProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BackupRetentionDays))
+            if (Core.Optional.IsDefined(BackupRetentionDays))
             {
                 writer.WritePropertyName("backupRetentionDays"u8);
                 writer.WriteNumberValue(BackupRetentionDays.Value);
             }
-            if (Optional.IsDefined(GeoRedundantBackup))
+            if (Core.Optional.IsDefined(GeoRedundantBackup))
             {
                 writer.WritePropertyName("geoRedundantBackup"u8);
                 writer.WriteStringValue(GeoRedundantBackup.Value.ToString());
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<int> backupRetentionDays = default;
-            Optional<PostgreSqlFlexibleServerGeoRedundantBackupEnum> geoRedundantBackup = default;
-            Optional<DateTimeOffset> earliestRestoreDate = default;
+            Core.Optional<int> backupRetentionDays = default;
+            Core.Optional<PostgreSqlFlexibleServerGeoRedundantBackupEnum> geoRedundantBackup = default;
+            Core.Optional<DateTimeOffset> earliestRestoreDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backupRetentionDays"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerBackupProperties(Optional.ToNullable(backupRetentionDays), Optional.ToNullable(geoRedundantBackup), Optional.ToNullable(earliestRestoreDate));
+            return new PostgreSqlFlexibleServerBackupProperties(Core.Optional.ToNullable(backupRetentionDays), Core.Optional.ToNullable(geoRedundantBackup), Core.Optional.ToNullable(earliestRestoreDate));
         }
     }
 }

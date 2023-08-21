@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of LogAnalyticsQuerySearchProperties. </summary>
         public LogAnalyticsQuerySearchProperties()
         {
-            Tags = new ChangeTrackingDictionary<string, IList<string>>();
+            Tags = new Core.ChangeTrackingDictionary<string, IList<string>>();
         }
 
         /// <summary> The related metadata items for the function. </summary>

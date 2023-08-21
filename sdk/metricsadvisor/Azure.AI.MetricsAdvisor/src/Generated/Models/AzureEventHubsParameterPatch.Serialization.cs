@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class AzureEventHubsParameterPatch : IUtf8JsonSerializable
+    internal partial class AzureEventHubsParameterPatch : Core.IUtf8JsonSerializable
     {
     }
 }

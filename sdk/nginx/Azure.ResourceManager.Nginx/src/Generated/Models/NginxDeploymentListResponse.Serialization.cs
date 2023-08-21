@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NginxDeploymentData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<NginxDeploymentData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     continue;
                 }
             }
-            return new NginxDeploymentListResponse(Optional.ToList(value), nextLink.Value);
+            return new NginxDeploymentListResponse(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

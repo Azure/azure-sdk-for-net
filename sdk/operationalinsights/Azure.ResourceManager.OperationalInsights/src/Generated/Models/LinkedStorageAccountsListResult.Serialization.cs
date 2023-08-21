@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<OperationalInsightsLinkedStorageAccountsData>> value = default;
+            Core.Optional<IReadOnlyList<OperationalInsightsLinkedStorageAccountsData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     continue;
                 }
             }
-            return new LinkedStorageAccountsListResult(Optional.ToList(value));
+            return new LinkedStorageAccountsListResult(Core.Optional.ToList(value));
         }
     }
 }

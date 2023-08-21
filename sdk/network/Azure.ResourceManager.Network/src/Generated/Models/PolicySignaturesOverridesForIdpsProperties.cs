@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PolicySignaturesOverridesForIdpsProperties. </summary>
         public PolicySignaturesOverridesForIdpsProperties()
         {
-            Signatures = new ChangeTrackingDictionary<string, string>();
+            Signatures = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of PolicySignaturesOverridesForIdpsProperties. </summary>

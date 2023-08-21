@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<long> availableApplianceStorageGB = default;
-            Optional<long> availableCoreCount = default;
-            Optional<long> availableHostStorageGB = default;
-            Optional<long> availableMemoryGB = default;
-            Optional<long> totalApplianceStorageGB = default;
-            Optional<long> totalCoreCount = default;
-            Optional<long> totalHostStorageGB = default;
-            Optional<long> totalMemoryGB = default;
+            Core.Optional<long> availableApplianceStorageGB = default;
+            Core.Optional<long> availableCoreCount = default;
+            Core.Optional<long> availableHostStorageGB = default;
+            Core.Optional<long> availableMemoryGB = default;
+            Core.Optional<long> totalApplianceStorageGB = default;
+            Core.Optional<long> totalCoreCount = default;
+            Core.Optional<long> totalHostStorageGB = default;
+            Core.Optional<long> totalMemoryGB = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("availableApplianceStorageGB"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new ClusterCapacity(Optional.ToNullable(availableApplianceStorageGB), Optional.ToNullable(availableCoreCount), Optional.ToNullable(availableHostStorageGB), Optional.ToNullable(availableMemoryGB), Optional.ToNullable(totalApplianceStorageGB), Optional.ToNullable(totalCoreCount), Optional.ToNullable(totalHostStorageGB), Optional.ToNullable(totalMemoryGB));
+            return new ClusterCapacity(Core.Optional.ToNullable(availableApplianceStorageGB), Core.Optional.ToNullable(availableCoreCount), Core.Optional.ToNullable(availableHostStorageGB), Core.Optional.ToNullable(availableMemoryGB), Core.Optional.ToNullable(totalApplianceStorageGB), Core.Optional.ToNullable(totalCoreCount), Core.Optional.ToNullable(totalHostStorageGB), Core.Optional.ToNullable(totalMemoryGB));
         }
     }
 }

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal partial class MonitorBase : IUtf8JsonSerializable
+    internal partial class MonitorBase : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BaseType))
+            if (Core.Optional.IsDefined(BaseType))
             {
                 writer.WritePropertyName("baseType"u8);
                 writer.WriteStringValue(BaseType);
             }
-            if (Optional.IsDefined(BaseData))
+            if (Core.Optional.IsDefined(BaseData))
             {
                 writer.WritePropertyName("baseData"u8);
                 writer.WriteObjectValue(BaseData);

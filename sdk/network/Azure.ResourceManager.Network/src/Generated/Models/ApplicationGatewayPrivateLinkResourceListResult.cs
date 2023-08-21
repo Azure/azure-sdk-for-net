@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayPrivateLinkResourceListResult. </summary>
         internal ApplicationGatewayPrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<ApplicationGatewayPrivateLinkResource>();
+            Value = new Core.ChangeTrackingList<ApplicationGatewayPrivateLinkResource>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayPrivateLinkResourceListResult. </summary>

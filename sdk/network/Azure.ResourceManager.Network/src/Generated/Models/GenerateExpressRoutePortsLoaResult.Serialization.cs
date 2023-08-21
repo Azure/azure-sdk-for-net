@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> encodedContent = default;
+            Core.Optional<string> encodedContent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encodedContent"u8))

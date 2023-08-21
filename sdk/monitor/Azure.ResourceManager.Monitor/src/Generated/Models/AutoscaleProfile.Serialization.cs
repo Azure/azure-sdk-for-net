@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class AutoscaleProfile : IUtf8JsonSerializable
+    public partial class AutoscaleProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(FixedDate))
+            if (Core.Optional.IsDefined(FixedDate))
             {
                 writer.WritePropertyName("fixedDate"u8);
                 writer.WriteObjectValue(FixedDate);
             }
-            if (Optional.IsDefined(Recurrence))
+            if (Core.Optional.IsDefined(Recurrence))
             {
                 writer.WritePropertyName("recurrence"u8);
                 writer.WriteObjectValue(Recurrence);
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Monitor.Models
             string name = default;
             MonitorScaleCapacity capacity = default;
             IList<AutoscaleRule> rules = default;
-            Optional<MonitorTimeWindow> fixedDate = default;
-            Optional<MonitorRecurrence> recurrence = default;
+            Core.Optional<MonitorTimeWindow> fixedDate = default;
+            Core.Optional<MonitorRecurrence> recurrence = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

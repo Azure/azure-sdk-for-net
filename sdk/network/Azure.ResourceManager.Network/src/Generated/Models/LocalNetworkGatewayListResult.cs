@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of LocalNetworkGatewayListResult. </summary>
         internal LocalNetworkGatewayListResult()
         {
-            Value = new ChangeTrackingList<LocalNetworkGatewayData>();
+            Value = new Core.ChangeTrackingList<LocalNetworkGatewayData>();
         }
 
         /// <summary> Initializes a new instance of LocalNetworkGatewayListResult. </summary>

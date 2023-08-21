@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> subscriptionId = default;
-            Optional<IReadOnlyList<MySqlFlexibleServerDelegatedSubnetUsage>> delegatedSubnetsUsage = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<string> subscriptionId = default;
+            Core.Optional<IReadOnlyList<MySqlFlexibleServerDelegatedSubnetUsage>> delegatedSubnetsUsage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new MySqlFlexibleServerVirtualNetworkSubnetUsageResult(Optional.ToNullable(location), subscriptionId.Value, Optional.ToList(delegatedSubnetsUsage));
+            return new MySqlFlexibleServerVirtualNetworkSubnetUsageResult(Core.Optional.ToNullable(location), subscriptionId.Value, Core.Optional.ToList(delegatedSubnetsUsage));
         }
     }
 }

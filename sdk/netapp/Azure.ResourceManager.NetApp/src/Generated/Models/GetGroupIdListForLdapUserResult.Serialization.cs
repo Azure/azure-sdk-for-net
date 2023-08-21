@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> groupIdsForLdapUser = default;
+            Core.Optional<IReadOnlyList<string>> groupIdsForLdapUser = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupIdsForLdapUser"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new GetGroupIdListForLdapUserResult(Optional.ToList(groupIdsForLdapUser));
+            return new GetGroupIdListForLdapUserResult(Core.Optional.ToList(groupIdsForLdapUser));
         }
     }
 }

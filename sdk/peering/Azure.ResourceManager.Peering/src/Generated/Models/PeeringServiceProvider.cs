@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <summary> Initializes a new instance of PeeringServiceProvider. </summary>
         public PeeringServiceProvider()
         {
-            PeeringLocations = new ChangeTrackingList<string>();
+            PeeringLocations = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PeeringServiceProvider. </summary>

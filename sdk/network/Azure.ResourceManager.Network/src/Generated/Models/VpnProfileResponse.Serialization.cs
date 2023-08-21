@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<Uri> profileUrl = default;
+            Core.Optional<Uri> profileUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("profileUrl"u8))

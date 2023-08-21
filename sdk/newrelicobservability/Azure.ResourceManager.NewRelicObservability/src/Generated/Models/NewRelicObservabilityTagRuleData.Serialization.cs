@@ -12,19 +12,19 @@ using Azure.ResourceManager.NewRelicObservability.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability
 {
-    public partial class NewRelicObservabilityTagRuleData : IUtf8JsonSerializable
+    public partial class NewRelicObservabilityTagRuleData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(LogRules))
+            if (Core.Optional.IsDefined(LogRules))
             {
                 writer.WritePropertyName("logRules"u8);
                 writer.WriteObjectValue(LogRules);
             }
-            if (Optional.IsDefined(MetricRules))
+            if (Core.Optional.IsDefined(MetricRules))
             {
                 writer.WritePropertyName("metricRules"u8);
                 writer.WriteObjectValue(MetricRules);
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.NewRelicObservability
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NewRelicProvisioningState> provisioningState = default;
-            Optional<NewRelicObservabilityLogRules> logRules = default;
-            Optional<NewRelicObservabilityMetricRules> metricRules = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<NewRelicProvisioningState> provisioningState = default;
+            Core.Optional<NewRelicObservabilityLogRules> logRules = default;
+            Core.Optional<NewRelicObservabilityMetricRules> metricRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                     continue;
                 }
             }
-            return new NewRelicObservabilityTagRuleData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), logRules.Value, metricRules.Value);
+            return new NewRelicObservabilityTagRuleData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), logRules.Value, metricRules.Value);
         }
     }
 }

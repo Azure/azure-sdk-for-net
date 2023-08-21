@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of ServiceEndpointPolicyDefinitionData. </summary>
         public ServiceEndpointPolicyDefinitionData()
         {
-            ServiceResources = new ChangeTrackingList<ResourceIdentifier>();
+            ServiceResources = new Core.ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of ServiceEndpointPolicyDefinitionData. </summary>

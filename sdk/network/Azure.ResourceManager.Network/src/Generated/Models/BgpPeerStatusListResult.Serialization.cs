@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BgpPeerStatus>> value = default;
+            Core.Optional<IReadOnlyList<BgpPeerStatus>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new BgpPeerStatusListResult(Optional.ToList(value));
+            return new BgpPeerStatusListResult(Core.Optional.ToList(value));
         }
     }
 }

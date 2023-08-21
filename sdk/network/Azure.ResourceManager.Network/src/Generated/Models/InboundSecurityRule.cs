@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of InboundSecurityRule. </summary>
         public InboundSecurityRule()
         {
-            Rules = new ChangeTrackingList<InboundSecurityRules>();
+            Rules = new Core.ChangeTrackingList<InboundSecurityRules>();
         }
 
         /// <summary> Initializes a new instance of InboundSecurityRule. </summary>

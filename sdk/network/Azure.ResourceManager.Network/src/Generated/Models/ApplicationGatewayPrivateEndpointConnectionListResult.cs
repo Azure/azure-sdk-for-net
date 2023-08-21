@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayPrivateEndpointConnectionListResult. </summary>
         internal ApplicationGatewayPrivateEndpointConnectionListResult()
         {
-            Value = new ChangeTrackingList<ApplicationGatewayPrivateEndpointConnectionData>();
+            Value = new Core.ChangeTrackingList<ApplicationGatewayPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayPrivateEndpointConnectionListResult. </summary>

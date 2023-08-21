@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewaySslPredefinedPolicy. </summary>
         public ApplicationGatewaySslPredefinedPolicy()
         {
-            CipherSuites = new ChangeTrackingList<ApplicationGatewaySslCipherSuite>();
+            CipherSuites = new Core.ChangeTrackingList<ApplicationGatewaySslCipherSuite>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewaySslPredefinedPolicy. </summary>

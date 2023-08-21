@@ -13,12 +13,12 @@ using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudClusterManagerData : IUtf8JsonSerializable
+    public partial class NetworkCloudClusterManagerData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AnalyticsWorkspaceId))
+            if (Core.Optional.IsDefined(AnalyticsWorkspaceId))
             {
                 writer.WritePropertyName("analyticsWorkspaceId"u8);
                 writer.WriteStringValue(AnalyticsWorkspaceId);
             }
-            if (Optional.IsCollectionDefined(AvailabilityZones))
+            if (Core.Optional.IsCollectionDefined(AvailabilityZones))
             {
                 writer.WritePropertyName("availabilityZones"u8);
                 writer.WriteStartArray();
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.NetworkCloud
             }
             writer.WritePropertyName("fabricControllerId"u8);
             writer.WriteStringValue(FabricControllerId);
-            if (Optional.IsDefined(ManagedResourceGroupConfiguration))
+            if (Core.Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
                 writer.WriteObjectValue(ManagedResourceGroupConfiguration);
             }
-            if (Optional.IsDefined(VmSize))
+            if (Core.Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
@@ -70,22 +70,22 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> analyticsWorkspaceId = default;
-            Optional<IList<string>> availabilityZones = default;
-            Optional<IReadOnlyList<ClusterAvailableVersion>> clusterVersions = default;
-            Optional<ClusterManagerDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ResourceIdentifier> analyticsWorkspaceId = default;
+            Core.Optional<IList<string>> availabilityZones = default;
+            Core.Optional<IReadOnlyList<ClusterAvailableVersion>> clusterVersions = default;
+            Core.Optional<ClusterManagerDetailedStatus> detailedStatus = default;
+            Core.Optional<string> detailedStatusMessage = default;
             ResourceIdentifier fabricControllerId = default;
-            Optional<ManagedResourceGroupConfiguration> managedResourceGroupConfiguration = default;
-            Optional<ExtendedLocation> managerExtendedLocation = default;
-            Optional<ClusterManagerProvisioningState> provisioningState = default;
-            Optional<string> vmSize = default;
+            Core.Optional<ManagedResourceGroupConfiguration> managedResourceGroupConfiguration = default;
+            Core.Optional<ExtendedLocation> managerExtendedLocation = default;
+            Core.Optional<ClusterManagerProvisioningState> provisioningState = default;
+            Core.Optional<string> vmSize = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     continue;
                 }
             }
-            return new NetworkCloudClusterManagerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, analyticsWorkspaceId.Value, Optional.ToList(availabilityZones), Optional.ToList(clusterVersions), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, fabricControllerId, managedResourceGroupConfiguration.Value, managerExtendedLocation.Value, Optional.ToNullable(provisioningState), vmSize.Value);
+            return new NetworkCloudClusterManagerData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, analyticsWorkspaceId.Value, Core.Optional.ToList(availabilityZones), Core.Optional.ToList(clusterVersions), Core.Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, fabricControllerId, managedResourceGroupConfiguration.Value, managerExtendedLocation.Value, Core.Optional.ToNullable(provisioningState), vmSize.Value);
         }
     }
 }

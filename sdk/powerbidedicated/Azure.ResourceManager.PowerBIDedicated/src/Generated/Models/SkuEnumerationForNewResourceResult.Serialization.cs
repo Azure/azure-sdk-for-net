@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CapacitySku>> value = default;
+            Core.Optional<IReadOnlyList<CapacitySku>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     continue;
                 }
             }
-            return new SkuEnumerationForNewResourceResult(Optional.ToList(value));
+            return new SkuEnumerationForNewResourceResult(Core.Optional.ToList(value));
         }
     }
 }

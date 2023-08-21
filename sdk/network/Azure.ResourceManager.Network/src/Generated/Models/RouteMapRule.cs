@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of RouteMapRule. </summary>
         public RouteMapRule()
         {
-            MatchCriteria = new ChangeTrackingList<RouteCriterion>();
-            Actions = new ChangeTrackingList<RouteMapAction>();
+            MatchCriteria = new Core.ChangeTrackingList<RouteCriterion>();
+            Actions = new Core.ChangeTrackingList<RouteMapAction>();
         }
 
         /// <summary> Initializes a new instance of RouteMapRule. </summary>

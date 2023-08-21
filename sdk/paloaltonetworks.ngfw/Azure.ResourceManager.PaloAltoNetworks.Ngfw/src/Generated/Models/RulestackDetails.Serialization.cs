@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class RulestackDetails : IUtf8JsonSerializable
+    public partial class RulestackDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (Core.Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(RulestackId))
+            if (Core.Optional.IsDefined(RulestackId))
             {
                 writer.WritePropertyName("rulestackId"u8);
                 writer.WriteStringValue(RulestackId);
             }
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> rulestackId = default;
-            Optional<AzureLocation> location = default;
+            Core.Optional<ResourceIdentifier> resourceId = default;
+            Core.Optional<string> rulestackId = default;
+            Core.Optional<AzureLocation> location = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     continue;
                 }
             }
-            return new RulestackDetails(resourceId.Value, rulestackId.Value, Optional.ToNullable(location));
+            return new RulestackDetails(resourceId.Value, rulestackId.Value, Core.Optional.ToNullable(location));
         }
     }
 }

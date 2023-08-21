@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MonitorIncident>> value = default;
+            Core.Optional<IReadOnlyList<MonitorIncident>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new IncidentListResult(Optional.ToList(value));
+            return new IncidentListResult(Core.Optional.ToList(value));
         }
     }
 }

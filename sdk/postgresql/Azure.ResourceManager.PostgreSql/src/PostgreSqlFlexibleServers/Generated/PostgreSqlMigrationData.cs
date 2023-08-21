@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="location"> The location. </param>
         public PostgreSqlMigrationData(AzureLocation location) : base(location)
         {
-            DbsToMigrate = new ChangeTrackingList<string>();
-            DbsToTriggerCutoverOn = new ChangeTrackingList<string>();
-            DbsToCancelMigrationOn = new ChangeTrackingList<string>();
+            DbsToMigrate = new Core.ChangeTrackingList<string>();
+            DbsToTriggerCutoverOn = new Core.ChangeTrackingList<string>();
+            DbsToCancelMigrationOn = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlMigrationData. </summary>

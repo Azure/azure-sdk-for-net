@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of NetAppVolumeGroupMetadata. </summary>
         public NetAppVolumeGroupMetadata()
         {
-            GlobalPlacementRules = new ChangeTrackingList<NetAppVolumePlacementRule>();
+            GlobalPlacementRules = new Core.ChangeTrackingList<NetAppVolumePlacementRule>();
         }
 
         /// <summary> Initializes a new instance of NetAppVolumeGroupMetadata. </summary>

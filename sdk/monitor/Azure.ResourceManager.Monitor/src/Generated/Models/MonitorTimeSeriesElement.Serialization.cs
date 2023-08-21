@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MonitorMetadataValue>> metadatavalues = default;
-            Optional<IReadOnlyList<MonitorMetricValue>> data = default;
+            Core.Optional<IReadOnlyList<MonitorMetadataValue>> metadatavalues = default;
+            Core.Optional<IReadOnlyList<MonitorMetricValue>> data = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metadatavalues"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MonitorTimeSeriesElement(Optional.ToList(metadatavalues), Optional.ToList(data));
+            return new MonitorTimeSeriesElement(Core.Optional.ToList(metadatavalues), Core.Optional.ToList(data));
         }
     }
 }

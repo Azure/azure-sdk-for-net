@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ExpressRouteCircuitPeeringListResult. </summary>
         internal ExpressRouteCircuitPeeringListResult()
         {
-            Value = new ChangeTrackingList<ExpressRouteCircuitPeeringData>();
+            Value = new Core.ChangeTrackingList<ExpressRouteCircuitPeeringData>();
         }
 
         /// <summary> Initializes a new instance of ExpressRouteCircuitPeeringListResult. </summary>

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of BastionHostData. </summary>
         public BastionHostData()
         {
-            IPConfigurations = new ChangeTrackingList<BastionHostIPConfiguration>();
+            IPConfigurations = new Core.ChangeTrackingList<BastionHostIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of BastionHostData. </summary>

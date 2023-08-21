@@ -15,14 +15,14 @@ using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudBareMetalMachineKeySetData : IUtf8JsonSerializable
+    public partial class NetworkCloudBareMetalMachineKeySetData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(OSGroupName))
+            if (Core.Optional.IsDefined(OSGroupName))
             {
                 writer.WritePropertyName("osGroupName"u8);
                 writer.WriteStringValue(OSGroupName);
@@ -78,23 +78,23 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             string azureGroupId = default;
-            Optional<BareMetalMachineKeySetDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
+            Core.Optional<BareMetalMachineKeySetDetailedStatus> detailedStatus = default;
+            Core.Optional<string> detailedStatusMessage = default;
             DateTimeOffset expiration = default;
             IList<IPAddress> jumpHostsAllowed = default;
-            Optional<DateTimeOffset> lastValidation = default;
-            Optional<string> osGroupName = default;
+            Core.Optional<DateTimeOffset> lastValidation = default;
+            Core.Optional<string> osGroupName = default;
             BareMetalMachineKeySetPrivilegeLevel privilegeLevel = default;
-            Optional<BareMetalMachineKeySetProvisioningState> provisioningState = default;
+            Core.Optional<BareMetalMachineKeySetProvisioningState> provisioningState = default;
             IList<KeySetUser> userList = default;
-            Optional<IReadOnlyList<KeySetUserStatus>> userListStatus = default;
+            Core.Optional<IReadOnlyList<KeySetUserStatus>> userListStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     continue;
                 }
             }
-            return new NetworkCloudBareMetalMachineKeySetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, azureGroupId, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, expiration, jumpHostsAllowed, Optional.ToNullable(lastValidation), osGroupName.Value, privilegeLevel, Optional.ToNullable(provisioningState), userList, Optional.ToList(userListStatus));
+            return new NetworkCloudBareMetalMachineKeySetData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, extendedLocation, azureGroupId, Core.Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, expiration, jumpHostsAllowed, Core.Optional.ToNullable(lastValidation), osGroupName.Value, privilegeLevel, Core.Optional.ToNullable(provisioningState), userList, Core.Optional.ToList(userListStatus));
         }
     }
 }

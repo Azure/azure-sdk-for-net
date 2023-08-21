@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetAppBackupPolicyData>> value = default;
+            Core.Optional<IReadOnlyList<NetAppBackupPolicyData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new BackupPoliciesList(Optional.ToList(value));
+            return new BackupPoliciesList(Core.Optional.ToList(value));
         }
     }
 }

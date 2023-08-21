@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<double> currentValue = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<double> limit = default;
-            Optional<VirtualNetworkUsageName> name = default;
-            Optional<string> unit = default;
+            Core.Optional<double> currentValue = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<double> limit = default;
+            Core.Optional<VirtualNetworkUsageName> name = default;
+            Core.Optional<string> unit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("currentValue"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VirtualNetworkUsage(Optional.ToNullable(currentValue), id.Value, Optional.ToNullable(limit), name.Value, unit.Value);
+            return new VirtualNetworkUsage(Core.Optional.ToNullable(currentValue), id.Value, Core.Optional.ToNullable(limit), name.Value, unit.Value);
         }
     }
 }

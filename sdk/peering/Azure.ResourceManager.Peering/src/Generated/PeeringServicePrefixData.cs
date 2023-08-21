@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Peering
         /// <summary> Initializes a new instance of PeeringServicePrefixData. </summary>
         public PeeringServicePrefixData()
         {
-            Events = new ChangeTrackingList<PeeringServicePrefixEvent>();
+            Events = new Core.ChangeTrackingList<PeeringServicePrefixEvent>();
         }
 
         /// <summary> Initializes a new instance of PeeringServicePrefixData. </summary>

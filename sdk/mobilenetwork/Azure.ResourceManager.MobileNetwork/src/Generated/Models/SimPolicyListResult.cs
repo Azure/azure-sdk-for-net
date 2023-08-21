@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <summary> Initializes a new instance of SimPolicyListResult. </summary>
         internal SimPolicyListResult()
         {
-            Value = new ChangeTrackingList<MobileNetworkSimPolicyData>();
+            Value = new Core.ChangeTrackingList<MobileNetworkSimPolicyData>();
         }
 
         /// <summary> Initializes a new instance of SimPolicyListResult. </summary>

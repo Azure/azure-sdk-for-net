@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetAppAccountData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<NetAppAccountData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new NetAppAccountList(Optional.ToList(value), nextLink.Value);
+            return new NetAppAccountList(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

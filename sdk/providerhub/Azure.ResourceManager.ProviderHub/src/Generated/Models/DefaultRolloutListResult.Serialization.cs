@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DefaultRolloutData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<DefaultRolloutData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new DefaultRolloutListResult(Optional.ToList(value), nextLink.Value);
+            return new DefaultRolloutListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

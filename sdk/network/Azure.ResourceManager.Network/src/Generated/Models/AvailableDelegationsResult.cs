@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of AvailableDelegationsResult. </summary>
         internal AvailableDelegationsResult()
         {
-            Value = new ChangeTrackingList<AvailableDelegation>();
+            Value = new Core.ChangeTrackingList<AvailableDelegation>();
         }
 
         /// <summary> Initializes a new instance of AvailableDelegationsResult. </summary>

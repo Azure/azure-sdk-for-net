@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class HubPublicIPAddresses : IUtf8JsonSerializable
+    public partial class HubPublicIPAddresses : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Addresses))
+            if (Core.Optional.IsCollectionDefined(Addresses))
             {
                 writer.WritePropertyName("addresses"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Count))
+            if (Core.Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<AzureFirewallPublicIPAddress>> addresses = default;
-            Optional<int> count = default;
+            Core.Optional<IList<AzureFirewallPublicIPAddress>> addresses = default;
+            Core.Optional<int> count = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addresses"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new HubPublicIPAddresses(Optional.ToList(addresses), Optional.ToNullable(count));
+            return new HubPublicIPAddresses(Core.Optional.ToList(addresses), Core.Optional.ToNullable(count));
         }
     }
 }

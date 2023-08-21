@@ -14,14 +14,14 @@ using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudVirtualMachineConsoleData : IUtf8JsonSerializable
+    public partial class NetworkCloudVirtualMachineConsoleData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteStringValue(Enabled.ToString());
-            if (Optional.IsDefined(ExpireOn))
+            if (Core.Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiration"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
@@ -56,20 +56,20 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ConsoleDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ConsoleDetailedStatus> detailedStatus = default;
+            Core.Optional<string> detailedStatusMessage = default;
             ConsoleEnabled enabled = default;
-            Optional<DateTimeOffset> expiration = default;
-            Optional<ResourceIdentifier> privateLinkServiceId = default;
-            Optional<ConsoleProvisioningState> provisioningState = default;
+            Core.Optional<DateTimeOffset> expiration = default;
+            Core.Optional<ResourceIdentifier> privateLinkServiceId = default;
+            Core.Optional<ConsoleProvisioningState> provisioningState = default;
             NetworkCloudSshPublicKey sshPublicKey = default;
-            Optional<Guid> virtualMachineAccessId = default;
+            Core.Optional<Guid> virtualMachineAccessId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     continue;
                 }
             }
-            return new NetworkCloudVirtualMachineConsoleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, enabled, Optional.ToNullable(expiration), privateLinkServiceId.Value, Optional.ToNullable(provisioningState), sshPublicKey, Optional.ToNullable(virtualMachineAccessId));
+            return new NetworkCloudVirtualMachineConsoleData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, extendedLocation, Core.Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, enabled, Core.Optional.ToNullable(expiration), privateLinkServiceId.Value, Core.Optional.ToNullable(provisioningState), sshPublicKey, Core.Optional.ToNullable(virtualMachineAccessId));
         }
     }
 }

@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="location"> The location. </param>
         public ActionGroupData(AzureLocation location) : base(location)
         {
-            EmailReceivers = new ChangeTrackingList<MonitorEmailReceiver>();
-            SmsReceivers = new ChangeTrackingList<MonitorSmsReceiver>();
-            WebhookReceivers = new ChangeTrackingList<MonitorWebhookReceiver>();
-            ItsmReceivers = new ChangeTrackingList<MonitorItsmReceiver>();
-            AzureAppPushReceivers = new ChangeTrackingList<MonitorAzureAppPushReceiver>();
-            AutomationRunbookReceivers = new ChangeTrackingList<MonitorAutomationRunbookReceiver>();
-            VoiceReceivers = new ChangeTrackingList<MonitorVoiceReceiver>();
-            LogicAppReceivers = new ChangeTrackingList<MonitorLogicAppReceiver>();
-            AzureFunctionReceivers = new ChangeTrackingList<MonitorAzureFunctionReceiver>();
-            ArmRoleReceivers = new ChangeTrackingList<MonitorArmRoleReceiver>();
-            EventHubReceivers = new ChangeTrackingList<MonitorEventHubReceiver>();
+            EmailReceivers = new Core.ChangeTrackingList<MonitorEmailReceiver>();
+            SmsReceivers = new Core.ChangeTrackingList<MonitorSmsReceiver>();
+            WebhookReceivers = new Core.ChangeTrackingList<MonitorWebhookReceiver>();
+            ItsmReceivers = new Core.ChangeTrackingList<MonitorItsmReceiver>();
+            AzureAppPushReceivers = new Core.ChangeTrackingList<MonitorAzureAppPushReceiver>();
+            AutomationRunbookReceivers = new Core.ChangeTrackingList<MonitorAutomationRunbookReceiver>();
+            VoiceReceivers = new Core.ChangeTrackingList<MonitorVoiceReceiver>();
+            LogicAppReceivers = new Core.ChangeTrackingList<MonitorLogicAppReceiver>();
+            AzureFunctionReceivers = new Core.ChangeTrackingList<MonitorAzureFunctionReceiver>();
+            ArmRoleReceivers = new Core.ChangeTrackingList<MonitorArmRoleReceiver>();
+            EventHubReceivers = new Core.ChangeTrackingList<MonitorEventHubReceiver>();
         }
 
         /// <summary> Initializes a new instance of ActionGroupData. </summary>

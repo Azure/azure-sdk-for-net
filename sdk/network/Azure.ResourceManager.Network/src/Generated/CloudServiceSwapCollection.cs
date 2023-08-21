@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _cloudServiceSwapVipSwapRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_cloudServiceSwapVipSwapClientDiagnostics, Pipeline, _cloudServiceSwapVipSwapRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation(_cloudServiceSwapVipSwapClientDiagnostics, Pipeline, _cloudServiceSwapVipSwapRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _cloudServiceSwapVipSwapRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, data, cancellationToken);
-                var operation = new NetworkArmOperation(_cloudServiceSwapVipSwapClientDiagnostics, Pipeline, _cloudServiceSwapVipSwapRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation(_cloudServiceSwapVipSwapClientDiagnostics, Pipeline, _cloudServiceSwapVipSwapRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Network
         public virtual AsyncPageable<CloudServiceSwapResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServiceSwapVipSwapRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CloudServiceSwapResource(Client, CloudServiceSwapData.DeserializeCloudServiceSwapData(e)), _cloudServiceSwapVipSwapClientDiagnostics, Pipeline, "CloudServiceSwapCollection.GetAll", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CloudServiceSwapResource(Client, CloudServiceSwapData.DeserializeCloudServiceSwapData(e)), _cloudServiceSwapVipSwapClientDiagnostics, Pipeline, "CloudServiceSwapCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Network
         public virtual Pageable<CloudServiceSwapResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServiceSwapVipSwapRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CloudServiceSwapResource(Client, CloudServiceSwapData.DeserializeCloudServiceSwapData(e)), _cloudServiceSwapVipSwapClientDiagnostics, Pipeline, "CloudServiceSwapCollection.GetAll", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CloudServiceSwapResource(Client, CloudServiceSwapData.DeserializeCloudServiceSwapData(e)), _cloudServiceSwapVipSwapClientDiagnostics, Pipeline, "CloudServiceSwapCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -19,7 +19,7 @@ namespace Azure.Monitor.Query.Models
                 return null;
             }
             string value = default;
-            Optional<string> localizedValue = default;
+            Core.Optional<string> localizedValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))

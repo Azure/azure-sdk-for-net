@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudStorageApplianceStorageAppliancesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudStorageApplianceResource>(new NetworkCloudStorageApplianceOperationSource(Client), _networkCloudStorageApplianceStorageAppliancesClientDiagnostics, Pipeline, _networkCloudStorageApplianceStorageAppliancesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkCloudArmOperation<NetworkCloudStorageApplianceResource>(new NetworkCloudStorageApplianceOperationSource(Client), _networkCloudStorageApplianceStorageAppliancesClientDiagnostics, Pipeline, _networkCloudStorageApplianceStorageAppliancesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudStorageApplianceStorageAppliancesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudStorageApplianceResource>(new NetworkCloudStorageApplianceOperationSource(Client), _networkCloudStorageApplianceStorageAppliancesClientDiagnostics, Pipeline, _networkCloudStorageApplianceStorageAppliancesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkCloudArmOperation<NetworkCloudStorageApplianceResource>(new NetworkCloudStorageApplianceOperationSource(Client), _networkCloudStorageApplianceStorageAppliancesClientDiagnostics, Pipeline, _networkCloudStorageApplianceStorageAppliancesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudStorageApplianceStorageAppliancesRestClient.DisableRemoteVendorManagementAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudStorageApplianceStorageAppliancesClientDiagnostics, Pipeline, _networkCloudStorageApplianceStorageAppliancesRestClient.CreateDisableRemoteVendorManagementRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudStorageApplianceStorageAppliancesClientDiagnostics, Pipeline, _networkCloudStorageApplianceStorageAppliancesRestClient.CreateDisableRemoteVendorManagementRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudStorageApplianceStorageAppliancesRestClient.DisableRemoteVendorManagement(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudStorageApplianceStorageAppliancesClientDiagnostics, Pipeline, _networkCloudStorageApplianceStorageAppliancesRestClient.CreateDisableRemoteVendorManagementRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudStorageApplianceStorageAppliancesClientDiagnostics, Pipeline, _networkCloudStorageApplianceStorageAppliancesRestClient.CreateDisableRemoteVendorManagementRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudStorageApplianceStorageAppliancesRestClient.EnableRemoteVendorManagementAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudStorageApplianceStorageAppliancesClientDiagnostics, Pipeline, _networkCloudStorageApplianceStorageAppliancesRestClient.CreateEnableRemoteVendorManagementRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudStorageApplianceStorageAppliancesClientDiagnostics, Pipeline, _networkCloudStorageApplianceStorageAppliancesRestClient.CreateEnableRemoteVendorManagementRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudStorageApplianceStorageAppliancesRestClient.EnableRemoteVendorManagement(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudStorageApplianceStorageAppliancesClientDiagnostics, Pipeline, _networkCloudStorageApplianceStorageAppliancesRestClient.CreateEnableRemoteVendorManagementRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudStorageApplianceStorageAppliancesClientDiagnostics, Pipeline, _networkCloudStorageApplianceStorageAppliancesRestClient.CreateEnableRemoteVendorManagementRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

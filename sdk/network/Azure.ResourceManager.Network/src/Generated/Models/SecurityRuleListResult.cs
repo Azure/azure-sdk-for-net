@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of SecurityRuleListResult. </summary>
         internal SecurityRuleListResult()
         {
-            Value = new ChangeTrackingList<SecurityRuleData>();
+            Value = new Core.ChangeTrackingList<SecurityRuleData>();
         }
 
         /// <summary> Initializes a new instance of SecurityRuleListResult. </summary>

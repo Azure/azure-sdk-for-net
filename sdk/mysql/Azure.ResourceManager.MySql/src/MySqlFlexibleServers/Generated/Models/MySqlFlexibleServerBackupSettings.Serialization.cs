@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerBackupSettings : IUtf8JsonSerializable
+    public partial class MySqlFlexibleServerBackupSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("backupName"u8);
             writer.WriteStringValue(BackupName);
-            if (Optional.IsDefined(BackupFormat))
+            if (Core.Optional.IsDefined(BackupFormat))
             {
                 writer.WritePropertyName("backupFormat"u8);
                 writer.WriteStringValue(BackupFormat.Value.ToString());

@@ -12,39 +12,39 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    public partial class OperationalInsightsTableData : IUtf8JsonSerializable
+    public partial class OperationalInsightsTableData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RetentionInDays))
+            if (Core.Optional.IsDefined(RetentionInDays))
             {
                 writer.WritePropertyName("retentionInDays"u8);
                 writer.WriteNumberValue(RetentionInDays.Value);
             }
-            if (Optional.IsDefined(TotalRetentionInDays))
+            if (Core.Optional.IsDefined(TotalRetentionInDays))
             {
                 writer.WritePropertyName("totalRetentionInDays"u8);
                 writer.WriteNumberValue(TotalRetentionInDays.Value);
             }
-            if (Optional.IsDefined(SearchResults))
+            if (Core.Optional.IsDefined(SearchResults))
             {
                 writer.WritePropertyName("searchResults"u8);
                 writer.WriteObjectValue(SearchResults);
             }
-            if (Optional.IsDefined(RestoredLogs))
+            if (Core.Optional.IsDefined(RestoredLogs))
             {
                 writer.WritePropertyName("restoredLogs"u8);
                 writer.WriteObjectValue(RestoredLogs);
             }
-            if (Optional.IsDefined(Plan))
+            if (Core.Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 writer.WriteStringValue(Plan.Value.ToString());
             }
-            if (Optional.IsDefined(Schema))
+            if (Core.Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 writer.WriteObjectValue(Schema);
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.OperationalInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> retentionInDays = default;
-            Optional<int> totalRetentionInDays = default;
-            Optional<int> archiveRetentionInDays = default;
-            Optional<OperationalInsightsTableSearchResults> searchResults = default;
-            Optional<OperationalInsightsTableRestoredLogs> restoredLogs = default;
-            Optional<OperationalInsightsTableResultStatistics> resultStatistics = default;
-            Optional<OperationalInsightsTablePlan> plan = default;
-            Optional<string> lastPlanModifiedDate = default;
-            Optional<OperationalInsightsSchema> schema = default;
-            Optional<OperationalInsightsTableProvisioningState> provisioningState = default;
-            Optional<RetentionInDaysAsDefaultState> retentionInDaysAsDefault = default;
-            Optional<TotalRetentionInDaysAsDefaultState> totalRetentionInDaysAsDefault = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<int> retentionInDays = default;
+            Core.Optional<int> totalRetentionInDays = default;
+            Core.Optional<int> archiveRetentionInDays = default;
+            Core.Optional<OperationalInsightsTableSearchResults> searchResults = default;
+            Core.Optional<OperationalInsightsTableRestoredLogs> restoredLogs = default;
+            Core.Optional<OperationalInsightsTableResultStatistics> resultStatistics = default;
+            Core.Optional<OperationalInsightsTablePlan> plan = default;
+            Core.Optional<string> lastPlanModifiedDate = default;
+            Core.Optional<OperationalInsightsSchema> schema = default;
+            Core.Optional<OperationalInsightsTableProvisioningState> provisioningState = default;
+            Core.Optional<RetentionInDaysAsDefaultState> retentionInDaysAsDefault = default;
+            Core.Optional<TotalRetentionInDaysAsDefaultState> totalRetentionInDaysAsDefault = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     continue;
                 }
             }
-            return new OperationalInsightsTableData(id, name, type, systemData.Value, Optional.ToNullable(retentionInDays), Optional.ToNullable(totalRetentionInDays), Optional.ToNullable(archiveRetentionInDays), searchResults.Value, restoredLogs.Value, resultStatistics.Value, Optional.ToNullable(plan), lastPlanModifiedDate.Value, schema.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(retentionInDaysAsDefault), Optional.ToNullable(totalRetentionInDaysAsDefault));
+            return new OperationalInsightsTableData(id, name, type, systemData.Value, Core.Optional.ToNullable(retentionInDays), Core.Optional.ToNullable(totalRetentionInDays), Core.Optional.ToNullable(archiveRetentionInDays), searchResults.Value, restoredLogs.Value, resultStatistics.Value, Core.Optional.ToNullable(plan), lastPlanModifiedDate.Value, schema.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(retentionInDaysAsDefault), Core.Optional.ToNullable(totalRetentionInDaysAsDefault));
         }
     }
 }

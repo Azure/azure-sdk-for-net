@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class FirewallPolicySnat : IUtf8JsonSerializable
+    public partial class FirewallPolicySnat : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PrivateRanges))
+            if (Core.Optional.IsCollectionDefined(PrivateRanges))
             {
                 writer.WritePropertyName("privateRanges"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AutoLearnPrivateRanges))
+            if (Core.Optional.IsDefined(AutoLearnPrivateRanges))
             {
                 writer.WritePropertyName("autoLearnPrivateRanges"u8);
                 writer.WriteStringValue(AutoLearnPrivateRanges.Value.ToString());
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> privateRanges = default;
-            Optional<AutoLearnPrivateRangesMode> autoLearnPrivateRanges = default;
+            Core.Optional<IList<string>> privateRanges = default;
+            Core.Optional<AutoLearnPrivateRangesMode> autoLearnPrivateRanges = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateRanges"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new FirewallPolicySnat(Optional.ToList(privateRanges), Optional.ToNullable(autoLearnPrivateRanges));
+            return new FirewallPolicySnat(Core.Optional.ToList(privateRanges), Core.Optional.ToNullable(autoLearnPrivateRanges));
         }
     }
 }

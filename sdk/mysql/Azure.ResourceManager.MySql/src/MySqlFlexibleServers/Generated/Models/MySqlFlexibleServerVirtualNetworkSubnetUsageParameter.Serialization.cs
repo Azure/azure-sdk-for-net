@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerVirtualNetworkSubnetUsageParameter : IUtf8JsonSerializable
+    public partial class MySqlFlexibleServerVirtualNetworkSubnetUsageParameter : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualNetworkResourceId))
+            if (Core.Optional.IsDefined(VirtualNetworkResourceId))
             {
                 writer.WritePropertyName("virtualNetworkResourceId"u8);
                 writer.WriteStringValue(VirtualNetworkResourceId);

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <summary> Initializes a new instance of SimGroupListResult. </summary>
         internal SimGroupListResult()
         {
-            Value = new ChangeTrackingList<MobileNetworkSimGroupData>();
+            Value = new Core.ChangeTrackingList<MobileNetworkSimGroupData>();
         }
 
         /// <summary> Initializes a new instance of SimGroupListResult. </summary>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MySqlDatabaseData>> value = default;
+            Core.Optional<IReadOnlyList<MySqlDatabaseData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MySql.Models
                     continue;
                 }
             }
-            return new MySqlDatabaseListResult(Optional.ToList(value));
+            return new MySqlDatabaseListResult(Core.Optional.ToList(value));
         }
     }
 }

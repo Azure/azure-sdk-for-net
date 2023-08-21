@@ -12,17 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class RuleWebhookAction : IUtf8JsonSerializable
+    public partial class RuleWebhookAction : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceUri))
+            if (Core.Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUri"u8);
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (Core.Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<Uri> serviceUri = default;
-            Optional<IDictionary<string, string>> properties = default;
+            Core.Optional<Uri> serviceUri = default;
+            Core.Optional<IDictionary<string, string>> properties = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new RuleWebhookAction(odataType, serviceUri.Value, Optional.ToDictionary(properties));
+            return new RuleWebhookAction(odataType, serviceUri.Value, Core.Optional.ToDictionary(properties));
         }
     }
 }

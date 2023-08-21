@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    public partial class CheckRestrictionsResourceDetails : IUtf8JsonSerializable
+    public partial class CheckRestrictionsResourceDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("resourceContent"u8);
@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 #else
             JsonSerializer.Serialize(writer, JsonDocument.Parse(ResourceContent.ToString()).RootElement);
 #endif
-            if (Optional.IsDefined(ApiVersion))
+            if (Core.Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
-            if (Optional.IsDefined(Scope))
+            if (Core.Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);

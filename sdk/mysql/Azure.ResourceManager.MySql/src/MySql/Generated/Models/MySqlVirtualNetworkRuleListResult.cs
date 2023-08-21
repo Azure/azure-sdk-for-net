@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <summary> Initializes a new instance of MySqlVirtualNetworkRuleListResult. </summary>
         internal MySqlVirtualNetworkRuleListResult()
         {
-            Value = new ChangeTrackingList<MySqlVirtualNetworkRuleData>();
+            Value = new Core.ChangeTrackingList<MySqlVirtualNetworkRuleData>();
         }
 
         /// <summary> Initializes a new instance of MySqlVirtualNetworkRuleListResult. </summary>

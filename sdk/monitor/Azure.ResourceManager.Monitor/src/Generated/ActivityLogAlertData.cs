@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="location"> The location. </param>
         public ActivityLogAlertData(AzureLocation location) : base(location)
         {
-            Scopes = new ChangeTrackingList<string>();
+            Scopes = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ActivityLogAlertData. </summary>

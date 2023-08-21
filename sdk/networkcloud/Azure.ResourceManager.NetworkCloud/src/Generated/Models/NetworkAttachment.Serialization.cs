@@ -10,31 +10,31 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class NetworkAttachment : IUtf8JsonSerializable
+    public partial class NetworkAttachment : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("attachedNetworkId"u8);
             writer.WriteStringValue(AttachedNetworkId);
-            if (Optional.IsDefined(DefaultGateway))
+            if (Core.Optional.IsDefined(DefaultGateway))
             {
                 writer.WritePropertyName("defaultGateway"u8);
                 writer.WriteStringValue(DefaultGateway.Value.ToString());
             }
             writer.WritePropertyName("ipAllocationMethod"u8);
             writer.WriteStringValue(IPAllocationMethod.ToString());
-            if (Optional.IsDefined(IPv4Address))
+            if (Core.Optional.IsDefined(IPv4Address))
             {
                 writer.WritePropertyName("ipv4Address"u8);
                 writer.WriteStringValue(IPv4Address);
             }
-            if (Optional.IsDefined(IPv6Address))
+            if (Core.Optional.IsDefined(IPv6Address))
             {
                 writer.WritePropertyName("ipv6Address"u8);
                 writer.WriteStringValue(IPv6Address);
             }
-            if (Optional.IsDefined(NetworkAttachmentName))
+            if (Core.Optional.IsDefined(NetworkAttachmentName))
             {
                 writer.WritePropertyName("networkAttachmentName"u8);
                 writer.WriteStringValue(NetworkAttachmentName);
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             string attachedNetworkId = default;
-            Optional<DefaultGateway> defaultGateway = default;
+            Core.Optional<DefaultGateway> defaultGateway = default;
             VirtualMachineIPAllocationMethod ipAllocationMethod = default;
-            Optional<string> ipv4Address = default;
-            Optional<string> ipv6Address = default;
-            Optional<string> macAddress = default;
-            Optional<string> networkAttachmentName = default;
+            Core.Optional<string> ipv4Address = default;
+            Core.Optional<string> ipv6Address = default;
+            Core.Optional<string> macAddress = default;
+            Core.Optional<string> networkAttachmentName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("attachedNetworkId"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new NetworkAttachment(attachedNetworkId, Optional.ToNullable(defaultGateway), ipAllocationMethod, ipv4Address.Value, ipv6Address.Value, macAddress.Value, networkAttachmentName.Value);
+            return new NetworkAttachment(attachedNetworkId, Core.Optional.ToNullable(defaultGateway), ipAllocationMethod, ipv4Address.Value, ipv6Address.Value, macAddress.Value, networkAttachmentName.Value);
         }
     }
 }

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> additionalHostInformation = default;
-            Optional<IReadOnlyList<HardwareInventoryNetworkInterface>> interfaces = default;
-            Optional<IReadOnlyList<NetworkCloudNic>> nics = default;
+            Core.Optional<string> additionalHostInformation = default;
+            Core.Optional<IReadOnlyList<HardwareInventoryNetworkInterface>> interfaces = default;
+            Core.Optional<IReadOnlyList<NetworkCloudNic>> nics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("additionalHostInformation"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new HardwareInventory(additionalHostInformation.Value, Optional.ToList(interfaces), Optional.ToList(nics));
+            return new HardwareInventory(additionalHostInformation.Value, Core.Optional.ToList(interfaces), Core.Optional.ToList(nics));
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of IPAllocationData. </summary>
         public IPAllocationData()
         {
-            AllocationTags = new ChangeTrackingDictionary<string, string>();
+            AllocationTags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of IPAllocationData. </summary>

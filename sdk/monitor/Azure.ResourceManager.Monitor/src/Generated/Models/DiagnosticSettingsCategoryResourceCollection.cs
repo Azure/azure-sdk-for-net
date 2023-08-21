@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of DiagnosticSettingsCategoryResourceCollection. </summary>
         internal DiagnosticSettingsCategoryResourceCollection()
         {
-            Value = new ChangeTrackingList<DiagnosticSettingsCategoryData>();
+            Value = new Core.ChangeTrackingList<DiagnosticSettingsCategoryData>();
         }
 
         /// <summary> Initializes a new instance of DiagnosticSettingsCategoryResourceCollection. </summary>

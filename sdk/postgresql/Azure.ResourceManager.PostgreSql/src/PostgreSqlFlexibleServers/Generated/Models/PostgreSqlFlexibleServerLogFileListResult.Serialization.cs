@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PostgreSqlFlexibleServerLogFile>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<PostgreSqlFlexibleServerLogFile>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerLogFileListResult(Optional.ToList(value), nextLink.Value);
+            return new PostgreSqlFlexibleServerLogFileListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

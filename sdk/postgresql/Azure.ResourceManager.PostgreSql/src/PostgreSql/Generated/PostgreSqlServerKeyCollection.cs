@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PostgreSql
             try
             {
                 var response = await _postgreSqlServerKeyServerKeysRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PostgreSqlArmOperation<PostgreSqlServerKeyResource>(new PostgreSqlServerKeyOperationSource(Client), _postgreSqlServerKeyServerKeysClientDiagnostics, Pipeline, _postgreSqlServerKeyServerKeysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new PostgreSqlArmOperation<PostgreSqlServerKeyResource>(new PostgreSqlServerKeyOperationSource(Client), _postgreSqlServerKeyServerKeysClientDiagnostics, Pipeline, _postgreSqlServerKeyServerKeysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.PostgreSql
             try
             {
                 var response = _postgreSqlServerKeyServerKeysRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, data, cancellationToken);
-                var operation = new PostgreSqlArmOperation<PostgreSqlServerKeyResource>(new PostgreSqlServerKeyOperationSource(Client), _postgreSqlServerKeyServerKeysClientDiagnostics, Pipeline, _postgreSqlServerKeyServerKeysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new PostgreSqlArmOperation<PostgreSqlServerKeyResource>(new PostgreSqlServerKeyOperationSource(Client), _postgreSqlServerKeyServerKeysClientDiagnostics, Pipeline, _postgreSqlServerKeyServerKeysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.PostgreSql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlServerKeyServerKeysRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlServerKeyServerKeysRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlServerKeyResource(Client, PostgreSqlServerKeyData.DeserializePostgreSqlServerKeyData(e)), _postgreSqlServerKeyServerKeysClientDiagnostics, Pipeline, "PostgreSqlServerKeyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlServerKeyResource(Client, PostgreSqlServerKeyData.DeserializePostgreSqlServerKeyData(e)), _postgreSqlServerKeyServerKeysClientDiagnostics, Pipeline, "PostgreSqlServerKeyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.PostgreSql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlServerKeyServerKeysRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postgreSqlServerKeyServerKeysRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlServerKeyResource(Client, PostgreSqlServerKeyData.DeserializePostgreSqlServerKeyData(e)), _postgreSqlServerKeyServerKeysClientDiagnostics, Pipeline, "PostgreSqlServerKeyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostgreSqlServerKeyResource(Client, PostgreSqlServerKeyData.DeserializePostgreSqlServerKeyData(e)), _postgreSqlServerKeyServerKeysClientDiagnostics, Pipeline, "PostgreSqlServerKeyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ThrottlingMetric : IUtf8JsonSerializable
+    public partial class ThrottlingMetric : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(MetricType.ToString());
             writer.WritePropertyName("limit"u8);
             writer.WriteNumberValue(Limit);
-            if (Optional.IsDefined(Interval))
+            if (Core.Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteStringValue(Interval.Value, "P");
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             ThrottlingMetricType type = default;
             long limit = default;
-            Optional<TimeSpan> interval = default;
+            Core.Optional<TimeSpan> interval = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new ThrottlingMetric(type, limit, Optional.ToNullable(interval));
+            return new ThrottlingMetric(type, limit, Core.Optional.ToNullable(interval));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Initializes a new instance of FieldRestrictions. </summary>
         internal FieldRestrictions()
         {
-            Restrictions = new ChangeTrackingList<FieldRestriction>();
+            Restrictions = new Core.ChangeTrackingList<FieldRestriction>();
         }
 
         /// <summary> Initializes a new instance of FieldRestrictions. </summary>

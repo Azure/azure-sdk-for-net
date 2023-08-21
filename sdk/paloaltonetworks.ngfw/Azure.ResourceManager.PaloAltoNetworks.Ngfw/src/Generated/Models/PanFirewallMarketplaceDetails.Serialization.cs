@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class PanFirewallMarketplaceDetails : IUtf8JsonSerializable
+    public partial class PanFirewallMarketplaceDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("offerId"u8);
             writer.WriteStringValue(OfferId);
             writer.WritePropertyName("publisherId"u8);
             writer.WriteStringValue(PublisherId);
-            if (Optional.IsDefined(MarketplaceSubscriptionStatus))
+            if (Core.Optional.IsDefined(MarketplaceSubscriptionStatus))
             {
                 writer.WritePropertyName("marketplaceSubscriptionStatus"u8);
                 writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToString());
@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<string> marketplaceSubscriptionId = default;
+            Core.Optional<string> marketplaceSubscriptionId = default;
             string offerId = default;
             string publisherId = default;
-            Optional<MarketplaceSubscriptionStatus> marketplaceSubscriptionStatus = default;
+            Core.Optional<MarketplaceSubscriptionStatus> marketplaceSubscriptionStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("marketplaceSubscriptionId"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     continue;
                 }
             }
-            return new PanFirewallMarketplaceDetails(marketplaceSubscriptionId.Value, offerId, publisherId, Optional.ToNullable(marketplaceSubscriptionStatus));
+            return new PanFirewallMarketplaceDetails(marketplaceSubscriptionId.Value, offerId, publisherId, Core.Optional.ToNullable(marketplaceSubscriptionStatus));
         }
     }
 }

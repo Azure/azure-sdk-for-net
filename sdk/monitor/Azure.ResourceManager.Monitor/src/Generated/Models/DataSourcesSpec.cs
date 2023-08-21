@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of DataSourcesSpec. </summary>
         public DataSourcesSpec()
         {
-            PerformanceCounters = new ChangeTrackingList<PerfCounterDataSource>();
-            WindowsEventLogs = new ChangeTrackingList<WindowsEventLogDataSource>();
-            Syslog = new ChangeTrackingList<SyslogDataSource>();
-            Extensions = new ChangeTrackingList<ExtensionDataSource>();
-            LogFiles = new ChangeTrackingList<LogFilesDataSource>();
-            IisLogs = new ChangeTrackingList<IisLogsDataSource>();
-            WindowsFirewallLogs = new ChangeTrackingList<WindowsFirewallLogsDataSource>();
-            PrometheusForwarder = new ChangeTrackingList<PrometheusForwarderDataSource>();
-            PlatformTelemetry = new ChangeTrackingList<PlatformTelemetryDataSource>();
+            PerformanceCounters = new Core.ChangeTrackingList<PerfCounterDataSource>();
+            WindowsEventLogs = new Core.ChangeTrackingList<WindowsEventLogDataSource>();
+            Syslog = new Core.ChangeTrackingList<SyslogDataSource>();
+            Extensions = new Core.ChangeTrackingList<ExtensionDataSource>();
+            LogFiles = new Core.ChangeTrackingList<LogFilesDataSource>();
+            IisLogs = new Core.ChangeTrackingList<IisLogsDataSource>();
+            WindowsFirewallLogs = new Core.ChangeTrackingList<WindowsFirewallLogsDataSource>();
+            PrometheusForwarder = new Core.ChangeTrackingList<PrometheusForwarderDataSource>();
+            PlatformTelemetry = new Core.ChangeTrackingList<PlatformTelemetryDataSource>();
         }
 
         /// <summary> Initializes a new instance of DataSourcesSpec. </summary>

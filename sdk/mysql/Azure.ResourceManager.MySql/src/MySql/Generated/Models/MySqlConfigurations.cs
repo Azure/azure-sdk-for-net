@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <summary> Initializes a new instance of MySqlConfigurations. </summary>
         public MySqlConfigurations()
         {
-            Values = new ChangeTrackingList<MySqlConfigurationData>();
+            Values = new Core.ChangeTrackingList<MySqlConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of MySqlConfigurations. </summary>

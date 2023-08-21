@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> name = default;
             string status = default;
-            Optional<string> resourceId = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<double> percentComplete = default;
-            Optional<BinaryData> properties = default;
-            Optional<ResponseError> error = default;
+            Core.Optional<string> resourceId = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<double> percentComplete = default;
+            Core.Optional<BinaryData> properties = default;
+            Core.Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     continue;
                 }
             }
-            return new AsyncOperationStatus(id.Value, name.Value, status, resourceId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(percentComplete), properties.Value, error.Value);
+            return new AsyncOperationStatus(id.Value, name.Value, status, resourceId.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToNullable(percentComplete), properties.Value, error.Value);
         }
     }
 }

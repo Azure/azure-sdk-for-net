@@ -14,22 +14,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ExpressRouteCrossConnectionData : IUtf8JsonSerializable
+    public partial class ExpressRouteCrossConnectionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -42,22 +42,22 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExpressRouteCircuit))
+            if (Core.Optional.IsDefined(ExpressRouteCircuit))
             {
                 writer.WritePropertyName("expressRouteCircuit"u8);
                 JsonSerializer.Serialize(writer, ExpressRouteCircuit);
             }
-            if (Optional.IsDefined(ServiceProviderProvisioningState))
+            if (Core.Optional.IsDefined(ServiceProviderProvisioningState))
             {
                 writer.WritePropertyName("serviceProviderProvisioningState"u8);
                 writer.WriteStringValue(ServiceProviderProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(ServiceProviderNotes))
+            if (Core.Optional.IsDefined(ServiceProviderNotes))
             {
                 writer.WritePropertyName("serviceProviderNotes"u8);
                 writer.WriteStringValue(ServiceProviderNotes);
             }
-            if (Optional.IsCollectionDefined(Peerings))
+            if (Core.Optional.IsCollectionDefined(Peerings))
             {
                 writer.WritePropertyName("peerings"u8);
                 writer.WriteStartArray();
@@ -77,22 +77,22 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> primaryAzurePort = default;
-            Optional<string> secondaryAzurePort = default;
-            Optional<int> sTag = default;
-            Optional<string> peeringLocation = default;
-            Optional<int> bandwidthInMbps = default;
-            Optional<WritableSubResource> expressRouteCircuit = default;
-            Optional<ServiceProviderProvisioningState> serviceProviderProvisioningState = default;
-            Optional<string> serviceProviderNotes = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<IList<ExpressRouteCrossConnectionPeeringData>> peerings = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceType> type = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<string> primaryAzurePort = default;
+            Core.Optional<string> secondaryAzurePort = default;
+            Core.Optional<int> sTag = default;
+            Core.Optional<string> peeringLocation = default;
+            Core.Optional<int> bandwidthInMbps = default;
+            Core.Optional<WritableSubResource> expressRouteCircuit = default;
+            Core.Optional<ServiceProviderProvisioningState> serviceProviderProvisioningState = default;
+            Core.Optional<string> serviceProviderNotes = default;
+            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Core.Optional<IList<ExpressRouteCrossConnectionPeeringData>> peerings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRouteCrossConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), primaryAzurePort.Value, secondaryAzurePort.Value, Optional.ToNullable(sTag), peeringLocation.Value, Optional.ToNullable(bandwidthInMbps), expressRouteCircuit, Optional.ToNullable(serviceProviderProvisioningState), serviceProviderNotes.Value, Optional.ToNullable(provisioningState), Optional.ToList(peerings));
+            return new ExpressRouteCrossConnectionData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags), Core.Optional.ToNullable(etag), primaryAzurePort.Value, secondaryAzurePort.Value, Core.Optional.ToNullable(sTag), peeringLocation.Value, Core.Optional.ToNullable(bandwidthInMbps), expressRouteCircuit, Core.Optional.ToNullable(serviceProviderProvisioningState), serviceProviderNotes.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(peerings));
         }
     }
 }

@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PublicIPAddressDnsSettings : IUtf8JsonSerializable
+    public partial class PublicIPAddressDnsSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DomainNameLabel))
+            if (Core.Optional.IsDefined(DomainNameLabel))
             {
                 writer.WritePropertyName("domainNameLabel"u8);
                 writer.WriteStringValue(DomainNameLabel);
             }
-            if (Optional.IsDefined(DomainNameLabelScope))
+            if (Core.Optional.IsDefined(DomainNameLabelScope))
             {
                 writer.WritePropertyName("domainNameLabelScope"u8);
                 writer.WriteStringValue(DomainNameLabelScope.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Fqdn))
+            if (Core.Optional.IsDefined(Fqdn))
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (Optional.IsDefined(ReverseFqdn))
+            if (Core.Optional.IsDefined(ReverseFqdn))
             {
                 writer.WritePropertyName("reverseFqdn"u8);
                 writer.WriteStringValue(ReverseFqdn);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> domainNameLabel = default;
-            Optional<PublicIPAddressDnsSettingsDomainNameLabelScope> domainNameLabelScope = default;
-            Optional<string> fqdn = default;
-            Optional<string> reverseFqdn = default;
+            Core.Optional<string> domainNameLabel = default;
+            Core.Optional<PublicIPAddressDnsSettingsDomainNameLabelScope> domainNameLabelScope = default;
+            Core.Optional<string> fqdn = default;
+            Core.Optional<string> reverseFqdn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainNameLabel"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PublicIPAddressDnsSettings(domainNameLabel.Value, Optional.ToNullable(domainNameLabelScope), fqdn.Value, reverseFqdn.Value);
+            return new PublicIPAddressDnsSettings(domainNameLabel.Value, Core.Optional.ToNullable(domainNameLabelScope), fqdn.Value, reverseFqdn.Value);
         }
     }
 }

@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class NewRelicObservabilityLogRules : IUtf8JsonSerializable
+    public partial class NewRelicObservabilityLogRules : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SendAadLogs))
+            if (Core.Optional.IsDefined(SendAadLogs))
             {
                 writer.WritePropertyName("sendAadLogs"u8);
                 writer.WriteStringValue(SendAadLogs.Value.ToString());
             }
-            if (Optional.IsDefined(SendSubscriptionLogs))
+            if (Core.Optional.IsDefined(SendSubscriptionLogs))
             {
                 writer.WritePropertyName("sendSubscriptionLogs"u8);
                 writer.WriteStringValue(SendSubscriptionLogs.Value.ToString());
             }
-            if (Optional.IsDefined(SendActivityLogs))
+            if (Core.Optional.IsDefined(SendActivityLogs))
             {
                 writer.WritePropertyName("sendActivityLogs"u8);
                 writer.WriteStringValue(SendActivityLogs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(FilteringTags))
+            if (Core.Optional.IsCollectionDefined(FilteringTags))
             {
                 writer.WritePropertyName("filteringTags"u8);
                 writer.WriteStartArray();
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Optional<NewRelicObservabilitySendAadLogsStatus> sendAadLogs = default;
-            Optional<NewRelicObservabilitySendSubscriptionLogsStatus> sendSubscriptionLogs = default;
-            Optional<NewRelicObservabilitySendActivityLogsStatus> sendActivityLogs = default;
-            Optional<IList<NewRelicObservabilityFilteringTag>> filteringTags = default;
+            Core.Optional<NewRelicObservabilitySendAadLogsStatus> sendAadLogs = default;
+            Core.Optional<NewRelicObservabilitySendSubscriptionLogsStatus> sendSubscriptionLogs = default;
+            Core.Optional<NewRelicObservabilitySendActivityLogsStatus> sendActivityLogs = default;
+            Core.Optional<IList<NewRelicObservabilityFilteringTag>> filteringTags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sendAadLogs"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     continue;
                 }
             }
-            return new NewRelicObservabilityLogRules(Optional.ToNullable(sendAadLogs), Optional.ToNullable(sendSubscriptionLogs), Optional.ToNullable(sendActivityLogs), Optional.ToList(filteringTags));
+            return new NewRelicObservabilityLogRules(Core.Optional.ToNullable(sendAadLogs), Core.Optional.ToNullable(sendSubscriptionLogs), Core.Optional.ToNullable(sendActivityLogs), Core.Optional.ToList(filteringTags));
         }
     }
 }

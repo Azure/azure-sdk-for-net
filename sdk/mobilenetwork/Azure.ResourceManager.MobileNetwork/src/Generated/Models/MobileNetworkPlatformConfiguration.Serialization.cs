@@ -12,29 +12,29 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class MobileNetworkPlatformConfiguration : IUtf8JsonSerializable
+    public partial class MobileNetworkPlatformConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(PlatformType.ToString());
-            if (Optional.IsDefined(AzureStackEdgeDevice))
+            if (Core.Optional.IsDefined(AzureStackEdgeDevice))
             {
                 writer.WritePropertyName("azureStackEdgeDevice"u8);
                 JsonSerializer.Serialize(writer, AzureStackEdgeDevice);
             }
-            if (Optional.IsDefined(AzureStackHciCluster))
+            if (Core.Optional.IsDefined(AzureStackHciCluster))
             {
                 writer.WritePropertyName("azureStackHciCluster"u8);
                 JsonSerializer.Serialize(writer, AzureStackHciCluster);
             }
-            if (Optional.IsDefined(ConnectedCluster))
+            if (Core.Optional.IsDefined(ConnectedCluster))
             {
                 writer.WritePropertyName("connectedCluster"u8);
                 JsonSerializer.Serialize(writer, ConnectedCluster);
             }
-            if (Optional.IsDefined(CustomLocation))
+            if (Core.Optional.IsDefined(CustomLocation))
             {
                 writer.WritePropertyName("customLocation"u8);
                 JsonSerializer.Serialize(writer, CustomLocation);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 return null;
             }
             MobileNetworkPlatformType type = default;
-            Optional<WritableSubResource> azureStackEdgeDevice = default;
-            Optional<IReadOnlyList<WritableSubResource>> azureStackEdgeDevices = default;
-            Optional<WritableSubResource> azureStackHciCluster = default;
-            Optional<WritableSubResource> connectedCluster = default;
-            Optional<WritableSubResource> customLocation = default;
+            Core.Optional<WritableSubResource> azureStackEdgeDevice = default;
+            Core.Optional<IReadOnlyList<WritableSubResource>> azureStackEdgeDevices = default;
+            Core.Optional<WritableSubResource> azureStackHciCluster = default;
+            Core.Optional<WritableSubResource> connectedCluster = default;
+            Core.Optional<WritableSubResource> customLocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     continue;
                 }
             }
-            return new MobileNetworkPlatformConfiguration(type, azureStackEdgeDevice, Optional.ToList(azureStackEdgeDevices), azureStackHciCluster, connectedCluster, customLocation);
+            return new MobileNetworkPlatformConfiguration(type, azureStackEdgeDevice, Core.Optional.ToList(azureStackEdgeDevices), azureStackHciCluster, connectedCluster, customLocation);
         }
     }
 }

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayRedirectConfiguration. </summary>
         public ApplicationGatewayRedirectConfiguration()
         {
-            RequestRoutingRules = new ChangeTrackingList<WritableSubResource>();
-            UrlPathMaps = new ChangeTrackingList<WritableSubResource>();
-            PathRules = new ChangeTrackingList<WritableSubResource>();
+            RequestRoutingRules = new Core.ChangeTrackingList<WritableSubResource>();
+            UrlPathMaps = new Core.ChangeTrackingList<WritableSubResource>();
+            PathRules = new Core.ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayRedirectConfiguration. </summary>

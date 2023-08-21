@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
 
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
-            RuleGroups = new ChangeTrackingList<ExclusionManagedRuleGroup>();
+            RuleGroups = new Core.ChangeTrackingList<ExclusionManagedRuleGroup>();
         }
 
         /// <summary> Initializes a new instance of ExclusionManagedRuleSet. </summary>

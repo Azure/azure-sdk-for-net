@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
 
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
-            Tiers = new ChangeTrackingList<ApplicationGatewayTierType>();
+            Tiers = new Core.ChangeTrackingList<ApplicationGatewayTierType>();
             RuleGroups = ruleGroups.ToList();
         }
 

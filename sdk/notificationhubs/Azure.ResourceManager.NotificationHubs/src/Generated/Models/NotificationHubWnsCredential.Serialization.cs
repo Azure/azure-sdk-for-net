@@ -11,24 +11,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class NotificationHubWnsCredential : IUtf8JsonSerializable
+    public partial class NotificationHubWnsCredential : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PackageSid))
+            if (Core.Optional.IsDefined(PackageSid))
             {
                 writer.WritePropertyName("packageSid"u8);
                 writer.WriteStringValue(PackageSid);
             }
-            if (Optional.IsDefined(SecretKey))
+            if (Core.Optional.IsDefined(SecretKey))
             {
                 writer.WritePropertyName("secretKey"u8);
                 writer.WriteStringValue(SecretKey);
             }
-            if (Optional.IsDefined(WindowsLiveEndpoint))
+            if (Core.Optional.IsDefined(WindowsLiveEndpoint))
             {
                 writer.WritePropertyName("windowsLiveEndpoint"u8);
                 writer.WriteStringValue(WindowsLiveEndpoint.AbsoluteUri);
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            Optional<string> packageSid = default;
-            Optional<string> secretKey = default;
-            Optional<Uri> windowsLiveEndpoint = default;
+            Core.Optional<string> packageSid = default;
+            Core.Optional<string> secretKey = default;
+            Core.Optional<Uri> windowsLiveEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))

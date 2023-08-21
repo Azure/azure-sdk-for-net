@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of ScheduledQueryRuleCriteria. </summary>
         public ScheduledQueryRuleCriteria()
         {
-            AllOf = new ChangeTrackingList<ScheduledQueryRuleCondition>();
+            AllOf = new Core.ChangeTrackingList<ScheduledQueryRuleCondition>();
         }
 
         /// <summary> Initializes a new instance of ScheduledQueryRuleCriteria. </summary>

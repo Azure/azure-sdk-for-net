@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class PeeringExchangeConnection : IUtf8JsonSerializable
+    public partial class PeeringExchangeConnection : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PeeringDBFacilityId))
+            if (Core.Optional.IsDefined(PeeringDBFacilityId))
             {
                 writer.WritePropertyName("peeringDBFacilityId"u8);
                 writer.WriteNumberValue(PeeringDBFacilityId.Value);
             }
-            if (Optional.IsDefined(BgpSession))
+            if (Core.Optional.IsDefined(BgpSession))
             {
                 writer.WritePropertyName("bgpSession"u8);
                 writer.WriteObjectValue(BgpSession);
             }
-            if (Optional.IsDefined(ConnectionIdentifier))
+            if (Core.Optional.IsDefined(ConnectionIdentifier))
             {
                 writer.WritePropertyName("connectionIdentifier"u8);
                 writer.WriteStringValue(ConnectionIdentifier.Value);
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<int> peeringDBFacilityId = default;
-            Optional<PeeringConnectionState> connectionState = default;
-            Optional<PeeringBgpSession> bgpSession = default;
-            Optional<Guid> connectionIdentifier = default;
-            Optional<string> errorMessage = default;
+            Core.Optional<int> peeringDBFacilityId = default;
+            Core.Optional<PeeringConnectionState> connectionState = default;
+            Core.Optional<PeeringBgpSession> bgpSession = default;
+            Core.Optional<Guid> connectionIdentifier = default;
+            Core.Optional<string> errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("peeringDBFacilityId"u8))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Peering.Models
                     continue;
                 }
             }
-            return new PeeringExchangeConnection(Optional.ToNullable(peeringDBFacilityId), Optional.ToNullable(connectionState), bgpSession.Value, Optional.ToNullable(connectionIdentifier), errorMessage.Value);
+            return new PeeringExchangeConnection(Core.Optional.ToNullable(peeringDBFacilityId), Core.Optional.ToNullable(connectionState), bgpSession.Value, Core.Optional.ToNullable(connectionIdentifier), errorMessage.Value);
         }
     }
 }

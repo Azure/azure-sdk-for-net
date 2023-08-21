@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of NetAppRegionInfo. </summary>
         internal NetAppRegionInfo()
         {
-            AvailabilityZoneMappings = new ChangeTrackingList<AvailabilityZoneMapping>();
+            AvailabilityZoneMappings = new Core.ChangeTrackingList<AvailabilityZoneMapping>();
         }
 
         /// <summary> Initializes a new instance of NetAppRegionInfo. </summary>

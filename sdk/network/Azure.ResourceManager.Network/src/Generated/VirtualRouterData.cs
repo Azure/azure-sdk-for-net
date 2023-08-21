@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of VirtualRouterData. </summary>
         public VirtualRouterData()
         {
-            VirtualRouterIPs = new ChangeTrackingList<string>();
-            Peerings = new ChangeTrackingList<WritableSubResource>();
+            VirtualRouterIPs = new Core.ChangeTrackingList<string>();
+            Peerings = new Core.ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of VirtualRouterData. </summary>

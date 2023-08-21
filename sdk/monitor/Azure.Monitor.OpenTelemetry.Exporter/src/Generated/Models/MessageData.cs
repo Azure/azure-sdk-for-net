@@ -23,8 +23,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Argument.AssertNotNull(message, nameof(message));
 
             Message = message;
-            Properties = new ChangeTrackingDictionary<string, string>();
-            Measurements = new ChangeTrackingDictionary<string, double>();
+            Properties = new Core.ChangeTrackingDictionary<string, string>();
+            Measurements = new Core.ChangeTrackingDictionary<string, double>();
         }
 
         /// <summary> Trace message. </summary>

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PostgreSql
             try
             {
                 var response = await _postgreSqlDatabaseDatabasesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PostgreSqlArmOperation<PostgreSqlDatabaseResource>(new PostgreSqlDatabaseOperationSource(Client), _postgreSqlDatabaseDatabasesClientDiagnostics, Pipeline, _postgreSqlDatabaseDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new PostgreSqlArmOperation<PostgreSqlDatabaseResource>(new PostgreSqlDatabaseOperationSource(Client), _postgreSqlDatabaseDatabasesClientDiagnostics, Pipeline, _postgreSqlDatabaseDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.PostgreSql
             try
             {
                 var response = _postgreSqlDatabaseDatabasesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data, cancellationToken);
-                var operation = new PostgreSqlArmOperation<PostgreSqlDatabaseResource>(new PostgreSqlDatabaseOperationSource(Client), _postgreSqlDatabaseDatabasesClientDiagnostics, Pipeline, _postgreSqlDatabaseDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new PostgreSqlArmOperation<PostgreSqlDatabaseResource>(new PostgreSqlDatabaseOperationSource(Client), _postgreSqlDatabaseDatabasesClientDiagnostics, Pipeline, _postgreSqlDatabaseDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.PostgreSql
         public virtual AsyncPageable<PostgreSqlDatabaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlDatabaseDatabasesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PostgreSqlDatabaseResource(Client, PostgreSqlDatabaseData.DeserializePostgreSqlDatabaseData(e)), _postgreSqlDatabaseDatabasesClientDiagnostics, Pipeline, "PostgreSqlDatabaseCollection.GetAll", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PostgreSqlDatabaseResource(Client, PostgreSqlDatabaseData.DeserializePostgreSqlDatabaseData(e)), _postgreSqlDatabaseDatabasesClientDiagnostics, Pipeline, "PostgreSqlDatabaseCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.PostgreSql
         public virtual Pageable<PostgreSqlDatabaseResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlDatabaseDatabasesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new PostgreSqlDatabaseResource(Client, PostgreSqlDatabaseData.DeserializePostgreSqlDatabaseData(e)), _postgreSqlDatabaseDatabasesClientDiagnostics, Pipeline, "PostgreSqlDatabaseCollection.GetAll", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, e => new PostgreSqlDatabaseResource(Client, PostgreSqlDatabaseData.DeserializePostgreSqlDatabaseData(e)), _postgreSqlDatabaseDatabasesClientDiagnostics, Pipeline, "PostgreSqlDatabaseCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -12,17 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VpnClientRootCertificate : IUtf8JsonSerializable
+    public partial class VpnClientRootCertificate : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceType> type = default;
             BinaryData publicCertData = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            Core.Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VpnClientRootCertificate(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), publicCertData, Optional.ToNullable(provisioningState));
+            return new VpnClientRootCertificate(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), publicCertData, Core.Optional.ToNullable(provisioningState));
         }
     }
 }

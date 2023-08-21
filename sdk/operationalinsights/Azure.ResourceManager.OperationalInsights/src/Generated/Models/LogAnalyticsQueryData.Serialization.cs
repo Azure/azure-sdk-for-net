@@ -14,34 +14,34 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    public partial class LogAnalyticsQueryData : IUtf8JsonSerializable
+    public partial class LogAnalyticsQueryData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Body))
+            if (Core.Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
                 writer.WriteStringValue(Body);
             }
-            if (Optional.IsDefined(Related))
+            if (Core.Optional.IsDefined(Related))
             {
                 writer.WritePropertyName("related"u8);
                 writer.WriteObjectValue(Related);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
 #if NET6_0_OR_GREATER
@@ -84,17 +84,17 @@ namespace Azure.ResourceManager.OperationalInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> id0 = default;
-            Optional<string> displayName = default;
-            Optional<DateTimeOffset> timeCreated = default;
-            Optional<DateTimeOffset> timeModified = default;
-            Optional<string> author = default;
-            Optional<string> description = default;
-            Optional<string> body = default;
-            Optional<LogAnalyticsQueryRelatedMetadata> related = default;
-            Optional<IDictionary<string, IList<string>>> tags = default;
-            Optional<BinaryData> properties = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<Guid> id0 = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<DateTimeOffset> timeCreated = default;
+            Core.Optional<DateTimeOffset> timeModified = default;
+            Core.Optional<string> author = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> body = default;
+            Core.Optional<LogAnalyticsQueryRelatedMetadata> related = default;
+            Core.Optional<IDictionary<string, IList<string>>> tags = default;
+            Core.Optional<BinaryData> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     continue;
                 }
             }
-            return new LogAnalyticsQueryData(id, name, type, systemData.Value, Optional.ToNullable(id0), displayName.Value, Optional.ToNullable(timeCreated), Optional.ToNullable(timeModified), author.Value, description.Value, body.Value, related.Value, Optional.ToDictionary(tags), properties.Value);
+            return new LogAnalyticsQueryData(id, name, type, systemData.Value, Core.Optional.ToNullable(id0), displayName.Value, Core.Optional.ToNullable(timeCreated), Core.Optional.ToNullable(timeModified), author.Value, description.Value, body.Value, related.Value, Core.Optional.ToDictionary(tags), properties.Value);
         }
     }
 }

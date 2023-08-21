@@ -18,9 +18,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             {
                 return null;
             }
-            Optional<int> index = default;
-            Optional<int> statusCode = default;
-            Optional<string> message = default;
+            Core.Optional<int> index = default;
+            Core.Optional<int> statusCode = default;
+            Core.Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("index"u8))
@@ -47,7 +47,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     continue;
                 }
             }
-            return new TelemetryErrorDetails(Optional.ToNullable(index), Optional.ToNullable(statusCode), message.Value);
+            return new TelemetryErrorDetails(Core.Optional.ToNullable(index), Core.Optional.ToNullable(statusCode), message.Value);
         }
     }
 }

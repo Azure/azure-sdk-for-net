@@ -14,27 +14,27 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class PrivateLinkServiceData : IUtf8JsonSerializable
+    public partial class PrivateLinkServiceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtendedLocation))
+            if (Core.Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(LoadBalancerFrontendIPConfigurations))
+            if (Core.Optional.IsCollectionDefined(LoadBalancerFrontendIPConfigurations))
             {
                 writer.WritePropertyName("loadBalancerFrontendIpConfigurations"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPConfigurations))
+            if (Core.Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
@@ -67,17 +67,17 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Visibility))
+            if (Core.Optional.IsDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteObjectValue(Visibility);
             }
-            if (Optional.IsDefined(AutoApproval))
+            if (Core.Optional.IsDefined(AutoApproval))
             {
                 writer.WritePropertyName("autoApproval"u8);
                 writer.WriteObjectValue(AutoApproval);
             }
-            if (Optional.IsCollectionDefined(Fqdns))
+            if (Core.Optional.IsCollectionDefined(Fqdns))
             {
                 writer.WritePropertyName("fqdns"u8);
                 writer.WriteStartArray();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnableProxyProtocol))
+            if (Core.Optional.IsDefined(EnableProxyProtocol))
             {
                 writer.WritePropertyName("enableProxyProtocol"u8);
                 writer.WriteBooleanValue(EnableProxyProtocol.Value);
@@ -102,23 +102,23 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<FrontendIPConfigurationData>> loadBalancerFrontendIPConfigurations = default;
-            Optional<IList<PrivateLinkServiceIPConfiguration>> ipConfigurations = default;
-            Optional<IReadOnlyList<NetworkInterfaceData>> networkInterfaces = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<NetworkPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<PrivateLinkServicePropertiesVisibility> visibility = default;
-            Optional<PrivateLinkServicePropertiesAutoApproval> autoApproval = default;
-            Optional<IList<string>> fqdns = default;
-            Optional<string> @alias = default;
-            Optional<bool> enableProxyProtocol = default;
+            Core.Optional<ExtendedLocation> extendedLocation = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceType> type = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IList<FrontendIPConfigurationData>> loadBalancerFrontendIPConfigurations = default;
+            Core.Optional<IList<PrivateLinkServiceIPConfiguration>> ipConfigurations = default;
+            Core.Optional<IReadOnlyList<NetworkInterfaceData>> networkInterfaces = default;
+            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Core.Optional<IReadOnlyList<NetworkPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Core.Optional<PrivateLinkServicePropertiesVisibility> visibility = default;
+            Core.Optional<PrivateLinkServicePropertiesAutoApproval> autoApproval = default;
+            Core.Optional<IList<string>> fqdns = default;
+            Core.Optional<string> @alias = default;
+            Core.Optional<bool> enableProxyProtocol = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new PrivateLinkServiceData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, Optional.ToNullable(etag), Optional.ToList(loadBalancerFrontendIPConfigurations), Optional.ToList(ipConfigurations), Optional.ToList(networkInterfaces), Optional.ToNullable(provisioningState), Optional.ToList(privateEndpointConnections), visibility.Value, autoApproval.Value, Optional.ToList(fqdns), @alias.Value, Optional.ToNullable(enableProxyProtocol));
+            return new PrivateLinkServiceData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags), extendedLocation, Core.Optional.ToNullable(etag), Core.Optional.ToList(loadBalancerFrontendIPConfigurations), Core.Optional.ToList(ipConfigurations), Core.Optional.ToList(networkInterfaces), Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(privateEndpointConnections), visibility.Value, autoApproval.Value, Core.Optional.ToList(fqdns), @alias.Value, Core.Optional.ToNullable(enableProxyProtocol));
         }
     }
 }

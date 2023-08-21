@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    internal partial class PeeringLocationPropertiesExchange : IUtf8JsonSerializable
+    internal partial class PeeringLocationPropertiesExchange : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PeeringFacilities))
+            if (Core.Optional.IsCollectionDefined(PeeringFacilities))
             {
                 writer.WritePropertyName("peeringFacilities"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<IList<ExchangePeeringFacility>> peeringFacilities = default;
+            Core.Optional<IList<ExchangePeeringFacility>> peeringFacilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("peeringFacilities"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Peering.Models
                     continue;
                 }
             }
-            return new PeeringLocationPropertiesExchange(Optional.ToList(peeringFacilities));
+            return new PeeringLocationPropertiesExchange(Core.Optional.ToList(peeringFacilities));
         }
     }
 }

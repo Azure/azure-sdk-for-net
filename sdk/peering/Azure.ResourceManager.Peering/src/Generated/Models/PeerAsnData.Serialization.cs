@@ -13,19 +13,19 @@ using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    public partial class PeerAsnData : IUtf8JsonSerializable
+    public partial class PeerAsnData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PeerAsn))
+            if (Core.Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerAsn"u8);
                 writer.WriteNumberValue(PeerAsn.Value);
             }
-            if (Optional.IsCollectionDefined(PeerContactDetail))
+            if (Core.Optional.IsCollectionDefined(PeerContactDetail))
             {
                 writer.WritePropertyName("peerContactDetail"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Peering
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PeerName))
+            if (Core.Optional.IsDefined(PeerName))
             {
                 writer.WritePropertyName("peerName"u8);
                 writer.WriteStringValue(PeerName);
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.Peering
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> peerAsn = default;
-            Optional<IList<PeerAsnContactDetail>> peerContactDetail = default;
-            Optional<string> peerName = default;
-            Optional<PeerAsnValidationState> validationState = default;
-            Optional<string> errorMessage = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<int> peerAsn = default;
+            Core.Optional<IList<PeerAsnContactDetail>> peerContactDetail = default;
+            Core.Optional<string> peerName = default;
+            Core.Optional<PeerAsnValidationState> validationState = default;
+            Core.Optional<string> errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Peering
                     continue;
                 }
             }
-            return new PeerAsnData(id, name, type, systemData.Value, Optional.ToNullable(peerAsn), Optional.ToList(peerContactDetail), peerName.Value, Optional.ToNullable(validationState), errorMessage.Value);
+            return new PeerAsnData(id, name, type, systemData.Value, Core.Optional.ToNullable(peerAsn), Core.Optional.ToList(peerContactDetail), peerName.Value, Core.Optional.ToNullable(validationState), errorMessage.Value);
         }
     }
 }

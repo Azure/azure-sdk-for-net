@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class ConditionFailingPeriods : IUtf8JsonSerializable
+    public partial class ConditionFailingPeriods : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(NumberOfEvaluationPeriods))
+            if (Core.Optional.IsDefined(NumberOfEvaluationPeriods))
             {
                 writer.WritePropertyName("numberOfEvaluationPeriods"u8);
                 writer.WriteNumberValue(NumberOfEvaluationPeriods.Value);
             }
-            if (Optional.IsDefined(MinFailingPeriodsToAlert))
+            if (Core.Optional.IsDefined(MinFailingPeriodsToAlert))
             {
                 writer.WritePropertyName("minFailingPeriodsToAlert"u8);
                 writer.WriteNumberValue(MinFailingPeriodsToAlert.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<long> numberOfEvaluationPeriods = default;
-            Optional<long> minFailingPeriodsToAlert = default;
+            Core.Optional<long> numberOfEvaluationPeriods = default;
+            Core.Optional<long> minFailingPeriodsToAlert = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("numberOfEvaluationPeriods"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new ConditionFailingPeriods(Optional.ToNullable(numberOfEvaluationPeriods), Optional.ToNullable(minFailingPeriodsToAlert));
+            return new ConditionFailingPeriods(Core.Optional.ToNullable(numberOfEvaluationPeriods), Core.Optional.ToNullable(minFailingPeriodsToAlert));
         }
     }
 }

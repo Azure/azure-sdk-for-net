@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of ResourceTypeRegistrationListResult. </summary>
         internal ResourceTypeRegistrationListResult()
         {
-            Value = new ChangeTrackingList<ResourceTypeRegistrationData>();
+            Value = new Core.ChangeTrackingList<ResourceTypeRegistrationData>();
         }
 
         /// <summary> Initializes a new instance of ResourceTypeRegistrationListResult. </summary>

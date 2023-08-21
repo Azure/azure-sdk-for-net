@@ -16,7 +16,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <summary> Initializes a new instance of TrackResponse. </summary>
         internal TrackResponse()
         {
-            Errors = new ChangeTrackingList<TelemetryErrorDetails>();
+            Errors = new Core.ChangeTrackingList<TelemetryErrorDetails>();
         }
 
         /// <summary> Initializes a new instance of TrackResponse. </summary>

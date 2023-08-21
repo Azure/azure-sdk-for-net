@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of MetricAlertPatch. </summary>
         public MetricAlertPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            Scopes = new ChangeTrackingList<string>();
-            Actions = new ChangeTrackingList<MetricAlertAction>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Scopes = new Core.ChangeTrackingList<string>();
+            Actions = new Core.ChangeTrackingList<MetricAlertAction>();
         }
 
         /// <summary> Resource tags. </summary>

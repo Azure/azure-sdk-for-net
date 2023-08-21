@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class QosIPRange : IUtf8JsonSerializable
+    public partial class QosIPRange : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartIP))
+            if (Core.Optional.IsDefined(StartIP))
             {
                 writer.WritePropertyName("startIP"u8);
                 writer.WriteStringValue(StartIP);
             }
-            if (Optional.IsDefined(EndIP))
+            if (Core.Optional.IsDefined(EndIP))
             {
                 writer.WritePropertyName("endIP"u8);
                 writer.WriteStringValue(EndIP);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> startIP = default;
-            Optional<string> endIP = default;
+            Core.Optional<string> startIP = default;
+            Core.Optional<string> endIP = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startIP"u8))

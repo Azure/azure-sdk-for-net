@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of FirewallPolicyThreatIntelWhitelist. </summary>
         public FirewallPolicyThreatIntelWhitelist()
         {
-            IPAddresses = new ChangeTrackingList<string>();
-            Fqdns = new ChangeTrackingList<string>();
+            IPAddresses = new Core.ChangeTrackingList<string>();
+            Fqdns = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of FirewallPolicyThreatIntelWhitelist. </summary>

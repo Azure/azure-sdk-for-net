@@ -13,12 +13,12 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class ActionGroupData : IUtf8JsonSerializable
+    public partial class ActionGroupData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,17 +33,17 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroupShortName))
+            if (Core.Optional.IsDefined(GroupShortName))
             {
                 writer.WritePropertyName("groupShortName"u8);
                 writer.WriteStringValue(GroupShortName);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (Core.Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(EmailReceivers))
+            if (Core.Optional.IsCollectionDefined(EmailReceivers))
             {
                 writer.WritePropertyName("emailReceivers"u8);
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SmsReceivers))
+            if (Core.Optional.IsCollectionDefined(SmsReceivers))
             {
                 writer.WritePropertyName("smsReceivers"u8);
                 writer.WriteStartArray();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(WebhookReceivers))
+            if (Core.Optional.IsCollectionDefined(WebhookReceivers))
             {
                 writer.WritePropertyName("webhookReceivers"u8);
                 writer.WriteStartArray();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ItsmReceivers))
+            if (Core.Optional.IsCollectionDefined(ItsmReceivers))
             {
                 writer.WritePropertyName("itsmReceivers"u8);
                 writer.WriteStartArray();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AzureAppPushReceivers))
+            if (Core.Optional.IsCollectionDefined(AzureAppPushReceivers))
             {
                 writer.WritePropertyName("azureAppPushReceivers"u8);
                 writer.WriteStartArray();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AutomationRunbookReceivers))
+            if (Core.Optional.IsCollectionDefined(AutomationRunbookReceivers))
             {
                 writer.WritePropertyName("automationRunbookReceivers"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VoiceReceivers))
+            if (Core.Optional.IsCollectionDefined(VoiceReceivers))
             {
                 writer.WritePropertyName("voiceReceivers"u8);
                 writer.WriteStartArray();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LogicAppReceivers))
+            if (Core.Optional.IsCollectionDefined(LogicAppReceivers))
             {
                 writer.WritePropertyName("logicAppReceivers"u8);
                 writer.WriteStartArray();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AzureFunctionReceivers))
+            if (Core.Optional.IsCollectionDefined(AzureFunctionReceivers))
             {
                 writer.WritePropertyName("azureFunctionReceivers"u8);
                 writer.WriteStartArray();
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ArmRoleReceivers))
+            if (Core.Optional.IsCollectionDefined(ArmRoleReceivers))
             {
                 writer.WritePropertyName("armRoleReceivers"u8);
                 writer.WriteStartArray();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EventHubReceivers))
+            if (Core.Optional.IsCollectionDefined(EventHubReceivers))
             {
                 writer.WritePropertyName("eventHubReceivers"u8);
                 writer.WriteStartArray();
@@ -163,25 +163,25 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> groupShortName = default;
-            Optional<bool> enabled = default;
-            Optional<IList<MonitorEmailReceiver>> emailReceivers = default;
-            Optional<IList<MonitorSmsReceiver>> smsReceivers = default;
-            Optional<IList<MonitorWebhookReceiver>> webhookReceivers = default;
-            Optional<IList<MonitorItsmReceiver>> itsmReceivers = default;
-            Optional<IList<MonitorAzureAppPushReceiver>> azureAppPushReceivers = default;
-            Optional<IList<MonitorAutomationRunbookReceiver>> automationRunbookReceivers = default;
-            Optional<IList<MonitorVoiceReceiver>> voiceReceivers = default;
-            Optional<IList<MonitorLogicAppReceiver>> logicAppReceivers = default;
-            Optional<IList<MonitorAzureFunctionReceiver>> azureFunctionReceivers = default;
-            Optional<IList<MonitorArmRoleReceiver>> armRoleReceivers = default;
-            Optional<IList<MonitorEventHubReceiver>> eventHubReceivers = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> groupShortName = default;
+            Core.Optional<bool> enabled = default;
+            Core.Optional<IList<MonitorEmailReceiver>> emailReceivers = default;
+            Core.Optional<IList<MonitorSmsReceiver>> smsReceivers = default;
+            Core.Optional<IList<MonitorWebhookReceiver>> webhookReceivers = default;
+            Core.Optional<IList<MonitorItsmReceiver>> itsmReceivers = default;
+            Core.Optional<IList<MonitorAzureAppPushReceiver>> azureAppPushReceivers = default;
+            Core.Optional<IList<MonitorAutomationRunbookReceiver>> automationRunbookReceivers = default;
+            Core.Optional<IList<MonitorVoiceReceiver>> voiceReceivers = default;
+            Core.Optional<IList<MonitorLogicAppReceiver>> logicAppReceivers = default;
+            Core.Optional<IList<MonitorAzureFunctionReceiver>> azureFunctionReceivers = default;
+            Core.Optional<IList<MonitorArmRoleReceiver>> armRoleReceivers = default;
+            Core.Optional<IList<MonitorEventHubReceiver>> eventHubReceivers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new ActionGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, groupShortName.Value, Optional.ToNullable(enabled), Optional.ToList(emailReceivers), Optional.ToList(smsReceivers), Optional.ToList(webhookReceivers), Optional.ToList(itsmReceivers), Optional.ToList(azureAppPushReceivers), Optional.ToList(automationRunbookReceivers), Optional.ToList(voiceReceivers), Optional.ToList(logicAppReceivers), Optional.ToList(azureFunctionReceivers), Optional.ToList(armRoleReceivers), Optional.ToList(eventHubReceivers));
+            return new ActionGroupData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, groupShortName.Value, Core.Optional.ToNullable(enabled), Core.Optional.ToList(emailReceivers), Core.Optional.ToList(smsReceivers), Core.Optional.ToList(webhookReceivers), Core.Optional.ToList(itsmReceivers), Core.Optional.ToList(azureAppPushReceivers), Core.Optional.ToList(automationRunbookReceivers), Core.Optional.ToList(voiceReceivers), Core.Optional.ToList(logicAppReceivers), Core.Optional.ToList(azureFunctionReceivers), Core.Optional.ToList(armRoleReceivers), Core.Optional.ToList(eventHubReceivers));
         }
     }
 }

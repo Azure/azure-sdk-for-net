@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> inboundNatRuleName = default;
-            Optional<LoadBalancingTransportProtocol> protocol = default;
-            Optional<int> frontendPort = default;
-            Optional<int> backendPort = default;
+            Core.Optional<string> inboundNatRuleName = default;
+            Core.Optional<LoadBalancingTransportProtocol> protocol = default;
+            Core.Optional<int> frontendPort = default;
+            Core.Optional<int> backendPort = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inboundNatRuleName"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new InboundNatRulePortMapping(inboundNatRuleName.Value, Optional.ToNullable(protocol), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort));
+            return new InboundNatRulePortMapping(inboundNatRuleName.Value, Core.Optional.ToNullable(protocol), Core.Optional.ToNullable(frontendPort), Core.Optional.ToNullable(backendPort));
         }
     }
 }

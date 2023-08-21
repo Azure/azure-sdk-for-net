@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of IPGroupData. </summary>
         public IPGroupData()
         {
-            IPAddresses = new ChangeTrackingList<string>();
-            Firewalls = new ChangeTrackingList<WritableSubResource>();
-            FirewallPolicies = new ChangeTrackingList<WritableSubResource>();
+            IPAddresses = new Core.ChangeTrackingList<string>();
+            Firewalls = new Core.ChangeTrackingList<WritableSubResource>();
+            FirewallPolicies = new Core.ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of IPGroupData. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkVirtualApplianceSiteListResult. </summary>
         internal NetworkVirtualApplianceSiteListResult()
         {
-            Value = new ChangeTrackingList<VirtualApplianceSiteData>();
+            Value = new Core.ChangeTrackingList<VirtualApplianceSiteData>();
         }
 
         /// <summary> Initializes a new instance of NetworkVirtualApplianceSiteListResult. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of ListReplications. </summary>
         internal ListReplications()
         {
-            Value = new ChangeTrackingList<NetAppVolumeReplication>();
+            Value = new Core.ChangeTrackingList<NetAppVolumeReplication>();
         }
 
         /// <summary> Initializes a new instance of ListReplications. </summary>

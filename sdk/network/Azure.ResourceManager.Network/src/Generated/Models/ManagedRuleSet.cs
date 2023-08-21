@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
 
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
-            RuleGroupOverrides = new ChangeTrackingList<ManagedRuleGroupOverride>();
+            RuleGroupOverrides = new Core.ChangeTrackingList<ManagedRuleGroupOverride>();
         }
 
         /// <summary> Initializes a new instance of ManagedRuleSet. </summary>

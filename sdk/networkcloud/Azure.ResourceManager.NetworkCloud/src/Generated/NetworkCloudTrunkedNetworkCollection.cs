@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, trunkedNetworkName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudTrunkedNetworkResource>(new NetworkCloudTrunkedNetworkOperationSource(Client), _networkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics, Pipeline, _networkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, trunkedNetworkName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkCloudArmOperation<NetworkCloudTrunkedNetworkResource>(new NetworkCloudTrunkedNetworkOperationSource(Client), _networkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics, Pipeline, _networkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, trunkedNetworkName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, trunkedNetworkName, data, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudTrunkedNetworkResource>(new NetworkCloudTrunkedNetworkOperationSource(Client), _networkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics, Pipeline, _networkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, trunkedNetworkName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkCloudArmOperation<NetworkCloudTrunkedNetworkResource>(new NetworkCloudTrunkedNetworkOperationSource(Client), _networkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics, Pipeline, _networkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, trunkedNetworkName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudTrunkedNetworkResource(Client, NetworkCloudTrunkedNetworkData.DeserializeNetworkCloudTrunkedNetworkData(e)), _networkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics, Pipeline, "NetworkCloudTrunkedNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudTrunkedNetworkResource(Client, NetworkCloudTrunkedNetworkData.DeserializeNetworkCloudTrunkedNetworkData(e)), _networkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics, Pipeline, "NetworkCloudTrunkedNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudTrunkedNetworkResource(Client, NetworkCloudTrunkedNetworkData.DeserializeNetworkCloudTrunkedNetworkData(e)), _networkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics, Pipeline, "NetworkCloudTrunkedNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudTrunkedNetworkResource(Client, NetworkCloudTrunkedNetworkData.DeserializeNetworkCloudTrunkedNetworkData(e)), _networkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics, Pipeline, "NetworkCloudTrunkedNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

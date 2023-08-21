@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PostgreSqlFirewallRuleData>> value = default;
+            Core.Optional<IReadOnlyList<PostgreSqlFirewallRuleData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     continue;
                 }
             }
-            return new PostgreSqlFirewallRuleListResult(Optional.ToList(value));
+            return new PostgreSqlFirewallRuleListResult(Core.Optional.ToList(value));
         }
     }
 }

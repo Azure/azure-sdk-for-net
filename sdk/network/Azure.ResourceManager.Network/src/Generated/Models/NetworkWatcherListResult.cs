@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkWatcherListResult. </summary>
         internal NetworkWatcherListResult()
         {
-            Value = new ChangeTrackingList<NetworkWatcherData>();
+            Value = new Core.ChangeTrackingList<NetworkWatcherData>();
         }
 
         /// <summary> Initializes a new instance of NetworkWatcherListResult. </summary>

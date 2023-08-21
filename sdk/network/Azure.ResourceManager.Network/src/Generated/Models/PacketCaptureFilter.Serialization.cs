@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PacketCaptureFilter : IUtf8JsonSerializable
+    public partial class PacketCaptureFilter : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Protocol))
+            if (Core.Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsDefined(LocalIPAddress))
+            if (Core.Optional.IsDefined(LocalIPAddress))
             {
                 writer.WritePropertyName("localIPAddress"u8);
                 writer.WriteStringValue(LocalIPAddress);
             }
-            if (Optional.IsDefined(RemoteIPAddress))
+            if (Core.Optional.IsDefined(RemoteIPAddress))
             {
                 writer.WritePropertyName("remoteIPAddress"u8);
                 writer.WriteStringValue(RemoteIPAddress);
             }
-            if (Optional.IsDefined(LocalPort))
+            if (Core.Optional.IsDefined(LocalPort))
             {
                 writer.WritePropertyName("localPort"u8);
                 writer.WriteStringValue(LocalPort);
             }
-            if (Optional.IsDefined(RemotePort))
+            if (Core.Optional.IsDefined(RemotePort))
             {
                 writer.WritePropertyName("remotePort"u8);
                 writer.WriteStringValue(RemotePort);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<PcProtocol> protocol = default;
-            Optional<string> localIPAddress = default;
-            Optional<string> remoteIPAddress = default;
-            Optional<string> localPort = default;
-            Optional<string> remotePort = default;
+            Core.Optional<PcProtocol> protocol = default;
+            Core.Optional<string> localIPAddress = default;
+            Core.Optional<string> remoteIPAddress = default;
+            Core.Optional<string> localPort = default;
+            Core.Optional<string> remotePort = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protocol"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PacketCaptureFilter(Optional.ToNullable(protocol), localIPAddress.Value, remoteIPAddress.Value, localPort.Value, remotePort.Value);
+            return new PacketCaptureFilter(Core.Optional.ToNullable(protocol), localIPAddress.Value, remoteIPAddress.Value, localPort.Value, remotePort.Value);
         }
     }
 }

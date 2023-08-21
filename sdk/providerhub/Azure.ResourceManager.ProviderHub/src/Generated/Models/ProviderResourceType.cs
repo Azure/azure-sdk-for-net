@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of ProviderResourceType. </summary>
         internal ProviderResourceType()
         {
-            AllowedUnauthorizedActions = new ChangeTrackingList<string>();
-            AuthorizationActionMappings = new ChangeTrackingList<AuthorizationActionMapping>();
-            LinkedAccessChecks = new ChangeTrackingList<LinkedAccessCheck>();
-            LoggingRules = new ChangeTrackingList<LoggingRule>();
-            ThrottlingRules = new ChangeTrackingList<ThrottlingRule>();
-            Endpoints = new ChangeTrackingList<ResourceProviderEndpoint>();
-            RequiredFeatures = new ChangeTrackingList<string>();
-            SubscriptionStateRules = new ChangeTrackingList<ProviderSubscriptionStateRule>();
-            ServiceTreeInfos = new ChangeTrackingList<ServiceTreeInfo>();
-            DisallowedActionVerbs = new ChangeTrackingList<string>();
-            ExtendedLocations = new ChangeTrackingList<ProviderHubExtendedLocationOptions>();
-            LinkedOperationRules = new ChangeTrackingList<LinkedOperationRule>();
+            AllowedUnauthorizedActions = new Core.ChangeTrackingList<string>();
+            AuthorizationActionMappings = new Core.ChangeTrackingList<AuthorizationActionMapping>();
+            LinkedAccessChecks = new Core.ChangeTrackingList<LinkedAccessCheck>();
+            LoggingRules = new Core.ChangeTrackingList<LoggingRule>();
+            ThrottlingRules = new Core.ChangeTrackingList<ThrottlingRule>();
+            Endpoints = new Core.ChangeTrackingList<ResourceProviderEndpoint>();
+            RequiredFeatures = new Core.ChangeTrackingList<string>();
+            SubscriptionStateRules = new Core.ChangeTrackingList<ProviderSubscriptionStateRule>();
+            ServiceTreeInfos = new Core.ChangeTrackingList<ServiceTreeInfo>();
+            DisallowedActionVerbs = new Core.ChangeTrackingList<string>();
+            ExtendedLocations = new Core.ChangeTrackingList<ProviderHubExtendedLocationOptions>();
+            LinkedOperationRules = new Core.ChangeTrackingList<LinkedOperationRule>();
         }
 
         /// <summary> Initializes a new instance of ProviderResourceType. </summary>

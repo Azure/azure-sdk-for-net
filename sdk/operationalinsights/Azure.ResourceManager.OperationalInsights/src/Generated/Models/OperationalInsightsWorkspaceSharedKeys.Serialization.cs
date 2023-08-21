@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<string> primarySharedKey = default;
-            Optional<string> secondarySharedKey = default;
+            Core.Optional<string> primarySharedKey = default;
+            Core.Optional<string> secondarySharedKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primarySharedKey"u8))

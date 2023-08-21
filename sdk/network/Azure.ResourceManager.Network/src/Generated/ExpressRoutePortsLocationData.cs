@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of ExpressRoutePortsLocationData. </summary>
         public ExpressRoutePortsLocationData()
         {
-            AvailableBandwidths = new ChangeTrackingList<ExpressRoutePortsLocationBandwidths>();
+            AvailableBandwidths = new Core.ChangeTrackingList<ExpressRoutePortsLocationBandwidths>();
         }
 
         /// <summary> Initializes a new instance of ExpressRoutePortsLocationData. </summary>

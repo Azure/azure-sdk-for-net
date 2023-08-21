@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary> Initializes a new instance of MobileNetworkPacketCaptureData. </summary>
         public MobileNetworkPacketCaptureData()
         {
-            NetworkInterfaces = new ChangeTrackingList<string>();
+            NetworkInterfaces = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of MobileNetworkPacketCaptureData. </summary>

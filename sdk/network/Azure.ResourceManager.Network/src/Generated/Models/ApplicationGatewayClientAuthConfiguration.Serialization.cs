@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayClientAuthConfiguration : IUtf8JsonSerializable
+    public partial class ApplicationGatewayClientAuthConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(VerifyClientCertIssuerDN))
+            if (Core.Optional.IsDefined(VerifyClientCertIssuerDN))
             {
                 writer.WritePropertyName("verifyClientCertIssuerDN"u8);
                 writer.WriteBooleanValue(VerifyClientCertIssuerDN.Value);
             }
-            if (Optional.IsDefined(VerifyClientRevocation))
+            if (Core.Optional.IsDefined(VerifyClientRevocation))
             {
                 writer.WritePropertyName("verifyClientRevocation"u8);
                 writer.WriteStringValue(VerifyClientRevocation.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<bool> verifyClientCertIssuerDN = default;
-            Optional<ApplicationGatewayClientRevocationOption> verifyClientRevocation = default;
+            Core.Optional<bool> verifyClientCertIssuerDN = default;
+            Core.Optional<ApplicationGatewayClientRevocationOption> verifyClientRevocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("verifyClientCertIssuerDN"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayClientAuthConfiguration(Optional.ToNullable(verifyClientCertIssuerDN), Optional.ToNullable(verifyClientRevocation));
+            return new ApplicationGatewayClientAuthConfiguration(Core.Optional.ToNullable(verifyClientCertIssuerDN), Core.Optional.ToNullable(verifyClientRevocation));
         }
     }
 }

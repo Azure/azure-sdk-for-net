@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of VolumeList. </summary>
         internal VolumeList()
         {
-            Value = new ChangeTrackingList<NetworkCloudVolumeData>();
+            Value = new Core.ChangeTrackingList<NetworkCloudVolumeData>();
         }
 
         /// <summary> Initializes a new instance of VolumeList. </summary>

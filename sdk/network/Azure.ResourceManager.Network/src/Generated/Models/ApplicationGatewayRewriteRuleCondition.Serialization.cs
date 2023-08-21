@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayRewriteRuleCondition : IUtf8JsonSerializable
+    public partial class ApplicationGatewayRewriteRuleCondition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Variable))
+            if (Core.Optional.IsDefined(Variable))
             {
                 writer.WritePropertyName("variable"u8);
                 writer.WriteStringValue(Variable);
             }
-            if (Optional.IsDefined(Pattern))
+            if (Core.Optional.IsDefined(Pattern))
             {
                 writer.WritePropertyName("pattern"u8);
                 writer.WriteStringValue(Pattern);
             }
-            if (Optional.IsDefined(IgnoreCase))
+            if (Core.Optional.IsDefined(IgnoreCase))
             {
                 writer.WritePropertyName("ignoreCase"u8);
                 writer.WriteBooleanValue(IgnoreCase.Value);
             }
-            if (Optional.IsDefined(Negate))
+            if (Core.Optional.IsDefined(Negate))
             {
                 writer.WritePropertyName("negate"u8);
                 writer.WriteBooleanValue(Negate.Value);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> variable = default;
-            Optional<string> pattern = default;
-            Optional<bool> ignoreCase = default;
-            Optional<bool> negate = default;
+            Core.Optional<string> variable = default;
+            Core.Optional<string> pattern = default;
+            Core.Optional<bool> ignoreCase = default;
+            Core.Optional<bool> negate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("variable"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayRewriteRuleCondition(variable.Value, pattern.Value, Optional.ToNullable(ignoreCase), Optional.ToNullable(negate));
+            return new ApplicationGatewayRewriteRuleCondition(variable.Value, pattern.Value, Core.Optional.ToNullable(ignoreCase), Core.Optional.ToNullable(negate));
         }
     }
 }

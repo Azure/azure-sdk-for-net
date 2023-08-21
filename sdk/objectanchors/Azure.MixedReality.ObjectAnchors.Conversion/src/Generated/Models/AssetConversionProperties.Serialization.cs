@@ -12,27 +12,27 @@ using Azure.MixedReality.ObjectAnchors.Conversion.Models;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
-    public partial class AssetConversionProperties : IUtf8JsonSerializable
+    public partial class AssetConversionProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConversionStatus))
+            if (Core.Optional.IsDefined(ConversionStatus))
             {
                 writer.WritePropertyName("jobStatus"u8);
                 writer.WriteStringValue(ConversionStatus.Value.ToSerialString());
             }
-            if (Optional.IsDefined(AssetFileTypeString))
+            if (Core.Optional.IsDefined(AssetFileTypeString))
             {
                 writer.WritePropertyName("assetFileType"u8);
                 writer.WriteStringValue(AssetFileTypeString);
             }
-            if (Optional.IsDefined(InputAssetUriString))
+            if (Core.Optional.IsDefined(InputAssetUriString))
             {
                 writer.WritePropertyName("inputAssetUri"u8);
                 writer.WriteStringValue(InputAssetUriString);
             }
-            if (Optional.IsDefined(ConversionConfiguration))
+            if (Core.Optional.IsDefined(ConversionConfiguration))
             {
                 writer.WritePropertyName("ingestionConfiguration"u8);
                 writer.WriteObjectValue(ConversionConfiguration);
@@ -46,17 +46,17 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             {
                 return null;
             }
-            Optional<string> clientErrorDetails = default;
-            Optional<string> serverErrorDetails = default;
-            Optional<ConversionErrorCode> errorCode = default;
-            Optional<Guid> jobId = default;
-            Optional<string> outputModelUri = default;
-            Optional<AssetConversionStatus> jobStatus = default;
-            Optional<string> assetFileType = default;
-            Optional<string> inputAssetUri = default;
-            Optional<Guid> accountId = default;
-            Optional<AssetConversionConfiguration> ingestionConfiguration = default;
-            Optional<Vector3> scaledAssetDimensions = default;
+            Core.Optional<string> clientErrorDetails = default;
+            Core.Optional<string> serverErrorDetails = default;
+            Core.Optional<ConversionErrorCode> errorCode = default;
+            Core.Optional<Guid> jobId = default;
+            Core.Optional<string> outputModelUri = default;
+            Core.Optional<AssetConversionStatus> jobStatus = default;
+            Core.Optional<string> assetFileType = default;
+            Core.Optional<string> inputAssetUri = default;
+            Core.Optional<Guid> accountId = default;
+            Core.Optional<AssetConversionConfiguration> ingestionConfiguration = default;
+            Core.Optional<Vector3> scaledAssetDimensions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientErrorDetails"u8))
@@ -140,7 +140,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     continue;
                 }
             }
-            return new AssetConversionProperties(clientErrorDetails.Value, serverErrorDetails.Value, errorCode, Optional.ToNullable(jobId), outputModelUri.Value, Optional.ToNullable(jobStatus), assetFileType.Value, inputAssetUri.Value, Optional.ToNullable(accountId), ingestionConfiguration.Value, scaledAssetDimensions.Value);
+            return new AssetConversionProperties(clientErrorDetails.Value, serverErrorDetails.Value, errorCode, Core.Optional.ToNullable(jobId), outputModelUri.Value, Core.Optional.ToNullable(jobStatus), assetFileType.Value, inputAssetUri.Value, Core.Optional.ToNullable(accountId), ingestionConfiguration.Value, scaledAssetDimensions.Value);
         }
     }
 }

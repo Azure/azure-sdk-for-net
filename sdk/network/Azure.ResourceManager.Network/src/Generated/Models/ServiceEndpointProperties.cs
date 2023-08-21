@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ServiceEndpointProperties. </summary>
         public ServiceEndpointProperties()
         {
-            Locations = new ChangeTrackingList<AzureLocation>();
+            Locations = new Core.ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Initializes a new instance of ServiceEndpointProperties. </summary>

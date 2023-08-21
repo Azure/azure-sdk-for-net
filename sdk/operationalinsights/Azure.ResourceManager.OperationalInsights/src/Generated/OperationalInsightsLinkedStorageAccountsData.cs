@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <summary> Initializes a new instance of OperationalInsightsLinkedStorageAccountsData. </summary>
         public OperationalInsightsLinkedStorageAccountsData()
         {
-            StorageAccountIds = new ChangeTrackingList<ResourceIdentifier>();
+            StorageAccountIds = new Core.ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of OperationalInsightsLinkedStorageAccountsData. </summary>

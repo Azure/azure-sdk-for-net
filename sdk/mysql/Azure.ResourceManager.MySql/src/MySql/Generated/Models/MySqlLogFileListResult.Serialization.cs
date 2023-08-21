@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MySqlLogFile>> value = default;
+            Core.Optional<IReadOnlyList<MySqlLogFile>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MySql.Models
                     continue;
                 }
             }
-            return new MySqlLogFileListResult(Optional.ToList(value));
+            return new MySqlLogFileListResult(Core.Optional.ToList(value));
         }
     }
 }

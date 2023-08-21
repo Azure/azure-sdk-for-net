@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> displayName = default;
-            Optional<string> type = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> type = default;
             bool indexed = default;
             bool stored = default;
             bool facet = default;
-            Optional<IReadOnlyList<string>> ownerType = default;
+            Core.Optional<IReadOnlyList<string>> ownerType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     continue;
                 }
             }
-            return new OperationalInsightsSearchSchemaValue(name.Value, displayName.Value, type.Value, indexed, stored, facet, Optional.ToList(ownerType));
+            return new OperationalInsightsSearchSchemaValue(name.Value, displayName.Value, type.Value, indexed, stored, facet, Core.Optional.ToList(ownerType));
         }
     }
 }

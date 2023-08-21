@@ -13,9 +13,9 @@ using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudRackSkuData : IUtf8JsonSerializable
+    public partial class NetworkCloudRackSkuData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -33,15 +33,15 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<MachineSkuSlot>> computeMachines = default;
-            Optional<IReadOnlyList<MachineSkuSlot>> controllerMachines = default;
-            Optional<string> description = default;
-            Optional<long> maxClusterSlots = default;
-            Optional<RackSkuProvisioningState> provisioningState = default;
-            Optional<RackSkuType> rackType = default;
-            Optional<IReadOnlyList<StorageApplianceSkuSlot>> storageAppliances = default;
-            Optional<IReadOnlyList<string>> supportedRackSkuIds = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IReadOnlyList<MachineSkuSlot>> computeMachines = default;
+            Core.Optional<IReadOnlyList<MachineSkuSlot>> controllerMachines = default;
+            Core.Optional<string> description = default;
+            Core.Optional<long> maxClusterSlots = default;
+            Core.Optional<RackSkuProvisioningState> provisioningState = default;
+            Core.Optional<RackSkuType> rackType = default;
+            Core.Optional<IReadOnlyList<StorageApplianceSkuSlot>> storageAppliances = default;
+            Core.Optional<IReadOnlyList<string>> supportedRackSkuIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     continue;
                 }
             }
-            return new NetworkCloudRackSkuData(id, name, type, systemData.Value, Optional.ToList(computeMachines), Optional.ToList(controllerMachines), description.Value, Optional.ToNullable(maxClusterSlots), Optional.ToNullable(provisioningState), Optional.ToNullable(rackType), Optional.ToList(storageAppliances), Optional.ToList(supportedRackSkuIds));
+            return new NetworkCloudRackSkuData(id, name, type, systemData.Value, Core.Optional.ToList(computeMachines), Core.Optional.ToList(controllerMachines), description.Value, Core.Optional.ToNullable(maxClusterSlots), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(rackType), Core.Optional.ToList(storageAppliances), Core.Optional.ToList(supportedRackSkuIds));
         }
     }
 }

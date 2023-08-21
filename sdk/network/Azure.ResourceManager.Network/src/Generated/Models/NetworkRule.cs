@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkRule. </summary>
         public NetworkRule()
         {
-            IPProtocols = new ChangeTrackingList<FirewallPolicyRuleNetworkProtocol>();
-            SourceAddresses = new ChangeTrackingList<string>();
-            DestinationAddresses = new ChangeTrackingList<string>();
-            DestinationPorts = new ChangeTrackingList<string>();
-            SourceIPGroups = new ChangeTrackingList<string>();
-            DestinationIPGroups = new ChangeTrackingList<string>();
-            DestinationFqdns = new ChangeTrackingList<string>();
+            IPProtocols = new Core.ChangeTrackingList<FirewallPolicyRuleNetworkProtocol>();
+            SourceAddresses = new Core.ChangeTrackingList<string>();
+            DestinationAddresses = new Core.ChangeTrackingList<string>();
+            DestinationPorts = new Core.ChangeTrackingList<string>();
+            SourceIPGroups = new Core.ChangeTrackingList<string>();
+            DestinationIPGroups = new Core.ChangeTrackingList<string>();
+            DestinationFqdns = new Core.ChangeTrackingList<string>();
             RuleType = FirewallPolicyRuleType.NetworkRule;
         }
 

@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of DscpConfigurationData. </summary>
         public DscpConfigurationData()
         {
-            Markings = new ChangeTrackingList<int>();
-            SourceIPRanges = new ChangeTrackingList<QosIPRange>();
-            DestinationIPRanges = new ChangeTrackingList<QosIPRange>();
-            SourcePortRanges = new ChangeTrackingList<QosPortRange>();
-            DestinationPortRanges = new ChangeTrackingList<QosPortRange>();
-            QosDefinitionCollection = new ChangeTrackingList<DscpQosDefinition>();
-            AssociatedNetworkInterfaces = new ChangeTrackingList<NetworkInterfaceData>();
+            Markings = new Core.ChangeTrackingList<int>();
+            SourceIPRanges = new Core.ChangeTrackingList<QosIPRange>();
+            DestinationIPRanges = new Core.ChangeTrackingList<QosIPRange>();
+            SourcePortRanges = new Core.ChangeTrackingList<QosPortRange>();
+            DestinationPortRanges = new Core.ChangeTrackingList<QosPortRange>();
+            QosDefinitionCollection = new Core.ChangeTrackingList<DscpQosDefinition>();
+            AssociatedNetworkInterfaces = new Core.ChangeTrackingList<NetworkInterfaceData>();
         }
 
         /// <summary> Initializes a new instance of DscpConfigurationData. </summary>

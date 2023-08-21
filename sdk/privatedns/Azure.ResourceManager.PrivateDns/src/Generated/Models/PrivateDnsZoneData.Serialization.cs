@@ -14,17 +14,17 @@ using Azure.ResourceManager.PrivateDns.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    public partial class PrivateDnsZoneData : IUtf8JsonSerializable
+    public partial class PrivateDnsZoneData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -49,21 +49,21 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<long> maxNumberOfRecordSets = default;
-            Optional<long> numberOfRecordSets = default;
-            Optional<long> maxNumberOfVirtualNetworkLinks = default;
-            Optional<long> numberOfVirtualNetworkLinks = default;
-            Optional<long> maxNumberOfVirtualNetworkLinksWithRegistration = default;
-            Optional<long> numberOfVirtualNetworkLinksWithRegistration = default;
-            Optional<PrivateDnsProvisioningState> privateDnsProvisioningState = default;
-            Optional<string> internalId = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<long> maxNumberOfRecordSets = default;
+            Core.Optional<long> numberOfRecordSets = default;
+            Core.Optional<long> maxNumberOfVirtualNetworkLinks = default;
+            Core.Optional<long> numberOfVirtualNetworkLinks = default;
+            Core.Optional<long> maxNumberOfVirtualNetworkLinksWithRegistration = default;
+            Core.Optional<long> numberOfVirtualNetworkLinksWithRegistration = default;
+            Core.Optional<PrivateDnsProvisioningState> privateDnsProvisioningState = default;
+            Core.Optional<string> internalId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.PrivateDns
                     continue;
                 }
             }
-            return new PrivateDnsZoneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(maxNumberOfRecordSets), Optional.ToNullable(numberOfRecordSets), Optional.ToNullable(maxNumberOfVirtualNetworkLinks), Optional.ToNullable(numberOfVirtualNetworkLinks), Optional.ToNullable(maxNumberOfVirtualNetworkLinksWithRegistration), Optional.ToNullable(numberOfVirtualNetworkLinksWithRegistration), Optional.ToNullable(privateDnsProvisioningState), internalId.Value);
+            return new PrivateDnsZoneData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(etag), Core.Optional.ToNullable(maxNumberOfRecordSets), Core.Optional.ToNullable(numberOfRecordSets), Core.Optional.ToNullable(maxNumberOfVirtualNetworkLinks), Core.Optional.ToNullable(numberOfVirtualNetworkLinks), Core.Optional.ToNullable(maxNumberOfVirtualNetworkLinksWithRegistration), Core.Optional.ToNullable(numberOfVirtualNetworkLinksWithRegistration), Core.Optional.ToNullable(privateDnsProvisioningState), internalId.Value);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetworkWatcherData>> value = default;
+            Core.Optional<IReadOnlyList<NetworkWatcherData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NetworkWatcherListResult(Optional.ToList(value));
+            return new NetworkWatcherListResult(Core.Optional.ToList(value));
         }
     }
 }

@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of EffectiveNetworkSecurityGroup. </summary>
         internal EffectiveNetworkSecurityGroup()
         {
-            EffectiveSecurityRules = new ChangeTrackingList<EffectiveNetworkSecurityRule>();
-            TagToIPAddresses = new ChangeTrackingDictionary<string, IList<string>>();
+            EffectiveSecurityRules = new Core.ChangeTrackingList<EffectiveNetworkSecurityRule>();
+            TagToIPAddresses = new Core.ChangeTrackingDictionary<string, IList<string>>();
         }
 
         /// <summary> Initializes a new instance of EffectiveNetworkSecurityGroup. </summary>

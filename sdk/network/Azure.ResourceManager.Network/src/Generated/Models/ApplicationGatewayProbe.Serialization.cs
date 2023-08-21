@@ -11,74 +11,74 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayProbe : IUtf8JsonSerializable
+    public partial class ApplicationGatewayProbe : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Protocol))
+            if (Core.Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsDefined(Host))
+            if (Core.Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
-            if (Optional.IsDefined(Path))
+            if (Core.Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsDefined(IntervalInSeconds))
+            if (Core.Optional.IsDefined(IntervalInSeconds))
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteNumberValue(IntervalInSeconds.Value);
             }
-            if (Optional.IsDefined(TimeoutInSeconds))
+            if (Core.Optional.IsDefined(TimeoutInSeconds))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
-            if (Optional.IsDefined(UnhealthyThreshold))
+            if (Core.Optional.IsDefined(UnhealthyThreshold))
             {
                 writer.WritePropertyName("unhealthyThreshold"u8);
                 writer.WriteNumberValue(UnhealthyThreshold.Value);
             }
-            if (Optional.IsDefined(PickHostNameFromBackendHttpSettings))
+            if (Core.Optional.IsDefined(PickHostNameFromBackendHttpSettings))
             {
                 writer.WritePropertyName("pickHostNameFromBackendHttpSettings"u8);
                 writer.WriteBooleanValue(PickHostNameFromBackendHttpSettings.Value);
             }
-            if (Optional.IsDefined(PickHostNameFromBackendSettings))
+            if (Core.Optional.IsDefined(PickHostNameFromBackendSettings))
             {
                 writer.WritePropertyName("pickHostNameFromBackendSettings"u8);
                 writer.WriteBooleanValue(PickHostNameFromBackendSettings.Value);
             }
-            if (Optional.IsDefined(MinServers))
+            if (Core.Optional.IsDefined(MinServers))
             {
                 writer.WritePropertyName("minServers"u8);
                 writer.WriteNumberValue(MinServers.Value);
             }
-            if (Optional.IsDefined(Match))
+            if (Core.Optional.IsDefined(Match))
             {
                 writer.WritePropertyName("match"u8);
                 writer.WriteObjectValue(Match);
             }
-            if (Optional.IsDefined(Port))
+            if (Core.Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
@@ -93,22 +93,22 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<ApplicationGatewayProtocol> protocol = default;
-            Optional<string> host = default;
-            Optional<string> path = default;
-            Optional<int> interval = default;
-            Optional<int> timeout = default;
-            Optional<int> unhealthyThreshold = default;
-            Optional<bool> pickHostNameFromBackendHttpSettings = default;
-            Optional<bool> pickHostNameFromBackendSettings = default;
-            Optional<int> minServers = default;
-            Optional<ApplicationGatewayProbeHealthResponseMatch> match = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<int> port = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceType> type = default;
+            Core.Optional<ApplicationGatewayProtocol> protocol = default;
+            Core.Optional<string> host = default;
+            Core.Optional<string> path = default;
+            Core.Optional<int> interval = default;
+            Core.Optional<int> timeout = default;
+            Core.Optional<int> unhealthyThreshold = default;
+            Core.Optional<bool> pickHostNameFromBackendHttpSettings = default;
+            Core.Optional<bool> pickHostNameFromBackendSettings = default;
+            Core.Optional<int> minServers = default;
+            Core.Optional<ApplicationGatewayProbeHealthResponseMatch> match = default;
+            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Core.Optional<int> port = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayProbe(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(protocol), host.Value, path.Value, Optional.ToNullable(interval), Optional.ToNullable(timeout), Optional.ToNullable(unhealthyThreshold), Optional.ToNullable(pickHostNameFromBackendHttpSettings), Optional.ToNullable(pickHostNameFromBackendSettings), Optional.ToNullable(minServers), match.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(port));
+            return new ApplicationGatewayProbe(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), Core.Optional.ToNullable(protocol), host.Value, path.Value, Core.Optional.ToNullable(interval), Core.Optional.ToNullable(timeout), Core.Optional.ToNullable(unhealthyThreshold), Core.Optional.ToNullable(pickHostNameFromBackendHttpSettings), Core.Optional.ToNullable(pickHostNameFromBackendSettings), Core.Optional.ToNullable(minServers), match.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(port));
         }
     }
 }

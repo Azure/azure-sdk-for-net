@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class MobileNetworkQosPolicy : IUtf8JsonSerializable
+    public partial class MobileNetworkQosPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FiveQi))
+            if (Core.Optional.IsDefined(FiveQi))
             {
                 writer.WritePropertyName("5qi"u8);
                 writer.WriteNumberValue(FiveQi.Value);
             }
-            if (Optional.IsDefined(AllocationAndRetentionPriorityLevel))
+            if (Core.Optional.IsDefined(AllocationAndRetentionPriorityLevel))
             {
                 writer.WritePropertyName("allocationAndRetentionPriorityLevel"u8);
                 writer.WriteNumberValue(AllocationAndRetentionPriorityLevel.Value);
             }
-            if (Optional.IsDefined(PreemptionCapability))
+            if (Core.Optional.IsDefined(PreemptionCapability))
             {
                 writer.WritePropertyName("preemptionCapability"u8);
                 writer.WriteStringValue(PreemptionCapability.Value.ToString());
             }
-            if (Optional.IsDefined(PreemptionVulnerability))
+            if (Core.Optional.IsDefined(PreemptionVulnerability))
             {
                 writer.WritePropertyName("preemptionVulnerability"u8);
                 writer.WriteStringValue(PreemptionVulnerability.Value.ToString());
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<int> _5qi = default;
-            Optional<int> allocationAndRetentionPriorityLevel = default;
-            Optional<MobileNetworkPreemptionCapability> preemptionCapability = default;
-            Optional<MobileNetworkPreemptionVulnerability> preemptionVulnerability = default;
+            Core.Optional<int> _5qi = default;
+            Core.Optional<int> allocationAndRetentionPriorityLevel = default;
+            Core.Optional<MobileNetworkPreemptionCapability> preemptionCapability = default;
+            Core.Optional<MobileNetworkPreemptionVulnerability> preemptionVulnerability = default;
             Ambr maximumBitRate = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     continue;
                 }
             }
-            return new MobileNetworkQosPolicy(Optional.ToNullable(_5qi), Optional.ToNullable(allocationAndRetentionPriorityLevel), Optional.ToNullable(preemptionCapability), Optional.ToNullable(preemptionVulnerability), maximumBitRate);
+            return new MobileNetworkQosPolicy(Core.Optional.ToNullable(_5qi), Core.Optional.ToNullable(allocationAndRetentionPriorityLevel), Core.Optional.ToNullable(preemptionCapability), Core.Optional.ToNullable(preemptionVulnerability), maximumBitRate);
         }
     }
 }

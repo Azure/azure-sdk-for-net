@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MySql
 {
-    internal class MySqlServerKeyOperationSource : IOperationSource<MySqlServerKeyResource>
+    internal class MySqlServerKeyOperationSource : Core.IOperationSource<MySqlServerKeyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.MySql
             _client = client;
         }
 
-        MySqlServerKeyResource IOperationSource<MySqlServerKeyResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        MySqlServerKeyResource Core.IOperationSource<MySqlServerKeyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MySqlServerKeyData.DeserializeMySqlServerKeyData(document.RootElement);
             return new MySqlServerKeyResource(_client, data);
         }
 
-        async ValueTask<MySqlServerKeyResource> IOperationSource<MySqlServerKeyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MySqlServerKeyResource> Core.IOperationSource<MySqlServerKeyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MySqlServerKeyData.DeserializeMySqlServerKeyData(document.RootElement);

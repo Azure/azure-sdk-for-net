@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class L3NetworkAttachmentConfiguration : IUtf8JsonSerializable
+    public partial class L3NetworkAttachmentConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IpamEnabled))
+            if (Core.Optional.IsDefined(IpamEnabled))
             {
                 writer.WritePropertyName("ipamEnabled"u8);
                 writer.WriteStringValue(IpamEnabled.Value.ToString());
             }
             writer.WritePropertyName("networkId"u8);
             writer.WriteStringValue(NetworkId);
-            if (Optional.IsDefined(PluginType))
+            if (Core.Optional.IsDefined(PluginType))
             {
                 writer.WritePropertyName("pluginType"u8);
                 writer.WriteStringValue(PluginType.Value.ToString());
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<L3NetworkConfigurationIpamEnabled> ipamEnabled = default;
+            Core.Optional<L3NetworkConfigurationIpamEnabled> ipamEnabled = default;
             ResourceIdentifier networkId = default;
-            Optional<KubernetesPluginType> pluginType = default;
+            Core.Optional<KubernetesPluginType> pluginType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipamEnabled"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new L3NetworkAttachmentConfiguration(Optional.ToNullable(ipamEnabled), networkId, Optional.ToNullable(pluginType));
+            return new L3NetworkAttachmentConfiguration(Core.Optional.ToNullable(ipamEnabled), networkId, Core.Optional.ToNullable(pluginType));
         }
     }
 }

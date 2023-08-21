@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of TroubleshootingResult. </summary>
         internal TroubleshootingResult()
         {
-            Results = new ChangeTrackingList<TroubleshootingDetails>();
+            Results = new Core.ChangeTrackingList<TroubleshootingDetails>();
         }
 
         /// <summary> Initializes a new instance of TroubleshootingResult. </summary>

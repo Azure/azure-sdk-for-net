@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> azureResourceIds = default;
+            Core.Optional<IReadOnlyList<string>> azureResourceIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureResourceIds"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     continue;
                 }
             }
-            return new NewRelicMetricsStatusResult(Optional.ToList(azureResourceIds));
+            return new NewRelicMetricsStatusResult(Core.Optional.ToList(azureResourceIds));
         }
     }
 }

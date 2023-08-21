@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of SubnetListResult. </summary>
         internal SubnetListResult()
         {
-            Value = new ChangeTrackingList<SubnetData>();
+            Value = new Core.ChangeTrackingList<SubnetData>();
         }
 
         /// <summary> Initializes a new instance of SubnetListResult. </summary>

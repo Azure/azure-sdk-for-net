@@ -23,17 +23,17 @@ namespace Azure.ResourceManager.NetApp.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> path = default;
-            Optional<string> parentPath = default;
-            Optional<long> size = default;
-            Optional<long> bytesUsed = default;
-            Optional<string> permissions = default;
-            Optional<DateTimeOffset> creationTimeStamp = default;
-            Optional<DateTimeOffset> accessedTimeStamp = default;
-            Optional<DateTimeOffset> modifiedTimeStamp = default;
-            Optional<DateTimeOffset> changedTimeStamp = default;
-            Optional<string> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> path = default;
+            Core.Optional<string> parentPath = default;
+            Core.Optional<long> size = default;
+            Core.Optional<long> bytesUsed = default;
+            Core.Optional<string> permissions = default;
+            Core.Optional<DateTimeOffset> creationTimeStamp = default;
+            Core.Optional<DateTimeOffset> accessedTimeStamp = default;
+            Core.Optional<DateTimeOffset> modifiedTimeStamp = default;
+            Core.Optional<DateTimeOffset> changedTimeStamp = default;
+            Core.Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new NetAppSubvolumeMetadata(id, name, type, systemData.Value, path.Value, parentPath.Value, Optional.ToNullable(size), Optional.ToNullable(bytesUsed), permissions.Value, Optional.ToNullable(creationTimeStamp), Optional.ToNullable(accessedTimeStamp), Optional.ToNullable(modifiedTimeStamp), Optional.ToNullable(changedTimeStamp), provisioningState.Value);
+            return new NetAppSubvolumeMetadata(id, name, type, systemData.Value, path.Value, parentPath.Value, Core.Optional.ToNullable(size), Core.Optional.ToNullable(bytesUsed), permissions.Value, Core.Optional.ToNullable(creationTimeStamp), Core.Optional.ToNullable(accessedTimeStamp), Core.Optional.ToNullable(modifiedTimeStamp), Core.Optional.ToNullable(changedTimeStamp), provisioningState.Value);
         }
     }
 }

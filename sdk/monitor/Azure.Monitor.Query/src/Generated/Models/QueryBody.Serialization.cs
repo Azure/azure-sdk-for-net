@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    internal partial class QueryBody : IUtf8JsonSerializable
+    internal partial class QueryBody : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
-            if (Optional.IsDefined(Timespan))
+            if (Core.Optional.IsDefined(Timespan))
             {
                 writer.WritePropertyName("timespan"u8);
                 writer.WriteStringValue(Timespan);
             }
-            if (Optional.IsCollectionDefined(Workspaces))
+            if (Core.Optional.IsCollectionDefined(Workspaces))
             {
                 writer.WritePropertyName("workspaces"u8);
                 writer.WriteStartArray();

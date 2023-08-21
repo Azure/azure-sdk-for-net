@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PolicyInsights
             Argument.AssertNotNull(policyAssignmentId, nameof(policyAssignmentId));
 
             PolicyAssignmentId = policyAssignmentId;
-            Evidence = new ChangeTrackingList<AttestationEvidence>();
+            Evidence = new Core.ChangeTrackingList<AttestationEvidence>();
         }
 
         /// <summary> Initializes a new instance of PolicyAttestationData. </summary>

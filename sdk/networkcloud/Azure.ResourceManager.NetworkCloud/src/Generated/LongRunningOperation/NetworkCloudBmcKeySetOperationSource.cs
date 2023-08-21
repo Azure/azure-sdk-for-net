@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    internal class NetworkCloudBmcKeySetOperationSource : IOperationSource<NetworkCloudBmcKeySetResource>
+    internal class NetworkCloudBmcKeySetOperationSource : Core.IOperationSource<NetworkCloudBmcKeySetResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.NetworkCloud
             _client = client;
         }
 
-        NetworkCloudBmcKeySetResource IOperationSource<NetworkCloudBmcKeySetResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkCloudBmcKeySetResource Core.IOperationSource<NetworkCloudBmcKeySetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NetworkCloudBmcKeySetData.DeserializeNetworkCloudBmcKeySetData(document.RootElement);
             return new NetworkCloudBmcKeySetResource(_client, data);
         }
 
-        async ValueTask<NetworkCloudBmcKeySetResource> IOperationSource<NetworkCloudBmcKeySetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkCloudBmcKeySetResource> Core.IOperationSource<NetworkCloudBmcKeySetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NetworkCloudBmcKeySetData.DeserializeNetworkCloudBmcKeySetData(document.RootElement);

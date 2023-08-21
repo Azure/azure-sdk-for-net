@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class VpnServerConfigurationPolicyGroupOperationSource : IOperationSource<VpnServerConfigurationPolicyGroupResource>
+    internal class VpnServerConfigurationPolicyGroupOperationSource : Core.IOperationSource<VpnServerConfigurationPolicyGroupResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        VpnServerConfigurationPolicyGroupResource IOperationSource<VpnServerConfigurationPolicyGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        VpnServerConfigurationPolicyGroupResource Core.IOperationSource<VpnServerConfigurationPolicyGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VpnServerConfigurationPolicyGroupData.DeserializeVpnServerConfigurationPolicyGroupData(document.RootElement);
             return new VpnServerConfigurationPolicyGroupResource(_client, data);
         }
 
-        async ValueTask<VpnServerConfigurationPolicyGroupResource> IOperationSource<VpnServerConfigurationPolicyGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VpnServerConfigurationPolicyGroupResource> Core.IOperationSource<VpnServerConfigurationPolicyGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VpnServerConfigurationPolicyGroupData.DeserializeVpnServerConfigurationPolicyGroupData(document.RootElement);

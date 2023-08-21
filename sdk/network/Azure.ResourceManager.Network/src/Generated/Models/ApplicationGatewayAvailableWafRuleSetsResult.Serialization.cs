@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApplicationGatewayFirewallRuleSet>> value = default;
+            Core.Optional<IReadOnlyList<ApplicationGatewayFirewallRuleSet>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayAvailableWafRuleSetsResult(Optional.ToList(value));
+            return new ApplicationGatewayAvailableWafRuleSetsResult(Core.Optional.ToList(value));
         }
     }
 }

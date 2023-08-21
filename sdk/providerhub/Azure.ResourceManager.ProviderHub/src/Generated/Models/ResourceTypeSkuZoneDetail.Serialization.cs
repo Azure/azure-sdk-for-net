@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ResourceTypeSkuZoneDetail : IUtf8JsonSerializable
+    public partial class ResourceTypeSkuZoneDetail : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Name))
+            if (Core.Optional.IsCollectionDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Capabilities))
+            if (Core.Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<IList<string>> name = default;
-            Optional<IList<ResourceSkuCapability>> capabilities = default;
+            Core.Optional<IList<string>> name = default;
+            Core.Optional<IList<ResourceSkuCapability>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new ResourceTypeSkuZoneDetail(Optional.ToList(name), Optional.ToList(capabilities));
+            return new ResourceTypeSkuZoneDetail(Core.Optional.ToList(name), Core.Optional.ToList(capabilities));
         }
     }
 }

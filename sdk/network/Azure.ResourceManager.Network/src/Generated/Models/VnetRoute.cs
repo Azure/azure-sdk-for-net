@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VnetRoute. </summary>
         public VnetRoute()
         {
-            StaticRoutes = new ChangeTrackingList<StaticRoute>();
-            BgpConnections = new ChangeTrackingList<WritableSubResource>();
+            StaticRoutes = new Core.ChangeTrackingList<StaticRoute>();
+            BgpConnections = new Core.ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of VnetRoute. </summary>

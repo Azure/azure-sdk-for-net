@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayCustomError : IUtf8JsonSerializable
+    public partial class ApplicationGatewayCustomError : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StatusCode))
+            if (Core.Optional.IsDefined(StatusCode))
             {
                 writer.WritePropertyName("statusCode"u8);
                 writer.WriteStringValue(StatusCode.Value.ToString());
             }
-            if (Optional.IsDefined(CustomErrorPageUri))
+            if (Core.Optional.IsDefined(CustomErrorPageUri))
             {
                 writer.WritePropertyName("customErrorPageUrl"u8);
                 writer.WriteStringValue(CustomErrorPageUri.AbsoluteUri);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ApplicationGatewayCustomErrorStatusCode> statusCode = default;
-            Optional<Uri> customErrorPageUrl = default;
+            Core.Optional<ApplicationGatewayCustomErrorStatusCode> statusCode = default;
+            Core.Optional<Uri> customErrorPageUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("statusCode"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayCustomError(Optional.ToNullable(statusCode), customErrorPageUrl.Value);
+            return new ApplicationGatewayCustomError(Core.Optional.ToNullable(statusCode), customErrorPageUrl.Value);
         }
     }
 }

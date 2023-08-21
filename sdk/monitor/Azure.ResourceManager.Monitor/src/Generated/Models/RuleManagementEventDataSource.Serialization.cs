@@ -10,74 +10,74 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class RuleManagementEventDataSource : IUtf8JsonSerializable
+    public partial class RuleManagementEventDataSource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EventName))
+            if (Core.Optional.IsDefined(EventName))
             {
                 writer.WritePropertyName("eventName"u8);
                 writer.WriteStringValue(EventName);
             }
-            if (Optional.IsDefined(EventSource))
+            if (Core.Optional.IsDefined(EventSource))
             {
                 writer.WritePropertyName("eventSource"u8);
                 writer.WriteStringValue(EventSource);
             }
-            if (Optional.IsDefined(Level))
+            if (Core.Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level);
             }
-            if (Optional.IsDefined(OperationName))
+            if (Core.Optional.IsDefined(OperationName))
             {
                 writer.WritePropertyName("operationName"u8);
                 writer.WriteStringValue(OperationName);
             }
-            if (Optional.IsDefined(ResourceGroupName))
+            if (Core.Optional.IsDefined(ResourceGroupName))
             {
                 writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
-            if (Optional.IsDefined(ResourceProviderName))
+            if (Core.Optional.IsDefined(ResourceProviderName))
             {
                 writer.WritePropertyName("resourceProviderName"u8);
                 writer.WriteStringValue(ResourceProviderName);
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(SubStatus))
+            if (Core.Optional.IsDefined(SubStatus))
             {
                 writer.WritePropertyName("subStatus"u8);
                 writer.WriteStringValue(SubStatus);
             }
-            if (Optional.IsDefined(Claims))
+            if (Core.Optional.IsDefined(Claims))
             {
                 writer.WritePropertyName("claims"u8);
                 writer.WriteObjectValue(Claims);
             }
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Optional.IsDefined(ResourceId))
+            if (Core.Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(LegacyResourceId))
+            if (Core.Optional.IsDefined(LegacyResourceId))
             {
                 writer.WritePropertyName("legacyResourceId"u8);
                 writer.WriteStringValue(LegacyResourceId);
             }
-            if (Optional.IsDefined(ResourceLocation))
+            if (Core.Optional.IsDefined(ResourceLocation))
             {
                 writer.WritePropertyName("resourceLocation"u8);
                 writer.WriteStringValue(ResourceLocation);
             }
-            if (Optional.IsDefined(MetricNamespace))
+            if (Core.Optional.IsDefined(MetricNamespace))
             {
                 writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
@@ -91,20 +91,20 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<string> eventName = default;
-            Optional<string> eventSource = default;
-            Optional<string> level = default;
-            Optional<string> operationName = default;
-            Optional<string> resourceGroupName = default;
-            Optional<string> resourceProviderName = default;
-            Optional<string> status = default;
-            Optional<string> subStatus = default;
-            Optional<RuleManagementEventClaimsDataSource> claims = default;
+            Core.Optional<string> eventName = default;
+            Core.Optional<string> eventSource = default;
+            Core.Optional<string> level = default;
+            Core.Optional<string> operationName = default;
+            Core.Optional<string> resourceGroupName = default;
+            Core.Optional<string> resourceProviderName = default;
+            Core.Optional<string> status = default;
+            Core.Optional<string> subStatus = default;
+            Core.Optional<RuleManagementEventClaimsDataSource> claims = default;
             string odataType = default;
-            Optional<ResourceIdentifier> resourceUri = default;
-            Optional<ResourceIdentifier> legacyResourceId = default;
-            Optional<string> resourceLocation = default;
-            Optional<string> metricNamespace = default;
+            Core.Optional<ResourceIdentifier> resourceUri = default;
+            Core.Optional<ResourceIdentifier> legacyResourceId = default;
+            Core.Optional<string> resourceLocation = default;
+            Core.Optional<string> metricNamespace = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventName"u8))

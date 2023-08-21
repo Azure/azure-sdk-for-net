@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VpnServerConfigurationData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<VpnServerConfigurationData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ListVpnServerConfigurationsResult(Optional.ToList(value), nextLink.Value);
+            return new ListVpnServerConfigurationsResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

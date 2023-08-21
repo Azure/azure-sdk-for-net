@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
 
             Target = target;
             StorageLocation = storageLocation;
-            Filters = new ChangeTrackingList<PacketCaptureFilter>();
+            Filters = new Core.ChangeTrackingList<PacketCaptureFilter>();
         }
 
         /// <summary> The ID of the targeted resource, only AzureVM and AzureVMSS as target type are currently supported. </summary>

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             try
             {
                 var response = await _preRulestackRulePreRulesRestClient.CreateOrUpdateAsync(Id.Name, priority, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NgfwArmOperation<PreRulestackRuleResource>(new PreRulestackRuleOperationSource(Client), _preRulestackRulePreRulesClientDiagnostics, Pipeline, _preRulestackRulePreRulesRestClient.CreateCreateOrUpdateRequest(Id.Name, priority, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NgfwArmOperation<PreRulestackRuleResource>(new PreRulestackRuleOperationSource(Client), _preRulestackRulePreRulesClientDiagnostics, Pipeline, _preRulestackRulePreRulesRestClient.CreateCreateOrUpdateRequest(Id.Name, priority, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             try
             {
                 var response = _preRulestackRulePreRulesRestClient.CreateOrUpdate(Id.Name, priority, data, cancellationToken);
-                var operation = new NgfwArmOperation<PreRulestackRuleResource>(new PreRulestackRuleOperationSource(Client), _preRulestackRulePreRulesClientDiagnostics, Pipeline, _preRulestackRulePreRulesRestClient.CreateCreateOrUpdateRequest(Id.Name, priority, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NgfwArmOperation<PreRulestackRuleResource>(new PreRulestackRuleOperationSource(Client), _preRulestackRulePreRulesClientDiagnostics, Pipeline, _preRulestackRulePreRulesRestClient.CreateCreateOrUpdateRequest(Id.Name, priority, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _preRulestackRulePreRulesRestClient.CreateListRequest(Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _preRulestackRulePreRulesRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PreRulestackRuleResource(Client, PreRulestackRuleData.DeserializePreRulestackRuleData(e)), _preRulestackRulePreRulesClientDiagnostics, Pipeline, "PreRulestackRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PreRulestackRuleResource(Client, PreRulestackRuleData.DeserializePreRulestackRuleData(e)), _preRulestackRulePreRulesClientDiagnostics, Pipeline, "PreRulestackRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _preRulestackRulePreRulesRestClient.CreateListRequest(Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _preRulestackRulePreRulesRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PreRulestackRuleResource(Client, PreRulestackRuleData.DeserializePreRulestackRuleData(e)), _preRulestackRulePreRulesClientDiagnostics, Pipeline, "PreRulestackRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PreRulestackRuleResource(Client, PreRulestackRuleData.DeserializePreRulestackRuleData(e)), _preRulestackRulePreRulesClientDiagnostics, Pipeline, "PreRulestackRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

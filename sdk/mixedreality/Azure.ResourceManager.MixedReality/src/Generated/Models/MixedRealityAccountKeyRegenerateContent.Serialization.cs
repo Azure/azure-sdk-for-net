@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MixedReality.Models
 {
-    public partial class MixedRealityAccountKeyRegenerateContent : IUtf8JsonSerializable
+    public partial class MixedRealityAccountKeyRegenerateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Serial))
+            if (Core.Optional.IsDefined(Serial))
             {
                 writer.WritePropertyName("serial"u8);
                 writer.WriteNumberValue((int)Serial.Value);

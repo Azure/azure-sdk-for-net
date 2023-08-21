@@ -14,22 +14,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class WebApplicationFirewallPolicyData : IUtf8JsonSerializable
+    public partial class WebApplicationFirewallPolicyData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PolicySettings))
+            if (Core.Optional.IsDefined(PolicySettings))
             {
                 writer.WritePropertyName("policySettings"u8);
                 writer.WriteObjectValue(PolicySettings);
             }
-            if (Optional.IsCollectionDefined(CustomRules))
+            if (Core.Optional.IsCollectionDefined(CustomRules))
             {
                 writer.WritePropertyName("customRules"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ManagedRules))
+            if (Core.Optional.IsDefined(ManagedRules))
             {
                 writer.WritePropertyName("managedRules"u8);
                 writer.WriteObjectValue(ManagedRules);
@@ -72,20 +72,20 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<PolicySettings> policySettings = default;
-            Optional<IList<WebApplicationFirewallCustomRule>> customRules = default;
-            Optional<IReadOnlyList<ApplicationGatewayData>> applicationGateways = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<WebApplicationFirewallPolicyResourceState> resourceState = default;
-            Optional<ManagedRulesDefinition> managedRules = default;
-            Optional<IReadOnlyList<WritableSubResource>> httpListeners = default;
-            Optional<IReadOnlyList<WritableSubResource>> pathBasedRules = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceType> type = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<PolicySettings> policySettings = default;
+            Core.Optional<IList<WebApplicationFirewallCustomRule>> customRules = default;
+            Core.Optional<IReadOnlyList<ApplicationGatewayData>> applicationGateways = default;
+            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Core.Optional<WebApplicationFirewallPolicyResourceState> resourceState = default;
+            Core.Optional<ManagedRulesDefinition> managedRules = default;
+            Core.Optional<IReadOnlyList<WritableSubResource>> httpListeners = default;
+            Core.Optional<IReadOnlyList<WritableSubResource>> pathBasedRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new WebApplicationFirewallPolicyData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), policySettings.Value, Optional.ToList(customRules), Optional.ToList(applicationGateways), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState), managedRules.Value, Optional.ToList(httpListeners), Optional.ToList(pathBasedRules));
+            return new WebApplicationFirewallPolicyData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags), Core.Optional.ToNullable(etag), policySettings.Value, Core.Optional.ToList(customRules), Core.Optional.ToList(applicationGateways), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(resourceState), managedRules.Value, Core.Optional.ToList(httpListeners), Core.Optional.ToList(pathBasedRules));
         }
     }
 }

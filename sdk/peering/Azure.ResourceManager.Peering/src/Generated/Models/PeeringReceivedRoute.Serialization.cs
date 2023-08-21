@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<string> prefix = default;
-            Optional<string> nextHop = default;
-            Optional<string> asPath = default;
-            Optional<string> originAsValidationState = default;
-            Optional<string> rpkiValidationState = default;
-            Optional<string> trustAnchor = default;
-            Optional<string> receivedTimestamp = default;
+            Core.Optional<string> prefix = default;
+            Core.Optional<string> nextHop = default;
+            Core.Optional<string> asPath = default;
+            Core.Optional<string> originAsValidationState = default;
+            Core.Optional<string> rpkiValidationState = default;
+            Core.Optional<string> trustAnchor = default;
+            Core.Optional<string> receivedTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("prefix"u8))

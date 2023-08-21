@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <summary> Initializes a new instance of ConnectionMonitorTestListResult. </summary>
         internal ConnectionMonitorTestListResult()
         {
-            Value = new ChangeTrackingList<ConnectionMonitorTestData>();
+            Value = new Core.ChangeTrackingList<ConnectionMonitorTestData>();
         }
 
         /// <summary> Initializes a new instance of ConnectionMonitorTestListResult. </summary>

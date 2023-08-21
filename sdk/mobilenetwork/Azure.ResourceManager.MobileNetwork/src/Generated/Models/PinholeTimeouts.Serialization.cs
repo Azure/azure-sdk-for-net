@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class PinholeTimeouts : IUtf8JsonSerializable
+    public partial class PinholeTimeouts : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Tcp))
+            if (Core.Optional.IsDefined(Tcp))
             {
                 writer.WritePropertyName("tcp"u8);
                 writer.WriteNumberValue(Tcp.Value);
             }
-            if (Optional.IsDefined(Udp))
+            if (Core.Optional.IsDefined(Udp))
             {
                 writer.WritePropertyName("udp"u8);
                 writer.WriteNumberValue(Udp.Value);
             }
-            if (Optional.IsDefined(Icmp))
+            if (Core.Optional.IsDefined(Icmp))
             {
                 writer.WritePropertyName("icmp"u8);
                 writer.WriteNumberValue(Icmp.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<int> tcp = default;
-            Optional<int> udp = default;
-            Optional<int> icmp = default;
+            Core.Optional<int> tcp = default;
+            Core.Optional<int> udp = default;
+            Core.Optional<int> icmp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tcp"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     continue;
                 }
             }
-            return new PinholeTimeouts(Optional.ToNullable(tcp), Optional.ToNullable(udp), Optional.ToNullable(icmp));
+            return new PinholeTimeouts(Core.Optional.ToNullable(tcp), Core.Optional.ToNullable(udp), Core.Optional.ToNullable(icmp));
         }
     }
 }

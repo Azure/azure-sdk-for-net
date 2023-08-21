@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectionStateSnapshot. </summary>
         internal ConnectionStateSnapshot()
         {
-            Hops = new ChangeTrackingList<ConnectivityHopInfo>();
+            Hops = new Core.ChangeTrackingList<ConnectivityHopInfo>();
         }
 
         /// <summary> Initializes a new instance of ConnectionStateSnapshot. </summary>

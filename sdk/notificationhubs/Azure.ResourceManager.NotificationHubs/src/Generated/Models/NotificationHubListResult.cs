@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <summary> Initializes a new instance of NotificationHubListResult. </summary>
         internal NotificationHubListResult()
         {
-            Value = new ChangeTrackingList<NotificationHubData>();
+            Value = new Core.ChangeTrackingList<NotificationHubData>();
         }
 
         /// <summary> Initializes a new instance of NotificationHubListResult. </summary>

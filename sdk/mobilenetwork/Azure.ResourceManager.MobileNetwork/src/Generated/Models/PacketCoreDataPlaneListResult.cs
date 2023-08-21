@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <summary> Initializes a new instance of PacketCoreDataPlaneListResult. </summary>
         internal PacketCoreDataPlaneListResult()
         {
-            Value = new ChangeTrackingList<PacketCoreDataPlaneData>();
+            Value = new Core.ChangeTrackingList<PacketCoreDataPlaneData>();
         }
 
         /// <summary> Initializes a new instance of PacketCoreDataPlaneListResult. </summary>

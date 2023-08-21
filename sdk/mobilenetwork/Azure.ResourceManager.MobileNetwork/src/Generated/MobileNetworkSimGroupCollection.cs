@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = await _mobileNetworkSimGroupSimGroupsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, simGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MobileNetworkArmOperation<MobileNetworkSimGroupResource>(new MobileNetworkSimGroupOperationSource(Client), _mobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, _mobileNetworkSimGroupSimGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, simGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MobileNetworkArmOperation<MobileNetworkSimGroupResource>(new MobileNetworkSimGroupOperationSource(Client), _mobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, _mobileNetworkSimGroupSimGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, simGroupName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = _mobileNetworkSimGroupSimGroupsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, simGroupName, data, cancellationToken);
-                var operation = new MobileNetworkArmOperation<MobileNetworkSimGroupResource>(new MobileNetworkSimGroupOperationSource(Client), _mobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, _mobileNetworkSimGroupSimGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, simGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new MobileNetworkArmOperation<MobileNetworkSimGroupResource>(new MobileNetworkSimGroupOperationSource(Client), _mobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, _mobileNetworkSimGroupSimGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, simGroupName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkSimGroupSimGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mobileNetworkSimGroupSimGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimGroupResource(Client, MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(e)), _mobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, "MobileNetworkSimGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimGroupResource(Client, MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(e)), _mobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, "MobileNetworkSimGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkSimGroupSimGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mobileNetworkSimGroupSimGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimGroupResource(Client, MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(e)), _mobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, "MobileNetworkSimGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimGroupResource(Client, MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(e)), _mobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, "MobileNetworkSimGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

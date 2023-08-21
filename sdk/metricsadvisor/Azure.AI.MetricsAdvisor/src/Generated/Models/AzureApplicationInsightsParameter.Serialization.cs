@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class AzureApplicationInsightsParameter : IUtf8JsonSerializable
+    internal partial class AzureApplicationInsightsParameter : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureCloud))
+            if (Core.Optional.IsDefined(AzureCloud))
             {
                 if (AzureCloud != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     writer.WriteNull("azureCloud");
                 }
             }
-            if (Optional.IsDefined(ApplicationId))
+            if (Core.Optional.IsDefined(ApplicationId))
             {
                 if (ApplicationId != null)
                 {
@@ -39,7 +39,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     writer.WriteNull("applicationId");
                 }
             }
-            if (Optional.IsDefined(ApiKey))
+            if (Core.Optional.IsDefined(ApiKey))
             {
                 if (ApiKey != null)
                 {
@@ -69,9 +69,9 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> azureCloud = default;
-            Optional<string> applicationId = default;
-            Optional<string> apiKey = default;
+            Core.Optional<string> azureCloud = default;
+            Core.Optional<string> applicationId = default;
+            Core.Optional<string> apiKey = default;
             string query = default;
             foreach (var property in element.EnumerateObject())
             {

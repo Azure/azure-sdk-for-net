@@ -19,24 +19,24 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> agentPoolId = default;
-            Optional<string> availabilityZone = default;
-            Optional<string> bareMetalMachineId = default;
-            Optional<long> cpuCores = default;
-            Optional<KubernetesClusterNodeDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<long> diskSizeGB = default;
-            Optional<string> image = default;
-            Optional<string> kubernetesVersion = default;
-            Optional<IReadOnlyList<KubernetesLabel>> labels = default;
-            Optional<long> memorySizeGB = default;
-            Optional<NetworkCloudAgentPoolMode> mode = default;
-            Optional<string> name = default;
-            Optional<IReadOnlyList<NetworkAttachment>> networkAttachments = default;
-            Optional<KubernetesNodePowerState> powerState = default;
-            Optional<KubernetesNodeRole> role = default;
-            Optional<IReadOnlyList<KubernetesLabel>> taints = default;
-            Optional<string> vmSkuName = default;
+            Core.Optional<string> agentPoolId = default;
+            Core.Optional<string> availabilityZone = default;
+            Core.Optional<string> bareMetalMachineId = default;
+            Core.Optional<long> cpuCores = default;
+            Core.Optional<KubernetesClusterNodeDetailedStatus> detailedStatus = default;
+            Core.Optional<string> detailedStatusMessage = default;
+            Core.Optional<long> diskSizeGB = default;
+            Core.Optional<string> image = default;
+            Core.Optional<string> kubernetesVersion = default;
+            Core.Optional<IReadOnlyList<KubernetesLabel>> labels = default;
+            Core.Optional<long> memorySizeGB = default;
+            Core.Optional<NetworkCloudAgentPoolMode> mode = default;
+            Core.Optional<string> name = default;
+            Core.Optional<IReadOnlyList<NetworkAttachment>> networkAttachments = default;
+            Core.Optional<KubernetesNodePowerState> powerState = default;
+            Core.Optional<KubernetesNodeRole> role = default;
+            Core.Optional<IReadOnlyList<KubernetesLabel>> taints = default;
+            Core.Optional<string> vmSkuName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("agentPoolId"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new KubernetesClusterNode(agentPoolId.Value, availabilityZone.Value, bareMetalMachineId.Value, Optional.ToNullable(cpuCores), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(diskSizeGB), image.Value, kubernetesVersion.Value, Optional.ToList(labels), Optional.ToNullable(memorySizeGB), Optional.ToNullable(mode), name.Value, Optional.ToList(networkAttachments), Optional.ToNullable(powerState), Optional.ToNullable(role), Optional.ToList(taints), vmSkuName.Value);
+            return new KubernetesClusterNode(agentPoolId.Value, availabilityZone.Value, bareMetalMachineId.Value, Core.Optional.ToNullable(cpuCores), Core.Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Core.Optional.ToNullable(diskSizeGB), image.Value, kubernetesVersion.Value, Core.Optional.ToList(labels), Core.Optional.ToNullable(memorySizeGB), Core.Optional.ToNullable(mode), name.Value, Core.Optional.ToList(networkAttachments), Core.Optional.ToNullable(powerState), Core.Optional.ToNullable(role), Core.Optional.ToList(taints), vmSkuName.Value);
         }
     }
 }

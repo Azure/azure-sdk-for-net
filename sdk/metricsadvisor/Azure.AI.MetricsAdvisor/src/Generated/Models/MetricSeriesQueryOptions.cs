@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public MetricSeriesQueryOptions(DateTimeOffset activeSince)
         {
             ActiveSince = activeSince;
-            DimensionFilter = new ChangeTrackingDictionary<string, IList<string>>();
+            DimensionFilter = new Core.ChangeTrackingDictionary<string, IList<string>>();
         }
 
         /// <summary> query series ingested after this time, the format should be yyyy-MM-ddTHH:mm:ssZ. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VpnClientContent. </summary>
         public VpnClientContent()
         {
-            ClientRootCertificates = new ChangeTrackingList<string>();
+            ClientRootCertificates = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> VPN client Processor Architecture. </summary>

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ResourceTypeSkuProperties : IUtf8JsonSerializable
+    public partial class ResourceTypeSkuProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("skuSettings"u8);
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(ProvisioningState))
+            if (Core.Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             IList<ResourceTypeSkuSetting> skuSettings = default;
-            Optional<ProviderHubProvisioningState> provisioningState = default;
+            Core.Optional<ProviderHubProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("skuSettings"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new ResourceTypeSkuProperties(skuSettings, Optional.ToNullable(provisioningState));
+            return new ResourceTypeSkuProperties(skuSettings, Core.Optional.ToNullable(provisioningState));
         }
     }
 }

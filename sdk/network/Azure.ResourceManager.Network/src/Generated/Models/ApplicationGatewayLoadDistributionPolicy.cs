@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayLoadDistributionPolicy. </summary>
         public ApplicationGatewayLoadDistributionPolicy()
         {
-            LoadDistributionTargets = new ChangeTrackingList<ApplicationGatewayLoadDistributionTarget>();
+            LoadDistributionTargets = new Core.ChangeTrackingList<ApplicationGatewayLoadDistributionTarget>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayLoadDistributionPolicy. </summary>

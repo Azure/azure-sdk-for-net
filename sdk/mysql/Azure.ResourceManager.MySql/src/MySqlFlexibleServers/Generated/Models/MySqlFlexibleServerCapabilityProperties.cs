@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <summary> Initializes a new instance of MySqlFlexibleServerCapabilityProperties. </summary>
         internal MySqlFlexibleServerCapabilityProperties()
         {
-            SupportedHAMode = new ChangeTrackingList<string>();
-            SupportedGeoBackupRegions = new ChangeTrackingList<string>();
-            SupportedFlexibleServerEditions = new ChangeTrackingList<MySqlFlexibleServerEditionCapability>();
+            SupportedHAMode = new Core.ChangeTrackingList<string>();
+            SupportedGeoBackupRegions = new Core.ChangeTrackingList<string>();
+            SupportedFlexibleServerEditions = new Core.ChangeTrackingList<MySqlFlexibleServerEditionCapability>();
         }
 
         /// <summary> Initializes a new instance of MySqlFlexibleServerCapabilityProperties. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectionMonitorQueryResult. </summary>
         internal ConnectionMonitorQueryResult()
         {
-            States = new ChangeTrackingList<ConnectionStateSnapshot>();
+            States = new Core.ChangeTrackingList<ConnectionStateSnapshot>();
         }
 
         /// <summary> Initializes a new instance of ConnectionMonitorQueryResult. </summary>

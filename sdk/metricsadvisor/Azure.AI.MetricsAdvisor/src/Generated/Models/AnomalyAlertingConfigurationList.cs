@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of AnomalyAlertingConfigurationList. </summary>
         internal AnomalyAlertingConfigurationList()
         {
-            Value = new ChangeTrackingList<AnomalyAlertConfiguration>();
+            Value = new Core.ChangeTrackingList<AnomalyAlertConfiguration>();
         }
 
         /// <summary> Initializes a new instance of AnomalyAlertingConfigurationList. </summary>

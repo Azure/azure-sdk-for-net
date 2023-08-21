@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class BgpAdvertisement : IUtf8JsonSerializable
+    public partial class BgpAdvertisement : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AdvertiseToFabric))
+            if (Core.Optional.IsDefined(AdvertiseToFabric))
             {
                 writer.WritePropertyName("advertiseToFabric"u8);
                 writer.WriteStringValue(AdvertiseToFabric.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Communities))
+            if (Core.Optional.IsCollectionDefined(Communities))
             {
                 writer.WritePropertyName("communities"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Peers))
+            if (Core.Optional.IsCollectionDefined(Peers))
             {
                 writer.WritePropertyName("peers"u8);
                 writer.WriteStartArray();
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<AdvertiseToFabric> advertiseToFabric = default;
-            Optional<IList<string>> communities = default;
+            Core.Optional<AdvertiseToFabric> advertiseToFabric = default;
+            Core.Optional<IList<string>> communities = default;
             IList<string> ipAddressPools = default;
-            Optional<IList<string>> peers = default;
+            Core.Optional<IList<string>> peers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("advertiseToFabric"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new BgpAdvertisement(Optional.ToNullable(advertiseToFabric), Optional.ToList(communities), ipAddressPools, Optional.ToList(peers));
+            return new BgpAdvertisement(Core.Optional.ToNullable(advertiseToFabric), Core.Optional.ToList(communities), ipAddressPools, Core.Optional.ToList(peers));
         }
     }
 }

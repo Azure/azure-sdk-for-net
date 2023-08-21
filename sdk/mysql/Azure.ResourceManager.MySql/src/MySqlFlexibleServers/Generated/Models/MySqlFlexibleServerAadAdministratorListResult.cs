@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <summary> Initializes a new instance of MySqlFlexibleServerAadAdministratorListResult. </summary>
         internal MySqlFlexibleServerAadAdministratorListResult()
         {
-            Value = new ChangeTrackingList<MySqlFlexibleServerAadAdministratorData>();
+            Value = new Core.ChangeTrackingList<MySqlFlexibleServerAadAdministratorData>();
         }
 
         /// <summary> Initializes a new instance of MySqlFlexibleServerAadAdministratorListResult. </summary>

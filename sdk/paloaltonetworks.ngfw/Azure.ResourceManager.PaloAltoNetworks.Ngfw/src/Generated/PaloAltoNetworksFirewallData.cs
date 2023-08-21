@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
             NetworkProfile = networkProfile;
             DnsSettings = dnsSettings;
-            FrontEndSettings = new ChangeTrackingList<FirewallFrontendSetting>();
+            FrontEndSettings = new Core.ChangeTrackingList<FirewallFrontendSetting>();
             PlanData = planData;
             MarketplaceDetails = marketplaceDetails;
         }

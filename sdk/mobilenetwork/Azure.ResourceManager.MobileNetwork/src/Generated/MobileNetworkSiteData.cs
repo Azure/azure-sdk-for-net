@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="location"> The location. </param>
         public MobileNetworkSiteData(AzureLocation location) : base(location)
         {
-            NetworkFunctions = new ChangeTrackingList<SubResource>();
+            NetworkFunctions = new Core.ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of MobileNetworkSiteData. </summary>

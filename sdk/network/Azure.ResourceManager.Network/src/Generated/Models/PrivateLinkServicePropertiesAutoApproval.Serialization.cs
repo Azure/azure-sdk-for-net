@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class PrivateLinkServicePropertiesAutoApproval : IUtf8JsonSerializable
+    internal partial class PrivateLinkServicePropertiesAutoApproval : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Subscriptions))
+            if (Core.Optional.IsCollectionDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> subscriptions = default;
+            Core.Optional<IList<string>> subscriptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subscriptions"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PrivateLinkServicePropertiesAutoApproval(Optional.ToList(subscriptions));
+            return new PrivateLinkServicePropertiesAutoApproval(Core.Optional.ToList(subscriptions));
         }
     }
 }

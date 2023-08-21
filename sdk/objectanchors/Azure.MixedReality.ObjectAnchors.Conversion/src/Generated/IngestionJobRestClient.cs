@@ -57,7 +57,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
@@ -70,7 +70,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="xMrcCv"> The client request correlation vector, which should be set to a new value for each request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<AssetConversionProperties, IngestionJobCreateHeaders>> CreateAsync(Guid accountId, Guid jobId, AssetConversionProperties body, string xMrcCv = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<AssetConversionProperties, IngestionJobCreateHeaders>> CreateAsync(Guid accountId, Guid jobId, AssetConversionProperties body, string xMrcCv = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -87,7 +87,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                         AssetConversionProperties value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = AssetConversionProperties.DeserializeAssetConversionProperties(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -101,7 +101,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="xMrcCv"> The client request correlation vector, which should be set to a new value for each request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<AssetConversionProperties, IngestionJobCreateHeaders> Create(Guid accountId, Guid jobId, AssetConversionProperties body, string xMrcCv = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<AssetConversionProperties, IngestionJobCreateHeaders> Create(Guid accountId, Guid jobId, AssetConversionProperties body, string xMrcCv = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -118,7 +118,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                         AssetConversionProperties value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = AssetConversionProperties.DeserializeAssetConversionProperties(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -151,7 +151,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="jobId"> Identifier for the Azure Object Anchors ingestion job. </param>
         /// <param name="xMrcCv"> The client request correlation vector, which should be set to a new value for each request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<AssetConversionProperties, IngestionJobGetHeaders>> GetAsync(Guid accountId, Guid jobId, string xMrcCv = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<AssetConversionProperties, IngestionJobGetHeaders>> GetAsync(Guid accountId, Guid jobId, string xMrcCv = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest(accountId, jobId, xMrcCv);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -163,7 +163,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                         AssetConversionProperties value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = AssetConversionProperties.DeserializeAssetConversionProperties(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -175,7 +175,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="jobId"> Identifier for the Azure Object Anchors ingestion job. </param>
         /// <param name="xMrcCv"> The client request correlation vector, which should be set to a new value for each request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<AssetConversionProperties, IngestionJobGetHeaders> Get(Guid accountId, Guid jobId, string xMrcCv = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<AssetConversionProperties, IngestionJobGetHeaders> Get(Guid accountId, Guid jobId, string xMrcCv = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest(accountId, jobId, xMrcCv);
             _pipeline.Send(message, cancellationToken);
@@ -187,7 +187,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                         AssetConversionProperties value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = AssetConversionProperties.DeserializeAssetConversionProperties(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);

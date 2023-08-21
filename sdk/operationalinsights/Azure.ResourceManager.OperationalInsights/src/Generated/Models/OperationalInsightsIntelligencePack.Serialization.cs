@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> enabled = default;
-            Optional<string> displayName = default;
+            Core.Optional<string> name = default;
+            Core.Optional<bool> enabled = default;
+            Core.Optional<string> displayName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     continue;
                 }
             }
-            return new OperationalInsightsIntelligencePack(name.Value, Optional.ToNullable(enabled), displayName.Value);
+            return new OperationalInsightsIntelligencePack(name.Value, Core.Optional.ToNullable(enabled), displayName.Value);
         }
     }
 }

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectionMonitorSuccessThreshold : IUtf8JsonSerializable
+    public partial class ConnectionMonitorSuccessThreshold : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ChecksFailedPercent))
+            if (Core.Optional.IsDefined(ChecksFailedPercent))
             {
                 writer.WritePropertyName("checksFailedPercent"u8);
                 writer.WriteNumberValue(ChecksFailedPercent.Value);
             }
-            if (Optional.IsDefined(RoundTripTimeMs))
+            if (Core.Optional.IsDefined(RoundTripTimeMs))
             {
                 writer.WritePropertyName("roundTripTimeMs"u8);
                 writer.WriteNumberValue(RoundTripTimeMs.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<int> checksFailedPercent = default;
-            Optional<float> roundTripTimeMs = default;
+            Core.Optional<int> checksFailedPercent = default;
+            Core.Optional<float> roundTripTimeMs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("checksFailedPercent"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ConnectionMonitorSuccessThreshold(Optional.ToNullable(checksFailedPercent), Optional.ToNullable(roundTripTimeMs));
+            return new ConnectionMonitorSuccessThreshold(Core.Optional.ToNullable(checksFailedPercent), Core.Optional.ToNullable(roundTripTimeMs));
         }
     }
 }

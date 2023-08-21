@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="location"> The location. </param>
         public ScheduledQueryRuleData(AzureLocation location) : base(location)
         {
-            Scopes = new ChangeTrackingList<string>();
-            TargetResourceTypes = new ChangeTrackingList<string>();
+            Scopes = new Core.ChangeTrackingList<string>();
+            TargetResourceTypes = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ScheduledQueryRuleData. </summary>

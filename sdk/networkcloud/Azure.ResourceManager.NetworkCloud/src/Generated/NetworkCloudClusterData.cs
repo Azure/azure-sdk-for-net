@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.NetworkCloud
 
             ExtendedLocation = extendedLocation;
             AggregatorOrSingleRackDefinition = aggregatorOrSingleRackDefinition;
-            AvailableUpgradeVersions = new ChangeTrackingList<ClusterAvailableUpgradeVersion>();
+            AvailableUpgradeVersions = new Core.ChangeTrackingList<ClusterAvailableUpgradeVersion>();
             ClusterType = clusterType;
             ClusterVersion = clusterVersion;
-            ComputeRackDefinitions = new ChangeTrackingList<NetworkCloudRackDefinition>();
+            ComputeRackDefinitions = new Core.ChangeTrackingList<NetworkCloudRackDefinition>();
             NetworkFabricId = networkFabricId;
-            WorkloadResourceIds = new ChangeTrackingList<ResourceIdentifier>();
+            WorkloadResourceIds = new Core.ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of NetworkCloudClusterData. </summary>

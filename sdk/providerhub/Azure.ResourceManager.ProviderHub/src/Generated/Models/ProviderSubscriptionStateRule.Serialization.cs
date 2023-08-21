@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ProviderSubscriptionStateRule : IUtf8JsonSerializable
+    public partial class ProviderSubscriptionStateRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AllowedActions))
+            if (Core.Optional.IsCollectionDefined(AllowedActions))
             {
                 writer.WritePropertyName("allowedActions"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<ProviderSubscriptionState> state = default;
-            Optional<IList<string>> allowedActions = default;
+            Core.Optional<ProviderSubscriptionState> state = default;
+            Core.Optional<IList<string>> allowedActions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new ProviderSubscriptionStateRule(Optional.ToNullable(state), Optional.ToList(allowedActions));
+            return new ProviderSubscriptionStateRule(Core.Optional.ToNullable(state), Core.Optional.ToList(allowedActions));
         }
     }
 }

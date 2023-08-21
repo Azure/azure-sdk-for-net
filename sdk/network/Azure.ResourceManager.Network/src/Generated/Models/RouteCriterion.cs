@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of RouteCriterion. </summary>
         public RouteCriterion()
         {
-            RoutePrefix = new ChangeTrackingList<string>();
-            Community = new ChangeTrackingList<string>();
-            AsPath = new ChangeTrackingList<string>();
+            RoutePrefix = new Core.ChangeTrackingList<string>();
+            Community = new Core.ChangeTrackingList<string>();
+            AsPath = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of RouteCriterion. </summary>

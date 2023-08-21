@@ -24,7 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Argument.AssertNotNull(metrics, nameof(metrics));
 
             Metrics = metrics.ToList();
-            Properties = new ChangeTrackingDictionary<string, string>();
+            Properties = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> List of metrics. Only one metric in the list is currently supported by Application Insights storage. If multiple data points were sent only the first one will be used. </summary>

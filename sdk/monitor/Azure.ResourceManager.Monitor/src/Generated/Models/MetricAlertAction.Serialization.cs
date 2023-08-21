@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MetricAlertAction : IUtf8JsonSerializable
+    public partial class MetricAlertAction : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ActionGroupId))
+            if (Core.Optional.IsDefined(ActionGroupId))
             {
                 writer.WritePropertyName("actionGroupId"u8);
                 writer.WriteStringValue(ActionGroupId);
             }
-            if (Optional.IsCollectionDefined(WebHookProperties))
+            if (Core.Optional.IsCollectionDefined(WebHookProperties))
             {
                 writer.WritePropertyName("webHookProperties"u8);
                 writer.WriteStartObject();
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> actionGroupId = default;
-            Optional<IDictionary<string, string>> webHookProperties = default;
+            Core.Optional<ResourceIdentifier> actionGroupId = default;
+            Core.Optional<IDictionary<string, string>> webHookProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionGroupId"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MetricAlertAction(actionGroupId.Value, Optional.ToDictionary(webHookProperties));
+            return new MetricAlertAction(actionGroupId.Value, Core.Optional.ToDictionary(webHookProperties));
         }
     }
 }

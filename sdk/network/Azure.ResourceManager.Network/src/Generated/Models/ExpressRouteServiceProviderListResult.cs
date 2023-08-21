@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ExpressRouteServiceProviderListResult. </summary>
         internal ExpressRouteServiceProviderListResult()
         {
-            Value = new ChangeTrackingList<ExpressRouteServiceProvider>();
+            Value = new Core.ChangeTrackingList<ExpressRouteServiceProvider>();
         }
 
         /// <summary> Initializes a new instance of ExpressRouteServiceProviderListResult. </summary>

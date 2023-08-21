@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<OnboardingStatus> onboardingStatus = default;
-            Optional<DataStatus> dataStatus = default;
-            Optional<IReadOnlyList<DataContainer>> data = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ResourceIdentifier> resourceId = default;
+            Core.Optional<OnboardingStatus> onboardingStatus = default;
+            Core.Optional<DataStatus> dataStatus = default;
+            Core.Optional<IReadOnlyList<DataContainer>> data = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new VmInsightsOnboardingStatusData(id, name, type, systemData.Value, resourceId.Value, Optional.ToNullable(onboardingStatus), Optional.ToNullable(dataStatus), Optional.ToList(data));
+            return new VmInsightsOnboardingStatusData(id, name, type, systemData.Value, resourceId.Value, Core.Optional.ToNullable(onboardingStatus), Core.Optional.ToNullable(dataStatus), Core.Optional.ToList(data));
         }
     }
 }

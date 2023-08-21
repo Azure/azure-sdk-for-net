@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of AzureFirewallNatRule. </summary>
         public AzureFirewallNatRule()
         {
-            SourceAddresses = new ChangeTrackingList<string>();
-            DestinationAddresses = new ChangeTrackingList<string>();
-            DestinationPorts = new ChangeTrackingList<string>();
-            Protocols = new ChangeTrackingList<AzureFirewallNetworkRuleProtocol>();
-            SourceIPGroups = new ChangeTrackingList<string>();
+            SourceAddresses = new Core.ChangeTrackingList<string>();
+            DestinationAddresses = new Core.ChangeTrackingList<string>();
+            DestinationPorts = new Core.ChangeTrackingList<string>();
+            Protocols = new Core.ChangeTrackingList<AzureFirewallNetworkRuleProtocol>();
+            SourceIPGroups = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AzureFirewallNatRule. </summary>

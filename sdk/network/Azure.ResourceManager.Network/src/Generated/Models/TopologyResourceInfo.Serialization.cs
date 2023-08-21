@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<AzureLocation> location = default;
-            Optional<IReadOnlyList<TopologyAssociation>> associations = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> id = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<IReadOnlyList<TopologyAssociation>> associations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new TopologyResourceInfo(name.Value, id.Value, Optional.ToNullable(location), Optional.ToList(associations));
+            return new TopologyResourceInfo(name.Value, id.Value, Core.Optional.ToNullable(location), Core.Optional.ToList(associations));
         }
     }
 }

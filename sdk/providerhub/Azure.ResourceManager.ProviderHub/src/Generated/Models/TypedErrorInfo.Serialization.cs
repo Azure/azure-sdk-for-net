@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class TypedErrorInfo : IUtf8JsonSerializable
+    public partial class TypedErrorInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             string type = default;
-            Optional<BinaryData> info = default;
+            Core.Optional<BinaryData> info = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))

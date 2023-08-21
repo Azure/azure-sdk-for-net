@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class RelocateVolumeContent : IUtf8JsonSerializable
+    public partial class RelocateVolumeContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreationToken))
+            if (Core.Optional.IsDefined(CreationToken))
             {
                 writer.WritePropertyName("creationToken"u8);
                 writer.WriteStringValue(CreationToken);

@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IssueOrigin> origin = default;
-            Optional<IssueSeverity> severity = default;
-            Optional<ConnectivityIssueType> type = default;
-            Optional<IReadOnlyList<IDictionary<string, string>>> context = default;
+            Core.Optional<IssueOrigin> origin = default;
+            Core.Optional<IssueSeverity> severity = default;
+            Core.Optional<ConnectivityIssueType> type = default;
+            Core.Optional<IReadOnlyList<IDictionary<string, string>>> context = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("origin"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ConnectivityIssueInfo(Optional.ToNullable(origin), Optional.ToNullable(severity), Optional.ToNullable(type), Optional.ToList(context));
+            return new ConnectivityIssueInfo(Core.Optional.ToNullable(origin), Core.Optional.ToNullable(severity), Core.Optional.ToNullable(type), Core.Optional.ToList(context));
         }
     }
 }

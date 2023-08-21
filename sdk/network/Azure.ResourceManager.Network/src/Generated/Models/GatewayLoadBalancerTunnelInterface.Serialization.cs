@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class GatewayLoadBalancerTunnelInterface : IUtf8JsonSerializable
+    public partial class GatewayLoadBalancerTunnelInterface : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Port))
+            if (Core.Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Optional.IsDefined(Identifier))
+            if (Core.Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
                 writer.WriteNumberValue(Identifier.Value);
             }
-            if (Optional.IsDefined(Protocol))
+            if (Core.Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsDefined(InterfaceType))
+            if (Core.Optional.IsDefined(InterfaceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(InterfaceType.Value.ToString());
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<int> port = default;
-            Optional<int> identifier = default;
-            Optional<GatewayLoadBalancerTunnelProtocol> protocol = default;
-            Optional<GatewayLoadBalancerTunnelInterfaceType> type = default;
+            Core.Optional<int> port = default;
+            Core.Optional<int> identifier = default;
+            Core.Optional<GatewayLoadBalancerTunnelProtocol> protocol = default;
+            Core.Optional<GatewayLoadBalancerTunnelInterfaceType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("port"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new GatewayLoadBalancerTunnelInterface(Optional.ToNullable(port), Optional.ToNullable(identifier), Optional.ToNullable(protocol), Optional.ToNullable(type));
+            return new GatewayLoadBalancerTunnelInterface(Core.Optional.ToNullable(port), Core.Optional.ToNullable(identifier), Core.Optional.ToNullable(protocol), Core.Optional.ToNullable(type));
         }
     }
 }

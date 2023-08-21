@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class CustomRolloutProperties : IUtf8JsonSerializable
+    public partial class CustomRolloutProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (Core.Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("specification"u8);
             writer.WriteObjectValue(Specification);
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<ProviderHubProvisioningState> provisioningState = default;
+            Core.Optional<ProviderHubProvisioningState> provisioningState = default;
             CustomRolloutSpecification specification = default;
-            Optional<CustomRolloutStatus> status = default;
+            Core.Optional<CustomRolloutStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new CustomRolloutProperties(Optional.ToNullable(provisioningState), specification, status.Value);
+            return new CustomRolloutProperties(Core.Optional.ToNullable(provisioningState), specification, status.Value);
         }
     }
 }

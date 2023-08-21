@@ -12,12 +12,12 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class ExchangePeeringProperties : IUtf8JsonSerializable
+    public partial class ExchangePeeringProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Connections))
+            if (Core.Optional.IsCollectionDefined(Connections))
             {
                 writer.WritePropertyName("connections"u8);
                 writer.WriteStartArray();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PeerAsn))
+            if (Core.Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerAsn"u8);
                 JsonSerializer.Serialize(writer, PeerAsn);
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<IList<PeeringExchangeConnection>> connections = default;
-            Optional<WritableSubResource> peerAsn = default;
+            Core.Optional<IList<PeeringExchangeConnection>> connections = default;
+            Core.Optional<WritableSubResource> peerAsn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connections"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Peering.Models
                     continue;
                 }
             }
-            return new ExchangePeeringProperties(Optional.ToList(connections), peerAsn);
+            return new ExchangePeeringProperties(Core.Optional.ToList(connections), peerAsn);
         }
     }
 }

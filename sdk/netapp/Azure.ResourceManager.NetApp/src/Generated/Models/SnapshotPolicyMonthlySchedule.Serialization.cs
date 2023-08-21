@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class SnapshotPolicyMonthlySchedule : IUtf8JsonSerializable
+    public partial class SnapshotPolicyMonthlySchedule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SnapshotsToKeep))
+            if (Core.Optional.IsDefined(SnapshotsToKeep))
             {
                 writer.WritePropertyName("snapshotsToKeep"u8);
                 writer.WriteNumberValue(SnapshotsToKeep.Value);
             }
-            if (Optional.IsDefined(DaysOfMonth))
+            if (Core.Optional.IsDefined(DaysOfMonth))
             {
                 writer.WritePropertyName("daysOfMonth"u8);
                 writer.WriteStringValue(DaysOfMonth);
             }
-            if (Optional.IsDefined(Hour))
+            if (Core.Optional.IsDefined(Hour))
             {
                 writer.WritePropertyName("hour"u8);
                 writer.WriteNumberValue(Hour.Value);
             }
-            if (Optional.IsDefined(Minute))
+            if (Core.Optional.IsDefined(Minute))
             {
                 writer.WritePropertyName("minute"u8);
                 writer.WriteNumberValue(Minute.Value);
             }
-            if (Optional.IsDefined(UsedBytes))
+            if (Core.Optional.IsDefined(UsedBytes))
             {
                 writer.WritePropertyName("usedBytes"u8);
                 writer.WriteNumberValue(UsedBytes.Value);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<int> snapshotsToKeep = default;
-            Optional<string> daysOfMonth = default;
-            Optional<int> hour = default;
-            Optional<int> minute = default;
-            Optional<long> usedBytes = default;
+            Core.Optional<int> snapshotsToKeep = default;
+            Core.Optional<string> daysOfMonth = default;
+            Core.Optional<int> hour = default;
+            Core.Optional<int> minute = default;
+            Core.Optional<long> usedBytes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("snapshotsToKeep"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new SnapshotPolicyMonthlySchedule(Optional.ToNullable(snapshotsToKeep), daysOfMonth.Value, Optional.ToNullable(hour), Optional.ToNullable(minute), Optional.ToNullable(usedBytes));
+            return new SnapshotPolicyMonthlySchedule(Core.Optional.ToNullable(snapshotsToKeep), daysOfMonth.Value, Core.Optional.ToNullable(hour), Core.Optional.ToNullable(minute), Core.Optional.ToNullable(usedBytes));
         }
     }
 }

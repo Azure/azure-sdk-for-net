@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class RouteMapActionParameter : IUtf8JsonSerializable
+    public partial class RouteMapActionParameter : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(RoutePrefix))
+            if (Core.Optional.IsCollectionDefined(RoutePrefix))
             {
                 writer.WritePropertyName("routePrefix"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Community))
+            if (Core.Optional.IsCollectionDefined(Community))
             {
                 writer.WritePropertyName("community"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AsPath))
+            if (Core.Optional.IsCollectionDefined(AsPath))
             {
                 writer.WritePropertyName("asPath"u8);
                 writer.WriteStartArray();
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> routePrefix = default;
-            Optional<IList<string>> community = default;
-            Optional<IList<string>> asPath = default;
+            Core.Optional<IList<string>> routePrefix = default;
+            Core.Optional<IList<string>> community = default;
+            Core.Optional<IList<string>> asPath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("routePrefix"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new RouteMapActionParameter(Optional.ToList(routePrefix), Optional.ToList(community), Optional.ToList(asPath));
+            return new RouteMapActionParameter(Core.Optional.ToList(routePrefix), Core.Optional.ToList(community), Core.Optional.ToList(asPath));
         }
     }
 }

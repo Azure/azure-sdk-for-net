@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApplicationGatewayPrivateLinkResource>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<ApplicationGatewayPrivateLinkResource>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayPrivateLinkResourceListResult(Optional.ToList(value), nextLink.Value);
+            return new ApplicationGatewayPrivateLinkResourceListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

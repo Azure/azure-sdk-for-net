@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of BastionHostListResult. </summary>
         internal BastionHostListResult()
         {
-            Value = new ChangeTrackingList<BastionHostData>();
+            Value = new Core.ChangeTrackingList<BastionHostData>();
         }
 
         /// <summary> Initializes a new instance of BastionHostListResult. </summary>

@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class MetricDimensionQueryOptions : IUtf8JsonSerializable
+    internal partial class MetricDimensionQueryOptions : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dimensionName"u8);
             writer.WriteStringValue(DimensionName);
-            if (Optional.IsDefined(DimensionValueFilter))
+            if (Core.Optional.IsDefined(DimensionValueFilter))
             {
                 writer.WritePropertyName("dimensionValueFilter"u8);
                 writer.WriteStringValue(DimensionValueFilter);

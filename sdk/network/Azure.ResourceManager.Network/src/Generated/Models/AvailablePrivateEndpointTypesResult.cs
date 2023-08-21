@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of AvailablePrivateEndpointTypesResult. </summary>
         internal AvailablePrivateEndpointTypesResult()
         {
-            Value = new ChangeTrackingList<AvailablePrivateEndpointType>();
+            Value = new Core.ChangeTrackingList<AvailablePrivateEndpointType>();
         }
 
         /// <summary> Initializes a new instance of AvailablePrivateEndpointTypesResult. </summary>

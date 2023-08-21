@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of ResourceProviderManifestProperties. </summary>
         public ResourceProviderManifestProperties()
         {
-            ProviderAuthorizations = new ChangeTrackingList<ResourceProviderAuthorization>();
-            RequiredFeatures = new ChangeTrackingList<string>();
-            Capabilities = new ChangeTrackingList<ResourceProviderCapabilities>();
+            ProviderAuthorizations = new Core.ChangeTrackingList<ResourceProviderAuthorization>();
+            RequiredFeatures = new Core.ChangeTrackingList<string>();
+            Capabilities = new Core.ChangeTrackingList<ResourceProviderCapabilities>();
         }
 
         /// <summary> Initializes a new instance of ResourceProviderManifestProperties. </summary>

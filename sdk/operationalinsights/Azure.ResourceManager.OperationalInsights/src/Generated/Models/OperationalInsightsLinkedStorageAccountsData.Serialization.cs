@@ -13,14 +13,14 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    public partial class OperationalInsightsLinkedStorageAccountsData : IUtf8JsonSerializable
+    public partial class OperationalInsightsLinkedStorageAccountsData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(StorageAccountIds))
+            if (Core.Optional.IsCollectionDefined(StorageAccountIds))
             {
                 writer.WritePropertyName("storageAccountIds"u8);
                 writer.WriteStartArray();
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.OperationalInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<OperationalInsightsDataSourceType> dataSourceType = default;
-            Optional<IList<ResourceIdentifier>> storageAccountIds = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<OperationalInsightsDataSourceType> dataSourceType = default;
+            Core.Optional<IList<ResourceIdentifier>> storageAccountIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     continue;
                 }
             }
-            return new OperationalInsightsLinkedStorageAccountsData(id, name, type, systemData.Value, Optional.ToNullable(dataSourceType), Optional.ToList(storageAccountIds));
+            return new OperationalInsightsLinkedStorageAccountsData(id, name, type, systemData.Value, Core.Optional.ToNullable(dataSourceType), Core.Optional.ToList(storageAccountIds));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <summary> Initializes a new instance of PeeringReceivedRouteListResult. </summary>
         internal PeeringReceivedRouteListResult()
         {
-            Value = new ChangeTrackingList<PeeringReceivedRoute>();
+            Value = new Core.ChangeTrackingList<PeeringReceivedRoute>();
         }
 
         /// <summary> Initializes a new instance of PeeringReceivedRouteListResult. </summary>

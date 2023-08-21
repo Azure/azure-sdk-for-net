@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of ThirdPartyProviderAuthorization. </summary>
         public ThirdPartyProviderAuthorization()
         {
-            Authorizations = new ChangeTrackingList<LightHouseAuthorization>();
+            Authorizations = new Core.ChangeTrackingList<LightHouseAuthorization>();
         }
 
         /// <summary> Initializes a new instance of ThirdPartyProviderAuthorization. </summary>

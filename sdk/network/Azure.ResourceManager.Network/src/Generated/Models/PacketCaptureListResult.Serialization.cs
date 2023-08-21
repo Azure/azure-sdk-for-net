@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PacketCaptureData>> value = default;
+            Core.Optional<IReadOnlyList<PacketCaptureData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PacketCaptureListResult(Optional.ToList(value));
+            return new PacketCaptureListResult(Core.Optional.ToList(value));
         }
     }
 }

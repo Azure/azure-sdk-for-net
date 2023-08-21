@@ -12,34 +12,34 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class BastionHostIPConfiguration : IUtf8JsonSerializable
+    public partial class BastionHostIPConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Subnet))
+            if (Core.Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 JsonSerializer.Serialize(writer, Subnet);
             }
-            if (Optional.IsDefined(PublicIPAddress))
+            if (Core.Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIPAddress"u8);
                 JsonSerializer.Serialize(writer, PublicIPAddress);
             }
-            if (Optional.IsDefined(PrivateIPAllocationMethod))
+            if (Core.Optional.IsDefined(PrivateIPAllocationMethod))
             {
                 writer.WritePropertyName("privateIPAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToString());
@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<WritableSubResource> subnet = default;
-            Optional<WritableSubResource> publicIPAddress = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<NetworkIPAllocationMethod> privateIPAllocationMethod = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceType> type = default;
+            Core.Optional<WritableSubResource> subnet = default;
+            Core.Optional<WritableSubResource> publicIPAddress = default;
+            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Core.Optional<NetworkIPAllocationMethod> privateIPAllocationMethod = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new BastionHostIPConfiguration(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), subnet, publicIPAddress, Optional.ToNullable(provisioningState), Optional.ToNullable(privateIPAllocationMethod));
+            return new BastionHostIPConfiguration(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), subnet, publicIPAddress, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(privateIPAllocationMethod));
         }
     }
 }

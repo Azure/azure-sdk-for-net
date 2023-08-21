@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VirtualHubRouteTable. </summary>
         public VirtualHubRouteTable()
         {
-            Routes = new ChangeTrackingList<VirtualHubRoute>();
+            Routes = new Core.ChangeTrackingList<VirtualHubRoute>();
         }
 
         /// <summary> Initializes a new instance of VirtualHubRouteTable. </summary>

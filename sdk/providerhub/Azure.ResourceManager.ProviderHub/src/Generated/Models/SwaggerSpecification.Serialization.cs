@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class SwaggerSpecification : IUtf8JsonSerializable
+    public partial class SwaggerSpecification : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ApiVersions))
+            if (Core.Optional.IsCollectionDefined(ApiVersions))
             {
                 writer.WritePropertyName("apiVersions"u8);
                 writer.WriteStartArray();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SwaggerSpecFolderUri))
+            if (Core.Optional.IsDefined(SwaggerSpecFolderUri))
             {
                 writer.WritePropertyName("swaggerSpecFolderUri"u8);
                 writer.WriteStringValue(SwaggerSpecFolderUri.AbsoluteUri);
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<IList<string>> apiVersions = default;
-            Optional<Uri> swaggerSpecFolderUri = default;
+            Core.Optional<IList<string>> apiVersions = default;
+            Core.Optional<Uri> swaggerSpecFolderUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("apiVersions"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new SwaggerSpecification(Optional.ToList(apiVersions), swaggerSpecFolderUri.Value);
+            return new SwaggerSpecification(Core.Optional.ToList(apiVersions), swaggerSpecFolderUri.Value);
         }
     }
 }

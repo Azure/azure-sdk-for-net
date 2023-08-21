@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<CertificateProvisioningState> state = default;
-            Optional<string> reason = default;
+            Core.Optional<CertificateProvisioningState> state = default;
+            Core.Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     continue;
                 }
             }
-            return new MobileNetworkCertificateProvisioning(Optional.ToNullable(state), reason.Value);
+            return new MobileNetworkCertificateProvisioning(Core.Optional.ToNullable(state), reason.Value);
         }
     }
 }

@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of RouteMapData. </summary>
         public RouteMapData()
         {
-            AssociatedInboundConnections = new ChangeTrackingList<string>();
-            AssociatedOutboundConnections = new ChangeTrackingList<string>();
-            Rules = new ChangeTrackingList<RouteMapRule>();
+            AssociatedInboundConnections = new Core.ChangeTrackingList<string>();
+            AssociatedOutboundConnections = new Core.ChangeTrackingList<string>();
+            Rules = new Core.ChangeTrackingList<RouteMapRule>();
         }
 
         /// <summary> Initializes a new instance of RouteMapData. </summary>

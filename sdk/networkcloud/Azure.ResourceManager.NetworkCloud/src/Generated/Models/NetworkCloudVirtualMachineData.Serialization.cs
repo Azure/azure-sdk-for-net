@@ -13,14 +13,14 @@ using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudVirtualMachineData : IUtf8JsonSerializable
+    public partial class NetworkCloudVirtualMachineData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("adminUsername"u8);
             writer.WriteStringValue(AdminUsername);
-            if (Optional.IsDefined(BootMethod))
+            if (Core.Optional.IsDefined(BootMethod))
             {
                 writer.WritePropertyName("bootMethod"u8);
                 writer.WriteStringValue(BootMethod.Value.ToString());
@@ -46,14 +46,14 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteObjectValue(CloudServicesNetworkAttachment);
             writer.WritePropertyName("cpuCores"u8);
             writer.WriteNumberValue(CpuCores);
-            if (Optional.IsDefined(IsolateEmulatorThread))
+            if (Core.Optional.IsDefined(IsolateEmulatorThread))
             {
                 writer.WritePropertyName("isolateEmulatorThread"u8);
                 writer.WriteStringValue(IsolateEmulatorThread.Value.ToString());
             }
             writer.WritePropertyName("memorySizeGB"u8);
             writer.WriteNumberValue(MemorySizeInGB);
-            if (Optional.IsCollectionDefined(NetworkAttachments))
+            if (Core.Optional.IsCollectionDefined(NetworkAttachments))
             {
                 writer.WritePropertyName("networkAttachments"u8);
                 writer.WriteStartArray();
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NetworkData))
+            if (Core.Optional.IsDefined(NetworkData))
             {
                 writer.WritePropertyName("networkData"u8);
                 writer.WriteStringValue(NetworkData);
             }
-            if (Optional.IsCollectionDefined(PlacementHints))
+            if (Core.Optional.IsCollectionDefined(PlacementHints))
             {
                 writer.WritePropertyName("placementHints"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SshPublicKeys))
+            if (Core.Optional.IsCollectionDefined(SshPublicKeys))
             {
                 writer.WritePropertyName("sshPublicKeys"u8);
                 writer.WriteStartArray();
@@ -90,24 +90,24 @@ namespace Azure.ResourceManager.NetworkCloud
             }
             writer.WritePropertyName("storageProfile"u8);
             writer.WriteObjectValue(StorageProfile);
-            if (Optional.IsDefined(UserData))
+            if (Core.Optional.IsDefined(UserData))
             {
                 writer.WritePropertyName("userData"u8);
                 writer.WriteStringValue(UserData);
             }
-            if (Optional.IsDefined(VirtioInterface))
+            if (Core.Optional.IsDefined(VirtioInterface))
             {
                 writer.WritePropertyName("virtioInterface"u8);
                 writer.WriteStringValue(VirtioInterface.Value.ToString());
             }
-            if (Optional.IsDefined(VmDeviceModel))
+            if (Core.Optional.IsDefined(VmDeviceModel))
             {
                 writer.WritePropertyName("vmDeviceModel"u8);
                 writer.WriteStringValue(VmDeviceModel.Value.ToString());
             }
             writer.WritePropertyName("vmImage"u8);
             writer.WriteStringValue(VmImage);
-            if (Optional.IsDefined(VmImageRepositoryCredentials))
+            if (Core.Optional.IsDefined(VmImageRepositoryCredentials))
             {
                 writer.WritePropertyName("vmImageRepositoryCredentials"u8);
                 writer.WriteObjectValue(VmImageRepositoryCredentials);
@@ -123,36 +123,36 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             string adminUsername = default;
-            Optional<string> availabilityZone = default;
-            Optional<ResourceIdentifier> bareMetalMachineId = default;
-            Optional<VirtualMachineBootMethod> bootMethod = default;
+            Core.Optional<string> availabilityZone = default;
+            Core.Optional<ResourceIdentifier> bareMetalMachineId = default;
+            Core.Optional<VirtualMachineBootMethod> bootMethod = default;
             NetworkAttachment cloudServicesNetworkAttachment = default;
-            Optional<ResourceIdentifier> clusterId = default;
+            Core.Optional<ResourceIdentifier> clusterId = default;
             long cpuCores = default;
-            Optional<VirtualMachineDetailedStatus> detailedStatus = default;
-            Optional<string> detailedStatusMessage = default;
-            Optional<VirtualMachineIsolateEmulatorThread> isolateEmulatorThread = default;
+            Core.Optional<VirtualMachineDetailedStatus> detailedStatus = default;
+            Core.Optional<string> detailedStatusMessage = default;
+            Core.Optional<VirtualMachineIsolateEmulatorThread> isolateEmulatorThread = default;
             long memorySizeGB = default;
-            Optional<IList<NetworkAttachment>> networkAttachments = default;
-            Optional<string> networkData = default;
-            Optional<IList<VirtualMachinePlacementHint>> placementHints = default;
-            Optional<VirtualMachinePowerState> powerState = default;
-            Optional<VirtualMachineProvisioningState> provisioningState = default;
-            Optional<IList<NetworkCloudSshPublicKey>> sshPublicKeys = default;
+            Core.Optional<IList<NetworkAttachment>> networkAttachments = default;
+            Core.Optional<string> networkData = default;
+            Core.Optional<IList<VirtualMachinePlacementHint>> placementHints = default;
+            Core.Optional<VirtualMachinePowerState> powerState = default;
+            Core.Optional<VirtualMachineProvisioningState> provisioningState = default;
+            Core.Optional<IList<NetworkCloudSshPublicKey>> sshPublicKeys = default;
             NetworkCloudStorageProfile storageProfile = default;
-            Optional<string> userData = default;
-            Optional<VirtualMachineVirtioInterfaceType> virtioInterface = default;
-            Optional<VirtualMachineDeviceModelType> vmDeviceModel = default;
+            Core.Optional<string> userData = default;
+            Core.Optional<VirtualMachineVirtioInterfaceType> virtioInterface = default;
+            Core.Optional<VirtualMachineDeviceModelType> vmDeviceModel = default;
             string vmImage = default;
-            Optional<ImageRepositoryCredentials> vmImageRepositoryCredentials = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> volumes = default;
+            Core.Optional<ImageRepositoryCredentials> vmImageRepositoryCredentials = default;
+            Core.Optional<IReadOnlyList<ResourceIdentifier>> volumes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     continue;
                 }
             }
-            return new NetworkCloudVirtualMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, adminUsername, availabilityZone.Value, bareMetalMachineId.Value, Optional.ToNullable(bootMethod), cloudServicesNetworkAttachment, clusterId.Value, cpuCores, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(isolateEmulatorThread), memorySizeGB, Optional.ToList(networkAttachments), networkData.Value, Optional.ToList(placementHints), Optional.ToNullable(powerState), Optional.ToNullable(provisioningState), Optional.ToList(sshPublicKeys), storageProfile, userData.Value, Optional.ToNullable(virtioInterface), Optional.ToNullable(vmDeviceModel), vmImage, vmImageRepositoryCredentials.Value, Optional.ToList(volumes));
+            return new NetworkCloudVirtualMachineData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, extendedLocation, adminUsername, availabilityZone.Value, bareMetalMachineId.Value, Core.Optional.ToNullable(bootMethod), cloudServicesNetworkAttachment, clusterId.Value, cpuCores, Core.Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Core.Optional.ToNullable(isolateEmulatorThread), memorySizeGB, Core.Optional.ToList(networkAttachments), networkData.Value, Core.Optional.ToList(placementHints), Core.Optional.ToNullable(powerState), Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(sshPublicKeys), storageProfile, userData.Value, Core.Optional.ToNullable(virtioInterface), Core.Optional.ToNullable(vmDeviceModel), vmImage, vmImageRepositoryCredentials.Value, Core.Optional.ToList(volumes));
         }
     }
 }

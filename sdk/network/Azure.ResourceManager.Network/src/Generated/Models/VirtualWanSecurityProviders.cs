@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VirtualWanSecurityProviders. </summary>
         internal VirtualWanSecurityProviders()
         {
-            SupportedProviders = new ChangeTrackingList<VirtualWanSecurityProvider>();
+            SupportedProviders = new Core.ChangeTrackingList<VirtualWanSecurityProvider>();
         }
 
         /// <summary> Initializes a new instance of VirtualWanSecurityProviders. </summary>

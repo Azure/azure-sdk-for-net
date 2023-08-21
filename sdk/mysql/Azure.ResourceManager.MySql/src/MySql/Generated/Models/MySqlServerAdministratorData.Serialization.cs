@@ -13,29 +13,29 @@ using Azure.ResourceManager.MySql.Models;
 
 namespace Azure.ResourceManager.MySql
 {
-    public partial class MySqlServerAdministratorData : IUtf8JsonSerializable
+    public partial class MySqlServerAdministratorData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AdministratorType))
+            if (Core.Optional.IsDefined(AdministratorType))
             {
                 writer.WritePropertyName("administratorType"u8);
                 writer.WriteStringValue(AdministratorType.Value.ToString());
             }
-            if (Optional.IsDefined(LoginAccountName))
+            if (Core.Optional.IsDefined(LoginAccountName))
             {
                 writer.WritePropertyName("login"u8);
                 writer.WriteStringValue(LoginAccountName);
             }
-            if (Optional.IsDefined(SecureId))
+            if (Core.Optional.IsDefined(SecureId))
             {
                 writer.WritePropertyName("sid"u8);
                 writer.WriteStringValue(SecureId.Value);
             }
-            if (Optional.IsDefined(TenantId))
+            if (Core.Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.MySql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MySqlAdministratorType> administratorType = default;
-            Optional<string> login = default;
-            Optional<Guid> sid = default;
-            Optional<Guid> tenantId = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<MySqlAdministratorType> administratorType = default;
+            Core.Optional<string> login = default;
+            Core.Optional<Guid> sid = default;
+            Core.Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MySql
                     continue;
                 }
             }
-            return new MySqlServerAdministratorData(id, name, type, systemData.Value, Optional.ToNullable(administratorType), login.Value, Optional.ToNullable(sid), Optional.ToNullable(tenantId));
+            return new MySqlServerAdministratorData(id, name, type, systemData.Value, Core.Optional.ToNullable(administratorType), login.Value, Core.Optional.ToNullable(sid), Core.Optional.ToNullable(tenantId));
         }
     }
 }

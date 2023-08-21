@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class ExtensionDataSource : IUtf8JsonSerializable
+    public partial class ExtensionDataSource : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Streams))
+            if (Core.Optional.IsCollectionDefined(Streams))
             {
                 writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("extensionName"u8);
             writer.WriteStringValue(ExtensionName);
-            if (Optional.IsDefined(ExtensionSettings))
+            if (Core.Optional.IsDefined(ExtensionSettings))
             {
                 writer.WritePropertyName("extensionSettings"u8);
 #if NET6_0_OR_GREATER
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(ExtensionSettings.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsCollectionDefined(InputDataSources))
+            if (Core.Optional.IsCollectionDefined(InputDataSources))
             {
                 writer.WritePropertyName("inputDataSources"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -62,11 +62,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<ExtensionDataSourceStream>> streams = default;
+            Core.Optional<IList<ExtensionDataSourceStream>> streams = default;
             string extensionName = default;
-            Optional<BinaryData> extensionSettings = default;
-            Optional<IList<string>> inputDataSources = default;
-            Optional<string> name = default;
+            Core.Optional<BinaryData> extensionSettings = default;
+            Core.Optional<IList<string>> inputDataSources = default;
+            Core.Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streams"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new ExtensionDataSource(Optional.ToList(streams), extensionName, extensionSettings.Value, Optional.ToList(inputDataSources), name.Value);
+            return new ExtensionDataSource(Core.Optional.ToList(streams), extensionName, extensionSettings.Value, Core.Optional.ToList(inputDataSources), name.Value);
         }
     }
 }

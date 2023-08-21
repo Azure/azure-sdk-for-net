@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    internal class PostgreSqlFlexibleServerOperationSource : IOperationSource<PostgreSqlFlexibleServerResource>
+    internal class PostgreSqlFlexibleServerOperationSource : Core.IOperationSource<PostgreSqlFlexibleServerResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _client = client;
         }
 
-        PostgreSqlFlexibleServerResource IOperationSource<PostgreSqlFlexibleServerResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PostgreSqlFlexibleServerResource Core.IOperationSource<PostgreSqlFlexibleServerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PostgreSqlFlexibleServerData.DeserializePostgreSqlFlexibleServerData(document.RootElement);
             return new PostgreSqlFlexibleServerResource(_client, data);
         }
 
-        async ValueTask<PostgreSqlFlexibleServerResource> IOperationSource<PostgreSqlFlexibleServerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PostgreSqlFlexibleServerResource> Core.IOperationSource<PostgreSqlFlexibleServerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PostgreSqlFlexibleServerData.DeserializePostgreSqlFlexibleServerData(document.RootElement);

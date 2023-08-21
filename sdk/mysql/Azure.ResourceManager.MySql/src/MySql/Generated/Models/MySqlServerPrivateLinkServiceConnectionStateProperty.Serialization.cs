@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MySql.Models
             }
             MySqlPrivateLinkServiceConnectionStateStatus status = default;
             string description = default;
-            Optional<MySqlPrivateLinkServiceConnectionStateRequiredAction> actionsRequired = default;
+            Core.Optional<MySqlPrivateLinkServiceConnectionStateRequiredAction> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MySql.Models
                     continue;
                 }
             }
-            return new MySqlServerPrivateLinkServiceConnectionStateProperty(status, description, Optional.ToNullable(actionsRequired));
+            return new MySqlServerPrivateLinkServiceConnectionStateProperty(status, description, Core.Optional.ToNullable(actionsRequired));
         }
     }
 }

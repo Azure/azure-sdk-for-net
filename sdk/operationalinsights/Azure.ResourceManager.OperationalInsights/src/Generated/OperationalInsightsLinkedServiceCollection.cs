@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = await _operationalInsightsLinkedServiceLinkedServicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedServiceResource>(new OperationalInsightsLinkedServiceOperationSource(Client), _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics, Pipeline, _operationalInsightsLinkedServiceLinkedServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedServiceResource>(new OperationalInsightsLinkedServiceOperationSource(Client), _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics, Pipeline, _operationalInsightsLinkedServiceLinkedServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = _operationalInsightsLinkedServiceLinkedServicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, data, cancellationToken);
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedServiceResource>(new OperationalInsightsLinkedServiceOperationSource(Client), _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics, Pipeline, _operationalInsightsLinkedServiceLinkedServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedServiceResource>(new OperationalInsightsLinkedServiceOperationSource(Client), _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics, Pipeline, _operationalInsightsLinkedServiceLinkedServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual AsyncPageable<OperationalInsightsLinkedServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsLinkedServiceLinkedServicesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new OperationalInsightsLinkedServiceResource(Client, OperationalInsightsLinkedServiceData.DeserializeOperationalInsightsLinkedServiceData(e)), _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics, Pipeline, "OperationalInsightsLinkedServiceCollection.GetAll", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new OperationalInsightsLinkedServiceResource(Client, OperationalInsightsLinkedServiceData.DeserializeOperationalInsightsLinkedServiceData(e)), _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics, Pipeline, "OperationalInsightsLinkedServiceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual Pageable<OperationalInsightsLinkedServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsLinkedServiceLinkedServicesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new OperationalInsightsLinkedServiceResource(Client, OperationalInsightsLinkedServiceData.DeserializeOperationalInsightsLinkedServiceData(e)), _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics, Pipeline, "OperationalInsightsLinkedServiceCollection.GetAll", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, e => new OperationalInsightsLinkedServiceResource(Client, OperationalInsightsLinkedServiceData.DeserializeOperationalInsightsLinkedServiceData(e)), _operationalInsightsLinkedServiceLinkedServicesClientDiagnostics, Pipeline, "OperationalInsightsLinkedServiceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

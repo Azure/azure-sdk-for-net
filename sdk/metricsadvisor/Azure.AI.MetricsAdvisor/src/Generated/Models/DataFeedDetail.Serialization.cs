@@ -10,23 +10,23 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class DataFeedDetail : IUtf8JsonSerializable
+    internal partial class DataFeedDetail : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dataSourceType"u8);
             writer.WriteStringValue(DataSourceType.ToString());
             writer.WritePropertyName("dataFeedName"u8);
             writer.WriteStringValue(DataFeedName);
-            if (Optional.IsDefined(DataFeedDescription))
+            if (Core.Optional.IsDefined(DataFeedDescription))
             {
                 writer.WritePropertyName("dataFeedDescription"u8);
                 writer.WriteStringValue(DataFeedDescription);
             }
             writer.WritePropertyName("granularityName"u8);
             writer.WriteStringValue(GranularityName.ToString());
-            if (Optional.IsDefined(GranularityAmount))
+            if (Core.Optional.IsDefined(GranularityAmount))
             {
                 if (GranularityAmount != null)
                 {
@@ -45,7 +45,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Dimension))
+            if (Core.Optional.IsCollectionDefined(Dimension))
             {
                 writer.WritePropertyName("dimension"u8);
                 writer.WriteStartArray();
@@ -55,44 +55,44 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TimestampColumn))
+            if (Core.Optional.IsDefined(TimestampColumn))
             {
                 writer.WritePropertyName("timestampColumn"u8);
                 writer.WriteStringValue(TimestampColumn);
             }
             writer.WritePropertyName("dataStartFrom"u8);
             writer.WriteStringValue(DataStartFrom, "O");
-            if (Optional.IsDefined(StartOffsetInSeconds))
+            if (Core.Optional.IsDefined(StartOffsetInSeconds))
             {
                 writer.WritePropertyName("startOffsetInSeconds"u8);
                 writer.WriteNumberValue(StartOffsetInSeconds.Value);
             }
-            if (Optional.IsDefined(MaxConcurrency))
+            if (Core.Optional.IsDefined(MaxConcurrency))
             {
                 writer.WritePropertyName("maxConcurrency"u8);
                 writer.WriteNumberValue(MaxConcurrency.Value);
             }
-            if (Optional.IsDefined(MinRetryIntervalInSeconds))
+            if (Core.Optional.IsDefined(MinRetryIntervalInSeconds))
             {
                 writer.WritePropertyName("minRetryIntervalInSeconds"u8);
                 writer.WriteNumberValue(MinRetryIntervalInSeconds.Value);
             }
-            if (Optional.IsDefined(StopRetryAfterInSeconds))
+            if (Core.Optional.IsDefined(StopRetryAfterInSeconds))
             {
                 writer.WritePropertyName("stopRetryAfterInSeconds"u8);
                 writer.WriteNumberValue(StopRetryAfterInSeconds.Value);
             }
-            if (Optional.IsDefined(NeedRollup))
+            if (Core.Optional.IsDefined(NeedRollup))
             {
                 writer.WritePropertyName("needRollup"u8);
                 writer.WriteStringValue(NeedRollup.Value.ToString());
             }
-            if (Optional.IsDefined(RollUpMethod))
+            if (Core.Optional.IsDefined(RollUpMethod))
             {
                 writer.WritePropertyName("rollUpMethod"u8);
                 writer.WriteStringValue(RollUpMethod.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(RollUpColumns))
+            if (Core.Optional.IsCollectionDefined(RollUpColumns))
             {
                 writer.WritePropertyName("rollUpColumns"u8);
                 writer.WriteStartArray();
@@ -102,27 +102,27 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AllUpIdentification))
+            if (Core.Optional.IsDefined(AllUpIdentification))
             {
                 writer.WritePropertyName("allUpIdentification"u8);
                 writer.WriteStringValue(AllUpIdentification);
             }
-            if (Optional.IsDefined(FillMissingPointType))
+            if (Core.Optional.IsDefined(FillMissingPointType))
             {
                 writer.WritePropertyName("fillMissingPointType"u8);
                 writer.WriteStringValue(FillMissingPointType.Value.ToString());
             }
-            if (Optional.IsDefined(FillMissingPointValue))
+            if (Core.Optional.IsDefined(FillMissingPointValue))
             {
                 writer.WritePropertyName("fillMissingPointValue"u8);
                 writer.WriteNumberValue(FillMissingPointValue.Value);
             }
-            if (Optional.IsDefined(ViewMode))
+            if (Core.Optional.IsDefined(ViewMode))
             {
                 writer.WritePropertyName("viewMode"u8);
                 writer.WriteStringValue(ViewMode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Admins))
+            if (Core.Optional.IsCollectionDefined(Admins))
             {
                 writer.WritePropertyName("admins"u8);
                 writer.WriteStartArray();
@@ -132,7 +132,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Viewers))
+            if (Core.Optional.IsCollectionDefined(Viewers))
             {
                 writer.WritePropertyName("viewers"u8);
                 writer.WriteStartArray();
@@ -142,17 +142,17 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ActionLinkTemplate))
+            if (Core.Optional.IsDefined(ActionLinkTemplate))
             {
                 writer.WritePropertyName("actionLinkTemplate"u8);
                 writer.WriteStringValue(ActionLinkTemplate);
             }
-            if (Optional.IsDefined(AuthenticationType))
+            if (Core.Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (Optional.IsDefined(CredentialId))
+            if (Core.Optional.IsDefined(CredentialId))
             {
                 writer.WritePropertyName("credentialId"u8);
                 writer.WriteStringValue(CredentialId);

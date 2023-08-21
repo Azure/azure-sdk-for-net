@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<bool> healthy = default;
-            Optional<NetAppRelationshipStatus> relationshipStatus = default;
-            Optional<NetAppMirrorState> mirrorState = default;
-            Optional<string> totalProgress = default;
-            Optional<string> errorMessage = default;
+            Core.Optional<bool> healthy = default;
+            Core.Optional<NetAppRelationshipStatus> relationshipStatus = default;
+            Core.Optional<NetAppMirrorState> mirrorState = default;
+            Core.Optional<string> totalProgress = default;
+            Core.Optional<string> errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("healthy"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new NetAppVolumeReplicationStatus(Optional.ToNullable(healthy), Optional.ToNullable(relationshipStatus), Optional.ToNullable(mirrorState), totalProgress.Value, errorMessage.Value);
+            return new NetAppVolumeReplicationStatus(Core.Optional.ToNullable(healthy), Core.Optional.ToNullable(relationshipStatus), Core.Optional.ToNullable(mirrorState), totalProgress.Value, errorMessage.Value);
         }
     }
 }

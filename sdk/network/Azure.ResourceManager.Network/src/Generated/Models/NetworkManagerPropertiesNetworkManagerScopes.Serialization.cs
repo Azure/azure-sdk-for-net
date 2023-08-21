@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkManagerPropertiesNetworkManagerScopes : IUtf8JsonSerializable
+    public partial class NetworkManagerPropertiesNetworkManagerScopes : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ManagementGroups))
+            if (Core.Optional.IsCollectionDefined(ManagementGroups))
             {
                 writer.WritePropertyName("managementGroups"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Subscriptions))
+            if (Core.Optional.IsCollectionDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> managementGroups = default;
-            Optional<IList<string>> subscriptions = default;
-            Optional<IReadOnlyList<CrossTenantScopes>> crossTenantScopes = default;
+            Core.Optional<IList<string>> managementGroups = default;
+            Core.Optional<IList<string>> subscriptions = default;
+            Core.Optional<IReadOnlyList<CrossTenantScopes>> crossTenantScopes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managementGroups"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NetworkManagerPropertiesNetworkManagerScopes(Optional.ToList(managementGroups), Optional.ToList(subscriptions), Optional.ToList(crossTenantScopes));
+            return new NetworkManagerPropertiesNetworkManagerScopes(Core.Optional.ToList(managementGroups), Core.Optional.ToList(subscriptions), Core.Optional.ToList(crossTenantScopes));
         }
     }
 }

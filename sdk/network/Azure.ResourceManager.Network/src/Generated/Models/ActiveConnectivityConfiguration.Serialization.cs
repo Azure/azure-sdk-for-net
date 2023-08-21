@@ -20,18 +20,18 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> commitTime = default;
-            Optional<AzureLocation> region = default;
-            Optional<string> id = default;
-            Optional<IReadOnlyList<NetworkConfigurationGroup>> configurationGroups = default;
-            Optional<string> description = default;
-            Optional<ConnectivityTopology> connectivityTopology = default;
-            Optional<IReadOnlyList<ConnectivityHub>> hubs = default;
-            Optional<GlobalMeshSupportFlag> isGlobal = default;
-            Optional<IReadOnlyList<ConnectivityGroupItem>> appliesToGroups = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<DeleteExistingPeering> deleteExistingPeering = default;
-            Optional<Guid> resourceGuid = default;
+            Core.Optional<DateTimeOffset> commitTime = default;
+            Core.Optional<AzureLocation> region = default;
+            Core.Optional<string> id = default;
+            Core.Optional<IReadOnlyList<NetworkConfigurationGroup>> configurationGroups = default;
+            Core.Optional<string> description = default;
+            Core.Optional<ConnectivityTopology> connectivityTopology = default;
+            Core.Optional<IReadOnlyList<ConnectivityHub>> hubs = default;
+            Core.Optional<GlobalMeshSupportFlag> isGlobal = default;
+            Core.Optional<IReadOnlyList<ConnectivityGroupItem>> appliesToGroups = default;
+            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Core.Optional<DeleteExistingPeering> deleteExistingPeering = default;
+            Core.Optional<Guid> resourceGuid = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("commitTime"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ActiveConnectivityConfiguration(id.Value, Optional.ToList(configurationGroups), description.Value, Optional.ToNullable(connectivityTopology), Optional.ToList(hubs), Optional.ToNullable(isGlobal), Optional.ToList(appliesToGroups), Optional.ToNullable(provisioningState), Optional.ToNullable(deleteExistingPeering), Optional.ToNullable(resourceGuid), Optional.ToNullable(commitTime), Optional.ToNullable(region));
+            return new ActiveConnectivityConfiguration(id.Value, Core.Optional.ToList(configurationGroups), description.Value, Core.Optional.ToNullable(connectivityTopology), Core.Optional.ToList(hubs), Core.Optional.ToNullable(isGlobal), Core.Optional.ToList(appliesToGroups), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(deleteExistingPeering), Core.Optional.ToNullable(resourceGuid), Core.Optional.ToNullable(commitTime), Core.Optional.ToNullable(region));
         }
     }
 }

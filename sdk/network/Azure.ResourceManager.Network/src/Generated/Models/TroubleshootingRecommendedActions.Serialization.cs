@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> actionId = default;
-            Optional<string> actionText = default;
-            Optional<Uri> actionUri = default;
-            Optional<string> actionUriText = default;
+            Core.Optional<string> actionId = default;
+            Core.Optional<string> actionText = default;
+            Core.Optional<Uri> actionUri = default;
+            Core.Optional<string> actionUriText = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionId"u8))

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of CustomDnsConfigProperties. </summary>
         public CustomDnsConfigProperties()
         {
-            IPAddresses = new ChangeTrackingList<string>();
+            IPAddresses = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of CustomDnsConfigProperties. </summary>

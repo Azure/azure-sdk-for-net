@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of TablesListResult. </summary>
         internal TablesListResult()
         {
-            Value = new ChangeTrackingList<OperationalInsightsTableData>();
+            Value = new Core.ChangeTrackingList<OperationalInsightsTableData>();
         }
 
         /// <summary> Initializes a new instance of TablesListResult. </summary>

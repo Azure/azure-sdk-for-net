@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkManagerDeploymentStatus. </summary>
         internal NetworkManagerDeploymentStatus()
         {
-            ConfigurationIds = new ChangeTrackingList<string>();
+            ConfigurationIds = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of NetworkManagerDeploymentStatus. </summary>

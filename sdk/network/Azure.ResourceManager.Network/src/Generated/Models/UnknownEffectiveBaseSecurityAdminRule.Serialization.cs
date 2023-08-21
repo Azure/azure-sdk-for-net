@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> configurationDescription = default;
-            Optional<string> ruleCollectionDescription = default;
-            Optional<IReadOnlyList<NetworkManagerSecurityGroupItem>> ruleCollectionAppliesToGroups = default;
-            Optional<IReadOnlyList<NetworkConfigurationGroup>> ruleGroups = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> configurationDescription = default;
+            Core.Optional<string> ruleCollectionDescription = default;
+            Core.Optional<IReadOnlyList<NetworkManagerSecurityGroupItem>> ruleCollectionAppliesToGroups = default;
+            Core.Optional<IReadOnlyList<NetworkConfigurationGroup>> ruleGroups = default;
             EffectiveAdminRuleKind kind = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new UnknownEffectiveBaseSecurityAdminRule(id.Value, configurationDescription.Value, ruleCollectionDescription.Value, Optional.ToList(ruleCollectionAppliesToGroups), Optional.ToList(ruleGroups), kind);
+            return new UnknownEffectiveBaseSecurityAdminRule(id.Value, configurationDescription.Value, ruleCollectionDescription.Value, Core.Optional.ToList(ruleCollectionAppliesToGroups), Core.Optional.ToList(ruleGroups), kind);
         }
     }
 }

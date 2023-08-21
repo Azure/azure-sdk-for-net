@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of DetectionAnomalyFilterCondition. </summary>
         public DetectionAnomalyFilterCondition()
         {
-            DimensionFilter = new ChangeTrackingList<DimensionKey>();
+            DimensionFilter = new Core.ChangeTrackingList<DimensionKey>();
         }
 
         /// <summary> dimension filter. </summary>

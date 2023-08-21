@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <summary> Initializes a new instance of StorageInsightData. </summary>
         public StorageInsightData()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            Containers = new ChangeTrackingList<string>();
-            Tables = new ChangeTrackingList<string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Containers = new Core.ChangeTrackingList<string>();
+            Tables = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of StorageInsightData. </summary>

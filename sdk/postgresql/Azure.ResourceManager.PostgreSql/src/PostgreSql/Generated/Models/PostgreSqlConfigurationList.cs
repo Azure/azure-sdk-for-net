@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <summary> Initializes a new instance of PostgreSqlConfigurationList. </summary>
         public PostgreSqlConfigurationList()
         {
-            Value = new ChangeTrackingList<PostgreSqlConfigurationData>();
+            Value = new Core.ChangeTrackingList<PostgreSqlConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlConfigurationList. </summary>

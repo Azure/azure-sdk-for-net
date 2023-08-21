@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerHighAvailability : IUtf8JsonSerializable
+    public partial class MySqlFlexibleServerHighAvailability : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Mode))
+            if (Core.Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsDefined(StandbyAvailabilityZone))
+            if (Core.Optional.IsDefined(StandbyAvailabilityZone))
             {
                 writer.WritePropertyName("standbyAvailabilityZone"u8);
                 writer.WriteStringValue(StandbyAvailabilityZone);
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<MySqlFlexibleServerHighAvailabilityMode> mode = default;
-            Optional<MySqlFlexibleServerHighAvailabilityState> state = default;
-            Optional<string> standbyAvailabilityZone = default;
+            Core.Optional<MySqlFlexibleServerHighAvailabilityMode> mode = default;
+            Core.Optional<MySqlFlexibleServerHighAvailabilityState> state = default;
+            Core.Optional<string> standbyAvailabilityZone = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mode"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new MySqlFlexibleServerHighAvailability(Optional.ToNullable(mode), Optional.ToNullable(state), standbyAvailabilityZone.Value);
+            return new MySqlFlexibleServerHighAvailability(Core.Optional.ToNullable(mode), Core.Optional.ToNullable(state), standbyAvailabilityZone.Value);
         }
     }
 }

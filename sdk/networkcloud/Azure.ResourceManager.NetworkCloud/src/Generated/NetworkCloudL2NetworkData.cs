@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNull(l2IsolationDomainId, nameof(l2IsolationDomainId));
 
             ExtendedLocation = extendedLocation;
-            AssociatedResourceIds = new ChangeTrackingList<ResourceIdentifier>();
-            HybridAksClustersAssociatedIds = new ChangeTrackingList<ResourceIdentifier>();
+            AssociatedResourceIds = new Core.ChangeTrackingList<ResourceIdentifier>();
+            HybridAksClustersAssociatedIds = new Core.ChangeTrackingList<ResourceIdentifier>();
             L2IsolationDomainId = l2IsolationDomainId;
-            VirtualMachinesAssociatedIds = new ChangeTrackingList<ResourceIdentifier>();
+            VirtualMachinesAssociatedIds = new Core.ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of NetworkCloudL2NetworkData. </summary>

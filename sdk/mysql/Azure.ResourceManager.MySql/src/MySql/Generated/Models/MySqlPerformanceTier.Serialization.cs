@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<int> maxBackupRetentionDays = default;
-            Optional<int> minBackupRetentionDays = default;
-            Optional<int> maxStorageMB = default;
-            Optional<int> minLargeStorageMB = default;
-            Optional<int> maxLargeStorageMB = default;
-            Optional<int> minStorageMB = default;
-            Optional<IReadOnlyList<MySqlPerformanceTierServiceLevelObjectives>> serviceLevelObjectives = default;
+            Core.Optional<string> id = default;
+            Core.Optional<int> maxBackupRetentionDays = default;
+            Core.Optional<int> minBackupRetentionDays = default;
+            Core.Optional<int> maxStorageMB = default;
+            Core.Optional<int> minLargeStorageMB = default;
+            Core.Optional<int> maxLargeStorageMB = default;
+            Core.Optional<int> minStorageMB = default;
+            Core.Optional<IReadOnlyList<MySqlPerformanceTierServiceLevelObjectives>> serviceLevelObjectives = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MySql.Models
                     continue;
                 }
             }
-            return new MySqlPerformanceTier(id.Value, Optional.ToNullable(maxBackupRetentionDays), Optional.ToNullable(minBackupRetentionDays), Optional.ToNullable(maxStorageMB), Optional.ToNullable(minLargeStorageMB), Optional.ToNullable(maxLargeStorageMB), Optional.ToNullable(minStorageMB), Optional.ToList(serviceLevelObjectives));
+            return new MySqlPerformanceTier(id.Value, Core.Optional.ToNullable(maxBackupRetentionDays), Core.Optional.ToNullable(minBackupRetentionDays), Core.Optional.ToNullable(maxStorageMB), Core.Optional.ToNullable(minLargeStorageMB), Core.Optional.ToNullable(maxLargeStorageMB), Core.Optional.ToNullable(minStorageMB), Core.Optional.ToList(serviceLevelObjectives));
         }
     }
 }

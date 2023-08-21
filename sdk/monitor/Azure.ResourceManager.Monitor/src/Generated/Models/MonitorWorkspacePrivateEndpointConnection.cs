@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of MonitorWorkspacePrivateEndpointConnection. </summary>
         internal MonitorWorkspacePrivateEndpointConnection()
         {
-            GroupIds = new ChangeTrackingList<string>();
+            GroupIds = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of MonitorWorkspacePrivateEndpointConnection. </summary>

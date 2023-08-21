@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Indexed = indexed;
             Stored = stored;
             Facet = facet;
-            OwnerType = new ChangeTrackingList<string>();
+            OwnerType = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of OperationalInsightsSearchSchemaValue. </summary>

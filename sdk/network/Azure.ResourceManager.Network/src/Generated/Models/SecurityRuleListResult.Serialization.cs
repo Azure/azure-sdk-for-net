@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecurityRuleData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<SecurityRuleData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new SecurityRuleListResult(Optional.ToList(value), nextLink.Value);
+            return new SecurityRuleListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

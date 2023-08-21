@@ -10,51 +10,51 @@ using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal partial class PageViewPerfData : IUtf8JsonSerializable
+    internal partial class PageViewPerfData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Url))
+            if (Core.Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url);
             }
-            if (Optional.IsDefined(Duration))
+            if (Core.Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration);
             }
-            if (Optional.IsDefined(PerfTotal))
+            if (Core.Optional.IsDefined(PerfTotal))
             {
                 writer.WritePropertyName("perfTotal"u8);
                 writer.WriteStringValue(PerfTotal);
             }
-            if (Optional.IsDefined(NetworkConnect))
+            if (Core.Optional.IsDefined(NetworkConnect))
             {
                 writer.WritePropertyName("networkConnect"u8);
                 writer.WriteStringValue(NetworkConnect);
             }
-            if (Optional.IsDefined(SentRequest))
+            if (Core.Optional.IsDefined(SentRequest))
             {
                 writer.WritePropertyName("sentRequest"u8);
                 writer.WriteStringValue(SentRequest);
             }
-            if (Optional.IsDefined(ReceivedResponse))
+            if (Core.Optional.IsDefined(ReceivedResponse))
             {
                 writer.WritePropertyName("receivedResponse"u8);
                 writer.WriteStringValue(ReceivedResponse);
             }
-            if (Optional.IsDefined(DomProcessing))
+            if (Core.Optional.IsDefined(DomProcessing))
             {
                 writer.WritePropertyName("domProcessing"u8);
                 writer.WriteStringValue(DomProcessing);
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (Core.Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Measurements))
+            if (Core.Optional.IsCollectionDefined(Measurements))
             {
                 writer.WritePropertyName("measurements"u8);
                 writer.WriteStartObject();

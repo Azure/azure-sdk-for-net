@@ -14,27 +14,27 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ExpressRouteCircuitData : IUtf8JsonSerializable
+    public partial class ExpressRouteCircuitData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -47,22 +47,22 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AllowClassicOperations))
+            if (Core.Optional.IsDefined(AllowClassicOperations))
             {
                 writer.WritePropertyName("allowClassicOperations"u8);
                 writer.WriteBooleanValue(AllowClassicOperations.Value);
             }
-            if (Optional.IsDefined(CircuitProvisioningState))
+            if (Core.Optional.IsDefined(CircuitProvisioningState))
             {
                 writer.WritePropertyName("circuitProvisioningState"u8);
                 writer.WriteStringValue(CircuitProvisioningState);
             }
-            if (Optional.IsDefined(ServiceProviderProvisioningState))
+            if (Core.Optional.IsDefined(ServiceProviderProvisioningState))
             {
                 writer.WritePropertyName("serviceProviderProvisioningState"u8);
                 writer.WriteStringValue(ServiceProviderProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Authorizations))
+            if (Core.Optional.IsCollectionDefined(Authorizations))
             {
                 writer.WritePropertyName("authorizations"u8);
                 writer.WriteStartArray();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Peerings))
+            if (Core.Optional.IsCollectionDefined(Peerings))
             {
                 writer.WritePropertyName("peerings"u8);
                 writer.WriteStartArray();
@@ -82,42 +82,42 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ServiceKey))
+            if (Core.Optional.IsDefined(ServiceKey))
             {
                 writer.WritePropertyName("serviceKey"u8);
                 writer.WriteStringValue(ServiceKey);
             }
-            if (Optional.IsDefined(ServiceProviderNotes))
+            if (Core.Optional.IsDefined(ServiceProviderNotes))
             {
                 writer.WritePropertyName("serviceProviderNotes"u8);
                 writer.WriteStringValue(ServiceProviderNotes);
             }
-            if (Optional.IsDefined(ServiceProviderProperties))
+            if (Core.Optional.IsDefined(ServiceProviderProperties))
             {
                 writer.WritePropertyName("serviceProviderProperties"u8);
                 writer.WriteObjectValue(ServiceProviderProperties);
             }
-            if (Optional.IsDefined(ExpressRoutePort))
+            if (Core.Optional.IsDefined(ExpressRoutePort))
             {
                 writer.WritePropertyName("expressRoutePort"u8);
                 JsonSerializer.Serialize(writer, ExpressRoutePort);
             }
-            if (Optional.IsDefined(BandwidthInGbps))
+            if (Core.Optional.IsDefined(BandwidthInGbps))
             {
                 writer.WritePropertyName("bandwidthInGbps"u8);
                 writer.WriteNumberValue(BandwidthInGbps.Value);
             }
-            if (Optional.IsDefined(GatewayManagerETag))
+            if (Core.Optional.IsDefined(GatewayManagerETag))
             {
                 writer.WritePropertyName("gatewayManagerEtag"u8);
                 writer.WriteStringValue(GatewayManagerETag);
             }
-            if (Optional.IsDefined(GlobalReachEnabled))
+            if (Core.Optional.IsDefined(GlobalReachEnabled))
             {
                 writer.WritePropertyName("globalReachEnabled"u8);
                 writer.WriteBooleanValue(GlobalReachEnabled.Value);
             }
-            if (Optional.IsDefined(AuthorizationKey))
+            if (Core.Optional.IsDefined(AuthorizationKey))
             {
                 writer.WritePropertyName("authorizationKey"u8);
                 writer.WriteStringValue(AuthorizationKey);
@@ -132,29 +132,29 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ExpressRouteCircuitSku> sku = default;
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<bool> allowClassicOperations = default;
-            Optional<string> circuitProvisioningState = default;
-            Optional<ServiceProviderProvisioningState> serviceProviderProvisioningState = default;
-            Optional<IList<ExpressRouteCircuitAuthorizationData>> authorizations = default;
-            Optional<IList<ExpressRouteCircuitPeeringData>> peerings = default;
-            Optional<string> serviceKey = default;
-            Optional<string> serviceProviderNotes = default;
-            Optional<ExpressRouteCircuitServiceProviderProperties> serviceProviderProperties = default;
-            Optional<WritableSubResource> expressRoutePort = default;
-            Optional<float> bandwidthInGbps = default;
-            Optional<int> stag = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<string> gatewayManagerETag = default;
-            Optional<bool> globalReachEnabled = default;
-            Optional<string> authorizationKey = default;
-            Optional<string> authorizationStatus = default;
+            Core.Optional<ExpressRouteCircuitSku> sku = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceType> type = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<bool> allowClassicOperations = default;
+            Core.Optional<string> circuitProvisioningState = default;
+            Core.Optional<ServiceProviderProvisioningState> serviceProviderProvisioningState = default;
+            Core.Optional<IList<ExpressRouteCircuitAuthorizationData>> authorizations = default;
+            Core.Optional<IList<ExpressRouteCircuitPeeringData>> peerings = default;
+            Core.Optional<string> serviceKey = default;
+            Core.Optional<string> serviceProviderNotes = default;
+            Core.Optional<ExpressRouteCircuitServiceProviderProperties> serviceProviderProperties = default;
+            Core.Optional<WritableSubResource> expressRoutePort = default;
+            Core.Optional<float> bandwidthInGbps = default;
+            Core.Optional<int> stag = default;
+            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Core.Optional<string> gatewayManagerETag = default;
+            Core.Optional<bool> globalReachEnabled = default;
+            Core.Optional<string> authorizationKey = default;
+            Core.Optional<string> authorizationStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRouteCircuitData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), sku.Value, Optional.ToNullable(etag), Optional.ToNullable(allowClassicOperations), circuitProvisioningState.Value, Optional.ToNullable(serviceProviderProvisioningState), Optional.ToList(authorizations), Optional.ToList(peerings), serviceKey.Value, serviceProviderNotes.Value, serviceProviderProperties.Value, expressRoutePort, Optional.ToNullable(bandwidthInGbps), Optional.ToNullable(stag), Optional.ToNullable(provisioningState), gatewayManagerETag.Value, Optional.ToNullable(globalReachEnabled), authorizationKey.Value, authorizationStatus.Value);
+            return new ExpressRouteCircuitData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags), sku.Value, Core.Optional.ToNullable(etag), Core.Optional.ToNullable(allowClassicOperations), circuitProvisioningState.Value, Core.Optional.ToNullable(serviceProviderProvisioningState), Core.Optional.ToList(authorizations), Core.Optional.ToList(peerings), serviceKey.Value, serviceProviderNotes.Value, serviceProviderProperties.Value, expressRoutePort, Core.Optional.ToNullable(bandwidthInGbps), Core.Optional.ToNullable(stag), Core.Optional.ToNullable(provisioningState), gatewayManagerETag.Value, Core.Optional.ToNullable(globalReachEnabled), authorizationKey.Value, authorizationStatus.Value);
         }
     }
 }

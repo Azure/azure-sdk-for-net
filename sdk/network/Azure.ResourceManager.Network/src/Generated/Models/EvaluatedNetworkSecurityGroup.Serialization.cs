@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> networkSecurityGroupId = default;
-            Optional<string> appliedTo = default;
-            Optional<MatchedRule> matchedRule = default;
-            Optional<IReadOnlyList<NetworkSecurityRulesEvaluationResult>> rulesEvaluationResult = default;
+            Core.Optional<ResourceIdentifier> networkSecurityGroupId = default;
+            Core.Optional<string> appliedTo = default;
+            Core.Optional<MatchedRule> matchedRule = default;
+            Core.Optional<IReadOnlyList<NetworkSecurityRulesEvaluationResult>> rulesEvaluationResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkSecurityGroupId"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new EvaluatedNetworkSecurityGroup(networkSecurityGroupId.Value, appliedTo.Value, matchedRule.Value, Optional.ToList(rulesEvaluationResult));
+            return new EvaluatedNetworkSecurityGroup(networkSecurityGroupId.Value, appliedTo.Value, matchedRule.Value, Core.Optional.ToList(rulesEvaluationResult));
         }
     }
 }

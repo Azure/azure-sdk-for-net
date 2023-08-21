@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of PrivateDnsZoneGroupData. </summary>
         public PrivateDnsZoneGroupData()
         {
-            PrivateDnsZoneConfigs = new ChangeTrackingList<PrivateDnsZoneConfig>();
+            PrivateDnsZoneConfigs = new Core.ChangeTrackingList<PrivateDnsZoneConfig>();
         }
 
         /// <summary> Initializes a new instance of PrivateDnsZoneGroupData. </summary>

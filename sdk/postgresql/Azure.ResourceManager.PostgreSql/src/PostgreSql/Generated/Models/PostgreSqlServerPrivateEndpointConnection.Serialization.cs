@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<PostgreSqlServerPrivateEndpointConnectionProperties> properties = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<PostgreSqlServerPrivateEndpointConnectionProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

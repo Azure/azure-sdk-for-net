@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of ResourceTypeSkuListResult. </summary>
         internal ResourceTypeSkuListResult()
         {
-            Value = new ChangeTrackingList<ResourceTypeSkuData>();
+            Value = new Core.ChangeTrackingList<ResourceTypeSkuData>();
         }
 
         /// <summary> Initializes a new instance of ResourceTypeSkuListResult. </summary>

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<int> totalDeployments = default;
-            Optional<int> successfulDeployments = default;
-            Optional<int> failedDeployments = default;
+            Core.Optional<int> totalDeployments = default;
+            Core.Optional<int> successfulDeployments = default;
+            Core.Optional<int> failedDeployments = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalDeployments"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     continue;
                 }
             }
-            return new RemediationDeploymentSummary(Optional.ToNullable(totalDeployments), Optional.ToNullable(successfulDeployments), Optional.ToNullable(failedDeployments));
+            return new RemediationDeploymentSummary(Core.Optional.ToNullable(totalDeployments), Core.Optional.ToNullable(successfulDeployments), Core.Optional.ToNullable(failedDeployments));
         }
     }
 }

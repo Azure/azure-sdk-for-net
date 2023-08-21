@@ -13,17 +13,17 @@ using Azure.ResourceManager.NewRelicObservability.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability
 {
-    public partial class NewRelicMonitorResourceData : IUtf8JsonSerializable
+    public partial class NewRelicMonitorResourceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,27 +38,27 @@ namespace Azure.ResourceManager.NewRelicObservability
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(NewRelicAccountProperties))
+            if (Core.Optional.IsDefined(NewRelicAccountProperties))
             {
                 writer.WritePropertyName("newRelicAccountProperties"u8);
                 writer.WriteObjectValue(NewRelicAccountProperties);
             }
-            if (Optional.IsDefined(UserInfo))
+            if (Core.Optional.IsDefined(UserInfo))
             {
                 writer.WritePropertyName("userInfo"u8);
                 writer.WriteObjectValue(UserInfo);
             }
-            if (Optional.IsDefined(PlanData))
+            if (Core.Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
                 writer.WriteObjectValue(PlanData);
             }
-            if (Optional.IsDefined(OrgCreationSource))
+            if (Core.Optional.IsDefined(OrgCreationSource))
             {
                 writer.WritePropertyName("orgCreationSource"u8);
                 writer.WriteStringValue(OrgCreationSource.Value.ToString());
             }
-            if (Optional.IsDefined(AccountCreationSource))
+            if (Core.Optional.IsDefined(AccountCreationSource))
             {
                 writer.WritePropertyName("accountCreationSource"u8);
                 writer.WriteStringValue(AccountCreationSource.Value.ToString());
@@ -73,24 +73,24 @@ namespace Azure.ResourceManager.NewRelicObservability
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<NewRelicProvisioningState> provisioningState = default;
-            Optional<NewRelicObservabilityMonitoringStatus> monitoringStatus = default;
-            Optional<NewRelicObservabilityMarketplaceSubscriptionStatus> marketplaceSubscriptionStatus = default;
-            Optional<string> marketplaceSubscriptionId = default;
-            Optional<NewRelicAccountProperties> newRelicAccountProperties = default;
-            Optional<NewRelicObservabilityUserInfo> userInfo = default;
-            Optional<NewRelicPlanDetails> planData = default;
-            Optional<NewRelicLiftrResourceCategory> liftrResourceCategory = default;
-            Optional<int> liftrResourcePreference = default;
-            Optional<NewRelicObservabilityOrgCreationSource> orgCreationSource = default;
-            Optional<NewRelicObservabilityAccountCreationSource> accountCreationSource = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<NewRelicProvisioningState> provisioningState = default;
+            Core.Optional<NewRelicObservabilityMonitoringStatus> monitoringStatus = default;
+            Core.Optional<NewRelicObservabilityMarketplaceSubscriptionStatus> marketplaceSubscriptionStatus = default;
+            Core.Optional<string> marketplaceSubscriptionId = default;
+            Core.Optional<NewRelicAccountProperties> newRelicAccountProperties = default;
+            Core.Optional<NewRelicObservabilityUserInfo> userInfo = default;
+            Core.Optional<NewRelicPlanDetails> planData = default;
+            Core.Optional<NewRelicLiftrResourceCategory> liftrResourceCategory = default;
+            Core.Optional<int> liftrResourcePreference = default;
+            Core.Optional<NewRelicObservabilityOrgCreationSource> orgCreationSource = default;
+            Core.Optional<NewRelicObservabilityAccountCreationSource> accountCreationSource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                     continue;
                 }
             }
-            return new NewRelicMonitorResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), Optional.ToNullable(monitoringStatus), Optional.ToNullable(marketplaceSubscriptionStatus), marketplaceSubscriptionId.Value, newRelicAccountProperties.Value, userInfo.Value, planData.Value, Optional.ToNullable(liftrResourceCategory), Optional.ToNullable(liftrResourcePreference), Optional.ToNullable(orgCreationSource), Optional.ToNullable(accountCreationSource));
+            return new NewRelicMonitorResourceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(monitoringStatus), Core.Optional.ToNullable(marketplaceSubscriptionStatus), marketplaceSubscriptionId.Value, newRelicAccountProperties.Value, userInfo.Value, planData.Value, Core.Optional.ToNullable(liftrResourceCategory), Core.Optional.ToNullable(liftrResourcePreference), Core.Optional.ToNullable(orgCreationSource), Core.Optional.ToNullable(accountCreationSource));
         }
     }
 }

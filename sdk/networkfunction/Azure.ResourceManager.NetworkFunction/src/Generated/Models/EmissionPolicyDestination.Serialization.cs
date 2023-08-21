@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
-    public partial class EmissionPolicyDestination : IUtf8JsonSerializable
+    public partial class EmissionPolicyDestination : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DestinationType))
+            if (Core.Optional.IsDefined(DestinationType))
             {
                 writer.WritePropertyName("destinationType"u8);
                 writer.WriteStringValue(DestinationType.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             {
                 return null;
             }
-            Optional<EmissionDestinationType> destinationType = default;
+            Core.Optional<EmissionDestinationType> destinationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("destinationType"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                     continue;
                 }
             }
-            return new EmissionPolicyDestination(Optional.ToNullable(destinationType));
+            return new EmissionPolicyDestination(Core.Optional.ToNullable(destinationType));
         }
     }
 }

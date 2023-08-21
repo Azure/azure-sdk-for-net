@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    public partial class MobileNetworkServiceData : IUtf8JsonSerializable
+    public partial class MobileNetworkServiceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MobileNetwork
             writer.WriteStartObject();
             writer.WritePropertyName("servicePrecedence"u8);
             writer.WriteNumberValue(ServicePrecedence);
-            if (Optional.IsDefined(ServiceQosPolicy))
+            if (Core.Optional.IsDefined(ServiceQosPolicy))
             {
                 writer.WritePropertyName("serviceQosPolicy"u8);
                 writer.WriteObjectValue(ServiceQosPolicy);
@@ -57,15 +57,15 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MobileNetworkProvisioningState> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<MobileNetworkProvisioningState> provisioningState = default;
             int servicePrecedence = default;
-            Optional<MobileNetworkQosPolicy> serviceQosPolicy = default;
+            Core.Optional<MobileNetworkQosPolicy> serviceQosPolicy = default;
             IList<PccRuleConfiguration> pccRules = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     continue;
                 }
             }
-            return new MobileNetworkServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), servicePrecedence, serviceQosPolicy.Value, pccRules);
+            return new MobileNetworkServiceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(provisioningState), servicePrecedence, serviceQosPolicy.Value, pccRules);
         }
     }
 }

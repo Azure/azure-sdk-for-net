@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of SecurityPartnerProviderListResult. </summary>
         internal SecurityPartnerProviderListResult()
         {
-            Value = new ChangeTrackingList<SecurityPartnerProviderData>();
+            Value = new Core.ChangeTrackingList<SecurityPartnerProviderData>();
         }
 
         /// <summary> Initializes a new instance of SecurityPartnerProviderListResult. </summary>

@@ -12,24 +12,24 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class NetworkPrivateEndpointConnectionData : IUtf8JsonSerializable
+    public partial class NetworkPrivateEndpointConnectionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectionState))
+            if (Core.Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(ConnectionState);
@@ -44,15 +44,15 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<PrivateEndpointData> privateEndpoint = default;
-            Optional<NetworkPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<string> linkIdentifier = default;
-            Optional<string> privateEndpointLocation = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceType> type = default;
+            Core.Optional<PrivateEndpointData> privateEndpoint = default;
+            Core.Optional<NetworkPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Core.Optional<string> linkIdentifier = default;
+            Core.Optional<string> privateEndpointLocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new NetworkPrivateEndpointConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), privateEndpoint.Value, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), linkIdentifier.Value, privateEndpointLocation.Value);
+            return new NetworkPrivateEndpointConnectionData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), privateEndpoint.Value, privateLinkServiceConnectionState.Value, Core.Optional.ToNullable(provisioningState), linkIdentifier.Value, privateEndpointLocation.Value);
         }
     }
 }

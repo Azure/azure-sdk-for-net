@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    internal partial class NewRelicObservabilityOrganizationInfo : IUtf8JsonSerializable
+    internal partial class NewRelicObservabilityOrganizationInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(OrganizationId))
+            if (Core.Optional.IsDefined(OrganizationId))
             {
                 writer.WritePropertyName("organizationId"u8);
                 writer.WriteStringValue(OrganizationId);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Optional<string> organizationId = default;
+            Core.Optional<string> organizationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("organizationId"u8))

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NetworkCloud
             ExpireOn = expireOn;
             PrivilegeLevel = privilegeLevel;
             UserList = userList.ToList();
-            UserListStatus = new ChangeTrackingList<KeySetUserStatus>();
+            UserListStatus = new Core.ChangeTrackingList<KeySetUserStatus>();
         }
 
         /// <summary> Initializes a new instance of NetworkCloudBmcKeySetData. </summary>

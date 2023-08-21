@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ThirdPartyProviderAuthorization : IUtf8JsonSerializable
+    public partial class ThirdPartyProviderAuthorization : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Authorizations))
+            if (Core.Optional.IsCollectionDefined(Authorizations))
             {
                 writer.WritePropertyName("authorizations"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ManagedByTenantId))
+            if (Core.Optional.IsDefined(ManagedByTenantId))
             {
                 writer.WritePropertyName("managedByTenantId"u8);
                 writer.WriteStringValue(ManagedByTenantId);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<IList<LightHouseAuthorization>> authorizations = default;
-            Optional<string> managedByTenantId = default;
+            Core.Optional<IList<LightHouseAuthorization>> authorizations = default;
+            Core.Optional<string> managedByTenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authorizations"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new ThirdPartyProviderAuthorization(Optional.ToList(authorizations), managedByTenantId.Value);
+            return new ThirdPartyProviderAuthorization(Core.Optional.ToList(authorizations), managedByTenantId.Value);
         }
     }
 }

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRouteCircuitPeeringConfig : IUtf8JsonSerializable
+    public partial class ExpressRouteCircuitPeeringConfig : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AdvertisedPublicPrefixes))
+            if (Core.Optional.IsCollectionDefined(AdvertisedPublicPrefixes))
             {
                 writer.WritePropertyName("advertisedPublicPrefixes"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AdvertisedCommunities))
+            if (Core.Optional.IsCollectionDefined(AdvertisedCommunities))
             {
                 writer.WritePropertyName("advertisedCommunities"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LegacyMode))
+            if (Core.Optional.IsDefined(LegacyMode))
             {
                 writer.WritePropertyName("legacyMode"u8);
                 writer.WriteNumberValue(LegacyMode.Value);
             }
-            if (Optional.IsDefined(CustomerASN))
+            if (Core.Optional.IsDefined(CustomerASN))
             {
                 writer.WritePropertyName("customerASN"u8);
                 writer.WriteNumberValue(CustomerASN.Value);
             }
-            if (Optional.IsDefined(RoutingRegistryName))
+            if (Core.Optional.IsDefined(RoutingRegistryName))
             {
                 writer.WritePropertyName("routingRegistryName"u8);
                 writer.WriteStringValue(RoutingRegistryName);
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> advertisedPublicPrefixes = default;
-            Optional<IList<string>> advertisedCommunities = default;
-            Optional<ExpressRouteCircuitPeeringAdvertisedPublicPrefixState> advertisedPublicPrefixesState = default;
-            Optional<int> legacyMode = default;
-            Optional<int> customerASN = default;
-            Optional<string> routingRegistryName = default;
+            Core.Optional<IList<string>> advertisedPublicPrefixes = default;
+            Core.Optional<IList<string>> advertisedCommunities = default;
+            Core.Optional<ExpressRouteCircuitPeeringAdvertisedPublicPrefixState> advertisedPublicPrefixesState = default;
+            Core.Optional<int> legacyMode = default;
+            Core.Optional<int> customerASN = default;
+            Core.Optional<string> routingRegistryName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("advertisedPublicPrefixes"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ExpressRouteCircuitPeeringConfig(Optional.ToList(advertisedPublicPrefixes), Optional.ToList(advertisedCommunities), Optional.ToNullable(advertisedPublicPrefixesState), Optional.ToNullable(legacyMode), Optional.ToNullable(customerASN), routingRegistryName.Value);
+            return new ExpressRouteCircuitPeeringConfig(Core.Optional.ToList(advertisedPublicPrefixes), Core.Optional.ToList(advertisedCommunities), Core.Optional.ToNullable(advertisedPublicPrefixesState), Core.Optional.ToNullable(legacyMode), Core.Optional.ToNullable(customerASN), routingRegistryName.Value);
         }
     }
 }

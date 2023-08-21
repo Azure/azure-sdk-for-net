@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class FirewallPolicySQL : IUtf8JsonSerializable
+    internal partial class FirewallPolicySQL : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AllowSqlRedirect))
+            if (Core.Optional.IsDefined(AllowSqlRedirect))
             {
                 writer.WritePropertyName("allowSqlRedirect"u8);
                 writer.WriteBooleanValue(AllowSqlRedirect.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<bool> allowSqlRedirect = default;
+            Core.Optional<bool> allowSqlRedirect = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowSqlRedirect"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new FirewallPolicySQL(Optional.ToNullable(allowSqlRedirect));
+            return new FirewallPolicySQL(Core.Optional.ToNullable(allowSqlRedirect));
         }
     }
 }

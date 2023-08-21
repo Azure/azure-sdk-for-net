@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class ExpressRouteGatewayOperationSource : IOperationSource<ExpressRouteGatewayResource>
+    internal class ExpressRouteGatewayOperationSource : Core.IOperationSource<ExpressRouteGatewayResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        ExpressRouteGatewayResource IOperationSource<ExpressRouteGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ExpressRouteGatewayResource Core.IOperationSource<ExpressRouteGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ExpressRouteGatewayData.DeserializeExpressRouteGatewayData(document.RootElement);
             return new ExpressRouteGatewayResource(_client, data);
         }
 
-        async ValueTask<ExpressRouteGatewayResource> IOperationSource<ExpressRouteGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ExpressRouteGatewayResource> Core.IOperationSource<ExpressRouteGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ExpressRouteGatewayData.DeserializeExpressRouteGatewayData(document.RootElement);

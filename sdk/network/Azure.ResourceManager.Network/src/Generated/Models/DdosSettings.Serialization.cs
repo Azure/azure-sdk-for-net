@@ -11,17 +11,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class DdosSettings : IUtf8JsonSerializable
+    public partial class DdosSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProtectionMode))
+            if (Core.Optional.IsDefined(ProtectionMode))
             {
                 writer.WritePropertyName("protectionMode"u8);
                 writer.WriteStringValue(ProtectionMode.Value.ToString());
             }
-            if (Optional.IsDefined(DdosProtectionPlan))
+            if (Core.Optional.IsDefined(DdosProtectionPlan))
             {
                 writer.WritePropertyName("ddosProtectionPlan"u8);
                 JsonSerializer.Serialize(writer, DdosProtectionPlan);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<DdosSettingsProtectionMode> protectionMode = default;
-            Optional<WritableSubResource> ddosProtectionPlan = default;
+            Core.Optional<DdosSettingsProtectionMode> protectionMode = default;
+            Core.Optional<WritableSubResource> ddosProtectionPlan = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protectionMode"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new DdosSettings(Optional.ToNullable(protectionMode), ddosProtectionPlan);
+            return new DdosSettings(Core.Optional.ToNullable(protectionMode), ddosProtectionPlan);
         }
     }
 }

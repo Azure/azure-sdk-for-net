@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of EndpointServicesListResult. </summary>
         internal EndpointServicesListResult()
         {
-            Value = new ChangeTrackingList<EndpointServiceResult>();
+            Value = new Core.ChangeTrackingList<EndpointServiceResult>();
         }
 
         /// <summary> Initializes a new instance of EndpointServicesListResult. </summary>

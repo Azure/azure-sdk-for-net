@@ -10,29 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppReplicationObject : IUtf8JsonSerializable
+    public partial class NetAppReplicationObject : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReplicationId))
+            if (Core.Optional.IsDefined(ReplicationId))
             {
                 writer.WritePropertyName("replicationId"u8);
                 writer.WriteStringValue(ReplicationId);
             }
-            if (Optional.IsDefined(EndpointType))
+            if (Core.Optional.IsDefined(EndpointType))
             {
                 writer.WritePropertyName("endpointType"u8);
                 writer.WriteStringValue(EndpointType.Value.ToString());
             }
-            if (Optional.IsDefined(ReplicationSchedule))
+            if (Core.Optional.IsDefined(ReplicationSchedule))
             {
                 writer.WritePropertyName("replicationSchedule"u8);
                 writer.WriteStringValue(ReplicationSchedule.Value.ToString());
             }
             writer.WritePropertyName("remoteVolumeResourceId"u8);
             writer.WriteStringValue(RemoteVolumeResourceId);
-            if (Optional.IsDefined(RemoteVolumeRegion))
+            if (Core.Optional.IsDefined(RemoteVolumeRegion))
             {
                 writer.WritePropertyName("remoteVolumeRegion"u8);
                 writer.WriteStringValue(RemoteVolumeRegion);
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<string> replicationId = default;
-            Optional<NetAppEndpointType> endpointType = default;
-            Optional<NetAppReplicationSchedule> replicationSchedule = default;
+            Core.Optional<string> replicationId = default;
+            Core.Optional<NetAppEndpointType> endpointType = default;
+            Core.Optional<NetAppReplicationSchedule> replicationSchedule = default;
             ResourceIdentifier remoteVolumeResourceId = default;
-            Optional<string> remoteVolumeRegion = default;
+            Core.Optional<string> remoteVolumeRegion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("replicationId"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new NetAppReplicationObject(replicationId.Value, Optional.ToNullable(endpointType), Optional.ToNullable(replicationSchedule), remoteVolumeResourceId, remoteVolumeRegion.Value);
+            return new NetAppReplicationObject(replicationId.Value, Core.Optional.ToNullable(endpointType), Core.Optional.ToNullable(replicationSchedule), remoteVolumeResourceId, remoteVolumeRegion.Value);
         }
     }
 }

@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<string> result = default;
-            Optional<string> expression = default;
-            Optional<string> expressionKind = default;
-            Optional<string> path = default;
-            Optional<BinaryData> expressionValue = default;
-            Optional<BinaryData> targetValue = default;
-            Optional<string> @operator = default;
+            Core.Optional<string> result = default;
+            Core.Optional<string> expression = default;
+            Core.Optional<string> expressionKind = default;
+            Core.Optional<string> path = default;
+            Core.Optional<BinaryData> expressionValue = default;
+            Core.Optional<BinaryData> targetValue = default;
+            Core.Optional<string> @operator = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("result"u8))

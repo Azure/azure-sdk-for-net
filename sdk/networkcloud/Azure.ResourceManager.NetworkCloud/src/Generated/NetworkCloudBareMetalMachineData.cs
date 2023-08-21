@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNull(serialNumber, nameof(serialNumber));
 
             ExtendedLocation = extendedLocation;
-            AssociatedResourceIds = new ChangeTrackingList<ResourceIdentifier>();
+            AssociatedResourceIds = new Core.ChangeTrackingList<ResourceIdentifier>();
             BmcConnectionString = bmcConnectionString;
             BmcCredentials = bmcCredentials;
             BmcMacAddress = bmcMacAddress;
             BootMacAddress = bootMacAddress;
-            HybridAksClustersAssociatedIds = new ChangeTrackingList<string>();
+            HybridAksClustersAssociatedIds = new Core.ChangeTrackingList<string>();
             MachineDetails = machineDetails;
             MachineName = machineName;
             MachineSkuId = machineSkuId;
             RackId = rackId;
             RackSlot = rackSlot;
             SerialNumber = serialNumber;
-            VirtualMachinesAssociatedIds = new ChangeTrackingList<string>();
+            VirtualMachinesAssociatedIds = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of NetworkCloudBareMetalMachineData. </summary>

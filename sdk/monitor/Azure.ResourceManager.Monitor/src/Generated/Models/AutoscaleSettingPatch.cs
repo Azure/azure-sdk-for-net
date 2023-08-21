@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of AutoscaleSettingPatch. </summary>
         public AutoscaleSettingPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            Profiles = new ChangeTrackingList<AutoscaleProfile>();
-            Notifications = new ChangeTrackingList<AutoscaleNotification>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Profiles = new Core.ChangeTrackingList<AutoscaleProfile>();
+            Notifications = new Core.ChangeTrackingList<AutoscaleNotification>();
         }
 
         /// <summary> Resource tags. </summary>

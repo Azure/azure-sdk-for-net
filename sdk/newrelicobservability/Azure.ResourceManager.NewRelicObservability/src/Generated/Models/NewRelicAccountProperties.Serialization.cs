@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class NewRelicAccountProperties : IUtf8JsonSerializable
+    public partial class NewRelicAccountProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserId))
+            if (Core.Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
             }
-            if (Optional.IsDefined(AccountInfo))
+            if (Core.Optional.IsDefined(AccountInfo))
             {
                 writer.WritePropertyName("accountInfo"u8);
                 writer.WriteObjectValue(AccountInfo);
             }
-            if (Optional.IsDefined(OrganizationInfo))
+            if (Core.Optional.IsDefined(OrganizationInfo))
             {
                 writer.WritePropertyName("organizationInfo"u8);
                 writer.WriteObjectValue(OrganizationInfo);
             }
-            if (Optional.IsDefined(SingleSignOnProperties))
+            if (Core.Optional.IsDefined(SingleSignOnProperties))
             {
                 writer.WritePropertyName("singleSignOnProperties"u8);
                 writer.WriteObjectValue(SingleSignOnProperties);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Optional<string> userId = default;
-            Optional<NewRelicObservabilityAccountInfo> accountInfo = default;
-            Optional<NewRelicObservabilityOrganizationInfo> organizationInfo = default;
-            Optional<NewRelicSingleSignOnProperties> singleSignOnProperties = default;
+            Core.Optional<string> userId = default;
+            Core.Optional<NewRelicObservabilityAccountInfo> accountInfo = default;
+            Core.Optional<NewRelicObservabilityOrganizationInfo> organizationInfo = default;
+            Core.Optional<NewRelicSingleSignOnProperties> singleSignOnProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userId"u8))

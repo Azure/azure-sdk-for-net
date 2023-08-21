@@ -11,24 +11,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class NotificationHubAdmCredential : IUtf8JsonSerializable
+    public partial class NotificationHubAdmCredential : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientId))
+            if (Core.Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (Optional.IsDefined(ClientSecret))
+            if (Core.Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
-            if (Optional.IsDefined(AuthTokenUri))
+            if (Core.Optional.IsDefined(AuthTokenUri))
             {
                 writer.WritePropertyName("authTokenUrl"u8);
                 writer.WriteStringValue(AuthTokenUri.AbsoluteUri);
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            Optional<string> clientId = default;
-            Optional<string> clientSecret = default;
-            Optional<Uri> authTokenUrl = default;
+            Core.Optional<string> clientId = default;
+            Core.Optional<string> clientSecret = default;
+            Core.Optional<Uri> authTokenUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))

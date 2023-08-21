@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Orbital.Models
             BandwidthMHz = bandwidthMHz;
             Direction = direction;
             Polarization = polarization;
-            Authorizations = new ChangeTrackingList<AuthorizedGroundStation>();
+            Authorizations = new Core.ChangeTrackingList<AuthorizedGroundStation>();
         }
 
         /// <summary> Initializes a new instance of OrbitalSpacecraftLink. </summary>

@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(vmSkuName, nameof(vmSkuName));
 
-            AvailabilityZones = new ChangeTrackingList<string>();
+            AvailabilityZones = new Core.ChangeTrackingList<string>();
             Count = count;
-            Labels = new ChangeTrackingList<KubernetesLabel>();
+            Labels = new Core.ChangeTrackingList<KubernetesLabel>();
             Mode = mode;
             Name = name;
-            Taints = new ChangeTrackingList<KubernetesLabel>();
+            Taints = new Core.ChangeTrackingList<KubernetesLabel>();
             VmSkuName = vmSkuName;
         }
 

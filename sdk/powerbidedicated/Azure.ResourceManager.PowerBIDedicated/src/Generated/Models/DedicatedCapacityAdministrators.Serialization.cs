@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
-    internal partial class DedicatedCapacityAdministrators : IUtf8JsonSerializable
+    internal partial class DedicatedCapacityAdministrators : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Members))
+            if (Core.Optional.IsCollectionDefined(Members))
             {
                 writer.WritePropertyName("members"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             {
                 return null;
             }
-            Optional<IList<string>> members = default;
+            Core.Optional<IList<string>> members = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("members"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     continue;
                 }
             }
-            return new DedicatedCapacityAdministrators(Optional.ToList(members));
+            return new DedicatedCapacityAdministrators(Core.Optional.ToList(members));
         }
     }
 }

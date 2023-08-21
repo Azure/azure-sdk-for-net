@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetAppVolumeQuotaRuleData>> value = default;
+            Core.Optional<IReadOnlyList<NetAppVolumeQuotaRuleData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new VolumeQuotaRulesList(Optional.ToList(value));
+            return new VolumeQuotaRulesList(Core.Optional.ToList(value));
         }
     }
 }

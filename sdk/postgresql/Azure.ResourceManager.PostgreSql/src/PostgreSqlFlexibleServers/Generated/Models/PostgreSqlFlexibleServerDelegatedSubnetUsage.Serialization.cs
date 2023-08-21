@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<string> subnetName = default;
-            Optional<long> usage = default;
+            Core.Optional<string> subnetName = default;
+            Core.Optional<long> usage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnetName"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerDelegatedSubnetUsage(subnetName.Value, Optional.ToNullable(usage));
+            return new PostgreSqlFlexibleServerDelegatedSubnetUsage(subnetName.Value, Core.Optional.ToNullable(usage));
         }
     }
 }

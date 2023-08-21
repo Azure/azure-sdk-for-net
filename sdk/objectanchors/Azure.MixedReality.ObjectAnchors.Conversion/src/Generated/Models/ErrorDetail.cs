@@ -25,7 +25,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
 
             Code = code;
             Message = message;
-            Details = new ChangeTrackingList<ErrorDetail>();
+            Details = new Core.ChangeTrackingList<ErrorDetail>();
         }
 
         /// <summary> Initializes a new instance of ErrorDetail. </summary>

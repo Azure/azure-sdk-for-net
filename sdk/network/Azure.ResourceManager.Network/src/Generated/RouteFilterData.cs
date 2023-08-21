@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of RouteFilterData. </summary>
         public RouteFilterData()
         {
-            Rules = new ChangeTrackingList<RouteFilterRuleData>();
-            Peerings = new ChangeTrackingList<ExpressRouteCircuitPeeringData>();
-            IPv6Peerings = new ChangeTrackingList<ExpressRouteCircuitPeeringData>();
+            Rules = new Core.ChangeTrackingList<RouteFilterRuleData>();
+            Peerings = new Core.ChangeTrackingList<ExpressRouteCircuitPeeringData>();
+            IPv6Peerings = new Core.ChangeTrackingList<ExpressRouteCircuitPeeringData>();
         }
 
         /// <summary> Initializes a new instance of RouteFilterData. </summary>

@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of PublicIPAddressData. </summary>
         public PublicIPAddressData()
         {
-            Zones = new ChangeTrackingList<string>();
-            IPTags = new ChangeTrackingList<IPTag>();
+            Zones = new Core.ChangeTrackingList<string>();
+            IPTags = new Core.ChangeTrackingList<IPTag>();
         }
 
         /// <summary> Initializes a new instance of PublicIPAddressData. </summary>

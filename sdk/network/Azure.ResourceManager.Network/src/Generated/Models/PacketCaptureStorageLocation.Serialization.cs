@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PacketCaptureStorageLocation : IUtf8JsonSerializable
+    public partial class PacketCaptureStorageLocation : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageId))
+            if (Core.Optional.IsDefined(StorageId))
             {
                 writer.WritePropertyName("storageId"u8);
                 writer.WriteStringValue(StorageId);
             }
-            if (Optional.IsDefined(StoragePath))
+            if (Core.Optional.IsDefined(StoragePath))
             {
                 writer.WritePropertyName("storagePath"u8);
                 writer.WriteStringValue(StoragePath);
             }
-            if (Optional.IsDefined(FilePath))
+            if (Core.Optional.IsDefined(FilePath))
             {
                 writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> storageId = default;
-            Optional<string> storagePath = default;
-            Optional<string> filePath = default;
+            Core.Optional<ResourceIdentifier> storageId = default;
+            Core.Optional<string> storagePath = default;
+            Core.Optional<string> filePath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageId"u8))

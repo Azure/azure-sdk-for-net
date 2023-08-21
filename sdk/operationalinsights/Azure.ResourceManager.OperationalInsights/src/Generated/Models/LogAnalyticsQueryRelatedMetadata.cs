@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of LogAnalyticsQueryRelatedMetadata. </summary>
         public LogAnalyticsQueryRelatedMetadata()
         {
-            Categories = new ChangeTrackingList<string>();
-            ResourceTypes = new ChangeTrackingList<string>();
-            Solutions = new ChangeTrackingList<string>();
+            Categories = new Core.ChangeTrackingList<string>();
+            ResourceTypes = new Core.ChangeTrackingList<string>();
+            Solutions = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of LogAnalyticsQueryRelatedMetadata. </summary>

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NextHopContent : IUtf8JsonSerializable
+    public partial class NextHopContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("targetResourceId"u8);
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(SourceIPAddress);
             writer.WritePropertyName("destinationIPAddress"u8);
             writer.WriteStringValue(DestinationIPAddress);
-            if (Optional.IsDefined(TargetNicResourceId))
+            if (Core.Optional.IsDefined(TargetNicResourceId))
             {
                 writer.WritePropertyName("targetNicResourceId"u8);
                 writer.WriteStringValue(TargetNicResourceId);

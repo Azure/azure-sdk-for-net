@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
         /// <summary> Initializes a new instance of PrivateDnsRecordListResult. </summary>
         internal PrivateDnsRecordListResult()
         {
-            Value = new ChangeTrackingList<PrivateDnsRecordData>();
+            Value = new Core.ChangeTrackingList<PrivateDnsRecordData>();
         }
 
         /// <summary> Initializes a new instance of PrivateDnsRecordListResult. </summary>

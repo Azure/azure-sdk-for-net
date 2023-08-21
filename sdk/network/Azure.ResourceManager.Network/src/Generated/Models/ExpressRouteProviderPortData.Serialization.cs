@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ExpressRouteProviderPortData : IUtf8JsonSerializable
+    public partial class ExpressRouteProviderPortData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,27 +33,27 @@ namespace Azure.ResourceManager.Network
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PeeringLocation))
+            if (Core.Optional.IsDefined(PeeringLocation))
             {
                 writer.WritePropertyName("peeringLocation"u8);
                 writer.WriteStringValue(PeeringLocation);
             }
-            if (Optional.IsDefined(OverprovisionFactor))
+            if (Core.Optional.IsDefined(OverprovisionFactor))
             {
                 writer.WritePropertyName("overprovisionFactor"u8);
                 writer.WriteNumberValue(OverprovisionFactor.Value);
             }
-            if (Optional.IsDefined(PortBandwidthInMbps))
+            if (Core.Optional.IsDefined(PortBandwidthInMbps))
             {
                 writer.WritePropertyName("portBandwidthInMbps"u8);
                 writer.WriteNumberValue(PortBandwidthInMbps.Value);
             }
-            if (Optional.IsDefined(UsedBandwidthInMbps))
+            if (Core.Optional.IsDefined(UsedBandwidthInMbps))
             {
                 writer.WritePropertyName("usedBandwidthInMbps"u8);
                 writer.WriteNumberValue(UsedBandwidthInMbps.Value);
             }
-            if (Optional.IsDefined(RemainingBandwidthInMbps))
+            if (Core.Optional.IsDefined(RemainingBandwidthInMbps))
             {
                 writer.WritePropertyName("remainingBandwidthInMbps"u8);
                 writer.WriteNumberValue(RemainingBandwidthInMbps.Value);
@@ -68,21 +68,21 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> portPairDescriptor = default;
-            Optional<string> primaryAzurePort = default;
-            Optional<string> secondaryAzurePort = default;
-            Optional<string> peeringLocation = default;
-            Optional<int> overprovisionFactor = default;
-            Optional<int> portBandwidthInMbps = default;
-            Optional<int> usedBandwidthInMbps = default;
-            Optional<int> remainingBandwidthInMbps = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> portPairDescriptor = default;
+            Core.Optional<string> primaryAzurePort = default;
+            Core.Optional<string> secondaryAzurePort = default;
+            Core.Optional<string> peeringLocation = default;
+            Core.Optional<int> overprovisionFactor = default;
+            Core.Optional<int> portBandwidthInMbps = default;
+            Core.Optional<int> usedBandwidthInMbps = default;
+            Core.Optional<int> remainingBandwidthInMbps = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRouteProviderPortData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), portPairDescriptor.Value, primaryAzurePort.Value, secondaryAzurePort.Value, peeringLocation.Value, Optional.ToNullable(overprovisionFactor), Optional.ToNullable(portBandwidthInMbps), Optional.ToNullable(usedBandwidthInMbps), Optional.ToNullable(remainingBandwidthInMbps));
+            return new ExpressRouteProviderPortData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(etag), portPairDescriptor.Value, primaryAzurePort.Value, secondaryAzurePort.Value, peeringLocation.Value, Core.Optional.ToNullable(overprovisionFactor), Core.Optional.ToNullable(portBandwidthInMbps), Core.Optional.ToNullable(usedBandwidthInMbps), Core.Optional.ToNullable(remainingBandwidthInMbps));
         }
     }
 }

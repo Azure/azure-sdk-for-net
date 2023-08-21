@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of VpnGatewayNatRuleData. </summary>
         public VpnGatewayNatRuleData()
         {
-            InternalMappings = new ChangeTrackingList<VpnNatRuleMapping>();
-            ExternalMappings = new ChangeTrackingList<VpnNatRuleMapping>();
-            EgressVpnSiteLinkConnections = new ChangeTrackingList<WritableSubResource>();
-            IngressVpnSiteLinkConnections = new ChangeTrackingList<WritableSubResource>();
+            InternalMappings = new Core.ChangeTrackingList<VpnNatRuleMapping>();
+            ExternalMappings = new Core.ChangeTrackingList<VpnNatRuleMapping>();
+            EgressVpnSiteLinkConnections = new Core.ChangeTrackingList<WritableSubResource>();
+            IngressVpnSiteLinkConnections = new Core.ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of VpnGatewayNatRuleData. </summary>

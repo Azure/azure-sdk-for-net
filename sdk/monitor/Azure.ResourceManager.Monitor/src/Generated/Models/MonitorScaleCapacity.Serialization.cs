@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorScaleCapacity : IUtf8JsonSerializable
+    public partial class MonitorScaleCapacity : Core.IUtf8JsonSerializable
     {
     }
 }

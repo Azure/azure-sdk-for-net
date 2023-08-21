@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <summary> Initializes a new instance of DiagnosticsPackageListResult. </summary>
         internal DiagnosticsPackageListResult()
         {
-            Value = new ChangeTrackingList<MobileNetworkDiagnosticsPackageData>();
+            Value = new Core.ChangeTrackingList<MobileNetworkDiagnosticsPackageData>();
         }
 
         /// <summary> Initializes a new instance of DiagnosticsPackageListResult. </summary>

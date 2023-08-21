@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AzureFirewallPacketCaptureFlags : IUtf8JsonSerializable
+    public partial class AzureFirewallPacketCaptureFlags : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FlagsType))
+            if (Core.Optional.IsDefined(FlagsType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(FlagsType.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<AzureFirewallPacketCaptureFlagsType> type = default;
+            Core.Optional<AzureFirewallPacketCaptureFlagsType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new AzureFirewallPacketCaptureFlags(Optional.ToNullable(type));
+            return new AzureFirewallPacketCaptureFlags(Core.Optional.ToNullable(type));
         }
     }
 }

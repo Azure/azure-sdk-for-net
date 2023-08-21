@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<float> progress = default;
-            Optional<int> ingestedRecords = default;
-            Optional<float> scannedGb = default;
+            Core.Optional<float> progress = default;
+            Core.Optional<int> ingestedRecords = default;
+            Core.Optional<float> scannedGb = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("progress"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     continue;
                 }
             }
-            return new OperationalInsightsTableResultStatistics(Optional.ToNullable(progress), Optional.ToNullable(ingestedRecords), Optional.ToNullable(scannedGb));
+            return new OperationalInsightsTableResultStatistics(Core.Optional.ToNullable(progress), Core.Optional.ToNullable(ingestedRecords), Core.Optional.ToNullable(scannedGb));
         }
     }
 }

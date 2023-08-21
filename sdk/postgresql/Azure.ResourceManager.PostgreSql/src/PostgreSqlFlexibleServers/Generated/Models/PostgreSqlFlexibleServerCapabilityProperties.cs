@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerCapabilityProperties. </summary>
         internal PostgreSqlFlexibleServerCapabilityProperties()
         {
-            SupportedServerEditions = new ChangeTrackingList<PostgreSqlFlexibleServerEditionCapability>();
-            SupportedServerVersions = new ChangeTrackingList<PostgreSqlFlexibleServerServerVersionCapability>();
-            SupportedFastProvisioningEditions = new ChangeTrackingList<PostgreSqlFlexibleServerFastProvisioningEditionCapability>();
+            SupportedServerEditions = new Core.ChangeTrackingList<PostgreSqlFlexibleServerEditionCapability>();
+            SupportedServerVersions = new Core.ChangeTrackingList<PostgreSqlFlexibleServerServerVersionCapability>();
+            SupportedFastProvisioningEditions = new Core.ChangeTrackingList<PostgreSqlFlexibleServerFastProvisioningEditionCapability>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerCapabilityProperties. </summary>

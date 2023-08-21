@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayListResult. </summary>
         internal ApplicationGatewayListResult()
         {
-            Value = new ChangeTrackingList<ApplicationGatewayData>();
+            Value = new Core.ChangeTrackingList<ApplicationGatewayData>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayListResult. </summary>

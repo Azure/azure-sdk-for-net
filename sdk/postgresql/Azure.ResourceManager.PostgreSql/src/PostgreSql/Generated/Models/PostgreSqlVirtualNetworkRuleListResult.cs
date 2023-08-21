@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <summary> Initializes a new instance of PostgreSqlVirtualNetworkRuleListResult. </summary>
         internal PostgreSqlVirtualNetworkRuleListResult()
         {
-            Value = new ChangeTrackingList<PostgreSqlVirtualNetworkRuleData>();
+            Value = new Core.ChangeTrackingList<PostgreSqlVirtualNetworkRuleData>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlVirtualNetworkRuleListResult. </summary>

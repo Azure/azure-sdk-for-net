@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ServiceTagInformationPropertiesFormat> properties = default;
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<string> serviceTagChangeNumber = default;
+            Core.Optional<ServiceTagInformationPropertiesFormat> properties = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> serviceTagChangeNumber = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))

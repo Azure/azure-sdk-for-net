@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of SecurityAdminConfigurationListResult. </summary>
         internal SecurityAdminConfigurationListResult()
         {
-            Value = new ChangeTrackingList<SecurityAdminConfigurationData>();
+            Value = new Core.ChangeTrackingList<SecurityAdminConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of SecurityAdminConfigurationListResult. </summary>

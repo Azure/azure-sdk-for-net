@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of SignatureOverridesFilterValuesResult. </summary>
         internal SignatureOverridesFilterValuesResult()
         {
-            FilterValues = new ChangeTrackingList<string>();
+            FilterValues = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SignatureOverridesFilterValuesResult. </summary>

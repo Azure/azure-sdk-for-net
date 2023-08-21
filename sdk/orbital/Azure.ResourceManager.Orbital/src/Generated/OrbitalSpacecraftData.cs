@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="location"> The location. </param>
         public OrbitalSpacecraftData(AzureLocation location) : base(location)
         {
-            Links = new ChangeTrackingList<OrbitalSpacecraftLink>();
+            Links = new Core.ChangeTrackingList<OrbitalSpacecraftLink>();
         }
 
         /// <summary> Initializes a new instance of OrbitalSpacecraftData. </summary>

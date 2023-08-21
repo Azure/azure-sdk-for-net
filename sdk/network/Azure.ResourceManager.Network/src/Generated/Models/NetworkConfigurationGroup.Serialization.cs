@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> description = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<Guid> resourceGuid = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> description = default;
+            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Core.Optional<Guid> resourceGuid = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NetworkConfigurationGroup(id.Value, description.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid));
+            return new NetworkConfigurationGroup(id.Value, description.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(resourceGuid));
         }
     }
 }

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualApplianceAdditionalNicProperties : IUtf8JsonSerializable
+    public partial class VirtualApplianceAdditionalNicProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(HasPublicIP))
+            if (Core.Optional.IsDefined(HasPublicIP))
             {
                 writer.WritePropertyName("hasPublicIp"u8);
                 writer.WriteBooleanValue(HasPublicIP.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<bool> hasPublicIP = default;
+            Core.Optional<string> name = default;
+            Core.Optional<bool> hasPublicIP = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VirtualApplianceAdditionalNicProperties(name.Value, Optional.ToNullable(hasPublicIP));
+            return new VirtualApplianceAdditionalNicProperties(name.Value, Core.Optional.ToNullable(hasPublicIP));
         }
     }
 }

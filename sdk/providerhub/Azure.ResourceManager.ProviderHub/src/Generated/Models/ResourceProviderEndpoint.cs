@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of ResourceProviderEndpoint. </summary>
         internal ResourceProviderEndpoint()
         {
-            ApiVersions = new ChangeTrackingList<string>();
-            Locations = new ChangeTrackingList<AzureLocation>();
-            RequiredFeatures = new ChangeTrackingList<string>();
+            ApiVersions = new Core.ChangeTrackingList<string>();
+            Locations = new Core.ChangeTrackingList<AzureLocation>();
+            RequiredFeatures = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ResourceProviderEndpoint. </summary>

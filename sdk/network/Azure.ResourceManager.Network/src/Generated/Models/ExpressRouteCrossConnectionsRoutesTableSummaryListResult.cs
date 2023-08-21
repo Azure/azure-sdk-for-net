@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ExpressRouteCrossConnectionsRoutesTableSummaryListResult. </summary>
         internal ExpressRouteCrossConnectionsRoutesTableSummaryListResult()
         {
-            Value = new ChangeTrackingList<ExpressRouteCrossConnectionRoutesTableSummary>();
+            Value = new Core.ChangeTrackingList<ExpressRouteCrossConnectionRoutesTableSummary>();
         }
 
         /// <summary> Initializes a new instance of ExpressRouteCrossConnectionsRoutesTableSummaryListResult. </summary>

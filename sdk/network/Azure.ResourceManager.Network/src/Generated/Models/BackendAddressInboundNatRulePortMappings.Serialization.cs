@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<InboundNatRulePortMapping>> inboundNatRulePortMappings = default;
+            Core.Optional<IReadOnlyList<InboundNatRulePortMapping>> inboundNatRulePortMappings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inboundNatRulePortMappings"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new BackendAddressInboundNatRulePortMappings(Optional.ToList(inboundNatRulePortMappings));
+            return new BackendAddressInboundNatRulePortMappings(Core.Optional.ToList(inboundNatRulePortMappings));
         }
     }
 }

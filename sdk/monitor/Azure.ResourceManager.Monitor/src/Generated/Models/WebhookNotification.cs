@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of WebhookNotification. </summary>
         public WebhookNotification()
         {
-            Properties = new ChangeTrackingDictionary<string, string>();
+            Properties = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of WebhookNotification. </summary>

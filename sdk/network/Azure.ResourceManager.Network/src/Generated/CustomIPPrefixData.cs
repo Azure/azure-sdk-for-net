@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of CustomIPPrefixData. </summary>
         public CustomIPPrefixData()
         {
-            Zones = new ChangeTrackingList<string>();
-            ChildCustomIPPrefixList = new ChangeTrackingList<WritableSubResource>();
-            PublicIPPrefixes = new ChangeTrackingList<WritableSubResource>();
+            Zones = new Core.ChangeTrackingList<string>();
+            ChildCustomIPPrefixList = new Core.ChangeTrackingList<WritableSubResource>();
+            PublicIPPrefixes = new Core.ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of CustomIPPrefixData. </summary>

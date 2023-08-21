@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of ConsoleList. </summary>
         internal ConsoleList()
         {
-            Value = new ChangeTrackingList<NetworkCloudVirtualMachineConsoleData>();
+            Value = new Core.ChangeTrackingList<NetworkCloudVirtualMachineConsoleData>();
         }
 
         /// <summary> Initializes a new instance of ConsoleList. </summary>

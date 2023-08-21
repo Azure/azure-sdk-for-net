@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RemediationDeployment>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<RemediationDeployment>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     continue;
                 }
             }
-            return new RemediationDeploymentsListResult(Optional.ToList(value), nextLink.Value);
+            return new RemediationDeploymentsListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

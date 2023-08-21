@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of NetworkProfileData. </summary>
         public NetworkProfileData()
         {
-            ContainerNetworkInterfaces = new ChangeTrackingList<ContainerNetworkInterface>();
-            ContainerNetworkInterfaceConfigurations = new ChangeTrackingList<ContainerNetworkInterfaceConfiguration>();
+            ContainerNetworkInterfaces = new Core.ChangeTrackingList<ContainerNetworkInterface>();
+            ContainerNetworkInterfaceConfigurations = new Core.ChangeTrackingList<ContainerNetworkInterfaceConfiguration>();
         }
 
         /// <summary> Initializes a new instance of NetworkProfileData. </summary>

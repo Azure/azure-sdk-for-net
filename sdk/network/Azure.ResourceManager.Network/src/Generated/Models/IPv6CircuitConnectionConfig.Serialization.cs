@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class IPv6CircuitConnectionConfig : IUtf8JsonSerializable
+    public partial class IPv6CircuitConnectionConfig : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AddressPrefix))
+            if (Core.Optional.IsDefined(AddressPrefix))
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> addressPrefix = default;
-            Optional<CircuitConnectionStatus> circuitConnectionStatus = default;
+            Core.Optional<string> addressPrefix = default;
+            Core.Optional<CircuitConnectionStatus> circuitConnectionStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addressPrefix"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new IPv6CircuitConnectionConfig(addressPrefix.Value, Optional.ToNullable(circuitConnectionStatus));
+            return new IPv6CircuitConnectionConfig(addressPrefix.Value, Core.Optional.ToNullable(circuitConnectionStatus));
         }
     }
 }

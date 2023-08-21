@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class DataFeedDimension : IUtf8JsonSerializable
+    public partial class DataFeedDimension : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dimensionName"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("dimensionDisplayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -32,7 +32,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 return null;
             }
             string dimensionName = default;
-            Optional<string> dimensionDisplayName = default;
+            Core.Optional<string> dimensionDisplayName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dimensionName"u8))

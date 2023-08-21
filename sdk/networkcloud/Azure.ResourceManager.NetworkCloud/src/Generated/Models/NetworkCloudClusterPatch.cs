@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of NetworkCloudClusterPatch. </summary>
         public NetworkCloudClusterPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            ComputeRackDefinitions = new ChangeTrackingList<NetworkCloudRackDefinition>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            ComputeRackDefinitions = new Core.ChangeTrackingList<NetworkCloudRackDefinition>();
         }
 
         /// <summary> The Azure resource tags that will replace the existing ones. </summary>

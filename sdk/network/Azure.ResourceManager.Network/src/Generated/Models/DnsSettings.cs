@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of DnsSettings. </summary>
         public DnsSettings()
         {
-            Servers = new ChangeTrackingList<string>();
+            Servers = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DnsSettings. </summary>

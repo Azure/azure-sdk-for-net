@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of P2SVpnConnectionHealthContent. </summary>
         public P2SVpnConnectionHealthContent()
         {
-            VpnUserNamesFilter = new ChangeTrackingList<string>();
+            VpnUserNamesFilter = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> The list of p2s vpn user names whose p2s vpn connection detailed health to retrieve for. </summary>

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class EmailHookParameterPatch : IUtf8JsonSerializable
+    internal partial class EmailHookParameterPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ToList))
+            if (Core.Optional.IsCollectionDefined(ToList))
             {
                 writer.WritePropertyName("toList"u8);
                 writer.WriteStartArray();

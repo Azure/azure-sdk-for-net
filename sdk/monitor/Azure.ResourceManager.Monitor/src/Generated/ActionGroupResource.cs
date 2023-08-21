@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = await _actionGroupRestClient.CreateNotificationsAtActionGroupResourceLevelAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<NotificationStatus>(new NotificationStatusOperationSource(), _actionGroupClientDiagnostics, Pipeline, _actionGroupRestClient.CreateCreateNotificationsAtActionGroupResourceLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new MonitorArmOperation<NotificationStatus>(new NotificationStatusOperationSource(), _actionGroupClientDiagnostics, Pipeline, _actionGroupRestClient.CreateCreateNotificationsAtActionGroupResourceLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Monitor
             try
             {
                 var response = _actionGroupRestClient.CreateNotificationsAtActionGroupResourceLevel(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new MonitorArmOperation<NotificationStatus>(new NotificationStatusOperationSource(), _actionGroupClientDiagnostics, Pipeline, _actionGroupRestClient.CreateCreateNotificationsAtActionGroupResourceLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new MonitorArmOperation<NotificationStatus>(new NotificationStatusOperationSource(), _actionGroupClientDiagnostics, Pipeline, _actionGroupRestClient.CreateCreateNotificationsAtActionGroupResourceLevelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

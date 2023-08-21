@@ -12,24 +12,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    public partial class PostgreSqlLogFile : IUtf8JsonSerializable
+    public partial class PostgreSqlLogFile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SizeInKB))
+            if (Core.Optional.IsDefined(SizeInKB))
             {
                 writer.WritePropertyName("sizeInKB"u8);
                 writer.WriteNumberValue(SizeInKB.Value);
             }
-            if (Optional.IsDefined(LogFileType))
+            if (Core.Optional.IsDefined(LogFileType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(LogFileType);
             }
-            if (Optional.IsDefined(Uri))
+            if (Core.Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.PostgreSql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<long> sizeInKB = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> type0 = default;
-            Optional<Uri> url = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<long> sizeInKB = default;
+            Core.Optional<DateTimeOffset> createdTime = default;
+            Core.Optional<DateTimeOffset> lastModifiedTime = default;
+            Core.Optional<string> type0 = default;
+            Core.Optional<Uri> url = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     continue;
                 }
             }
-            return new PostgreSqlLogFile(id, name, type, systemData.Value, Optional.ToNullable(sizeInKB), Optional.ToNullable(createdTime), Optional.ToNullable(lastModifiedTime), type0.Value, url.Value);
+            return new PostgreSqlLogFile(id, name, type, systemData.Value, Core.Optional.ToNullable(sizeInKB), Core.Optional.ToNullable(createdTime), Core.Optional.ToNullable(lastModifiedTime), type0.Value, url.Value);
         }
     }
 }

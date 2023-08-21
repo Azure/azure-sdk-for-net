@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class Office365PolicyProperties : IUtf8JsonSerializable
+    internal partial class Office365PolicyProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BreakOutCategories))
+            if (Core.Optional.IsDefined(BreakOutCategories))
             {
                 writer.WritePropertyName("breakOutCategories"u8);
                 writer.WriteObjectValue(BreakOutCategories);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<BreakOutCategoryPolicies> breakOutCategories = default;
+            Core.Optional<BreakOutCategoryPolicies> breakOutCategories = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("breakOutCategories"u8))

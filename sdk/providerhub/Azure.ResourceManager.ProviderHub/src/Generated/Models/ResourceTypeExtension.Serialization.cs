@@ -12,17 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ResourceTypeExtension : IUtf8JsonSerializable
+    public partial class ResourceTypeExtension : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EndpointUri))
+            if (Core.Optional.IsDefined(EndpointUri))
             {
                 writer.WritePropertyName("endpointUri"u8);
                 writer.WriteStringValue(EndpointUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(ExtensionCategories))
+            if (Core.Optional.IsCollectionDefined(ExtensionCategories))
             {
                 writer.WritePropertyName("extensionCategories"u8);
                 writer.WriteStartArray();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Timeout))
+            if (Core.Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<Uri> endpointUri = default;
-            Optional<IList<ResourceTypeExtensionCategory>> extensionCategories = default;
-            Optional<TimeSpan> timeout = default;
+            Core.Optional<Uri> endpointUri = default;
+            Core.Optional<IList<ResourceTypeExtensionCategory>> extensionCategories = default;
+            Core.Optional<TimeSpan> timeout = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointUri"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new ResourceTypeExtension(endpointUri.Value, Optional.ToList(extensionCategories), Optional.ToNullable(timeout));
+            return new ResourceTypeExtension(endpointUri.Value, Core.Optional.ToList(extensionCategories), Core.Optional.ToNullable(timeout));
         }
     }
 }

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<PolicyDetails> policyDetails = default;
-            Optional<ResourceIdentifier> deploymentId = default;
-            Optional<DateTimeOffset> deploymentTime = default;
+            Core.Optional<PolicyDetails> policyDetails = default;
+            Core.Optional<ResourceIdentifier> deploymentId = default;
+            Core.Optional<DateTimeOffset> deploymentTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyDetails"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     continue;
                 }
             }
-            return new TrackedResourceModificationDetails(policyDetails.Value, deploymentId.Value, Optional.ToNullable(deploymentTime));
+            return new TrackedResourceModificationDetails(policyDetails.Value, deploymentId.Value, Core.Optional.ToNullable(deploymentTime));
         }
     }
 }

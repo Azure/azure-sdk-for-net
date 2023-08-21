@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkInterfaceDnsSettings. </summary>
         public NetworkInterfaceDnsSettings()
         {
-            DnsServers = new ChangeTrackingList<string>();
-            AppliedDnsServers = new ChangeTrackingList<string>();
+            DnsServers = new Core.ChangeTrackingList<string>();
+            AppliedDnsServers = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of NetworkInterfaceDnsSettings. </summary>

@@ -19,9 +19,9 @@ namespace Azure.AI.MetricsAdvisor.Models
                 return null;
             }
             AnomalySeverity anomalySeverity = default;
-            Optional<AnomalyStatus> anomalyStatus = default;
+            Core.Optional<AnomalyStatus> anomalyStatus = default;
             double value = default;
-            Optional<double?> expectedValue = default;
+            Core.Optional<double?> expectedValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("anomalySeverity"u8))
@@ -54,7 +54,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AnomalyProperty(anomalySeverity, Optional.ToNullable(anomalyStatus), value, Optional.ToNullable(expectedValue));
+            return new AnomalyProperty(anomalySeverity, Core.Optional.ToNullable(anomalyStatus), value, Core.Optional.ToNullable(expectedValue));
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public MobileNetworkManagedServiceIdentity(MobileNetworkManagedServiceIdentityType identityType)
         {
             IdentityType = identityType;
-            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
+            UserAssignedIdentities = new Core.ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
         /// <summary> Initializes a new instance of MobileNetworkManagedServiceIdentity. </summary>

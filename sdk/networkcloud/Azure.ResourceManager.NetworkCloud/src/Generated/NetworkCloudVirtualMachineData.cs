@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.NetworkCloud
             CloudServicesNetworkAttachment = cloudServicesNetworkAttachment;
             CpuCores = cpuCores;
             MemorySizeInGB = memorySizeInGB;
-            NetworkAttachments = new ChangeTrackingList<NetworkAttachment>();
-            PlacementHints = new ChangeTrackingList<VirtualMachinePlacementHint>();
-            SshPublicKeys = new ChangeTrackingList<NetworkCloudSshPublicKey>();
+            NetworkAttachments = new Core.ChangeTrackingList<NetworkAttachment>();
+            PlacementHints = new Core.ChangeTrackingList<VirtualMachinePlacementHint>();
+            SshPublicKeys = new Core.ChangeTrackingList<NetworkCloudSshPublicKey>();
             StorageProfile = storageProfile;
             VmImage = vmImage;
-            Volumes = new ChangeTrackingList<ResourceIdentifier>();
+            Volumes = new Core.ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of NetworkCloudVirtualMachineData. </summary>

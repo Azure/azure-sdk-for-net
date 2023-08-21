@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkVirtualApplianceSkuInstances : IUtf8JsonSerializable
+    public partial class NetworkVirtualApplianceSkuInstances : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> scaleUnit = default;
-            Optional<int> instanceCount = default;
+            Core.Optional<string> scaleUnit = default;
+            Core.Optional<int> instanceCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scaleUnit"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NetworkVirtualApplianceSkuInstances(scaleUnit.Value, Optional.ToNullable(instanceCount));
+            return new NetworkVirtualApplianceSkuInstances(scaleUnit.Value, Core.Optional.ToNullable(instanceCount));
         }
     }
 }

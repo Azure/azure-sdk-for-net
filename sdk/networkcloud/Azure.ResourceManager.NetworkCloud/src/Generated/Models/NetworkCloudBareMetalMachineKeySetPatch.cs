@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of NetworkCloudBareMetalMachineKeySetPatch. </summary>
         public NetworkCloudBareMetalMachineKeySetPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            JumpHostsAllowed = new ChangeTrackingList<IPAddress>();
-            UserList = new ChangeTrackingList<KeySetUser>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            JumpHostsAllowed = new Core.ChangeTrackingList<IPAddress>();
+            UserList = new Core.ChangeTrackingList<KeySetUser>();
         }
 
         /// <summary> The Azure resource tags that will replace the existing ones. </summary>

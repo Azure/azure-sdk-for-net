@@ -14,12 +14,12 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class AlertRuleData : IUtf8JsonSerializable
+    public partial class AlertRuleData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(AlertRuleName);
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (Core.Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("condition"u8);
             writer.WriteObjectValue(Condition);
-            if (Optional.IsDefined(Action))
+            if (Core.Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteObjectValue(Action);
             }
-            if (Optional.IsCollectionDefined(Actions))
+            if (Core.Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -75,20 +75,20 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             string name0 = default;
-            Optional<string> description = default;
-            Optional<string> provisioningState = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> provisioningState = default;
             bool isEnabled = default;
             AlertRuleCondition condition = default;
-            Optional<AlertRuleAction> action = default;
-            Optional<IList<AlertRuleAction>> actions = default;
-            Optional<DateTimeOffset> lastUpdatedTime = default;
+            Core.Optional<AlertRuleAction> action = default;
+            Core.Optional<IList<AlertRuleAction>> actions = default;
+            Core.Optional<DateTimeOffset> lastUpdatedTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new AlertRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, name0, description.Value, provisioningState.Value, isEnabled, condition, action.Value, Optional.ToList(actions), Optional.ToNullable(lastUpdatedTime));
+            return new AlertRuleData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, name0, description.Value, provisioningState.Value, isEnabled, condition, action.Value, Core.Optional.ToList(actions), Core.Optional.ToNullable(lastUpdatedTime));
         }
     }
 }

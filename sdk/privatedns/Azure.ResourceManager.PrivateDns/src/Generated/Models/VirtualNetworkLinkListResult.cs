@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
         /// <summary> Initializes a new instance of VirtualNetworkLinkListResult. </summary>
         internal VirtualNetworkLinkListResult()
         {
-            Value = new ChangeTrackingList<VirtualNetworkLinkData>();
+            Value = new Core.ChangeTrackingList<VirtualNetworkLinkData>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkLinkListResult. </summary>

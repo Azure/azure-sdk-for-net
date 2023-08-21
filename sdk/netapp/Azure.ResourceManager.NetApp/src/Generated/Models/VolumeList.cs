@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of VolumeList. </summary>
         internal VolumeList()
         {
-            Value = new ChangeTrackingList<NetAppVolumeData>();
+            Value = new Core.ChangeTrackingList<NetAppVolumeData>();
         }
 
         /// <summary> Initializes a new instance of VolumeList. </summary>

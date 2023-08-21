@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor
 {
-    public partial class MetricCommentFeedback : IUtf8JsonSerializable
+    public partial class MetricCommentFeedback : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartsOn))
+            if (Core.Optional.IsDefined(StartsOn))
             {
                 if (StartsOn != null)
                 {
@@ -29,7 +29,7 @@ namespace Azure.AI.MetricsAdvisor
                     writer.WriteNull("startTime");
                 }
             }
-            if (Optional.IsDefined(EndsOn))
+            if (Core.Optional.IsDefined(EndsOn))
             {
                 if (EndsOn != null)
                 {
@@ -58,13 +58,13 @@ namespace Azure.AI.MetricsAdvisor
             {
                 return null;
             }
-            Optional<DateTimeOffset?> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
+            Core.Optional<DateTimeOffset?> startTime = default;
+            Core.Optional<DateTimeOffset?> endTime = default;
             CommentFeedbackValue value = default;
             MetricFeedbackKind feedbackType = default;
-            Optional<string> feedbackId = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<string> userPrincipal = default;
+            Core.Optional<string> feedbackId = default;
+            Core.Optional<DateTimeOffset> createdTime = default;
+            Core.Optional<string> userPrincipal = default;
             string metricId = default;
             FeedbackFilter dimensionFilter = default;
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.AI.MetricsAdvisor
                     continue;
                 }
             }
-            return new MetricCommentFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, Optional.ToNullable(startTime), Optional.ToNullable(endTime), value);
+            return new MetricCommentFeedback(feedbackType, feedbackId.Value, Core.Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), value);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of OutboundRuleData. </summary>
         public OutboundRuleData()
         {
-            FrontendIPConfigurations = new ChangeTrackingList<WritableSubResource>();
+            FrontendIPConfigurations = new Core.ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of OutboundRuleData. </summary>

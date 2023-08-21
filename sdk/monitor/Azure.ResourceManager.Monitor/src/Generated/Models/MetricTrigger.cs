@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
             TimeAggregation = timeAggregation;
             Operator = @operator;
             Threshold = threshold;
-            Dimensions = new ChangeTrackingList<AutoscaleRuleMetricDimension>();
+            Dimensions = new Core.ChangeTrackingList<AutoscaleRuleMetricDimension>();
         }
 
         /// <summary> Initializes a new instance of MetricTrigger. </summary>

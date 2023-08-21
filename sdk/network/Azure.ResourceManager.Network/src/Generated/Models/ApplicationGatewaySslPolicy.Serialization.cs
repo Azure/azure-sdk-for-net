@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewaySslPolicy : IUtf8JsonSerializable
+    public partial class ApplicationGatewaySslPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DisabledSslProtocols))
+            if (Core.Optional.IsCollectionDefined(DisabledSslProtocols))
             {
                 writer.WritePropertyName("disabledSslProtocols"u8);
                 writer.WriteStartArray();
@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PolicyType))
+            if (Core.Optional.IsDefined(PolicyType))
             {
                 writer.WritePropertyName("policyType"u8);
                 writer.WriteStringValue(PolicyType.Value.ToString());
             }
-            if (Optional.IsDefined(PolicyName))
+            if (Core.Optional.IsDefined(PolicyName))
             {
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(CipherSuites))
+            if (Core.Optional.IsCollectionDefined(CipherSuites))
             {
                 writer.WritePropertyName("cipherSuites"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MinProtocolVersion))
+            if (Core.Optional.IsDefined(MinProtocolVersion))
             {
                 writer.WritePropertyName("minProtocolVersion"u8);
                 writer.WriteStringValue(MinProtocolVersion.Value.ToString());
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<ApplicationGatewaySslProtocol>> disabledSslProtocols = default;
-            Optional<ApplicationGatewaySslPolicyType> policyType = default;
-            Optional<ApplicationGatewaySslPolicyName> policyName = default;
-            Optional<IList<ApplicationGatewaySslCipherSuite>> cipherSuites = default;
-            Optional<ApplicationGatewaySslProtocol> minProtocolVersion = default;
+            Core.Optional<IList<ApplicationGatewaySslProtocol>> disabledSslProtocols = default;
+            Core.Optional<ApplicationGatewaySslPolicyType> policyType = default;
+            Core.Optional<ApplicationGatewaySslPolicyName> policyName = default;
+            Core.Optional<IList<ApplicationGatewaySslCipherSuite>> cipherSuites = default;
+            Core.Optional<ApplicationGatewaySslProtocol> minProtocolVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("disabledSslProtocols"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewaySslPolicy(Optional.ToList(disabledSslProtocols), Optional.ToNullable(policyType), Optional.ToNullable(policyName), Optional.ToList(cipherSuites), Optional.ToNullable(minProtocolVersion));
+            return new ApplicationGatewaySslPolicy(Core.Optional.ToList(disabledSslProtocols), Core.Optional.ToNullable(policyType), Core.Optional.ToNullable(policyName), Core.Optional.ToList(cipherSuites), Core.Optional.ToNullable(minProtocolVersion));
         }
     }
 }

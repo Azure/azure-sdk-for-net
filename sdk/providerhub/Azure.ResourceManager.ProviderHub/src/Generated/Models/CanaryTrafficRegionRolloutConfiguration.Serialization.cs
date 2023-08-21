@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class CanaryTrafficRegionRolloutConfiguration : IUtf8JsonSerializable
+    public partial class CanaryTrafficRegionRolloutConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SkipRegions))
+            if (Core.Optional.IsCollectionDefined(SkipRegions))
             {
                 writer.WritePropertyName("skipRegions"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Regions))
+            if (Core.Optional.IsCollectionDefined(Regions))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<IList<AzureLocation>> skipRegions = default;
-            Optional<IList<AzureLocation>> regions = default;
+            Core.Optional<IList<AzureLocation>> skipRegions = default;
+            Core.Optional<IList<AzureLocation>> regions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("skipRegions"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new CanaryTrafficRegionRolloutConfiguration(Optional.ToList(skipRegions), Optional.ToList(regions));
+            return new CanaryTrafficRegionRolloutConfiguration(Core.Optional.ToList(skipRegions), Core.Optional.ToList(regions));
         }
     }
 }

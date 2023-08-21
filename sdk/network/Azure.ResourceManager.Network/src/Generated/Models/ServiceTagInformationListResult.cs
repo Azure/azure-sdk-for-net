@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ServiceTagInformationListResult. </summary>
         internal ServiceTagInformationListResult()
         {
-            Value = new ChangeTrackingList<ServiceTagInformation>();
+            Value = new Core.ChangeTrackingList<ServiceTagInformation>();
         }
 
         /// <summary> Initializes a new instance of ServiceTagInformationListResult. </summary>

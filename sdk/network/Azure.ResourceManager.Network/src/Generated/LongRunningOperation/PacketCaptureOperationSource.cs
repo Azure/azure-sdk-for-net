@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class PacketCaptureOperationSource : IOperationSource<PacketCaptureResource>
+    internal class PacketCaptureOperationSource : Core.IOperationSource<PacketCaptureResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        PacketCaptureResource IOperationSource<PacketCaptureResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PacketCaptureResource Core.IOperationSource<PacketCaptureResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PacketCaptureData.DeserializePacketCaptureData(document.RootElement);
             return new PacketCaptureResource(_client, data);
         }
 
-        async ValueTask<PacketCaptureResource> IOperationSource<PacketCaptureResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PacketCaptureResource> Core.IOperationSource<PacketCaptureResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PacketCaptureData.DeserializePacketCaptureData(document.RootElement);

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VpnLinkBgpSettings : IUtf8JsonSerializable
+    public partial class VpnLinkBgpSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Asn))
+            if (Core.Optional.IsDefined(Asn))
             {
                 writer.WritePropertyName("asn"u8);
                 writer.WriteNumberValue(Asn.Value);
             }
-            if (Optional.IsDefined(BgpPeeringAddress))
+            if (Core.Optional.IsDefined(BgpPeeringAddress))
             {
                 writer.WritePropertyName("bgpPeeringAddress"u8);
                 writer.WriteStringValue(BgpPeeringAddress);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<long> asn = default;
-            Optional<string> bgpPeeringAddress = default;
+            Core.Optional<long> asn = default;
+            Core.Optional<string> bgpPeeringAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("asn"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VpnLinkBgpSettings(Optional.ToNullable(asn), bgpPeeringAddress.Value);
+            return new VpnLinkBgpSettings(Core.Optional.ToNullable(asn), bgpPeeringAddress.Value);
         }
     }
 }

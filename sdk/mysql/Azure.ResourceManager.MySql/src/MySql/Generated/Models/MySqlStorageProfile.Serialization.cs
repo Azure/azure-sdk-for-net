@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.Models
 {
-    public partial class MySqlStorageProfile : IUtf8JsonSerializable
+    public partial class MySqlStorageProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BackupRetentionDays))
+            if (Core.Optional.IsDefined(BackupRetentionDays))
             {
                 writer.WritePropertyName("backupRetentionDays"u8);
                 writer.WriteNumberValue(BackupRetentionDays.Value);
             }
-            if (Optional.IsDefined(GeoRedundantBackup))
+            if (Core.Optional.IsDefined(GeoRedundantBackup))
             {
                 writer.WritePropertyName("geoRedundantBackup"u8);
                 writer.WriteStringValue(GeoRedundantBackup.Value.ToString());
             }
-            if (Optional.IsDefined(StorageInMB))
+            if (Core.Optional.IsDefined(StorageInMB))
             {
                 writer.WritePropertyName("storageMB"u8);
                 writer.WriteNumberValue(StorageInMB.Value);
             }
-            if (Optional.IsDefined(StorageAutogrow))
+            if (Core.Optional.IsDefined(StorageAutogrow))
             {
                 writer.WritePropertyName("storageAutogrow"u8);
                 writer.WriteStringValue(StorageAutogrow.Value.ToString());
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<int> backupRetentionDays = default;
-            Optional<MySqlGeoRedundantBackup> geoRedundantBackup = default;
-            Optional<int> storageMB = default;
-            Optional<MySqlStorageAutogrow> storageAutogrow = default;
+            Core.Optional<int> backupRetentionDays = default;
+            Core.Optional<MySqlGeoRedundantBackup> geoRedundantBackup = default;
+            Core.Optional<int> storageMB = default;
+            Core.Optional<MySqlStorageAutogrow> storageAutogrow = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backupRetentionDays"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MySql.Models
                     continue;
                 }
             }
-            return new MySqlStorageProfile(Optional.ToNullable(backupRetentionDays), Optional.ToNullable(geoRedundantBackup), Optional.ToNullable(storageMB), Optional.ToNullable(storageAutogrow));
+            return new MySqlStorageProfile(Core.Optional.ToNullable(backupRetentionDays), Core.Optional.ToNullable(geoRedundantBackup), Core.Optional.ToNullable(storageMB), Core.Optional.ToNullable(storageAutogrow));
         }
     }
 }

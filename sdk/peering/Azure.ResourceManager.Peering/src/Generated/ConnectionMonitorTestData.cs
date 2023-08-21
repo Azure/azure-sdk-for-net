@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Peering
         /// <summary> Initializes a new instance of ConnectionMonitorTestData. </summary>
         public ConnectionMonitorTestData()
         {
-            Path = new ChangeTrackingList<string>();
+            Path = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ConnectionMonitorTestData. </summary>

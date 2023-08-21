@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<MySqlQueryPerformanceInsightResetDataResultState> status = default;
-            Optional<string> message = default;
+            Core.Optional<MySqlQueryPerformanceInsightResetDataResultState> status = default;
+            Core.Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MySql.Models
                     continue;
                 }
             }
-            return new MySqlQueryPerformanceInsightResetDataResult(Optional.ToNullable(status), message.Value);
+            return new MySqlQueryPerformanceInsightResetDataResult(Core.Optional.ToNullable(status), message.Value);
         }
     }
 }

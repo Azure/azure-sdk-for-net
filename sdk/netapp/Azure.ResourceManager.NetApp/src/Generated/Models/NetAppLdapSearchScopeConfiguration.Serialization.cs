@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppLdapSearchScopeConfiguration : IUtf8JsonSerializable
+    public partial class NetAppLdapSearchScopeConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserDN))
+            if (Core.Optional.IsDefined(UserDN))
             {
                 writer.WritePropertyName("userDN"u8);
                 writer.WriteStringValue(UserDN);
             }
-            if (Optional.IsDefined(GroupDN))
+            if (Core.Optional.IsDefined(GroupDN))
             {
                 writer.WritePropertyName("groupDN"u8);
                 writer.WriteStringValue(GroupDN);
             }
-            if (Optional.IsDefined(GroupMembershipFilter))
+            if (Core.Optional.IsDefined(GroupMembershipFilter))
             {
                 writer.WritePropertyName("groupMembershipFilter"u8);
                 writer.WriteStringValue(GroupMembershipFilter);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<string> userDN = default;
-            Optional<string> groupDN = default;
-            Optional<string> groupMembershipFilter = default;
+            Core.Optional<string> userDN = default;
+            Core.Optional<string> groupDN = default;
+            Core.Optional<string> groupMembershipFilter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userDN"u8))

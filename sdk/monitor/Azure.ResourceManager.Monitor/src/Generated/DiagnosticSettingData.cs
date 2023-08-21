@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Initializes a new instance of DiagnosticSettingData. </summary>
         public DiagnosticSettingData()
         {
-            Metrics = new ChangeTrackingList<MetricSettings>();
-            Logs = new ChangeTrackingList<LogSettings>();
+            Metrics = new Core.ChangeTrackingList<MetricSettings>();
+            Logs = new Core.ChangeTrackingList<LogSettings>();
         }
 
         /// <summary> Initializes a new instance of DiagnosticSettingData. </summary>

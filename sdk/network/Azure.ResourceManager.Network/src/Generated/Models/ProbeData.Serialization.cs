@@ -14,49 +14,49 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ProbeData : IUtf8JsonSerializable
+    public partial class ProbeData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Protocol))
+            if (Core.Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsDefined(Port))
+            if (Core.Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Optional.IsDefined(IntervalInSeconds))
+            if (Core.Optional.IsDefined(IntervalInSeconds))
             {
                 writer.WritePropertyName("intervalInSeconds"u8);
                 writer.WriteNumberValue(IntervalInSeconds.Value);
             }
-            if (Optional.IsDefined(NumberOfProbes))
+            if (Core.Optional.IsDefined(NumberOfProbes))
             {
                 writer.WritePropertyName("numberOfProbes"u8);
                 writer.WriteNumberValue(NumberOfProbes.Value);
             }
-            if (Optional.IsDefined(ProbeThreshold))
+            if (Core.Optional.IsDefined(ProbeThreshold))
             {
                 writer.WritePropertyName("probeThreshold"u8);
                 writer.WriteNumberValue(ProbeThreshold.Value);
             }
-            if (Optional.IsDefined(RequestPath))
+            if (Core.Optional.IsDefined(RequestPath))
             {
                 writer.WritePropertyName("requestPath"u8);
                 writer.WriteStringValue(RequestPath);
@@ -71,18 +71,18 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<IReadOnlyList<WritableSubResource>> loadBalancingRules = default;
-            Optional<ProbeProtocol> protocol = default;
-            Optional<int> port = default;
-            Optional<int> intervalInSeconds = default;
-            Optional<int> numberOfProbes = default;
-            Optional<int> probeThreshold = default;
-            Optional<string> requestPath = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceType> type = default;
+            Core.Optional<IReadOnlyList<WritableSubResource>> loadBalancingRules = default;
+            Core.Optional<ProbeProtocol> protocol = default;
+            Core.Optional<int> port = default;
+            Core.Optional<int> intervalInSeconds = default;
+            Core.Optional<int> numberOfProbes = default;
+            Core.Optional<int> probeThreshold = default;
+            Core.Optional<string> requestPath = default;
+            Core.Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ProbeData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToList(loadBalancingRules), Optional.ToNullable(protocol), Optional.ToNullable(port), Optional.ToNullable(intervalInSeconds), Optional.ToNullable(numberOfProbes), Optional.ToNullable(probeThreshold), requestPath.Value, Optional.ToNullable(provisioningState));
+            return new ProbeData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), Core.Optional.ToList(loadBalancingRules), Core.Optional.ToNullable(protocol), Core.Optional.ToNullable(port), Core.Optional.ToNullable(intervalInSeconds), Core.Optional.ToNullable(numberOfProbes), Core.Optional.ToNullable(probeThreshold), requestPath.Value, Core.Optional.ToNullable(provisioningState));
         }
     }
 }

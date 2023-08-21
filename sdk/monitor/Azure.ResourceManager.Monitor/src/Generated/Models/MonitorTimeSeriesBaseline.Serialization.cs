@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             string aggregation = default;
-            Optional<IReadOnlyList<MonitorMetricSingleDimension>> dimensions = default;
+            Core.Optional<IReadOnlyList<MonitorMetricSingleDimension>> dimensions = default;
             IReadOnlyList<DateTimeOffset> timestamps = default;
             IReadOnlyList<MonitorSingleBaseline> data = default;
-            Optional<IReadOnlyList<MonitorBaselineMetadata>> metadataValues = default;
+            Core.Optional<IReadOnlyList<MonitorBaselineMetadata>> metadataValues = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aggregation"u8))
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MonitorTimeSeriesBaseline(aggregation, Optional.ToList(dimensions), timestamps, data, Optional.ToList(metadataValues));
+            return new MonitorTimeSeriesBaseline(aggregation, Core.Optional.ToList(dimensions), timestamps, data, Core.Optional.ToList(metadataValues));
         }
     }
 }
