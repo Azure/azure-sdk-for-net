@@ -284,7 +284,6 @@ namespace Azure.Storage.DataMovement
             {
                 if (TransferFailedEventHandler != null)
                 {
-                    // TODO: change to RaiseAsync
                     await TransferFailedEventHandler.RaiseAsync(
                         new TransferItemFailedEventArgs(
                             _dataTransfer.Id,
@@ -298,12 +297,8 @@ namespace Azure.Storage.DataMovement
                         ClientDiagnostics)
                         .ConfigureAwait(false);
                 }
-                if (_dataTransfer._state.TryOnFailedItemsState())
-                {
-
-                }
+                _dataTransfer._state.TryOnFailedItemsState();
             }
-            // Trigger job cancellation if the failed handler is enabled
             await TriggerJobCancellationAsync().ConfigureAwait(false);
 
             // If we're failing from a Transfer Job point, it means we have aborted the job

@@ -307,7 +307,7 @@ namespace Azure.Storage.DataMovement
                 }
 
                 // Set the status in the checkpointer
-                await SetCheckpointerState(transferState).ConfigureAwait(false);
+                await SetCheckpointerStatus().ConfigureAwait(false);
 
                 await PartTransferStatusEventHandler.RaiseAsync(
                     new TransferStatusEventArgs(
@@ -488,12 +488,12 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        internal async virtual Task SetCheckpointerState(DataTransferStatus.TransferState state)
+        internal async virtual Task SetCheckpointerStatus()
         {
-            await _checkpointer.SetJobPartTransferStateAsync(
+            await _checkpointer.SetJobPartTransferStatusAsync(
                 transferId: _dataTransfer.Id,
                 partNumber: PartNumber,
-                state: state).ConfigureAwait(false);
+                state: JobPartStatus).ConfigureAwait(false);
         }
 
         internal long CalculateBlockSize(long length)
