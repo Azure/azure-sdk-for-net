@@ -1,6 +1,6 @@
 # Azure WebJobs Storage Blobs client library for .NET
 
-This extension provides functionality for accessing Azure Storage Blobs in Azure Functions.
+This extension provides functionality for accessing Azure Storage Blobs in Azure Functions within the process.
 
 ## Getting started
 
@@ -11,8 +11,6 @@ Install the Storage Blobs extension with [NuGet][nuget]:
 ```dotnetcli
 dotnet add package Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 ```
-
-For isolated worker process functions, use [Microsoft.Azure.Functions.Worker.Extensions.Storage.Blobs nuget package](https://www.nuget.org/packages/Microsoft.Azure.Functions.Worker.Extensions.Storage.Blobs).
 
 ### Prerequisites
 
