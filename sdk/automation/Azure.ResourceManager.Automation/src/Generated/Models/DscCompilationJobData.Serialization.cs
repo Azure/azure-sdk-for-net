@@ -14,39 +14,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    public partial class DscCompilationJobData : IUtf8JsonSerializable
+    public partial class DscCompilationJobData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Configuration))
+            if (Core.Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (Core.Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(RunOn))
+            if (Core.Optional.IsDefined(RunOn))
             {
                 writer.WritePropertyName("runOn"u8);
                 writer.WriteStringValue(RunOn);
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(StatusDetails))
+            if (Core.Optional.IsDefined(StatusDetails))
             {
                 writer.WritePropertyName("statusDetails"u8);
                 writer.WriteStringValue(StatusDetails);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (Core.Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -70,21 +70,21 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DscConfigurationAssociationProperty> configuration = default;
-            Optional<string> startedBy = default;
-            Optional<Guid> jobId = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<JobProvisioningState> provisioningState = default;
-            Optional<string> runOn = default;
-            Optional<AutomationJobStatus> status = default;
-            Optional<string> statusDetails = default;
-            Optional<DateTimeOffset?> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
-            Optional<string> exception = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<DateTimeOffset?> lastStatusModifiedTime = default;
-            Optional<IDictionary<string, string>> parameters = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DscConfigurationAssociationProperty> configuration = default;
+            Core.Optional<string> startedBy = default;
+            Core.Optional<Guid> jobId = default;
+            Core.Optional<DateTimeOffset> creationTime = default;
+            Core.Optional<JobProvisioningState> provisioningState = default;
+            Core.Optional<string> runOn = default;
+            Core.Optional<AutomationJobStatus> status = default;
+            Core.Optional<string> statusDetails = default;
+            Core.Optional<DateTimeOffset?> startTime = default;
+            Core.Optional<DateTimeOffset?> endTime = default;
+            Core.Optional<string> exception = default;
+            Core.Optional<DateTimeOffset> lastModifiedTime = default;
+            Core.Optional<DateTimeOffset?> lastStatusModifiedTime = default;
+            Core.Optional<IDictionary<string, string>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Automation
                     continue;
                 }
             }
-            return new DscCompilationJobData(id, name, type, systemData.Value, configuration.Value, startedBy.Value, Optional.ToNullable(jobId), Optional.ToNullable(creationTime), Optional.ToNullable(provisioningState), runOn.Value, Optional.ToNullable(status), statusDetails.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), exception.Value, Optional.ToNullable(lastModifiedTime), Optional.ToNullable(lastStatusModifiedTime), Optional.ToDictionary(parameters));
+            return new DscCompilationJobData(id, name, type, systemData.Value, configuration.Value, startedBy.Value, Core.Optional.ToNullable(jobId), Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(provisioningState), runOn.Value, Core.Optional.ToNullable(status), statusDetails.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), exception.Value, Core.Optional.ToNullable(lastModifiedTime), Core.Optional.ToNullable(lastStatusModifiedTime), Core.Optional.ToDictionary(parameters));
         }
     }
 }

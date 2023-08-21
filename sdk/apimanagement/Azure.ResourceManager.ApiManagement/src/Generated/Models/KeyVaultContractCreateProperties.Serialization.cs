@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class KeyVaultContractCreateProperties : IUtf8JsonSerializable
+    public partial class KeyVaultContractCreateProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SecretIdentifier))
+            if (Core.Optional.IsDefined(SecretIdentifier))
             {
                 writer.WritePropertyName("secretIdentifier"u8);
                 writer.WriteStringValue(SecretIdentifier);
             }
-            if (Optional.IsDefined(IdentityClientId))
+            if (Core.Optional.IsDefined(IdentityClientId))
             {
                 writer.WritePropertyName("identityClientId"u8);
                 writer.WriteStringValue(IdentityClientId);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> secretIdentifier = default;
-            Optional<string> identityClientId = default;
+            Core.Optional<string> secretIdentifier = default;
+            Core.Optional<string> identityClientId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secretIdentifier"u8))

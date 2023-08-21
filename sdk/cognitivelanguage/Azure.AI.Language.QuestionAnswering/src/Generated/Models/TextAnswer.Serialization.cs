@@ -18,12 +18,12 @@ namespace Azure.AI.Language.QuestionAnswering
             {
                 return null;
             }
-            Optional<string> answer = default;
-            Optional<double> confidenceScore = default;
-            Optional<string> id = default;
-            Optional<AnswerSpan> answerSpan = default;
-            Optional<int> offset = default;
-            Optional<int> length = default;
+            Core.Optional<string> answer = default;
+            Core.Optional<double> confidenceScore = default;
+            Core.Optional<string> id = default;
+            Core.Optional<AnswerSpan> answerSpan = default;
+            Core.Optional<int> offset = default;
+            Core.Optional<int> length = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("answer"u8))
@@ -73,7 +73,7 @@ namespace Azure.AI.Language.QuestionAnswering
                     continue;
                 }
             }
-            return new TextAnswer(answer.Value, Optional.ToNullable(confidenceScore), id.Value, answerSpan.Value, Optional.ToNullable(offset), Optional.ToNullable(length));
+            return new TextAnswer(answer.Value, Core.Optional.ToNullable(confidenceScore), id.Value, answerSpan.Value, Core.Optional.ToNullable(offset), Core.Optional.ToNullable(length));
         }
     }
 }

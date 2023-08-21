@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    internal partial class RateLimitRuleList : IUtf8JsonSerializable
+    internal partial class RateLimitRuleList : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Rules))
+            if (Core.Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IList<RateLimitRule>> rules = default;
+            Core.Optional<IList<RateLimitRule>> rules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rules"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new RateLimitRuleList(Optional.ToList(rules));
+            return new RateLimitRuleList(Core.Optional.ToList(rules));
         }
     }
 }

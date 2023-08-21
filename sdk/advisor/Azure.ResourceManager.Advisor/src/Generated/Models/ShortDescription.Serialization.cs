@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Advisor.Models
 {
-    public partial class ShortDescription : IUtf8JsonSerializable
+    public partial class ShortDescription : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Problem))
+            if (Core.Optional.IsDefined(Problem))
             {
                 writer.WritePropertyName("problem"u8);
                 writer.WriteStringValue(Problem);
             }
-            if (Optional.IsDefined(Solution))
+            if (Core.Optional.IsDefined(Solution))
             {
                 writer.WritePropertyName("solution"u8);
                 writer.WriteStringValue(Solution);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Advisor.Models
             {
                 return null;
             }
-            Optional<string> problem = default;
-            Optional<string> solution = default;
+            Core.Optional<string> problem = default;
+            Core.Optional<string> solution = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("problem"u8))

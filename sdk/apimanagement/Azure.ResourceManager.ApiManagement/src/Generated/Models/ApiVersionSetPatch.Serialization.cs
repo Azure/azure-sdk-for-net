@@ -10,34 +10,34 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiVersionSetPatch : IUtf8JsonSerializable
+    public partial class ApiVersionSetPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(VersionQueryName))
+            if (Core.Optional.IsDefined(VersionQueryName))
             {
                 writer.WritePropertyName("versionQueryName"u8);
                 writer.WriteStringValue(VersionQueryName);
             }
-            if (Optional.IsDefined(VersionHeaderName))
+            if (Core.Optional.IsDefined(VersionHeaderName))
             {
                 writer.WritePropertyName("versionHeaderName"u8);
                 writer.WriteStringValue(VersionHeaderName);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(VersioningScheme))
+            if (Core.Optional.IsDefined(VersioningScheme))
             {
                 writer.WritePropertyName("versioningScheme"u8);
                 writer.WriteStringValue(VersioningScheme.Value.ToString());

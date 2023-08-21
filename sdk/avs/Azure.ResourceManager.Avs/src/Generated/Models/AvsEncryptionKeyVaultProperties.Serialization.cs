@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class AvsEncryptionKeyVaultProperties : IUtf8JsonSerializable
+    public partial class AvsEncryptionKeyVaultProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyName))
+            if (Core.Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (Optional.IsDefined(KeyVersion))
+            if (Core.Optional.IsDefined(KeyVersion))
             {
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
-            if (Optional.IsDefined(KeyVaultUri))
+            if (Core.Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultUrl"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<string> keyName = default;
-            Optional<string> keyVersion = default;
-            Optional<string> autoDetectedKeyVersion = default;
-            Optional<Uri> keyVaultUrl = default;
-            Optional<AvsEncryptionKeyStatus> keyState = default;
-            Optional<AvsEncryptionVersionType> versionType = default;
+            Core.Optional<string> keyName = default;
+            Core.Optional<string> keyVersion = default;
+            Core.Optional<string> autoDetectedKeyVersion = default;
+            Core.Optional<Uri> keyVaultUrl = default;
+            Core.Optional<AvsEncryptionKeyStatus> keyState = default;
+            Core.Optional<AvsEncryptionVersionType> versionType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyName"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new AvsEncryptionKeyVaultProperties(keyName.Value, keyVersion.Value, autoDetectedKeyVersion.Value, keyVaultUrl.Value, Optional.ToNullable(keyState), Optional.ToNullable(versionType));
+            return new AvsEncryptionKeyVaultProperties(keyName.Value, keyVersion.Value, autoDetectedKeyVersion.Value, keyVaultUrl.Value, Core.Optional.ToNullable(keyState), Core.Optional.ToNullable(versionType));
         }
     }
 }

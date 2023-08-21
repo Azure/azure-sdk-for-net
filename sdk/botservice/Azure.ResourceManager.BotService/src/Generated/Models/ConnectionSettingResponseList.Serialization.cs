@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<BotConnectionSettingData>> value = default;
+            Core.Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<BotConnectionSettingData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new ConnectionSettingResponseList(nextLink.Value, Optional.ToList(value));
+            return new ConnectionSettingResponseList(nextLink.Value, Core.Optional.ToList(value));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <summary> Initializes a new instance of DigestConfig. </summary>
         public DigestConfig()
         {
-            Categories = new ChangeTrackingList<Category>();
+            Categories = new Core.ChangeTrackingList<Category>();
         }
 
         /// <summary> Initializes a new instance of DigestConfig. </summary>

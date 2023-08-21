@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Automanage
         /// <summary> Initializes a new instance of AutomanageConfigurationProfileAssignmentReportData. </summary>
         public AutomanageConfigurationProfileAssignmentReportData()
         {
-            Resources = new ChangeTrackingList<ConfigurationProfileAssignmentReportResourceDetails>();
+            Resources = new Core.ChangeTrackingList<ConfigurationProfileAssignmentReportResourceDetails>();
         }
 
         /// <summary> Initializes a new instance of AutomanageConfigurationProfileAssignmentReportData. </summary>

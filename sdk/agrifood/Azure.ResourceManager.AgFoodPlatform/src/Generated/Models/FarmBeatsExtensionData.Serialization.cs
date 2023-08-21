@@ -13,9 +13,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AgFoodPlatform
 {
-    public partial class FarmBeatsExtensionData : IUtf8JsonSerializable
+    public partial class FarmBeatsExtensionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -33,17 +33,17 @@ namespace Azure.ResourceManager.AgFoodPlatform
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> targetResourceType = default;
-            Optional<string> farmBeatsExtensionId = default;
-            Optional<string> farmBeatsExtensionName = default;
-            Optional<string> farmBeatsExtensionVersion = default;
-            Optional<string> publisherId = default;
-            Optional<string> description = default;
-            Optional<string> extensionCategory = default;
-            Optional<string> extensionAuthLink = default;
-            Optional<string> extensionApiDocsLink = default;
-            Optional<IReadOnlyList<DetailedInformation>> detailedInformation = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> targetResourceType = default;
+            Core.Optional<string> farmBeatsExtensionId = default;
+            Core.Optional<string> farmBeatsExtensionName = default;
+            Core.Optional<string> farmBeatsExtensionVersion = default;
+            Core.Optional<string> publisherId = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> extensionCategory = default;
+            Core.Optional<string> extensionAuthLink = default;
+            Core.Optional<string> extensionApiDocsLink = default;
+            Core.Optional<IReadOnlyList<DetailedInformation>> detailedInformation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                     continue;
                 }
             }
-            return new FarmBeatsExtensionData(id, name, type, systemData.Value, targetResourceType.Value, farmBeatsExtensionId.Value, farmBeatsExtensionName.Value, farmBeatsExtensionVersion.Value, publisherId.Value, description.Value, extensionCategory.Value, extensionAuthLink.Value, extensionApiDocsLink.Value, Optional.ToList(detailedInformation));
+            return new FarmBeatsExtensionData(id, name, type, systemData.Value, targetResourceType.Value, farmBeatsExtensionId.Value, farmBeatsExtensionName.Value, farmBeatsExtensionVersion.Value, publisherId.Value, description.Value, extensionCategory.Value, extensionAuthLink.Value, extensionApiDocsLink.Value, Core.Optional.ToList(detailedInformation));
         }
     }
 }

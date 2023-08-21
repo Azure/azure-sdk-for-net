@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    internal partial class UnknownUserSourceInfo : IUtf8JsonSerializable
+    internal partial class UnknownUserSourceInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UserSourceInfoType);
-            if (Optional.IsDefined(Version))
+            if (Core.Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 return null;
             }
             string type = "Unknown";
-            Optional<string> version = default;
+            Core.Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))

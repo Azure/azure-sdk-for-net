@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Initializes a new instance of AlertProcessingRuleCondition. </summary>
         public AlertProcessingRuleCondition()
         {
-            Values = new ChangeTrackingList<string>();
+            Values = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AlertProcessingRuleCondition. </summary>

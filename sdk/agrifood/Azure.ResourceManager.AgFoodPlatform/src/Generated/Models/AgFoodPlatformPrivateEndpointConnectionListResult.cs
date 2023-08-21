@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         /// <summary> Initializes a new instance of AgFoodPlatformPrivateEndpointConnectionListResult. </summary>
         internal AgFoodPlatformPrivateEndpointConnectionListResult()
         {
-            Value = new ChangeTrackingList<AgFoodPlatformPrivateEndpointConnectionData>();
+            Value = new Core.ChangeTrackingList<AgFoodPlatformPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of AgFoodPlatformPrivateEndpointConnectionListResult. </summary>

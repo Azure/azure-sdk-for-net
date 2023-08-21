@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    public partial class AutomationCredentialData : IUtf8JsonSerializable
+    public partial class AutomationCredentialData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> userName = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> description = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> userName = default;
+            Core.Optional<DateTimeOffset> creationTime = default;
+            Core.Optional<DateTimeOffset> lastModifiedTime = default;
+            Core.Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Automation
                     continue;
                 }
             }
-            return new AutomationCredentialData(id, name, type, systemData.Value, userName.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value);
+            return new AutomationCredentialData(id, name, type, systemData.Value, userName.Value, Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(lastModifiedTime), description.Value);
         }
     }
 }

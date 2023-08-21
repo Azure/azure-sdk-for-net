@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
-    public partial class QueryFilters : IUtf8JsonSerializable
+    public partial class QueryFilters : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MetadataFilter))
+            if (Core.Optional.IsDefined(MetadataFilter))
             {
                 writer.WritePropertyName("metadataFilter"u8);
                 writer.WriteObjectValue(MetadataFilter);
             }
-            if (Optional.IsCollectionDefined(SourceFilter))
+            if (Core.Optional.IsCollectionDefined(SourceFilter))
             {
                 writer.WritePropertyName("sourceFilter"u8);
                 writer.WriteStartArray();
@@ -30,7 +30,7 @@ namespace Azure.AI.Language.QuestionAnswering
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LogicalOperation))
+            if (Core.Optional.IsDefined(LogicalOperation))
             {
                 writer.WritePropertyName("logicalOperation"u8);
                 writer.WriteStringValue(LogicalOperation.Value.ToString());

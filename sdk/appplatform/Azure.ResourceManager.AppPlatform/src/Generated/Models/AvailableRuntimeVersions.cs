@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AvailableRuntimeVersions. </summary>
         internal AvailableRuntimeVersions()
         {
-            Value = new ChangeTrackingList<AppPlatformSupportedRuntimeVersion>();
+            Value = new Core.ChangeTrackingList<AppPlatformSupportedRuntimeVersion>();
         }
 
         /// <summary> Initializes a new instance of AvailableRuntimeVersions. </summary>

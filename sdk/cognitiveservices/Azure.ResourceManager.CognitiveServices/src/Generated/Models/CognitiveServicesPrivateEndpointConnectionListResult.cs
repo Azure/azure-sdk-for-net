@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of CognitiveServicesPrivateEndpointConnectionListResult. </summary>
         internal CognitiveServicesPrivateEndpointConnectionListResult()
         {
-            Value = new ChangeTrackingList<CognitiveServicesPrivateEndpointConnectionData>();
+            Value = new Core.ChangeTrackingList<CognitiveServicesPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of CognitiveServicesPrivateEndpointConnectionListResult. </summary>

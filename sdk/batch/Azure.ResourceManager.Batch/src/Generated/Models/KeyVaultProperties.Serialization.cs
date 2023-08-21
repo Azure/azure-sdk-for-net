@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    internal partial class KeyVaultProperties : IUtf8JsonSerializable
+    internal partial class KeyVaultProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyIdentifier))
+            if (Core.Optional.IsDefined(KeyIdentifier))
             {
                 writer.WritePropertyName("keyIdentifier"u8);
                 writer.WriteStringValue(KeyIdentifier.AbsoluteUri);
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<Uri> keyIdentifier = default;
+            Core.Optional<Uri> keyIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyIdentifier"u8))

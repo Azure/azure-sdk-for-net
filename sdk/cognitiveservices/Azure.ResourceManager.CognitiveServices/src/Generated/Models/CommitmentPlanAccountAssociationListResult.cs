@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of CommitmentPlanAccountAssociationListResult. </summary>
         internal CommitmentPlanAccountAssociationListResult()
         {
-            Value = new ChangeTrackingList<CommitmentPlanAccountAssociationData>();
+            Value = new Core.ChangeTrackingList<CommitmentPlanAccountAssociationData>();
         }
 
         /// <summary> Initializes a new instance of CommitmentPlanAccountAssociationListResult. </summary>

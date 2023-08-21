@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> arcInstance = default;
-            Optional<NodeArcState> state = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> arcInstance = default;
+            Core.Optional<NodeArcState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new PerNodeArcState(name.Value, arcInstance.Value, Optional.ToNullable(state));
+            return new PerNodeArcState(name.Value, arcInstance.Value, Core.Optional.ToNullable(state));
         }
     }
 }

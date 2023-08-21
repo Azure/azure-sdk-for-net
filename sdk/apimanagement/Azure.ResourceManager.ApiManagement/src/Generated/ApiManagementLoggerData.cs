@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of ApiManagementLoggerData. </summary>
         public ApiManagementLoggerData()
         {
-            Credentials = new ChangeTrackingDictionary<string, string>();
+            Credentials = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ApiManagementLoggerData. </summary>

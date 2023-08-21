@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    internal partial class UnknownFilter : IUtf8JsonSerializable
+    internal partial class UnknownFilter : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Initializes a new instance of AuthorizationProviderOperationsMetadataListResult. </summary>
         internal AuthorizationProviderOperationsMetadataListResult()
         {
-            Value = new ChangeTrackingList<AuthorizationProviderOperationsMetadataData>();
+            Value = new Core.ChangeTrackingList<AuthorizationProviderOperationsMetadataData>();
         }
 
         /// <summary> Initializes a new instance of AuthorizationProviderOperationsMetadataListResult. </summary>

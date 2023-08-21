@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchAccountAutoStorageBaseConfiguration : IUtf8JsonSerializable
+    public partial class BatchAccountAutoStorageBaseConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("storageAccountId"u8);
             writer.WriteStringValue(StorageAccountId);
-            if (Optional.IsDefined(AuthenticationMode))
+            if (Core.Optional.IsDefined(AuthenticationMode))
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToSerialString());
             }
-            if (Optional.IsDefined(NodeIdentity))
+            if (Core.Optional.IsDefined(NodeIdentity))
             {
                 writer.WritePropertyName("nodeIdentityReference"u8);
                 writer.WriteObjectValue(NodeIdentity);
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             ResourceIdentifier storageAccountId = default;
-            Optional<BatchAutoStorageAuthenticationMode> authenticationMode = default;
-            Optional<ComputeNodeIdentityReference> nodeIdentityReference = default;
+            Core.Optional<BatchAutoStorageAuthenticationMode> authenticationMode = default;
+            Core.Optional<ComputeNodeIdentityReference> nodeIdentityReference = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountId"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new BatchAccountAutoStorageBaseConfiguration(storageAccountId, Optional.ToNullable(authenticationMode), nodeIdentityReference.Value);
+            return new BatchAccountAutoStorageBaseConfiguration(storageAccountId, Core.Optional.ToNullable(authenticationMode), nodeIdentityReference.Value);
         }
     }
 }

@@ -14,34 +14,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    public partial class RoleManagementPolicyData : IUtf8JsonSerializable
+    public partial class RoleManagementPolicyData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Scope))
+            if (Core.Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(IsOrganizationDefault))
+            if (Core.Optional.IsDefined(IsOrganizationDefault))
             {
                 writer.WritePropertyName("isOrganizationDefault"u8);
                 writer.WriteBooleanValue(IsOrganizationDefault.Value);
             }
-            if (Optional.IsCollectionDefined(Rules))
+            if (Core.Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -64,16 +64,16 @@ namespace Azure.ResourceManager.Authorization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> scope = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<bool> isOrganizationDefault = default;
-            Optional<RoleManagementPrincipal> lastModifiedBy = default;
-            Optional<DateTimeOffset> lastModifiedDateTime = default;
-            Optional<IList<RoleManagementPolicyRule>> rules = default;
-            Optional<IReadOnlyList<RoleManagementPolicyRule>> effectiveRules = default;
-            Optional<RoleManagementPolicyProperties> policyProperties = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> scope = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> description = default;
+            Core.Optional<bool> isOrganizationDefault = default;
+            Core.Optional<RoleManagementPrincipal> lastModifiedBy = default;
+            Core.Optional<DateTimeOffset> lastModifiedDateTime = default;
+            Core.Optional<IList<RoleManagementPolicyRule>> rules = default;
+            Core.Optional<IReadOnlyList<RoleManagementPolicyRule>> effectiveRules = default;
+            Core.Optional<RoleManagementPolicyProperties> policyProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Authorization
                     continue;
                 }
             }
-            return new RoleManagementPolicyData(id, name, type, systemData.Value, scope.Value, displayName.Value, description.Value, Optional.ToNullable(isOrganizationDefault), lastModifiedBy.Value, Optional.ToNullable(lastModifiedDateTime), Optional.ToList(rules), Optional.ToList(effectiveRules), policyProperties.Value);
+            return new RoleManagementPolicyData(id, name, type, systemData.Value, scope.Value, displayName.Value, description.Value, Core.Optional.ToNullable(isOrganizationDefault), lastModifiedBy.Value, Core.Optional.ToNullable(lastModifiedDateTime), Core.Optional.ToList(rules), Core.Optional.ToList(effectiveRules), policyProperties.Value);
         }
     }
 }

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Batch
 {
-    internal class BatchPrivateEndpointConnectionOperationSource : IOperationSource<BatchPrivateEndpointConnectionResource>
+    internal class BatchPrivateEndpointConnectionOperationSource : Core.IOperationSource<BatchPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Batch
             _client = client;
         }
 
-        BatchPrivateEndpointConnectionResource IOperationSource<BatchPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        BatchPrivateEndpointConnectionResource Core.IOperationSource<BatchPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = BatchPrivateEndpointConnectionData.DeserializeBatchPrivateEndpointConnectionData(document.RootElement);
             return new BatchPrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<BatchPrivateEndpointConnectionResource> IOperationSource<BatchPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<BatchPrivateEndpointConnectionResource> Core.IOperationSource<BatchPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = BatchPrivateEndpointConnectionData.DeserializeBatchPrivateEndpointConnectionData(document.RootElement);

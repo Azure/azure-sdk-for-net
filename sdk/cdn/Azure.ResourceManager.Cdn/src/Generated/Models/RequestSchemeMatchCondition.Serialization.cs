@@ -11,21 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class RequestSchemeMatchCondition : IUtf8JsonSerializable
+    public partial class RequestSchemeMatchCondition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("typeName"u8);
             writer.WriteStringValue(ConditionType.ToString());
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(RequestSchemeOperator.ToString());
-            if (Optional.IsDefined(NegateCondition))
+            if (Core.Optional.IsDefined(NegateCondition))
             {
                 writer.WritePropertyName("negateCondition"u8);
                 writer.WriteBooleanValue(NegateCondition.Value);
             }
-            if (Optional.IsCollectionDefined(Transforms))
+            if (Core.Optional.IsCollectionDefined(Transforms))
             {
                 writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MatchValues))
+            if (Core.Optional.IsCollectionDefined(MatchValues))
             {
                 writer.WritePropertyName("matchValues"u8);
                 writer.WriteStartArray();
@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             RequestSchemeMatchConditionType typeName = default;
             RequestSchemeOperator @operator = default;
-            Optional<bool> negateCondition = default;
-            Optional<IList<PreTransformCategory>> transforms = default;
-            Optional<IList<RequestSchemeMatchConditionMatchValue>> matchValues = default;
+            Core.Optional<bool> negateCondition = default;
+            Core.Optional<IList<PreTransformCategory>> transforms = default;
+            Core.Optional<IList<RequestSchemeMatchConditionMatchValue>> matchValues = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("typeName"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new RequestSchemeMatchCondition(typeName, @operator, Optional.ToNullable(negateCondition), Optional.ToList(transforms), Optional.ToList(matchValues));
+            return new RequestSchemeMatchCondition(typeName, @operator, Core.Optional.ToNullable(negateCondition), Core.Optional.ToList(transforms), Core.Optional.ToList(matchValues));
         }
     }
 }

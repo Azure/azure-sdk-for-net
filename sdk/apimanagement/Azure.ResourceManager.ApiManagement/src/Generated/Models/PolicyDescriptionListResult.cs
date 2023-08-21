@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of PolicyDescriptionListResult. </summary>
         internal PolicyDescriptionListResult()
         {
-            Value = new ChangeTrackingList<PolicyDescriptionContractData>();
+            Value = new Core.ChangeTrackingList<PolicyDescriptionContractData>();
         }
 
         /// <summary> Initializes a new instance of PolicyDescriptionListResult. </summary>

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    internal partial class NodePlacementConfiguration : IUtf8JsonSerializable
+    internal partial class NodePlacementConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Policy))
+            if (Core.Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteStringValue(Policy.Value.ToSerialString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<BatchNodePlacementPolicyType> policy = default;
+            Core.Optional<BatchNodePlacementPolicyType> policy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policy"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new NodePlacementConfiguration(Optional.ToNullable(policy));
+            return new NodePlacementConfiguration(Core.Optional.ToNullable(policy));
         }
     }
 }

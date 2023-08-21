@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// <summary> Initializes a new instance of ResourceGroupDefinition. </summary>
         public ResourceGroupDefinition()
         {
-            DependsOn = new ChangeTrackingList<string>();
-            Tags = new ChangeTrackingDictionary<string, string>();
+            DependsOn = new Core.ChangeTrackingList<string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ResourceGroupDefinition. </summary>

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SavingsPlanValidateResult>> benefits = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<SavingsPlanValidateResult>> benefits = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("benefits"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     continue;
                 }
             }
-            return new SavingsPlanValidateResponse(Optional.ToList(benefits), nextLink.Value);
+            return new SavingsPlanValidateResponse(Core.Optional.ToList(benefits), nextLink.Value);
         }
     }
 }

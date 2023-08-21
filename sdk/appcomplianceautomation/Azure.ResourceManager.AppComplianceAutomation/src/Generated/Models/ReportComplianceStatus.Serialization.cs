@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<OverviewStatus> m365 = default;
+            Core.Optional<OverviewStatus> m365 = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("m365"u8))

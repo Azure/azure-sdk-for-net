@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<int> recording = default;
+            Core.Optional<int> recording = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recording"u8))
@@ -31,7 +31,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new UserConsent(Optional.ToNullable(recording));
+            return new UserConsent(Core.Optional.ToNullable(recording));
         }
     }
 }

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<NetworkStatusContract> networkStatus = default;
+            Core.Optional<AzureLocation> location = default;
+            Core.Optional<NetworkStatusContract> networkStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new NetworkStatusContractWithLocation(Optional.ToNullable(location), networkStatus.Value);
+            return new NetworkStatusContractWithLocation(Core.Optional.ToNullable(location), networkStatus.Value);
         }
     }
 }

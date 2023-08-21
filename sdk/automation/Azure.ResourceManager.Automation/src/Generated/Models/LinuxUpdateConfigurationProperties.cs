@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of LinuxUpdateConfigurationProperties. </summary>
         public LinuxUpdateConfigurationProperties()
         {
-            ExcludedPackageNameMasks = new ChangeTrackingList<string>();
-            IncludedPackageNameMasks = new ChangeTrackingList<string>();
+            ExcludedPackageNameMasks = new Core.ChangeTrackingList<string>();
+            IncludedPackageNameMasks = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of LinuxUpdateConfigurationProperties. </summary>

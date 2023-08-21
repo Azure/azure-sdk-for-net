@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class WorkloadNetworkDhcpRelay : IUtf8JsonSerializable
+    public partial class WorkloadNetworkDhcpRelay : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ServerAddresses))
+            if (Core.Optional.IsCollectionDefined(ServerAddresses))
             {
                 writer.WritePropertyName("serverAddresses"u8);
                 writer.WriteStartArray();
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Avs.Models
             }
             writer.WritePropertyName("dhcpType"u8);
             writer.WriteStringValue(DhcpType.ToString());
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Revision))
+            if (Core.Optional.IsDefined(Revision))
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<IList<string>> serverAddresses = default;
+            Core.Optional<IList<string>> serverAddresses = default;
             DhcpTypeEnum dhcpType = default;
-            Optional<string> displayName = default;
-            Optional<IReadOnlyList<string>> segments = default;
-            Optional<WorkloadNetworkDhcpProvisioningState> provisioningState = default;
-            Optional<long> revision = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<IReadOnlyList<string>> segments = default;
+            Core.Optional<WorkloadNetworkDhcpProvisioningState> provisioningState = default;
+            Core.Optional<long> revision = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serverAddresses"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new WorkloadNetworkDhcpRelay(dhcpType, displayName.Value, Optional.ToList(segments), Optional.ToNullable(provisioningState), Optional.ToNullable(revision), Optional.ToList(serverAddresses));
+            return new WorkloadNetworkDhcpRelay(dhcpType, displayName.Value, Core.Optional.ToList(segments), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(revision), Core.Optional.ToList(serverAddresses));
         }
     }
 }

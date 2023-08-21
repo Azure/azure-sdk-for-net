@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Advisor
         /// <summary> Initializes a new instance of ResourceRecommendationBaseData. </summary>
         public ResourceRecommendationBaseData()
         {
-            Metadata = new ChangeTrackingDictionary<string, BinaryData>();
-            SuppressionIds = new ChangeTrackingList<Guid>();
-            ExtendedProperties = new ChangeTrackingDictionary<string, string>();
-            Actions = new ChangeTrackingList<IDictionary<string, BinaryData>>();
-            Remediation = new ChangeTrackingDictionary<string, BinaryData>();
-            ExposedMetadataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            Metadata = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            SuppressionIds = new Core.ChangeTrackingList<Guid>();
+            ExtendedProperties = new Core.ChangeTrackingDictionary<string, string>();
+            Actions = new Core.ChangeTrackingList<IDictionary<string, BinaryData>>();
+            Remediation = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            ExposedMetadataProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ResourceRecommendationBaseData. </summary>

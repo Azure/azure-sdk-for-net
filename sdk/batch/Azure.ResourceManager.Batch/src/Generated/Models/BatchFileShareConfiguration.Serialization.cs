@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchFileShareConfiguration : IUtf8JsonSerializable
+    public partial class BatchFileShareConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("accountName"u8);
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStringValue(AccountKey);
             writer.WritePropertyName("relativeMountPath"u8);
             writer.WriteStringValue(RelativeMountPath);
-            if (Optional.IsDefined(MountOptions))
+            if (Core.Optional.IsDefined(MountOptions))
             {
                 writer.WritePropertyName("mountOptions"u8);
                 writer.WriteStringValue(MountOptions);
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Batch.Models
             Uri azureFileUrl = default;
             string accountKey = default;
             string relativeMountPath = default;
-            Optional<string> mountOptions = default;
+            Core.Optional<string> mountOptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountName"u8))

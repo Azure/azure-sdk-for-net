@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformSkuRestrictions. </summary>
         internal AppPlatformSkuRestrictions()
         {
-            Values = new ChangeTrackingList<string>();
+            Values = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AppPlatformSkuRestrictions. </summary>

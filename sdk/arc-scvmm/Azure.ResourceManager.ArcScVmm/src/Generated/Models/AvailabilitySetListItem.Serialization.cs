@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
-    public partial class AvailabilitySetListItem : IUtf8JsonSerializable
+    public partial class AvailabilitySetListItem : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

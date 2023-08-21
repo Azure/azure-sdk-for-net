@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RoleAssignmentScheduleInstanceData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<RoleAssignmentScheduleInstanceData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new RoleAssignmentScheduleInstanceListResult(Optional.ToList(value), nextLink.Value);
+            return new RoleAssignmentScheduleInstanceListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

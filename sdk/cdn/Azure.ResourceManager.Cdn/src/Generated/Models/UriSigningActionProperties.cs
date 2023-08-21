@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public UriSigningActionProperties(UriSigningActionType actionType)
         {
             ActionType = actionType;
-            ParameterNameOverride = new ChangeTrackingList<UriSigningParamIdentifier>();
+            ParameterNameOverride = new Core.ChangeTrackingList<UriSigningParamIdentifier>();
         }
 
         /// <summary> Initializes a new instance of UriSigningActionProperties. </summary>

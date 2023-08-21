@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of AddonList. </summary>
         internal AddonList()
         {
-            Value = new ChangeTrackingList<AvsPrivateCloudAddonData>();
+            Value = new Core.ChangeTrackingList<AvsPrivateCloudAddonData>();
         }
 
         /// <summary> Initializes a new instance of AddonList. </summary>

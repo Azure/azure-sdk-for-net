@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of RequestReportListResult. </summary>
         internal RequestReportListResult()
         {
-            Value = new ChangeTrackingList<RequestReportRecordContract>();
+            Value = new Core.ChangeTrackingList<RequestReportRecordContract>();
         }
 
         /// <summary> Initializes a new instance of RequestReportListResult. </summary>

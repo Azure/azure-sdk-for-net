@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformCustomDomainProperties : IUtf8JsonSerializable
+    public partial class AppPlatformCustomDomainProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Thumbprint))
+            if (Core.Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (Optional.IsDefined(CertName))
+            if (Core.Optional.IsDefined(CertName))
             {
                 writer.WritePropertyName("certName"u8);
                 writer.WriteStringValue(CertName);
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> thumbprint = default;
-            Optional<string> appName = default;
-            Optional<string> certName = default;
-            Optional<AppPlatformCustomDomainProvisioningState> provisioningState = default;
+            Core.Optional<string> thumbprint = default;
+            Core.Optional<string> appName = default;
+            Core.Optional<string> certName = default;
+            Core.Optional<AppPlatformCustomDomainProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("thumbprint"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformCustomDomainProperties(thumbprint.Value, appName.Value, certName.Value, Optional.ToNullable(provisioningState));
+            return new AppPlatformCustomDomainProperties(thumbprint.Value, appName.Value, certName.Value, Core.Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// <summary> Initializes a new instance of AssignmentJobCreatedResource. </summary>
         public AssignmentJobCreatedResource()
         {
-            Properties = new ChangeTrackingDictionary<string, string>();
+            Properties = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of AssignmentJobCreatedResource. </summary>

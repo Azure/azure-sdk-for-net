@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchAccountCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class BatchAccountCreateOrUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -28,44 +28,44 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AutoStorage))
+            if (Core.Optional.IsDefined(AutoStorage))
             {
                 writer.WritePropertyName("autoStorage"u8);
                 writer.WriteObjectValue(AutoStorage);
             }
-            if (Optional.IsDefined(PoolAllocationMode))
+            if (Core.Optional.IsDefined(PoolAllocationMode))
             {
                 writer.WritePropertyName("poolAllocationMode"u8);
                 writer.WriteStringValue(PoolAllocationMode.Value.ToSerialString());
             }
-            if (Optional.IsDefined(KeyVaultReference))
+            if (Core.Optional.IsDefined(KeyVaultReference))
             {
                 writer.WritePropertyName("keyVaultReference"u8);
                 writer.WriteObjectValue(KeyVaultReference);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (Core.Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
             }
-            if (Optional.IsDefined(NetworkProfile))
+            if (Core.Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (Optional.IsDefined(Encryption))
+            if (Core.Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsCollectionDefined(AllowedAuthenticationModes))
+            if (Core.Optional.IsCollectionDefined(AllowedAuthenticationModes))
             {
                 if (AllowedAuthenticationModes != null)
                 {

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<SoftwareUpdateConfigurationRunTaskProperties> preTask = default;
-            Optional<SoftwareUpdateConfigurationRunTaskProperties> postTask = default;
+            Core.Optional<SoftwareUpdateConfigurationRunTaskProperties> preTask = default;
+            Core.Optional<SoftwareUpdateConfigurationRunTaskProperties> postTask = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("preTask"u8))

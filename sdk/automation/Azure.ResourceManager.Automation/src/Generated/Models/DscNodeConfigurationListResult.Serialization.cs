@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DscNodeConfigurationData>> value = default;
-            Optional<string> nextLink = default;
-            Optional<int> totalCount = default;
+            Core.Optional<IReadOnlyList<DscNodeConfigurationData>> value = default;
+            Core.Optional<string> nextLink = default;
+            Core.Optional<int> totalCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new DscNodeConfigurationListResult(Optional.ToList(value), nextLink.Value, Optional.ToNullable(totalCount));
+            return new DscNodeConfigurationListResult(Core.Optional.ToList(value), nextLink.Value, Core.Optional.ToNullable(totalCount));
         }
     }
 }

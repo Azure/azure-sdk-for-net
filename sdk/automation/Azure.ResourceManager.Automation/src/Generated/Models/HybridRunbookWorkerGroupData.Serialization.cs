@@ -12,19 +12,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    public partial class HybridRunbookWorkerGroupData : IUtf8JsonSerializable
+    public partial class HybridRunbookWorkerGroupData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroupType))
+            if (Core.Optional.IsDefined(GroupType))
             {
                 writer.WritePropertyName("groupType"u8);
                 writer.WriteStringValue(GroupType.Value.ToString());
             }
-            if (Optional.IsDefined(Credential))
+            if (Core.Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential);
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HybridWorkerGroup> groupType = default;
-            Optional<RunAsCredentialAssociationProperty> credential = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<HybridWorkerGroup> groupType = default;
+            Core.Optional<RunAsCredentialAssociationProperty> credential = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Automation
                     continue;
                 }
             }
-            return new HybridRunbookWorkerGroupData(id, name, type, systemData.Value, Optional.ToNullable(groupType), credential.Value);
+            return new HybridRunbookWorkerGroupData(id, name, type, systemData.Value, Core.Optional.ToNullable(groupType), credential.Value);
         }
     }
 }

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
-    internal class WorkloadNetworkDhcpOperationSource : IOperationSource<WorkloadNetworkDhcpResource>
+    internal class WorkloadNetworkDhcpOperationSource : Core.IOperationSource<WorkloadNetworkDhcpResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Avs
             _client = client;
         }
 
-        WorkloadNetworkDhcpResource IOperationSource<WorkloadNetworkDhcpResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        WorkloadNetworkDhcpResource Core.IOperationSource<WorkloadNetworkDhcpResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = WorkloadNetworkDhcpData.DeserializeWorkloadNetworkDhcpData(document.RootElement);
             return new WorkloadNetworkDhcpResource(_client, data);
         }
 
-        async ValueTask<WorkloadNetworkDhcpResource> IOperationSource<WorkloadNetworkDhcpResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<WorkloadNetworkDhcpResource> Core.IOperationSource<WorkloadNetworkDhcpResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = WorkloadNetworkDhcpData.DeserializeWorkloadNetworkDhcpData(document.RootElement);

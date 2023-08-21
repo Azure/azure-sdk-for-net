@@ -14,14 +14,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    public partial class ProfileData : IUtf8JsonSerializable
+    public partial class ProfileData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(OriginResponseTimeoutSeconds))
+            if (Core.Optional.IsDefined(OriginResponseTimeoutSeconds))
             {
                 if (OriginResponseTimeoutSeconds != null)
                 {
@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.Cdn
                 return null;
             }
             CdnSku sku = default;
-            Optional<string> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<string> kind = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ProfileResourceState> resourceState = default;
-            Optional<ProfileProvisioningState> provisioningState = default;
-            Optional<Guid> frontDoorId = default;
-            Optional<int?> originResponseTimeoutSeconds = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ProfileResourceState> resourceState = default;
+            Core.Optional<ProfileProvisioningState> provisioningState = default;
+            Core.Optional<Guid> frontDoorId = default;
+            Core.Optional<int?> originResponseTimeoutSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new ProfileData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, kind.Value, Optional.ToNullable(resourceState), Optional.ToNullable(provisioningState), Optional.ToNullable(frontDoorId), Optional.ToNullable(originResponseTimeoutSeconds));
+            return new ProfileData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku, kind.Value, Core.Optional.ToNullable(resourceState), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(frontDoorId), Core.Optional.ToNullable(originResponseTimeoutSeconds));
         }
     }
 }

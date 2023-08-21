@@ -14,32 +14,32 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    public partial class CognitiveServicesAccountData : IUtf8JsonSerializable
+    public partial class CognitiveServicesAccountData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,17 +61,17 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<CognitiveServicesSku> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<CognitiveServicesAccountProperties> properties = default;
-            Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<string> kind = default;
+            Core.Optional<CognitiveServicesSku> sku = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<CognitiveServicesAccountProperties> properties = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     continue;
                 }
             }
-            return new CognitiveServicesAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, kind.Value, sku.Value, identity, properties.Value, Optional.ToNullable(etag));
+            return new CognitiveServicesAccountData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, kind.Value, sku.Value, identity, properties.Value, Core.Optional.ToNullable(etag));
         }
     }
 }

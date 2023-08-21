@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of BatchPublicIPAddressConfiguration. </summary>
         public BatchPublicIPAddressConfiguration()
         {
-            IPAddressIds = new ChangeTrackingList<ResourceIdentifier>();
+            IPAddressIds = new Core.ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of BatchPublicIPAddressConfiguration. </summary>

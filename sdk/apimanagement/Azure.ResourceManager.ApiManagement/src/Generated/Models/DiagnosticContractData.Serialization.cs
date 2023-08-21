@@ -12,59 +12,59 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class DiagnosticContractData : IUtf8JsonSerializable
+    public partial class DiagnosticContractData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AlwaysLog))
+            if (Core.Optional.IsDefined(AlwaysLog))
             {
                 writer.WritePropertyName("alwaysLog"u8);
                 writer.WriteStringValue(AlwaysLog.Value.ToString());
             }
-            if (Optional.IsDefined(LoggerId))
+            if (Core.Optional.IsDefined(LoggerId))
             {
                 writer.WritePropertyName("loggerId"u8);
                 writer.WriteStringValue(LoggerId);
             }
-            if (Optional.IsDefined(Sampling))
+            if (Core.Optional.IsDefined(Sampling))
             {
                 writer.WritePropertyName("sampling"u8);
                 writer.WriteObjectValue(Sampling);
             }
-            if (Optional.IsDefined(Frontend))
+            if (Core.Optional.IsDefined(Frontend))
             {
                 writer.WritePropertyName("frontend"u8);
                 writer.WriteObjectValue(Frontend);
             }
-            if (Optional.IsDefined(Backend))
+            if (Core.Optional.IsDefined(Backend))
             {
                 writer.WritePropertyName("backend"u8);
                 writer.WriteObjectValue(Backend);
             }
-            if (Optional.IsDefined(IsLogClientIPEnabled))
+            if (Core.Optional.IsDefined(IsLogClientIPEnabled))
             {
                 writer.WritePropertyName("logClientIp"u8);
                 writer.WriteBooleanValue(IsLogClientIPEnabled.Value);
             }
-            if (Optional.IsDefined(HttpCorrelationProtocol))
+            if (Core.Optional.IsDefined(HttpCorrelationProtocol))
             {
                 writer.WritePropertyName("httpCorrelationProtocol"u8);
                 writer.WriteStringValue(HttpCorrelationProtocol.Value.ToString());
             }
-            if (Optional.IsDefined(Verbosity))
+            if (Core.Optional.IsDefined(Verbosity))
             {
                 writer.WritePropertyName("verbosity"u8);
                 writer.WriteStringValue(Verbosity.Value.ToString());
             }
-            if (Optional.IsDefined(OperationNameFormat))
+            if (Core.Optional.IsDefined(OperationNameFormat))
             {
                 writer.WritePropertyName("operationNameFormat"u8);
                 writer.WriteStringValue(OperationNameFormat.Value.ToString());
             }
-            if (Optional.IsDefined(Metrics))
+            if (Core.Optional.IsDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteBooleanValue(Metrics.Value);
@@ -82,17 +82,17 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AlwaysLog> alwaysLog = default;
-            Optional<string> loggerId = default;
-            Optional<SamplingSettings> sampling = default;
-            Optional<PipelineDiagnosticSettings> frontend = default;
-            Optional<PipelineDiagnosticSettings> backend = default;
-            Optional<bool> logClientIP = default;
-            Optional<HttpCorrelationProtocol> httpCorrelationProtocol = default;
-            Optional<TraceVerbosityLevel> verbosity = default;
-            Optional<OperationNameFormat> operationNameFormat = default;
-            Optional<bool> metrics = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<AlwaysLog> alwaysLog = default;
+            Core.Optional<string> loggerId = default;
+            Core.Optional<SamplingSettings> sampling = default;
+            Core.Optional<PipelineDiagnosticSettings> frontend = default;
+            Core.Optional<PipelineDiagnosticSettings> backend = default;
+            Core.Optional<bool> logClientIP = default;
+            Core.Optional<HttpCorrelationProtocol> httpCorrelationProtocol = default;
+            Core.Optional<TraceVerbosityLevel> verbosity = default;
+            Core.Optional<OperationNameFormat> operationNameFormat = default;
+            Core.Optional<bool> metrics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new DiagnosticContractData(id, name, type, systemData.Value, Optional.ToNullable(alwaysLog), loggerId.Value, sampling.Value, frontend.Value, backend.Value, Optional.ToNullable(logClientIP), Optional.ToNullable(httpCorrelationProtocol), Optional.ToNullable(verbosity), Optional.ToNullable(operationNameFormat), Optional.ToNullable(metrics));
+            return new DiagnosticContractData(id, name, type, systemData.Value, Core.Optional.ToNullable(alwaysLog), loggerId.Value, sampling.Value, frontend.Value, backend.Value, Core.Optional.ToNullable(logClientIP), Core.Optional.ToNullable(httpCorrelationProtocol), Core.Optional.ToNullable(verbosity), Core.Optional.ToNullable(operationNameFormat), Core.Optional.ToNullable(metrics));
         }
     }
 }

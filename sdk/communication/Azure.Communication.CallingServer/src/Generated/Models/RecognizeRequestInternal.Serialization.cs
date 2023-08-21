@@ -10,26 +10,26 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class RecognizeRequestInternal : IUtf8JsonSerializable
+    internal partial class RecognizeRequestInternal : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("recognizeInputType"u8);
             writer.WriteStringValue(RecognizeInputType.ToString());
-            if (Optional.IsDefined(PlayPrompt))
+            if (Core.Optional.IsDefined(PlayPrompt))
             {
                 writer.WritePropertyName("playPrompt"u8);
                 writer.WriteObjectValue(PlayPrompt);
             }
-            if (Optional.IsDefined(InterruptCallMediaOperation))
+            if (Core.Optional.IsDefined(InterruptCallMediaOperation))
             {
                 writer.WritePropertyName("interruptCallMediaOperation"u8);
                 writer.WriteBooleanValue(InterruptCallMediaOperation.Value);
             }
             writer.WritePropertyName("recognizeOptions"u8);
             writer.WriteObjectValue(RecognizeOptions);
-            if (Optional.IsDefined(OperationContext))
+            if (Core.Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);

@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.BillingBenefits
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingBenefitsSavingsPlanSavingsPlanRestClient.CreateValidateUpdateRequest(Id.Parent.Name, Id.Name, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingBenefitsSavingsPlanSavingsPlanRestClient.CreateValidateUpdateNextPageRequest(nextLink, Id.Parent.Name, Id.Name, content);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult, _billingBenefitsSavingsPlanSavingsPlanClientDiagnostics, Pipeline, "BillingBenefitsSavingsPlanResource.ValidateUpdate", "benefits", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult, _billingBenefitsSavingsPlanSavingsPlanClientDiagnostics, Pipeline, "BillingBenefitsSavingsPlanResource.ValidateUpdate", "benefits", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.BillingBenefits
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingBenefitsSavingsPlanSavingsPlanRestClient.CreateValidateUpdateRequest(Id.Parent.Name, Id.Name, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingBenefitsSavingsPlanSavingsPlanRestClient.CreateValidateUpdateNextPageRequest(nextLink, Id.Parent.Name, Id.Name, content);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult, _billingBenefitsSavingsPlanSavingsPlanClientDiagnostics, Pipeline, "BillingBenefitsSavingsPlanResource.ValidateUpdate", "benefits", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult, _billingBenefitsSavingsPlanSavingsPlanClientDiagnostics, Pipeline, "BillingBenefitsSavingsPlanResource.ValidateUpdate", "benefits", "nextLink", cancellationToken);
         }
     }
 }

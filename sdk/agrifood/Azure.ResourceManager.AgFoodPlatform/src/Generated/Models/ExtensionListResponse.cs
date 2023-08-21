@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         /// <summary> Initializes a new instance of ExtensionListResponse. </summary>
         internal ExtensionListResponse()
         {
-            Value = new ChangeTrackingList<ExtensionData>();
+            Value = new Core.ChangeTrackingList<ExtensionData>();
         }
 
         /// <summary> Initializes a new instance of ExtensionListResponse. </summary>

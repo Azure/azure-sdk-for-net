@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of DetectorListResult. </summary>
         internal DetectorListResult()
         {
-            Value = new ChangeTrackingList<BatchAccountDetectorData>();
+            Value = new Core.ChangeTrackingList<BatchAccountDetectorData>();
         }
 
         /// <summary> Initializes a new instance of DetectorListResult. </summary>

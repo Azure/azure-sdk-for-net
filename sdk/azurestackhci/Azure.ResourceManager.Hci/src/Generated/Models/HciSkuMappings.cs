@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of HciSkuMappings. </summary>
         public HciSkuMappings()
         {
-            MarketplaceSkuVersions = new ChangeTrackingList<string>();
+            MarketplaceSkuVersions = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of HciSkuMappings. </summary>

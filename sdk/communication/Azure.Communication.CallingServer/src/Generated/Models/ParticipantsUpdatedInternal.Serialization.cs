@@ -20,15 +20,15 @@ namespace Azure.Communication.CallingServer
             {
                 return null;
             }
-            Optional<string> eventSource = default;
-            Optional<IReadOnlyList<CommunicationIdentifierModel>> participants = default;
-            Optional<string> version = default;
-            Optional<string> operationContext = default;
-            Optional<ResultInformation> resultInformation = default;
-            Optional<string> callConnectionId = default;
-            Optional<string> serverCallId = default;
-            Optional<string> correlationId = default;
-            Optional<string> publicEventType = default;
+            Core.Optional<string> eventSource = default;
+            Core.Optional<IReadOnlyList<CommunicationIdentifierModel>> participants = default;
+            Core.Optional<string> version = default;
+            Core.Optional<string> operationContext = default;
+            Core.Optional<ResultInformation> resultInformation = default;
+            Core.Optional<string> callConnectionId = default;
+            Core.Optional<string> serverCallId = default;
+            Core.Optional<string> correlationId = default;
+            Core.Optional<string> publicEventType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventSource"u8))
@@ -90,7 +90,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new ParticipantsUpdatedInternal(eventSource.Value, Optional.ToList(participants), version.Value, operationContext.Value, resultInformation.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
+            return new ParticipantsUpdatedInternal(eventSource.Value, Core.Optional.ToList(participants), version.Value, operationContext.Value, resultInformation.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
         }
     }
 }

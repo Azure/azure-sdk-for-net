@@ -10,37 +10,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class ApplicationInsightsComponentAnalyticsItem : IUtf8JsonSerializable
+    public partial class ApplicationInsightsComponentAnalyticsItem : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("Id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("Name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Content))
+            if (Core.Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("Content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Optional.IsDefined(Scope))
+            if (Core.Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("Scope"u8);
                 writer.WriteStringValue(Scope.Value.ToString());
             }
-            if (Optional.IsDefined(ItemType))
+            if (Core.Optional.IsDefined(ItemType))
             {
                 writer.WritePropertyName("Type"u8);
                 writer.WriteStringValue(ItemType.Value.ToString());
             }
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("Properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -54,15 +54,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> content = default;
-            Optional<string> version = default;
-            Optional<ItemScope> scope = default;
-            Optional<ItemType> type = default;
-            Optional<string> timeCreated = default;
-            Optional<string> timeModified = default;
-            Optional<ApplicationInsightsComponentAnalyticsItemProperties> properties = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> content = default;
+            Core.Optional<string> version = default;
+            Core.Optional<ItemScope> scope = default;
+            Core.Optional<ItemType> type = default;
+            Core.Optional<string> timeCreated = default;
+            Core.Optional<string> timeModified = default;
+            Core.Optional<ApplicationInsightsComponentAnalyticsItemProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Id"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     continue;
                 }
             }
-            return new ApplicationInsightsComponentAnalyticsItem(id.Value, name.Value, content.Value, version.Value, Optional.ToNullable(scope), Optional.ToNullable(type), timeCreated.Value, timeModified.Value, properties.Value);
+            return new ApplicationInsightsComponentAnalyticsItem(id.Value, name.Value, content.Value, version.Value, Core.Optional.ToNullable(scope), Core.Optional.ToNullable(type), timeCreated.Value, timeModified.Value, properties.Value);
         }
     }
 }

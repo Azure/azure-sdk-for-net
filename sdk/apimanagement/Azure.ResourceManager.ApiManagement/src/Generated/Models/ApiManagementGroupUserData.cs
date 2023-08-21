@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ApiManagementGroupUserData. </summary>
         public ApiManagementGroupUserData()
         {
-            Identities = new ChangeTrackingList<UserIdentityContract>();
-            Groups = new ChangeTrackingList<GroupContractProperties>();
+            Identities = new Core.ChangeTrackingList<UserIdentityContract>();
+            Groups = new Core.ChangeTrackingList<GroupContractProperties>();
         }
 
         /// <summary> Initializes a new instance of ApiManagementGroupUserData. </summary>

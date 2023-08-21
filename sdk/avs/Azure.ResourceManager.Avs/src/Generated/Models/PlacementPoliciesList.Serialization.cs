@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PlacementPolicyData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<PlacementPolicyData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new PlacementPoliciesList(Optional.ToList(value), nextLink.Value);
+            return new PlacementPoliciesList(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

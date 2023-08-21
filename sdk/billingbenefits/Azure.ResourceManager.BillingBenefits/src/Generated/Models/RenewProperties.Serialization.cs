@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    internal partial class RenewProperties : IUtf8JsonSerializable
+    internal partial class RenewProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PurchaseProperties))
+            if (Core.Optional.IsDefined(PurchaseProperties))
             {
                 writer.WritePropertyName("purchaseProperties"u8);
                 writer.WriteObjectValue(PurchaseProperties);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<BillingBenefitsPurchaseContent> purchaseProperties = default;
+            Core.Optional<BillingBenefitsPurchaseContent> purchaseProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("purchaseProperties"u8))

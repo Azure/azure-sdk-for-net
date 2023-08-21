@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> status = default;
-            Optional<string> reason = default;
-            Optional<string> discoveryStatus = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> zone = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> status = default;
+            Core.Optional<string> reason = default;
+            Core.Optional<string> discoveryStatus = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<string> zone = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformDeploymentInstance(name.Value, status.Value, reason.Value, discoveryStatus.Value, Optional.ToNullable(startTime), zone.Value);
+            return new AppPlatformDeploymentInstance(name.Value, status.Value, reason.Value, discoveryStatus.Value, Core.Optional.ToNullable(startTime), zone.Value);
         }
     }
 }

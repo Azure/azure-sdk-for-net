@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    public partial class Step : IUtf8JsonSerializable
+    public partial class Step : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);

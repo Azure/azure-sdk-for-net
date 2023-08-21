@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of DscNodeReportListResult. </summary>
         internal DscNodeReportListResult()
         {
-            Value = new ChangeTrackingList<DscNodeReport>();
+            Value = new Core.ChangeTrackingList<DscNodeReport>();
         }
 
         /// <summary> Initializes a new instance of DscNodeReportListResult. </summary>

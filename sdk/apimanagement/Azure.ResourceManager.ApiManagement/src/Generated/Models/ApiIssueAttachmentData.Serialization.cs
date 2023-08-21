@@ -11,24 +11,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiIssueAttachmentData : IUtf8JsonSerializable
+    public partial class ApiIssueAttachmentData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Title))
+            if (Core.Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(ContentFormat))
+            if (Core.Optional.IsDefined(ContentFormat))
             {
                 writer.WritePropertyName("contentFormat"u8);
                 writer.WriteStringValue(ContentFormat);
             }
-            if (Optional.IsDefined(Content))
+            if (Core.Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> title = default;
-            Optional<string> contentFormat = default;
-            Optional<string> content = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> title = default;
+            Core.Optional<string> contentFormat = default;
+            Core.Optional<string> content = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

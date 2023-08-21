@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.BillingBenefits
             try
             {
                 var response = await _billingBenefitsReservationOrderAliasReservationOrderAliasRestClient.CreateAsync(reservationOrderAliasName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingBenefitsArmOperation<BillingBenefitsReservationOrderAliasResource>(new BillingBenefitsReservationOrderAliasOperationSource(Client), _billingBenefitsReservationOrderAliasReservationOrderAliasClientDiagnostics, Pipeline, _billingBenefitsReservationOrderAliasReservationOrderAliasRestClient.CreateCreateRequest(reservationOrderAliasName, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new BillingBenefitsArmOperation<BillingBenefitsReservationOrderAliasResource>(new BillingBenefitsReservationOrderAliasOperationSource(Client), _billingBenefitsReservationOrderAliasReservationOrderAliasClientDiagnostics, Pipeline, _billingBenefitsReservationOrderAliasReservationOrderAliasRestClient.CreateCreateRequest(reservationOrderAliasName, content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.BillingBenefits
             try
             {
                 var response = _billingBenefitsReservationOrderAliasReservationOrderAliasRestClient.Create(reservationOrderAliasName, content, cancellationToken);
-                var operation = new BillingBenefitsArmOperation<BillingBenefitsReservationOrderAliasResource>(new BillingBenefitsReservationOrderAliasOperationSource(Client), _billingBenefitsReservationOrderAliasReservationOrderAliasClientDiagnostics, Pipeline, _billingBenefitsReservationOrderAliasReservationOrderAliasRestClient.CreateCreateRequest(reservationOrderAliasName, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new BillingBenefitsArmOperation<BillingBenefitsReservationOrderAliasResource>(new BillingBenefitsReservationOrderAliasOperationSource(Client), _billingBenefitsReservationOrderAliasReservationOrderAliasClientDiagnostics, Pipeline, _billingBenefitsReservationOrderAliasReservationOrderAliasRestClient.CreateCreateRequest(reservationOrderAliasName, content).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

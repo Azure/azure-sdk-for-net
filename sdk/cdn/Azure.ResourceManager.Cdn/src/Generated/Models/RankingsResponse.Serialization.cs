@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> dateTimeBegin = default;
-            Optional<DateTimeOffset> dateTimeEnd = default;
-            Optional<IReadOnlyList<RankingsResponseTablesItem>> tables = default;
+            Core.Optional<DateTimeOffset> dateTimeBegin = default;
+            Core.Optional<DateTimeOffset> dateTimeEnd = default;
+            Core.Optional<IReadOnlyList<RankingsResponseTablesItem>> tables = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dateTimeBegin"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new RankingsResponse(Optional.ToNullable(dateTimeBegin), Optional.ToNullable(dateTimeEnd), Optional.ToList(tables));
+            return new RankingsResponse(Core.Optional.ToNullable(dateTimeBegin), Core.Optional.ToNullable(dateTimeEnd), Core.Optional.ToList(tables));
         }
     }
 }

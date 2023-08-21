@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> hosts = default;
-            Optional<string> zone = default;
+            Core.Optional<IReadOnlyList<string>> hosts = default;
+            Core.Optional<string> zone = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hosts"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new AvsClusterZone(Optional.ToList(hosts), zone.Value);
+            return new AvsClusterZone(Core.Optional.ToList(hosts), zone.Value);
         }
     }
 }

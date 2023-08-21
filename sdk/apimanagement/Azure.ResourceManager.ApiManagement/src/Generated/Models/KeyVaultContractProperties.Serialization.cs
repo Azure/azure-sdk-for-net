@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class KeyVaultContractProperties : IUtf8JsonSerializable
+    public partial class KeyVaultContractProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LastStatus))
+            if (Core.Optional.IsDefined(LastStatus))
             {
                 writer.WritePropertyName("lastStatus"u8);
                 writer.WriteObjectValue(LastStatus);
             }
-            if (Optional.IsDefined(SecretIdentifier))
+            if (Core.Optional.IsDefined(SecretIdentifier))
             {
                 writer.WritePropertyName("secretIdentifier"u8);
                 writer.WriteStringValue(SecretIdentifier);
             }
-            if (Optional.IsDefined(IdentityClientId))
+            if (Core.Optional.IsDefined(IdentityClientId))
             {
                 writer.WritePropertyName("identityClientId"u8);
                 writer.WriteStringValue(IdentityClientId);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<KeyVaultLastAccessStatusContractProperties> lastStatus = default;
-            Optional<string> secretIdentifier = default;
-            Optional<string> identityClientId = default;
+            Core.Optional<KeyVaultLastAccessStatusContractProperties> lastStatus = default;
+            Core.Optional<string> secretIdentifier = default;
+            Core.Optional<string> identityClientId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastStatus"u8))

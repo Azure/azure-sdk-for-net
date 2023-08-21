@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomationModuleField>> value = default;
+            Core.Optional<IReadOnlyList<AutomationModuleField>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new AutomationModuleFieldListResult(Optional.ToList(value));
+            return new AutomationModuleFieldListResult(Core.Optional.ToList(value));
         }
     }
 }

@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<string> nsxtUsername = default;
-            Optional<string> nsxtPassword = default;
-            Optional<string> vcenterUsername = default;
-            Optional<string> vcenterPassword = default;
+            Core.Optional<string> nsxtUsername = default;
+            Core.Optional<string> nsxtPassword = default;
+            Core.Optional<string> vcenterUsername = default;
+            Core.Optional<string> vcenterPassword = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nsxtUsername"u8))

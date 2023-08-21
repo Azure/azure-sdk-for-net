@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> value = default;
-            Optional<string> connectionString = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<bool> readOnly = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> value = default;
+            Core.Optional<string> connectionString = default;
+            Core.Optional<DateTimeOffset> lastModified = default;
+            Core.Optional<bool> readOnly = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new AppConfigurationStoreApiKey(id.Value, name.Value, value.Value, connectionString.Value, Optional.ToNullable(lastModified), Optional.ToNullable(readOnly));
+            return new AppConfigurationStoreApiKey(id.Value, name.Value, value.Value, connectionString.Value, Core.Optional.ToNullable(lastModified), Core.Optional.ToNullable(readOnly));
         }
     }
 }

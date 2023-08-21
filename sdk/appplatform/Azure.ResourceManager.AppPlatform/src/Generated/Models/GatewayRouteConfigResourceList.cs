@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of GatewayRouteConfigResourceList. </summary>
         internal GatewayRouteConfigResourceList()
         {
-            Value = new ChangeTrackingList<AppPlatformGatewayRouteConfigData>();
+            Value = new Core.ChangeTrackingList<AppPlatformGatewayRouteConfigData>();
         }
 
         /// <summary> Initializes a new instance of GatewayRouteConfigResourceList. </summary>

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppConfiguration
             Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
-            PrivateEndpointConnections = new ChangeTrackingList<AppConfigurationPrivateEndpointConnectionReference>();
+            PrivateEndpointConnections = new Core.ChangeTrackingList<AppConfigurationPrivateEndpointConnectionReference>();
         }
 
         /// <summary> Initializes a new instance of AppConfigurationStoreData. </summary>

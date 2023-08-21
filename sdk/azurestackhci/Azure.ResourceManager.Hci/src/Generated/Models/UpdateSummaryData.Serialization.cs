@@ -14,29 +14,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    public partial class UpdateSummaryData : IUtf8JsonSerializable
+    public partial class UpdateSummaryData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(OemFamily))
+            if (Core.Optional.IsDefined(OemFamily))
             {
                 writer.WritePropertyName("oemFamily"u8);
                 writer.WriteStringValue(OemFamily);
             }
-            if (Optional.IsDefined(HardwareModel))
+            if (Core.Optional.IsDefined(HardwareModel))
             {
                 writer.WritePropertyName("hardwareModel"u8);
                 writer.WriteStringValue(HardwareModel);
             }
-            if (Optional.IsCollectionDefined(PackageVersions))
+            if (Core.Optional.IsCollectionDefined(PackageVersions))
             {
                 writer.WritePropertyName("packageVersions"u8);
                 writer.WriteStartArray();
@@ -46,27 +46,27 @@ namespace Azure.ResourceManager.Hci
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CurrentVersion))
+            if (Core.Optional.IsDefined(CurrentVersion))
             {
                 writer.WritePropertyName("currentVersion"u8);
                 writer.WriteStringValue(CurrentVersion);
             }
-            if (Optional.IsDefined(LastUpdated))
+            if (Core.Optional.IsDefined(LastUpdated))
             {
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdated.Value, "O");
             }
-            if (Optional.IsDefined(LastChecked))
+            if (Core.Optional.IsDefined(LastChecked))
             {
                 writer.WritePropertyName("lastChecked"u8);
                 writer.WriteStringValue(LastChecked.Value, "O");
             }
-            if (Optional.IsDefined(HealthState))
+            if (Core.Optional.IsDefined(HealthState))
             {
                 writer.WritePropertyName("healthState"u8);
                 writer.WriteStringValue(HealthState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(HealthCheckResult))
+            if (Core.Optional.IsCollectionDefined(HealthCheckResult))
             {
                 writer.WritePropertyName("healthCheckResult"u8);
                 writer.WriteStartArray();
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.Hci
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(HealthCheckOn))
+            if (Core.Optional.IsDefined(HealthCheckOn))
             {
                 writer.WritePropertyName("healthCheckDate"u8);
                 writer.WriteStringValue(HealthCheckOn.Value, "O");
             }
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -96,22 +96,22 @@ namespace Azure.ResourceManager.Hci
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            Core.Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HciProvisioningState> provisioningState = default;
-            Optional<string> oemFamily = default;
-            Optional<string> hardwareModel = default;
-            Optional<IList<HciPackageVersionInfo>> packageVersions = default;
-            Optional<string> currentVersion = default;
-            Optional<DateTimeOffset> lastUpdated = default;
-            Optional<DateTimeOffset> lastChecked = default;
-            Optional<HciHealthState> healthState = default;
-            Optional<IList<HciPrecheckResult>> healthCheckResult = default;
-            Optional<DateTimeOffset> healthCheckDate = default;
-            Optional<UpdateSummariesPropertiesState> state = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<HciProvisioningState> provisioningState = default;
+            Core.Optional<string> oemFamily = default;
+            Core.Optional<string> hardwareModel = default;
+            Core.Optional<IList<HciPackageVersionInfo>> packageVersions = default;
+            Core.Optional<string> currentVersion = default;
+            Core.Optional<DateTimeOffset> lastUpdated = default;
+            Core.Optional<DateTimeOffset> lastChecked = default;
+            Core.Optional<HciHealthState> healthState = default;
+            Core.Optional<IList<HciPrecheckResult>> healthCheckResult = default;
+            Core.Optional<DateTimeOffset> healthCheckDate = default;
+            Core.Optional<UpdateSummariesPropertiesState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Hci
                     continue;
                 }
             }
-            return new UpdateSummaryData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), oemFamily.Value, hardwareModel.Value, Optional.ToList(packageVersions), currentVersion.Value, Optional.ToNullable(lastUpdated), Optional.ToNullable(lastChecked), Optional.ToNullable(healthState), Optional.ToList(healthCheckResult), Optional.ToNullable(healthCheckDate), Optional.ToNullable(state));
+            return new UpdateSummaryData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), Core.Optional.ToNullable(provisioningState), oemFamily.Value, hardwareModel.Value, Core.Optional.ToList(packageVersions), currentVersion.Value, Core.Optional.ToNullable(lastUpdated), Core.Optional.ToNullable(lastChecked), Core.Optional.ToNullable(healthState), Core.Optional.ToList(healthCheckResult), Core.Optional.ToNullable(healthCheckDate), Core.Optional.ToNullable(state));
         }
     }
 }

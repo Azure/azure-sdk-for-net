@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ApiOperationPatch. </summary>
         public ApiOperationPatch()
         {
-            TemplateParameters = new ChangeTrackingList<ParameterContract>();
-            Responses = new ChangeTrackingList<ResponseContract>();
+            TemplateParameters = new Core.ChangeTrackingList<ParameterContract>();
+            Responses = new Core.ChangeTrackingList<ResponseContract>();
         }
 
         /// <summary> Collection of URL template parameters. </summary>

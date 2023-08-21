@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ApiManagementNamedValuePatch. </summary>
         public ApiManagementNamedValuePatch()
         {
-            Tags = new ChangeTrackingList<string>();
+            Tags = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Optional tags that when provided can be used to filter the NamedValue list. </summary>

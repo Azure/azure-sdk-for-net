@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class FrontDoorCustomDomainPatch : IUtf8JsonSerializable
+    public partial class FrontDoorCustomDomainPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TlsSettings))
+            if (Core.Optional.IsDefined(TlsSettings))
             {
                 writer.WritePropertyName("tlsSettings"u8);
                 writer.WriteObjectValue(TlsSettings);
             }
-            if (Optional.IsDefined(DnsZone))
+            if (Core.Optional.IsDefined(DnsZone))
             {
                 writer.WritePropertyName("azureDnsZone"u8);
                 JsonSerializer.Serialize(writer, DnsZone);
             }
-            if (Optional.IsDefined(PreValidatedCustomDomainResource))
+            if (Core.Optional.IsDefined(PreValidatedCustomDomainResource))
             {
                 if (PreValidatedCustomDomainResource != null)
                 {

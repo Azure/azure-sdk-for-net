@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    internal partial class ServiceVnetAddons : IUtf8JsonSerializable
+    internal partial class ServiceVnetAddons : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsLogStreamPublicEndpoint))
+            if (Core.Optional.IsDefined(IsLogStreamPublicEndpoint))
             {
                 writer.WritePropertyName("logStreamPublicEndpoint"u8);
                 writer.WriteBooleanValue(IsLogStreamPublicEndpoint.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<bool> logStreamPublicEndpoint = default;
+            Core.Optional<bool> logStreamPublicEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logStreamPublicEndpoint"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new ServiceVnetAddons(Optional.ToNullable(logStreamPublicEndpoint));
+            return new ServiceVnetAddons(Core.Optional.ToNullable(logStreamPublicEndpoint));
         }
     }
 }

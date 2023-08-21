@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.BotService.Models
         {
             Argument.AssertNotNull(appId, nameof(appId));
 
-            Pages = new ChangeTrackingList<FacebookPage>();
+            Pages = new Core.ChangeTrackingList<FacebookPage>();
             AppId = appId;
             IsEnabled = isEnabled;
         }

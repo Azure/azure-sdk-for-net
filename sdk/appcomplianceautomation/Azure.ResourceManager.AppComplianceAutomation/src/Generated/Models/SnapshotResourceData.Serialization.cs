@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppComplianceAutomation
 {
-    public partial class SnapshotResourceData : IUtf8JsonSerializable
+    public partial class SnapshotResourceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 return null;
             }
-            Optional<SnapshotProperties> properties = default;
+            Core.Optional<SnapshotProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))

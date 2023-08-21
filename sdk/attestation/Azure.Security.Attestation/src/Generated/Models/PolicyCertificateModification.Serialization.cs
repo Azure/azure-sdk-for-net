@@ -13,12 +13,12 @@ using Azure.Core;
 namespace Azure.Security.Attestation
 {
     [JsonConverter(typeof(PolicyCertificateModificationConverter))]
-    internal partial class PolicyCertificateModification : IUtf8JsonSerializable
+    internal partial class PolicyCertificateModification : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(InternalPolicyCertificate))
+            if (Core.Optional.IsDefined(InternalPolicyCertificate))
             {
                 writer.WritePropertyName("policyCertificate"u8);
                 writer.WriteObjectValue(InternalPolicyCertificate);
@@ -32,7 +32,7 @@ namespace Azure.Security.Attestation
             {
                 return null;
             }
-            Optional<JsonWebKey> policyCertificate = default;
+            Core.Optional<JsonWebKey> policyCertificate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyCertificate"u8))

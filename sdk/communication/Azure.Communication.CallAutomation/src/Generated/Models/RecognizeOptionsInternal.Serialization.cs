@@ -10,39 +10,39 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class RecognizeOptionsInternal : IUtf8JsonSerializable
+    internal partial class RecognizeOptionsInternal : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(InterruptPrompt))
+            if (Core.Optional.IsDefined(InterruptPrompt))
             {
                 writer.WritePropertyName("interruptPrompt"u8);
                 writer.WriteBooleanValue(InterruptPrompt.Value);
             }
-            if (Optional.IsDefined(InitialSilenceTimeoutInSeconds))
+            if (Core.Optional.IsDefined(InitialSilenceTimeoutInSeconds))
             {
                 writer.WritePropertyName("initialSilenceTimeoutInSeconds"u8);
                 writer.WriteNumberValue(InitialSilenceTimeoutInSeconds.Value);
             }
             writer.WritePropertyName("targetParticipant"u8);
             writer.WriteObjectValue(TargetParticipant);
-            if (Optional.IsDefined(SpeechLanguage))
+            if (Core.Optional.IsDefined(SpeechLanguage))
             {
                 writer.WritePropertyName("speechLanguage"u8);
                 writer.WriteStringValue(SpeechLanguage);
             }
-            if (Optional.IsDefined(SpeechRecognitionModelEndpointId))
+            if (Core.Optional.IsDefined(SpeechRecognitionModelEndpointId))
             {
                 writer.WritePropertyName("speechRecognitionModelEndpointId"u8);
                 writer.WriteStringValue(SpeechRecognitionModelEndpointId);
             }
-            if (Optional.IsDefined(DtmfOptions))
+            if (Core.Optional.IsDefined(DtmfOptions))
             {
                 writer.WritePropertyName("dtmfOptions"u8);
                 writer.WriteObjectValue(DtmfOptions);
             }
-            if (Optional.IsCollectionDefined(Choices))
+            if (Core.Optional.IsCollectionDefined(Choices))
             {
                 writer.WritePropertyName("choices"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.Communication.CallAutomation
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SpeechOptions))
+            if (Core.Optional.IsDefined(SpeechOptions))
             {
                 writer.WritePropertyName("speechOptions"u8);
                 writer.WriteObjectValue(SpeechOptions);

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of HciOfferList. </summary>
         internal HciOfferList()
         {
-            Value = new ChangeTrackingList<OfferData>();
+            Value = new Core.ChangeTrackingList<OfferData>();
         }
 
         /// <summary> Initializes a new instance of HciOfferList. </summary>

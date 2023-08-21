@@ -11,9 +11,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automanage.Models
 {
-    public partial class AutomanageServicePrincipalData : IUtf8JsonSerializable
+    public partial class AutomanageServicePrincipalData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.Automanage.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> servicePrincipalId = default;
-            Optional<bool> authorizationSet = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> servicePrincipalId = default;
+            Core.Optional<bool> authorizationSet = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Automanage.Models
                     continue;
                 }
             }
-            return new AutomanageServicePrincipalData(id, name, type, systemData.Value, servicePrincipalId.Value, Optional.ToNullable(authorizationSet));
+            return new AutomanageServicePrincipalData(id, name, type, systemData.Value, servicePrincipalId.Value, Core.Optional.ToNullable(authorizationSet));
         }
     }
 }

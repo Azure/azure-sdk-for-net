@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of RunbookTestJob. </summary>
         internal RunbookTestJob()
         {
-            Parameters = new ChangeTrackingDictionary<string, string>();
+            Parameters = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of RunbookTestJob. </summary>

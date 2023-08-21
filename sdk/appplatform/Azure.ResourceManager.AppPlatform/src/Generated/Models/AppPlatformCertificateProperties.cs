@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformCertificateProperties. </summary>
         protected AppPlatformCertificateProperties()
         {
-            DnsNames = new ChangeTrackingList<string>();
+            DnsNames = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AppPlatformCertificateProperties. </summary>

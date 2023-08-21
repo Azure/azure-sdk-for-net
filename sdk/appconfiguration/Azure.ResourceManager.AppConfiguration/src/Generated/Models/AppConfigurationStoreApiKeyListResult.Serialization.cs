@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AppConfigurationStoreApiKey>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<AppConfigurationStoreApiKey>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new AppConfigurationStoreApiKeyListResult(Optional.ToList(value), nextLink.Value);
+            return new AppConfigurationStoreApiKeyListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

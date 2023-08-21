@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             DateTimeOffset evaluationTime = default;
-            Optional<string> results = default;
-            Optional<ResponseError> error = default;
+            Core.Optional<string> results = default;
+            Core.Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("evaluationTime"u8))

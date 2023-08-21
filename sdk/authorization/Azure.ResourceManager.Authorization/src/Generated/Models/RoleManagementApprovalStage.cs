@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Initializes a new instance of RoleManagementApprovalStage. </summary>
         public RoleManagementApprovalStage()
         {
-            PrimaryApprovers = new ChangeTrackingList<RoleManagementUserInfo>();
-            EscalationApprovers = new ChangeTrackingList<RoleManagementUserInfo>();
+            PrimaryApprovers = new Core.ChangeTrackingList<RoleManagementUserInfo>();
+            EscalationApprovers = new Core.ChangeTrackingList<RoleManagementUserInfo>();
         }
 
         /// <summary> Initializes a new instance of RoleManagementApprovalStage. </summary>

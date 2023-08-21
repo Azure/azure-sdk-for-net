@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<string> statusCode = default;
-            Optional<string> message = default;
+            Core.Optional<string> statusCode = default;
+            Core.Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("statusCode"u8))

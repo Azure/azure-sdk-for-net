@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> ruleId = default;
-            Optional<string> description = default;
+            Core.Optional<string> ruleId = default;
+            Core.Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleId"u8))

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ErrorResponseBody. </summary>
         public ErrorResponseBody()
         {
-            Details = new ChangeTrackingList<ErrorFieldContract>();
+            Details = new Core.ChangeTrackingList<ErrorFieldContract>();
         }
 
         /// <summary> Initializes a new instance of ErrorResponseBody. </summary>

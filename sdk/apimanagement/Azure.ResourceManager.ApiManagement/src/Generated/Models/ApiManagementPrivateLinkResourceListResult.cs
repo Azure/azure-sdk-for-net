@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ApiManagementPrivateLinkResourceListResult. </summary>
         internal ApiManagementPrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<ApiManagementPrivateLinkResourceData>();
+            Value = new Core.ChangeTrackingList<ApiManagementPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of ApiManagementPrivateLinkResourceListResult. </summary>

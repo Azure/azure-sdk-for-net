@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <summary> Initializes a new instance of AttestationPrivateEndpointConnectionListResult. </summary>
         internal AttestationPrivateEndpointConnectionListResult()
         {
-            Value = new ChangeTrackingList<AttestationPrivateEndpointConnectionData>();
+            Value = new Core.ChangeTrackingList<AttestationPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of AttestationPrivateEndpointConnectionListResult. </summary>

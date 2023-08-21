@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of ExpressRouteAuthorizationList. </summary>
         internal ExpressRouteAuthorizationList()
         {
-            Value = new ChangeTrackingList<ExpressRouteAuthorizationData>();
+            Value = new Core.ChangeTrackingList<ExpressRouteAuthorizationData>();
         }
 
         /// <summary> Initializes a new instance of ExpressRouteAuthorizationList. </summary>

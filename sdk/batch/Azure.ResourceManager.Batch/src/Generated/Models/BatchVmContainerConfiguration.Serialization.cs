@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchVmContainerConfiguration : IUtf8JsonSerializable
+    public partial class BatchVmContainerConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ContainerType.ToString());
-            if (Optional.IsCollectionDefined(ContainerImageNames))
+            if (Core.Optional.IsCollectionDefined(ContainerImageNames))
             {
                 writer.WritePropertyName("containerImageNames"u8);
                 writer.WriteStartArray();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ContainerRegistries))
+            if (Core.Optional.IsCollectionDefined(ContainerRegistries))
             {
                 writer.WritePropertyName("containerRegistries"u8);
                 writer.WriteStartArray();
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             BatchVmContainerType type = default;
-            Optional<IList<string>> containerImageNames = default;
-            Optional<IList<BatchVmContainerRegistry>> containerRegistries = default;
+            Core.Optional<IList<string>> containerImageNames = default;
+            Core.Optional<IList<BatchVmContainerRegistry>> containerRegistries = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new BatchVmContainerConfiguration(type, Optional.ToList(containerImageNames), Optional.ToList(containerRegistries));
+            return new BatchVmContainerConfiguration(type, Core.Optional.ToList(containerImageNames), Core.Optional.ToList(containerRegistries));
         }
     }
 }

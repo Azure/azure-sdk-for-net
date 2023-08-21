@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class SoftwareUpdateConfigurationTargetProperties : IUtf8JsonSerializable
+    public partial class SoftwareUpdateConfigurationTargetProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AzureQueries))
+            if (Core.Optional.IsCollectionDefined(AzureQueries))
             {
                 writer.WritePropertyName("azureQueries"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NonAzureQueries))
+            if (Core.Optional.IsCollectionDefined(NonAzureQueries))
             {
                 writer.WritePropertyName("nonAzureQueries"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IList<AzureQueryProperties>> azureQueries = default;
-            Optional<IList<NonAzureQueryProperties>> nonAzureQueries = default;
+            Core.Optional<IList<AzureQueryProperties>> azureQueries = default;
+            Core.Optional<IList<NonAzureQueryProperties>> nonAzureQueries = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureQueries"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new SoftwareUpdateConfigurationTargetProperties(Optional.ToList(azureQueries), Optional.ToList(nonAzureQueries));
+            return new SoftwareUpdateConfigurationTargetProperties(Core.Optional.ToList(azureQueries), Core.Optional.ToList(nonAzureQueries));
         }
     }
 }

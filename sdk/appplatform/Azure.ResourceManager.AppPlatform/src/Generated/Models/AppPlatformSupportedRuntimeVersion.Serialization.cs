@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformSupportedRuntimeValue> value = default;
-            Optional<AppPlatformSupportedRuntimePlatform> platform = default;
-            Optional<string> version = default;
+            Core.Optional<AppPlatformSupportedRuntimeValue> value = default;
+            Core.Optional<AppPlatformSupportedRuntimePlatform> platform = default;
+            Core.Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformSupportedRuntimeVersion(Optional.ToNullable(value), Optional.ToNullable(platform), version.Value);
+            return new AppPlatformSupportedRuntimeVersion(Core.Optional.ToNullable(value), Core.Optional.ToNullable(platform), version.Value);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <summary> Initializes a new instance of JsonWebKeySet. </summary>
         public JsonWebKeySet()
         {
-            Keys = new ChangeTrackingList<JsonWebKey>();
+            Keys = new Core.ChangeTrackingList<JsonWebKey>();
         }
 
         /// <summary>

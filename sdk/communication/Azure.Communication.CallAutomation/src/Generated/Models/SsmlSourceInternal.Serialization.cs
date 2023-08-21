@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class SsmlSourceInternal : IUtf8JsonSerializable
+    internal partial class SsmlSourceInternal : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("ssmlText"u8);
             writer.WriteStringValue(SsmlText);
-            if (Optional.IsDefined(CustomVoiceEndpointId))
+            if (Core.Optional.IsDefined(CustomVoiceEndpointId))
             {
                 writer.WritePropertyName("customVoiceEndpointId"u8);
                 writer.WriteStringValue(CustomVoiceEndpointId);

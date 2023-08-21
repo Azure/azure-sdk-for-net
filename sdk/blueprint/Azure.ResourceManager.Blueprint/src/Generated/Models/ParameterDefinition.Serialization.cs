@@ -12,14 +12,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
-    public partial class ParameterDefinition : IUtf8JsonSerializable
+    public partial class ParameterDefinition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TemplateParameterType.ToString());
-            if (Optional.IsDefined(DefaultValue))
+            if (Core.Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
 #if NET6_0_OR_GREATER
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(DefaultValue.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsCollectionDefined(AllowedValues))
+            if (Core.Optional.IsCollectionDefined(AllowedValues))
             {
                 writer.WritePropertyName("allowedValues"u8);
                 writer.WriteStartArray();
@@ -49,17 +49,17 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
             writer.WritePropertyName("metadata"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(StrongType))
+            if (Core.Optional.IsDefined(StrongType))
             {
                 writer.WritePropertyName("strongType"u8);
                 writer.WriteStringValue(StrongType);
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.Blueprint.Models
                 return null;
             }
             TemplateParameterType type = default;
-            Optional<BinaryData> defaultValue = default;
-            Optional<IList<BinaryData>> allowedValues = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> strongType = default;
+            Core.Optional<BinaryData> defaultValue = default;
+            Core.Optional<IList<BinaryData>> allowedValues = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> strongType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     continue;
                 }
             }
-            return new ParameterDefinition(type, defaultValue.Value, Optional.ToList(allowedValues), displayName.Value, description.Value, strongType.Value);
+            return new ParameterDefinition(type, defaultValue.Value, Core.Optional.ToList(allowedValues), displayName.Value, description.Value, strongType.Value);
         }
     }
 }

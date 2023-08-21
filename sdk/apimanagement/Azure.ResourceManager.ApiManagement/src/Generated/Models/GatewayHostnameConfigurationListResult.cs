@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of GatewayHostnameConfigurationListResult. </summary>
         internal GatewayHostnameConfigurationListResult()
         {
-            Value = new ChangeTrackingList<ApiManagementGatewayHostnameConfigurationData>();
+            Value = new Core.ChangeTrackingList<ApiManagementGatewayHostnameConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of GatewayHostnameConfigurationListResult. </summary>

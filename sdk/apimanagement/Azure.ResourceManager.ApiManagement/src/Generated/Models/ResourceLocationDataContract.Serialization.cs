@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ResourceLocationDataContract : IUtf8JsonSerializable
+    public partial class ResourceLocationDataContract : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(City))
+            if (Core.Optional.IsDefined(City))
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (Optional.IsDefined(District))
+            if (Core.Optional.IsDefined(District))
             {
                 writer.WritePropertyName("district"u8);
                 writer.WriteStringValue(District);
             }
-            if (Optional.IsDefined(CountryOrRegion))
+            if (Core.Optional.IsDefined(CountryOrRegion))
             {
                 writer.WritePropertyName("countryOrRegion"u8);
                 writer.WriteStringValue(CountryOrRegion);
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             string name = default;
-            Optional<string> city = default;
-            Optional<string> district = default;
-            Optional<string> countryOrRegion = default;
+            Core.Optional<string> city = default;
+            Core.Optional<string> district = default;
+            Core.Optional<string> countryOrRegion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<bool> valid = default;
-            Optional<string> reasonCode = default;
-            Optional<string> reason = default;
+            Core.Optional<bool> valid = default;
+            Core.Optional<string> reasonCode = default;
+            Core.Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("valid"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     continue;
                 }
             }
-            return new SavingsPlanValidateResult(Optional.ToNullable(valid), reasonCode.Value, reason.Value);
+            return new SavingsPlanValidateResult(Core.Optional.ToNullable(valid), reasonCode.Value, reason.Value);
         }
     }
 }

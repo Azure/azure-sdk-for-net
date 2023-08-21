@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<ApiManagementSkuRestrictionsType> type = default;
-            Optional<IReadOnlyList<string>> values = default;
-            Optional<ApiManagementSkuRestrictionInfo> restrictionInfo = default;
-            Optional<ApiManagementSkuRestrictionsReasonCode> reasonCode = default;
+            Core.Optional<ApiManagementSkuRestrictionsType> type = default;
+            Core.Optional<IReadOnlyList<string>> values = default;
+            Core.Optional<ApiManagementSkuRestrictionInfo> restrictionInfo = default;
+            Core.Optional<ApiManagementSkuRestrictionsReasonCode> reasonCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ApiManagementSkuRestrictions(Optional.ToNullable(type), Optional.ToList(values), restrictionInfo.Value, Optional.ToNullable(reasonCode));
+            return new ApiManagementSkuRestrictions(Core.Optional.ToNullable(type), Core.Optional.ToList(values), restrictionInfo.Value, Core.Optional.ToNullable(reasonCode));
         }
     }
 }

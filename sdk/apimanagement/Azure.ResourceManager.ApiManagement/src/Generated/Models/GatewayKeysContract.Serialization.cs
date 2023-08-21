@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> primary = default;
-            Optional<string> secondary = default;
+            Core.Optional<string> primary = default;
+            Core.Optional<string> secondary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primary"u8))

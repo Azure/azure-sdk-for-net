@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ApiManagementGroupUserListResult. </summary>
         internal ApiManagementGroupUserListResult()
         {
-            Value = new ChangeTrackingList<ApiManagementGroupUserData>();
+            Value = new Core.ChangeTrackingList<ApiManagementGroupUserData>();
         }
 
         /// <summary> Initializes a new instance of ApiManagementGroupUserListResult. </summary>

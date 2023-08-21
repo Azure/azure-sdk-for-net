@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ChangesRestClient.CreateListChangesByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, startTime, endTime, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ChangesRestClient.CreateListChangesByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, startTime, endTime, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DetectedChangeData.DeserializeDetectedChangeData, ChangesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetChangesByResourceGroup", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DetectedChangeData.DeserializeDetectedChangeData, ChangesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetChangesByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ChangesRestClient.CreateListChangesByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, startTime, endTime, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ChangesRestClient.CreateListChangesByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, startTime, endTime, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DetectedChangeData.DeserializeDetectedChangeData, ChangesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetChangesByResourceGroup", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DetectedChangeData.DeserializeDetectedChangeData, ChangesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetChangesByResourceGroup", "value", "nextLink", cancellationToken);
         }
     }
 }

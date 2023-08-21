@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class QuotaCounterValueUpdateContent : IUtf8JsonSerializable
+    public partial class QuotaCounterValueUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CallsCount))
+            if (Core.Optional.IsDefined(CallsCount))
             {
                 writer.WritePropertyName("callsCount"u8);
                 writer.WriteNumberValue(CallsCount.Value);
             }
-            if (Optional.IsDefined(KbTransferred))
+            if (Core.Optional.IsDefined(KbTransferred))
             {
                 writer.WritePropertyName("kbTransferred"u8);
                 writer.WriteNumberValue(KbTransferred.Value);

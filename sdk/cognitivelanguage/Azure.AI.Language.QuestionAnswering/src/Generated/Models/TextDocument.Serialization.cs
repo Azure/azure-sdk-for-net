@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
-    public partial class TextDocument : IUtf8JsonSerializable
+    public partial class TextDocument : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);

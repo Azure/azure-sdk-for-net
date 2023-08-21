@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class GetBotServiceQnAMakerEndpointKeyContent : IUtf8JsonSerializable
+    public partial class GetBotServiceQnAMakerEndpointKeyContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Hostname))
+            if (Core.Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (Optional.IsDefined(Authkey))
+            if (Core.Optional.IsDefined(Authkey))
             {
                 writer.WritePropertyName("authkey"u8);
                 writer.WriteStringValue(Authkey);

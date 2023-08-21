@@ -12,19 +12,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiReleaseData : IUtf8JsonSerializable
+    public partial class ApiReleaseData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ApiId))
+            if (Core.Optional.IsDefined(ApiId))
             {
                 writer.WritePropertyName("apiId"u8);
                 writer.WriteStringValue(ApiId);
             }
-            if (Optional.IsDefined(Notes))
+            if (Core.Optional.IsDefined(Notes))
             {
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> apiId = default;
-            Optional<DateTimeOffset> createdDateTime = default;
-            Optional<DateTimeOffset> updatedDateTime = default;
-            Optional<string> notes = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ResourceIdentifier> apiId = default;
+            Core.Optional<DateTimeOffset> createdDateTime = default;
+            Core.Optional<DateTimeOffset> updatedDateTime = default;
+            Core.Optional<string> notes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new ApiReleaseData(id, name, type, systemData.Value, apiId.Value, Optional.ToNullable(createdDateTime), Optional.ToNullable(updatedDateTime), notes.Value);
+            return new ApiReleaseData(id, name, type, systemData.Value, apiId.Value, Core.Optional.ToNullable(createdDateTime), Core.Optional.ToNullable(updatedDateTime), notes.Value);
         }
     }
 }

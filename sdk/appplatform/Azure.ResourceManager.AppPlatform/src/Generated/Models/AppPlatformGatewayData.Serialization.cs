@@ -12,17 +12,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    public partial class AppPlatformGatewayData : IUtf8JsonSerializable
+    public partial class AppPlatformGatewayData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 return null;
             }
-            Optional<AppPlatformGatewayProperties> properties = default;
-            Optional<AppPlatformSku> sku = default;
+            Core.Optional<AppPlatformGatewayProperties> properties = default;
+            Core.Optional<AppPlatformSku> sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))

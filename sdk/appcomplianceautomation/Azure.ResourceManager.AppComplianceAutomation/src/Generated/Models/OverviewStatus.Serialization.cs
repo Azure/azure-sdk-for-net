@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<int> passedCount = default;
-            Optional<int> failedCount = default;
-            Optional<int> manualCount = default;
+            Core.Optional<int> passedCount = default;
+            Core.Optional<int> failedCount = default;
+            Core.Optional<int> manualCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("passedCount"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     continue;
                 }
             }
-            return new OverviewStatus(Optional.ToNullable(passedCount), Optional.ToNullable(failedCount), Optional.ToNullable(manualCount));
+            return new OverviewStatus(Core.Optional.ToNullable(passedCount), Core.Optional.ToNullable(failedCount), Core.Optional.ToNullable(manualCount));
         }
     }
 }

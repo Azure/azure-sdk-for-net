@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.BillingBenefits
 {
-    internal class BillingBenefitsSavingsPlanOrderAliasOperationSource : IOperationSource<BillingBenefitsSavingsPlanOrderAliasResource>
+    internal class BillingBenefitsSavingsPlanOrderAliasOperationSource : Core.IOperationSource<BillingBenefitsSavingsPlanOrderAliasResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.BillingBenefits
             _client = client;
         }
 
-        BillingBenefitsSavingsPlanOrderAliasResource IOperationSource<BillingBenefitsSavingsPlanOrderAliasResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        BillingBenefitsSavingsPlanOrderAliasResource Core.IOperationSource<BillingBenefitsSavingsPlanOrderAliasResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = BillingBenefitsSavingsPlanOrderAliasData.DeserializeBillingBenefitsSavingsPlanOrderAliasData(document.RootElement);
             return new BillingBenefitsSavingsPlanOrderAliasResource(_client, data);
         }
 
-        async ValueTask<BillingBenefitsSavingsPlanOrderAliasResource> IOperationSource<BillingBenefitsSavingsPlanOrderAliasResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<BillingBenefitsSavingsPlanOrderAliasResource> Core.IOperationSource<BillingBenefitsSavingsPlanOrderAliasResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = BillingBenefitsSavingsPlanOrderAliasData.DeserializeBillingBenefitsSavingsPlanOrderAliasData(document.RootElement);

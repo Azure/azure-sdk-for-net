@@ -10,52 +10,52 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class ApplicationInsightsComponentExportRequest : IUtf8JsonSerializable
+    public partial class ApplicationInsightsComponentExportRequest : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecordTypes))
+            if (Core.Optional.IsDefined(RecordTypes))
             {
                 writer.WritePropertyName("RecordTypes"u8);
                 writer.WriteStringValue(RecordTypes);
             }
-            if (Optional.IsDefined(DestinationType))
+            if (Core.Optional.IsDefined(DestinationType))
             {
                 writer.WritePropertyName("DestinationType"u8);
                 writer.WriteStringValue(DestinationType);
             }
-            if (Optional.IsDefined(DestinationAddress))
+            if (Core.Optional.IsDefined(DestinationAddress))
             {
                 writer.WritePropertyName("DestinationAddress"u8);
                 writer.WriteStringValue(DestinationAddress);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (Core.Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("IsEnabled"u8);
                 writer.WriteStringValue(IsEnabled);
             }
-            if (Optional.IsDefined(NotificationQueueEnabled))
+            if (Core.Optional.IsDefined(NotificationQueueEnabled))
             {
                 writer.WritePropertyName("NotificationQueueEnabled"u8);
                 writer.WriteStringValue(NotificationQueueEnabled);
             }
-            if (Optional.IsDefined(NotificationQueueUri))
+            if (Core.Optional.IsDefined(NotificationQueueUri))
             {
                 writer.WritePropertyName("NotificationQueueUri"u8);
                 writer.WriteStringValue(NotificationQueueUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(DestinationStorageSubscriptionId))
+            if (Core.Optional.IsDefined(DestinationStorageSubscriptionId))
             {
                 writer.WritePropertyName("DestinationStorageSubscriptionId"u8);
                 writer.WriteStringValue(DestinationStorageSubscriptionId);
             }
-            if (Optional.IsDefined(DestinationStorageLocationId))
+            if (Core.Optional.IsDefined(DestinationStorageLocationId))
             {
                 writer.WritePropertyName("DestinationStorageLocationId"u8);
                 writer.WriteStringValue(DestinationStorageLocationId);
             }
-            if (Optional.IsDefined(DestinationAccountId))
+            if (Core.Optional.IsDefined(DestinationAccountId))
             {
                 writer.WritePropertyName("DestinationAccountId"u8);
                 writer.WriteStringValue(DestinationAccountId);

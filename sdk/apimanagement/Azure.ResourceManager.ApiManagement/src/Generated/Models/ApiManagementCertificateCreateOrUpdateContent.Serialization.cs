@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiManagementCertificateCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class ApiManagementCertificateCreateOrUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Data))
+            if (Core.Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStringValue(Data);
             }
-            if (Optional.IsDefined(Password))
+            if (Core.Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(KeyVaultDetails))
+            if (Core.Optional.IsDefined(KeyVaultDetails))
             {
                 writer.WritePropertyName("keyVault"u8);
                 writer.WriteObjectValue(KeyVaultDetails);

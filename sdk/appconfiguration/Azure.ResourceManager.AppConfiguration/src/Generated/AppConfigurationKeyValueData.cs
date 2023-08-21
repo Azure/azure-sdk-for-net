@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> Initializes a new instance of AppConfigurationKeyValueData. </summary>
         public AppConfigurationKeyValueData()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of AppConfigurationKeyValueData. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of FrontDoorCustomDomainListResult. </summary>
         internal FrontDoorCustomDomainListResult()
         {
-            Value = new ChangeTrackingList<FrontDoorCustomDomainData>();
+            Value = new Core.ChangeTrackingList<FrontDoorCustomDomainData>();
         }
 
         /// <summary> Initializes a new instance of FrontDoorCustomDomainListResult. </summary>

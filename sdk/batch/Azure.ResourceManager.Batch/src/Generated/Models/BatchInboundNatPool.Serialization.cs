@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchInboundNatPool : IUtf8JsonSerializable
+    public partial class BatchInboundNatPool : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteNumberValue(FrontendPortRangeStart);
             writer.WritePropertyName("frontendPortRangeEnd"u8);
             writer.WriteNumberValue(FrontendPortRangeEnd);
-            if (Optional.IsCollectionDefined(NetworkSecurityGroupRules))
+            if (Core.Optional.IsCollectionDefined(NetworkSecurityGroupRules))
             {
                 writer.WritePropertyName("networkSecurityGroupRules"u8);
                 writer.WriteStartArray();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Batch.Models
             int backendPort = default;
             int frontendPortRangeStart = default;
             int frontendPortRangeEnd = default;
-            Optional<IList<BatchNetworkSecurityGroupRule>> networkSecurityGroupRules = default;
+            Core.Optional<IList<BatchNetworkSecurityGroupRule>> networkSecurityGroupRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new BatchInboundNatPool(name, protocol, backendPort, frontendPortRangeStart, frontendPortRangeEnd, Optional.ToList(networkSecurityGroupRules));
+            return new BatchInboundNatPool(name, protocol, backendPort, frontendPortRangeStart, frontendPortRangeEnd, Core.Optional.ToList(networkSecurityGroupRules));
         }
     }
 }

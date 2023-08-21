@@ -16,7 +16,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <summary> Initializes a new instance of QueryFilters. </summary>
         public QueryFilters()
         {
-            SourceFilter = new ChangeTrackingList<string>();
+            SourceFilter = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Find QnAs that are associated with the given list of metadata. </summary>

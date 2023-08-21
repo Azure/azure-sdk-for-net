@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of WorkloadNetworkDhcpList. </summary>
         internal WorkloadNetworkDhcpList()
         {
-            Value = new ChangeTrackingList<WorkloadNetworkDhcpData>();
+            Value = new Core.ChangeTrackingList<WorkloadNetworkDhcpData>();
         }
 
         /// <summary> Initializes a new instance of WorkloadNetworkDhcpList. </summary>

@@ -13,19 +13,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class WorkloadNetworkVmGroupData : IUtf8JsonSerializable
+    public partial class WorkloadNetworkVmGroupData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(Members))
+            if (Core.Optional.IsCollectionDefined(Members))
             {
                 writer.WritePropertyName("members"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Revision))
+            if (Core.Optional.IsDefined(Revision))
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<IList<string>> members = default;
-            Optional<WorkloadNetworkVmGroupStatus> status = default;
-            Optional<WorkloadNetworkVmGroupProvisioningState> provisioningState = default;
-            Optional<long> revision = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<IList<string>> members = default;
+            Core.Optional<WorkloadNetworkVmGroupStatus> status = default;
+            Core.Optional<WorkloadNetworkVmGroupProvisioningState> provisioningState = default;
+            Core.Optional<long> revision = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Avs
                     continue;
                 }
             }
-            return new WorkloadNetworkVmGroupData(id, name, type, systemData.Value, displayName.Value, Optional.ToList(members), Optional.ToNullable(status), Optional.ToNullable(provisioningState), Optional.ToNullable(revision));
+            return new WorkloadNetworkVmGroupData(id, name, type, systemData.Value, displayName.Value, Core.Optional.ToList(members), Core.Optional.ToNullable(status), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(revision));
         }
     }
 }

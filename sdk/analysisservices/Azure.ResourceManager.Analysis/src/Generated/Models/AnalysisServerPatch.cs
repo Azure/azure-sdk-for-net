@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Analysis.Models
         /// <summary> Initializes a new instance of AnalysisServerPatch. </summary>
         public AnalysisServerPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The SKU of the Analysis Services resource. </summary>

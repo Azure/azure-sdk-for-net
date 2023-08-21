@@ -12,29 +12,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementCacheData : IUtf8JsonSerializable
+    public partial class ApiManagementCacheData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ConnectionString))
+            if (Core.Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
-            if (Optional.IsDefined(UseFromLocation))
+            if (Core.Optional.IsDefined(UseFromLocation))
             {
                 writer.WritePropertyName("useFromLocation"u8);
                 writer.WriteStringValue(UseFromLocation);
             }
-            if (Optional.IsDefined(ResourceUri))
+            if (Core.Optional.IsDefined(ResourceUri))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceUri.AbsoluteUri);
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> connectionString = default;
-            Optional<string> useFromLocation = default;
-            Optional<Uri> resourceId = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> connectionString = default;
+            Core.Optional<string> useFromLocation = default;
+            Core.Optional<Uri> resourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

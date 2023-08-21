@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class FrontDoorRulePatch : IUtf8JsonSerializable
+    public partial class FrontDoorRulePatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Order))
+            if (Core.Optional.IsDefined(Order))
             {
                 writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
-            if (Optional.IsCollectionDefined(Conditions))
+            if (Core.Optional.IsCollectionDefined(Conditions))
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Actions))
+            if (Core.Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MatchProcessingBehavior))
+            if (Core.Optional.IsDefined(MatchProcessingBehavior))
             {
                 writer.WritePropertyName("matchProcessingBehavior"u8);
                 writer.WriteStringValue(MatchProcessingBehavior.Value.ToString());

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomationPrivateLinkResource>> value = default;
+            Core.Optional<IReadOnlyList<AutomationPrivateLinkResource>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new AutomationPrivateLinkResourceListResult(Optional.ToList(value));
+            return new AutomationPrivateLinkResourceListResult(Core.Optional.ToList(value));
         }
     }
 }

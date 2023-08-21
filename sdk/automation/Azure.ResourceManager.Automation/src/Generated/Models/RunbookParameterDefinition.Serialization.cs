@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class RunbookParameterDefinition : IUtf8JsonSerializable
+    public partial class RunbookParameterDefinition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RunbookParameterType))
+            if (Core.Optional.IsDefined(RunbookParameterType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RunbookParameterType);
             }
-            if (Optional.IsDefined(IsMandatory))
+            if (Core.Optional.IsDefined(IsMandatory))
             {
                 writer.WritePropertyName("isMandatory"u8);
                 writer.WriteBooleanValue(IsMandatory.Value);
             }
-            if (Optional.IsDefined(Position))
+            if (Core.Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
                 writer.WriteNumberValue(Position.Value);
             }
-            if (Optional.IsDefined(DefaultValue))
+            if (Core.Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<bool> isMandatory = default;
-            Optional<int> position = default;
-            Optional<string> defaultValue = default;
+            Core.Optional<string> type = default;
+            Core.Optional<bool> isMandatory = default;
+            Core.Optional<int> position = default;
+            Core.Optional<string> defaultValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new RunbookParameterDefinition(type.Value, Optional.ToNullable(isMandatory), Optional.ToNullable(position), defaultValue.Value);
+            return new RunbookParameterDefinition(type.Value, Core.Optional.ToNullable(isMandatory), Core.Optional.ToNullable(position), defaultValue.Value);
         }
     }
 }

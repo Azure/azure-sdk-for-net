@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ConnectivityIssue. </summary>
         internal ConnectivityIssue()
         {
-            Context = new ChangeTrackingList<IDictionary<string, string>>();
+            Context = new Core.ChangeTrackingList<IDictionary<string, string>>();
         }
 
         /// <summary> Initializes a new instance of ConnectivityIssue. </summary>

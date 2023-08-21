@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Initializes a new instance of WorkbookTemplatePatch. </summary>
         public WorkbookTemplatePatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            Galleries = new ChangeTrackingList<WorkbookTemplateGallery>();
-            Localized = new ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Galleries = new Core.ChangeTrackingList<WorkbookTemplateGallery>();
+            Localized = new Core.ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>>();
         }
 
         /// <summary> Resource tags. </summary>

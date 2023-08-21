@@ -13,29 +13,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Blueprint
 {
-    public partial class PublishedBlueprintData : IUtf8JsonSerializable
+    public partial class PublishedBlueprintData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(TargetScope))
+            if (Core.Optional.IsDefined(TargetScope))
             {
                 writer.WritePropertyName("targetScope"u8);
                 writer.WriteStringValue(TargetScope.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (Core.Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Blueprint
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ResourceGroups))
+            if (Core.Optional.IsCollectionDefined(ResourceGroups))
             {
                 writer.WritePropertyName("resourceGroups"u8);
                 writer.WriteStartObject();
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.Blueprint
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(BlueprintName))
+            if (Core.Optional.IsDefined(BlueprintName))
             {
                 writer.WritePropertyName("blueprintName"u8);
                 writer.WriteStringValue(BlueprintName);
             }
-            if (Optional.IsDefined(ChangeNotes))
+            if (Core.Optional.IsDefined(ChangeNotes))
             {
                 writer.WritePropertyName("changeNotes"u8);
                 writer.WriteStringValue(ChangeNotes);
@@ -80,15 +80,15 @@ namespace Azure.ResourceManager.Blueprint
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<BlueprintStatus> status = default;
-            Optional<BlueprintTargetScope> targetScope = default;
-            Optional<IDictionary<string, ParameterDefinition>> parameters = default;
-            Optional<IDictionary<string, ResourceGroupDefinition>> resourceGroups = default;
-            Optional<string> blueprintName = default;
-            Optional<string> changeNotes = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> description = default;
+            Core.Optional<BlueprintStatus> status = default;
+            Core.Optional<BlueprintTargetScope> targetScope = default;
+            Core.Optional<IDictionary<string, ParameterDefinition>> parameters = default;
+            Core.Optional<IDictionary<string, ResourceGroupDefinition>> resourceGroups = default;
+            Core.Optional<string> blueprintName = default;
+            Core.Optional<string> changeNotes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Blueprint
                     continue;
                 }
             }
-            return new PublishedBlueprintData(id, name, type, systemData.Value, displayName.Value, description.Value, status.Value, Optional.ToNullable(targetScope), Optional.ToDictionary(parameters), Optional.ToDictionary(resourceGroups), blueprintName.Value, changeNotes.Value);
+            return new PublishedBlueprintData(id, name, type, systemData.Value, displayName.Value, description.Value, status.Value, Core.Optional.ToNullable(targetScope), Core.Optional.ToDictionary(parameters), Core.Optional.ToDictionary(resourceGroups), blueprintName.Value, changeNotes.Value);
         }
     }
 }

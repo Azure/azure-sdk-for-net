@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of ArcSettingList. </summary>
         internal ArcSettingList()
         {
-            Value = new ChangeTrackingList<ArcSettingData>();
+            Value = new Core.ChangeTrackingList<ArcSettingData>();
         }
 
         /// <summary> Initializes a new instance of ArcSettingList. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of WorkloadNetworkSegmentsList. </summary>
         internal WorkloadNetworkSegmentsList()
         {
-            Value = new ChangeTrackingList<WorkloadNetworkSegmentData>();
+            Value = new Core.ChangeTrackingList<WorkloadNetworkSegmentData>();
         }
 
         /// <summary> Initializes a new instance of WorkloadNetworkSegmentsList. </summary>

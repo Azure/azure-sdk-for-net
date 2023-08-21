@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CdnSku : IUtf8JsonSerializable
+    public partial class CdnSku : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<CdnSkuName> name = default;
+            Core.Optional<CdnSkuName> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new CdnSku(Optional.ToNullable(name));
+            return new CdnSku(Core.Optional.ToNullable(name));
         }
     }
 }

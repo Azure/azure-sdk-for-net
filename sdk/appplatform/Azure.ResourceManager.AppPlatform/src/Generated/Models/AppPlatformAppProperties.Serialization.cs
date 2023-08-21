@@ -12,17 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformAppProperties : IUtf8JsonSerializable
+    public partial class AppPlatformAppProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsPublic))
+            if (Core.Optional.IsDefined(IsPublic))
             {
                 writer.WritePropertyName("public"u8);
                 writer.WriteBooleanValue(IsPublic.Value);
             }
-            if (Optional.IsCollectionDefined(AddonConfigs))
+            if (Core.Optional.IsCollectionDefined(AddonConfigs))
             {
                 writer.WritePropertyName("addonConfigs"u8);
                 writer.WriteStartObject();
@@ -53,22 +53,22 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(IsHttpsOnly))
+            if (Core.Optional.IsDefined(IsHttpsOnly))
             {
                 writer.WritePropertyName("httpsOnly"u8);
                 writer.WriteBooleanValue(IsHttpsOnly.Value);
             }
-            if (Optional.IsDefined(TemporaryDisk))
+            if (Core.Optional.IsDefined(TemporaryDisk))
             {
                 writer.WritePropertyName("temporaryDisk"u8);
                 writer.WriteObjectValue(TemporaryDisk);
             }
-            if (Optional.IsDefined(PersistentDisk))
+            if (Core.Optional.IsDefined(PersistentDisk))
             {
                 writer.WritePropertyName("persistentDisk"u8);
                 writer.WriteObjectValue(PersistentDisk);
             }
-            if (Optional.IsCollectionDefined(CustomPersistentDisks))
+            if (Core.Optional.IsCollectionDefined(CustomPersistentDisks))
             {
                 writer.WritePropertyName("customPersistentDisks"u8);
                 writer.WriteStartArray();
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsEndToEndTlsEnabled))
+            if (Core.Optional.IsDefined(IsEndToEndTlsEnabled))
             {
                 writer.WritePropertyName("enableEndToEndTLS"u8);
                 writer.WriteBooleanValue(IsEndToEndTlsEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(LoadedCertificates))
+            if (Core.Optional.IsCollectionDefined(LoadedCertificates))
             {
                 writer.WritePropertyName("loadedCertificates"u8);
                 writer.WriteStartArray();
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(VnetAddons))
+            if (Core.Optional.IsDefined(VnetAddons))
             {
                 writer.WritePropertyName("vnetAddons"u8);
                 writer.WriteObjectValue(VnetAddons);
             }
-            if (Optional.IsDefined(IngressSettings))
+            if (Core.Optional.IsDefined(IngressSettings))
             {
                 writer.WritePropertyName("ingressSettings"u8);
                 writer.WriteObjectValue(IngressSettings);
@@ -112,19 +112,19 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<bool> @public = default;
-            Optional<string> uri = default;
-            Optional<IDictionary<string, IDictionary<string, BinaryData>>> addonConfigs = default;
-            Optional<AppPlatformAppProvisioningState> provisioningState = default;
-            Optional<string> fqdn = default;
-            Optional<bool> httpsOnly = default;
-            Optional<AppTemporaryDisk> temporaryDisk = default;
-            Optional<AppPersistentDisk> persistentDisk = default;
-            Optional<IList<AppCustomPersistentDisk>> customPersistentDisks = default;
-            Optional<bool> enableEndToEndTls = default;
-            Optional<IList<AppLoadedCertificate>> loadedCertificates = default;
-            Optional<AppVnetAddons> vnetAddons = default;
-            Optional<AppIngressSettings> ingressSettings = default;
+            Core.Optional<bool> @public = default;
+            Core.Optional<string> uri = default;
+            Core.Optional<IDictionary<string, IDictionary<string, BinaryData>>> addonConfigs = default;
+            Core.Optional<AppPlatformAppProvisioningState> provisioningState = default;
+            Core.Optional<string> fqdn = default;
+            Core.Optional<bool> httpsOnly = default;
+            Core.Optional<AppTemporaryDisk> temporaryDisk = default;
+            Core.Optional<AppPersistentDisk> persistentDisk = default;
+            Core.Optional<IList<AppCustomPersistentDisk>> customPersistentDisks = default;
+            Core.Optional<bool> enableEndToEndTls = default;
+            Core.Optional<IList<AppLoadedCertificate>> loadedCertificates = default;
+            Core.Optional<AppVnetAddons> vnetAddons = default;
+            Core.Optional<AppIngressSettings> ingressSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("public"u8))
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformAppProperties(Optional.ToNullable(@public), uri.Value, Optional.ToDictionary(addonConfigs), Optional.ToNullable(provisioningState), fqdn.Value, Optional.ToNullable(httpsOnly), temporaryDisk.Value, persistentDisk.Value, Optional.ToList(customPersistentDisks), Optional.ToNullable(enableEndToEndTls), Optional.ToList(loadedCertificates), vnetAddons.Value, ingressSettings.Value);
+            return new AppPlatformAppProperties(Core.Optional.ToNullable(@public), uri.Value, Core.Optional.ToDictionary(addonConfigs), Core.Optional.ToNullable(provisioningState), fqdn.Value, Core.Optional.ToNullable(httpsOnly), temporaryDisk.Value, persistentDisk.Value, Core.Optional.ToList(customPersistentDisks), Core.Optional.ToNullable(enableEndToEndTls), Core.Optional.ToList(loadedCertificates), vnetAddons.Value, ingressSettings.Value);
         }
     }
 }

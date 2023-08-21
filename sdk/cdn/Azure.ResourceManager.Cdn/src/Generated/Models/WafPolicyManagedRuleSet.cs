@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
-            RuleGroupOverrides = new ChangeTrackingList<ManagedRuleGroupOverrideSetting>();
+            RuleGroupOverrides = new Core.ChangeTrackingList<ManagedRuleGroupOverrideSetting>();
         }
 
         /// <summary> Initializes a new instance of WafPolicyManagedRuleSet. </summary>

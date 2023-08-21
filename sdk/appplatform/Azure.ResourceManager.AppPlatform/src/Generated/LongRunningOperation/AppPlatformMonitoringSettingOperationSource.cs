@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    internal class AppPlatformMonitoringSettingOperationSource : IOperationSource<AppPlatformMonitoringSettingResource>
+    internal class AppPlatformMonitoringSettingOperationSource : Core.IOperationSource<AppPlatformMonitoringSettingResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.AppPlatform
             _client = client;
         }
 
-        AppPlatformMonitoringSettingResource IOperationSource<AppPlatformMonitoringSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        AppPlatformMonitoringSettingResource Core.IOperationSource<AppPlatformMonitoringSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AppPlatformMonitoringSettingData.DeserializeAppPlatformMonitoringSettingData(document.RootElement);
             return new AppPlatformMonitoringSettingResource(_client, data);
         }
 
-        async ValueTask<AppPlatformMonitoringSettingResource> IOperationSource<AppPlatformMonitoringSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AppPlatformMonitoringSettingResource> Core.IOperationSource<AppPlatformMonitoringSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AppPlatformMonitoringSettingData.DeserializeAppPlatformMonitoringSettingData(document.RootElement);

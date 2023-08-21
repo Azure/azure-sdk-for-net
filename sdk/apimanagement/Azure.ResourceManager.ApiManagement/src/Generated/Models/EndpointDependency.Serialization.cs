@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> domainName = default;
-            Optional<IReadOnlyList<EndpointDetail>> endpointDetails = default;
+            Core.Optional<string> domainName = default;
+            Core.Optional<IReadOnlyList<EndpointDetail>> endpointDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainName"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new EndpointDependency(domainName.Value, Optional.ToList(endpointDetails));
+            return new EndpointDependency(domainName.Value, Core.Optional.ToList(endpointDetails));
         }
     }
 }

@@ -11,42 +11,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchResourceFile : IUtf8JsonSerializable
+    public partial class BatchResourceFile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AutoBlobContainerName))
+            if (Core.Optional.IsDefined(AutoBlobContainerName))
             {
                 writer.WritePropertyName("autoStorageContainerName"u8);
                 writer.WriteStringValue(AutoBlobContainerName);
             }
-            if (Optional.IsDefined(BlobContainerUri))
+            if (Core.Optional.IsDefined(BlobContainerUri))
             {
                 writer.WritePropertyName("storageContainerUrl"u8);
                 writer.WriteStringValue(BlobContainerUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(HttpUri))
+            if (Core.Optional.IsDefined(HttpUri))
             {
                 writer.WritePropertyName("httpUrl"u8);
                 writer.WriteStringValue(HttpUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(BlobPrefix))
+            if (Core.Optional.IsDefined(BlobPrefix))
             {
                 writer.WritePropertyName("blobPrefix"u8);
                 writer.WriteStringValue(BlobPrefix);
             }
-            if (Optional.IsDefined(FilePath))
+            if (Core.Optional.IsDefined(FilePath))
             {
                 writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
             }
-            if (Optional.IsDefined(FileMode))
+            if (Core.Optional.IsDefined(FileMode))
             {
                 writer.WritePropertyName("fileMode"u8);
                 writer.WriteStringValue(FileMode);
             }
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identityReference"u8);
                 writer.WriteObjectValue(Identity);
@@ -60,13 +60,13 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<string> autoStorageContainerName = default;
-            Optional<Uri> storageContainerUrl = default;
-            Optional<Uri> httpUrl = default;
-            Optional<string> blobPrefix = default;
-            Optional<string> filePath = default;
-            Optional<string> fileMode = default;
-            Optional<ComputeNodeIdentityReference> identityReference = default;
+            Core.Optional<string> autoStorageContainerName = default;
+            Core.Optional<Uri> storageContainerUrl = default;
+            Core.Optional<Uri> httpUrl = default;
+            Core.Optional<string> blobPrefix = default;
+            Core.Optional<string> filePath = default;
+            Core.Optional<string> fileMode = default;
+            Core.Optional<ComputeNodeIdentityReference> identityReference = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("autoStorageContainerName"u8))

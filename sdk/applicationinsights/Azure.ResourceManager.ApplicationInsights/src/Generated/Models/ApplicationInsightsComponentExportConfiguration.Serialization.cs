@@ -18,25 +18,25 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> exportId = default;
-            Optional<string> instrumentationKey = default;
-            Optional<string> recordTypes = default;
-            Optional<string> applicationName = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> resourceGroup = default;
-            Optional<string> destinationStorageSubscriptionId = default;
-            Optional<string> destinationStorageLocationId = default;
-            Optional<string> destinationAccountId = default;
-            Optional<string> destinationType = default;
-            Optional<string> isUserEnabled = default;
-            Optional<string> lastUserUpdate = default;
-            Optional<string> notificationQueueEnabled = default;
-            Optional<string> exportStatus = default;
-            Optional<string> lastSuccessTime = default;
-            Optional<string> lastGapTime = default;
-            Optional<string> permanentErrorReason = default;
-            Optional<string> storageName = default;
-            Optional<string> containerName = default;
+            Core.Optional<string> exportId = default;
+            Core.Optional<string> instrumentationKey = default;
+            Core.Optional<string> recordTypes = default;
+            Core.Optional<string> applicationName = default;
+            Core.Optional<string> subscriptionId = default;
+            Core.Optional<string> resourceGroup = default;
+            Core.Optional<string> destinationStorageSubscriptionId = default;
+            Core.Optional<string> destinationStorageLocationId = default;
+            Core.Optional<string> destinationAccountId = default;
+            Core.Optional<string> destinationType = default;
+            Core.Optional<string> isUserEnabled = default;
+            Core.Optional<string> lastUserUpdate = default;
+            Core.Optional<string> notificationQueueEnabled = default;
+            Core.Optional<string> exportStatus = default;
+            Core.Optional<string> lastSuccessTime = default;
+            Core.Optional<string> lastGapTime = default;
+            Core.Optional<string> permanentErrorReason = default;
+            Core.Optional<string> storageName = default;
+            Core.Optional<string> containerName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ExportId"u8))

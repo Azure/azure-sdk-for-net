@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Initializes a new instance of ArcExtensionData. </summary>
         public ArcExtensionData()
         {
-            PerNodeExtensionDetails = new ChangeTrackingList<PerNodeExtensionState>();
+            PerNodeExtensionDetails = new Core.ChangeTrackingList<PerNodeExtensionState>();
         }
 
         /// <summary> Initializes a new instance of ArcExtensionData. </summary>

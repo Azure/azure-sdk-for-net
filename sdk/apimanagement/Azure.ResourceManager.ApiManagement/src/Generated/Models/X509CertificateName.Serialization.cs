@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class X509CertificateName : IUtf8JsonSerializable
+    public partial class X509CertificateName : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(IssuerCertificateThumbprint))
+            if (Core.Optional.IsDefined(IssuerCertificateThumbprint))
             {
                 writer.WritePropertyName("issuerCertificateThumbprint"u8);
                 writer.WriteStringValue(IssuerCertificateThumbprint);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> issuerCertificateThumbprint = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> issuerCertificateThumbprint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

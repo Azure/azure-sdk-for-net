@@ -24,15 +24,15 @@ namespace Azure.ResourceManager.Chaos
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> experimentId = default;
-            Optional<string> status = default;
-            Optional<string> failureReason = default;
-            Optional<DateTimeOffset> createdDateTime = default;
-            Optional<DateTimeOffset> lastActionDateTime = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<DateTimeOffset> stopDateTime = default;
-            Optional<ExperimentExecutionDetailsPropertiesRunInformation> runInformation = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> experimentId = default;
+            Core.Optional<string> status = default;
+            Core.Optional<string> failureReason = default;
+            Core.Optional<DateTimeOffset> createdDateTime = default;
+            Core.Optional<DateTimeOffset> lastActionDateTime = default;
+            Core.Optional<DateTimeOffset> startDateTime = default;
+            Core.Optional<DateTimeOffset> stopDateTime = default;
+            Core.Optional<ExperimentExecutionDetailsPropertiesRunInformation> runInformation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Chaos
                     continue;
                 }
             }
-            return new ExperimentExecutionDetailData(id, name, type, systemData.Value, experimentId.Value, status.Value, failureReason.Value, Optional.ToNullable(createdDateTime), Optional.ToNullable(lastActionDateTime), Optional.ToNullable(startDateTime), Optional.ToNullable(stopDateTime), runInformation.Value);
+            return new ExperimentExecutionDetailData(id, name, type, systemData.Value, experimentId.Value, status.Value, failureReason.Value, Core.Optional.ToNullable(createdDateTime), Core.Optional.ToNullable(lastActionDateTime), Core.Optional.ToNullable(startDateTime), Core.Optional.ToNullable(stopDateTime), runInformation.Value);
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    internal partial class GatewayCustomDomainProperties : IUtf8JsonSerializable
+    internal partial class GatewayCustomDomainProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Thumbprint))
+            if (Core.Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> thumbprint = default;
+            Core.Optional<string> thumbprint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("thumbprint"u8))

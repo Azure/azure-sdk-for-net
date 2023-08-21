@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
-            EndpointLinks = new ChangeTrackingList<SubResource>();
+            EndpointLinks = new Core.ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of CdnWebApplicationFirewallPolicyData. </summary>

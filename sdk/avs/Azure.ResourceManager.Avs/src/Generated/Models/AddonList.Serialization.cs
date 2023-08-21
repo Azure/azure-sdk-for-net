@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AvsPrivateCloudAddonData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<AvsPrivateCloudAddonData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new AddonList(Optional.ToList(value), nextLink.Value);
+            return new AddonList(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

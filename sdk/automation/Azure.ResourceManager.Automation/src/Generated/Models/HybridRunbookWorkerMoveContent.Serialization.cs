@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class HybridRunbookWorkerMoveContent : IUtf8JsonSerializable
+    public partial class HybridRunbookWorkerMoveContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(HybridRunbookWorkerGroupName))
+            if (Core.Optional.IsDefined(HybridRunbookWorkerGroupName))
             {
                 writer.WritePropertyName("hybridRunbookWorkerGroupName"u8);
                 writer.WriteStringValue(HybridRunbookWorkerGroupName);

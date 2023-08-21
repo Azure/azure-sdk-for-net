@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BotServicePrivateLinkResourceData>> value = default;
+            Core.Optional<IReadOnlyList<BotServicePrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new BotServicePrivateLinkResourceListResult(Optional.ToList(value));
+            return new BotServicePrivateLinkResourceListResult(Core.Optional.ToList(value));
         }
     }
 }

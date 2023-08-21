@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
-    internal class WorkloadNetworkVmGroupOperationSource : IOperationSource<WorkloadNetworkVmGroupResource>
+    internal class WorkloadNetworkVmGroupOperationSource : Core.IOperationSource<WorkloadNetworkVmGroupResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Avs
             _client = client;
         }
 
-        WorkloadNetworkVmGroupResource IOperationSource<WorkloadNetworkVmGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        WorkloadNetworkVmGroupResource Core.IOperationSource<WorkloadNetworkVmGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = WorkloadNetworkVmGroupData.DeserializeWorkloadNetworkVmGroupData(document.RootElement);
             return new WorkloadNetworkVmGroupResource(_client, data);
         }
 
-        async ValueTask<WorkloadNetworkVmGroupResource> IOperationSource<WorkloadNetworkVmGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<WorkloadNetworkVmGroupResource> Core.IOperationSource<WorkloadNetworkVmGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = WorkloadNetworkVmGroupData.DeserializeWorkloadNetworkVmGroupData(document.RootElement);

@@ -12,37 +12,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
-    public partial class AssignmentDeploymentJob : IUtf8JsonSerializable
+    public partial class AssignmentDeploymentJob : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsDefined(Action))
+            if (Core.Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action);
             }
-            if (Optional.IsDefined(JobId))
+            if (Core.Optional.IsDefined(JobId))
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (Optional.IsDefined(JobState))
+            if (Core.Optional.IsDefined(JobState))
             {
                 writer.WritePropertyName("jobState"u8);
                 writer.WriteStringValue(JobState);
             }
-            if (Optional.IsDefined(Result))
+            if (Core.Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
                 writer.WriteObjectValue(Result);
             }
-            if (Optional.IsCollectionDefined(History))
+            if (Core.Optional.IsCollectionDefined(History))
             {
                 writer.WritePropertyName("history"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RequestUri))
+            if (Core.Optional.IsDefined(RequestUri))
             {
                 writer.WritePropertyName("requestUri"u8);
                 writer.WriteStringValue(RequestUri.AbsoluteUri);
@@ -66,13 +66,13 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
-            Optional<string> action = default;
-            Optional<string> jobId = default;
-            Optional<string> jobState = default;
-            Optional<AssignmentDeploymentJobResult> result = default;
-            Optional<IList<AssignmentDeploymentJobResult>> history = default;
-            Optional<Uri> requestUri = default;
+            Core.Optional<string> kind = default;
+            Core.Optional<string> action = default;
+            Core.Optional<string> jobId = default;
+            Core.Optional<string> jobState = default;
+            Core.Optional<AssignmentDeploymentJobResult> result = default;
+            Core.Optional<IList<AssignmentDeploymentJobResult>> history = default;
+            Core.Optional<Uri> requestUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     continue;
                 }
             }
-            return new AssignmentDeploymentJob(kind.Value, action.Value, jobId.Value, jobState.Value, result.Value, Optional.ToList(history), requestUri.Value);
+            return new AssignmentDeploymentJob(kind.Value, action.Value, jobId.Value, jobState.Value, result.Value, Core.Optional.ToList(history), requestUri.Value);
         }
     }
 }

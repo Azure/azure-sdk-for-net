@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationCredentialCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class AutomationCredentialCreateOrUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStringValue(UserName);
             writer.WritePropertyName("password"u8);
             writer.WriteStringValue(Password);
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of WorkloadNetworkSegmentSubnet. </summary>
         public WorkloadNetworkSegmentSubnet()
         {
-            DhcpRanges = new ChangeTrackingList<string>();
+            DhcpRanges = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of WorkloadNetworkSegmentSubnet. </summary>

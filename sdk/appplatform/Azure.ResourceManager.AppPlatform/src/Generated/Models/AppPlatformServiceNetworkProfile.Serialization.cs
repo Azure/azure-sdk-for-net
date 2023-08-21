@@ -11,42 +11,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformServiceNetworkProfile : IUtf8JsonSerializable
+    public partial class AppPlatformServiceNetworkProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceRuntimeSubnetId))
+            if (Core.Optional.IsDefined(ServiceRuntimeSubnetId))
             {
                 writer.WritePropertyName("serviceRuntimeSubnetId"u8);
                 writer.WriteStringValue(ServiceRuntimeSubnetId);
             }
-            if (Optional.IsDefined(AppSubnetId))
+            if (Core.Optional.IsDefined(AppSubnetId))
             {
                 writer.WritePropertyName("appSubnetId"u8);
                 writer.WriteStringValue(AppSubnetId);
             }
-            if (Optional.IsDefined(ServiceCidr))
+            if (Core.Optional.IsDefined(ServiceCidr))
             {
                 writer.WritePropertyName("serviceCidr"u8);
                 writer.WriteStringValue(ServiceCidr);
             }
-            if (Optional.IsDefined(ServiceRuntimeNetworkResourceGroup))
+            if (Core.Optional.IsDefined(ServiceRuntimeNetworkResourceGroup))
             {
                 writer.WritePropertyName("serviceRuntimeNetworkResourceGroup"u8);
                 writer.WriteStringValue(ServiceRuntimeNetworkResourceGroup);
             }
-            if (Optional.IsDefined(AppNetworkResourceGroup))
+            if (Core.Optional.IsDefined(AppNetworkResourceGroup))
             {
                 writer.WritePropertyName("appNetworkResourceGroup"u8);
                 writer.WriteStringValue(AppNetworkResourceGroup);
             }
-            if (Optional.IsDefined(IngressConfig))
+            if (Core.Optional.IsDefined(IngressConfig))
             {
                 writer.WritePropertyName("ingressConfig"u8);
                 writer.WriteObjectValue(IngressConfig);
             }
-            if (Optional.IsDefined(OutboundType))
+            if (Core.Optional.IsDefined(OutboundType))
             {
                 writer.WritePropertyName("outboundType"u8);
                 writer.WriteStringValue(OutboundType);
@@ -60,15 +60,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> serviceRuntimeSubnetId = default;
-            Optional<ResourceIdentifier> appSubnetId = default;
-            Optional<string> serviceCidr = default;
-            Optional<string> serviceRuntimeNetworkResourceGroup = default;
-            Optional<string> appNetworkResourceGroup = default;
-            Optional<NetworkProfileOutboundIPs> outboundIPs = default;
-            Optional<IReadOnlyList<AppPlatformServiceRequiredTraffic>> requiredTraffics = default;
-            Optional<IngressConfig> ingressConfig = default;
-            Optional<string> outboundType = default;
+            Core.Optional<ResourceIdentifier> serviceRuntimeSubnetId = default;
+            Core.Optional<ResourceIdentifier> appSubnetId = default;
+            Core.Optional<string> serviceCidr = default;
+            Core.Optional<string> serviceRuntimeNetworkResourceGroup = default;
+            Core.Optional<string> appNetworkResourceGroup = default;
+            Core.Optional<NetworkProfileOutboundIPs> outboundIPs = default;
+            Core.Optional<IReadOnlyList<AppPlatformServiceRequiredTraffic>> requiredTraffics = default;
+            Core.Optional<IngressConfig> ingressConfig = default;
+            Core.Optional<string> outboundType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceRuntimeSubnetId"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformServiceNetworkProfile(serviceRuntimeSubnetId.Value, appSubnetId.Value, serviceCidr.Value, serviceRuntimeNetworkResourceGroup.Value, appNetworkResourceGroup.Value, outboundIPs.Value, Optional.ToList(requiredTraffics), ingressConfig.Value, outboundType.Value);
+            return new AppPlatformServiceNetworkProfile(serviceRuntimeSubnetId.Value, appSubnetId.Value, serviceCidr.Value, serviceRuntimeNetworkResourceGroup.Value, appNetworkResourceGroup.Value, outboundIPs.Value, Core.Optional.ToList(requiredTraffics), ingressConfig.Value, outboundType.Value);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Initializes a new instance of DenyAssignmentListResult. </summary>
         internal DenyAssignmentListResult()
         {
-            Value = new ChangeTrackingList<DenyAssignmentData>();
+            Value = new Core.ChangeTrackingList<DenyAssignmentData>();
         }
 
         /// <summary> Initializes a new instance of DenyAssignmentListResult. </summary>

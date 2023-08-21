@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class ApplicationInsightsComponentDataVolumeCap : IUtf8JsonSerializable
+    public partial class ApplicationInsightsComponentDataVolumeCap : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Cap))
+            if (Core.Optional.IsDefined(Cap))
             {
                 writer.WritePropertyName("Cap"u8);
                 writer.WriteNumberValue(Cap.Value);
             }
-            if (Optional.IsDefined(WarningThreshold))
+            if (Core.Optional.IsDefined(WarningThreshold))
             {
                 writer.WritePropertyName("WarningThreshold"u8);
                 writer.WriteNumberValue(WarningThreshold.Value);
             }
-            if (Optional.IsDefined(IsStopSendNotificationWhenHitThreshold))
+            if (Core.Optional.IsDefined(IsStopSendNotificationWhenHitThreshold))
             {
                 writer.WritePropertyName("StopSendNotificationWhenHitThreshold"u8);
                 writer.WriteBooleanValue(IsStopSendNotificationWhenHitThreshold.Value);
             }
-            if (Optional.IsDefined(IsStopSendNotificationWhenHitCap))
+            if (Core.Optional.IsDefined(IsStopSendNotificationWhenHitCap))
             {
                 writer.WritePropertyName("StopSendNotificationWhenHitCap"u8);
                 writer.WriteBooleanValue(IsStopSendNotificationWhenHitCap.Value);
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<float> cap = default;
-            Optional<int> resetTime = default;
-            Optional<int> warningThreshold = default;
-            Optional<bool> stopSendNotificationWhenHitThreshold = default;
-            Optional<bool> stopSendNotificationWhenHitCap = default;
-            Optional<float> maxHistoryCap = default;
+            Core.Optional<float> cap = default;
+            Core.Optional<int> resetTime = default;
+            Core.Optional<int> warningThreshold = default;
+            Core.Optional<bool> stopSendNotificationWhenHitThreshold = default;
+            Core.Optional<bool> stopSendNotificationWhenHitCap = default;
+            Core.Optional<float> maxHistoryCap = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Cap"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     continue;
                 }
             }
-            return new ApplicationInsightsComponentDataVolumeCap(Optional.ToNullable(cap), Optional.ToNullable(resetTime), Optional.ToNullable(warningThreshold), Optional.ToNullable(stopSendNotificationWhenHitThreshold), Optional.ToNullable(stopSendNotificationWhenHitCap), Optional.ToNullable(maxHistoryCap));
+            return new ApplicationInsightsComponentDataVolumeCap(Core.Optional.ToNullable(cap), Core.Optional.ToNullable(resetTime), Core.Optional.ToNullable(warningThreshold), Core.Optional.ToNullable(stopSendNotificationWhenHitThreshold), Core.Optional.ToNullable(stopSendNotificationWhenHitCap), Core.Optional.ToNullable(maxHistoryCap));
         }
     }
 }

@@ -14,15 +14,15 @@ using Azure.ResourceManager.AppComplianceAutomation.Models;
 
 namespace Azure.ResourceManager.AppComplianceAutomation
 {
-    internal class DownloadResponseOperationSource : IOperationSource<DownloadResponse>
+    internal class DownloadResponseOperationSource : Core.IOperationSource<DownloadResponse>
     {
-        DownloadResponse IOperationSource<DownloadResponse>.CreateResult(Response response, CancellationToken cancellationToken)
+        DownloadResponse Core.IOperationSource<DownloadResponse>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return DownloadResponse.DeserializeDownloadResponse(document.RootElement);
         }
 
-        async ValueTask<DownloadResponse> IOperationSource<DownloadResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DownloadResponse> Core.IOperationSource<DownloadResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return DownloadResponse.DeserializeDownloadResponse(document.RootElement);

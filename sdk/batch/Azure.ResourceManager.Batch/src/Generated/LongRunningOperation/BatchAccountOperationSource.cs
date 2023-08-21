@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Batch
 {
-    internal class BatchAccountOperationSource : IOperationSource<BatchAccountResource>
+    internal class BatchAccountOperationSource : Core.IOperationSource<BatchAccountResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Batch
             _client = client;
         }
 
-        BatchAccountResource IOperationSource<BatchAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        BatchAccountResource Core.IOperationSource<BatchAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = BatchAccountData.DeserializeBatchAccountData(document.RootElement);
             return new BatchAccountResource(_client, data);
         }
 
-        async ValueTask<BatchAccountResource> IOperationSource<BatchAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<BatchAccountResource> Core.IOperationSource<BatchAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = BatchAccountData.DeserializeBatchAccountData(document.RootElement);

@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CacheConfiguration : IUtf8JsonSerializable
+    public partial class CacheConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(QueryStringCachingBehavior))
+            if (Core.Optional.IsDefined(QueryStringCachingBehavior))
             {
                 writer.WritePropertyName("queryStringCachingBehavior"u8);
                 writer.WriteStringValue(QueryStringCachingBehavior.Value.ToString());
             }
-            if (Optional.IsDefined(QueryParameters))
+            if (Core.Optional.IsDefined(QueryParameters))
             {
                 writer.WritePropertyName("queryParameters"u8);
                 writer.WriteStringValue(QueryParameters);
             }
-            if (Optional.IsDefined(IsCompressionEnabled))
+            if (Core.Optional.IsDefined(IsCompressionEnabled))
             {
                 writer.WritePropertyName("isCompressionEnabled"u8);
                 writer.WriteStringValue(IsCompressionEnabled.Value.ToString());
             }
-            if (Optional.IsDefined(CacheBehavior))
+            if (Core.Optional.IsDefined(CacheBehavior))
             {
                 writer.WritePropertyName("cacheBehavior"u8);
                 writer.WriteStringValue(CacheBehavior.Value.ToString());
             }
-            if (Optional.IsDefined(CacheDuration))
+            if (Core.Optional.IsDefined(CacheDuration))
             {
                 if (CacheDuration != null)
                 {
@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<RuleQueryStringCachingBehavior> queryStringCachingBehavior = default;
-            Optional<string> queryParameters = default;
-            Optional<RuleIsCompressionEnabled> isCompressionEnabled = default;
-            Optional<RuleCacheBehavior> cacheBehavior = default;
-            Optional<TimeSpan?> cacheDuration = default;
+            Core.Optional<RuleQueryStringCachingBehavior> queryStringCachingBehavior = default;
+            Core.Optional<string> queryParameters = default;
+            Core.Optional<RuleIsCompressionEnabled> isCompressionEnabled = default;
+            Core.Optional<RuleCacheBehavior> cacheBehavior = default;
+            Core.Optional<TimeSpan?> cacheDuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queryStringCachingBehavior"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new CacheConfiguration(Optional.ToNullable(queryStringCachingBehavior), queryParameters.Value, Optional.ToNullable(isCompressionEnabled), Optional.ToNullable(cacheBehavior), Optional.ToNullable(cacheDuration));
+            return new CacheConfiguration(Core.Optional.ToNullable(queryStringCachingBehavior), queryParameters.Value, Core.Optional.ToNullable(isCompressionEnabled), Core.Optional.ToNullable(cacheBehavior), Core.Optional.ToNullable(cacheDuration));
         }
     }
 }

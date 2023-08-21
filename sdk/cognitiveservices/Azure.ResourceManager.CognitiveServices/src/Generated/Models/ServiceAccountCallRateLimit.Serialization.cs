@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<float> count = default;
-            Optional<float> renewalPeriod = default;
-            Optional<IReadOnlyList<ServiceAccountThrottlingRule>> rules = default;
+            Core.Optional<float> count = default;
+            Core.Optional<float> renewalPeriod = default;
+            Core.Optional<IReadOnlyList<ServiceAccountThrottlingRule>> rules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new ServiceAccountCallRateLimit(Optional.ToNullable(count), Optional.ToNullable(renewalPeriod), Optional.ToList(rules));
+            return new ServiceAccountCallRateLimit(Core.Optional.ToNullable(count), Core.Optional.ToNullable(renewalPeriod), Core.Optional.ToList(rules));
         }
     }
 }

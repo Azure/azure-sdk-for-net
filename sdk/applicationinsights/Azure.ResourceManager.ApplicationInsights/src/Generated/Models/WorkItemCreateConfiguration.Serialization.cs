@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class WorkItemCreateConfiguration : IUtf8JsonSerializable
+    public partial class WorkItemCreateConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectorId))
+            if (Core.Optional.IsDefined(ConnectorId))
             {
                 writer.WritePropertyName("ConnectorId"u8);
                 writer.WriteStringValue(ConnectorId);
             }
-            if (Optional.IsDefined(ConnectorDataConfiguration))
+            if (Core.Optional.IsDefined(ConnectorDataConfiguration))
             {
                 writer.WritePropertyName("ConnectorDataConfiguration"u8);
                 writer.WriteStringValue(ConnectorDataConfiguration);
             }
-            if (Optional.IsDefined(IsValidateOnly))
+            if (Core.Optional.IsDefined(IsValidateOnly))
             {
                 writer.WritePropertyName("ValidateOnly"u8);
                 writer.WriteBooleanValue(IsValidateOnly.Value);
             }
-            if (Optional.IsCollectionDefined(WorkItemProperties))
+            if (Core.Optional.IsCollectionDefined(WorkItemProperties))
             {
                 writer.WritePropertyName("WorkItemProperties"u8);
                 writer.WriteStartObject();

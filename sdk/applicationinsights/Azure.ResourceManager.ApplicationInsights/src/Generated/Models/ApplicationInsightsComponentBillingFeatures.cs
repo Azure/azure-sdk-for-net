@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Initializes a new instance of ApplicationInsightsComponentBillingFeatures. </summary>
         public ApplicationInsightsComponentBillingFeatures()
         {
-            CurrentBillingFeatures = new ChangeTrackingList<string>();
+            CurrentBillingFeatures = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ApplicationInsightsComponentBillingFeatures. </summary>

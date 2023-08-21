@@ -13,19 +13,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class AvsPrivateCloudData : IUtf8JsonSerializable
+    public partial class AvsPrivateCloudData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.Avs
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ManagementCluster))
+            if (Core.Optional.IsDefined(ManagementCluster))
             {
                 writer.WritePropertyName("managementCluster"u8);
                 writer.WriteObjectValue(ManagementCluster);
             }
-            if (Optional.IsDefined(Internet))
+            if (Core.Optional.IsDefined(Internet))
             {
                 writer.WritePropertyName("internet"u8);
                 writer.WriteStringValue(Internet.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IdentitySources))
+            if (Core.Optional.IsCollectionDefined(IdentitySources))
             {
                 writer.WritePropertyName("identitySources"u8);
                 writer.WriteStartArray();
@@ -60,37 +60,37 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Availability))
+            if (Core.Optional.IsDefined(Availability))
             {
                 writer.WritePropertyName("availability"u8);
                 writer.WriteObjectValue(Availability);
             }
-            if (Optional.IsDefined(Encryption))
+            if (Core.Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsDefined(Circuit))
+            if (Core.Optional.IsDefined(Circuit))
             {
                 writer.WritePropertyName("circuit"u8);
                 writer.WriteObjectValue(Circuit);
             }
-            if (Optional.IsDefined(NetworkBlock))
+            if (Core.Optional.IsDefined(NetworkBlock))
             {
                 writer.WritePropertyName("networkBlock"u8);
                 writer.WriteStringValue(NetworkBlock);
             }
-            if (Optional.IsDefined(VCenterPassword))
+            if (Core.Optional.IsDefined(VCenterPassword))
             {
                 writer.WritePropertyName("vcenterPassword"u8);
                 writer.WriteStringValue(VCenterPassword);
             }
-            if (Optional.IsDefined(NsxtPassword))
+            if (Core.Optional.IsDefined(NsxtPassword))
             {
                 writer.WritePropertyName("nsxtPassword"u8);
                 writer.WriteStringValue(NsxtPassword);
             }
-            if (Optional.IsDefined(SecondaryCircuit))
+            if (Core.Optional.IsDefined(SecondaryCircuit))
             {
                 writer.WritePropertyName("secondaryCircuit"u8);
                 writer.WriteObjectValue(SecondaryCircuit);
@@ -106,32 +106,32 @@ namespace Azure.ResourceManager.Avs
                 return null;
             }
             AvsSku sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AvsManagementCluster> managementCluster = default;
-            Optional<InternetConnectivityState> internet = default;
-            Optional<IList<SingleSignOnIdentitySource>> identitySources = default;
-            Optional<PrivateCloudAvailabilityProperties> availability = default;
-            Optional<CustomerManagedEncryption> encryption = default;
-            Optional<AvsPrivateCloudProvisioningState> provisioningState = default;
-            Optional<ExpressRouteCircuit> circuit = default;
-            Optional<AvsPrivateCloudEndpoints> endpoints = default;
-            Optional<string> networkBlock = default;
-            Optional<string> managementNetwork = default;
-            Optional<string> provisioningNetwork = default;
-            Optional<string> vmotionNetwork = default;
-            Optional<string> vcenterPassword = default;
-            Optional<string> nsxtPassword = default;
-            Optional<string> vcenterCertificateThumbprint = default;
-            Optional<string> nsxtCertificateThumbprint = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> externalCloudLinks = default;
-            Optional<ExpressRouteCircuit> secondaryCircuit = default;
-            Optional<NsxPublicIPQuotaRaisedEnum> nsxPublicIPQuotaRaised = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<AvsManagementCluster> managementCluster = default;
+            Core.Optional<InternetConnectivityState> internet = default;
+            Core.Optional<IList<SingleSignOnIdentitySource>> identitySources = default;
+            Core.Optional<PrivateCloudAvailabilityProperties> availability = default;
+            Core.Optional<CustomerManagedEncryption> encryption = default;
+            Core.Optional<AvsPrivateCloudProvisioningState> provisioningState = default;
+            Core.Optional<ExpressRouteCircuit> circuit = default;
+            Core.Optional<AvsPrivateCloudEndpoints> endpoints = default;
+            Core.Optional<string> networkBlock = default;
+            Core.Optional<string> managementNetwork = default;
+            Core.Optional<string> provisioningNetwork = default;
+            Core.Optional<string> vmotionNetwork = default;
+            Core.Optional<string> vcenterPassword = default;
+            Core.Optional<string> nsxtPassword = default;
+            Core.Optional<string> vcenterCertificateThumbprint = default;
+            Core.Optional<string> nsxtCertificateThumbprint = default;
+            Core.Optional<IReadOnlyList<ResourceIdentifier>> externalCloudLinks = default;
+            Core.Optional<ExpressRouteCircuit> secondaryCircuit = default;
+            Core.Optional<NsxPublicIPQuotaRaisedEnum> nsxPublicIPQuotaRaised = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Avs
                     continue;
                 }
             }
-            return new AvsPrivateCloudData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, managementCluster.Value, Optional.ToNullable(internet), Optional.ToList(identitySources), availability.Value, encryption.Value, Optional.ToNullable(provisioningState), circuit.Value, endpoints.Value, networkBlock.Value, managementNetwork.Value, provisioningNetwork.Value, vmotionNetwork.Value, vcenterPassword.Value, nsxtPassword.Value, vcenterCertificateThumbprint.Value, nsxtCertificateThumbprint.Value, Optional.ToList(externalCloudLinks), secondaryCircuit.Value, Optional.ToNullable(nsxPublicIPQuotaRaised));
+            return new AvsPrivateCloudData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku, identity, managementCluster.Value, Core.Optional.ToNullable(internet), Core.Optional.ToList(identitySources), availability.Value, encryption.Value, Core.Optional.ToNullable(provisioningState), circuit.Value, endpoints.Value, networkBlock.Value, managementNetwork.Value, provisioningNetwork.Value, vmotionNetwork.Value, vcenterPassword.Value, nsxtPassword.Value, vcenterCertificateThumbprint.Value, nsxtCertificateThumbprint.Value, Core.Optional.ToList(externalCloudLinks), secondaryCircuit.Value, Core.Optional.ToNullable(nsxPublicIPQuotaRaised));
         }
     }
 }

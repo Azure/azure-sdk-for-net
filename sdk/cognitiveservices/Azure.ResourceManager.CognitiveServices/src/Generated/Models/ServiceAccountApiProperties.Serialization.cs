@@ -12,57 +12,57 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class ServiceAccountApiProperties : IUtf8JsonSerializable
+    public partial class ServiceAccountApiProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(QnaRuntimeEndpoint))
+            if (Core.Optional.IsDefined(QnaRuntimeEndpoint))
             {
                 writer.WritePropertyName("qnaRuntimeEndpoint"u8);
                 writer.WriteStringValue(QnaRuntimeEndpoint);
             }
-            if (Optional.IsDefined(QnaAzureSearchEndpointKey))
+            if (Core.Optional.IsDefined(QnaAzureSearchEndpointKey))
             {
                 writer.WritePropertyName("qnaAzureSearchEndpointKey"u8);
                 writer.WriteStringValue(QnaAzureSearchEndpointKey);
             }
-            if (Optional.IsDefined(QnaAzureSearchEndpointId))
+            if (Core.Optional.IsDefined(QnaAzureSearchEndpointId))
             {
                 writer.WritePropertyName("qnaAzureSearchEndpointId"u8);
                 writer.WriteStringValue(QnaAzureSearchEndpointId);
             }
-            if (Optional.IsDefined(EnableStatistics))
+            if (Core.Optional.IsDefined(EnableStatistics))
             {
                 writer.WritePropertyName("statisticsEnabled"u8);
                 writer.WriteBooleanValue(EnableStatistics.Value);
             }
-            if (Optional.IsDefined(EventHubConnectionString))
+            if (Core.Optional.IsDefined(EventHubConnectionString))
             {
                 writer.WritePropertyName("eventHubConnectionString"u8);
                 writer.WriteStringValue(EventHubConnectionString);
             }
-            if (Optional.IsDefined(StorageAccountConnectionString))
+            if (Core.Optional.IsDefined(StorageAccountConnectionString))
             {
                 writer.WritePropertyName("storageAccountConnectionString"u8);
                 writer.WriteStringValue(StorageAccountConnectionString);
             }
-            if (Optional.IsDefined(AadClientId))
+            if (Core.Optional.IsDefined(AadClientId))
             {
                 writer.WritePropertyName("aadClientId"u8);
                 writer.WriteStringValue(AadClientId.Value);
             }
-            if (Optional.IsDefined(AadTenantId))
+            if (Core.Optional.IsDefined(AadTenantId))
             {
                 writer.WritePropertyName("aadTenantId"u8);
                 writer.WriteStringValue(AadTenantId.Value);
             }
-            if (Optional.IsDefined(SuperUser))
+            if (Core.Optional.IsDefined(SuperUser))
             {
                 writer.WritePropertyName("superUser"u8);
                 writer.WriteStringValue(SuperUser);
             }
-            if (Optional.IsDefined(WebsiteName))
+            if (Core.Optional.IsDefined(WebsiteName))
             {
                 writer.WritePropertyName("websiteName"u8);
                 writer.WriteStringValue(WebsiteName);
@@ -85,16 +85,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<string> qnaRuntimeEndpoint = default;
-            Optional<string> qnaAzureSearchEndpointKey = default;
-            Optional<ResourceIdentifier> qnaAzureSearchEndpointId = default;
-            Optional<bool> statisticsEnabled = default;
-            Optional<string> eventHubConnectionString = default;
-            Optional<string> storageAccountConnectionString = default;
-            Optional<Guid> aadClientId = default;
-            Optional<Guid> aadTenantId = default;
-            Optional<string> superUser = default;
-            Optional<string> websiteName = default;
+            Core.Optional<string> qnaRuntimeEndpoint = default;
+            Core.Optional<string> qnaAzureSearchEndpointKey = default;
+            Core.Optional<ResourceIdentifier> qnaAzureSearchEndpointId = default;
+            Core.Optional<bool> statisticsEnabled = default;
+            Core.Optional<string> eventHubConnectionString = default;
+            Core.Optional<string> storageAccountConnectionString = default;
+            Core.Optional<Guid> aadClientId = default;
+            Core.Optional<Guid> aadTenantId = default;
+            Core.Optional<string> superUser = default;
+            Core.Optional<string> websiteName = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ServiceAccountApiProperties(qnaRuntimeEndpoint.Value, qnaAzureSearchEndpointKey.Value, qnaAzureSearchEndpointId.Value, Optional.ToNullable(statisticsEnabled), eventHubConnectionString.Value, storageAccountConnectionString.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), superUser.Value, websiteName.Value, additionalProperties);
+            return new ServiceAccountApiProperties(qnaRuntimeEndpoint.Value, qnaAzureSearchEndpointKey.Value, qnaAzureSearchEndpointId.Value, Core.Optional.ToNullable(statisticsEnabled), eventHubConnectionString.Value, storageAccountConnectionString.Value, Core.Optional.ToNullable(aadClientId), Core.Optional.ToNullable(aadTenantId), superUser.Value, websiteName.Value, additionalProperties);
         }
     }
 }

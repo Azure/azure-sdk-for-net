@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automanage.Models
         /// <summary> Initializes a new instance of ServicePrincipalListResult. </summary>
         internal ServicePrincipalListResult()
         {
-            Value = new ChangeTrackingList<AutomanageServicePrincipalData>();
+            Value = new Core.ChangeTrackingList<AutomanageServicePrincipalData>();
         }
 
         /// <summary> Initializes a new instance of ServicePrincipalListResult. </summary>

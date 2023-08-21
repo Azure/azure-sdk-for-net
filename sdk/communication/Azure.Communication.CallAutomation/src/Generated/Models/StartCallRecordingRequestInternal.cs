@@ -23,8 +23,8 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(callLocator, nameof(callLocator));
 
             CallLocator = callLocator;
-            AudioChannelParticipantOrdering = new ChangeTrackingList<CommunicationIdentifierModel>();
-            ChannelAffinity = new ChangeTrackingList<ChannelAffinityInternal>();
+            AudioChannelParticipantOrdering = new Core.ChangeTrackingList<CommunicationIdentifierModel>();
+            ChannelAffinity = new Core.ChangeTrackingList<ChannelAffinityInternal>();
         }
 
         /// <summary> The call locator. </summary>

@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class OutlookChannel : IUtf8JsonSerializable
+    public partial class OutlookChannel : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("channelName"u8);
             writer.WriteStringValue(ChannelName);
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 if (ETag != null)
                 {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("etag");
                 }
             }
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             string channelName = default;
-            Optional<ETag?> etag = default;
-            Optional<string> provisioningState = default;
-            Optional<AzureLocation> location = default;
+            Core.Optional<ETag?> etag = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<AzureLocation> location = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("channelName"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new OutlookChannel(channelName, Optional.ToNullable(etag), provisioningState.Value, Optional.ToNullable(location));
+            return new OutlookChannel(channelName, Core.Optional.ToNullable(etag), provisioningState.Value, Core.Optional.ToNullable(location));
         }
     }
 }

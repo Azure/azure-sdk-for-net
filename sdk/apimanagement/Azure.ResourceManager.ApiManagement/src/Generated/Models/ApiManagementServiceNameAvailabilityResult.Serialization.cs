@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<bool> nameAvailable = default;
-            Optional<string> message = default;
-            Optional<ApiManagementServiceNameUnavailableReason> reason = default;
+            Core.Optional<bool> nameAvailable = default;
+            Core.Optional<string> message = default;
+            Core.Optional<ApiManagementServiceNameUnavailableReason> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameAvailable"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new ApiManagementServiceNameAvailabilityResult(Optional.ToNullable(nameAvailable), message.Value, Optional.ToNullable(reason));
+            return new ApiManagementServiceNameAvailabilityResult(Core.Optional.ToNullable(nameAvailable), message.Value, Core.Optional.ToNullable(reason));
         }
     }
 }

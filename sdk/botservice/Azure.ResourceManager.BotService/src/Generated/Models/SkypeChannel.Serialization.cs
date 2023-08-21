@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class SkypeChannel : IUtf8JsonSerializable
+    public partial class SkypeChannel : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
             writer.WritePropertyName("channelName"u8);
             writer.WriteStringValue(ChannelName);
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 if (ETag != null)
                 {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("etag");
                 }
             }
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<SkypeChannelProperties> properties = default;
+            Core.Optional<SkypeChannelProperties> properties = default;
             string channelName = default;
-            Optional<ETag?> etag = default;
-            Optional<string> provisioningState = default;
-            Optional<AzureLocation> location = default;
+            Core.Optional<ETag?> etag = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<AzureLocation> location = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new SkypeChannel(channelName, Optional.ToNullable(etag), provisioningState.Value, Optional.ToNullable(location), properties.Value);
+            return new SkypeChannel(channelName, Core.Optional.ToNullable(etag), provisioningState.Value, Core.Optional.ToNullable(location), properties.Value);
         }
     }
 }

@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<Guid> arcApplicationClientId = default;
-            Optional<Guid> arcApplicationTenantId = default;
-            Optional<Guid> arcServicePrincipalObjectId = default;
-            Optional<Guid> arcApplicationObjectId = default;
+            Core.Optional<Guid> arcApplicationClientId = default;
+            Core.Optional<Guid> arcApplicationTenantId = default;
+            Core.Optional<Guid> arcServicePrincipalObjectId = default;
+            Core.Optional<Guid> arcApplicationObjectId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new ArcIdentityResult(Optional.ToNullable(arcApplicationClientId), Optional.ToNullable(arcApplicationTenantId), Optional.ToNullable(arcServicePrincipalObjectId), Optional.ToNullable(arcApplicationObjectId));
+            return new ArcIdentityResult(Core.Optional.ToNullable(arcApplicationClientId), Core.Optional.ToNullable(arcApplicationTenantId), Core.Optional.ToNullable(arcServicePrincipalObjectId), Core.Optional.ToNullable(arcApplicationObjectId));
         }
     }
 }

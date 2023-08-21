@@ -18,8 +18,8 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<string> recordingId = default;
-            Optional<RecordingState> recordingState = default;
+            Core.Optional<string> recordingId = default;
+            Core.Optional<RecordingState> recordingState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recordingId"u8))
@@ -37,7 +37,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new RecordingStateResult(recordingId.Value, Optional.ToNullable(recordingState));
+            return new RecordingStateResult(recordingId.Value, Core.Optional.ToNullable(recordingState));
         }
     }
 }

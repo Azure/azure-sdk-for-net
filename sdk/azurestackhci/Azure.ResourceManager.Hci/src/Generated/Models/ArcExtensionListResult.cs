@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of ArcExtensionListResult. </summary>
         internal ArcExtensionListResult()
         {
-            Value = new ChangeTrackingList<ArcExtensionData>();
+            Value = new Core.ChangeTrackingList<ArcExtensionData>();
         }
 
         /// <summary> Initializes a new instance of ArcExtensionListResult. </summary>

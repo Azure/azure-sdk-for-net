@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <summary> Initializes a new instance of SnapshotResourceList. </summary>
         internal SnapshotResourceList()
         {
-            Value = new ChangeTrackingList<SnapshotResourceData>();
+            Value = new Core.ChangeTrackingList<SnapshotResourceData>();
         }
 
         /// <summary> Initializes a new instance of SnapshotResourceList. </summary>

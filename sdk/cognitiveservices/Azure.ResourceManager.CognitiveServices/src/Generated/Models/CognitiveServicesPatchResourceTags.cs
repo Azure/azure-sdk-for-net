@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of CognitiveServicesPatchResourceTags. </summary>
         public CognitiveServicesPatchResourceTags()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Resource tags. </summary>

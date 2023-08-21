@@ -16,19 +16,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementServiceData : IUtf8JsonSerializable
+    public partial class ApiManagementServiceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Zones))
+            if (Core.Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.ApiManagement
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(NotificationSenderEmail))
+            if (Core.Optional.IsDefined(NotificationSenderEmail))
             {
                 writer.WritePropertyName("notificationSenderEmail"u8);
                 writer.WriteStringValue(NotificationSenderEmail);
             }
-            if (Optional.IsCollectionDefined(HostnameConfigurations))
+            if (Core.Optional.IsCollectionDefined(HostnameConfigurations))
             {
                 writer.WritePropertyName("hostnameConfigurations"u8);
                 writer.WriteStartArray();
@@ -68,22 +68,22 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PublicIPAddressId))
+            if (Core.Optional.IsDefined(PublicIPAddressId))
             {
                 writer.WritePropertyName("publicIpAddressId"u8);
                 writer.WriteStringValue(PublicIPAddressId);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (Core.Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(VirtualNetworkConfiguration))
+            if (Core.Optional.IsDefined(VirtualNetworkConfiguration))
             {
                 writer.WritePropertyName("virtualNetworkConfiguration"u8);
                 writer.WriteObjectValue(VirtualNetworkConfiguration);
             }
-            if (Optional.IsCollectionDefined(AdditionalLocations))
+            if (Core.Optional.IsCollectionDefined(AdditionalLocations))
             {
                 writer.WritePropertyName("additionalLocations"u8);
                 writer.WriteStartArray();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CustomProperties))
+            if (Core.Optional.IsCollectionDefined(CustomProperties))
             {
                 writer.WritePropertyName("customProperties"u8);
                 writer.WriteStartObject();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Certificates))
+            if (Core.Optional.IsCollectionDefined(Certificates))
             {
                 writer.WritePropertyName("certificates"u8);
                 writer.WriteStartArray();
@@ -114,32 +114,32 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnableClientCertificate))
+            if (Core.Optional.IsDefined(EnableClientCertificate))
             {
                 writer.WritePropertyName("enableClientCertificate"u8);
                 writer.WriteBooleanValue(EnableClientCertificate.Value);
             }
-            if (Optional.IsDefined(DisableGateway))
+            if (Core.Optional.IsDefined(DisableGateway))
             {
                 writer.WritePropertyName("disableGateway"u8);
                 writer.WriteBooleanValue(DisableGateway.Value);
             }
-            if (Optional.IsDefined(VirtualNetworkType))
+            if (Core.Optional.IsDefined(VirtualNetworkType))
             {
                 writer.WritePropertyName("virtualNetworkType"u8);
                 writer.WriteStringValue(VirtualNetworkType.Value.ToString());
             }
-            if (Optional.IsDefined(ApiVersionConstraint))
+            if (Core.Optional.IsDefined(ApiVersionConstraint))
             {
                 writer.WritePropertyName("apiVersionConstraint"u8);
                 writer.WriteObjectValue(ApiVersionConstraint);
             }
-            if (Optional.IsDefined(Restore))
+            if (Core.Optional.IsDefined(Restore))
             {
                 writer.WritePropertyName("restore"u8);
                 writer.WriteBooleanValue(Restore.Value);
             }
-            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (Core.Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -164,41 +164,41 @@ namespace Azure.ResourceManager.ApiManagement
                 return null;
             }
             ApiManagementServiceSkuProperties sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<ETag> etag = default;
-            Optional<IList<string>> zones = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<IList<string>> zones = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> notificationSenderEmail = default;
-            Optional<string> provisioningState = default;
-            Optional<string> targetProvisioningState = default;
-            Optional<DateTimeOffset> createdAtUtc = default;
-            Optional<Uri> gatewayUri = default;
-            Optional<Uri> gatewayRegionalUri = default;
-            Optional<Uri> portalUri = default;
-            Optional<Uri> managementApiUri = default;
-            Optional<Uri> scmUri = default;
-            Optional<Uri> developerPortalUri = default;
-            Optional<IList<HostnameConfiguration>> hostnameConfigurations = default;
-            Optional<IReadOnlyList<IPAddress>> publicIPAddresses = default;
-            Optional<IReadOnlyList<IPAddress>> privateIPAddresses = default;
-            Optional<ResourceIdentifier> publicIPAddressId = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
-            Optional<VirtualNetworkConfiguration> virtualNetworkConfiguration = default;
-            Optional<IList<AdditionalLocation>> additionalLocations = default;
-            Optional<IDictionary<string, string>> customProperties = default;
-            Optional<IList<CertificateConfiguration>> certificates = default;
-            Optional<bool> enableClientCertificate = default;
-            Optional<bool> disableGateway = default;
-            Optional<VirtualNetworkType> virtualNetworkType = default;
-            Optional<ApiVersionConstraint> apiVersionConstraint = default;
-            Optional<bool> restore = default;
-            Optional<IList<RemotePrivateEndpointConnectionWrapper>> privateEndpointConnections = default;
-            Optional<PlatformVersion> platformVersion = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> notificationSenderEmail = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<string> targetProvisioningState = default;
+            Core.Optional<DateTimeOffset> createdAtUtc = default;
+            Core.Optional<Uri> gatewayUri = default;
+            Core.Optional<Uri> gatewayRegionalUri = default;
+            Core.Optional<Uri> portalUri = default;
+            Core.Optional<Uri> managementApiUri = default;
+            Core.Optional<Uri> scmUri = default;
+            Core.Optional<Uri> developerPortalUri = default;
+            Core.Optional<IList<HostnameConfiguration>> hostnameConfigurations = default;
+            Core.Optional<IReadOnlyList<IPAddress>> publicIPAddresses = default;
+            Core.Optional<IReadOnlyList<IPAddress>> privateIPAddresses = default;
+            Core.Optional<ResourceIdentifier> publicIPAddressId = default;
+            Core.Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Core.Optional<VirtualNetworkConfiguration> virtualNetworkConfiguration = default;
+            Core.Optional<IList<AdditionalLocation>> additionalLocations = default;
+            Core.Optional<IDictionary<string, string>> customProperties = default;
+            Core.Optional<IList<CertificateConfiguration>> certificates = default;
+            Core.Optional<bool> enableClientCertificate = default;
+            Core.Optional<bool> disableGateway = default;
+            Core.Optional<VirtualNetworkType> virtualNetworkType = default;
+            Core.Optional<ApiVersionConstraint> apiVersionConstraint = default;
+            Core.Optional<bool> restore = default;
+            Core.Optional<IList<RemotePrivateEndpointConnectionWrapper>> privateEndpointConnections = default;
+            Core.Optional<PlatformVersion> platformVersion = default;
             string publisherEmail = default;
             string publisherName = default;
             foreach (var property in element.EnumerateObject())
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new ApiManagementServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, Optional.ToNullable(etag), Optional.ToList(zones), notificationSenderEmail.Value, provisioningState.Value, targetProvisioningState.Value, Optional.ToNullable(createdAtUtc), gatewayUri.Value, gatewayRegionalUri.Value, portalUri.Value, managementApiUri.Value, scmUri.Value, developerPortalUri.Value, Optional.ToList(hostnameConfigurations), Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses), publicIPAddressId.Value, Optional.ToNullable(publicNetworkAccess), virtualNetworkConfiguration.Value, Optional.ToList(additionalLocations), Optional.ToDictionary(customProperties), Optional.ToList(certificates), Optional.ToNullable(enableClientCertificate), Optional.ToNullable(disableGateway), Optional.ToNullable(virtualNetworkType), apiVersionConstraint.Value, Optional.ToNullable(restore), Optional.ToList(privateEndpointConnections), Optional.ToNullable(platformVersion), publisherEmail, publisherName);
+            return new ApiManagementServiceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku, identity, Core.Optional.ToNullable(etag), Core.Optional.ToList(zones), notificationSenderEmail.Value, provisioningState.Value, targetProvisioningState.Value, Core.Optional.ToNullable(createdAtUtc), gatewayUri.Value, gatewayRegionalUri.Value, portalUri.Value, managementApiUri.Value, scmUri.Value, developerPortalUri.Value, Core.Optional.ToList(hostnameConfigurations), Core.Optional.ToList(publicIPAddresses), Core.Optional.ToList(privateIPAddresses), publicIPAddressId.Value, Core.Optional.ToNullable(publicNetworkAccess), virtualNetworkConfiguration.Value, Core.Optional.ToList(additionalLocations), Core.Optional.ToDictionary(customProperties), Core.Optional.ToList(certificates), Core.Optional.ToNullable(enableClientCertificate), Core.Optional.ToNullable(disableGateway), Core.Optional.ToNullable(virtualNetworkType), apiVersionConstraint.Value, Core.Optional.ToNullable(restore), Core.Optional.ToList(privateEndpointConnections), Core.Optional.ToNullable(platformVersion), publisherEmail, publisherName);
         }
     }
 }

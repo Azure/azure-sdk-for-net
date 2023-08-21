@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of DiagnosticListResult. </summary>
         internal DiagnosticListResult()
         {
-            Value = new ChangeTrackingList<DiagnosticContractData>();
+            Value = new Core.ChangeTrackingList<DiagnosticContractData>();
         }
 
         /// <summary> Initializes a new instance of DiagnosticListResult. </summary>

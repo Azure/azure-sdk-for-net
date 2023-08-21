@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> clientSecret = default;
+            Core.Optional<string> clientSecret = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientSecret"u8))

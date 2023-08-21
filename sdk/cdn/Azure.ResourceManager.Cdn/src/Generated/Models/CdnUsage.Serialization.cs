@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<CdnUsageUnit> unit = default;
-            Optional<int> currentValue = default;
-            Optional<int> limit = default;
+            Core.Optional<string> resourceType = default;
+            Core.Optional<CdnUsageUnit> unit = default;
+            Core.Optional<int> currentValue = default;
+            Core.Optional<int> limit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new CdnUsage(resourceType.Value, Optional.ToNullable(unit), Optional.ToNullable(currentValue), Optional.ToNullable(limit));
+            return new CdnUsage(resourceType.Value, Core.Optional.ToNullable(unit), Core.Optional.ToNullable(currentValue), Core.Optional.ToNullable(limit));
         }
     }
 }

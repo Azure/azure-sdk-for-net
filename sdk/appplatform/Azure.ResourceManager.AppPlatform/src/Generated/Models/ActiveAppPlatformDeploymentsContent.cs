@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of ActiveAppPlatformDeploymentsContent. </summary>
         public ActiveAppPlatformDeploymentsContent()
         {
-            ActiveDeploymentNames = new ChangeTrackingList<string>();
+            ActiveDeploymentNames = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Collection of Deployment name. </summary>

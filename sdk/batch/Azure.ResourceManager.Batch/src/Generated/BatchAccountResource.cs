@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Batch
             try
             {
                 var response = await _batchAccountRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new BatchArmOperation(_batchAccountClientDiagnostics, Pipeline, _batchAccountRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new BatchArmOperation(_batchAccountClientDiagnostics, Pipeline, _batchAccountRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.Batch
             try
             {
                 var response = _batchAccountRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new BatchArmOperation(_batchAccountClientDiagnostics, Pipeline, _batchAccountRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new BatchArmOperation(_batchAccountClientDiagnostics, Pipeline, _batchAccountRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.Batch
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchAccountRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BatchAccountOutboundEnvironmentEndpoint.DeserializeBatchAccountOutboundEnvironmentEndpoint, _batchAccountClientDiagnostics, Pipeline, "BatchAccountResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BatchAccountOutboundEnvironmentEndpoint.DeserializeBatchAccountOutboundEnvironmentEndpoint, _batchAccountClientDiagnostics, Pipeline, "BatchAccountResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -836,7 +836,7 @@ namespace Azure.ResourceManager.Batch
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchAccountRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BatchAccountOutboundEnvironmentEndpoint.DeserializeBatchAccountOutboundEnvironmentEndpoint, _batchAccountClientDiagnostics, Pipeline, "BatchAccountResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BatchAccountOutboundEnvironmentEndpoint.DeserializeBatchAccountOutboundEnvironmentEndpoint, _batchAccountClientDiagnostics, Pipeline, "BatchAccountResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

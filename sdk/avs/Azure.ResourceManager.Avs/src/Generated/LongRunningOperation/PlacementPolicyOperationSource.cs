@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
-    internal class PlacementPolicyOperationSource : IOperationSource<PlacementPolicyResource>
+    internal class PlacementPolicyOperationSource : Core.IOperationSource<PlacementPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Avs
             _client = client;
         }
 
-        PlacementPolicyResource IOperationSource<PlacementPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PlacementPolicyResource Core.IOperationSource<PlacementPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PlacementPolicyData.DeserializePlacementPolicyData(document.RootElement);
             return new PlacementPolicyResource(_client, data);
         }
 
-        async ValueTask<PlacementPolicyResource> IOperationSource<PlacementPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PlacementPolicyResource> Core.IOperationSource<PlacementPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PlacementPolicyData.DeserializePlacementPolicyData(document.RootElement);

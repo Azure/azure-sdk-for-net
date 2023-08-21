@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Automanage.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomanageServicePrincipalData>> value = default;
+            Core.Optional<IReadOnlyList<AutomanageServicePrincipalData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Automanage.Models
                     continue;
                 }
             }
-            return new ServicePrincipalListResult(Optional.ToList(value));
+            return new ServicePrincipalListResult(Core.Optional.ToList(value));
         }
     }
 }

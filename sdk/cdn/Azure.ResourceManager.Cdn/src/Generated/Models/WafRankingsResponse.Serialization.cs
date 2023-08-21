@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> dateTimeBegin = default;
-            Optional<DateTimeOffset> dateTimeEnd = default;
-            Optional<IReadOnlyList<string>> groups = default;
-            Optional<IReadOnlyList<WafRankingsResponseDataItem>> data = default;
+            Core.Optional<DateTimeOffset> dateTimeBegin = default;
+            Core.Optional<DateTimeOffset> dateTimeEnd = default;
+            Core.Optional<IReadOnlyList<string>> groups = default;
+            Core.Optional<IReadOnlyList<WafRankingsResponseDataItem>> data = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dateTimeBegin"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new WafRankingsResponse(Optional.ToNullable(dateTimeBegin), Optional.ToNullable(dateTimeEnd), Optional.ToList(groups), Optional.ToList(data));
+            return new WafRankingsResponse(Core.Optional.ToNullable(dateTimeBegin), Core.Optional.ToNullable(dateTimeEnd), Core.Optional.ToList(groups), Core.Optional.ToList(data));
         }
     }
 }

@@ -18,14 +18,14 @@ namespace Azure.Communication.CallingServer
             {
                 return null;
             }
-            Optional<string> eventSource = default;
-            Optional<string> operationContext = default;
-            Optional<ResultInformation> resultInformation = default;
-            Optional<string> version = default;
-            Optional<string> callConnectionId = default;
-            Optional<string> serverCallId = default;
-            Optional<string> correlationId = default;
-            Optional<string> publicEventType = default;
+            Core.Optional<string> eventSource = default;
+            Core.Optional<string> operationContext = default;
+            Core.Optional<ResultInformation> resultInformation = default;
+            Core.Optional<string> version = default;
+            Core.Optional<string> callConnectionId = default;
+            Core.Optional<string> serverCallId = default;
+            Core.Optional<string> correlationId = default;
+            Core.Optional<string> publicEventType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventSource"u8))

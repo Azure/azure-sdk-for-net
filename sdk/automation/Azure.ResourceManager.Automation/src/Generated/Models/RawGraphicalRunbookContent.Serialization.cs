@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class RawGraphicalRunbookContent : IUtf8JsonSerializable
+    public partial class RawGraphicalRunbookContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SchemaVersion))
+            if (Core.Optional.IsDefined(SchemaVersion))
             {
                 writer.WritePropertyName("schemaVersion"u8);
                 writer.WriteStringValue(SchemaVersion);
             }
-            if (Optional.IsDefined(RunbookDefinition))
+            if (Core.Optional.IsDefined(RunbookDefinition))
             {
                 writer.WritePropertyName("runbookDefinition"u8);
                 writer.WriteStringValue(RunbookDefinition);
             }
-            if (Optional.IsDefined(RunbookType))
+            if (Core.Optional.IsDefined(RunbookType))
             {
                 writer.WritePropertyName("runbookType"u8);
                 writer.WriteStringValue(RunbookType.Value.ToString());
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> schemaVersion = default;
-            Optional<string> runbookDefinition = default;
-            Optional<GraphRunbookType> runbookType = default;
+            Core.Optional<string> schemaVersion = default;
+            Core.Optional<string> runbookDefinition = default;
+            Core.Optional<GraphRunbookType> runbookType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaVersion"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new RawGraphicalRunbookContent(schemaVersion.Value, runbookDefinition.Value, Optional.ToNullable(runbookType));
+            return new RawGraphicalRunbookContent(schemaVersion.Value, runbookDefinition.Value, Core.Optional.ToNullable(runbookType));
         }
     }
 }

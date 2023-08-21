@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Advisor.Models
 {
-    public partial class DigestConfig : IUtf8JsonSerializable
+    public partial class DigestConfig : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ActionGroupResourceId))
+            if (Core.Optional.IsDefined(ActionGroupResourceId))
             {
                 writer.WritePropertyName("actionGroupResourceId"u8);
                 writer.WriteStringValue(ActionGroupResourceId);
             }
-            if (Optional.IsDefined(Frequency))
+            if (Core.Optional.IsDefined(Frequency))
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteNumberValue(Frequency.Value);
             }
-            if (Optional.IsCollectionDefined(Categories))
+            if (Core.Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Language))
+            if (Core.Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.Advisor.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> actionGroupResourceId = default;
-            Optional<int> frequency = default;
-            Optional<IList<Category>> categories = default;
-            Optional<string> language = default;
-            Optional<DigestConfigState> state = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> actionGroupResourceId = default;
+            Core.Optional<int> frequency = default;
+            Core.Optional<IList<Category>> categories = default;
+            Core.Optional<string> language = default;
+            Core.Optional<DigestConfigState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Advisor.Models
                     continue;
                 }
             }
-            return new DigestConfig(name.Value, actionGroupResourceId.Value, Optional.ToNullable(frequency), Optional.ToList(categories), language.Value, Optional.ToNullable(state));
+            return new DigestConfig(name.Value, actionGroupResourceId.Value, Core.Optional.ToNullable(frequency), Core.Optional.ToList(categories), language.Value, Core.Optional.ToNullable(state));
         }
     }
 }

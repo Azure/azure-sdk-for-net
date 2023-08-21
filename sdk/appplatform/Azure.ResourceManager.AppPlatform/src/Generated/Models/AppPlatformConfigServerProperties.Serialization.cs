@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformConfigServerProperties : IUtf8JsonSerializable
+    public partial class AppPlatformConfigServerProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Error))
+            if (Core.Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            if (Optional.IsDefined(ConfigServer))
+            if (Core.Optional.IsDefined(ConfigServer))
             {
                 writer.WritePropertyName("configServer"u8);
                 writer.WriteObjectValue(ConfigServer);
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformConfigServerState> provisioningState = default;
-            Optional<AppPlatformErrorInfo> error = default;
-            Optional<ConfigServerSettings> configServer = default;
+            Core.Optional<AppPlatformConfigServerState> provisioningState = default;
+            Core.Optional<AppPlatformErrorInfo> error = default;
+            Core.Optional<ConfigServerSettings> configServer = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformConfigServerProperties(Optional.ToNullable(provisioningState), error.Value, configServer.Value);
+            return new AppPlatformConfigServerProperties(Core.Optional.ToNullable(provisioningState), error.Value, configServer.Value);
         }
     }
 }

@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> jobScheduleId = default;
-            Optional<ScheduleAssociationProperty> schedule = default;
-            Optional<RunbookAssociationProperty> runbook = default;
-            Optional<string> runOn = default;
-            Optional<IReadOnlyDictionary<string, string>> parameters = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<Guid> jobScheduleId = default;
+            Core.Optional<ScheduleAssociationProperty> schedule = default;
+            Core.Optional<RunbookAssociationProperty> runbook = default;
+            Core.Optional<string> runOn = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Automation
                     continue;
                 }
             }
-            return new AutomationJobScheduleData(id, name, type, systemData.Value, Optional.ToNullable(jobScheduleId), schedule.Value, runbook.Value, runOn.Value, Optional.ToDictionary(parameters));
+            return new AutomationJobScheduleData(id, name, type, systemData.Value, Core.Optional.ToNullable(jobScheduleId), schedule.Value, runbook.Value, runOn.Value, Core.Optional.ToDictionary(parameters));
         }
     }
 }

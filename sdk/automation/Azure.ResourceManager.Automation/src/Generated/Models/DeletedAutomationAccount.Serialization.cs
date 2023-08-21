@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            Core.Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> automationAccountResourceId = default;
-            Optional<string> automationAccountId = default;
-            Optional<string> location0 = default;
-            Optional<DateTimeOffset> deletionTime = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ResourceIdentifier> automationAccountResourceId = default;
+            Core.Optional<string> automationAccountId = default;
+            Core.Optional<string> location0 = default;
+            Core.Optional<DateTimeOffset> deletionTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new DeletedAutomationAccount(id, name, type, systemData.Value, Optional.ToNullable(location), automationAccountResourceId.Value, automationAccountId.Value, location0.Value, Optional.ToNullable(deletionTime));
+            return new DeletedAutomationAccount(id, name, type, systemData.Value, Core.Optional.ToNullable(location), automationAccountResourceId.Value, automationAccountId.Value, location0.Value, Core.Optional.ToNullable(deletionTime));
         }
     }
 }

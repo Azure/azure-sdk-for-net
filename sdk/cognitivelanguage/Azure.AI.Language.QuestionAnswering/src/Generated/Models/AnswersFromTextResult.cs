@@ -16,7 +16,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <summary> Initializes a new instance of AnswersFromTextResult. </summary>
         internal AnswersFromTextResult()
         {
-            Answers = new ChangeTrackingList<TextAnswer>();
+            Answers = new Core.ChangeTrackingList<TextAnswer>();
         }
 
         /// <summary> Initializes a new instance of AnswersFromTextResult. </summary>

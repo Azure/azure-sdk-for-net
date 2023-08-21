@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Argument.AssertNotNull(contentType, nameof(contentType));
 
             ContentType = contentType;
-            FormParameters = new ChangeTrackingList<ParameterContract>();
-            Examples = new ChangeTrackingDictionary<string, ParameterExampleContract>();
+            FormParameters = new Core.ChangeTrackingList<ParameterContract>();
+            Examples = new Core.ChangeTrackingDictionary<string, ParameterExampleContract>();
         }
 
         /// <summary> Initializes a new instance of RepresentationContract. </summary>

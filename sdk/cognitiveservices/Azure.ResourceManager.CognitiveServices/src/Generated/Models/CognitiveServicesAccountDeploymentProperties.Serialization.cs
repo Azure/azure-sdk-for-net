@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CognitiveServicesAccountDeploymentProperties : IUtf8JsonSerializable
+    public partial class CognitiveServicesAccountDeploymentProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Model))
+            if (Core.Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteObjectValue(Model);
             }
-            if (Optional.IsDefined(ScaleSettings))
+            if (Core.Optional.IsDefined(ScaleSettings))
             {
                 writer.WritePropertyName("scaleSettings"u8);
                 writer.WriteObjectValue(ScaleSettings);
             }
-            if (Optional.IsDefined(RaiPolicyName))
+            if (Core.Optional.IsDefined(RaiPolicyName))
             {
                 writer.WritePropertyName("raiPolicyName"u8);
                 writer.WriteStringValue(RaiPolicyName);
             }
-            if (Optional.IsDefined(VersionUpgradeOption))
+            if (Core.Optional.IsDefined(VersionUpgradeOption))
             {
                 writer.WritePropertyName("versionUpgradeOption"u8);
                 writer.WriteStringValue(VersionUpgradeOption.Value.ToString());
@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<CognitiveServicesAccountDeploymentProvisioningState> provisioningState = default;
-            Optional<CognitiveServicesAccountDeploymentModel> model = default;
-            Optional<CognitiveServicesAccountDeploymentScaleSettings> scaleSettings = default;
-            Optional<IReadOnlyDictionary<string, string>> capabilities = default;
-            Optional<string> raiPolicyName = default;
-            Optional<ServiceAccountCallRateLimit> callRateLimit = default;
-            Optional<IReadOnlyList<ServiceAccountThrottlingRule>> rateLimits = default;
-            Optional<DeploymentModelVersionUpgradeOption> versionUpgradeOption = default;
+            Core.Optional<CognitiveServicesAccountDeploymentProvisioningState> provisioningState = default;
+            Core.Optional<CognitiveServicesAccountDeploymentModel> model = default;
+            Core.Optional<CognitiveServicesAccountDeploymentScaleSettings> scaleSettings = default;
+            Core.Optional<IReadOnlyDictionary<string, string>> capabilities = default;
+            Core.Optional<string> raiPolicyName = default;
+            Core.Optional<ServiceAccountCallRateLimit> callRateLimit = default;
+            Core.Optional<IReadOnlyList<ServiceAccountThrottlingRule>> rateLimits = default;
+            Core.Optional<DeploymentModelVersionUpgradeOption> versionUpgradeOption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new CognitiveServicesAccountDeploymentProperties(Optional.ToNullable(provisioningState), model.Value, scaleSettings.Value, Optional.ToDictionary(capabilities), raiPolicyName.Value, callRateLimit.Value, Optional.ToList(rateLimits), Optional.ToNullable(versionUpgradeOption));
+            return new CognitiveServicesAccountDeploymentProperties(Core.Optional.ToNullable(provisioningState), model.Value, scaleSettings.Value, Core.Optional.ToDictionary(capabilities), raiPolicyName.Value, callRateLimit.Value, Core.Optional.ToList(rateLimits), Core.Optional.ToNullable(versionUpgradeOption));
         }
     }
 }

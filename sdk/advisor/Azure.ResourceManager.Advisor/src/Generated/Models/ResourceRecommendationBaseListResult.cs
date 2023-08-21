@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <summary> Initializes a new instance of ResourceRecommendationBaseListResult. </summary>
         internal ResourceRecommendationBaseListResult()
         {
-            Value = new ChangeTrackingList<ResourceRecommendationBaseData>();
+            Value = new Core.ChangeTrackingList<ResourceRecommendationBaseData>();
         }
 
         /// <summary> Initializes a new instance of ResourceRecommendationBaseListResult. </summary>

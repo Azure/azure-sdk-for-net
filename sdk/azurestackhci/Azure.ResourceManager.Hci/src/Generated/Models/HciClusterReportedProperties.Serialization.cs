@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> clusterName = default;
-            Optional<Guid> clusterId = default;
-            Optional<string> clusterVersion = default;
-            Optional<IReadOnlyList<HciClusterNode>> nodes = default;
-            Optional<DateTimeOffset> lastUpdated = default;
-            Optional<ImdsAttestationState> imdsAttestation = default;
-            Optional<HciClusterDiagnosticLevel> diagnosticLevel = default;
-            Optional<IReadOnlyList<string>> supportedCapabilities = default;
+            Core.Optional<string> clusterName = default;
+            Core.Optional<Guid> clusterId = default;
+            Core.Optional<string> clusterVersion = default;
+            Core.Optional<IReadOnlyList<HciClusterNode>> nodes = default;
+            Core.Optional<DateTimeOffset> lastUpdated = default;
+            Core.Optional<ImdsAttestationState> imdsAttestation = default;
+            Core.Optional<HciClusterDiagnosticLevel> diagnosticLevel = default;
+            Core.Optional<IReadOnlyList<string>> supportedCapabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterName"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new HciClusterReportedProperties(clusterName.Value, Optional.ToNullable(clusterId), clusterVersion.Value, Optional.ToList(nodes), Optional.ToNullable(lastUpdated), Optional.ToNullable(imdsAttestation), Optional.ToNullable(diagnosticLevel), Optional.ToList(supportedCapabilities));
+            return new HciClusterReportedProperties(clusterName.Value, Core.Optional.ToNullable(clusterId), clusterVersion.Value, Core.Optional.ToList(nodes), Core.Optional.ToNullable(lastUpdated), Core.Optional.ToNullable(imdsAttestation), Core.Optional.ToNullable(diagnosticLevel), Core.Optional.ToList(supportedCapabilities));
         }
     }
 }

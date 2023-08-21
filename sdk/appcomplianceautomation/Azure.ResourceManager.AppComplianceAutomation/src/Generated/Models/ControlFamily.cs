@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <summary> Initializes a new instance of ControlFamily. </summary>
         internal ControlFamily()
         {
-            Controls = new ChangeTrackingList<Control>();
+            Controls = new Core.ChangeTrackingList<Control>();
         }
 
         /// <summary> Initializes a new instance of ControlFamily. </summary>

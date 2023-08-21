@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Batch.Models
         public BatchEndpointAccessProfile(BatchEndpointAccessDefaultAction defaultAction)
         {
             DefaultAction = defaultAction;
-            IPRules = new ChangeTrackingList<BatchIPRule>();
+            IPRules = new Core.ChangeTrackingList<BatchIPRule>();
         }
 
         /// <summary> Initializes a new instance of BatchEndpointAccessProfile. </summary>

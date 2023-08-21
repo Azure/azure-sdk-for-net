@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchPublicIPAddressConfiguration : IUtf8JsonSerializable
+    public partial class BatchPublicIPAddressConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Provision))
+            if (Core.Optional.IsDefined(Provision))
             {
                 writer.WritePropertyName("provision"u8);
                 writer.WriteStringValue(Provision.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(IPAddressIds))
+            if (Core.Optional.IsCollectionDefined(IPAddressIds))
             {
                 writer.WritePropertyName("ipAddressIds"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<BatchIPAddressProvisioningType> provision = default;
-            Optional<IList<ResourceIdentifier>> ipAddressIds = default;
+            Core.Optional<BatchIPAddressProvisioningType> provision = default;
+            Core.Optional<IList<ResourceIdentifier>> ipAddressIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provision"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new BatchPublicIPAddressConfiguration(Optional.ToNullable(provision), Optional.ToList(ipAddressIds));
+            return new BatchPublicIPAddressConfiguration(Core.Optional.ToNullable(provision), Core.Optional.ToList(ipAddressIds));
         }
     }
 }

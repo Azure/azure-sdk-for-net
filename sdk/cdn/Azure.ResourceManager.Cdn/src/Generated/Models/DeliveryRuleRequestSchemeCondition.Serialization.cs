@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class DeliveryRuleRequestSchemeCondition : IUtf8JsonSerializable
+    public partial class DeliveryRuleRequestSchemeCondition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("parameters"u8);

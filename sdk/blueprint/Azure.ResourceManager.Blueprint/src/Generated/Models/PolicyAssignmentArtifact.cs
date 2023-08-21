@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             Argument.AssertNotNull(policyDefinitionId, nameof(policyDefinitionId));
             Argument.AssertNotNull(parameters, nameof(parameters));
 
-            DependsOn = new ChangeTrackingList<string>();
+            DependsOn = new Core.ChangeTrackingList<string>();
             PolicyDefinitionId = policyDefinitionId;
             Parameters = parameters;
             Kind = ArtifactKind.PolicyAssignment;

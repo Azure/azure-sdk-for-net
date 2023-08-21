@@ -392,7 +392,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAttachmentsByPartyIdRequest(partyId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAttachmentsByPartyIdNextPageRequest(nextLink, partyId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Attachments.GetAttachmentsByPartyId", "value", "nextLink", context);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Attachments.GetAttachmentsByPartyId", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -439,7 +439,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAttachmentsByPartyIdRequest(partyId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAttachmentsByPartyIdNextPageRequest(nextLink, partyId, resourceIds, resourceTypes, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Attachments.GetAttachmentsByPartyId", "value", "nextLink", context);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Attachments.GetAttachmentsByPartyId", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetAttachmentsByPartyIdRequest(string partyId, IEnumerable<string> resourceIds, IEnumerable<string> resourceTypes, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
@@ -452,42 +452,42 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendPath("/parties/", false);
             uri.AppendPath(partyId, true);
             uri.AppendPath("/attachments", false);
-            if (resourceIds != null && Optional.IsCollectionDefined(resourceIds))
+            if (resourceIds != null && Core.Optional.IsCollectionDefined(resourceIds))
             {
                 foreach (var param in resourceIds)
                 {
                     uri.AppendQuery("resourceIds", param, true);
                 }
             }
-            if (resourceTypes != null && Optional.IsCollectionDefined(resourceTypes))
+            if (resourceTypes != null && Core.Optional.IsCollectionDefined(resourceTypes))
             {
                 foreach (var param in resourceTypes)
                 {
                     uri.AppendQuery("resourceTypes", param, true);
                 }
             }
-            if (ids != null && Optional.IsCollectionDefined(ids))
+            if (ids != null && Core.Optional.IsCollectionDefined(ids))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null && Optional.IsCollectionDefined(names))
+            if (names != null && Core.Optional.IsCollectionDefined(names))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            if (propertyFilters != null && Core.Optional.IsCollectionDefined(propertyFilters))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            if (statuses != null && Core.Optional.IsCollectionDefined(statuses))
             {
                 foreach (var param in statuses)
                 {

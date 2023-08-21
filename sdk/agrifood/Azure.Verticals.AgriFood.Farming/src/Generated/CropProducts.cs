@@ -302,7 +302,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCropProductsRequest(cropIds, brands, products, traits, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCropProductsNextPageRequest(nextLink, cropIds, brands, products, traits, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "CropProducts.GetCropProducts", "value", "nextLink", context);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "CropProducts.GetCropProducts", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -343,7 +343,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCropProductsRequest(cropIds, brands, products, traits, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCropProductsNextPageRequest(nextLink, cropIds, brands, products, traits, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "CropProducts.GetCropProducts", "value", "nextLink", context);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "CropProducts.GetCropProducts", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetCropProductsRequest(IEnumerable<string> cropIds, IEnumerable<string> brands, IEnumerable<string> products, IEnumerable<string> traits, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
@@ -354,56 +354,56 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/crop-products", false);
-            if (cropIds != null && Optional.IsCollectionDefined(cropIds))
+            if (cropIds != null && Core.Optional.IsCollectionDefined(cropIds))
             {
                 foreach (var param in cropIds)
                 {
                     uri.AppendQuery("cropIds", param, true);
                 }
             }
-            if (brands != null && Optional.IsCollectionDefined(brands))
+            if (brands != null && Core.Optional.IsCollectionDefined(brands))
             {
                 foreach (var param in brands)
                 {
                     uri.AppendQuery("brands", param, true);
                 }
             }
-            if (products != null && Optional.IsCollectionDefined(products))
+            if (products != null && Core.Optional.IsCollectionDefined(products))
             {
                 foreach (var param in products)
                 {
                     uri.AppendQuery("products", param, true);
                 }
             }
-            if (traits != null && Optional.IsCollectionDefined(traits))
+            if (traits != null && Core.Optional.IsCollectionDefined(traits))
             {
                 foreach (var param in traits)
                 {
                     uri.AppendQuery("traits", param, true);
                 }
             }
-            if (ids != null && Optional.IsCollectionDefined(ids))
+            if (ids != null && Core.Optional.IsCollectionDefined(ids))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null && Optional.IsCollectionDefined(names))
+            if (names != null && Core.Optional.IsCollectionDefined(names))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            if (propertyFilters != null && Core.Optional.IsCollectionDefined(propertyFilters))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            if (statuses != null && Core.Optional.IsCollectionDefined(statuses))
             {
                 foreach (var param in statuses)
                 {

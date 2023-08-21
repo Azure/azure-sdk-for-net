@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Initializes a new instance of ScriptCmdletData. </summary>
         public ScriptCmdletData()
         {
-            Parameters = new ChangeTrackingList<ScriptParameter>();
+            Parameters = new Core.ChangeTrackingList<ScriptParameter>();
         }
 
         /// <summary> Initializes a new instance of ScriptCmdletData. </summary>

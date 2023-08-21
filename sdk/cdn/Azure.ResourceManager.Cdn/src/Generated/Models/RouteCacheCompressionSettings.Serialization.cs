@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class RouteCacheCompressionSettings : IUtf8JsonSerializable
+    public partial class RouteCacheCompressionSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ContentTypesToCompress))
+            if (Core.Optional.IsCollectionDefined(ContentTypesToCompress))
             {
                 writer.WritePropertyName("contentTypesToCompress"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsCompressionEnabled))
+            if (Core.Optional.IsDefined(IsCompressionEnabled))
             {
                 writer.WritePropertyName("isCompressionEnabled"u8);
                 writer.WriteBooleanValue(IsCompressionEnabled.Value);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IList<string>> contentTypesToCompress = default;
-            Optional<bool> isCompressionEnabled = default;
+            Core.Optional<IList<string>> contentTypesToCompress = default;
+            Core.Optional<bool> isCompressionEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contentTypesToCompress"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new RouteCacheCompressionSettings(Optional.ToList(contentTypesToCompress), Optional.ToNullable(isCompressionEnabled));
+            return new RouteCacheCompressionSettings(Core.Optional.ToList(contentTypesToCompress), Core.Optional.ToNullable(isCompressionEnabled));
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AgFoodPlatformPrivateLinkResourceData>> value = default;
+            Core.Optional<IReadOnlyList<AgFoodPlatformPrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     continue;
                 }
             }
-            return new AgFoodPlatformPrivateLinkResourceListResult(Optional.ToList(value));
+            return new AgFoodPlatformPrivateLinkResourceListResult(Core.Optional.ToList(value));
         }
     }
 }

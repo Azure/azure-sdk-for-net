@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ApiManagementLoggerPatch. </summary>
         public ApiManagementLoggerPatch()
         {
-            Credentials = new ChangeTrackingDictionary<string, string>();
+            Credentials = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Logger type. </summary>

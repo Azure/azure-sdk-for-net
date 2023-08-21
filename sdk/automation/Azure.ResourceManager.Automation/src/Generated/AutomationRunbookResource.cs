@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = await _automationRunbookRunbookRestClient.PublishAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation(_automationRunbookRunbookClientDiagnostics, Pipeline, _automationRunbookRunbookRestClient.CreatePublishRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new AutomationArmOperation(_automationRunbookRunbookClientDiagnostics, Pipeline, _automationRunbookRunbookRestClient.CreatePublishRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = _automationRunbookRunbookRestClient.Publish(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AutomationArmOperation(_automationRunbookRunbookClientDiagnostics, Pipeline, _automationRunbookRunbookRestClient.CreatePublishRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new AutomationArmOperation(_automationRunbookRunbookClientDiagnostics, Pipeline, _automationRunbookRunbookRestClient.CreatePublishRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _testJobStreamsRestClient.CreateListByTestJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _testJobStreamsRestClient.CreateListByTestJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AutomationJobStream.DeserializeAutomationJobStream, _testJobStreamsClientDiagnostics, Pipeline, "AutomationRunbookResource.GetTestJobStreams", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AutomationJobStream.DeserializeAutomationJobStream, _testJobStreamsClientDiagnostics, Pipeline, "AutomationRunbookResource.GetTestJobStreams", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _testJobStreamsRestClient.CreateListByTestJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _testJobStreamsRestClient.CreateListByTestJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AutomationJobStream.DeserializeAutomationJobStream, _testJobStreamsClientDiagnostics, Pipeline, "AutomationRunbookResource.GetTestJobStreams", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AutomationJobStream.DeserializeAutomationJobStream, _testJobStreamsClientDiagnostics, Pipeline, "AutomationRunbookResource.GetTestJobStreams", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

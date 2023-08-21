@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of DtmfOptionsInternal. </summary>
         public DtmfOptionsInternal()
         {
-            StopTones = new ChangeTrackingList<DtmfTone>();
+            StopTones = new Core.ChangeTrackingList<DtmfTone>();
         }
 
         /// <summary> Time to wait between DTMF inputs to stop recognizing. </summary>

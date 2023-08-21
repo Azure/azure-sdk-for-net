@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CidrIPAddress : IUtf8JsonSerializable
+    public partial class CidrIPAddress : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(BaseIPAddress))
+            if (Core.Optional.IsDefined(BaseIPAddress))
             {
                 writer.WritePropertyName("baseIpAddress"u8);
                 writer.WriteStringValue(BaseIPAddress);
             }
-            if (Optional.IsDefined(PrefixLength))
+            if (Core.Optional.IsDefined(PrefixLength))
             {
                 writer.WritePropertyName("prefixLength"u8);
                 writer.WriteNumberValue(PrefixLength.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> baseIPAddress = default;
-            Optional<int> prefixLength = default;
+            Core.Optional<string> baseIPAddress = default;
+            Core.Optional<int> prefixLength = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("baseIpAddress"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new CidrIPAddress(baseIPAddress.Value, Optional.ToNullable(prefixLength));
+            return new CidrIPAddress(baseIPAddress.Value, Core.Optional.ToNullable(prefixLength));
         }
     }
 }

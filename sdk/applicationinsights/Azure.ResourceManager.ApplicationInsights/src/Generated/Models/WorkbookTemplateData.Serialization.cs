@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
-    public partial class WorkbookTemplateData : IUtf8JsonSerializable
+    public partial class WorkbookTemplateData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.ApplicationInsights
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Priority))
+            if (Core.Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Optional.IsDefined(Author))
+            if (Core.Optional.IsDefined(Author))
             {
                 writer.WritePropertyName("author"u8);
                 writer.WriteStringValue(Author);
             }
-            if (Optional.IsDefined(TemplateData))
+            if (Core.Optional.IsDefined(TemplateData))
             {
                 writer.WritePropertyName("templateData"u8);
 #if NET6_0_OR_GREATER
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(TemplateData.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsCollectionDefined(Galleries))
+            if (Core.Optional.IsCollectionDefined(Galleries))
             {
                 writer.WritePropertyName("galleries"u8);
                 writer.WriteStartArray();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LocalizedGalleries))
+            if (Core.Optional.IsCollectionDefined(LocalizedGalleries))
             {
                 writer.WritePropertyName("localized"u8);
                 writer.WriteStartObject();
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> priority = default;
-            Optional<string> author = default;
-            Optional<BinaryData> templateData = default;
-            Optional<IList<WorkbookTemplateGallery>> galleries = default;
-            Optional<IDictionary<string, IList<WorkbookTemplateLocalizedGallery>>> localized = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<int> priority = default;
+            Core.Optional<string> author = default;
+            Core.Optional<BinaryData> templateData = default;
+            Core.Optional<IList<WorkbookTemplateGallery>> galleries = default;
+            Core.Optional<IDictionary<string, IList<WorkbookTemplateLocalizedGallery>>> localized = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                     continue;
                 }
             }
-            return new WorkbookTemplateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(priority), author.Value, templateData.Value, Optional.ToList(galleries), Optional.ToDictionary(localized));
+            return new WorkbookTemplateData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(priority), author.Value, templateData.Value, Core.Optional.ToList(galleries), Core.Optional.ToDictionary(localized));
         }
     }
 }

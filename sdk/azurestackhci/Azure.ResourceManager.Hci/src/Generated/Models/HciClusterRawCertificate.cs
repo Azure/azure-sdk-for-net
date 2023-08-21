@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of HciClusterRawCertificate. </summary>
         public HciClusterRawCertificate()
         {
-            Certificates = new ChangeTrackingList<string>();
+            Certificates = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Gets the certificates. </summary>

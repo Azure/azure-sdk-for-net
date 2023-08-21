@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class KeyVaultLastAccessStatusContractProperties : IUtf8JsonSerializable
+    public partial class KeyVaultLastAccessStatusContractProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Code))
+            if (Core.Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Optional.IsDefined(Message))
+            if (Core.Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(TimeStampUtc))
+            if (Core.Optional.IsDefined(TimeStampUtc))
             {
                 writer.WritePropertyName("timeStampUtc"u8);
                 writer.WriteStringValue(TimeStampUtc.Value, "O");
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<DateTimeOffset> timeStampUtc = default;
+            Core.Optional<string> code = default;
+            Core.Optional<string> message = default;
+            Core.Optional<DateTimeOffset> timeStampUtc = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new KeyVaultLastAccessStatusContractProperties(code.Value, message.Value, Optional.ToNullable(timeStampUtc));
+            return new KeyVaultLastAccessStatusContractProperties(code.Value, message.Value, Core.Optional.ToNullable(timeStampUtc));
         }
     }
 }

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> displayName = default;
-            Optional<IReadOnlyList<AuthorizationProviderOperationInfo>> operations = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<IReadOnlyList<AuthorizationProviderOperationInfo>> operations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new AuthorizationProviderResourceType(name.Value, displayName.Value, Optional.ToList(operations));
+            return new AuthorizationProviderResourceType(name.Value, displayName.Value, Core.Optional.ToList(operations));
         }
     }
 }

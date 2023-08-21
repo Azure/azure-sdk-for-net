@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of DeploymentList. </summary>
         internal DeploymentList()
         {
-            Deployments = new ChangeTrackingList<ResourceIdentifier>();
+            Deployments = new Core.ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of DeploymentList. </summary>

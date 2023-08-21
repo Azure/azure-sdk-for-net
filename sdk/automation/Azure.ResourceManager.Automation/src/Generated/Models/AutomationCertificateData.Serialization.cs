@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    public partial class AutomationCertificateData : IUtf8JsonSerializable
+    public partial class AutomationCertificateData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -37,13 +37,13 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> thumbprint = default;
-            Optional<DateTimeOffset> expiryTime = default;
-            Optional<bool> isExportable = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> description = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> thumbprint = default;
+            Core.Optional<DateTimeOffset> expiryTime = default;
+            Core.Optional<bool> isExportable = default;
+            Core.Optional<DateTimeOffset> creationTime = default;
+            Core.Optional<DateTimeOffset> lastModifiedTime = default;
+            Core.Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Automation
                     continue;
                 }
             }
-            return new AutomationCertificateData(id, name, type, systemData.Value, thumbprint.Value, Optional.ToNullable(expiryTime), Optional.ToNullable(isExportable), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value);
+            return new AutomationCertificateData(id, name, type, systemData.Value, thumbprint.Value, Core.Optional.ToNullable(expiryTime), Core.Optional.ToNullable(isExportable), Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(lastModifiedTime), description.Value);
         }
     }
 }

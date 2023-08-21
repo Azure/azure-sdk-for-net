@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Attestation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AttestationPrivateEndpointConnectionData>> value = default;
+            Core.Optional<IReadOnlyList<AttestationPrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     continue;
                 }
             }
-            return new AttestationPrivateEndpointConnectionListResult(Optional.ToList(value));
+            return new AttestationPrivateEndpointConnectionListResult(Core.Optional.ToList(value));
         }
     }
 }

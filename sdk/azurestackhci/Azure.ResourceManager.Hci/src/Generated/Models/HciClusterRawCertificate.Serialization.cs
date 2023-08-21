@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    internal partial class HciClusterRawCertificate : IUtf8JsonSerializable
+    internal partial class HciClusterRawCertificate : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Certificates))
+            if (Core.Optional.IsCollectionDefined(Certificates))
             {
                 writer.WritePropertyName("certificates"u8);
                 writer.WriteStartArray();

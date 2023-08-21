@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of AvsPrivateCloudPatch. </summary>
         public AvsPrivateCloudPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            IdentitySources = new ChangeTrackingList<SingleSignOnIdentitySource>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            IdentitySources = new Core.ChangeTrackingList<SingleSignOnIdentitySource>();
         }
 
         /// <summary> Resource tags. </summary>

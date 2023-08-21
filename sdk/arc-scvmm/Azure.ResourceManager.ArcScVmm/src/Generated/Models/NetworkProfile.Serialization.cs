@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
-    internal partial class NetworkProfile : IUtf8JsonSerializable
+    internal partial class NetworkProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(NetworkInterfaces))
+            if (Core.Optional.IsCollectionDefined(NetworkInterfaces))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<IList<NetworkInterfaces>> networkInterfaces = default;
+            Core.Optional<IList<NetworkInterfaces>> networkInterfaces = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkInterfaces"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     continue;
                 }
             }
-            return new NetworkProfile(Optional.ToList(networkInterfaces));
+            return new NetworkProfile(Core.Optional.ToList(networkInterfaces));
         }
     }
 }

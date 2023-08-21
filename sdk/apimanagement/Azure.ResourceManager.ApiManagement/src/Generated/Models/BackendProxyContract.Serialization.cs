@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class BackendProxyContract : IUtf8JsonSerializable
+    public partial class BackendProxyContract : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("url"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
-            if (Optional.IsDefined(Username))
+            if (Core.Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Optional.IsDefined(Password))
+            if (Core.Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 return null;
             }
             Uri uri = default;
-            Optional<string> username = default;
-            Optional<string> password = default;
+            Core.Optional<string> username = default;
+            Core.Optional<string> password = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"u8))

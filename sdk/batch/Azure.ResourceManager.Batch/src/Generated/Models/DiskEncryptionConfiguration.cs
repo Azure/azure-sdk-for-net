@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of DiskEncryptionConfiguration. </summary>
         public DiskEncryptionConfiguration()
         {
-            Targets = new ChangeTrackingList<BatchDiskEncryptionTarget>();
+            Targets = new Core.ChangeTrackingList<BatchDiskEncryptionTarget>();
         }
 
         /// <summary> Initializes a new instance of DiskEncryptionConfiguration. </summary>

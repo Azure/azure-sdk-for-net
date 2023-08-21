@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BatchAccountCertificateData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<BatchAccountCertificateData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new ListCertificatesResult(Optional.ToList(value), nextLink.Value);
+            return new ListCertificatesResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

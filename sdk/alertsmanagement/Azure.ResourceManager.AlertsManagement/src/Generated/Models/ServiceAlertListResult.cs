@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Initializes a new instance of ServiceAlertListResult. </summary>
         internal ServiceAlertListResult()
         {
-            Value = new ChangeTrackingList<ServiceAlertData>();
+            Value = new Core.ChangeTrackingList<ServiceAlertData>();
         }
 
         /// <summary> Initializes a new instance of ServiceAlertListResult. </summary>

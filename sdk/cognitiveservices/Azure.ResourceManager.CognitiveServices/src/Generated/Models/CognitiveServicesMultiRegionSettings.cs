@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of CognitiveServicesMultiRegionSettings. </summary>
         public CognitiveServicesMultiRegionSettings()
         {
-            Regions = new ChangeTrackingList<CognitiveServicesRegionSetting>();
+            Regions = new Core.ChangeTrackingList<CognitiveServicesRegionSetting>();
         }
 
         /// <summary> Initializes a new instance of CognitiveServicesMultiRegionSettings. </summary>

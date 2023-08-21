@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Initializes a new instance of WorkloadNetworkVmGroupData. </summary>
         public WorkloadNetworkVmGroupData()
         {
-            Members = new ChangeTrackingList<string>();
+            Members = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of WorkloadNetworkVmGroupData. </summary>

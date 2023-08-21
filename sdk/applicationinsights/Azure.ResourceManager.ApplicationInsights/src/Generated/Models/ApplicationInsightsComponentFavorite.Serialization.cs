@@ -11,37 +11,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class ApplicationInsightsComponentFavorite : IUtf8JsonSerializable
+    public partial class ApplicationInsightsComponentFavorite : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("Name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Config))
+            if (Core.Optional.IsDefined(Config))
             {
                 writer.WritePropertyName("Config"u8);
                 writer.WriteStringValue(Config);
             }
-            if (Optional.IsDefined(Version))
+            if (Core.Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("Version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(FavoriteType))
+            if (Core.Optional.IsDefined(FavoriteType))
             {
                 writer.WritePropertyName("FavoriteType"u8);
                 writer.WriteStringValue(FavoriteType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(SourceType))
+            if (Core.Optional.IsDefined(SourceType))
             {
                 writer.WritePropertyName("SourceType"u8);
                 writer.WriteStringValue(SourceType);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("Tags"u8);
                 writer.WriteStartArray();
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Category))
+            if (Core.Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("Category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Optional.IsDefined(IsGeneratedFromTemplate))
+            if (Core.Optional.IsDefined(IsGeneratedFromTemplate))
             {
                 writer.WritePropertyName("IsGeneratedFromTemplate"u8);
                 writer.WriteBooleanValue(IsGeneratedFromTemplate.Value);
@@ -70,17 +70,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> config = default;
-            Optional<string> version = default;
-            Optional<string> favoriteId = default;
-            Optional<FavoriteType> favoriteType = default;
-            Optional<string> sourceType = default;
-            Optional<string> timeModified = default;
-            Optional<IList<string>> tags = default;
-            Optional<string> category = default;
-            Optional<bool> isGeneratedFromTemplate = default;
-            Optional<string> userId = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> config = default;
+            Core.Optional<string> version = default;
+            Core.Optional<string> favoriteId = default;
+            Core.Optional<FavoriteType> favoriteType = default;
+            Core.Optional<string> sourceType = default;
+            Core.Optional<string> timeModified = default;
+            Core.Optional<IList<string>> tags = default;
+            Core.Optional<string> category = default;
+            Core.Optional<bool> isGeneratedFromTemplate = default;
+            Core.Optional<string> userId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Name"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     continue;
                 }
             }
-            return new ApplicationInsightsComponentFavorite(name.Value, config.Value, version.Value, favoriteId.Value, Optional.ToNullable(favoriteType), sourceType.Value, timeModified.Value, Optional.ToList(tags), category.Value, Optional.ToNullable(isGeneratedFromTemplate), userId.Value);
+            return new ApplicationInsightsComponentFavorite(name.Value, config.Value, version.Value, favoriteId.Value, Core.Optional.ToNullable(favoriteType), sourceType.Value, timeModified.Value, Core.Optional.ToList(tags), category.Value, Core.Optional.ToNullable(isGeneratedFromTemplate), userId.Value);
         }
     }
 }

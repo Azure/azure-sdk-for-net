@@ -467,7 +467,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetBoundariesRequest(parentType, type, parentIds, minArea, maxArea, boundaryIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetBoundariesNextPageRequest(nextLink, parentType, type, parentIds, minArea, maxArea, boundaryIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Boundaries.GetBoundaries", "value", "nextLink", context);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Boundaries.GetBoundaries", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -509,7 +509,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetBoundariesRequest(parentType, type, parentIds, minArea, maxArea, boundaryIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetBoundariesNextPageRequest(nextLink, parentType, type, parentIds, minArea, maxArea, boundaryIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Boundaries.GetBoundaries", "value", "nextLink", context);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Boundaries.GetBoundaries", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -534,7 +534,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateSearchRequest(content, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateSearchNextPageRequest(nextLink, content, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Boundaries.Search", "value", "nextLink", context);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Boundaries.Search", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -559,7 +559,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateSearchRequest(content, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateSearchNextPageRequest(nextLink, content, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Boundaries.Search", "value", "nextLink", context);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Boundaries.Search", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -606,7 +606,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetBoundariesByPartyIdRequest(partyId, parentType, type, parentIds, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetBoundariesByPartyIdNextPageRequest(nextLink, partyId, parentType, type, parentIds, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Boundaries.GetBoundariesByPartyId", "value", "nextLink", context);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Boundaries.GetBoundariesByPartyId", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -653,7 +653,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetBoundariesByPartyIdRequest(partyId, parentType, type, parentIds, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetBoundariesByPartyIdNextPageRequest(nextLink, partyId, parentType, type, parentIds, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Boundaries.GetBoundariesByPartyId", "value", "nextLink", context);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Boundaries.GetBoundariesByPartyId", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -681,7 +681,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateSearchByPartyIdRequest(partyId, content, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateSearchByPartyIdNextPageRequest(nextLink, partyId, content, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Boundaries.SearchByPartyId", "value", "nextLink", context);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Boundaries.SearchByPartyId", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -709,7 +709,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateSearchByPartyIdRequest(partyId, content, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateSearchByPartyIdNextPageRequest(nextLink, partyId, content, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Boundaries.SearchByPartyId", "value", "nextLink", context);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Boundaries.SearchByPartyId", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -743,7 +743,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, partyId, boundaryId, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "Boundaries.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await Core.ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "Boundaries.CreateCascadeDeleteJob", Core.OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -783,7 +783,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, partyId, boundaryId, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "Boundaries.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil);
+                return Core.ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "Boundaries.CreateCascadeDeleteJob", Core.OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -808,7 +808,7 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("type", type, true);
             }
-            if (parentIds != null && Optional.IsCollectionDefined(parentIds))
+            if (parentIds != null && Core.Optional.IsCollectionDefined(parentIds))
             {
                 foreach (var param in parentIds)
                 {
@@ -823,28 +823,28 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("maxArea", maxArea.Value, true);
             }
-            if (boundaryIds != null && Optional.IsCollectionDefined(boundaryIds))
+            if (boundaryIds != null && Core.Optional.IsCollectionDefined(boundaryIds))
             {
                 foreach (var param in boundaryIds)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null && Optional.IsCollectionDefined(names))
+            if (names != null && Core.Optional.IsCollectionDefined(names))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            if (propertyFilters != null && Core.Optional.IsCollectionDefined(propertyFilters))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            if (statuses != null && Core.Optional.IsCollectionDefined(statuses))
             {
                 foreach (var param in statuses)
                 {
@@ -947,7 +947,7 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("type", type, true);
             }
-            if (parentIds != null && Optional.IsCollectionDefined(parentIds))
+            if (parentIds != null && Core.Optional.IsCollectionDefined(parentIds))
             {
                 foreach (var param in parentIds)
                 {
@@ -962,28 +962,28 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("maxArea", maxArea.Value, true);
             }
-            if (ids != null && Optional.IsCollectionDefined(ids))
+            if (ids != null && Core.Optional.IsCollectionDefined(ids))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null && Optional.IsCollectionDefined(names))
+            if (names != null && Core.Optional.IsCollectionDefined(names))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            if (propertyFilters != null && Core.Optional.IsCollectionDefined(propertyFilters))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            if (statuses != null && Core.Optional.IsCollectionDefined(statuses))
             {
                 foreach (var param in statuses)
                 {

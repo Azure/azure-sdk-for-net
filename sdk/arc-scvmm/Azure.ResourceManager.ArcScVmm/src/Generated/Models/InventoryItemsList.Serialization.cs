@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            Core.Optional<string> nextLink = default;
             IReadOnlyList<InventoryItemData> value = default;
             foreach (var property in element.EnumerateObject())
             {

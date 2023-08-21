@@ -12,24 +12,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class GlobalReachConnectionData : IUtf8JsonSerializable
+    public partial class GlobalReachConnectionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AuthorizationKey))
+            if (Core.Optional.IsDefined(AuthorizationKey))
             {
                 writer.WritePropertyName("authorizationKey"u8);
                 writer.WriteStringValue(AuthorizationKey);
             }
-            if (Optional.IsDefined(PeerExpressRouteCircuit))
+            if (Core.Optional.IsDefined(PeerExpressRouteCircuit))
             {
                 writer.WritePropertyName("peerExpressRouteCircuit"u8);
                 writer.WriteStringValue(PeerExpressRouteCircuit);
             }
-            if (Optional.IsDefined(ExpressRouteId))
+            if (Core.Optional.IsDefined(ExpressRouteId))
             {
                 writer.WritePropertyName("expressRouteId"u8);
                 writer.WriteStringValue(ExpressRouteId);
@@ -47,13 +47,13 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<GlobalReachConnectionProvisioningState> provisioningState = default;
-            Optional<string> addressPrefix = default;
-            Optional<string> authorizationKey = default;
-            Optional<GlobalReachConnectionStatus> circuitConnectionStatus = default;
-            Optional<ResourceIdentifier> peerExpressRouteCircuit = default;
-            Optional<ResourceIdentifier> expressRouteId = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<GlobalReachConnectionProvisioningState> provisioningState = default;
+            Core.Optional<string> addressPrefix = default;
+            Core.Optional<string> authorizationKey = default;
+            Core.Optional<GlobalReachConnectionStatus> circuitConnectionStatus = default;
+            Core.Optional<ResourceIdentifier> peerExpressRouteCircuit = default;
+            Core.Optional<ResourceIdentifier> expressRouteId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Avs
                     continue;
                 }
             }
-            return new GlobalReachConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), addressPrefix.Value, authorizationKey.Value, Optional.ToNullable(circuitConnectionStatus), peerExpressRouteCircuit.Value, expressRouteId.Value);
+            return new GlobalReachConnectionData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), addressPrefix.Value, authorizationKey.Value, Core.Optional.ToNullable(circuitConnectionStatus), peerExpressRouteCircuit.Value, expressRouteId.Value);
         }
     }
 }

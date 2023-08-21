@@ -14,39 +14,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    public partial class ArcSettingData : IUtf8JsonSerializable
+    public partial class ArcSettingData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ArcInstanceResourceGroup))
+            if (Core.Optional.IsDefined(ArcInstanceResourceGroup))
             {
                 writer.WritePropertyName("arcInstanceResourceGroup"u8);
                 writer.WriteStringValue(ArcInstanceResourceGroup);
             }
-            if (Optional.IsDefined(ArcApplicationClientId))
+            if (Core.Optional.IsDefined(ArcApplicationClientId))
             {
                 writer.WritePropertyName("arcApplicationClientId"u8);
                 writer.WriteStringValue(ArcApplicationClientId.Value);
             }
-            if (Optional.IsDefined(ArcApplicationTenantId))
+            if (Core.Optional.IsDefined(ArcApplicationTenantId))
             {
                 writer.WritePropertyName("arcApplicationTenantId"u8);
                 writer.WriteStringValue(ArcApplicationTenantId.Value);
             }
-            if (Optional.IsDefined(ArcServicePrincipalObjectId))
+            if (Core.Optional.IsDefined(ArcServicePrincipalObjectId))
             {
                 writer.WritePropertyName("arcServicePrincipalObjectId"u8);
                 writer.WriteStringValue(ArcServicePrincipalObjectId.Value);
             }
-            if (Optional.IsDefined(ArcApplicationObjectId))
+            if (Core.Optional.IsDefined(ArcApplicationObjectId))
             {
                 writer.WritePropertyName("arcApplicationObjectId"u8);
                 writer.WriteStringValue(ArcApplicationObjectId.Value);
             }
-            if (Optional.IsDefined(ConnectivityProperties))
+            if (Core.Optional.IsDefined(ConnectivityProperties))
             {
                 writer.WritePropertyName("connectivityProperties"u8);
 #if NET6_0_OR_GREATER
@@ -68,16 +68,16 @@ namespace Azure.ResourceManager.Hci
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HciProvisioningState> provisioningState = default;
-            Optional<string> arcInstanceResourceGroup = default;
-            Optional<Guid> arcApplicationClientId = default;
-            Optional<Guid> arcApplicationTenantId = default;
-            Optional<Guid> arcServicePrincipalObjectId = default;
-            Optional<Guid> arcApplicationObjectId = default;
-            Optional<ArcSettingAggregateState> aggregateState = default;
-            Optional<IReadOnlyList<PerNodeArcState>> perNodeDetails = default;
-            Optional<BinaryData> connectivityProperties = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<HciProvisioningState> provisioningState = default;
+            Core.Optional<string> arcInstanceResourceGroup = default;
+            Core.Optional<Guid> arcApplicationClientId = default;
+            Core.Optional<Guid> arcApplicationTenantId = default;
+            Core.Optional<Guid> arcServicePrincipalObjectId = default;
+            Core.Optional<Guid> arcApplicationObjectId = default;
+            Core.Optional<ArcSettingAggregateState> aggregateState = default;
+            Core.Optional<IReadOnlyList<PerNodeArcState>> perNodeDetails = default;
+            Core.Optional<BinaryData> connectivityProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Hci
                     continue;
                 }
             }
-            return new ArcSettingData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), arcInstanceResourceGroup.Value, Optional.ToNullable(arcApplicationClientId), Optional.ToNullable(arcApplicationTenantId), Optional.ToNullable(arcServicePrincipalObjectId), Optional.ToNullable(arcApplicationObjectId), Optional.ToNullable(aggregateState), Optional.ToList(perNodeDetails), connectivityProperties.Value);
+            return new ArcSettingData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), arcInstanceResourceGroup.Value, Core.Optional.ToNullable(arcApplicationClientId), Core.Optional.ToNullable(arcApplicationTenantId), Core.Optional.ToNullable(arcServicePrincipalObjectId), Core.Optional.ToNullable(arcApplicationObjectId), Core.Optional.ToNullable(aggregateState), Core.Optional.ToList(perNodeDetails), connectivityProperties.Value);
         }
     }
 }

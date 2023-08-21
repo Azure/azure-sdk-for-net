@@ -11,24 +11,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class TenantAccessInfoData : IUtf8JsonSerializable
+    public partial class TenantAccessInfoData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AccessInfoType))
+            if (Core.Optional.IsDefined(AccessInfoType))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(AccessInfoType);
             }
-            if (Optional.IsDefined(PrincipalId))
+            if (Core.Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId);
             }
-            if (Optional.IsDefined(IsDirectAccessEnabled))
+            if (Core.Optional.IsDefined(IsDirectAccessEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsDirectAccessEnabled.Value);
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> id0 = default;
-            Optional<string> principalId = default;
-            Optional<bool> enabled = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> id0 = default;
+            Core.Optional<string> principalId = default;
+            Core.Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new TenantAccessInfoData(id, name, type, systemData.Value, id0.Value, principalId.Value, Optional.ToNullable(enabled));
+            return new TenantAccessInfoData(id, name, type, systemData.Value, id0.Value, principalId.Value, Core.Optional.ToNullable(enabled));
         }
     }
 }

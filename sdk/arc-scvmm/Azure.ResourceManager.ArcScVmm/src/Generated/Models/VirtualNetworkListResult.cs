@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <summary> Initializes a new instance of VirtualNetworkListResult. </summary>
         internal VirtualNetworkListResult()
         {
-            Value = new ChangeTrackingList<ScVmmVirtualNetworkData>();
+            Value = new Core.ChangeTrackingList<ScVmmVirtualNetworkData>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkListResult. </summary>

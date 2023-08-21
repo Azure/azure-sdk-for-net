@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    internal partial class ApplicationInsightsAgentVersions : IUtf8JsonSerializable
+    internal partial class ApplicationInsightsAgentVersions : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> java = default;
+            Core.Optional<string> java = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("java"u8))

@@ -13,14 +13,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiOperationData : IUtf8JsonSerializable
+    public partial class ApiOperationData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TemplateParameters))
+            if (Core.Optional.IsCollectionDefined(TemplateParameters))
             {
                 writer.WritePropertyName("templateParameters"u8);
                 writer.WriteStartArray();
@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Request))
+            if (Core.Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
                 writer.WriteObjectValue(Request);
             }
-            if (Optional.IsCollectionDefined(Responses))
+            if (Core.Optional.IsCollectionDefined(Responses))
             {
                 writer.WritePropertyName("responses"u8);
                 writer.WriteStartArray();
@@ -50,22 +50,22 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Policies))
+            if (Core.Optional.IsDefined(Policies))
             {
                 writer.WritePropertyName("policies"u8);
                 writer.WriteStringValue(Policies);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Method))
+            if (Core.Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method);
             }
-            if (Optional.IsDefined(UriTemplate))
+            if (Core.Optional.IsDefined(UriTemplate))
             {
                 writer.WritePropertyName("urlTemplate"u8);
                 writer.WriteStringValue(UriTemplate);
@@ -83,15 +83,15 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<ParameterContract>> templateParameters = default;
-            Optional<string> description = default;
-            Optional<RequestContract> request = default;
-            Optional<IList<ResponseContract>> responses = default;
-            Optional<string> policies = default;
-            Optional<string> displayName = default;
-            Optional<string> method = default;
-            Optional<string> uriTemplate = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IList<ParameterContract>> templateParameters = default;
+            Core.Optional<string> description = default;
+            Core.Optional<RequestContract> request = default;
+            Core.Optional<IList<ResponseContract>> responses = default;
+            Core.Optional<string> policies = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> method = default;
+            Core.Optional<string> uriTemplate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new ApiOperationData(id, name, type, systemData.Value, Optional.ToList(templateParameters), description.Value, request.Value, Optional.ToList(responses), policies.Value, displayName.Value, method.Value, uriTemplate.Value);
+            return new ApiOperationData(id, name, type, systemData.Value, Core.Optional.ToList(templateParameters), description.Value, request.Value, Core.Optional.ToList(responses), policies.Value, displayName.Value, method.Value, uriTemplate.Value);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Initializes a new instance of BatchPrivateEndpointConnectionData. </summary>
         public BatchPrivateEndpointConnectionData()
         {
-            GroupIds = new ChangeTrackingList<string>();
+            GroupIds = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of BatchPrivateEndpointConnectionData. </summary>

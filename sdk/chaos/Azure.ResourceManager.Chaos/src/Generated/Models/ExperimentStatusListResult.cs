@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> Initializes a new instance of ExperimentStatusListResult. </summary>
         internal ExperimentStatusListResult()
         {
-            Value = new ChangeTrackingList<ExperimentStatusData>();
+            Value = new Core.ChangeTrackingList<ExperimentStatusData>();
         }
 
         /// <summary> Initializes a new instance of ExperimentStatusListResult. </summary>

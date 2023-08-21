@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of DscCompilationJobListResult. </summary>
         internal DscCompilationJobListResult()
         {
-            Value = new ChangeTrackingList<DscCompilationJobData>();
+            Value = new Core.ChangeTrackingList<DscCompilationJobData>();
         }
 
         /// <summary> Initializes a new instance of DscCompilationJobListResult. </summary>

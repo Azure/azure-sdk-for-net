@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class AlertProcessingRuleWeeklyRecurrence : IUtf8JsonSerializable
+    public partial class AlertProcessingRuleWeeklyRecurrence : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("daysOfWeek"u8);
@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteEndArray();
             writer.WritePropertyName("recurrenceType"u8);
             writer.WriteStringValue(RecurrenceType.ToString());
-            if (Optional.IsDefined(StartOn))
+            if (Core.Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "T");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Core.Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "T");
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
             IList<AlertsManagementDayOfWeek> daysOfWeek = default;
             RecurrenceType recurrenceType = default;
-            Optional<TimeSpan> startTime = default;
-            Optional<TimeSpan> endTime = default;
+            Core.Optional<TimeSpan> startTime = default;
+            Core.Optional<TimeSpan> endTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("daysOfWeek"u8))
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     continue;
                 }
             }
-            return new AlertProcessingRuleWeeklyRecurrence(recurrenceType, Optional.ToNullable(startTime), Optional.ToNullable(endTime), daysOfWeek);
+            return new AlertProcessingRuleWeeklyRecurrence(recurrenceType, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), daysOfWeek);
         }
     }
 }

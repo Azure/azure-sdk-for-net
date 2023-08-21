@@ -21,10 +21,10 @@ namespace Azure.Security.Attestation
             {
                 return null;
             }
-            Optional<PolicyModification> xMsPolicyResult = default;
-            Optional<string> xMsPolicyTokenHash = default;
-            Optional<JsonWebKey> xMsPolicySigner = default;
-            Optional<string> xMsPolicy = default;
+            Core.Optional<PolicyModification> xMsPolicyResult = default;
+            Core.Optional<string> xMsPolicyTokenHash = default;
+            Core.Optional<JsonWebKey> xMsPolicySigner = default;
+            Core.Optional<string> xMsPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("x-ms-policy-result"u8))

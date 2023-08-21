@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class MyWorkbookManagedIdentity : IUtf8JsonSerializable
+    public partial class MyWorkbookManagedIdentity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserAssignedIdentities))
+            if (Core.Optional.IsDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteObjectValue(UserAssignedIdentities);
             }
-            if (Optional.IsDefined(IdentityType))
+            if (Core.Optional.IsDefined(IdentityType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IdentityType.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<MyWorkbookUserAssignedIdentities> userAssignedIdentities = default;
-            Optional<MyWorkbookManagedIdentityType> type = default;
+            Core.Optional<MyWorkbookUserAssignedIdentities> userAssignedIdentities = default;
+            Core.Optional<MyWorkbookManagedIdentityType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userAssignedIdentities"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     continue;
                 }
             }
-            return new MyWorkbookManagedIdentity(userAssignedIdentities.Value, Optional.ToNullable(type));
+            return new MyWorkbookManagedIdentity(userAssignedIdentities.Value, Core.Optional.ToNullable(type));
         }
     }
 }

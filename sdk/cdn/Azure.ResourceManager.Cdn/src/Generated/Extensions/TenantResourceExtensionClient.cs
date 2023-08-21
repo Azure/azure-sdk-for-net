@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Cdn
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeNodesRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeNodesRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EdgeNode.DeserializeEdgeNode, EdgeNodesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetEdgeNodes", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EdgeNode.DeserializeEdgeNode, EdgeNodesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetEdgeNodes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Cdn
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeNodesRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeNodesRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EdgeNode.DeserializeEdgeNode, EdgeNodesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetEdgeNodes", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EdgeNode.DeserializeEdgeNode, EdgeNodesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetEdgeNodes", "value", "nextLink", cancellationToken);
         }
     }
 }

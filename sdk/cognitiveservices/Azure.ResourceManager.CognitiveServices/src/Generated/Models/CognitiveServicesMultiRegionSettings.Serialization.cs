@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CognitiveServicesMultiRegionSettings : IUtf8JsonSerializable
+    public partial class CognitiveServicesMultiRegionSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RoutingMethod))
+            if (Core.Optional.IsDefined(RoutingMethod))
             {
                 writer.WritePropertyName("routingMethod"u8);
                 writer.WriteStringValue(RoutingMethod.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Regions))
+            if (Core.Optional.IsCollectionDefined(Regions))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<CognitiveServicesRoutingMethod> routingMethod = default;
-            Optional<IList<CognitiveServicesRegionSetting>> regions = default;
+            Core.Optional<CognitiveServicesRoutingMethod> routingMethod = default;
+            Core.Optional<IList<CognitiveServicesRegionSetting>> regions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("routingMethod"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new CognitiveServicesMultiRegionSettings(Optional.ToNullable(routingMethod), Optional.ToList(regions));
+            return new CognitiveServicesMultiRegionSettings(Core.Optional.ToNullable(routingMethod), Core.Optional.ToList(regions));
         }
     }
 }

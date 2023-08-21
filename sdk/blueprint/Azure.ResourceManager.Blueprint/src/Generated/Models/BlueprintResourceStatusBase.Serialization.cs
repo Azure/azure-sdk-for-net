@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> timeCreated = default;
-            Optional<DateTimeOffset> lastModified = default;
+            Core.Optional<DateTimeOffset> timeCreated = default;
+            Core.Optional<DateTimeOffset> lastModified = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeCreated"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     continue;
                 }
             }
-            return new BlueprintResourceStatusBase(Optional.ToNullable(timeCreated), Optional.ToNullable(lastModified));
+            return new BlueprintResourceStatusBase(Core.Optional.ToNullable(timeCreated), Core.Optional.ToNullable(lastModified));
         }
     }
 }

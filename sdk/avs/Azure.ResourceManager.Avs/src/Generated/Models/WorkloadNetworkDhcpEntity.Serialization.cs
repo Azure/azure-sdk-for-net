@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class WorkloadNetworkDhcpEntity : IUtf8JsonSerializable
+    public partial class WorkloadNetworkDhcpEntity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dhcpType"u8);
             writer.WriteStringValue(DhcpType.ToString());
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Revision))
+            if (Core.Optional.IsDefined(Revision))
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AvsPrivateCloudDatastoreData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<AvsPrivateCloudDatastoreData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new DatastoreList(Optional.ToList(value), nextLink.Value);
+            return new DatastoreList(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

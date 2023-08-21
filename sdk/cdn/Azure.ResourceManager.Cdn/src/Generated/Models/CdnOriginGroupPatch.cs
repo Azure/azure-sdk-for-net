@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of CdnOriginGroupPatch. </summary>
         public CdnOriginGroupPatch()
         {
-            Origins = new ChangeTrackingList<WritableSubResource>();
+            Origins = new Core.ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Health probe settings to the origin that is used to determine the health of the origin. </summary>

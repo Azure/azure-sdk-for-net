@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class APIKeyContent : IUtf8JsonSerializable
+    public partial class APIKeyContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(LinkedReadProperties))
+            if (Core.Optional.IsCollectionDefined(LinkedReadProperties))
             {
                 writer.WritePropertyName("linkedReadProperties"u8);
                 writer.WriteStartArray();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(LinkedWriteProperties))
+            if (Core.Optional.IsCollectionDefined(LinkedWriteProperties))
             {
                 writer.WritePropertyName("linkedWriteProperties"u8);
                 writer.WriteStartArray();

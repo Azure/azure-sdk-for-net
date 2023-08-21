@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformSupportedStackProperties : IUtf8JsonSerializable
+    public partial class AppPlatformSupportedStackProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StackId))
+            if (Core.Optional.IsDefined(StackId))
             {
                 writer.WritePropertyName("stackId"u8);
                 writer.WriteStringValue(StackId);
             }
-            if (Optional.IsDefined(Version))
+            if (Core.Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> stackId = default;
-            Optional<string> version = default;
+            Core.Optional<string> stackId = default;
+            Core.Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("stackId"u8))

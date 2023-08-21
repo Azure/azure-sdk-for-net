@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <summary> Initializes a new instance of ConfigurationListResult. </summary>
         internal ConfigurationListResult()
         {
-            Value = new ChangeTrackingList<ConfigData>();
+            Value = new Core.ChangeTrackingList<ConfigData>();
         }
 
         /// <summary> Initializes a new instance of ConfigurationListResult. </summary>

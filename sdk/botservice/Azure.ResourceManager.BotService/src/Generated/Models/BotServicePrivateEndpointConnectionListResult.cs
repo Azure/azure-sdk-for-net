@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Initializes a new instance of BotServicePrivateEndpointConnectionListResult. </summary>
         internal BotServicePrivateEndpointConnectionListResult()
         {
-            Value = new ChangeTrackingList<BotServicePrivateEndpointConnectionData>();
+            Value = new Core.ChangeTrackingList<BotServicePrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of BotServicePrivateEndpointConnectionListResult. </summary>

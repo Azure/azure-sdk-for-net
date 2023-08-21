@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformCustomContainer. </summary>
         public AppPlatformCustomContainer()
         {
-            Command = new ChangeTrackingList<string>();
-            Args = new ChangeTrackingList<string>();
+            Command = new Core.ChangeTrackingList<string>();
+            Args = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AppPlatformCustomContainer. </summary>

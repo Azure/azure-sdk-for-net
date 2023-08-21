@@ -13,26 +13,26 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
-    public partial class RoleAssignmentArtifact : IUtf8JsonSerializable
+    public partial class RoleAssignmentArtifact : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (Core.Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Blueprint.Models
 #else
             JsonSerializer.Serialize(writer, JsonDocument.Parse(PrincipalIds.ToString()).RootElement);
 #endif
-            if (Optional.IsDefined(ResourceGroup))
+            if (Core.Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
@@ -69,13 +69,13 @@ namespace Azure.ResourceManager.Blueprint.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<IList<string>> dependsOn = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> description = default;
+            Core.Optional<IList<string>> dependsOn = default;
             string roleDefinitionId = default;
             BinaryData principalIds = default;
-            Optional<string> resourceGroup = default;
+            Core.Optional<string> resourceGroup = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     continue;
                 }
             }
-            return new RoleAssignmentArtifact(id, name, type, systemData.Value, kind, displayName.Value, description.Value, Optional.ToList(dependsOn), roleDefinitionId, principalIds, resourceGroup.Value);
+            return new RoleAssignmentArtifact(id, name, type, systemData.Value, kind, displayName.Value, description.Value, Core.Optional.ToList(dependsOn), roleDefinitionId, principalIds, resourceGroup.Value);
         }
     }
 }

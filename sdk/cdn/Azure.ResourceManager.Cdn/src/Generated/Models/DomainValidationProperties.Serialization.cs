@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> validationToken = default;
-            Optional<DateTimeOffset> expirationDate = default;
+            Core.Optional<string> validationToken = default;
+            Core.Optional<DateTimeOffset> expirationDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validationToken"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new DomainValidationProperties(validationToken.Value, Optional.ToNullable(expirationDate));
+            return new DomainValidationProperties(validationToken.Value, Core.Optional.ToNullable(expirationDate));
         }
     }
 }

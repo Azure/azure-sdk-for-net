@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<Annotation>> value = default;
+            Core.Optional<IReadOnlyList<Annotation>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     continue;
                 }
             }
-            return new AnnotationsListResult(Optional.ToList(value));
+            return new AnnotationsListResult(Core.Optional.ToList(value));
         }
     }
 }

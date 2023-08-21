@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class SoftwareAssuranceProperties : IUtf8JsonSerializable
+    public partial class SoftwareAssuranceProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SoftwareAssuranceStatus))
+            if (Core.Optional.IsDefined(SoftwareAssuranceStatus))
             {
                 writer.WritePropertyName("softwareAssuranceStatus"u8);
                 writer.WriteStringValue(SoftwareAssuranceStatus.Value.ToString());
             }
-            if (Optional.IsDefined(SoftwareAssuranceIntent))
+            if (Core.Optional.IsDefined(SoftwareAssuranceIntent))
             {
                 writer.WritePropertyName("softwareAssuranceIntent"u8);
                 writer.WriteStringValue(SoftwareAssuranceIntent.Value.ToString());
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<SoftwareAssuranceStatus> softwareAssuranceStatus = default;
-            Optional<SoftwareAssuranceIntent> softwareAssuranceIntent = default;
-            Optional<DateTimeOffset> lastUpdated = default;
+            Core.Optional<SoftwareAssuranceStatus> softwareAssuranceStatus = default;
+            Core.Optional<SoftwareAssuranceIntent> softwareAssuranceIntent = default;
+            Core.Optional<DateTimeOffset> lastUpdated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("softwareAssuranceStatus"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new SoftwareAssuranceProperties(Optional.ToNullable(softwareAssuranceStatus), Optional.ToNullable(softwareAssuranceIntent), Optional.ToNullable(lastUpdated));
+            return new SoftwareAssuranceProperties(Core.Optional.ToNullable(softwareAssuranceStatus), Core.Optional.ToNullable(softwareAssuranceIntent), Core.Optional.ToNullable(lastUpdated));
         }
     }
 }

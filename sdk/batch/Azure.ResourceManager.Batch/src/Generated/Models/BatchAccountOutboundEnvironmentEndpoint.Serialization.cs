@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<string> category = default;
-            Optional<IReadOnlyList<BatchAccountEndpointDependency>> endpoints = default;
+            Core.Optional<string> category = default;
+            Core.Optional<IReadOnlyList<BatchAccountEndpointDependency>> endpoints = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("category"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new BatchAccountOutboundEnvironmentEndpoint(category.Value, Optional.ToList(endpoints));
+            return new BatchAccountOutboundEnvironmentEndpoint(category.Value, Core.Optional.ToList(endpoints));
         }
     }
 }

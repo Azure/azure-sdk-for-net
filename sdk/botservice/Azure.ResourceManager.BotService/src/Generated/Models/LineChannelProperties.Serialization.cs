@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class LineChannelProperties : IUtf8JsonSerializable
+    public partial class LineChannelProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("lineRegistrations"u8);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             IList<LineRegistration> lineRegistrations = default;
-            Optional<Uri> callbackUrl = default;
-            Optional<bool> isValidated = default;
+            Core.Optional<Uri> callbackUrl = default;
+            Core.Optional<bool> isValidated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lineRegistrations"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new LineChannelProperties(lineRegistrations, callbackUrl.Value, Optional.ToNullable(isValidated));
+            return new LineChannelProperties(lineRegistrations, callbackUrl.Value, Core.Optional.ToNullable(isValidated));
         }
     }
 }

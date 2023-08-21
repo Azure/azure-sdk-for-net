@@ -13,29 +13,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementCertificateData : IUtf8JsonSerializable
+    public partial class ApiManagementCertificateData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Subject))
+            if (Core.Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (Optional.IsDefined(Thumbprint))
+            if (Core.Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (Core.Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(KeyVaultDetails))
+            if (Core.Optional.IsDefined(KeyVaultDetails))
             {
                 writer.WritePropertyName("keyVault"u8);
                 writer.WriteObjectValue(KeyVaultDetails);
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> subject = default;
-            Optional<string> thumbprint = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<KeyVaultContractProperties> keyVault = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> subject = default;
+            Core.Optional<string> thumbprint = default;
+            Core.Optional<DateTimeOffset> expirationDate = default;
+            Core.Optional<KeyVaultContractProperties> keyVault = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new ApiManagementCertificateData(id, name, type, systemData.Value, subject.Value, thumbprint.Value, Optional.ToNullable(expirationDate), keyVault.Value);
+            return new ApiManagementCertificateData(id, name, type, systemData.Value, subject.Value, thumbprint.Value, Core.Optional.ToNullable(expirationDate), keyVault.Value);
         }
     }
 }

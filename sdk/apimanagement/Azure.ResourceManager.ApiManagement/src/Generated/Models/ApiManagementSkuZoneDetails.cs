@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ApiManagementSkuZoneDetails. </summary>
         internal ApiManagementSkuZoneDetails()
         {
-            Name = new ChangeTrackingList<string>();
-            Capabilities = new ChangeTrackingList<ApiManagementSkuCapabilities>();
+            Name = new Core.ChangeTrackingList<string>();
+            Capabilities = new Core.ChangeTrackingList<ApiManagementSkuCapabilities>();
         }
 
         /// <summary> Initializes a new instance of ApiManagementSkuZoneDetails. </summary>

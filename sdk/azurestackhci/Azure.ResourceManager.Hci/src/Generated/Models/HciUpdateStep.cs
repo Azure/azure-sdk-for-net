@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of HciUpdateStep. </summary>
         public HciUpdateStep()
         {
-            Steps = new ChangeTrackingList<HciUpdateStep>();
+            Steps = new Core.ChangeTrackingList<HciUpdateStep>();
         }
 
         /// <summary> Initializes a new instance of HciUpdateStep. </summary>

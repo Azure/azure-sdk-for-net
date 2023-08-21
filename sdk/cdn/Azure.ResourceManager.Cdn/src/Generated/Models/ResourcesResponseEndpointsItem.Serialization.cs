@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<bool> history = default;
-            Optional<IReadOnlyList<ResourcesResponseEndpointsPropertiesItemsItem>> customDomains = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<bool> history = default;
+            Core.Optional<IReadOnlyList<ResourcesResponseEndpointsPropertiesItemsItem>> customDomains = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new ResourcesResponseEndpointsItem(id.Value, name.Value, Optional.ToNullable(history), Optional.ToList(customDomains));
+            return new ResourcesResponseEndpointsItem(id.Value, name.Value, Core.Optional.ToNullable(history), Core.Optional.ToList(customDomains));
         }
     }
 }

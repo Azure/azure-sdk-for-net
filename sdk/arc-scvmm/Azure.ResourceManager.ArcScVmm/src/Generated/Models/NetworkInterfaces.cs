@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <summary> Initializes a new instance of NetworkInterfaces. </summary>
         public NetworkInterfaces()
         {
-            IPv4Addresses = new ChangeTrackingList<string>();
-            IPv6Addresses = new ChangeTrackingList<string>();
+            IPv4Addresses = new Core.ChangeTrackingList<string>();
+            IPv6Addresses = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of NetworkInterfaces. </summary>

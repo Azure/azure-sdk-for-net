@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchNetworkSecurityGroupRule : IUtf8JsonSerializable
+    public partial class BatchNetworkSecurityGroupRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("priority"u8);
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStringValue(Access.ToSerialString());
             writer.WritePropertyName("sourceAddressPrefix"u8);
             writer.WriteStringValue(SourceAddressPrefix);
-            if (Optional.IsCollectionDefined(SourcePortRanges))
+            if (Core.Optional.IsCollectionDefined(SourcePortRanges))
             {
                 writer.WritePropertyName("sourcePortRanges"u8);
                 writer.WriteStartArray();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Batch.Models
             int priority = default;
             BatchNetworkSecurityGroupRuleAccess access = default;
             string sourceAddressPrefix = default;
-            Optional<IList<string>> sourcePortRanges = default;
+            Core.Optional<IList<string>> sourcePortRanges = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("priority"u8))
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new BatchNetworkSecurityGroupRule(priority, access, sourceAddressPrefix, Optional.ToList(sourcePortRanges));
+            return new BatchNetworkSecurityGroupRule(priority, access, sourceAddressPrefix, Core.Optional.ToList(sourcePortRanges));
         }
     }
 }

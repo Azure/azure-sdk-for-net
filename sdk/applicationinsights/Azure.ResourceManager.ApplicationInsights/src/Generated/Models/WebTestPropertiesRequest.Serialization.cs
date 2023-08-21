@@ -12,17 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class WebTestPropertiesRequest : IUtf8JsonSerializable
+    public partial class WebTestPropertiesRequest : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RequestUri))
+            if (Core.Optional.IsDefined(RequestUri))
             {
                 writer.WritePropertyName("RequestUrl"u8);
                 writer.WriteStringValue(RequestUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(Headers))
+            if (Core.Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("Headers"u8);
                 writer.WriteStartArray();
@@ -32,22 +32,22 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(HttpVerb))
+            if (Core.Optional.IsDefined(HttpVerb))
             {
                 writer.WritePropertyName("HttpVerb"u8);
                 writer.WriteStringValue(HttpVerb);
             }
-            if (Optional.IsDefined(RequestBody))
+            if (Core.Optional.IsDefined(RequestBody))
             {
                 writer.WritePropertyName("RequestBody"u8);
                 writer.WriteStringValue(RequestBody);
             }
-            if (Optional.IsDefined(ParseDependentRequests))
+            if (Core.Optional.IsDefined(ParseDependentRequests))
             {
                 writer.WritePropertyName("ParseDependentRequests"u8);
                 writer.WriteBooleanValue(ParseDependentRequests.Value);
             }
-            if (Optional.IsDefined(FollowRedirects))
+            if (Core.Optional.IsDefined(FollowRedirects))
             {
                 writer.WritePropertyName("FollowRedirects"u8);
                 writer.WriteBooleanValue(FollowRedirects.Value);
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<Uri> requestUrl = default;
-            Optional<IList<HeaderField>> headers = default;
-            Optional<string> httpVerb = default;
-            Optional<string> requestBody = default;
-            Optional<bool> parseDependentRequests = default;
-            Optional<bool> followRedirects = default;
+            Core.Optional<Uri> requestUrl = default;
+            Core.Optional<IList<HeaderField>> headers = default;
+            Core.Optional<string> httpVerb = default;
+            Core.Optional<string> requestBody = default;
+            Core.Optional<bool> parseDependentRequests = default;
+            Core.Optional<bool> followRedirects = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("RequestUrl"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     continue;
                 }
             }
-            return new WebTestPropertiesRequest(requestUrl.Value, Optional.ToList(headers), httpVerb.Value, requestBody.Value, Optional.ToNullable(parseDependentRequests), Optional.ToNullable(followRedirects));
+            return new WebTestPropertiesRequest(requestUrl.Value, Core.Optional.ToList(headers), httpVerb.Value, requestBody.Value, Core.Optional.ToNullable(parseDependentRequests), Core.Optional.ToNullable(followRedirects));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.Communication.CallingServer
         /// <summary> Initializes a new instance of CommunicationError. </summary>
         internal CommunicationError()
         {
-            Details = new ChangeTrackingList<CommunicationError>();
+            Details = new Core.ChangeTrackingList<CommunicationError>();
         }
 
         /// <summary> Gets the code. </summary>

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class WebChatChannelProperties : IUtf8JsonSerializable
+    public partial class WebChatChannelProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Sites))
+            if (Core.Optional.IsCollectionDefined(Sites))
             {
                 writer.WritePropertyName("sites"u8);
                 writer.WriteStartArray();
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> webChatEmbedCode = default;
-            Optional<IList<WebChatSite>> sites = default;
+            Core.Optional<string> webChatEmbedCode = default;
+            Core.Optional<IList<WebChatSite>> sites = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("webChatEmbedCode"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new WebChatChannelProperties(webChatEmbedCode.Value, Optional.ToList(sites));
+            return new WebChatChannelProperties(webChatEmbedCode.Value, Core.Optional.ToList(sites));
         }
     }
 }

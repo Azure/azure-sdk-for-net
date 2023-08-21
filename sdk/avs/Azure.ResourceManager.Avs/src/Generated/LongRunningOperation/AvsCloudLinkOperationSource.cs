@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
-    internal class AvsCloudLinkOperationSource : IOperationSource<AvsCloudLinkResource>
+    internal class AvsCloudLinkOperationSource : Core.IOperationSource<AvsCloudLinkResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Avs
             _client = client;
         }
 
-        AvsCloudLinkResource IOperationSource<AvsCloudLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        AvsCloudLinkResource Core.IOperationSource<AvsCloudLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AvsCloudLinkData.DeserializeAvsCloudLinkData(document.RootElement);
             return new AvsCloudLinkResource(_client, data);
         }
 
-        async ValueTask<AvsCloudLinkResource> IOperationSource<AvsCloudLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AvsCloudLinkResource> Core.IOperationSource<AvsCloudLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AvsCloudLinkData.DeserializeAvsCloudLinkData(document.RootElement);

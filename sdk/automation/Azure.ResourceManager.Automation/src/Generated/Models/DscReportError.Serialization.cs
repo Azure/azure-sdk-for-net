@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> errorSource = default;
-            Optional<string> resourceId = default;
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<string> locale = default;
-            Optional<string> errorDetails = default;
+            Core.Optional<string> errorSource = default;
+            Core.Optional<string> resourceId = default;
+            Core.Optional<string> errorCode = default;
+            Core.Optional<string> errorMessage = default;
+            Core.Optional<string> locale = default;
+            Core.Optional<string> errorDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorSource"u8))

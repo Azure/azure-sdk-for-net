@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automanage.Models
         /// <summary> Initializes a new instance of BestPracticeList. </summary>
         internal BestPracticeList()
         {
-            Value = new ChangeTrackingList<AutomanageBestPracticeData>();
+            Value = new Core.ChangeTrackingList<AutomanageBestPracticeData>();
         }
 
         /// <summary> Initializes a new instance of BestPracticeList. </summary>

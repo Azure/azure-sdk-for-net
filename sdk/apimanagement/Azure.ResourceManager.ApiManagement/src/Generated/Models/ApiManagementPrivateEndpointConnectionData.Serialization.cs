@@ -13,19 +13,19 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementPrivateEndpointConnectionData : IUtf8JsonSerializable
+    public partial class ApiManagementPrivateEndpointConnectionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateEndpoint))
+            if (Core.Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (Optional.IsDefined(ConnectionState))
+            if (Core.Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(ConnectionState);
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<ApiManagementPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<ApiManagementPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<SubResource> privateEndpoint = default;
+            Core.Optional<ApiManagementPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Core.Optional<ApiManagementPrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new ApiManagementPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new ApiManagementPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Core.Optional.ToNullable(provisioningState));
         }
     }
 }

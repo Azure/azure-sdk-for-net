@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    internal partial class BackendProperties : IUtf8JsonSerializable
+    internal partial class BackendProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceFabricCluster))
+            if (Core.Optional.IsDefined(ServiceFabricCluster))
             {
                 writer.WritePropertyName("serviceFabricCluster"u8);
                 writer.WriteObjectValue(ServiceFabricCluster);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<BackendServiceFabricClusterProperties> serviceFabricCluster = default;
+            Core.Optional<BackendServiceFabricClusterProperties> serviceFabricCluster = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceFabricCluster"u8))

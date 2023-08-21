@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class PrivateCloudAvailabilityProperties : IUtf8JsonSerializable
+    public partial class PrivateCloudAvailabilityProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Strategy))
+            if (Core.Optional.IsDefined(Strategy))
             {
                 writer.WritePropertyName("strategy"u8);
                 writer.WriteStringValue(Strategy.Value.ToString());
             }
-            if (Optional.IsDefined(Zone))
+            if (Core.Optional.IsDefined(Zone))
             {
                 writer.WritePropertyName("zone"u8);
                 writer.WriteNumberValue(Zone.Value);
             }
-            if (Optional.IsDefined(SecondaryZone))
+            if (Core.Optional.IsDefined(SecondaryZone))
             {
                 writer.WritePropertyName("secondaryZone"u8);
                 writer.WriteNumberValue(SecondaryZone.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<AvailabilityStrategy> strategy = default;
-            Optional<int> zone = default;
-            Optional<int> secondaryZone = default;
+            Core.Optional<AvailabilityStrategy> strategy = default;
+            Core.Optional<int> zone = default;
+            Core.Optional<int> secondaryZone = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("strategy"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new PrivateCloudAvailabilityProperties(Optional.ToNullable(strategy), Optional.ToNullable(zone), Optional.ToNullable(secondaryZone));
+            return new PrivateCloudAvailabilityProperties(Core.Optional.ToNullable(strategy), Core.Optional.ToNullable(zone), Core.Optional.ToNullable(secondaryZone));
         }
     }
 }

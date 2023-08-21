@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AppConfigurationStoreData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<AppConfigurationStoreData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     continue;
                 }
             }
-            return new AppConfigurationStoreListResult(Optional.ToList(value), nextLink.Value);
+            return new AppConfigurationStoreListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

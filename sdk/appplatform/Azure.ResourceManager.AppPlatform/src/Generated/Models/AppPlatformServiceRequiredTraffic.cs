@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformServiceRequiredTraffic. </summary>
         internal AppPlatformServiceRequiredTraffic()
         {
-            IPs = new ChangeTrackingList<IPAddress>();
-            Fqdns = new ChangeTrackingList<string>();
+            IPs = new Core.ChangeTrackingList<IPAddress>();
+            Fqdns = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AppPlatformServiceRequiredTraffic. </summary>

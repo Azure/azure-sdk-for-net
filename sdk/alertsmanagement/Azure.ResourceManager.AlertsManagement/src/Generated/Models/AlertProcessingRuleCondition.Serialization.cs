@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class AlertProcessingRuleCondition : IUtf8JsonSerializable
+    public partial class AlertProcessingRuleCondition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Field))
+            if (Core.Optional.IsDefined(Field))
             {
                 writer.WritePropertyName("field"u8);
                 writer.WriteStringValue(Field.Value.ToString());
             }
-            if (Optional.IsDefined(Operator))
+            if (Core.Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Values))
+            if (Core.Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Optional<AlertProcessingRuleField> field = default;
-            Optional<AlertProcessingRuleOperator> @operator = default;
-            Optional<IList<string>> values = default;
+            Core.Optional<AlertProcessingRuleField> field = default;
+            Core.Optional<AlertProcessingRuleOperator> @operator = default;
+            Core.Optional<IList<string>> values = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("field"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     continue;
                 }
             }
-            return new AlertProcessingRuleCondition(Optional.ToNullable(field), Optional.ToNullable(@operator), Optional.ToList(values));
+            return new AlertProcessingRuleCondition(Core.Optional.ToNullable(field), Core.Optional.ToNullable(@operator), Core.Optional.ToList(values));
         }
     }
 }

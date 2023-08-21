@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiContactInformation : IUtf8JsonSerializable
+    public partial class ApiContactInformation : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Uri))
+            if (Core.Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Email))
+            if (Core.Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<Uri> uri = default;
-            Optional<string> email = default;
+            Core.Optional<string> name = default;
+            Core.Optional<Uri> uri = default;
+            Core.Optional<string> email = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

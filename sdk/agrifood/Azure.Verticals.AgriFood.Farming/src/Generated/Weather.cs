@@ -226,7 +226,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWeathersRequest(partyId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWeathersNextPageRequest(nextLink, partyId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Weather.GetWeathers", "value", "nextLink", context);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Weather.GetWeathers", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -266,7 +266,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWeathersRequest(partyId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWeathersNextPageRequest(nextLink, partyId, boundaryId, extensionId, weatherDataType, granularity, startDateTime, endDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Weather.GetWeathers", "value", "nextLink", context);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Weather.GetWeathers", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -298,7 +298,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateCreateDataDeleteJobRequest(jobId, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "Weather.CreateDataDeleteJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await Core.ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "Weather.CreateDataDeleteJob", Core.OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -336,7 +336,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateCreateDataDeleteJobRequest(jobId, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "Weather.CreateDataDeleteJob", OperationFinalStateVia.Location, context, waitUntil);
+                return Core.ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "Weather.CreateDataDeleteJob", Core.OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -374,7 +374,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "Weather.CreateDataIngestionJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await Core.ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "Weather.CreateDataIngestionJob", Core.OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -412,7 +412,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateCreateDataIngestionJobRequest(jobId, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "Weather.CreateDataIngestionJob", OperationFinalStateVia.Location, context, waitUntil);
+                return Core.ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "Weather.CreateDataIngestionJob", Core.OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {

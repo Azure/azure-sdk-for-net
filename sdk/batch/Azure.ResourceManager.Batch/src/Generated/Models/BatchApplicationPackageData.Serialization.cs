@@ -14,9 +14,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Batch
 {
-    public partial class BatchApplicationPackageData : IUtf8JsonSerializable
+    public partial class BatchApplicationPackageData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -31,16 +31,16 @@ namespace Azure.ResourceManager.Batch
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            Core.Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<BatchApplicationPackageState> state = default;
-            Optional<string> format = default;
-            Optional<Uri> storageUrl = default;
-            Optional<DateTimeOffset> storageUrlExpiry = default;
-            Optional<DateTimeOffset> lastActivationTime = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<BatchApplicationPackageState> state = default;
+            Core.Optional<string> format = default;
+            Core.Optional<Uri> storageUrl = default;
+            Core.Optional<DateTimeOffset> storageUrlExpiry = default;
+            Core.Optional<DateTimeOffset> lastActivationTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Batch
                     continue;
                 }
             }
-            return new BatchApplicationPackageData(id, name, type, systemData.Value, Optional.ToNullable(state), format.Value, storageUrl.Value, Optional.ToNullable(storageUrlExpiry), Optional.ToNullable(lastActivationTime), Optional.ToNullable(etag));
+            return new BatchApplicationPackageData(id, name, type, systemData.Value, Core.Optional.ToNullable(state), format.Value, storageUrl.Value, Core.Optional.ToNullable(storageUrlExpiry), Core.Optional.ToNullable(lastActivationTime), Core.Optional.ToNullable(etag));
         }
     }
 }

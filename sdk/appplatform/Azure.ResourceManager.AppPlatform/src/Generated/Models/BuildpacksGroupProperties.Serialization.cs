@@ -12,17 +12,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class BuildpacksGroupProperties : IUtf8JsonSerializable
+    public partial class BuildpacksGroupProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsCollectionDefined(Buildpacks))
+            if (Core.Optional.IsCollectionDefined(Buildpacks))
             {
                 writer.WritePropertyName("buildpacks"u8);
                 writer.WriteStartArray();
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IList<WritableSubResource>> buildpacks = default;
+            Core.Optional<string> name = default;
+            Core.Optional<IList<WritableSubResource>> buildpacks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new BuildpacksGroupProperties(name.Value, Optional.ToList(buildpacks));
+            return new BuildpacksGroupProperties(name.Value, Core.Optional.ToList(buildpacks));
         }
     }
 }

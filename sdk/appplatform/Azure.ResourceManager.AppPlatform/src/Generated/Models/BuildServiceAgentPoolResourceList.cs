@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of BuildServiceAgentPoolResourceList. </summary>
         internal BuildServiceAgentPoolResourceList()
         {
-            Value = new ChangeTrackingList<AppPlatformBuildServiceAgentPoolData>();
+            Value = new Core.ChangeTrackingList<AppPlatformBuildServiceAgentPoolData>();
         }
 
         /// <summary> Initializes a new instance of BuildServiceAgentPoolResourceList. </summary>

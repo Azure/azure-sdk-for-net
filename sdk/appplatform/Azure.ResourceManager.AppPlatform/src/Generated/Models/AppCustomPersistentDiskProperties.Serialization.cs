@@ -10,21 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppCustomPersistentDiskProperties : IUtf8JsonSerializable
+    public partial class AppCustomPersistentDiskProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UnderlyingResourceType.ToString());
             writer.WritePropertyName("mountPath"u8);
             writer.WriteStringValue(MountPath);
-            if (Optional.IsDefined(IsReadOnly))
+            if (Core.Optional.IsDefined(IsReadOnly))
             {
                 writer.WritePropertyName("readOnly"u8);
                 writer.WriteBooleanValue(IsReadOnly.Value);
             }
-            if (Optional.IsCollectionDefined(MountOptions))
+            if (Core.Optional.IsCollectionDefined(MountOptions))
             {
                 writer.WritePropertyName("mountOptions"u8);
                 writer.WriteStartArray();

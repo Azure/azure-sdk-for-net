@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<AutomationUsageCounterName> name = default;
-            Optional<string> unit = default;
-            Optional<double> currentValue = default;
-            Optional<long> limit = default;
-            Optional<string> throttleStatus = default;
+            Core.Optional<string> id = default;
+            Core.Optional<AutomationUsageCounterName> name = default;
+            Core.Optional<string> unit = default;
+            Core.Optional<double> currentValue = default;
+            Core.Optional<long> limit = default;
+            Core.Optional<string> throttleStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new AutomationUsage(id.Value, name.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), throttleStatus.Value);
+            return new AutomationUsage(id.Value, name.Value, unit.Value, Core.Optional.ToNullable(currentValue), Core.Optional.ToNullable(limit), throttleStatus.Value);
         }
     }
 }

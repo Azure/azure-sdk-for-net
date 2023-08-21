@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Initializes a new instance of TelephonyChannelProperties. </summary>
         public TelephonyChannelProperties()
         {
-            PhoneNumbers = new ChangeTrackingList<TelephonyPhoneNumbers>();
-            ApiConfigurations = new ChangeTrackingList<TelephonyChannelResourceApiConfiguration>();
+            PhoneNumbers = new Core.ChangeTrackingList<TelephonyPhoneNumbers>();
+            ApiConfigurations = new Core.ChangeTrackingList<TelephonyChannelResourceApiConfiguration>();
         }
 
         /// <summary> Initializes a new instance of TelephonyChannelProperties. </summary>

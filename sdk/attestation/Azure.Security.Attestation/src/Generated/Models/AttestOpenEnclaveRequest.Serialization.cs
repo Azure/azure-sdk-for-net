@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.Security.Attestation
 {
-    internal partial class AttestOpenEnclaveRequest : IUtf8JsonSerializable
+    internal partial class AttestOpenEnclaveRequest : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Report))
+            if (Core.Optional.IsDefined(Report))
             {
                 writer.WritePropertyName("report"u8);
                 writer.WriteBase64StringValue(Report, "U");
             }
-            if (Optional.IsDefined(RuntimeData))
+            if (Core.Optional.IsDefined(RuntimeData))
             {
                 writer.WritePropertyName("runtimeData"u8);
                 writer.WriteObjectValue(RuntimeData);
             }
-            if (Optional.IsDefined(InitTimeData))
+            if (Core.Optional.IsDefined(InitTimeData))
             {
                 writer.WritePropertyName("initTimeData"u8);
                 writer.WriteObjectValue(InitTimeData);
             }
-            if (Optional.IsDefined(DraftPolicyForAttestation))
+            if (Core.Optional.IsDefined(DraftPolicyForAttestation))
             {
                 writer.WritePropertyName("draftPolicyForAttestation"u8);
                 writer.WriteStringValue(DraftPolicyForAttestation);

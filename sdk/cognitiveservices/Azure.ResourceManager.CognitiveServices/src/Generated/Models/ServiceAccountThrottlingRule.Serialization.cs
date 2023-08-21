@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<string> key = default;
-            Optional<float> renewalPeriod = default;
-            Optional<float> count = default;
-            Optional<float> minCount = default;
-            Optional<bool> dynamicThrottlingEnabled = default;
-            Optional<IReadOnlyList<ServiceAccountThrottlingMatchPattern>> matchPatterns = default;
+            Core.Optional<string> key = default;
+            Core.Optional<float> renewalPeriod = default;
+            Core.Optional<float> count = default;
+            Core.Optional<float> minCount = default;
+            Core.Optional<bool> dynamicThrottlingEnabled = default;
+            Core.Optional<IReadOnlyList<ServiceAccountThrottlingMatchPattern>> matchPatterns = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new ServiceAccountThrottlingRule(key.Value, Optional.ToNullable(renewalPeriod), Optional.ToNullable(count), Optional.ToNullable(minCount), Optional.ToNullable(dynamicThrottlingEnabled), Optional.ToList(matchPatterns));
+            return new ServiceAccountThrottlingRule(key.Value, Core.Optional.ToNullable(renewalPeriod), Core.Optional.ToNullable(count), Core.Optional.ToNullable(minCount), Core.Optional.ToNullable(dynamicThrottlingEnabled), Core.Optional.ToList(matchPatterns));
         }
     }
 }

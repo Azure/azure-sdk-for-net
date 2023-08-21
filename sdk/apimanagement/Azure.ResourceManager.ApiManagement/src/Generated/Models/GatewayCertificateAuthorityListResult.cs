@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of GatewayCertificateAuthorityListResult. </summary>
         internal GatewayCertificateAuthorityListResult()
         {
-            Value = new ChangeTrackingList<ApiManagementGatewayCertificateAuthorityData>();
+            Value = new Core.ChangeTrackingList<ApiManagementGatewayCertificateAuthorityData>();
         }
 
         /// <summary> Initializes a new instance of GatewayCertificateAuthorityListResult. </summary>

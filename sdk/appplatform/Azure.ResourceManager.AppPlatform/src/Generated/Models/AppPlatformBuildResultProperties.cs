@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformBuildResultProperties. </summary>
         public AppPlatformBuildResultProperties()
         {
-            BuildStages = new ChangeTrackingList<AppPlatformBuildStageProperties>();
+            BuildStages = new Core.ChangeTrackingList<AppPlatformBuildStageProperties>();
         }
 
         /// <summary> Initializes a new instance of AppPlatformBuildResultProperties. </summary>

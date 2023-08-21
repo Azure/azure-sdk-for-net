@@ -385,7 +385,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetManagementZonesRequest(types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetManagementZonesNextPageRequest(nextLink, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ManagementZones.GetManagementZones", "value", "nextLink", context);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ManagementZones.GetManagementZones", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -427,7 +427,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetManagementZonesRequest(types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetManagementZonesNextPageRequest(nextLink, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ManagementZones.GetManagementZones", "value", "nextLink", context);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ManagementZones.GetManagementZones", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -474,7 +474,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetManagementZonesByPartyIdRequest(partyId, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetManagementZonesByPartyIdNextPageRequest(nextLink, partyId, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ManagementZones.GetManagementZonesByPartyId", "value", "nextLink", context);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ManagementZones.GetManagementZonesByPartyId", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -521,7 +521,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetManagementZonesByPartyIdRequest(partyId, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetManagementZonesByPartyIdNextPageRequest(nextLink, partyId, types, cropIds, seasonIds, fieldIds, sources, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ManagementZones.GetManagementZonesByPartyId", "value", "nextLink", context);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ManagementZones.GetManagementZonesByPartyId", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -555,7 +555,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, partyId, managementZoneId, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ManagementZones.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await Core.ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ManagementZones.CreateCascadeDeleteJob", Core.OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -595,7 +595,7 @@ namespace Azure.Verticals.AgriFood.Farming
             try
             {
                 using HttpMessage message = CreateCreateCascadeDeleteJobRequest(jobId, partyId, managementZoneId, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ManagementZones.CreateCascadeDeleteJob", OperationFinalStateVia.Location, context, waitUntil);
+                return Core.ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ManagementZones.CreateCascadeDeleteJob", Core.OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -612,63 +612,63 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/management-zones", false);
-            if (types != null && Optional.IsCollectionDefined(types))
+            if (types != null && Core.Optional.IsCollectionDefined(types))
             {
                 foreach (var param in types)
                 {
                     uri.AppendQuery("types", param, true);
                 }
             }
-            if (cropIds != null && Optional.IsCollectionDefined(cropIds))
+            if (cropIds != null && Core.Optional.IsCollectionDefined(cropIds))
             {
                 foreach (var param in cropIds)
                 {
                     uri.AppendQuery("cropIds", param, true);
                 }
             }
-            if (seasonIds != null && Optional.IsCollectionDefined(seasonIds))
+            if (seasonIds != null && Core.Optional.IsCollectionDefined(seasonIds))
             {
                 foreach (var param in seasonIds)
                 {
                     uri.AppendQuery("seasonIds", param, true);
                 }
             }
-            if (fieldIds != null && Optional.IsCollectionDefined(fieldIds))
+            if (fieldIds != null && Core.Optional.IsCollectionDefined(fieldIds))
             {
                 foreach (var param in fieldIds)
                 {
                     uri.AppendQuery("fieldIds", param, true);
                 }
             }
-            if (sources != null && Optional.IsCollectionDefined(sources))
+            if (sources != null && Core.Optional.IsCollectionDefined(sources))
             {
                 foreach (var param in sources)
                 {
                     uri.AppendQuery("sources", param, true);
                 }
             }
-            if (ids != null && Optional.IsCollectionDefined(ids))
+            if (ids != null && Core.Optional.IsCollectionDefined(ids))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null && Optional.IsCollectionDefined(names))
+            if (names != null && Core.Optional.IsCollectionDefined(names))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            if (propertyFilters != null && Core.Optional.IsCollectionDefined(propertyFilters))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            if (statuses != null && Core.Optional.IsCollectionDefined(statuses))
             {
                 foreach (var param in statuses)
                 {
@@ -747,63 +747,63 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendPath("/parties/", false);
             uri.AppendPath(partyId, true);
             uri.AppendPath("/management-zones", false);
-            if (types != null && Optional.IsCollectionDefined(types))
+            if (types != null && Core.Optional.IsCollectionDefined(types))
             {
                 foreach (var param in types)
                 {
                     uri.AppendQuery("types", param, true);
                 }
             }
-            if (cropIds != null && Optional.IsCollectionDefined(cropIds))
+            if (cropIds != null && Core.Optional.IsCollectionDefined(cropIds))
             {
                 foreach (var param in cropIds)
                 {
                     uri.AppendQuery("cropIds", param, true);
                 }
             }
-            if (seasonIds != null && Optional.IsCollectionDefined(seasonIds))
+            if (seasonIds != null && Core.Optional.IsCollectionDefined(seasonIds))
             {
                 foreach (var param in seasonIds)
                 {
                     uri.AppendQuery("seasonIds", param, true);
                 }
             }
-            if (fieldIds != null && Optional.IsCollectionDefined(fieldIds))
+            if (fieldIds != null && Core.Optional.IsCollectionDefined(fieldIds))
             {
                 foreach (var param in fieldIds)
                 {
                     uri.AppendQuery("fieldIds", param, true);
                 }
             }
-            if (sources != null && Optional.IsCollectionDefined(sources))
+            if (sources != null && Core.Optional.IsCollectionDefined(sources))
             {
                 foreach (var param in sources)
                 {
                     uri.AppendQuery("sources", param, true);
                 }
             }
-            if (ids != null && Optional.IsCollectionDefined(ids))
+            if (ids != null && Core.Optional.IsCollectionDefined(ids))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null && Optional.IsCollectionDefined(names))
+            if (names != null && Core.Optional.IsCollectionDefined(names))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            if (propertyFilters != null && Core.Optional.IsCollectionDefined(propertyFilters))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            if (statuses != null && Core.Optional.IsCollectionDefined(statuses))
             {
                 foreach (var param in statuses)
                 {

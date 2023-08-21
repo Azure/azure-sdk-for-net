@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<bool> isMandatory = default;
-            Optional<bool> isDynamic = default;
-            Optional<long> position = default;
-            Optional<bool> valueFromPipeline = default;
-            Optional<bool> valueFromPipelineByPropertyName = default;
-            Optional<bool> valueFromRemainingArguments = default;
-            Optional<string> description = default;
-            Optional<IReadOnlyList<AutomationActivityParameterValidationSet>> validationSet = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> type = default;
+            Core.Optional<bool> isMandatory = default;
+            Core.Optional<bool> isDynamic = default;
+            Core.Optional<long> position = default;
+            Core.Optional<bool> valueFromPipeline = default;
+            Core.Optional<bool> valueFromPipelineByPropertyName = default;
+            Core.Optional<bool> valueFromRemainingArguments = default;
+            Core.Optional<string> description = default;
+            Core.Optional<IReadOnlyList<AutomationActivityParameterValidationSet>> validationSet = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new AutomationActivityParameterDefinition(name.Value, type.Value, Optional.ToNullable(isMandatory), Optional.ToNullable(isDynamic), Optional.ToNullable(position), Optional.ToNullable(valueFromPipeline), Optional.ToNullable(valueFromPipelineByPropertyName), Optional.ToNullable(valueFromRemainingArguments), description.Value, Optional.ToList(validationSet));
+            return new AutomationActivityParameterDefinition(name.Value, type.Value, Core.Optional.ToNullable(isMandatory), Core.Optional.ToNullable(isDynamic), Core.Optional.ToNullable(position), Core.Optional.ToNullable(valueFromPipeline), Core.Optional.ToNullable(valueFromPipelineByPropertyName), Core.Optional.ToNullable(valueFromRemainingArguments), description.Value, Core.Optional.ToList(validationSet));
         }
     }
 }

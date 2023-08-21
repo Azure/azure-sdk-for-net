@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformBuildServiceProperties : IUtf8JsonSerializable
+    public partial class AppPlatformBuildServiceProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(KPackVersion))
+            if (Core.Optional.IsDefined(KPackVersion))
             {
                 writer.WritePropertyName("kPackVersion"u8);
                 writer.WriteStringValue(KPackVersion);
             }
-            if (Optional.IsDefined(ResourceRequests))
+            if (Core.Optional.IsDefined(ResourceRequests))
             {
                 writer.WritePropertyName("resourceRequests"u8);
                 writer.WriteObjectValue(ResourceRequests);
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> kPackVersion = default;
-            Optional<AppPlatformBuildServiceProvisioningState> provisioningState = default;
-            Optional<AppPlatformBuildServiceResourceRequirements> resourceRequests = default;
+            Core.Optional<string> kPackVersion = default;
+            Core.Optional<AppPlatformBuildServiceProvisioningState> provisioningState = default;
+            Core.Optional<AppPlatformBuildServiceResourceRequirements> resourceRequests = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kPackVersion"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformBuildServiceProperties(kPackVersion.Value, Optional.ToNullable(provisioningState), resourceRequests.Value);
+            return new AppPlatformBuildServiceProperties(kPackVersion.Value, Core.Optional.ToNullable(provisioningState), resourceRequests.Value);
         }
     }
 }

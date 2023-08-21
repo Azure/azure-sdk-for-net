@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// <summary> Initializes a new instance of ArtifactList. </summary>
         internal ArtifactList()
         {
-            Value = new ChangeTrackingList<ArtifactData>();
+            Value = new Core.ChangeTrackingList<ArtifactData>();
         }
 
         /// <summary> Initializes a new instance of ArtifactList. </summary>

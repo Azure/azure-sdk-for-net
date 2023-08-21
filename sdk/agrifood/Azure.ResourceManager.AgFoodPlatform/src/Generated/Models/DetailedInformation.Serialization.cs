@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             {
                 return null;
             }
-            Optional<string> apiName = default;
-            Optional<IReadOnlyList<string>> customParameters = default;
-            Optional<IReadOnlyList<string>> platformParameters = default;
-            Optional<UnitSystemsInfo> unitsSupported = default;
-            Optional<IReadOnlyList<string>> apiInputParameters = default;
+            Core.Optional<string> apiName = default;
+            Core.Optional<IReadOnlyList<string>> customParameters = default;
+            Core.Optional<IReadOnlyList<string>> platformParameters = default;
+            Core.Optional<UnitSystemsInfo> unitsSupported = default;
+            Core.Optional<IReadOnlyList<string>> apiInputParameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("apiName"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     continue;
                 }
             }
-            return new DetailedInformation(apiName.Value, Optional.ToList(customParameters), Optional.ToList(platformParameters), unitsSupported.Value, Optional.ToList(apiInputParameters));
+            return new DetailedInformation(apiName.Value, Core.Optional.ToList(customParameters), Core.Optional.ToList(platformParameters), unitsSupported.Value, Core.Optional.ToList(apiInputParameters));
         }
     }
 }

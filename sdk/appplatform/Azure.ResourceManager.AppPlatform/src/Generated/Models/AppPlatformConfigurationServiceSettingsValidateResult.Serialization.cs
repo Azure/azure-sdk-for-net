@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformConfigurationServiceGitValidateResult> gitPropertyValidationResult = default;
+            Core.Optional<AppPlatformConfigurationServiceGitValidateResult> gitPropertyValidationResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("gitPropertyValidationResult"u8))

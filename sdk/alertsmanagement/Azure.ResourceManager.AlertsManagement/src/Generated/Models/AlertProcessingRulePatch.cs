@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Initializes a new instance of AlertProcessingRulePatch. </summary>
         public AlertProcessingRulePatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Tags to be updated. </summary>

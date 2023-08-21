@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <summary> Initializes a new instance of SuppressionContractListResult. </summary>
         internal SuppressionContractListResult()
         {
-            Value = new ChangeTrackingList<SuppressionContractData>();
+            Value = new Core.ChangeTrackingList<SuppressionContractData>();
         }
 
         /// <summary> Initializes a new instance of SuppressionContractListResult. </summary>

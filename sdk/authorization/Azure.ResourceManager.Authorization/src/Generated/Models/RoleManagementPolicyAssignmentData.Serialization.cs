@@ -13,24 +13,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    public partial class RoleManagementPolicyAssignmentData : IUtf8JsonSerializable
+    public partial class RoleManagementPolicyAssignmentData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Scope))
+            if (Core.Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Optional.IsDefined(RoleDefinitionId))
+            if (Core.Optional.IsDefined(RoleDefinitionId))
             {
                 writer.WritePropertyName("roleDefinitionId"u8);
                 writer.WriteStringValue(RoleDefinitionId);
             }
-            if (Optional.IsDefined(PolicyId))
+            if (Core.Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.Authorization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> scope = default;
-            Optional<ResourceIdentifier> roleDefinitionId = default;
-            Optional<ResourceIdentifier> policyId = default;
-            Optional<IReadOnlyList<RoleManagementPolicyRule>> effectiveRules = default;
-            Optional<PolicyAssignmentProperties> policyAssignmentProperties = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> scope = default;
+            Core.Optional<ResourceIdentifier> roleDefinitionId = default;
+            Core.Optional<ResourceIdentifier> policyId = default;
+            Core.Optional<IReadOnlyList<RoleManagementPolicyRule>> effectiveRules = default;
+            Core.Optional<PolicyAssignmentProperties> policyAssignmentProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Authorization
                     continue;
                 }
             }
-            return new RoleManagementPolicyAssignmentData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, policyId.Value, Optional.ToList(effectiveRules), policyAssignmentProperties.Value);
+            return new RoleManagementPolicyAssignmentData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, policyId.Value, Core.Optional.ToList(effectiveRules), policyAssignmentProperties.Value);
         }
     }
 }

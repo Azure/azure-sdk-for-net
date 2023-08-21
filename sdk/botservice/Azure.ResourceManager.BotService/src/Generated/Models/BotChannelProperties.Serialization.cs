@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class BotChannelProperties : IUtf8JsonSerializable
+    public partial class BotChannelProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("channelName"u8);
             writer.WriteStringValue(ChannelName);
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 if (ETag != null)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("etag");
                 }
             }
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);

@@ -11,17 +11,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class OriginGroupOverride : IUtf8JsonSerializable
+    public partial class OriginGroupOverride : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(OriginGroup))
+            if (Core.Optional.IsDefined(OriginGroup))
             {
                 writer.WritePropertyName("originGroup"u8);
                 JsonSerializer.Serialize(writer, OriginGroup);
             }
-            if (Optional.IsDefined(ForwardingProtocol))
+            if (Core.Optional.IsDefined(ForwardingProtocol))
             {
                 writer.WritePropertyName("forwardingProtocol"u8);
                 writer.WriteStringValue(ForwardingProtocol.Value.ToString());
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> originGroup = default;
-            Optional<ForwardingProtocol> forwardingProtocol = default;
+            Core.Optional<WritableSubResource> originGroup = default;
+            Core.Optional<ForwardingProtocol> forwardingProtocol = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("originGroup"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new OriginGroupOverride(originGroup, Optional.ToNullable(forwardingProtocol));
+            return new OriginGroupOverride(originGroup, Core.Optional.ToNullable(forwardingProtocol));
         }
     }
 }

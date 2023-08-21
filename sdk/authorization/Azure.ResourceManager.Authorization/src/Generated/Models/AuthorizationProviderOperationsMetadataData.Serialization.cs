@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.Authorization
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<IReadOnlyList<AuthorizationProviderResourceType>> resourceTypes = default;
-            Optional<IReadOnlyList<AuthorizationProviderOperationInfo>> operations = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<IReadOnlyList<AuthorizationProviderResourceType>> resourceTypes = default;
+            Core.Optional<IReadOnlyList<AuthorizationProviderOperationInfo>> operations = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Authorization
                     continue;
                 }
             }
-            return new AuthorizationProviderOperationsMetadataData(id, name, type, systemData.Value, displayName.Value, Optional.ToList(resourceTypes), Optional.ToList(operations));
+            return new AuthorizationProviderOperationsMetadataData(id, name, type, systemData.Value, displayName.Value, Core.Optional.ToList(resourceTypes), Core.Optional.ToList(operations));
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class AddonSrmProperties : IUtf8JsonSerializable
+    public partial class AddonSrmProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LicenseKey))
+            if (Core.Optional.IsDefined(LicenseKey))
             {
                 writer.WritePropertyName("licenseKey"u8);
                 writer.WriteStringValue(LicenseKey);
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<string> licenseKey = default;
+            Core.Optional<string> licenseKey = default;
             AddonType addonType = default;
-            Optional<AddonProvisioningState> provisioningState = default;
+            Core.Optional<AddonProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("licenseKey"u8))
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new AddonSrmProperties(addonType, Optional.ToNullable(provisioningState), licenseKey.Value);
+            return new AddonSrmProperties(addonType, Core.Optional.ToNullable(provisioningState), licenseKey.Value);
         }
     }
 }

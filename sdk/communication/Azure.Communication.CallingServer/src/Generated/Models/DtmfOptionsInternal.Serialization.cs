@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    public partial class DtmfOptionsInternal : IUtf8JsonSerializable
+    public partial class DtmfOptionsInternal : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(InterToneTimeoutInSeconds))
+            if (Core.Optional.IsDefined(InterToneTimeoutInSeconds))
             {
                 writer.WritePropertyName("interToneTimeoutInSeconds"u8);
                 writer.WriteNumberValue(InterToneTimeoutInSeconds.Value);
             }
-            if (Optional.IsDefined(MaxTonesToCollect))
+            if (Core.Optional.IsDefined(MaxTonesToCollect))
             {
                 writer.WritePropertyName("maxTonesToCollect"u8);
                 writer.WriteNumberValue(MaxTonesToCollect.Value);
             }
-            if (Optional.IsCollectionDefined(StopTones))
+            if (Core.Optional.IsCollectionDefined(StopTones))
             {
                 writer.WritePropertyName("stopTones"u8);
                 writer.WriteStartArray();

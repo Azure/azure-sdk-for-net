@@ -14,34 +14,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    public partial class UpdateData : IUtf8JsonSerializable
+    public partial class UpdateData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(InstalledOn))
+            if (Core.Optional.IsDefined(InstalledOn))
             {
                 writer.WritePropertyName("installedDate"u8);
                 writer.WriteStringValue(InstalledOn.Value, "O");
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Prerequisites))
+            if (Core.Optional.IsCollectionDefined(Prerequisites))
             {
                 writer.WritePropertyName("prerequisites"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ComponentVersions))
+            if (Core.Optional.IsCollectionDefined(ComponentVersions))
             {
                 writer.WritePropertyName("componentVersions"u8);
                 writer.WriteStartArray();
@@ -61,17 +61,17 @@ namespace Azure.ResourceManager.Hci
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RebootRequired))
+            if (Core.Optional.IsDefined(RebootRequired))
             {
                 writer.WritePropertyName("rebootRequired"u8);
                 writer.WriteStringValue(RebootRequired.Value.ToString());
             }
-            if (Optional.IsDefined(HealthState))
+            if (Core.Optional.IsDefined(HealthState))
             {
                 writer.WritePropertyName("healthState"u8);
                 writer.WriteStringValue(HealthState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(HealthCheckResult))
+            if (Core.Optional.IsCollectionDefined(HealthCheckResult))
             {
                 writer.WritePropertyName("healthCheckResult"u8);
                 writer.WriteStartArray();
@@ -81,64 +81,64 @@ namespace Azure.ResourceManager.Hci
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(HealthCheckOn))
+            if (Core.Optional.IsDefined(HealthCheckOn))
             {
                 writer.WritePropertyName("healthCheckDate"u8);
                 writer.WriteStringValue(HealthCheckOn.Value, "O");
             }
-            if (Optional.IsDefined(PackagePath))
+            if (Core.Optional.IsDefined(PackagePath))
             {
                 writer.WritePropertyName("packagePath"u8);
                 writer.WriteStringValue(PackagePath);
             }
-            if (Optional.IsDefined(PackageSizeInMb))
+            if (Core.Optional.IsDefined(PackageSizeInMb))
             {
                 writer.WritePropertyName("packageSizeInMb"u8);
                 writer.WriteNumberValue(PackageSizeInMb.Value);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Version))
+            if (Core.Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(Publisher))
+            if (Core.Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Optional.IsDefined(ReleaseLink))
+            if (Core.Optional.IsDefined(ReleaseLink))
             {
                 writer.WritePropertyName("releaseLink"u8);
                 writer.WriteStringValue(ReleaseLink);
             }
-            if (Optional.IsDefined(AvailabilityType))
+            if (Core.Optional.IsDefined(AvailabilityType))
             {
                 writer.WritePropertyName("availabilityType"u8);
                 writer.WriteStringValue(AvailabilityType.Value.ToString());
             }
-            if (Optional.IsDefined(PackageType))
+            if (Core.Optional.IsDefined(PackageType))
             {
                 writer.WritePropertyName("packageType"u8);
                 writer.WriteStringValue(PackageType);
             }
-            if (Optional.IsDefined(AdditionalProperties))
+            if (Core.Optional.IsDefined(AdditionalProperties))
             {
                 writer.WritePropertyName("additionalProperties"u8);
                 writer.WriteStringValue(AdditionalProperties);
             }
             writer.WritePropertyName("updateStateProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProgressPercentage))
+            if (Core.Optional.IsDefined(ProgressPercentage))
             {
                 writer.WritePropertyName("progressPercentage"u8);
                 writer.WriteNumberValue(ProgressPercentage.Value);
             }
-            if (Optional.IsDefined(NotifyMessage))
+            if (Core.Optional.IsDefined(NotifyMessage))
             {
                 writer.WritePropertyName("notifyMessage"u8);
                 writer.WriteStringValue(NotifyMessage);
@@ -154,32 +154,32 @@ namespace Azure.ResourceManager.Hci
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            Core.Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<HciProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> installedDate = default;
-            Optional<string> description = default;
-            Optional<HciUpdateState> state = default;
-            Optional<IList<UpdatePrerequisite>> prerequisites = default;
-            Optional<IList<HciPackageVersionInfo>> componentVersions = default;
-            Optional<HciNodeRebootRequirement> rebootRequired = default;
-            Optional<HciHealthState> healthState = default;
-            Optional<IList<HciPrecheckResult>> healthCheckResult = default;
-            Optional<DateTimeOffset> healthCheckDate = default;
-            Optional<string> packagePath = default;
-            Optional<float> packageSizeInMb = default;
-            Optional<string> displayName = default;
-            Optional<string> version = default;
-            Optional<string> publisher = default;
-            Optional<string> releaseLink = default;
-            Optional<HciAvailabilityType> availabilityType = default;
-            Optional<string> packageType = default;
-            Optional<string> additionalProperties = default;
-            Optional<float> progressPercentage = default;
-            Optional<string> notifyMessage = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<HciProvisioningState> provisioningState = default;
+            Core.Optional<DateTimeOffset> installedDate = default;
+            Core.Optional<string> description = default;
+            Core.Optional<HciUpdateState> state = default;
+            Core.Optional<IList<UpdatePrerequisite>> prerequisites = default;
+            Core.Optional<IList<HciPackageVersionInfo>> componentVersions = default;
+            Core.Optional<HciNodeRebootRequirement> rebootRequired = default;
+            Core.Optional<HciHealthState> healthState = default;
+            Core.Optional<IList<HciPrecheckResult>> healthCheckResult = default;
+            Core.Optional<DateTimeOffset> healthCheckDate = default;
+            Core.Optional<string> packagePath = default;
+            Core.Optional<float> packageSizeInMb = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> version = default;
+            Core.Optional<string> publisher = default;
+            Core.Optional<string> releaseLink = default;
+            Core.Optional<HciAvailabilityType> availabilityType = default;
+            Core.Optional<string> packageType = default;
+            Core.Optional<string> additionalProperties = default;
+            Core.Optional<float> progressPercentage = default;
+            Core.Optional<string> notifyMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Hci
                     continue;
                 }
             }
-            return new UpdateData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), Optional.ToNullable(installedDate), description.Value, Optional.ToNullable(state), Optional.ToList(prerequisites), Optional.ToList(componentVersions), Optional.ToNullable(rebootRequired), Optional.ToNullable(healthState), Optional.ToList(healthCheckResult), Optional.ToNullable(healthCheckDate), packagePath.Value, Optional.ToNullable(packageSizeInMb), displayName.Value, version.Value, publisher.Value, releaseLink.Value, Optional.ToNullable(availabilityType), packageType.Value, additionalProperties.Value, Optional.ToNullable(progressPercentage), notifyMessage.Value);
+            return new UpdateData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(installedDate), description.Value, Core.Optional.ToNullable(state), Core.Optional.ToList(prerequisites), Core.Optional.ToList(componentVersions), Core.Optional.ToNullable(rebootRequired), Core.Optional.ToNullable(healthState), Core.Optional.ToList(healthCheckResult), Core.Optional.ToNullable(healthCheckDate), packagePath.Value, Core.Optional.ToNullable(packageSizeInMb), displayName.Value, version.Value, publisher.Value, releaseLink.Value, Core.Optional.ToNullable(availabilityType), packageType.Value, additionalProperties.Value, Core.Optional.ToNullable(progressPercentage), notifyMessage.Value);
         }
     }
 }

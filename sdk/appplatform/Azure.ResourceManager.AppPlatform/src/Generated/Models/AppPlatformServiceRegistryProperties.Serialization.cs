@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformServiceRegistryProperties : IUtf8JsonSerializable
+    public partial class AppPlatformServiceRegistryProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformServiceRegistryProvisioningState> provisioningState = default;
-            Optional<AppPlatformServiceRegistryResourceRequirements> resourceRequests = default;
-            Optional<IReadOnlyList<AppPlatformServiceRegistryInstance>> instances = default;
+            Core.Optional<AppPlatformServiceRegistryProvisioningState> provisioningState = default;
+            Core.Optional<AppPlatformServiceRegistryResourceRequirements> resourceRequests = default;
+            Core.Optional<IReadOnlyList<AppPlatformServiceRegistryInstance>> instances = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformServiceRegistryProperties(Optional.ToNullable(provisioningState), resourceRequests.Value, Optional.ToList(instances));
+            return new AppPlatformServiceRegistryProperties(Core.Optional.ToNullable(provisioningState), resourceRequests.Value, Core.Optional.ToList(instances));
         }
     }
 }

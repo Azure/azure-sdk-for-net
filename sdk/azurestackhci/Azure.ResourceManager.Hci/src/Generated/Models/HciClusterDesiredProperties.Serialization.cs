@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class HciClusterDesiredProperties : IUtf8JsonSerializable
+    public partial class HciClusterDesiredProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(WindowsServerSubscription))
+            if (Core.Optional.IsDefined(WindowsServerSubscription))
             {
                 writer.WritePropertyName("windowsServerSubscription"u8);
                 writer.WriteStringValue(WindowsServerSubscription.Value.ToString());
             }
-            if (Optional.IsDefined(DiagnosticLevel))
+            if (Core.Optional.IsDefined(DiagnosticLevel))
             {
                 writer.WritePropertyName("diagnosticLevel"u8);
                 writer.WriteStringValue(DiagnosticLevel.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<WindowsServerSubscription> windowsServerSubscription = default;
-            Optional<HciClusterDiagnosticLevel> diagnosticLevel = default;
+            Core.Optional<WindowsServerSubscription> windowsServerSubscription = default;
+            Core.Optional<HciClusterDiagnosticLevel> diagnosticLevel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("windowsServerSubscription"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new HciClusterDesiredProperties(Optional.ToNullable(windowsServerSubscription), Optional.ToNullable(diagnosticLevel));
+            return new HciClusterDesiredProperties(Core.Optional.ToNullable(windowsServerSubscription), Core.Optional.ToNullable(diagnosticLevel));
         }
     }
 }

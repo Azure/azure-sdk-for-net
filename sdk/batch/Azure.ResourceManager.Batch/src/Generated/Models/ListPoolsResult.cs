@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of ListPoolsResult. </summary>
         internal ListPoolsResult()
         {
-            Value = new ChangeTrackingList<BatchAccountPoolData>();
+            Value = new Core.ChangeTrackingList<BatchAccountPoolData>();
         }
 
         /// <summary> Initializes a new instance of ListPoolsResult. </summary>

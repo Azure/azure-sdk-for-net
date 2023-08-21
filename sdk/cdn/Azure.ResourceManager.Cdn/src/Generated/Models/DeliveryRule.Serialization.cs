@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class DeliveryRule : IUtf8JsonSerializable
+    public partial class DeliveryRule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("order"u8);
             writer.WriteNumberValue(Order);
-            if (Optional.IsCollectionDefined(Conditions))
+            if (Core.Optional.IsCollectionDefined(Conditions))
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            Core.Optional<string> name = default;
             int order = default;
-            Optional<IList<DeliveryRuleCondition>> conditions = default;
+            Core.Optional<IList<DeliveryRuleCondition>> conditions = default;
             IList<DeliveryRuleAction> actions = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new DeliveryRule(name.Value, order, Optional.ToList(conditions), actions);
+            return new DeliveryRule(name.Value, order, Core.Optional.ToList(conditions), actions);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<int> accountQuota = default;
+            Core.Optional<int> accountQuota = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountQuota"u8))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new BatchLocationQuota(Optional.ToNullable(accountQuota));
+            return new BatchLocationQuota(Core.Optional.ToNullable(accountQuota));
         }
     }
 }

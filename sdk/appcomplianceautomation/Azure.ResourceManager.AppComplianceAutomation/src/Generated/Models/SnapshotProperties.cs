@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <summary> Initializes a new instance of SnapshotProperties. </summary>
         internal SnapshotProperties()
         {
-            ComplianceResults = new ChangeTrackingList<ComplianceResult>();
+            ComplianceResults = new Core.ChangeTrackingList<ComplianceResult>();
         }
 
         /// <summary> Initializes a new instance of SnapshotProperties. </summary>

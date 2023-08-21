@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiOperationPatch : IUtf8JsonSerializable
+    public partial class ApiOperationPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TemplateParameters))
+            if (Core.Optional.IsCollectionDefined(TemplateParameters))
             {
                 writer.WritePropertyName("templateParameters"u8);
                 writer.WriteStartArray();
@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Request))
+            if (Core.Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
                 writer.WriteObjectValue(Request);
             }
-            if (Optional.IsCollectionDefined(Responses))
+            if (Core.Optional.IsCollectionDefined(Responses))
             {
                 writer.WritePropertyName("responses"u8);
                 writer.WriteStartArray();
@@ -47,22 +47,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Policies))
+            if (Core.Optional.IsDefined(Policies))
             {
                 writer.WritePropertyName("policies"u8);
                 writer.WriteStringValue(Policies);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Method))
+            if (Core.Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method);
             }
-            if (Optional.IsDefined(UriTemplate))
+            if (Core.Optional.IsDefined(UriTemplate))
             {
                 writer.WritePropertyName("urlTemplate"u8);
                 writer.WriteStringValue(UriTemplate);

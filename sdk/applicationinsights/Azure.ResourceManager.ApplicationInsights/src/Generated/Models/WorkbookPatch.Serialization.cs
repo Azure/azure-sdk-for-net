@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class WorkbookPatch : IUtf8JsonSerializable
+    public partial class WorkbookPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,22 +33,22 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(SerializedData))
+            if (Core.Optional.IsDefined(SerializedData))
             {
                 writer.WritePropertyName("serializedData"u8);
                 writer.WriteStringValue(SerializedData);
             }
-            if (Optional.IsDefined(Category))
+            if (Core.Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Optional.IsCollectionDefined(TagsPropertiesTags))
+            if (Core.Optional.IsCollectionDefined(TagsPropertiesTags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Optional.IsDefined(Revision))
+            if (Core.Optional.IsDefined(Revision))
             {
                 if (Revision != null)
                 {

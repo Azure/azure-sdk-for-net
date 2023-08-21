@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
             TimeZone = timeZone;
             TriggerOn = triggerOn;
-            Subscriptions = new ChangeTrackingList<string>();
+            Subscriptions = new Core.ChangeTrackingList<string>();
             Resources = resources.ToList();
         }
 

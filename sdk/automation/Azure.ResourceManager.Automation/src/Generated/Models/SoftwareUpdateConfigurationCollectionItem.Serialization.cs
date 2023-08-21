@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<SoftwareUpdateConfigurationSpecificProperties> updateConfiguration = default;
-            Optional<SoftwareUpdateConfigurationTasks> tasks = default;
-            Optional<AutomationScheduleFrequency> frequency = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<string> provisioningState = default;
-            Optional<DateTimeOffset?> nextRun = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<SoftwareUpdateConfigurationSpecificProperties> updateConfiguration = default;
+            Core.Optional<SoftwareUpdateConfigurationTasks> tasks = default;
+            Core.Optional<AutomationScheduleFrequency> frequency = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> creationTime = default;
+            Core.Optional<DateTimeOffset> lastModifiedTime = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<DateTimeOffset?> nextRun = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new SoftwareUpdateConfigurationCollectionItem(name.Value, id.Value, updateConfiguration.Value, tasks.Value, Optional.ToNullable(frequency), Optional.ToNullable(startTime), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), provisioningState.Value, Optional.ToNullable(nextRun));
+            return new SoftwareUpdateConfigurationCollectionItem(name.Value, id.Value, updateConfiguration.Value, tasks.Value, Core.Optional.ToNullable(frequency), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(lastModifiedTime), provisioningState.Value, Core.Optional.ToNullable(nextRun));
         }
     }
 }

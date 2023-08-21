@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of OutboundEnvironmentEndpointCollection. </summary>
         internal OutboundEnvironmentEndpointCollection()
         {
-            Value = new ChangeTrackingList<BatchAccountOutboundEnvironmentEndpoint>();
+            Value = new Core.ChangeTrackingList<BatchAccountOutboundEnvironmentEndpoint>();
         }
 
         /// <summary> Initializes a new instance of OutboundEnvironmentEndpointCollection. </summary>

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AvailableAppPlatformSku>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<AvailableAppPlatformSku>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new ResourceSkuList(Optional.ToList(value), nextLink.Value);
+            return new ResourceSkuList(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

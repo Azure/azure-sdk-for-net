@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    internal partial class OSDisk : IUtf8JsonSerializable
+    internal partial class OSDisk : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EphemeralOSDiskSettings))
+            if (Core.Optional.IsDefined(EphemeralOSDiskSettings))
             {
                 writer.WritePropertyName("ephemeralOSDiskSettings"u8);
                 writer.WriteObjectValue(EphemeralOSDiskSettings);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<DiffDiskSettings> ephemeralOSDiskSettings = default;
+            Core.Optional<DiffDiskSettings> ephemeralOSDiskSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ephemeralOSDiskSettings"u8))

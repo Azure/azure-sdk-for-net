@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Authorization.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> id0 = default;
-            Optional<RoleManagementPrincipal> lastModifiedBy = default;
-            Optional<DateTimeOffset> lastModifiedDateTime = default;
-            Optional<ResourceIdentifier> id1 = default;
-            Optional<string> displayName = default;
-            Optional<AuthorizationRoleType> type0 = default;
-            Optional<ResourceIdentifier> id2 = default;
-            Optional<string> displayName0 = default;
-            Optional<RoleManagementScopeType> type1 = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ResourceIdentifier> id0 = default;
+            Core.Optional<RoleManagementPrincipal> lastModifiedBy = default;
+            Core.Optional<DateTimeOffset> lastModifiedDateTime = default;
+            Core.Optional<ResourceIdentifier> id1 = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<AuthorizationRoleType> type0 = default;
+            Core.Optional<ResourceIdentifier> id2 = default;
+            Core.Optional<string> displayName0 = default;
+            Core.Optional<RoleManagementScopeType> type1 = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new PolicyAssignmentProperties(id, name, type, systemData.Value, id0.Value, lastModifiedBy.Value, Optional.ToNullable(lastModifiedDateTime), id1.Value, displayName.Value, Optional.ToNullable(type0), id2.Value, displayName0.Value, Optional.ToNullable(type1));
+            return new PolicyAssignmentProperties(id, name, type, systemData.Value, id0.Value, lastModifiedBy.Value, Core.Optional.ToNullable(lastModifiedDateTime), id1.Value, displayName.Value, Core.Optional.ToNullable(type0), id2.Value, displayName0.Value, Core.Optional.ToNullable(type1));
         }
     }
 }

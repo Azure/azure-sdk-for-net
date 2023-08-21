@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Initializes a new instance of ApplicationInsightsComponentProactiveDetectionConfiguration. </summary>
         public ApplicationInsightsComponentProactiveDetectionConfiguration()
         {
-            CustomEmails = new ChangeTrackingList<string>();
+            CustomEmails = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ApplicationInsightsComponentProactiveDetectionConfiguration. </summary>

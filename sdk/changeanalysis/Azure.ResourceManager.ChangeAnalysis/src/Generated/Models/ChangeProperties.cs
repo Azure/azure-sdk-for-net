@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
         /// <summary> Initializes a new instance of ChangeProperties. </summary>
         internal ChangeProperties()
         {
-            InitiatedByList = new ChangeTrackingList<string>();
-            PropertyChanges = new ChangeTrackingList<PropertyChange>();
+            InitiatedByList = new Core.ChangeTrackingList<string>();
+            PropertyChanges = new Core.ChangeTrackingList<PropertyChange>();
         }
 
         /// <summary> Initializes a new instance of ChangeProperties. </summary>

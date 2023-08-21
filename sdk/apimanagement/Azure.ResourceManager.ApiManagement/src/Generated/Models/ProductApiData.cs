@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ProductApiData. </summary>
         public ProductApiData()
         {
-            Protocols = new ChangeTrackingList<ApiOperationInvokableProtocol>();
+            Protocols = new Core.ChangeTrackingList<ApiOperationInvokableProtocol>();
         }
 
         /// <summary> Initializes a new instance of ProductApiData. </summary>

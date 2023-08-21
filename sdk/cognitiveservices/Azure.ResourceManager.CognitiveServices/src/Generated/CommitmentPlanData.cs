@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <summary> Initializes a new instance of CommitmentPlanData. </summary>
         public CommitmentPlanData()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of CommitmentPlanData. </summary>

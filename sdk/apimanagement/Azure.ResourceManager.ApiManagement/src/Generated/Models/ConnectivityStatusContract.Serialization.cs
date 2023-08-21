@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             string name = default;
             ConnectivityStatusType status = default;
-            Optional<string> error = default;
+            Core.Optional<string> error = default;
             DateTimeOffset lastUpdated = default;
             DateTimeOffset lastStatusChange = default;
             string resourceType = default;

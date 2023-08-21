@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
-    public partial class VirtualMachineUpdateProperties : IUtf8JsonSerializable
+    public partial class VirtualMachineUpdateProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(HardwareProfile))
+            if (Core.Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile);
             }
-            if (Optional.IsDefined(StorageProfile))
+            if (Core.Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (Optional.IsDefined(NetworkProfile))
+            if (Core.Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (Optional.IsCollectionDefined(AvailabilitySets))
+            if (Core.Optional.IsCollectionDefined(AvailabilitySets))
             {
                 writer.WritePropertyName("availabilitySets"u8);
                 writer.WriteStartArray();

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <summary> Initializes a new instance of AvailabilitySetListResult. </summary>
         internal AvailabilitySetListResult()
         {
-            Value = new ChangeTrackingList<ScVmmAvailabilitySetData>();
+            Value = new Core.ChangeTrackingList<ScVmmAvailabilitySetData>();
         }
 
         /// <summary> Initializes a new instance of AvailabilitySetListResult. </summary>

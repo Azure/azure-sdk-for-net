@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Initializes a new instance of MyWorkbookResource. </summary>
         public MyWorkbookResource()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            ETag = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            ETag = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of MyWorkbookResource. </summary>

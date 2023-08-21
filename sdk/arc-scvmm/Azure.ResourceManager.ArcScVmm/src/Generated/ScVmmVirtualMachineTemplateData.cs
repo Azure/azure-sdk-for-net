@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.ArcScVmm
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
             ExtendedLocation = extendedLocation;
-            NetworkInterfaces = new ChangeTrackingList<NetworkInterfaces>();
-            Disks = new ChangeTrackingList<VirtualDisk>();
+            NetworkInterfaces = new Core.ChangeTrackingList<NetworkInterfaces>();
+            Disks = new Core.ChangeTrackingList<VirtualDisk>();
         }
 
         /// <summary> Initializes a new instance of ScVmmVirtualMachineTemplateData. </summary>

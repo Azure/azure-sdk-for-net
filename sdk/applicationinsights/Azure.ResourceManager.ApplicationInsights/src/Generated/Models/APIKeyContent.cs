@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Initializes a new instance of APIKeyContent. </summary>
         public APIKeyContent()
         {
-            LinkedReadProperties = new ChangeTrackingList<string>();
-            LinkedWriteProperties = new ChangeTrackingList<string>();
+            LinkedReadProperties = new Core.ChangeTrackingList<string>();
+            LinkedWriteProperties = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> The name of the API Key. </summary>

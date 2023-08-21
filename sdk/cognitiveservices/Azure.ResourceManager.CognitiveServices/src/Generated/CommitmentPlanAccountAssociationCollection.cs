@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CognitiveServices
             try
             {
                 var response = await _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateOrUpdateAssociationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CognitiveServicesArmOperation<CommitmentPlanAccountAssociationResource>(new CommitmentPlanAccountAssociationOperationSource(Client), _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics, Pipeline, _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateCreateOrUpdateAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new CognitiveServicesArmOperation<CommitmentPlanAccountAssociationResource>(new CommitmentPlanAccountAssociationOperationSource(Client), _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics, Pipeline, _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateCreateOrUpdateAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CognitiveServices
             try
             {
                 var response = _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateOrUpdateAssociation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, data, cancellationToken);
-                var operation = new CognitiveServicesArmOperation<CommitmentPlanAccountAssociationResource>(new CommitmentPlanAccountAssociationOperationSource(Client), _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics, Pipeline, _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateCreateOrUpdateAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new CognitiveServicesArmOperation<CommitmentPlanAccountAssociationResource>(new CommitmentPlanAccountAssociationOperationSource(Client), _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics, Pipeline, _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateCreateOrUpdateAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateListAssociationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateListAssociationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CommitmentPlanAccountAssociationResource(Client, CommitmentPlanAccountAssociationData.DeserializeCommitmentPlanAccountAssociationData(e)), _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics, Pipeline, "CommitmentPlanAccountAssociationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CommitmentPlanAccountAssociationResource(Client, CommitmentPlanAccountAssociationData.DeserializeCommitmentPlanAccountAssociationData(e)), _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics, Pipeline, "CommitmentPlanAccountAssociationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateListAssociationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateListAssociationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CommitmentPlanAccountAssociationResource(Client, CommitmentPlanAccountAssociationData.DeserializeCommitmentPlanAccountAssociationData(e)), _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics, Pipeline, "CommitmentPlanAccountAssociationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CommitmentPlanAccountAssociationResource(Client, CommitmentPlanAccountAssociationData.DeserializeCommitmentPlanAccountAssociationData(e)), _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics, Pipeline, "CommitmentPlanAccountAssociationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

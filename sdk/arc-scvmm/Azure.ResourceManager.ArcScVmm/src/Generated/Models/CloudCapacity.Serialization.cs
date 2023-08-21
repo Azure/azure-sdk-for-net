@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<long> cpuCount = default;
-            Optional<long> memoryMB = default;
-            Optional<long> vmCount = default;
+            Core.Optional<long> cpuCount = default;
+            Core.Optional<long> memoryMB = default;
+            Core.Optional<long> vmCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cpuCount"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     continue;
                 }
             }
-            return new CloudCapacity(Optional.ToNullable(cpuCount), Optional.ToNullable(memoryMB), Optional.ToNullable(vmCount));
+            return new CloudCapacity(Core.Optional.ToNullable(cpuCount), Core.Optional.ToNullable(memoryMB), Core.Optional.ToNullable(vmCount));
         }
     }
 }

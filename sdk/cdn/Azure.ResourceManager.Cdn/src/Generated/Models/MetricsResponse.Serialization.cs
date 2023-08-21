@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> dateTimeBegin = default;
-            Optional<DateTimeOffset> dateTimeEnd = default;
-            Optional<MetricsResponseGranularity> granularity = default;
-            Optional<IReadOnlyList<MetricsResponseSeriesItem>> series = default;
+            Core.Optional<DateTimeOffset> dateTimeBegin = default;
+            Core.Optional<DateTimeOffset> dateTimeEnd = default;
+            Core.Optional<MetricsResponseGranularity> granularity = default;
+            Core.Optional<IReadOnlyList<MetricsResponseSeriesItem>> series = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dateTimeBegin"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new MetricsResponse(Optional.ToNullable(dateTimeBegin), Optional.ToNullable(dateTimeEnd), Optional.ToNullable(granularity), Optional.ToList(series));
+            return new MetricsResponse(Core.Optional.ToNullable(dateTimeBegin), Core.Optional.ToNullable(dateTimeEnd), Core.Optional.ToNullable(granularity), Core.Optional.ToList(series));
         }
     }
 }

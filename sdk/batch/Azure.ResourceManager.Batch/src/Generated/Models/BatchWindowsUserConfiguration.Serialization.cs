@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    internal partial class BatchWindowsUserConfiguration : IUtf8JsonSerializable
+    internal partial class BatchWindowsUserConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LoginMode))
+            if (Core.Optional.IsDefined(LoginMode))
             {
                 writer.WritePropertyName("loginMode"u8);
                 writer.WriteStringValue(LoginMode.Value.ToSerialString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<BatchWindowsLoginMode> loginMode = default;
+            Core.Optional<BatchWindowsLoginMode> loginMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("loginMode"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new BatchWindowsUserConfiguration(Optional.ToNullable(loginMode));
+            return new BatchWindowsUserConfiguration(Core.Optional.ToNullable(loginMode));
         }
     }
 }

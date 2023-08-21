@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BillingBenefitsSavingsPlanOrderData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<BillingBenefitsSavingsPlanOrderData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     continue;
                 }
             }
-            return new SavingsPlanOrderModelList(Optional.ToList(value), nextLink.Value);
+            return new SavingsPlanOrderModelList(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

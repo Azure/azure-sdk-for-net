@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Optional<ServiceAlertMetadataProperties> properties = default;
+            Core.Optional<ServiceAlertMetadataProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))

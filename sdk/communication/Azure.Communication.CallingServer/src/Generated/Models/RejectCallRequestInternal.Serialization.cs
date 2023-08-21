@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class RejectCallRequestInternal : IUtf8JsonSerializable
+    internal partial class RejectCallRequestInternal : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("incomingCallContext"u8);
             writer.WriteStringValue(IncomingCallContext);
-            if (Optional.IsDefined(CallRejectReason))
+            if (Core.Optional.IsDefined(CallRejectReason))
             {
                 writer.WritePropertyName("callRejectReason"u8);
                 writer.WriteStringValue(CallRejectReason.Value.ToString());

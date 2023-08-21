@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of PaymentMethodsListResult. </summary>
         internal PaymentMethodsListResult()
         {
-            Value = new ChangeTrackingList<BillingPaymentMethodData>();
+            Value = new Core.ChangeTrackingList<BillingPaymentMethodData>();
         }
 
         /// <summary> Initializes a new instance of PaymentMethodsListResult. </summary>

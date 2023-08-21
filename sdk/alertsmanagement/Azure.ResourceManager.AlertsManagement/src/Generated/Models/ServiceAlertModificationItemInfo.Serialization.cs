@@ -10,42 +10,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class ServiceAlertModificationItemInfo : IUtf8JsonSerializable
+    public partial class ServiceAlertModificationItemInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ModificationEvent))
+            if (Core.Optional.IsDefined(ModificationEvent))
             {
                 writer.WritePropertyName("modificationEvent"u8);
                 writer.WriteStringValue(ModificationEvent.Value.ToSerialString());
             }
-            if (Optional.IsDefined(OldValue))
+            if (Core.Optional.IsDefined(OldValue))
             {
                 writer.WritePropertyName("oldValue"u8);
                 writer.WriteStringValue(OldValue);
             }
-            if (Optional.IsDefined(NewValue))
+            if (Core.Optional.IsDefined(NewValue))
             {
                 writer.WritePropertyName("newValue"u8);
                 writer.WriteStringValue(NewValue);
             }
-            if (Optional.IsDefined(ModifiedAt))
+            if (Core.Optional.IsDefined(ModifiedAt))
             {
                 writer.WritePropertyName("modifiedAt"u8);
                 writer.WriteStringValue(ModifiedAt);
             }
-            if (Optional.IsDefined(ModifiedBy))
+            if (Core.Optional.IsDefined(ModifiedBy))
             {
                 writer.WritePropertyName("modifiedBy"u8);
                 writer.WriteStringValue(ModifiedBy);
             }
-            if (Optional.IsDefined(Comments))
+            if (Core.Optional.IsDefined(Comments))
             {
                 writer.WritePropertyName("comments"u8);
                 writer.WriteStringValue(Comments);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Optional<ServiceAlertModificationEvent> modificationEvent = default;
-            Optional<string> oldValue = default;
-            Optional<string> newValue = default;
-            Optional<string> modifiedAt = default;
-            Optional<string> modifiedBy = default;
-            Optional<string> comments = default;
-            Optional<string> description = default;
+            Core.Optional<ServiceAlertModificationEvent> modificationEvent = default;
+            Core.Optional<string> oldValue = default;
+            Core.Optional<string> newValue = default;
+            Core.Optional<string> modifiedAt = default;
+            Core.Optional<string> modifiedBy = default;
+            Core.Optional<string> comments = default;
+            Core.Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modificationEvent"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     continue;
                 }
             }
-            return new ServiceAlertModificationItemInfo(Optional.ToNullable(modificationEvent), oldValue.Value, newValue.Value, modifiedAt.Value, modifiedBy.Value, comments.Value, description.Value);
+            return new ServiceAlertModificationItemInfo(Core.Optional.ToNullable(modificationEvent), oldValue.Value, newValue.Value, modifiedAt.Value, modifiedBy.Value, comments.Value, description.Value);
         }
     }
 }

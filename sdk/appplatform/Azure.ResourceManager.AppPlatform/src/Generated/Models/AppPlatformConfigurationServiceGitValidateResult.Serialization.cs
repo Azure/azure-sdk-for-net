@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<bool> isValid = default;
-            Optional<IReadOnlyList<AppPlatformConfigurationServiceGitReposValidationMessages>> gitReposValidationResult = default;
+            Core.Optional<bool> isValid = default;
+            Core.Optional<IReadOnlyList<AppPlatformConfigurationServiceGitReposValidationMessages>> gitReposValidationResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isValid"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformConfigurationServiceGitValidateResult(Optional.ToNullable(isValid), Optional.ToList(gitReposValidationResult));
+            return new AppPlatformConfigurationServiceGitValidateResult(Core.Optional.ToNullable(isValid), Core.Optional.ToList(gitReposValidationResult));
         }
     }
 }

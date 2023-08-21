@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformAppProperties. </summary>
         public AppPlatformAppProperties()
         {
-            AddonConfigs = new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>();
-            CustomPersistentDisks = new ChangeTrackingList<AppCustomPersistentDisk>();
-            LoadedCertificates = new ChangeTrackingList<AppLoadedCertificate>();
+            AddonConfigs = new Core.ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>();
+            CustomPersistentDisks = new Core.ChangeTrackingList<AppCustomPersistentDisk>();
+            LoadedCertificates = new Core.ChangeTrackingList<AppLoadedCertificate>();
         }
 
         /// <summary> Initializes a new instance of AppPlatformAppProperties. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of ListCertificatesResult. </summary>
         internal ListCertificatesResult()
         {
-            Value = new ChangeTrackingList<BatchAccountCertificateData>();
+            Value = new Core.ChangeTrackingList<BatchAccountCertificateData>();
         }
 
         /// <summary> Initializes a new instance of ListCertificatesResult. </summary>

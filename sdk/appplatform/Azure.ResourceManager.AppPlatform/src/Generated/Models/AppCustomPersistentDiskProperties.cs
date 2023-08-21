@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Argument.AssertNotNull(mountPath, nameof(mountPath));
 
             MountPath = mountPath;
-            MountOptions = new ChangeTrackingList<string>();
+            MountOptions = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AppCustomPersistentDiskProperties. </summary>

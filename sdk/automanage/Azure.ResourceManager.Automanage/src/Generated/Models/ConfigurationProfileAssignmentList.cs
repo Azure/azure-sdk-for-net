@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automanage.Models
         /// <summary> Initializes a new instance of ConfigurationProfileAssignmentList. </summary>
         internal ConfigurationProfileAssignmentList()
         {
-            Value = new ChangeTrackingList<AutomanageConfigurationProfileAssignmentData>();
+            Value = new Core.ChangeTrackingList<AutomanageConfigurationProfileAssignmentData>();
         }
 
         /// <summary> Initializes a new instance of ConfigurationProfileAssignmentList. </summary>

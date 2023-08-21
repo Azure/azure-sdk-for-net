@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of DeletedAutomationAccountListResult. </summary>
         internal DeletedAutomationAccountListResult()
         {
-            Value = new ChangeTrackingList<DeletedAutomationAccount>();
+            Value = new Core.ChangeTrackingList<DeletedAutomationAccount>();
         }
 
         /// <summary> Initializes a new instance of DeletedAutomationAccountListResult. </summary>

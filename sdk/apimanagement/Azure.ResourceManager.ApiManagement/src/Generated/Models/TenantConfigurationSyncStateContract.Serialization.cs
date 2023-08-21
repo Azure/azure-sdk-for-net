@@ -12,49 +12,49 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class TenantConfigurationSyncStateContract : IUtf8JsonSerializable
+    public partial class TenantConfigurationSyncStateContract : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Branch))
+            if (Core.Optional.IsDefined(Branch))
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (Optional.IsDefined(CommitId))
+            if (Core.Optional.IsDefined(CommitId))
             {
                 writer.WritePropertyName("commitId"u8);
                 writer.WriteStringValue(CommitId);
             }
-            if (Optional.IsDefined(IsExported))
+            if (Core.Optional.IsDefined(IsExported))
             {
                 writer.WritePropertyName("isExport"u8);
                 writer.WriteBooleanValue(IsExported.Value);
             }
-            if (Optional.IsDefined(IsSynced))
+            if (Core.Optional.IsDefined(IsSynced))
             {
                 writer.WritePropertyName("isSynced"u8);
                 writer.WriteBooleanValue(IsSynced.Value);
             }
-            if (Optional.IsDefined(IsGitEnabled))
+            if (Core.Optional.IsDefined(IsGitEnabled))
             {
                 writer.WritePropertyName("isGitEnabled"u8);
                 writer.WriteBooleanValue(IsGitEnabled.Value);
             }
-            if (Optional.IsDefined(SyncOn))
+            if (Core.Optional.IsDefined(SyncOn))
             {
                 writer.WritePropertyName("syncDate"u8);
                 writer.WriteStringValue(SyncOn.Value, "O");
             }
-            if (Optional.IsDefined(ConfigurationChangeOn))
+            if (Core.Optional.IsDefined(ConfigurationChangeOn))
             {
                 writer.WritePropertyName("configurationChangeDate"u8);
                 writer.WriteStringValue(ConfigurationChangeOn.Value, "O");
             }
-            if (Optional.IsDefined(LastOperationId))
+            if (Core.Optional.IsDefined(LastOperationId))
             {
                 writer.WritePropertyName("lastOperationId"u8);
                 writer.WriteStringValue(LastOperationId);
@@ -72,15 +72,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> branch = default;
-            Optional<string> commitId = default;
-            Optional<bool> isExport = default;
-            Optional<bool> isSynced = default;
-            Optional<bool> isGitEnabled = default;
-            Optional<DateTimeOffset> syncDate = default;
-            Optional<DateTimeOffset> configurationChangeDate = default;
-            Optional<string> lastOperationId = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> branch = default;
+            Core.Optional<string> commitId = default;
+            Core.Optional<bool> isExport = default;
+            Core.Optional<bool> isSynced = default;
+            Core.Optional<bool> isGitEnabled = default;
+            Core.Optional<DateTimeOffset> syncDate = default;
+            Core.Optional<DateTimeOffset> configurationChangeDate = default;
+            Core.Optional<string> lastOperationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new TenantConfigurationSyncStateContract(id, name, type, systemData.Value, branch.Value, commitId.Value, Optional.ToNullable(isExport), Optional.ToNullable(isSynced), Optional.ToNullable(isGitEnabled), Optional.ToNullable(syncDate), Optional.ToNullable(configurationChangeDate), lastOperationId.Value);
+            return new TenantConfigurationSyncStateContract(id, name, type, systemData.Value, branch.Value, commitId.Value, Core.Optional.ToNullable(isExport), Core.Optional.ToNullable(isSynced), Core.Optional.ToNullable(isGitEnabled), Core.Optional.ToNullable(syncDate), Core.Optional.ToNullable(configurationChangeDate), lastOperationId.Value);
         }
     }
 }

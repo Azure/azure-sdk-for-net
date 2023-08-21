@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of ServiceAccountUsageListResult. </summary>
         internal ServiceAccountUsageListResult()
         {
-            Value = new ChangeTrackingList<ServiceAccountUsage>();
+            Value = new Core.ChangeTrackingList<ServiceAccountUsage>();
         }
 
         /// <summary> Initializes a new instance of ServiceAccountUsageListResult. </summary>

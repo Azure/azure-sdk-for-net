@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class CallLocatorInternal : IUtf8JsonSerializable
+    internal partial class CallLocatorInternal : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroupCallId))
+            if (Core.Optional.IsDefined(GroupCallId))
             {
                 writer.WritePropertyName("groupCallId"u8);
                 writer.WriteStringValue(GroupCallId);
             }
-            if (Optional.IsDefined(ServerCallId))
+            if (Core.Optional.IsDefined(ServerCallId))
             {
                 writer.WritePropertyName("serverCallId"u8);
                 writer.WriteStringValue(ServerCallId);
             }
-            if (Optional.IsDefined(Kind))
+            if (Core.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());

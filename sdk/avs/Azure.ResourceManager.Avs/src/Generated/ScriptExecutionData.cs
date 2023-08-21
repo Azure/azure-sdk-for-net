@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Initializes a new instance of ScriptExecutionData. </summary>
         public ScriptExecutionData()
         {
-            Parameters = new ChangeTrackingList<ScriptExecutionParameterDetails>();
-            HiddenParameters = new ChangeTrackingList<ScriptExecutionParameterDetails>();
-            Output = new ChangeTrackingList<string>();
-            Information = new ChangeTrackingList<string>();
-            Warnings = new ChangeTrackingList<string>();
-            Errors = new ChangeTrackingList<string>();
+            Parameters = new Core.ChangeTrackingList<ScriptExecutionParameterDetails>();
+            HiddenParameters = new Core.ChangeTrackingList<ScriptExecutionParameterDetails>();
+            Output = new Core.ChangeTrackingList<string>();
+            Information = new Core.ChangeTrackingList<string>();
+            Warnings = new Core.ChangeTrackingList<string>();
+            Errors = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ScriptExecutionData. </summary>

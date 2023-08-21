@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CdnManagedHttpsContent : IUtf8JsonSerializable
+    public partial class CdnManagedHttpsContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("certificateSourceParameters"u8);
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(CertificateSource.ToString());
             writer.WritePropertyName("protocolType"u8);
             writer.WriteStringValue(ProtocolType.ToString());
-            if (Optional.IsDefined(MinimumTlsVersion))
+            if (Core.Optional.IsDefined(MinimumTlsVersion))
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToSerialString());
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
             CdnCertificateSource certificateSourceParameters = default;
             CertificateSource certificateSource = default;
             SecureDeliveryProtocolType protocolType = default;
-            Optional<CdnMinimumTlsVersion> minimumTlsVersion = default;
+            Core.Optional<CdnMinimumTlsVersion> minimumTlsVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateSourceParameters"u8))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new CdnManagedHttpsContent(certificateSource, protocolType, Optional.ToNullable(minimumTlsVersion), certificateSourceParameters);
+            return new CdnManagedHttpsContent(certificateSource, protocolType, Core.Optional.ToNullable(minimumTlsVersion), certificateSourceParameters);
         }
     }
 }

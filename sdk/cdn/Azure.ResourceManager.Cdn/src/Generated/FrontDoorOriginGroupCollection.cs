@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = await _frontDoorOriginGroupRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, originGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<FrontDoorOriginGroupResource>(new FrontDoorOriginGroupOperationSource(Client), _frontDoorOriginGroupClientDiagnostics, Pipeline, _frontDoorOriginGroupRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, originGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new CdnArmOperation<FrontDoorOriginGroupResource>(new FrontDoorOriginGroupOperationSource(Client), _frontDoorOriginGroupClientDiagnostics, Pipeline, _frontDoorOriginGroupRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, originGroupName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _frontDoorOriginGroupRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, originGroupName, data, cancellationToken);
-                var operation = new CdnArmOperation<FrontDoorOriginGroupResource>(new FrontDoorOriginGroupOperationSource(Client), _frontDoorOriginGroupClientDiagnostics, Pipeline, _frontDoorOriginGroupRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, originGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new CdnArmOperation<FrontDoorOriginGroupResource>(new FrontDoorOriginGroupOperationSource(Client), _frontDoorOriginGroupClientDiagnostics, Pipeline, _frontDoorOriginGroupRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, originGroupName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Cdn
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorOriginGroupRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorOriginGroupRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorOriginGroupResource(Client, FrontDoorOriginGroupData.DeserializeFrontDoorOriginGroupData(e)), _frontDoorOriginGroupClientDiagnostics, Pipeline, "FrontDoorOriginGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorOriginGroupResource(Client, FrontDoorOriginGroupData.DeserializeFrontDoorOriginGroupData(e)), _frontDoorOriginGroupClientDiagnostics, Pipeline, "FrontDoorOriginGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Cdn
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorOriginGroupRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorOriginGroupRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorOriginGroupResource(Client, FrontDoorOriginGroupData.DeserializeFrontDoorOriginGroupData(e)), _frontDoorOriginGroupClientDiagnostics, Pipeline, "FrontDoorOriginGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorOriginGroupResource(Client, FrontDoorOriginGroupData.DeserializeFrontDoorOriginGroupData(e)), _frontDoorOriginGroupClientDiagnostics, Pipeline, "FrontDoorOriginGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

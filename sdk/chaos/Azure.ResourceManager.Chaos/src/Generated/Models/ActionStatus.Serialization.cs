@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            Optional<string> actionName = default;
-            Optional<string> actionId = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<IReadOnlyList<ExperimentExecutionActionTargetDetailsProperties>> targets = default;
+            Core.Optional<string> actionName = default;
+            Core.Optional<string> actionId = default;
+            Core.Optional<string> status = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<IReadOnlyList<ExperimentExecutionActionTargetDetailsProperties>> targets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionName"u8))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     continue;
                 }
             }
-            return new ActionStatus(actionName.Value, actionId.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(targets));
+            return new ActionStatus(actionName.Value, actionId.Value, status.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToList(targets));
         }
     }
 }

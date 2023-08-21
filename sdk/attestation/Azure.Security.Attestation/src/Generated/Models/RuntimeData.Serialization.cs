@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Security.Attestation
 {
-    internal partial class RuntimeData : IUtf8JsonSerializable
+    internal partial class RuntimeData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Data))
+            if (Core.Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteBase64StringValue(Data, "U");
             }
-            if (Optional.IsDefined(DataType))
+            if (Core.Optional.IsDefined(DataType))
             {
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType.Value.ToString());

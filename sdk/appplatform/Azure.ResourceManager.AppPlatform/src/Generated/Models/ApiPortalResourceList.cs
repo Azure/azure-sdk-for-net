@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of ApiPortalResourceList. </summary>
         internal ApiPortalResourceList()
         {
-            Value = new ChangeTrackingList<AppPlatformApiPortalData>();
+            Value = new Core.ChangeTrackingList<AppPlatformApiPortalData>();
         }
 
         /// <summary> Initializes a new instance of ApiPortalResourceList. </summary>

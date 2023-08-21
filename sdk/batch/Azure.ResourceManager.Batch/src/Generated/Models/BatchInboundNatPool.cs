@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Batch.Models
             BackendPort = backendPort;
             FrontendPortRangeStart = frontendPortRangeStart;
             FrontendPortRangeEnd = frontendPortRangeEnd;
-            NetworkSecurityGroupRules = new ChangeTrackingList<BatchNetworkSecurityGroupRule>();
+            NetworkSecurityGroupRules = new Core.ChangeTrackingList<BatchNetworkSecurityGroupRule>();
         }
 
         /// <summary> Initializes a new instance of BatchInboundNatPool. </summary>

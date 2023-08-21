@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Initializes a new instance of WorkloadNetworkDnsZoneData. </summary>
         public WorkloadNetworkDnsZoneData()
         {
-            Domain = new ChangeTrackingList<string>();
-            DnsServerIPs = new ChangeTrackingList<IPAddress>();
+            Domain = new Core.ChangeTrackingList<string>();
+            DnsServerIPs = new Core.ChangeTrackingList<IPAddress>();
         }
 
         /// <summary> Initializes a new instance of WorkloadNetworkDnsZoneData. </summary>

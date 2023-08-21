@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Automation
 {
-    internal class DscCompilationJobOperationSource : IOperationSource<DscCompilationJobResource>
+    internal class DscCompilationJobOperationSource : Core.IOperationSource<DscCompilationJobResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Automation
             _client = client;
         }
 
-        DscCompilationJobResource IOperationSource<DscCompilationJobResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DscCompilationJobResource Core.IOperationSource<DscCompilationJobResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DscCompilationJobData.DeserializeDscCompilationJobData(document.RootElement);
             return new DscCompilationJobResource(_client, data);
         }
 
-        async ValueTask<DscCompilationJobResource> IOperationSource<DscCompilationJobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DscCompilationJobResource> Core.IOperationSource<DscCompilationJobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DscCompilationJobData.DeserializeDscCompilationJobData(document.RootElement);

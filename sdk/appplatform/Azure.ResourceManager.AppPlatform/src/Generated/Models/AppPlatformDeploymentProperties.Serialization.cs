@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformDeploymentProperties : IUtf8JsonSerializable
+    public partial class AppPlatformDeploymentProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Source))
+            if (Core.Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
-            if (Optional.IsDefined(DeploymentSettings))
+            if (Core.Optional.IsDefined(DeploymentSettings))
             {
                 writer.WritePropertyName("deploymentSettings"u8);
                 writer.WriteObjectValue(DeploymentSettings);
             }
-            if (Optional.IsDefined(IsActive))
+            if (Core.Optional.IsDefined(IsActive))
             {
                 writer.WritePropertyName("active"u8);
                 writer.WriteBooleanValue(IsActive.Value);
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformUserSourceInfo> source = default;
-            Optional<AppPlatformDeploymentSettings> deploymentSettings = default;
-            Optional<AppPlatformDeploymentProvisioningState> provisioningState = default;
-            Optional<AppPlatformDeploymentStatus> status = default;
-            Optional<bool> active = default;
-            Optional<IReadOnlyList<AppPlatformDeploymentInstance>> instances = default;
+            Core.Optional<AppPlatformUserSourceInfo> source = default;
+            Core.Optional<AppPlatformDeploymentSettings> deploymentSettings = default;
+            Core.Optional<AppPlatformDeploymentProvisioningState> provisioningState = default;
+            Core.Optional<AppPlatformDeploymentStatus> status = default;
+            Core.Optional<bool> active = default;
+            Core.Optional<IReadOnlyList<AppPlatformDeploymentInstance>> instances = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformDeploymentProperties(source.Value, deploymentSettings.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(active), Optional.ToList(instances));
+            return new AppPlatformDeploymentProperties(source.Value, deploymentSettings.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(status), Core.Optional.ToNullable(active), Core.Optional.ToList(instances));
         }
     }
 }

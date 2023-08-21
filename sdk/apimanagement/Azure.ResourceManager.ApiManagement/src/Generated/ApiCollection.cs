@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiId, content, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiResource>(new ApiOperationSource(Client), _apiClientDiagnostics, Pipeline, _apiRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiId, content, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation<ApiResource>(new ApiOperationSource(Client), _apiClientDiagnostics, Pipeline, _apiRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiId, content, ifMatch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiId, content, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiResource>(new ApiOperationSource(Client), _apiClientDiagnostics, Pipeline, _apiRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiId, content, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ApiManagementArmOperation<ApiResource>(new ApiOperationSource(Client), _apiClientDiagnostics, Pipeline, _apiRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiId, content, ifMatch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, tags, expandApiVersionSet);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, tags, expandApiVersionSet);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiResource(Client, ApiData.DeserializeApiData(e)), _apiClientDiagnostics, Pipeline, "ApiCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiResource(Client, ApiData.DeserializeApiData(e)), _apiClientDiagnostics, Pipeline, "ApiCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, tags, expandApiVersionSet);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, tags, expandApiVersionSet);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiResource(Client, ApiData.DeserializeApiData(e)), _apiClientDiagnostics, Pipeline, "ApiCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiResource(Client, ApiData.DeserializeApiData(e)), _apiClientDiagnostics, Pipeline, "ApiCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

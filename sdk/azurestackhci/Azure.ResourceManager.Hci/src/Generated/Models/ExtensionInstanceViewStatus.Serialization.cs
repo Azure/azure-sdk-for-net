@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<HciStatusLevelType> level = default;
-            Optional<string> displayStatus = default;
-            Optional<string> message = default;
-            Optional<DateTimeOffset> time = default;
+            Core.Optional<string> code = default;
+            Core.Optional<HciStatusLevelType> level = default;
+            Core.Optional<string> displayStatus = default;
+            Core.Optional<string> message = default;
+            Core.Optional<DateTimeOffset> time = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new ExtensionInstanceViewStatus(code.Value, Optional.ToNullable(level), displayStatus.Value, message.Value, Optional.ToNullable(time));
+            return new ExtensionInstanceViewStatus(code.Value, Core.Optional.ToNullable(level), displayStatus.Value, message.Value, Core.Optional.ToNullable(time));
         }
     }
 }

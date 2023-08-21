@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Initializes a new instance of MyWorkbooksListResult. </summary>
         internal MyWorkbooksListResult()
         {
-            Value = new ChangeTrackingList<MyWorkbookData>();
+            Value = new Core.ChangeTrackingList<MyWorkbookData>();
         }
 
         /// <summary> Initializes a new instance of MyWorkbooksListResult. </summary>

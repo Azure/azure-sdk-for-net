@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class CustomerManagedEncryption : IUtf8JsonSerializable
+    public partial class CustomerManagedEncryption : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(KeyVaultProperties))
+            if (Core.Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<AvsEncryptionState> status = default;
-            Optional<AvsEncryptionKeyVaultProperties> keyVaultProperties = default;
+            Core.Optional<AvsEncryptionState> status = default;
+            Core.Optional<AvsEncryptionKeyVaultProperties> keyVaultProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new CustomerManagedEncryption(Optional.ToNullable(status), keyVaultProperties.Value);
+            return new CustomerManagedEncryption(Core.Optional.ToNullable(status), keyVaultProperties.Value);
         }
     }
 }

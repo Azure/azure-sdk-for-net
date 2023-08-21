@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    internal partial class DiffDiskSettings : IUtf8JsonSerializable
+    internal partial class DiffDiskSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Placement))
+            if (Core.Optional.IsDefined(Placement))
             {
                 writer.WritePropertyName("placement"u8);
                 writer.WriteStringValue(Placement.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<BatchDiffDiskPlacement> placement = default;
+            Core.Optional<BatchDiffDiskPlacement> placement = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("placement"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new DiffDiskSettings(Optional.ToNullable(placement));
+            return new DiffDiskSettings(Core.Optional.ToNullable(placement));
         }
     }
 }

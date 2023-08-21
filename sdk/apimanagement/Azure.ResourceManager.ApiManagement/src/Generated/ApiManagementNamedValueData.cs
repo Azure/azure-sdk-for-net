@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of ApiManagementNamedValueData. </summary>
         public ApiManagementNamedValueData()
         {
-            Tags = new ChangeTrackingList<string>();
+            Tags = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ApiManagementNamedValueData. </summary>

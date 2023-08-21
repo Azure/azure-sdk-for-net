@@ -18,8 +18,8 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<string> label = default;
-            Optional<string> recognizedPhrase = default;
+            Core.Optional<string> label = default;
+            Core.Optional<string> recognizedPhrase = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("label"u8))

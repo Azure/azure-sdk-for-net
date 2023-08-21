@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of GatewayListResult. </summary>
         internal GatewayListResult()
         {
-            Value = new ChangeTrackingList<ApiManagementGatewayData>();
+            Value = new Core.ChangeTrackingList<ApiManagementGatewayData>();
         }
 
         /// <summary> Initializes a new instance of GatewayListResult. </summary>

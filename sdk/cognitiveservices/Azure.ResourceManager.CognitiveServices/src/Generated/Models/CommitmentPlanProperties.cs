@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of CommitmentPlanProperties. </summary>
         public CommitmentPlanProperties()
         {
-            ProvisioningIssues = new ChangeTrackingList<string>();
+            ProvisioningIssues = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of CommitmentPlanProperties. </summary>

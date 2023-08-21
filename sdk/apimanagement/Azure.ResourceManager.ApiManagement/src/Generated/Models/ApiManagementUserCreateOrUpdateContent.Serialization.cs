@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiManagementUserCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class ApiManagementUserCreateOrUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(Note))
+            if (Core.Optional.IsDefined(Note))
             {
                 writer.WritePropertyName("note"u8);
                 writer.WriteStringValue(Note);
             }
-            if (Optional.IsCollectionDefined(Identities))
+            if (Core.Optional.IsCollectionDefined(Identities))
             {
                 writer.WritePropertyName("identities"u8);
                 writer.WriteStartArray();
@@ -37,32 +37,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Email))
+            if (Core.Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (Optional.IsDefined(FirstName))
+            if (Core.Optional.IsDefined(FirstName))
             {
                 writer.WritePropertyName("firstName"u8);
                 writer.WriteStringValue(FirstName);
             }
-            if (Optional.IsDefined(LastName))
+            if (Core.Optional.IsDefined(LastName))
             {
                 writer.WritePropertyName("lastName"u8);
                 writer.WriteStringValue(LastName);
             }
-            if (Optional.IsDefined(Password))
+            if (Core.Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(AppType))
+            if (Core.Optional.IsDefined(AppType))
             {
                 writer.WritePropertyName("appType"u8);
                 writer.WriteStringValue(AppType.Value.ToString());
             }
-            if (Optional.IsDefined(Confirmation))
+            if (Core.Optional.IsDefined(Confirmation))
             {
                 writer.WritePropertyName("confirmation"u8);
                 writer.WriteStringValue(Confirmation.Value.ToString());

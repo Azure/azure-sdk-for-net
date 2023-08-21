@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ApiManagementIdentityProviderCreateOrUpdateContent. </summary>
         public ApiManagementIdentityProviderCreateOrUpdateContent()
         {
-            AllowedTenants = new ChangeTrackingList<string>();
+            AllowedTenants = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ApiManagementIdentityProviderCreateOrUpdateContent. </summary>

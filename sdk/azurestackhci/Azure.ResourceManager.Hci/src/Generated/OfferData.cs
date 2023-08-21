@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Initializes a new instance of OfferData. </summary>
         public OfferData()
         {
-            SkuMappings = new ChangeTrackingList<HciSkuMappings>();
+            SkuMappings = new Core.ChangeTrackingList<HciSkuMappings>();
         }
 
         /// <summary> Initializes a new instance of OfferData. </summary>

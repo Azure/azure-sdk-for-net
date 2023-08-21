@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of GlobalReachConnectionList. </summary>
         internal GlobalReachConnectionList()
         {
-            Value = new ChangeTrackingList<GlobalReachConnectionData>();
+            Value = new Core.ChangeTrackingList<GlobalReachConnectionData>();
         }
 
         /// <summary> Initializes a new instance of GlobalReachConnectionList. </summary>

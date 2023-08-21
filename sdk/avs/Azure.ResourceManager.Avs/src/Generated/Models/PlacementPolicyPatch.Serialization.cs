@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class PlacementPolicyPatch : IUtf8JsonSerializable
+    public partial class PlacementPolicyPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(VmMembers))
+            if (Core.Optional.IsCollectionDefined(VmMembers))
             {
                 writer.WritePropertyName("vmMembers"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(HostMembers))
+            if (Core.Optional.IsCollectionDefined(HostMembers))
             {
                 writer.WritePropertyName("hostMembers"u8);
                 writer.WriteStartArray();
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AffinityStrength))
+            if (Core.Optional.IsDefined(AffinityStrength))
             {
                 writer.WritePropertyName("affinityStrength"u8);
                 writer.WriteStringValue(AffinityStrength.Value.ToString());
             }
-            if (Optional.IsDefined(AzureHybridBenefitType))
+            if (Core.Optional.IsDefined(AzureHybridBenefitType))
             {
                 writer.WritePropertyName("azureHybridBenefitType"u8);
                 writer.WriteStringValue(AzureHybridBenefitType.Value.ToString());

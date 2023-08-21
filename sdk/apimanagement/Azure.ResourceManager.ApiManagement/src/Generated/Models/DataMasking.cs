@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of DataMasking. </summary>
         public DataMasking()
         {
-            QueryParams = new ChangeTrackingList<DataMaskingEntity>();
-            Headers = new ChangeTrackingList<DataMaskingEntity>();
+            QueryParams = new Core.ChangeTrackingList<DataMaskingEntity>();
+            Headers = new Core.ChangeTrackingList<DataMaskingEntity>();
         }
 
         /// <summary> Initializes a new instance of DataMasking. </summary>

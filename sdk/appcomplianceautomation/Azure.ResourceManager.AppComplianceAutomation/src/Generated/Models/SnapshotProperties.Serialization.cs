@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> snapshotName = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<ReportProperties> reportProperties = default;
-            Optional<SystemData> reportSystemData = default;
-            Optional<IReadOnlyList<ComplianceResult>> complianceResults = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> snapshotName = default;
+            Core.Optional<DateTimeOffset> createdAt = default;
+            Core.Optional<ProvisioningState> provisioningState = default;
+            Core.Optional<ReportProperties> reportProperties = default;
+            Core.Optional<SystemData> reportSystemData = default;
+            Core.Optional<IReadOnlyList<ComplianceResult>> complianceResults = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     continue;
                 }
             }
-            return new SnapshotProperties(id.Value, snapshotName.Value, Optional.ToNullable(createdAt), Optional.ToNullable(provisioningState), reportProperties.Value, reportSystemData, Optional.ToList(complianceResults));
+            return new SnapshotProperties(id.Value, snapshotName.Value, Core.Optional.ToNullable(createdAt), Core.Optional.ToNullable(provisioningState), reportProperties.Value, reportSystemData, Core.Optional.ToList(complianceResults));
         }
     }
 }

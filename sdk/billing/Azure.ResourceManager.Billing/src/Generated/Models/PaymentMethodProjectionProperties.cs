@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of PaymentMethodProjectionProperties. </summary>
         public PaymentMethodProjectionProperties()
         {
-            Logos = new ChangeTrackingList<PaymentMethodLogo>();
+            Logos = new Core.ChangeTrackingList<PaymentMethodLogo>();
         }
 
         /// <summary> Initializes a new instance of PaymentMethodProjectionProperties. </summary>

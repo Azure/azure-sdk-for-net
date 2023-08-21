@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IPAddress>> publicIPs = default;
+            Core.Optional<IReadOnlyList<IPAddress>> publicIPs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicIPs"u8))
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new NetworkProfileOutboundIPs(Optional.ToList(publicIPs));
+            return new NetworkProfileOutboundIPs(Core.Optional.ToList(publicIPs));
         }
     }
 }

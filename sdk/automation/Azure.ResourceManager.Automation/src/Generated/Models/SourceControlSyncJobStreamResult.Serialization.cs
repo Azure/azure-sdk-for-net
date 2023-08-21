@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> sourceControlSyncJobStreamId = default;
-            Optional<string> summary = default;
-            Optional<DateTimeOffset?> time = default;
-            Optional<SourceControlStreamType> streamType = default;
-            Optional<string> streamText = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> value = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> sourceControlSyncJobStreamId = default;
+            Core.Optional<string> summary = default;
+            Core.Optional<DateTimeOffset?> time = default;
+            Core.Optional<SourceControlStreamType> streamType = default;
+            Core.Optional<string> streamText = default;
+            Core.Optional<IReadOnlyDictionary<string, BinaryData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new SourceControlSyncJobStreamResult(id.Value, sourceControlSyncJobStreamId.Value, summary.Value, Optional.ToNullable(time), Optional.ToNullable(streamType), streamText.Value, Optional.ToDictionary(value));
+            return new SourceControlSyncJobStreamResult(id.Value, sourceControlSyncJobStreamId.Value, summary.Value, Core.Optional.ToNullable(time), Core.Optional.ToNullable(streamType), streamText.Value, Core.Optional.ToDictionary(value));
         }
     }
 }

@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    public partial class SnapshotDownloadContent : IUtf8JsonSerializable
+    public partial class SnapshotDownloadContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReportCreatorTenantId))
+            if (Core.Optional.IsDefined(ReportCreatorTenantId))
             {
                 writer.WritePropertyName("reportCreatorTenantId"u8);
                 writer.WriteStringValue(ReportCreatorTenantId);
             }
             writer.WritePropertyName("downloadType"u8);
             writer.WriteStringValue(DownloadType.ToString());
-            if (Optional.IsDefined(OfferGuid))
+            if (Core.Optional.IsDefined(OfferGuid))
             {
                 writer.WritePropertyName("offerGuid"u8);
                 writer.WriteStringValue(OfferGuid);

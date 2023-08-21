@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FarmBeatsExtensionData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<FarmBeatsExtensionData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     continue;
                 }
             }
-            return new FarmBeatsExtensionListResponse(Optional.ToList(value), nextLink.Value);
+            return new FarmBeatsExtensionListResponse(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

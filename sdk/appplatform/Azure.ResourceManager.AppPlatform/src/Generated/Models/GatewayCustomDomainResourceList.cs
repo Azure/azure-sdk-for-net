@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of GatewayCustomDomainResourceList. </summary>
         internal GatewayCustomDomainResourceList()
         {
-            Value = new ChangeTrackingList<AppPlatformGatewayCustomDomainData>();
+            Value = new Core.ChangeTrackingList<AppPlatformGatewayCustomDomainData>();
         }
 
         /// <summary> Initializes a new instance of GatewayCustomDomainResourceList. </summary>

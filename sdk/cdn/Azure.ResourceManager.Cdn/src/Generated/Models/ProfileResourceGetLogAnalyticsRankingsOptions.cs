@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
             MaxRanking = maxRanking;
             DateTimeBegin = dateTimeBegin;
             DateTimeEnd = dateTimeEnd;
-            CustomDomains = new ChangeTrackingList<string>();
+            CustomDomains = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> The ArrayOfLogRanking to use. </summary>

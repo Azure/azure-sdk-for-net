@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class RedirectCallRequestInternal : IUtf8JsonSerializable
+    internal partial class RedirectCallRequestInternal : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("incomingCallContext"u8);
             writer.WriteStringValue(IncomingCallContext);
             writer.WritePropertyName("target"u8);
             writer.WriteObjectValue(Target);
-            if (Optional.IsDefined(CustomContext))
+            if (Core.Optional.IsDefined(CustomContext))
             {
                 writer.WritePropertyName("customContext"u8);
                 writer.WriteObjectValue(CustomContext);

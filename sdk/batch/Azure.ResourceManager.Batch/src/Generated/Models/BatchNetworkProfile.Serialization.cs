@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchNetworkProfile : IUtf8JsonSerializable
+    public partial class BatchNetworkProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AccountAccess))
+            if (Core.Optional.IsDefined(AccountAccess))
             {
                 writer.WritePropertyName("accountAccess"u8);
                 writer.WriteObjectValue(AccountAccess);
             }
-            if (Optional.IsDefined(NodeManagementAccess))
+            if (Core.Optional.IsDefined(NodeManagementAccess))
             {
                 writer.WritePropertyName("nodeManagementAccess"u8);
                 writer.WriteObjectValue(NodeManagementAccess);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<BatchEndpointAccessProfile> accountAccess = default;
-            Optional<BatchEndpointAccessProfile> nodeManagementAccess = default;
+            Core.Optional<BatchEndpointAccessProfile> accountAccess = default;
+            Core.Optional<BatchEndpointAccessProfile> nodeManagementAccess = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountAccess"u8))

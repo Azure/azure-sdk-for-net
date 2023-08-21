@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of PlacementPolicyPatch. </summary>
         public PlacementPolicyPatch()
         {
-            VmMembers = new ChangeTrackingList<ResourceIdentifier>();
-            HostMembers = new ChangeTrackingList<string>();
+            VmMembers = new Core.ChangeTrackingList<ResourceIdentifier>();
+            HostMembers = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Whether the placement policy is enabled or disabled. </summary>

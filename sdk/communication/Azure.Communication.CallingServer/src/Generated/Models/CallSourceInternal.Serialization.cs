@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class CallSourceInternal : IUtf8JsonSerializable
+    internal partial class CallSourceInternal : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CallerId))
+            if (Core.Optional.IsDefined(CallerId))
             {
                 writer.WritePropertyName("callerId"u8);
                 writer.WriteObjectValue(CallerId);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -37,8 +37,8 @@ namespace Azure.Communication.CallingServer
             {
                 return null;
             }
-            Optional<PhoneNumberIdentifierModel> callerId = default;
-            Optional<string> displayName = default;
+            Core.Optional<PhoneNumberIdentifierModel> callerId = default;
+            Core.Optional<string> displayName = default;
             CommunicationIdentifierModel identifier = default;
             foreach (var property in element.EnumerateObject())
             {

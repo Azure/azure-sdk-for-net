@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> continentId = default;
+            Core.Optional<string> id = default;
+            Core.Optional<string> continentId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

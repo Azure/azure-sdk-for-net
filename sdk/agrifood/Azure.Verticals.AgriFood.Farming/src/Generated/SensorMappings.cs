@@ -302,7 +302,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSensorMappingsRequest(sensorIds, sensorPartnerIds, partyIds, boundaryIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSensorMappingsNextPageRequest(nextLink, sensorIds, sensorPartnerIds, partyIds, boundaryIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SensorMappings.GetSensorMappings", "value", "nextLink", context);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SensorMappings.GetSensorMappings", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -343,7 +343,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSensorMappingsRequest(sensorIds, sensorPartnerIds, partyIds, boundaryIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSensorMappingsNextPageRequest(nextLink, sensorIds, sensorPartnerIds, partyIds, boundaryIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SensorMappings.GetSensorMappings", "value", "nextLink", context);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SensorMappings.GetSensorMappings", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetSensorMappingsRequest(IEnumerable<string> sensorIds, IEnumerable<string> sensorPartnerIds, IEnumerable<string> partyIds, IEnumerable<string> boundaryIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
@@ -354,56 +354,56 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/sensor-mappings", false);
-            if (sensorIds != null && Optional.IsCollectionDefined(sensorIds))
+            if (sensorIds != null && Core.Optional.IsCollectionDefined(sensorIds))
             {
                 foreach (var param in sensorIds)
                 {
                     uri.AppendQuery("sensorIds", param, true);
                 }
             }
-            if (sensorPartnerIds != null && Optional.IsCollectionDefined(sensorPartnerIds))
+            if (sensorPartnerIds != null && Core.Optional.IsCollectionDefined(sensorPartnerIds))
             {
                 foreach (var param in sensorPartnerIds)
                 {
                     uri.AppendQuery("sensorPartnerIds", param, true);
                 }
             }
-            if (partyIds != null && Optional.IsCollectionDefined(partyIds))
+            if (partyIds != null && Core.Optional.IsCollectionDefined(partyIds))
             {
                 foreach (var param in partyIds)
                 {
                     uri.AppendQuery("partyIds", param, true);
                 }
             }
-            if (boundaryIds != null && Optional.IsCollectionDefined(boundaryIds))
+            if (boundaryIds != null && Core.Optional.IsCollectionDefined(boundaryIds))
             {
                 foreach (var param in boundaryIds)
                 {
                     uri.AppendQuery("boundaryIds", param, true);
                 }
             }
-            if (ids != null && Optional.IsCollectionDefined(ids))
+            if (ids != null && Core.Optional.IsCollectionDefined(ids))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null && Optional.IsCollectionDefined(names))
+            if (names != null && Core.Optional.IsCollectionDefined(names))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            if (propertyFilters != null && Core.Optional.IsCollectionDefined(propertyFilters))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            if (statuses != null && Core.Optional.IsCollectionDefined(statuses))
             {
                 foreach (var param in statuses)
                 {

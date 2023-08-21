@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <summary> Initializes a new instance of VmmServerListResult. </summary>
         internal VmmServerListResult()
         {
-            Value = new ChangeTrackingList<ScVmmServerData>();
+            Value = new Core.ChangeTrackingList<ScVmmServerData>();
         }
 
         /// <summary> Initializes a new instance of VmmServerListResult. </summary>

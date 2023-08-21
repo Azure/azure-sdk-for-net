@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<bool> required = default;
+            Core.Optional<bool> required = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("required"u8))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new ServiceProviderParameterMetadataConstraints(Optional.ToNullable(required));
+            return new ServiceProviderParameterMetadataConstraints(Core.Optional.ToNullable(required));
         }
     }
 }

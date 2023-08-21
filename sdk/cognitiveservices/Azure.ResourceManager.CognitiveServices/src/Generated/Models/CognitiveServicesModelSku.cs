@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of CognitiveServicesModelSku. </summary>
         public CognitiveServicesModelSku()
         {
-            RateLimits = new ChangeTrackingList<ServiceAccountCallRateLimit>();
+            RateLimits = new Core.ChangeTrackingList<ServiceAccountCallRateLimit>();
         }
 
         /// <summary> Initializes a new instance of CognitiveServicesModelSku. </summary>

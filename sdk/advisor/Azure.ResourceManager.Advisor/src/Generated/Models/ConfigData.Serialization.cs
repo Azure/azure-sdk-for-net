@@ -12,24 +12,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Advisor.Models
 {
-    public partial class ConfigData : IUtf8JsonSerializable
+    public partial class ConfigData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Exclude))
+            if (Core.Optional.IsDefined(Exclude))
             {
                 writer.WritePropertyName("exclude"u8);
                 writer.WriteBooleanValue(Exclude.Value);
             }
-            if (Optional.IsDefined(LowCpuThreshold))
+            if (Core.Optional.IsDefined(LowCpuThreshold))
             {
                 writer.WritePropertyName("lowCpuThreshold"u8);
                 writer.WriteStringValue(LowCpuThreshold.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Digests))
+            if (Core.Optional.IsCollectionDefined(Digests))
             {
                 writer.WritePropertyName("digests"u8);
                 writer.WriteStartArray();
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.Advisor.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> exclude = default;
-            Optional<CpuThreshold> lowCpuThreshold = default;
-            Optional<IList<DigestConfig>> digests = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<bool> exclude = default;
+            Core.Optional<CpuThreshold> lowCpuThreshold = default;
+            Core.Optional<IList<DigestConfig>> digests = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Advisor.Models
                     continue;
                 }
             }
-            return new ConfigData(id, name, type, systemData.Value, Optional.ToNullable(exclude), Optional.ToNullable(lowCpuThreshold), Optional.ToList(digests));
+            return new ConfigData(id, name, type, systemData.Value, Core.Optional.ToNullable(exclude), Core.Optional.ToNullable(lowCpuThreshold), Core.Optional.ToList(digests));
         }
     }
 }

@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Batch
         /// <summary> Initializes a new instance of BatchAccountPoolData. </summary>
         public BatchAccountPoolData()
         {
-            UserAccounts = new ChangeTrackingList<BatchUserAccount>();
-            Metadata = new ChangeTrackingList<BatchAccountPoolMetadataItem>();
-            Certificates = new ChangeTrackingList<BatchCertificateReference>();
-            ApplicationPackages = new ChangeTrackingList<BatchApplicationPackageReference>();
-            ApplicationLicenses = new ChangeTrackingList<string>();
-            MountConfiguration = new ChangeTrackingList<BatchMountConfiguration>();
+            UserAccounts = new Core.ChangeTrackingList<BatchUserAccount>();
+            Metadata = new Core.ChangeTrackingList<BatchAccountPoolMetadataItem>();
+            Certificates = new Core.ChangeTrackingList<BatchCertificateReference>();
+            ApplicationPackages = new Core.ChangeTrackingList<BatchApplicationPackageReference>();
+            ApplicationLicenses = new Core.ChangeTrackingList<string>();
+            MountConfiguration = new Core.ChangeTrackingList<BatchMountConfiguration>();
         }
 
         /// <summary> Initializes a new instance of BatchAccountPoolData. </summary>

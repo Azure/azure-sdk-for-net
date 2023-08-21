@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CognitiveServicesPrivateLinkResourceProperties : IUtf8JsonSerializable
+    public partial class CognitiveServicesPrivateLinkResourceProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(RequiredZoneNames))
+            if (Core.Optional.IsCollectionDefined(RequiredZoneNames))
             {
                 writer.WritePropertyName("requiredZoneNames"u8);
                 writer.WriteStartArray();
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<string> groupId = default;
-            Optional<IReadOnlyList<string>> requiredMembers = default;
-            Optional<IList<string>> requiredZoneNames = default;
-            Optional<string> displayName = default;
+            Core.Optional<string> groupId = default;
+            Core.Optional<IReadOnlyList<string>> requiredMembers = default;
+            Core.Optional<IList<string>> requiredZoneNames = default;
+            Core.Optional<string> displayName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupId"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new CognitiveServicesPrivateLinkResourceProperties(groupId.Value, Optional.ToList(requiredMembers), Optional.ToList(requiredZoneNames), displayName.Value);
+            return new CognitiveServicesPrivateLinkResourceProperties(groupId.Value, Core.Optional.ToList(requiredMembers), Core.Optional.ToList(requiredZoneNames), displayName.Value);
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    internal partial class AppConfigurationStoreEncryptionProperties : IUtf8JsonSerializable
+    internal partial class AppConfigurationStoreEncryptionProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyVaultProperties))
+            if (Core.Optional.IsDefined(KeyVaultProperties))
             {
                 if (KeyVaultProperties != null)
                 {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 return null;
             }
-            Optional<AppConfigurationKeyVaultProperties> keyVaultProperties = default;
+            Core.Optional<AppConfigurationKeyVaultProperties> keyVaultProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultProperties"u8))

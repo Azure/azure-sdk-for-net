@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <summary> Initializes a new instance of ConfigData. </summary>
         public ConfigData()
         {
-            Digests = new ChangeTrackingList<DigestConfig>();
+            Digests = new Core.ChangeTrackingList<DigestConfig>();
         }
 
         /// <summary> Initializes a new instance of ConfigData. </summary>

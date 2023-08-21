@@ -21,7 +21,7 @@ namespace Azure.Security.Attestation
             {
                 return null;
             }
-            Optional<JsonWebKeySet> xMsPolicyCertificates = default;
+            Core.Optional<JsonWebKeySet> xMsPolicyCertificates = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("x-ms-policy-certificates"u8))

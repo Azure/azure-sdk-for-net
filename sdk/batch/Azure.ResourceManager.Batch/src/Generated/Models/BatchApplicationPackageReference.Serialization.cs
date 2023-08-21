@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchApplicationPackageReference : IUtf8JsonSerializable
+    public partial class BatchApplicationPackageReference : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Optional.IsDefined(Version))
+            if (Core.Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            Optional<string> version = default;
+            Core.Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

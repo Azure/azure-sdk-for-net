@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformGatewayRouteConfigProperties. </summary>
         public AppPlatformGatewayRouteConfigProperties()
         {
-            Routes = new ChangeTrackingList<AppPlatformGatewayApiRoute>();
+            Routes = new Core.ChangeTrackingList<AppPlatformGatewayApiRoute>();
         }
 
         /// <summary> Initializes a new instance of AppPlatformGatewayRouteConfigProperties. </summary>

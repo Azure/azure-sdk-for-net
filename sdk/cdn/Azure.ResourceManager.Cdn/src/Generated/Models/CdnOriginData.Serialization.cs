@@ -12,19 +12,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    public partial class CdnOriginData : IUtf8JsonSerializable
+    public partial class CdnOriginData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(HostName))
+            if (Core.Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsDefined(HttpPort))
+            if (Core.Optional.IsDefined(HttpPort))
             {
                 if (HttpPort != null)
                 {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("httpPort");
                 }
             }
-            if (Optional.IsDefined(HttpsPort))
+            if (Core.Optional.IsDefined(HttpsPort))
             {
                 if (HttpsPort != null)
                 {
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("httpsPort");
                 }
             }
-            if (Optional.IsDefined(OriginHostHeader))
+            if (Core.Optional.IsDefined(OriginHostHeader))
             {
                 writer.WritePropertyName("originHostHeader"u8);
                 writer.WriteStringValue(OriginHostHeader);
             }
-            if (Optional.IsDefined(Priority))
+            if (Core.Optional.IsDefined(Priority))
             {
                 if (Priority != null)
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("priority");
                 }
             }
-            if (Optional.IsDefined(Weight))
+            if (Core.Optional.IsDefined(Weight))
             {
                 if (Weight != null)
                 {
@@ -77,17 +77,17 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("weight");
                 }
             }
-            if (Optional.IsDefined(Enabled))
+            if (Core.Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Optional.IsDefined(PrivateLinkAlias))
+            if (Core.Optional.IsDefined(PrivateLinkAlias))
             {
                 writer.WritePropertyName("privateLinkAlias"u8);
                 writer.WriteStringValue(PrivateLinkAlias);
             }
-            if (Optional.IsDefined(PrivateLinkResourceId))
+            if (Core.Optional.IsDefined(PrivateLinkResourceId))
             {
                 if (PrivateLinkResourceId != null)
                 {
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("privateLinkResourceId");
                 }
             }
-            if (Optional.IsDefined(PrivateLinkLocation))
+            if (Core.Optional.IsDefined(PrivateLinkLocation))
             {
                 writer.WritePropertyName("privateLinkLocation"u8);
                 writer.WriteStringValue(PrivateLinkLocation);
             }
-            if (Optional.IsDefined(PrivateLinkApprovalMessage))
+            if (Core.Optional.IsDefined(PrivateLinkApprovalMessage))
             {
                 writer.WritePropertyName("privateLinkApprovalMessage"u8);
                 writer.WriteStringValue(PrivateLinkApprovalMessage);
@@ -122,21 +122,21 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> hostName = default;
-            Optional<int?> httpPort = default;
-            Optional<int?> httpsPort = default;
-            Optional<string> originHostHeader = default;
-            Optional<int?> priority = default;
-            Optional<int?> weight = default;
-            Optional<bool> enabled = default;
-            Optional<string> privateLinkAlias = default;
-            Optional<ResourceIdentifier> privateLinkResourceId = default;
-            Optional<string> privateLinkLocation = default;
-            Optional<string> privateLinkApprovalMessage = default;
-            Optional<OriginResourceState> resourceState = default;
-            Optional<OriginProvisioningState> provisioningState = default;
-            Optional<PrivateEndpointStatus?> privateEndpointStatus = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<string> hostName = default;
+            Core.Optional<int?> httpPort = default;
+            Core.Optional<int?> httpsPort = default;
+            Core.Optional<string> originHostHeader = default;
+            Core.Optional<int?> priority = default;
+            Core.Optional<int?> weight = default;
+            Core.Optional<bool> enabled = default;
+            Core.Optional<string> privateLinkAlias = default;
+            Core.Optional<ResourceIdentifier> privateLinkResourceId = default;
+            Core.Optional<string> privateLinkLocation = default;
+            Core.Optional<string> privateLinkApprovalMessage = default;
+            Core.Optional<OriginResourceState> resourceState = default;
+            Core.Optional<OriginProvisioningState> provisioningState = default;
+            Core.Optional<PrivateEndpointStatus?> privateEndpointStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new CdnOriginData(id, name, type, systemData.Value, hostName.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), originHostHeader.Value, Optional.ToNullable(priority), Optional.ToNullable(weight), Optional.ToNullable(enabled), privateLinkAlias.Value, privateLinkResourceId.Value, privateLinkLocation.Value, privateLinkApprovalMessage.Value, Optional.ToNullable(resourceState), Optional.ToNullable(provisioningState), Optional.ToNullable(privateEndpointStatus));
+            return new CdnOriginData(id, name, type, systemData.Value, hostName.Value, Core.Optional.ToNullable(httpPort), Core.Optional.ToNullable(httpsPort), originHostHeader.Value, Core.Optional.ToNullable(priority), Core.Optional.ToNullable(weight), Core.Optional.ToNullable(enabled), privateLinkAlias.Value, privateLinkResourceId.Value, privateLinkLocation.Value, privateLinkApprovalMessage.Value, Core.Optional.ToNullable(resourceState), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(privateEndpointStatus));
         }
     }
 }

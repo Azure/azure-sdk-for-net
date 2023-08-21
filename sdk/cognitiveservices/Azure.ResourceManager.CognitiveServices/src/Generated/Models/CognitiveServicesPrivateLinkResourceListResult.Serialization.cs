@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CognitiveServicesPrivateLinkResource>> value = default;
+            Core.Optional<IReadOnlyList<CognitiveServicesPrivateLinkResource>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new CognitiveServicesPrivateLinkResourceListResult(Optional.ToList(value));
+            return new CognitiveServicesPrivateLinkResourceListResult(Core.Optional.ToList(value));
         }
     }
 }
