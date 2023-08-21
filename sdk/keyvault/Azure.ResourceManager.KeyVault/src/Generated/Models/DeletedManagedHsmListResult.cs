@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of DeletedManagedHsmListResult. </summary>
         internal DeletedManagedHsmListResult()
         {
-            Value = new ChangeTrackingList<DeletedManagedHsmData>();
+            Value = new Core.ChangeTrackingList<DeletedManagedHsmData>();
         }
 
         /// <summary> Initializes a new instance of DeletedManagedHsmListResult. </summary>

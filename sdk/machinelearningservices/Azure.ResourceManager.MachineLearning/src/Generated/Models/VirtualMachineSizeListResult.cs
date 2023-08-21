@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of VirtualMachineSizeListResult. </summary>
         internal VirtualMachineSizeListResult()
         {
-            Value = new ChangeTrackingList<MachineLearningVmSize>();
+            Value = new Core.ChangeTrackingList<MachineLearningVmSize>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineSizeListResult. </summary>

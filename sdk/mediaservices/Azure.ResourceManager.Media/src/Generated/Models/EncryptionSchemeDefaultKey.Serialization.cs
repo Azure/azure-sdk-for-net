@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class EncryptionSchemeDefaultKey : IUtf8JsonSerializable
+    public partial class EncryptionSchemeDefaultKey : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Label))
+            if (Core.Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (Optional.IsDefined(PolicyName))
+            if (Core.Optional.IsDefined(PolicyName))
             {
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> label = default;
-            Optional<string> policyName = default;
+            Core.Optional<string> label = default;
+            Core.Optional<string> policyName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("label"u8))

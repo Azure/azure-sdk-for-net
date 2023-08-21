@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
-    internal partial class KubernetesClusterProperties : IUtf8JsonSerializable
+    internal partial class KubernetesClusterProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServicePrincipal))
+            if (Core.Optional.IsDefined(ServicePrincipal))
             {
                 writer.WritePropertyName("servicePrincipal"u8);
                 writer.WriteObjectValue(ServicePrincipal);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<ServicePrincipalProperties> servicePrincipal = default;
+            Core.Optional<ServicePrincipalProperties> servicePrincipal = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("servicePrincipal"u8))

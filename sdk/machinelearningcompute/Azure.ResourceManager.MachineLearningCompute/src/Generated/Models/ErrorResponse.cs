@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 
             Code = code;
             Message = message;
-            Details = new ChangeTrackingList<ErrorDetail>();
+            Details = new Core.ChangeTrackingList<ErrorDetail>();
         }
 
         /// <summary> Initializes a new instance of ErrorResponse. </summary>

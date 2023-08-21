@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<NetworkFabricConfigurationState> configurationState = default;
-            Optional<IReadOnlyList<string>> successfulDevices = default;
-            Optional<IReadOnlyList<string>> failedDevices = default;
-            Optional<ResponseError> error = default;
+            Core.Optional<NetworkFabricConfigurationState> configurationState = default;
+            Core.Optional<IReadOnlyList<string>> successfulDevices = default;
+            Core.Optional<IReadOnlyList<string>> failedDevices = default;
+            Core.Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("configurationState"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new DeviceUpdateCommonPostActionResult(error.Value, Optional.ToNullable(configurationState), Optional.ToList(successfulDevices), Optional.ToList(failedDevices));
+            return new DeviceUpdateCommonPostActionResult(error.Value, Core.Optional.ToNullable(configurationState), Core.Optional.ToList(successfulDevices), Core.Optional.ToList(failedDevices));
         }
     }
 }

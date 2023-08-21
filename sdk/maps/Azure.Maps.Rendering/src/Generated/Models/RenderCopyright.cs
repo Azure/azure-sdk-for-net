@@ -16,8 +16,8 @@ namespace Azure.Maps.Rendering
         /// <summary> Initializes a new instance of RenderCopyright. </summary>
         internal RenderCopyright()
         {
-            GeneralCopyrights = new ChangeTrackingList<string>();
-            RegionalCopyrights = new ChangeTrackingList<RegionalCopyright>();
+            GeneralCopyrights = new Core.ChangeTrackingList<string>();
+            RegionalCopyrights = new Core.ChangeTrackingList<RegionalCopyright>();
         }
 
         /// <summary> Format Version property. </summary>

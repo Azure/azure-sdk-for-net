@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StreamingEndpointSkuInfo>> value = default;
+            Core.Optional<IReadOnlyList<StreamingEndpointSkuInfo>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new StreamingEndpointSkuInfoListResult(Optional.ToList(value));
+            return new StreamingEndpointSkuInfoListResult(Core.Optional.ToList(value));
         }
     }
 }

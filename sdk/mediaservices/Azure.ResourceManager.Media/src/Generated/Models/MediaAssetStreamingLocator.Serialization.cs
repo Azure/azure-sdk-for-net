@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> assetName = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<Guid> streamingLocatorId = default;
-            Optional<string> streamingPolicyName = default;
-            Optional<string> defaultContentKeyPolicyName = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> assetName = default;
+            Core.Optional<DateTimeOffset> created = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<Guid> streamingLocatorId = default;
+            Core.Optional<string> streamingPolicyName = default;
+            Core.Optional<string> defaultContentKeyPolicyName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new MediaAssetStreamingLocator(name.Value, assetName.Value, Optional.ToNullable(created), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(streamingLocatorId), streamingPolicyName.Value, defaultContentKeyPolicyName.Value);
+            return new MediaAssetStreamingLocator(name.Value, assetName.Value, Core.Optional.ToNullable(created), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToNullable(streamingLocatorId), streamingPolicyName.Value, defaultContentKeyPolicyName.Value);
         }
     }
 }

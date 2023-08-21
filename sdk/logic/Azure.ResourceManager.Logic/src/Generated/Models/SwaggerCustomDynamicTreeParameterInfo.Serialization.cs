@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class SwaggerCustomDynamicTreeParameterInfo : IUtf8JsonSerializable
+    public partial class SwaggerCustomDynamicTreeParameterInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SelectedItemValuePath))
+            if (Core.Optional.IsDefined(SelectedItemValuePath))
             {
                 writer.WritePropertyName("selectedItemValuePath"u8);
                 writer.WriteStringValue(SelectedItemValuePath);
             }
-            if (Optional.IsDefined(Value))
+            if (Core.Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Logic.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Value.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(ParameterReference))
+            if (Core.Optional.IsDefined(ParameterReference))
             {
                 writer.WritePropertyName("parameterReference"u8);
                 writer.WriteStringValue(ParameterReference);
             }
-            if (Optional.IsDefined(IsRequired))
+            if (Core.Optional.IsDefined(IsRequired))
             {
                 writer.WritePropertyName("required"u8);
                 writer.WriteBooleanValue(IsRequired.Value);
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> selectedItemValuePath = default;
-            Optional<BinaryData> value = default;
-            Optional<string> parameterReference = default;
-            Optional<bool> required = default;
+            Core.Optional<string> selectedItemValuePath = default;
+            Core.Optional<BinaryData> value = default;
+            Core.Optional<string> parameterReference = default;
+            Core.Optional<bool> required = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("selectedItemValuePath"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new SwaggerCustomDynamicTreeParameterInfo(selectedItemValuePath.Value, value.Value, parameterReference.Value, Optional.ToNullable(required));
+            return new SwaggerCustomDynamicTreeParameterInfo(selectedItemValuePath.Value, value.Value, parameterReference.Value, Core.Optional.ToNullable(required));
         }
     }
 }

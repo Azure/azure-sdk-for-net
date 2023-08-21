@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.IotCentral
             try
             {
                 var response = await _iotCentralAppAppsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new IotCentralArmOperation<IotCentralAppResource>(new IotCentralAppOperationSource(Client), _iotCentralAppAppsClientDiagnostics, Pipeline, _iotCentralAppAppsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new IotCentralArmOperation<IotCentralAppResource>(new IotCentralAppOperationSource(Client), _iotCentralAppAppsClientDiagnostics, Pipeline, _iotCentralAppAppsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.IotCentral
             try
             {
                 var response = _iotCentralAppAppsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken);
-                var operation = new IotCentralArmOperation<IotCentralAppResource>(new IotCentralAppOperationSource(Client), _iotCentralAppAppsClientDiagnostics, Pipeline, _iotCentralAppAppsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new IotCentralArmOperation<IotCentralAppResource>(new IotCentralAppOperationSource(Client), _iotCentralAppAppsClientDiagnostics, Pipeline, _iotCentralAppAppsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.IotCentral
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotCentralAppAppsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotCentralAppAppsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotCentralAppResource(Client, IotCentralAppData.DeserializeIotCentralAppData(e)), _iotCentralAppAppsClientDiagnostics, Pipeline, "IotCentralAppCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotCentralAppResource(Client, IotCentralAppData.DeserializeIotCentralAppData(e)), _iotCentralAppAppsClientDiagnostics, Pipeline, "IotCentralAppCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.IotCentral
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotCentralAppAppsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotCentralAppAppsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotCentralAppResource(Client, IotCentralAppData.DeserializeIotCentralAppData(e)), _iotCentralAppAppsClientDiagnostics, Pipeline, "IotCentralAppCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotCentralAppResource(Client, IotCentralAppData.DeserializeIotCentralAppData(e)), _iotCentralAppAppsClientDiagnostics, Pipeline, "IotCentralAppCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

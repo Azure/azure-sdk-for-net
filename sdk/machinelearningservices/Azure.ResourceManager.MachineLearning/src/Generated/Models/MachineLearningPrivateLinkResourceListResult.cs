@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningPrivateLinkResourceListResult. </summary>
         internal MachineLearningPrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<MachineLearningPrivateLinkResource>();
+            Value = new Core.ChangeTrackingList<MachineLearningPrivateLinkResource>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningPrivateLinkResourceListResult. </summary>

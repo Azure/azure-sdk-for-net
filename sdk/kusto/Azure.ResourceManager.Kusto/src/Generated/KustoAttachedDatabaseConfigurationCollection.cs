@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = await _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedDatabaseConfigurationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new KustoArmOperation<KustoAttachedDatabaseConfigurationResource>(new KustoAttachedDatabaseConfigurationOperationSource(Client), _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics, Pipeline, _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedDatabaseConfigurationName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation<KustoAttachedDatabaseConfigurationResource>(new KustoAttachedDatabaseConfigurationOperationSource(Client), _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics, Pipeline, _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedDatabaseConfigurationName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Kusto
             try
             {
                 var response = _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedDatabaseConfigurationName, data, cancellationToken);
-                var operation = new KustoArmOperation<KustoAttachedDatabaseConfigurationResource>(new KustoAttachedDatabaseConfigurationOperationSource(Client), _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics, Pipeline, _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedDatabaseConfigurationName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new KustoArmOperation<KustoAttachedDatabaseConfigurationResource>(new KustoAttachedDatabaseConfigurationOperationSource(Client), _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics, Pipeline, _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, attachedDatabaseConfigurationName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual AsyncPageable<KustoAttachedDatabaseConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoAttachedDatabaseConfigurationResource(Client, KustoAttachedDatabaseConfigurationData.DeserializeKustoAttachedDatabaseConfigurationData(e)), _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics, Pipeline, "KustoAttachedDatabaseConfigurationCollection.GetAll", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoAttachedDatabaseConfigurationResource(Client, KustoAttachedDatabaseConfigurationData.DeserializeKustoAttachedDatabaseConfigurationData(e)), _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics, Pipeline, "KustoAttachedDatabaseConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual Pageable<KustoAttachedDatabaseConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoAttachedDatabaseConfigurationResource(Client, KustoAttachedDatabaseConfigurationData.DeserializeKustoAttachedDatabaseConfigurationData(e)), _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics, Pipeline, "KustoAttachedDatabaseConfigurationCollection.GetAll", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoAttachedDatabaseConfigurationResource(Client, KustoAttachedDatabaseConfigurationData.DeserializeKustoAttachedDatabaseConfigurationData(e)), _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics, Pipeline, "KustoAttachedDatabaseConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

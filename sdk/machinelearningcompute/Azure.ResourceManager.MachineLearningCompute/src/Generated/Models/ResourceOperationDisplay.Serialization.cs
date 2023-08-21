@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<string> provider = default;
-            Optional<string> resource = default;
-            Optional<string> operation = default;
-            Optional<string> description = default;
+            Core.Optional<string> provider = default;
+            Core.Optional<string> resource = default;
+            Core.Optional<string> operation = default;
+            Core.Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provider"u8))

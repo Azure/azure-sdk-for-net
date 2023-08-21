@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoClusterTrustedExternalTenant : IUtf8JsonSerializable
+    public partial class KustoClusterTrustedExternalTenant : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
+            if (Core.Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<string> value = default;
+            Core.Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))

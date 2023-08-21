@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<string> errorMessage = default;
+            Core.Optional<string> errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorMessage"u8))

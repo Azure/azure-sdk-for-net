@@ -16,10 +16,10 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of PointOfInterest. </summary>
         internal PointOfInterest()
         {
-            CategorySets = new ChangeTrackingList<PointOfInterestCategorySet>();
-            Categories = new ChangeTrackingList<string>();
-            Classifications = new ChangeTrackingList<PointOfInterestClassification>();
-            Brands = new ChangeTrackingList<BrandName>();
+            CategorySets = new Core.ChangeTrackingList<PointOfInterestCategorySet>();
+            Categories = new Core.ChangeTrackingList<string>();
+            Classifications = new Core.ChangeTrackingList<PointOfInterestClassification>();
+            Brands = new Core.ChangeTrackingList<BrandName>();
         }
 
         /// <summary> Initializes a new instance of PointOfInterest. </summary>

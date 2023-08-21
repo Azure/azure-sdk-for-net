@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of BatchConfigurationCollection. </summary>
         internal BatchConfigurationCollection()
         {
-            Value = new ChangeTrackingList<IntegrationAccountBatchConfigurationData>();
+            Value = new Core.ChangeTrackingList<IntegrationAccountBatchConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of BatchConfigurationCollection. </summary>

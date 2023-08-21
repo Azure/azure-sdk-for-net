@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> initializationVector = default;
-            Optional<string> assetFileName = default;
+            Core.Optional<string> initializationVector = default;
+            Core.Optional<string> assetFileName = default;
             Guid assetFileId = default;
             foreach (var property in element.EnumerateObject())
             {

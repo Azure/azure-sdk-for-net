@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of QueryApprovedPlansDetails. </summary>
         internal QueryApprovedPlansDetails()
         {
-            SubscriptionIds = new ChangeTrackingList<string>();
+            SubscriptionIds = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of QueryApprovedPlansDetails. </summary>

@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="location"> The location. </param>
         public NetworkFabricControllerData(AzureLocation location) : base(location)
         {
-            InfrastructureExpressRouteConnections = new ChangeTrackingList<ExpressRouteConnectionInformation>();
-            WorkloadExpressRouteConnections = new ChangeTrackingList<ExpressRouteConnectionInformation>();
-            NetworkFabricIds = new ChangeTrackingList<ResourceIdentifier>();
-            TenantInternetGatewayIds = new ChangeTrackingList<ResourceIdentifier>();
+            InfrastructureExpressRouteConnections = new Core.ChangeTrackingList<ExpressRouteConnectionInformation>();
+            WorkloadExpressRouteConnections = new Core.ChangeTrackingList<ExpressRouteConnectionInformation>();
+            NetworkFabricIds = new Core.ChangeTrackingList<ResourceIdentifier>();
+            TenantInternetGatewayIds = new Core.ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of NetworkFabricControllerData. </summary>

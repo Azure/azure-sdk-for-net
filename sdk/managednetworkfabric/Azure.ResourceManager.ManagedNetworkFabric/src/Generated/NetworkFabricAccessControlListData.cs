@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="location"> The location. </param>
         public NetworkFabricAccessControlListData(AzureLocation location) : base(location)
         {
-            MatchConfigurations = new ChangeTrackingList<AccessControlListMatchConfiguration>();
-            DynamicMatchConfigurations = new ChangeTrackingList<CommonDynamicMatchConfiguration>();
+            MatchConfigurations = new Core.ChangeTrackingList<AccessControlListMatchConfiguration>();
+            DynamicMatchConfigurations = new Core.ChangeTrackingList<CommonDynamicMatchConfiguration>();
         }
 
         /// <summary> Initializes a new instance of NetworkFabricAccessControlListData. </summary>

@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Logic.Models
             }
             IntegrationServiceErrorCode code = default;
             string message = default;
-            Optional<IReadOnlyList<IntegrationServiceErrorInfo>> details = default;
-            Optional<BinaryData> innerError = default;
+            Core.Optional<IReadOnlyList<IntegrationServiceErrorInfo>> details = default;
+            Core.Optional<BinaryData> innerError = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new IntegrationServiceErrorInfo(code, message, Optional.ToList(details), innerError.Value);
+            return new IntegrationServiceErrorInfo(code, message, Core.Optional.ToList(details), innerError.Value);
         }
     }
 }

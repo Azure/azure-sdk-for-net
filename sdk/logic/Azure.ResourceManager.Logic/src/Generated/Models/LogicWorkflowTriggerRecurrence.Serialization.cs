@@ -11,37 +11,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicWorkflowTriggerRecurrence : IUtf8JsonSerializable
+    public partial class LogicWorkflowTriggerRecurrence : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Frequency))
+            if (Core.Optional.IsDefined(Frequency))
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
-            if (Optional.IsDefined(Interval))
+            if (Core.Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteNumberValue(Interval.Value);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Core.Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Core.Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(TimeZone))
+            if (Core.Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Optional.IsDefined(Schedule))
+            if (Core.Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteObjectValue(Schedule);
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<LogicWorkflowRecurrenceFrequency> frequency = default;
-            Optional<int> interval = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> timeZone = default;
-            Optional<LogicWorkflowRecurrenceSchedule> schedule = default;
+            Core.Optional<LogicWorkflowRecurrenceFrequency> frequency = default;
+            Core.Optional<int> interval = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<string> timeZone = default;
+            Core.Optional<LogicWorkflowRecurrenceSchedule> schedule = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("frequency"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new LogicWorkflowTriggerRecurrence(Optional.ToNullable(frequency), Optional.ToNullable(interval), Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeZone.Value, schedule.Value);
+            return new LogicWorkflowTriggerRecurrence(Core.Optional.ToNullable(frequency), Core.Optional.ToNullable(interval), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), timeZone.Value, schedule.Value);
         }
     }
 }

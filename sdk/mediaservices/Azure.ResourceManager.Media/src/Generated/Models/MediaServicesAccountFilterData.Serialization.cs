@@ -13,24 +13,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    public partial class MediaServicesAccountFilterData : IUtf8JsonSerializable
+    public partial class MediaServicesAccountFilterData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PresentationTimeRange))
+            if (Core.Optional.IsDefined(PresentationTimeRange))
             {
                 writer.WritePropertyName("presentationTimeRange"u8);
                 writer.WriteObjectValue(PresentationTimeRange);
             }
-            if (Optional.IsDefined(FirstQuality))
+            if (Core.Optional.IsDefined(FirstQuality))
             {
                 writer.WritePropertyName("firstQuality"u8);
                 writer.WriteObjectValue(FirstQuality);
             }
-            if (Optional.IsCollectionDefined(Tracks))
+            if (Core.Optional.IsCollectionDefined(Tracks))
             {
                 writer.WritePropertyName("tracks"u8);
                 writer.WriteStartArray();
@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.Media
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<PresentationTimeRange> presentationTimeRange = default;
-            Optional<FirstQuality> firstQuality = default;
-            Optional<IList<FilterTrackSelection>> tracks = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<PresentationTimeRange> presentationTimeRange = default;
+            Core.Optional<FirstQuality> firstQuality = default;
+            Core.Optional<IList<FilterTrackSelection>> tracks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Media
                     continue;
                 }
             }
-            return new MediaServicesAccountFilterData(id, name, type, systemData.Value, presentationTimeRange.Value, firstQuality.Value, Optional.ToList(tracks));
+            return new MediaServicesAccountFilterData(id, name, type, systemData.Value, presentationTimeRange.Value, firstQuality.Value, Core.Optional.ToList(tracks));
         }
     }
 }

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicWorkflowRecurrenceSchedule : IUtf8JsonSerializable
+    public partial class LogicWorkflowRecurrenceSchedule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Minutes))
+            if (Core.Optional.IsCollectionDefined(Minutes))
             {
                 writer.WritePropertyName("minutes"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Hours))
+            if (Core.Optional.IsCollectionDefined(Hours))
             {
                 writer.WritePropertyName("hours"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(WeekDays))
+            if (Core.Optional.IsCollectionDefined(WeekDays))
             {
                 writer.WritePropertyName("weekDays"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MonthDays))
+            if (Core.Optional.IsCollectionDefined(MonthDays))
             {
                 writer.WritePropertyName("monthDays"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MonthlyOccurrences))
+            if (Core.Optional.IsCollectionDefined(MonthlyOccurrences))
             {
                 writer.WritePropertyName("monthlyOccurrences"u8);
                 writer.WriteStartArray();
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IList<int>> minutes = default;
-            Optional<IList<int>> hours = default;
-            Optional<IList<LogicWorkflowDayOfWeek>> weekDays = default;
-            Optional<IList<int>> monthDays = default;
-            Optional<IList<LogicWorkflowRecurrenceScheduleOccurrence>> monthlyOccurrences = default;
+            Core.Optional<IList<int>> minutes = default;
+            Core.Optional<IList<int>> hours = default;
+            Core.Optional<IList<LogicWorkflowDayOfWeek>> weekDays = default;
+            Core.Optional<IList<int>> monthDays = default;
+            Core.Optional<IList<LogicWorkflowRecurrenceScheduleOccurrence>> monthlyOccurrences = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minutes"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new LogicWorkflowRecurrenceSchedule(Optional.ToList(minutes), Optional.ToList(hours), Optional.ToList(weekDays), Optional.ToList(monthDays), Optional.ToList(monthlyOccurrences));
+            return new LogicWorkflowRecurrenceSchedule(Core.Optional.ToList(minutes), Core.Optional.ToList(hours), Core.Optional.ToList(weekDays), Core.Optional.ToList(monthDays), Core.Optional.ToList(monthlyOccurrences));
         }
     }
 }

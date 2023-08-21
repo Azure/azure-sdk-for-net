@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
-    public partial class ManagedServicesEligibleApprover : IUtf8JsonSerializable
+    public partial class ManagedServicesEligibleApprover : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
-            if (Optional.IsDefined(PrincipalIdDisplayName))
+            if (Core.Optional.IsDefined(PrincipalIdDisplayName))
             {
                 writer.WritePropertyName("principalIdDisplayName"u8);
                 writer.WriteStringValue(PrincipalIdDisplayName);
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 return null;
             }
             Guid principalId = default;
-            Optional<string> principalIdDisplayName = default;
+            Core.Optional<string> principalIdDisplayName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))

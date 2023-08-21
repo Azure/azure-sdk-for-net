@@ -10,21 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class X12SecuritySettings : IUtf8JsonSerializable
+    public partial class X12SecuritySettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("authorizationQualifier"u8);
             writer.WriteStringValue(AuthorizationQualifier);
-            if (Optional.IsDefined(AuthorizationValue))
+            if (Core.Optional.IsDefined(AuthorizationValue))
             {
                 writer.WritePropertyName("authorizationValue"u8);
                 writer.WriteStringValue(AuthorizationValue);
             }
             writer.WritePropertyName("securityQualifier"u8);
             writer.WriteStringValue(SecurityQualifier);
-            if (Optional.IsDefined(PasswordValue))
+            if (Core.Optional.IsDefined(PasswordValue))
             {
                 writer.WritePropertyName("passwordValue"u8);
                 writer.WriteStringValue(PasswordValue);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             string authorizationQualifier = default;
-            Optional<string> authorizationValue = default;
+            Core.Optional<string> authorizationValue = default;
             string securityQualifier = default;
-            Optional<string> passwordValue = default;
+            Core.Optional<string> passwordValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authorizationQualifier"u8))

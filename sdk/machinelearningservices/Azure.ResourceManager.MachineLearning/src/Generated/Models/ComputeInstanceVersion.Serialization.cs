@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> runtime = default;
+            Core.Optional<string> runtime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("runtime"u8))

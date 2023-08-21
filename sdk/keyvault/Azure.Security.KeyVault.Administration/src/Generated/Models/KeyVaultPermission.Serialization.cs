@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    public partial class KeyVaultPermission : IUtf8JsonSerializable
+    public partial class KeyVaultPermission : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Actions))
+            if (Core.Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Administration
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NotActions))
+            if (Core.Optional.IsCollectionDefined(NotActions))
             {
                 writer.WritePropertyName("notActions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.Security.KeyVault.Administration
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DataActions))
+            if (Core.Optional.IsCollectionDefined(DataActions))
             {
                 writer.WritePropertyName("dataActions"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.Security.KeyVault.Administration
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NotDataActions))
+            if (Core.Optional.IsCollectionDefined(NotDataActions))
             {
                 writer.WritePropertyName("notDataActions"u8);
                 writer.WriteStartArray();
@@ -65,10 +65,10 @@ namespace Azure.Security.KeyVault.Administration
             {
                 return null;
             }
-            Optional<IList<string>> actions = default;
-            Optional<IList<string>> notActions = default;
-            Optional<IList<KeyVaultDataAction>> dataActions = default;
-            Optional<IList<KeyVaultDataAction>> notDataActions = default;
+            Core.Optional<IList<string>> actions = default;
+            Core.Optional<IList<string>> notActions = default;
+            Core.Optional<IList<KeyVaultDataAction>> dataActions = default;
+            Core.Optional<IList<KeyVaultDataAction>> notDataActions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actions"u8))
@@ -128,7 +128,7 @@ namespace Azure.Security.KeyVault.Administration
                     continue;
                 }
             }
-            return new KeyVaultPermission(Optional.ToList(actions), Optional.ToList(notActions), Optional.ToList(dataActions), Optional.ToList(notDataActions));
+            return new KeyVaultPermission(Core.Optional.ToList(actions), Core.Optional.ToList(notActions), Core.Optional.ToList(dataActions), Core.Optional.ToList(notDataActions));
         }
     }
 }

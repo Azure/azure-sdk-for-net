@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
         /// <summary> Initializes a new instance of ManagedNetworkGroupListResult. </summary>
         internal ManagedNetworkGroupListResult()
         {
-            Value = new ChangeTrackingList<ManagedNetworkGroupData>();
+            Value = new Core.ChangeTrackingList<ManagedNetworkGroupData>();
         }
 
         /// <summary> Initializes a new instance of ManagedNetworkGroupListResult. </summary>

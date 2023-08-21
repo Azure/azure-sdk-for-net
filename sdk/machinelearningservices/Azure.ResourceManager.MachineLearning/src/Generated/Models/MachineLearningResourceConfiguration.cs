@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningResourceConfiguration. </summary>
         public MachineLearningResourceConfiguration()
         {
-            Properties = new ChangeTrackingDictionary<string, BinaryData>();
+            Properties = new Core.ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningResourceConfiguration. </summary>

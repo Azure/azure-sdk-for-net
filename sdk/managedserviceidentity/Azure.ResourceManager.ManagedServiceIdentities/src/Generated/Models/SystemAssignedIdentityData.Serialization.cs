@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities
 {
-    public partial class SystemAssignedIdentityData : IUtf8JsonSerializable
+    public partial class SystemAssignedIdentityData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -43,16 +43,16 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> tenantId = default;
-            Optional<Guid> principalId = default;
-            Optional<Guid> clientId = default;
-            Optional<Uri> clientSecretUrl = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<Guid> tenantId = default;
+            Core.Optional<Guid> principalId = default;
+            Core.Optional<Guid> clientId = default;
+            Core.Optional<Uri> clientSecretUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                     continue;
                 }
             }
-            return new SystemAssignedIdentityData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(tenantId), Optional.ToNullable(principalId), Optional.ToNullable(clientId), clientSecretUrl.Value);
+            return new SystemAssignedIdentityData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(tenantId), Core.Optional.ToNullable(principalId), Core.Optional.ToNullable(clientId), clientSecretUrl.Value);
         }
     }
 }

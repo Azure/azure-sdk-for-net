@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> Initializes a new instance of CloudProviderProfileInfraStorageProfile. </summary>
         public CloudProviderProfileInfraStorageProfile()
         {
-            StorageSpaceIds = new ChangeTrackingList<string>();
+            StorageSpaceIds = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of CloudProviderProfileInfraStorageProfile. </summary>

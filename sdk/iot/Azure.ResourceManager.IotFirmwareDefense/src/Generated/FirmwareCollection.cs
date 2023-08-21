@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FirmwareResource(Client, FirmwareData.DeserializeFirmwareData(e)), _firmwareClientDiagnostics, Pipeline, "FirmwareCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FirmwareResource(Client, FirmwareData.DeserializeFirmwareData(e)), _firmwareClientDiagnostics, Pipeline, "FirmwareCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FirmwareResource(Client, FirmwareData.DeserializeFirmwareData(e)), _firmwareClientDiagnostics, Pipeline, "FirmwareCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FirmwareResource(Client, FirmwareData.DeserializeFirmwareData(e)), _firmwareClientDiagnostics, Pipeline, "FirmwareCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

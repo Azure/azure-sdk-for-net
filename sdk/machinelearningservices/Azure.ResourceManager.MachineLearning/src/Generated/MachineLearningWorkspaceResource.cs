@@ -870,7 +870,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = await _machineLearningWorkspaceWorkspacesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation(_machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, _machineLearningWorkspaceWorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation(_machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, _machineLearningWorkspaceWorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -904,7 +904,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = _machineLearningWorkspaceWorkspacesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new MachineLearningArmOperation(_machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, _machineLearningWorkspaceWorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation(_machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, _machineLearningWorkspaceWorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -942,7 +942,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = await _machineLearningWorkspaceWorkspacesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MachineLearningWorkspaceResource>(new MachineLearningWorkspaceOperationSource(Client), _machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, _machineLearningWorkspaceWorkspacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<MachineLearningWorkspaceResource>(new MachineLearningWorkspaceOperationSource(Client), _machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, _machineLearningWorkspaceWorkspacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -980,7 +980,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = _machineLearningWorkspaceWorkspacesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new MachineLearningArmOperation<MachineLearningWorkspaceResource>(new MachineLearningWorkspaceOperationSource(Client), _machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, _machineLearningWorkspaceWorkspacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<MachineLearningWorkspaceResource>(new MachineLearningWorkspaceOperationSource(Client), _machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, _machineLearningWorkspaceWorkspacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1015,7 +1015,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = await _machineLearningWorkspaceWorkspacesRestClient.DiagnoseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MachineLearningWorkspaceDiagnoseResult>(new MachineLearningWorkspaceDiagnoseResultOperationSource(), _machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, _machineLearningWorkspaceWorkspacesRestClient.CreateDiagnoseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<MachineLearningWorkspaceDiagnoseResult>(new MachineLearningWorkspaceDiagnoseResultOperationSource(), _machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, _machineLearningWorkspaceWorkspacesRestClient.CreateDiagnoseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1050,7 +1050,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = _machineLearningWorkspaceWorkspacesRestClient.Diagnose(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new MachineLearningArmOperation<MachineLearningWorkspaceDiagnoseResult>(new MachineLearningWorkspaceDiagnoseResultOperationSource(), _machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, _machineLearningWorkspaceWorkspacesRestClient.CreateDiagnoseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<MachineLearningWorkspaceDiagnoseResult>(new MachineLearningWorkspaceDiagnoseResultOperationSource(), _machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, _machineLearningWorkspaceWorkspacesRestClient.CreateDiagnoseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1144,7 +1144,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = await _machineLearningWorkspaceWorkspacesRestClient.ResyncKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation(_machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, _machineLearningWorkspaceWorkspacesRestClient.CreateResyncKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation(_machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, _machineLearningWorkspaceWorkspacesRestClient.CreateResyncKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1178,7 +1178,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = _machineLearningWorkspaceWorkspacesRestClient.ResyncKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new MachineLearningArmOperation(_machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, _machineLearningWorkspaceWorkspacesRestClient.CreateResyncKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation(_machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, _machineLearningWorkspaceWorkspacesRestClient.CreateResyncKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1272,7 +1272,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = await _machineLearningWorkspaceWorkspacesRestClient.PrepareNotebookAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MachineLearningNotebookResourceInfo>(new MachineLearningNotebookResourceInfoOperationSource(), _machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, _machineLearningWorkspaceWorkspacesRestClient.CreatePrepareNotebookRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<MachineLearningNotebookResourceInfo>(new MachineLearningNotebookResourceInfoOperationSource(), _machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, _machineLearningWorkspaceWorkspacesRestClient.CreatePrepareNotebookRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1306,7 +1306,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = _machineLearningWorkspaceWorkspacesRestClient.PrepareNotebook(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new MachineLearningArmOperation<MachineLearningNotebookResourceInfo>(new MachineLearningNotebookResourceInfoOperationSource(), _machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, _machineLearningWorkspaceWorkspacesRestClient.CreatePrepareNotebookRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<MachineLearningNotebookResourceInfo>(new MachineLearningNotebookResourceInfoOperationSource(), _machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, _machineLearningWorkspaceWorkspacesRestClient.CreatePrepareNotebookRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1456,7 +1456,7 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual AsyncPageable<MachineLearningFqdnEndpoints> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningWorkspaceWorkspacesRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MachineLearningFqdnEndpoints.DeserializeMachineLearningFqdnEndpoints, _machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, "MachineLearningWorkspaceResource.GetOutboundNetworkDependenciesEndpoints", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MachineLearningFqdnEndpoints.DeserializeMachineLearningFqdnEndpoints, _machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, "MachineLearningWorkspaceResource.GetOutboundNetworkDependenciesEndpoints", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1477,7 +1477,7 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual Pageable<MachineLearningFqdnEndpoints> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningWorkspaceWorkspacesRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, MachineLearningFqdnEndpoints.DeserializeMachineLearningFqdnEndpoints, _machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, "MachineLearningWorkspaceResource.GetOutboundNetworkDependenciesEndpoints", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, MachineLearningFqdnEndpoints.DeserializeMachineLearningFqdnEndpoints, _machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, "MachineLearningWorkspaceResource.GetOutboundNetworkDependenciesEndpoints", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1498,7 +1498,7 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual AsyncPageable<MachineLearningPrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MachineLearningPrivateLinkResource.DeserializeMachineLearningPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "MachineLearningWorkspaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MachineLearningPrivateLinkResource.DeserializeMachineLearningPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "MachineLearningWorkspaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1519,7 +1519,7 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual Pageable<MachineLearningPrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, MachineLearningPrivateLinkResource.DeserializeMachineLearningPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "MachineLearningWorkspaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, MachineLearningPrivateLinkResource.DeserializeMachineLearningPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "MachineLearningWorkspaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1541,7 +1541,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workspaceFeaturesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workspaceFeaturesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MachineLearningUserFeature.DeserializeMachineLearningUserFeature, _workspaceFeaturesClientDiagnostics, Pipeline, "MachineLearningWorkspaceResource.GetWorkspaceFeatures", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MachineLearningUserFeature.DeserializeMachineLearningUserFeature, _workspaceFeaturesClientDiagnostics, Pipeline, "MachineLearningWorkspaceResource.GetWorkspaceFeatures", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1563,7 +1563,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workspaceFeaturesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workspaceFeaturesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MachineLearningUserFeature.DeserializeMachineLearningUserFeature, _workspaceFeaturesClientDiagnostics, Pipeline, "MachineLearningWorkspaceResource.GetWorkspaceFeatures", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MachineLearningUserFeature.DeserializeMachineLearningUserFeature, _workspaceFeaturesClientDiagnostics, Pipeline, "MachineLearningWorkspaceResource.GetWorkspaceFeatures", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> offerId = default;
-            Optional<string> displayName = default;
-            Optional<bool> isFuturePlansEnabled = default;
-            Optional<long> messageCode = default;
-            Optional<Uri> icon = default;
-            Optional<IReadOnlyList<PlanNotificationDetails>> plans = default;
+            Core.Optional<string> offerId = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<bool> isFuturePlansEnabled = default;
+            Core.Optional<long> messageCode = default;
+            Core.Optional<Uri> icon = default;
+            Core.Optional<IReadOnlyList<PlanNotificationDetails>> plans = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offerId"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new NewPlanNotification(offerId.Value, displayName.Value, Optional.ToNullable(isFuturePlansEnabled), Optional.ToNullable(messageCode), icon.Value, Optional.ToList(plans));
+            return new NewPlanNotification(offerId.Value, displayName.Value, Core.Optional.ToNullable(isFuturePlansEnabled), Core.Optional.ToNullable(messageCode), icon.Value, Core.Optional.ToList(plans));
         }
     }
 }

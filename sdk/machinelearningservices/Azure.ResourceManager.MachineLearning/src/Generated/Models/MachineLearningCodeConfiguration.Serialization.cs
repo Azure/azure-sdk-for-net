@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningCodeConfiguration : IUtf8JsonSerializable
+    public partial class MachineLearningCodeConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CodeId))
+            if (Core.Optional.IsDefined(CodeId))
             {
                 if (CodeId != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> codeId = default;
+            Core.Optional<ResourceIdentifier> codeId = default;
             string scoringScript = default;
             foreach (var property in element.EnumerateObject())
             {

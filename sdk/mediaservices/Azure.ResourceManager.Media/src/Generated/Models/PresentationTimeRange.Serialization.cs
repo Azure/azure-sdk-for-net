@@ -10,37 +10,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class PresentationTimeRange : IUtf8JsonSerializable
+    public partial class PresentationTimeRange : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartTimestamp))
+            if (Core.Optional.IsDefined(StartTimestamp))
             {
                 writer.WritePropertyName("startTimestamp"u8);
                 writer.WriteNumberValue(StartTimestamp.Value);
             }
-            if (Optional.IsDefined(EndTimestamp))
+            if (Core.Optional.IsDefined(EndTimestamp))
             {
                 writer.WritePropertyName("endTimestamp"u8);
                 writer.WriteNumberValue(EndTimestamp.Value);
             }
-            if (Optional.IsDefined(PresentationWindowDuration))
+            if (Core.Optional.IsDefined(PresentationWindowDuration))
             {
                 writer.WritePropertyName("presentationWindowDuration"u8);
                 writer.WriteNumberValue(PresentationWindowDuration.Value);
             }
-            if (Optional.IsDefined(LiveBackoffDuration))
+            if (Core.Optional.IsDefined(LiveBackoffDuration))
             {
                 writer.WritePropertyName("liveBackoffDuration"u8);
                 writer.WriteNumberValue(LiveBackoffDuration.Value);
             }
-            if (Optional.IsDefined(Timescale))
+            if (Core.Optional.IsDefined(Timescale))
             {
                 writer.WritePropertyName("timescale"u8);
                 writer.WriteNumberValue(Timescale.Value);
             }
-            if (Optional.IsDefined(ForceEndTimestamp))
+            if (Core.Optional.IsDefined(ForceEndTimestamp))
             {
                 writer.WritePropertyName("forceEndTimestamp"u8);
                 writer.WriteBooleanValue(ForceEndTimestamp.Value);
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<long> startTimestamp = default;
-            Optional<long> endTimestamp = default;
-            Optional<long> presentationWindowDuration = default;
-            Optional<long> liveBackoffDuration = default;
-            Optional<long> timescale = default;
-            Optional<bool> forceEndTimestamp = default;
+            Core.Optional<long> startTimestamp = default;
+            Core.Optional<long> endTimestamp = default;
+            Core.Optional<long> presentationWindowDuration = default;
+            Core.Optional<long> liveBackoffDuration = default;
+            Core.Optional<long> timescale = default;
+            Core.Optional<bool> forceEndTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTimestamp"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new PresentationTimeRange(Optional.ToNullable(startTimestamp), Optional.ToNullable(endTimestamp), Optional.ToNullable(presentationWindowDuration), Optional.ToNullable(liveBackoffDuration), Optional.ToNullable(timescale), Optional.ToNullable(forceEndTimestamp));
+            return new PresentationTimeRange(Core.Optional.ToNullable(startTimestamp), Core.Optional.ToNullable(endTimestamp), Core.Optional.ToNullable(presentationWindowDuration), Core.Optional.ToNullable(liveBackoffDuration), Core.Optional.ToNullable(timescale), Core.Optional.ToNullable(forceEndTimestamp));
         }
     }
 }

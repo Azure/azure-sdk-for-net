@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class AggregateRouteConfiguration : IUtf8JsonSerializable
+    public partial class AggregateRouteConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IPv4Routes))
+            if (Core.Optional.IsCollectionDefined(IPv4Routes))
             {
                 writer.WritePropertyName("ipv4Routes"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPv6Routes))
+            if (Core.Optional.IsCollectionDefined(IPv6Routes))
             {
                 writer.WritePropertyName("ipv6Routes"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IList<AggregateRoute>> ipv4Routes = default;
-            Optional<IList<AggregateRoute>> ipv6Routes = default;
+            Core.Optional<IList<AggregateRoute>> ipv4Routes = default;
+            Core.Optional<IList<AggregateRoute>> ipv6Routes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipv4Routes"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new AggregateRouteConfiguration(Optional.ToList(ipv4Routes), Optional.ToList(ipv6Routes));
+            return new AggregateRouteConfiguration(Core.Optional.ToList(ipv4Routes), Core.Optional.ToList(ipv6Routes));
         }
     }
 }

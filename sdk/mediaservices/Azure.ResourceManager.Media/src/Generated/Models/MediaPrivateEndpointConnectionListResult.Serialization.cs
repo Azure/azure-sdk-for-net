@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MediaServicesPrivateEndpointConnectionData>> value = default;
+            Core.Optional<IReadOnlyList<MediaServicesPrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new MediaPrivateEndpointConnectionListResult(Optional.ToList(value));
+            return new MediaPrivateEndpointConnectionListResult(Core.Optional.ToList(value));
         }
     }
 }

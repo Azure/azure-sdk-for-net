@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningBatchEndpointProperties : IUtf8JsonSerializable
+    public partial class MachineLearningBatchEndpointProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Defaults))
+            if (Core.Optional.IsDefined(Defaults))
             {
                 if (Defaults != null)
                 {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("authMode"u8);
             writer.WriteStringValue(AuthMode.ToString());
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Optional.IsDefined(Keys))
+            if (Core.Optional.IsDefined(Keys))
             {
                 if (Keys != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("keys");
                 }
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (Core.Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<BatchEndpointDefaults> defaults = default;
-            Optional<MachineLearningEndpointProvisioningState> provisioningState = default;
+            Core.Optional<BatchEndpointDefaults> defaults = default;
+            Core.Optional<MachineLearningEndpointProvisioningState> provisioningState = default;
             MachineLearningEndpointAuthMode authMode = default;
-            Optional<string> description = default;
-            Optional<MachineLearningEndpointAuthKeys> keys = default;
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<Uri> scoringUri = default;
-            Optional<Uri> swaggerUri = default;
+            Core.Optional<string> description = default;
+            Core.Optional<MachineLearningEndpointAuthKeys> keys = default;
+            Core.Optional<IDictionary<string, string>> properties = default;
+            Core.Optional<Uri> scoringUri = default;
+            Core.Optional<Uri> swaggerUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaults"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningBatchEndpointProperties(authMode, description.Value, keys.Value, Optional.ToDictionary(properties), scoringUri.Value, swaggerUri.Value, defaults.Value, Optional.ToNullable(provisioningState));
+            return new MachineLearningBatchEndpointProperties(authMode, description.Value, keys.Value, Core.Optional.ToDictionary(properties), scoringUri.Value, swaggerUri.Value, defaults.Value, Core.Optional.ToNullable(provisioningState));
         }
     }
 }

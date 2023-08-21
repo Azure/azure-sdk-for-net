@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<ErrorResponse> error = default;
+            Core.Optional<ErrorResponse> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))

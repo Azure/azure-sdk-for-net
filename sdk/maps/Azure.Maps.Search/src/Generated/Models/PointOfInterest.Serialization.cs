@@ -19,14 +19,14 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> phone = default;
-            Optional<string> url = default;
-            Optional<IReadOnlyList<PointOfInterestCategorySet>> categorySet = default;
-            Optional<IReadOnlyList<string>> categories = default;
-            Optional<IReadOnlyList<PointOfInterestClassification>> classifications = default;
-            Optional<IReadOnlyList<BrandName>> brands = default;
-            Optional<OperatingHours> openingHours = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> phone = default;
+            Core.Optional<string> url = default;
+            Core.Optional<IReadOnlyList<PointOfInterestCategorySet>> categorySet = default;
+            Core.Optional<IReadOnlyList<string>> categories = default;
+            Core.Optional<IReadOnlyList<PointOfInterestClassification>> classifications = default;
+            Core.Optional<IReadOnlyList<BrandName>> brands = default;
+            Core.Optional<OperatingHours> openingHours = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -110,7 +110,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new PointOfInterest(name.Value, phone.Value, url.Value, Optional.ToList(categorySet), Optional.ToList(categories), Optional.ToList(classifications), Optional.ToList(brands), openingHours.Value);
+            return new PointOfInterest(name.Value, phone.Value, url.Value, Core.Optional.ToList(categorySet), Core.Optional.ToList(categories), Core.Optional.ToList(classifications), Core.Optional.ToList(brands), openingHours.Value);
         }
     }
 }

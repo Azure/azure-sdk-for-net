@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of PrivateStoreBillingAccountsResult. </summary>
         internal PrivateStoreBillingAccountsResult()
         {
-            BillingAccounts = new ChangeTrackingList<string>();
+            BillingAccounts = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PrivateStoreBillingAccountsResult. </summary>

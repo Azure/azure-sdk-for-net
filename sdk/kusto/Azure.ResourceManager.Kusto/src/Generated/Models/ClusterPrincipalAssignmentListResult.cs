@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of ClusterPrincipalAssignmentListResult. </summary>
         internal ClusterPrincipalAssignmentListResult()
         {
-            Value = new ChangeTrackingList<KustoClusterPrincipalAssignmentData>();
+            Value = new Core.ChangeTrackingList<KustoClusterPrincipalAssignmentData>();
         }
 
         /// <summary> Initializes a new instance of ClusterPrincipalAssignmentListResult. </summary>

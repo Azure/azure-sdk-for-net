@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
-    internal partial class BatchRequestItem : IUtf8JsonSerializable
+    internal partial class BatchRequestItem : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Query))
+            if (Core.Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);

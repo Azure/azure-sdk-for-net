@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class StreamingPolicyFairPlayConfiguration : IUtf8JsonSerializable
+    public partial class StreamingPolicyFairPlayConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomLicenseAcquisitionUriTemplate))
+            if (Core.Optional.IsDefined(CustomLicenseAcquisitionUriTemplate))
             {
                 writer.WritePropertyName("customLicenseAcquisitionUrlTemplate"u8);
                 writer.WriteStringValue(CustomLicenseAcquisitionUriTemplate);
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> customLicenseAcquisitionUriTemplate = default;
+            Core.Optional<string> customLicenseAcquisitionUriTemplate = default;
             bool allowPersistentLicense = default;
             foreach (var property in element.EnumerateObject())
             {

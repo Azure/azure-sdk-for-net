@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class HybridComputeServiceStatus : IUtf8JsonSerializable
+    public partial class HybridComputeServiceStatus : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(StartupType))
+            if (Core.Optional.IsDefined(StartupType))
             {
                 writer.WritePropertyName("startupType"u8);
                 writer.WriteStringValue(StartupType);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<string> startupType = default;
+            Core.Optional<string> status = default;
+            Core.Optional<string> startupType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))

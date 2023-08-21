@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class SelectVideoTrackById : IUtf8JsonSerializable
+    public partial class SelectVideoTrackById : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("trackId"u8);

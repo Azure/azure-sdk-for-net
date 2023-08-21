@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class CosmosDbSettings : IUtf8JsonSerializable
+    internal partial class CosmosDbSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CollectionsThroughput))
+            if (Core.Optional.IsDefined(CollectionsThroughput))
             {
                 writer.WritePropertyName("collectionsThroughput"u8);
                 writer.WriteNumberValue(CollectionsThroughput.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> collectionsThroughput = default;
+            Core.Optional<int> collectionsThroughput = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("collectionsThroughput"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new CosmosDbSettings(Optional.ToNullable(collectionsThroughput));
+            return new CosmosDbSettings(Core.Optional.ToNullable(collectionsThroughput));
         }
     }
 }

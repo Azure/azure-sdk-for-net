@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of PortGroupProperties. </summary>
         public PortGroupProperties()
         {
-            Ports = new ChangeTrackingList<string>();
+            Ports = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PortGroupProperties. </summary>

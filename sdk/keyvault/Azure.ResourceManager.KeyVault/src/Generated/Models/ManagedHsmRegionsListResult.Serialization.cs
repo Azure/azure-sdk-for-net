@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManagedHsmGeoReplicatedRegion>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<ManagedHsmGeoReplicatedRegion>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new ManagedHsmRegionsListResult(Optional.ToList(value), nextLink.Value);
+            return new ManagedHsmRegionsListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

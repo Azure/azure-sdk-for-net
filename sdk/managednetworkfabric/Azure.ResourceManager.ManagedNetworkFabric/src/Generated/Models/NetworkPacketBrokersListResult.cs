@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of NetworkPacketBrokersListResult. </summary>
         internal NetworkPacketBrokersListResult()
         {
-            Value = new ChangeTrackingList<NetworkPacketBrokerData>();
+            Value = new Core.ChangeTrackingList<NetworkPacketBrokerData>();
         }
 
         /// <summary> Initializes a new instance of NetworkPacketBrokersListResult. </summary>

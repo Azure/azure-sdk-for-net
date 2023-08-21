@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManagedNetworkGroupData>> groups = default;
-            Optional<IReadOnlyList<ManagedNetworkPeeringPolicyData>> peerings = default;
+            Core.Optional<IReadOnlyList<ManagedNetworkGroupData>> groups = default;
+            Core.Optional<IReadOnlyList<ManagedNetworkPeeringPolicyData>> peerings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groups"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     continue;
                 }
             }
-            return new ConnectivityCollection(Optional.ToList(groups), Optional.ToList(peerings));
+            return new ConnectivityCollection(Core.Optional.ToList(groups), Core.Optional.ToList(peerings));
         }
     }
 }

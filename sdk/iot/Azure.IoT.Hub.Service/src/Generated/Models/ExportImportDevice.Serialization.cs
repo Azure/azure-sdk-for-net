@@ -10,52 +10,52 @@ using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class ExportImportDevice : IUtf8JsonSerializable
+    public partial class ExportImportDevice : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(ModuleId))
+            if (Core.Optional.IsDefined(ModuleId))
             {
                 writer.WritePropertyName("moduleId"u8);
                 writer.WriteStringValue(ModuleId);
             }
-            if (Optional.IsDefined(ETag))
+            if (Core.Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag);
             }
-            if (Optional.IsDefined(ImportMode))
+            if (Core.Optional.IsDefined(ImportMode))
             {
                 writer.WritePropertyName("importMode"u8);
                 writer.WriteStringValue(ImportMode.Value.ToString());
             }
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(StatusReason))
+            if (Core.Optional.IsDefined(StatusReason))
             {
                 writer.WritePropertyName("statusReason"u8);
                 writer.WriteStringValue(StatusReason);
             }
-            if (Optional.IsDefined(Authentication))
+            if (Core.Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
             }
-            if (Optional.IsDefined(TwinETag))
+            if (Core.Optional.IsDefined(TwinETag))
             {
                 writer.WritePropertyName("twinETag"u8);
                 writer.WriteStringValue(TwinETag);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -71,17 +71,17 @@ namespace Azure.IoT.Hub.Service.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Properties))
+            if (Core.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsDefined(Capabilities))
+            if (Core.Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteObjectValue(Capabilities);
             }
-            if (Optional.IsDefined(DeviceScope))
+            if (Core.Optional.IsDefined(DeviceScope))
             {
                 writer.WritePropertyName("deviceScope"u8);
                 writer.WriteStringValue(DeviceScope);

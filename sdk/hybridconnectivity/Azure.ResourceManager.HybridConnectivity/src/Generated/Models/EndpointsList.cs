@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <summary> Initializes a new instance of EndpointsList. </summary>
         internal EndpointsList()
         {
-            Value = new ChangeTrackingList<EndpointResourceData>();
+            Value = new Core.ChangeTrackingList<EndpointResourceData>();
         }
 
         /// <summary> Initializes a new instance of EndpointsList. </summary>

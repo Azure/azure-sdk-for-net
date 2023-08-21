@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class NetworkDeviceInterfaceOperationSource : IOperationSource<NetworkDeviceInterfaceResource>
+    internal class NetworkDeviceInterfaceOperationSource : Core.IOperationSource<NetworkDeviceInterfaceResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             _client = client;
         }
 
-        NetworkDeviceInterfaceResource IOperationSource<NetworkDeviceInterfaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkDeviceInterfaceResource Core.IOperationSource<NetworkDeviceInterfaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NetworkDeviceInterfaceData.DeserializeNetworkDeviceInterfaceData(document.RootElement);
             return new NetworkDeviceInterfaceResource(_client, data);
         }
 
-        async ValueTask<NetworkDeviceInterfaceResource> IOperationSource<NetworkDeviceInterfaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkDeviceInterfaceResource> Core.IOperationSource<NetworkDeviceInterfaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NetworkDeviceInterfaceData.DeserializeNetworkDeviceInterfaceData(document.RootElement);

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaServicesAccountPatch : IUtf8JsonSerializable
+    public partial class MediaServicesAccountPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(StorageAccounts))
+            if (Core.Optional.IsCollectionDefined(StorageAccounts))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(StorageAuthentication))
+            if (Core.Optional.IsDefined(StorageAuthentication))
             {
                 if (StorageAuthentication != null)
                 {
@@ -55,17 +55,17 @@ namespace Azure.ResourceManager.Media.Models
                     writer.WriteNull("storageAuthentication");
                 }
             }
-            if (Optional.IsDefined(Encryption))
+            if (Core.Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsDefined(KeyDelivery))
+            if (Core.Optional.IsDefined(KeyDelivery))
             {
                 writer.WritePropertyName("keyDelivery"u8);
                 writer.WriteObjectValue(KeyDelivery);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (Core.Optional.IsDefined(PublicNetworkAccess))
             {
                 if (PublicNetworkAccess != null)
                 {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Media.Models
                     writer.WriteNull("publicNetworkAccess");
                 }
             }
-            if (Optional.IsDefined(MinimumTlsVersion))
+            if (Core.Optional.IsDefined(MinimumTlsVersion))
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToString());

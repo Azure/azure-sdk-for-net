@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <summary> Initializes a new instance of LoadTestingQuotaListResult. </summary>
         internal LoadTestingQuotaListResult()
         {
-            Value = new ChangeTrackingList<LoadTestingQuotaData>();
+            Value = new Core.ChangeTrackingList<LoadTestingQuotaData>();
         }
 
         /// <summary> Initializes a new instance of LoadTestingQuotaListResult. </summary>

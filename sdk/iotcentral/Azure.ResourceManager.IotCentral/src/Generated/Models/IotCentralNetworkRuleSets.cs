@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.IotCentral.Models
         /// <summary> Initializes a new instance of IotCentralNetworkRuleSets. </summary>
         public IotCentralNetworkRuleSets()
         {
-            IPRules = new ChangeTrackingList<IotCentralNetworkRuleSetIPRule>();
+            IPRules = new Core.ChangeTrackingList<IotCentralNetworkRuleSetIPRule>();
         }
 
         /// <summary> Initializes a new instance of IotCentralNetworkRuleSets. </summary>

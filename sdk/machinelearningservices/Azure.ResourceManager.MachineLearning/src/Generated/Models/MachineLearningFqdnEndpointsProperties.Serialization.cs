@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> category = default;
-            Optional<IReadOnlyList<MachineLearningFqdnEndpoint>> endpoints = default;
+            Core.Optional<string> category = default;
+            Core.Optional<IReadOnlyList<MachineLearningFqdnEndpoint>> endpoints = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("category"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningFqdnEndpointsProperties(category.Value, Optional.ToList(endpoints));
+            return new MachineLearningFqdnEndpointsProperties(category.Value, Core.Optional.ToList(endpoints));
         }
     }
 }

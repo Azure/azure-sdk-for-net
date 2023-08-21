@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
-    internal partial class SasDefinitionUpdateParameters : IUtf8JsonSerializable
+    internal partial class SasDefinitionUpdateParameters : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TemplateUri))
+            if (Core.Optional.IsDefined(TemplateUri))
             {
                 writer.WritePropertyName("templateUri"u8);
                 writer.WriteStringValue(TemplateUri);
             }
-            if (Optional.IsDefined(SasType))
+            if (Core.Optional.IsDefined(SasType))
             {
                 writer.WritePropertyName("sasType"u8);
                 writer.WriteStringValue(SasType.Value.ToString());
             }
-            if (Optional.IsDefined(ValidityPeriod))
+            if (Core.Optional.IsDefined(ValidityPeriod))
             {
                 writer.WritePropertyName("validityPeriod"u8);
                 writer.WriteStringValue(ValidityPeriod);
             }
-            if (Optional.IsDefined(SasDefinitionAttributes))
+            if (Core.Optional.IsDefined(SasDefinitionAttributes))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteObjectValue(SasDefinitionAttributes);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();

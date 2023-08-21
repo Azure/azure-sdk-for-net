@@ -13,19 +13,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridConnectivity
 {
-    public partial class EndpointResourceData : IUtf8JsonSerializable
+    public partial class EndpointResourceData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(EndpointType))
+            if (Core.Optional.IsDefined(EndpointType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(EndpointType.Value.ToString());
             }
-            if (Optional.IsDefined(ResourceId))
+            if (Core.Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
@@ -33,32 +33,32 @@ namespace Azure.ResourceManager.HybridConnectivity
             writer.WriteEndObject();
             writer.WritePropertyName("systemData"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreatedBy))
+            if (Core.Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (Optional.IsDefined(CreatedByType))
+            if (Core.Optional.IsDefined(CreatedByType))
             {
                 writer.WritePropertyName("createdByType"u8);
                 writer.WriteStringValue(CreatedByType.Value.ToString());
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (Core.Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(LastModifiedBy))
+            if (Core.Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
                 writer.WriteStringValue(LastModifiedBy);
             }
-            if (Optional.IsDefined(LastModifiedByType))
+            if (Core.Optional.IsDefined(LastModifiedByType))
             {
                 writer.WritePropertyName("lastModifiedByType"u8);
                 writer.WriteStringValue(LastModifiedByType.Value.ToString());
             }
-            if (Optional.IsDefined(LastModifiedOn))
+            if (Core.Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedAt"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
@@ -76,16 +76,16 @@ namespace Azure.ResourceManager.HybridConnectivity
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EndpointType> type0 = default;
-            Optional<string> resourceId = default;
-            Optional<string> provisioningState = default;
-            Optional<string> createdBy = default;
-            Optional<Models.CreatedByType> createdByType = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<string> lastModifiedBy = default;
-            Optional<Models.CreatedByType> lastModifiedByType = default;
-            Optional<DateTimeOffset> lastModifiedAt = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<EndpointType> type0 = default;
+            Core.Optional<string> resourceId = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<string> createdBy = default;
+            Core.Optional<Models.CreatedByType> createdByType = default;
+            Core.Optional<DateTimeOffset> createdAt = default;
+            Core.Optional<string> lastModifiedBy = default;
+            Core.Optional<Models.CreatedByType> lastModifiedByType = default;
+            Core.Optional<DateTimeOffset> lastModifiedAt = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                     continue;
                 }
             }
-            return new EndpointResourceData(id, name, type, systemData.Value, Optional.ToNullable(type0), resourceId.Value, provisioningState.Value, createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt));
+            return new EndpointResourceData(id, name, type, systemData.Value, Core.Optional.ToNullable(type0), resourceId.Value, provisioningState.Value, createdBy.Value, Core.Optional.ToNullable(createdByType), Core.Optional.ToNullable(createdAt), lastModifiedBy.Value, Core.Optional.ToNullable(lastModifiedByType), Core.Optional.ToNullable(lastModifiedAt));
         }
     }
 }

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class TwinProperties : IUtf8JsonSerializable
+    public partial class TwinProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Desired))
+            if (Core.Optional.IsCollectionDefined(Desired))
             {
                 writer.WritePropertyName("desired"u8);
                 writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.IoT.Hub.Service.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Reported))
+            if (Core.Optional.IsCollectionDefined(Reported))
             {
                 writer.WritePropertyName("reported"u8);
                 writer.WriteStartObject();
@@ -57,8 +57,8 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, object>> desired = default;
-            Optional<IDictionary<string, object>> reported = default;
+            Core.Optional<IDictionary<string, object>> desired = default;
+            Core.Optional<IDictionary<string, object>> reported = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("desired"u8))
@@ -104,7 +104,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new TwinProperties(Optional.ToDictionary(desired), Optional.ToDictionary(reported));
+            return new TwinProperties(Core.Optional.ToDictionary(desired), Core.Optional.ToDictionary(reported));
         }
     }
 }

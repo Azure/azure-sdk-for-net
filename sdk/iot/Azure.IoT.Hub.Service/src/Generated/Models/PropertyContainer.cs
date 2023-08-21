@@ -16,8 +16,8 @@ namespace Azure.IoT.Hub.Service.Models
         /// <summary> Initializes a new instance of PropertyContainer. </summary>
         public PropertyContainer()
         {
-            Desired = new ChangeTrackingDictionary<string, object>();
-            Reported = new ChangeTrackingDictionary<string, object>();
+            Desired = new Core.ChangeTrackingDictionary<string, object>();
+            Reported = new Core.ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> The collection of desired property key-value pairs. The keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), '.', '$' and space. The desired porperty values are JSON objects, up-to 4KB in length. </summary>

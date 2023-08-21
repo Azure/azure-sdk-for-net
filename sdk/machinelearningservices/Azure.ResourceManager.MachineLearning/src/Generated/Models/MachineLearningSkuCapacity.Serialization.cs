@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> @default = default;
-            Optional<int> maximum = default;
-            Optional<int> minimum = default;
-            Optional<MachineLearningSkuScaleType> scaleType = default;
+            Core.Optional<int> @default = default;
+            Core.Optional<int> maximum = default;
+            Core.Optional<int> minimum = default;
+            Core.Optional<MachineLearningSkuScaleType> scaleType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("default"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningSkuCapacity(Optional.ToNullable(@default), Optional.ToNullable(maximum), Optional.ToNullable(minimum), Optional.ToNullable(scaleType));
+            return new MachineLearningSkuCapacity(Core.Optional.ToNullable(@default), Core.Optional.ToNullable(maximum), Core.Optional.ToNullable(minimum), Core.Optional.ToNullable(scaleType));
         }
     }
 }

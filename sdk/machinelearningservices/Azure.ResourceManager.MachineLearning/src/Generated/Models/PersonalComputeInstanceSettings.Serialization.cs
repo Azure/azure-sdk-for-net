@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class PersonalComputeInstanceSettings : IUtf8JsonSerializable
+    internal partial class PersonalComputeInstanceSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AssignedUser))
+            if (Core.Optional.IsDefined(AssignedUser))
             {
                 writer.WritePropertyName("assignedUser"u8);
                 writer.WriteObjectValue(AssignedUser);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningComputeInstanceAssignedUser> assignedUser = default;
+            Core.Optional<MachineLearningComputeInstanceAssignedUser> assignedUser = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("assignedUser"u8))

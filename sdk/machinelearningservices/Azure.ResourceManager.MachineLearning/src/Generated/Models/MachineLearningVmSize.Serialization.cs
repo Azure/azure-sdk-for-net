@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> family = default;
-            Optional<int> vCpus = default;
-            Optional<int> gpus = default;
-            Optional<int> osVhdSizeMB = default;
-            Optional<int> maxResourceVolumeMB = default;
-            Optional<double> memoryGB = default;
-            Optional<bool> lowPriorityCapable = default;
-            Optional<bool> premiumIO = default;
-            Optional<MachineLearningEstimatedVmPrices> estimatedVmPrices = default;
-            Optional<IReadOnlyList<string>> supportedComputeTypes = default;
+            Core.Optional<string> name = default;
+            Core.Optional<string> family = default;
+            Core.Optional<int> vCpus = default;
+            Core.Optional<int> gpus = default;
+            Core.Optional<int> osVhdSizeMB = default;
+            Core.Optional<int> maxResourceVolumeMB = default;
+            Core.Optional<double> memoryGB = default;
+            Core.Optional<bool> lowPriorityCapable = default;
+            Core.Optional<bool> premiumIO = default;
+            Core.Optional<MachineLearningEstimatedVmPrices> estimatedVmPrices = default;
+            Core.Optional<IReadOnlyList<string>> supportedComputeTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningVmSize(name.Value, family.Value, Optional.ToNullable(vCpus), Optional.ToNullable(gpus), Optional.ToNullable(osVhdSizeMB), Optional.ToNullable(maxResourceVolumeMB), Optional.ToNullable(memoryGB), Optional.ToNullable(lowPriorityCapable), Optional.ToNullable(premiumIO), estimatedVmPrices.Value, Optional.ToList(supportedComputeTypes));
+            return new MachineLearningVmSize(name.Value, family.Value, Core.Optional.ToNullable(vCpus), Core.Optional.ToNullable(gpus), Core.Optional.ToNullable(osVhdSizeMB), Core.Optional.ToNullable(maxResourceVolumeMB), Core.Optional.ToNullable(memoryGB), Core.Optional.ToNullable(lowPriorityCapable), Core.Optional.ToNullable(premiumIO), estimatedVmPrices.Value, Core.Optional.ToList(supportedComputeTypes));
         }
     }
 }

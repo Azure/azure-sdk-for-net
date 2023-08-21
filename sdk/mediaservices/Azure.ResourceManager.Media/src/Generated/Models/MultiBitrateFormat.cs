@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Media.Models
         {
             Argument.AssertNotNull(filenamePattern, nameof(filenamePattern));
 
-            OutputFiles = new ChangeTrackingList<MediaOutputFile>();
+            OutputFiles = new Core.ChangeTrackingList<MediaOutputFile>();
             OdataType = "#Microsoft.Media.MultiBitrateFormat";
         }
 

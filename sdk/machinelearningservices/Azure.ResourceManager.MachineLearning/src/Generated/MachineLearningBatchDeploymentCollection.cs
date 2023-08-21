@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = await _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MachineLearningBatchDeploymentResource>(new MachineLearningBatchDeploymentOperationSource(Client), _machineLearningBatchDeploymentBatchDeploymentsClientDiagnostics, Pipeline, _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<MachineLearningBatchDeploymentResource>(new MachineLearningBatchDeploymentOperationSource(Client), _machineLearningBatchDeploymentBatchDeploymentsClientDiagnostics, Pipeline, _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data, cancellationToken);
-                var operation = new MachineLearningArmOperation<MachineLearningBatchDeploymentResource>(new MachineLearningBatchDeploymentOperationSource(Client), _machineLearningBatchDeploymentBatchDeploymentsClientDiagnostics, Pipeline, _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<MachineLearningBatchDeploymentResource>(new MachineLearningBatchDeploymentOperationSource(Client), _machineLearningBatchDeploymentBatchDeploymentsClientDiagnostics, Pipeline, _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningBatchDeploymentResource(Client, MachineLearningBatchDeploymentData.DeserializeMachineLearningBatchDeploymentData(e)), _machineLearningBatchDeploymentBatchDeploymentsClientDiagnostics, Pipeline, "MachineLearningBatchDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningBatchDeploymentResource(Client, MachineLearningBatchDeploymentData.DeserializeMachineLearningBatchDeploymentData(e)), _machineLearningBatchDeploymentBatchDeploymentsClientDiagnostics, Pipeline, "MachineLearningBatchDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningBatchDeploymentResource(Client, MachineLearningBatchDeploymentData.DeserializeMachineLearningBatchDeploymentData(e)), _machineLearningBatchDeploymentBatchDeploymentsClientDiagnostics, Pipeline, "MachineLearningBatchDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningBatchDeploymentResource(Client, MachineLearningBatchDeploymentData.DeserializeMachineLearningBatchDeploymentData(e)), _machineLearningBatchDeploymentBatchDeploymentsClientDiagnostics, Pipeline, "MachineLearningBatchDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

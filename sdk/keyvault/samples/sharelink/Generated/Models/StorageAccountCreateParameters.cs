@@ -27,7 +27,7 @@ namespace Azure.Security.KeyVault.Storage.Models
             ResourceId = resourceId;
             ActiveKeyName = activeKeyName;
             AutoRegenerateKey = autoRegenerateKey;
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Storage account resource id. </summary>

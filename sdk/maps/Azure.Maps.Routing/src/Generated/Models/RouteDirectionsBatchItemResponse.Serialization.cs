@@ -19,11 +19,11 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Optional<ErrorDetail> error = default;
-            Optional<string> formatVersion = default;
-            Optional<IReadOnlyList<RouteData>> routes = default;
-            Optional<IReadOnlyList<RouteOptimizedWaypoint>> optimizedWaypoints = default;
-            Optional<RouteReport> report = default;
+            Core.Optional<ErrorDetail> error = default;
+            Core.Optional<string> formatVersion = default;
+            Core.Optional<IReadOnlyList<RouteData>> routes = default;
+            Core.Optional<IReadOnlyList<RouteOptimizedWaypoint>> optimizedWaypoints = default;
+            Core.Optional<RouteReport> report = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))
@@ -78,7 +78,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteDirectionsBatchItemResponse(formatVersion.Value, Optional.ToList(routes), Optional.ToList(optimizedWaypoints), report.Value, error.Value);
+            return new RouteDirectionsBatchItemResponse(formatVersion.Value, Core.Optional.ToList(routes), Core.Optional.ToList(optimizedWaypoints), report.Value, error.Value);
         }
     }
 }

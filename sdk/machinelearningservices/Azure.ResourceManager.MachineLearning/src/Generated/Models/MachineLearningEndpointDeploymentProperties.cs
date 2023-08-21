@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningEndpointDeploymentProperties. </summary>
         public MachineLearningEndpointDeploymentProperties()
         {
-            EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
-            Properties = new ChangeTrackingDictionary<string, string>();
+            EnvironmentVariables = new Core.ChangeTrackingDictionary<string, string>();
+            Properties = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningEndpointDeploymentProperties. </summary>

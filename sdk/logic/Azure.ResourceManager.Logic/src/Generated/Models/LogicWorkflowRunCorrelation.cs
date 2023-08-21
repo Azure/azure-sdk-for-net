@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of LogicWorkflowRunCorrelation. </summary>
         public LogicWorkflowRunCorrelation()
         {
-            ClientKeywords = new ChangeTrackingList<string>();
+            ClientKeywords = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of LogicWorkflowRunCorrelation. </summary>

@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    internal partial class RoleDefinitionProperties : IUtf8JsonSerializable
+    internal partial class RoleDefinitionProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RoleName))
+            if (Core.Optional.IsDefined(RoleName))
             {
                 writer.WritePropertyName("roleName"u8);
                 writer.WriteStringValue(RoleName);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(RoleType))
+            if (Core.Optional.IsDefined(RoleType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RoleType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Permissions))
+            if (Core.Optional.IsCollectionDefined(Permissions))
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AssignableScopes))
+            if (Core.Optional.IsCollectionDefined(AssignableScopes))
             {
                 writer.WritePropertyName("assignableScopes"u8);
                 writer.WriteStartArray();

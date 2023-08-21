@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="location"> The location. </param>
         public NetworkTapRuleData(AzureLocation location) : base(location)
         {
-            MatchConfigurations = new ChangeTrackingList<NetworkTapRuleMatchConfiguration>();
-            DynamicMatchConfigurations = new ChangeTrackingList<CommonDynamicMatchConfiguration>();
+            MatchConfigurations = new Core.ChangeTrackingList<NetworkTapRuleMatchConfiguration>();
+            DynamicMatchConfigurations = new Core.ChangeTrackingList<CommonDynamicMatchConfiguration>();
         }
 
         /// <summary> Initializes a new instance of NetworkTapRuleData. </summary>

@@ -14,15 +14,15 @@ using Azure.ResourceManager.MachineLearningCompute.Models;
 
 namespace Azure.ResourceManager.MachineLearningCompute
 {
-    internal class UpdateSystemServicesResponseOperationSource : IOperationSource<UpdateSystemServicesResponse>
+    internal class UpdateSystemServicesResponseOperationSource : Core.IOperationSource<UpdateSystemServicesResponse>
     {
-        UpdateSystemServicesResponse IOperationSource<UpdateSystemServicesResponse>.CreateResult(Response response, CancellationToken cancellationToken)
+        UpdateSystemServicesResponse Core.IOperationSource<UpdateSystemServicesResponse>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return UpdateSystemServicesResponse.DeserializeUpdateSystemServicesResponse(document.RootElement);
         }
 
-        async ValueTask<UpdateSystemServicesResponse> IOperationSource<UpdateSystemServicesResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<UpdateSystemServicesResponse> Core.IOperationSource<UpdateSystemServicesResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return UpdateSystemServicesResponse.DeserializeUpdateSystemServicesResponse(document.RootElement);

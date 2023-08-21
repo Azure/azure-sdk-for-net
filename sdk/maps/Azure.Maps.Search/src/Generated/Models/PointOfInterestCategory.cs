@@ -16,8 +16,8 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of PointOfInterestCategory. </summary>
         internal PointOfInterestCategory()
         {
-            ChildIds = new ChangeTrackingList<int>();
-            Synonyms = new ChangeTrackingList<string>();
+            ChildIds = new Core.ChangeTrackingList<int>();
+            Synonyms = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PointOfInterestCategory. </summary>

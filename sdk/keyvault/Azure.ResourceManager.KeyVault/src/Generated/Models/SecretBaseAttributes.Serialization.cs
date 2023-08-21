@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class SecretBaseAttributes : IUtf8JsonSerializable
+    public partial class SecretBaseAttributes : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Core.Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Optional.IsDefined(NotBefore))
+            if (Core.Optional.IsDefined(NotBefore))
             {
                 writer.WritePropertyName("nbf"u8);
                 writer.WriteNumberValue(NotBefore.Value, "U");
             }
-            if (Optional.IsDefined(Expires))
+            if (Core.Optional.IsDefined(Expires))
             {
                 writer.WritePropertyName("exp"u8);
                 writer.WriteNumberValue(Expires.Value, "U");
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<DateTimeOffset> nbf = default;
-            Optional<DateTimeOffset> exp = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> updated = default;
+            Core.Optional<bool> enabled = default;
+            Core.Optional<DateTimeOffset> nbf = default;
+            Core.Optional<DateTimeOffset> exp = default;
+            Core.Optional<DateTimeOffset> created = default;
+            Core.Optional<DateTimeOffset> updated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new SecretBaseAttributes(Optional.ToNullable(enabled), Optional.ToNullable(nbf), Optional.ToNullable(exp), Optional.ToNullable(created), Optional.ToNullable(updated));
+            return new SecretBaseAttributes(Core.Optional.ToNullable(enabled), Core.Optional.ToNullable(nbf), Core.Optional.ToNullable(exp), Core.Optional.ToNullable(created), Core.Optional.ToNullable(updated));
         }
     }
 }

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningRecurrenceSchedule : IUtf8JsonSerializable
+    public partial class MachineLearningRecurrenceSchedule : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("hours"u8);
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteNumberValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(MonthDays))
+            if (Core.Optional.IsCollectionDefined(MonthDays))
             {
                 if (MonthDays != null)
                 {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("monthDays");
                 }
             }
-            if (Optional.IsCollectionDefined(WeekDays))
+            if (Core.Optional.IsCollectionDefined(WeekDays))
             {
                 if (WeekDays != null)
                 {
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             IList<int> hours = default;
             IList<int> minutes = default;
-            Optional<IList<int>> monthDays = default;
-            Optional<IList<MachineLearningDayOfWeek>> weekDays = default;
+            Core.Optional<IList<int>> monthDays = default;
+            Core.Optional<IList<MachineLearningDayOfWeek>> weekDays = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hours"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningRecurrenceSchedule(hours, minutes, Optional.ToList(monthDays), Optional.ToList(weekDays));
+            return new MachineLearningRecurrenceSchedule(hours, minutes, Core.Optional.ToList(monthDays), Core.Optional.ToList(weekDays));
         }
     }
 }

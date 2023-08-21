@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<string> firmwareCryptoKeyId = default;
-            Optional<string> keyType = default;
-            Optional<long?> keySize = default;
-            Optional<string> keyAlgorithm = default;
-            Optional<IReadOnlyList<string>> usage = default;
-            Optional<IReadOnlyList<string>> filePaths = default;
-            Optional<PairedKey> pairedKey = default;
-            Optional<IsShortKeySize?> isShortKeySize = default;
+            Core.Optional<string> firmwareCryptoKeyId = default;
+            Core.Optional<string> keyType = default;
+            Core.Optional<long?> keySize = default;
+            Core.Optional<string> keyAlgorithm = default;
+            Core.Optional<IReadOnlyList<string>> usage = default;
+            Core.Optional<IReadOnlyList<string>> filePaths = default;
+            Core.Optional<PairedKey> pairedKey = default;
+            Core.Optional<IsShortKeySize?> isShortKeySize = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cryptoKeyId"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     continue;
                 }
             }
-            return new FirmwareCryptoKey(firmwareCryptoKeyId.Value, keyType.Value, Optional.ToNullable(keySize), keyAlgorithm.Value, Optional.ToList(usage), Optional.ToList(filePaths), pairedKey.Value, Optional.ToNullable(isShortKeySize));
+            return new FirmwareCryptoKey(firmwareCryptoKeyId.Value, keyType.Value, Core.Optional.ToNullable(keySize), keyAlgorithm.Value, Core.Optional.ToList(usage), Core.Optional.ToList(filePaths), pairedKey.Value, Core.Optional.ToNullable(isShortKeySize));
         }
     }
 }

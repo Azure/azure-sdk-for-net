@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    internal partial class IntegrationAccountMapPropertiesParametersSchema : IUtf8JsonSerializable
+    internal partial class IntegrationAccountMapPropertiesParametersSchema : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Ref))
+            if (Core.Optional.IsDefined(Ref))
             {
                 writer.WritePropertyName("ref"u8);
                 writer.WriteStringValue(Ref);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> @ref = default;
+            Core.Optional<string> @ref = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ref"u8))

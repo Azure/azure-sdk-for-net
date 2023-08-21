@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    internal partial class UnknownClipTime : IUtf8JsonSerializable
+    internal partial class UnknownClipTime : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);

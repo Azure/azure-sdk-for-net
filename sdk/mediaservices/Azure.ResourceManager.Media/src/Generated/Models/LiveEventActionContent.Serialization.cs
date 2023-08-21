@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class LiveEventActionContent : IUtf8JsonSerializable
+    public partial class LiveEventActionContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RemoveOutputsOnStop))
+            if (Core.Optional.IsDefined(RemoveOutputsOnStop))
             {
                 writer.WritePropertyName("removeOutputsOnStop"u8);
                 writer.WriteBooleanValue(RemoveOutputsOnStop.Value);

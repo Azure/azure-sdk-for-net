@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MaintenanceUpdate>> value = default;
+            Core.Optional<IReadOnlyList<MaintenanceUpdate>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     continue;
                 }
             }
-            return new MaintenanceUpdateListResult(Optional.ToList(value));
+            return new MaintenanceUpdateListResult(Core.Optional.ToList(value));
         }
     }
 }

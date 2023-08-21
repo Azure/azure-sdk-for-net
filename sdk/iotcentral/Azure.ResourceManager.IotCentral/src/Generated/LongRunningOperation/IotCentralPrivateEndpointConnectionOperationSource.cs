@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.IotCentral
 {
-    internal class IotCentralPrivateEndpointConnectionOperationSource : IOperationSource<IotCentralPrivateEndpointConnectionResource>
+    internal class IotCentralPrivateEndpointConnectionOperationSource : Core.IOperationSource<IotCentralPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.IotCentral
             _client = client;
         }
 
-        IotCentralPrivateEndpointConnectionResource IOperationSource<IotCentralPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        IotCentralPrivateEndpointConnectionResource Core.IOperationSource<IotCentralPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = IotCentralPrivateEndpointConnectionData.DeserializeIotCentralPrivateEndpointConnectionData(document.RootElement);
             return new IotCentralPrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<IotCentralPrivateEndpointConnectionResource> IOperationSource<IotCentralPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<IotCentralPrivateEndpointConnectionResource> Core.IOperationSource<IotCentralPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = IotCentralPrivateEndpointConnectionData.DeserializeIotCentralPrivateEndpointConnectionData(document.RootElement);

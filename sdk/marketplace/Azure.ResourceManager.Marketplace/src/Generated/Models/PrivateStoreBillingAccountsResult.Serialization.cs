@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> billingAccounts = default;
+            Core.Optional<IReadOnlyList<string>> billingAccounts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("billingAccounts"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new PrivateStoreBillingAccountsResult(Optional.ToList(billingAccounts));
+            return new PrivateStoreBillingAccountsResult(Core.Optional.ToList(billingAccounts));
         }
     }
 }

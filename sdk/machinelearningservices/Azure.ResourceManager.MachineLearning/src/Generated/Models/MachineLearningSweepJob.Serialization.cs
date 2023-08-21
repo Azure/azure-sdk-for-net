@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningSweepJob : IUtf8JsonSerializable
+    public partial class MachineLearningSweepJob : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EarlyTermination))
+            if (Core.Optional.IsDefined(EarlyTermination))
             {
                 if (EarlyTermination != null)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("earlyTermination");
                 }
             }
-            if (Optional.IsCollectionDefined(Inputs))
+            if (Core.Optional.IsCollectionDefined(Inputs))
             {
                 if (Inputs != null)
                 {
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("inputs");
                 }
             }
-            if (Optional.IsDefined(Limits))
+            if (Core.Optional.IsDefined(Limits))
             {
                 writer.WritePropertyName("limits"u8);
                 writer.WriteObjectValue(Limits);
             }
             writer.WritePropertyName("objective"u8);
             writer.WriteObjectValue(Objective);
-            if (Optional.IsCollectionDefined(Outputs))
+            if (Core.Optional.IsCollectionDefined(Outputs))
             {
                 if (Outputs != null)
                 {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #endif
             writer.WritePropertyName("trial"u8);
             writer.WriteObjectValue(Trial);
-            if (Optional.IsDefined(ComponentId))
+            if (Core.Optional.IsDefined(ComponentId))
             {
                 if (ComponentId != null)
                 {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("componentId");
                 }
             }
-            if (Optional.IsDefined(ComputeId))
+            if (Core.Optional.IsDefined(ComputeId))
             {
                 if (ComputeId != null)
                 {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("computeId");
                 }
             }
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 if (DisplayName != null)
                 {
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("displayName");
                 }
             }
-            if (Optional.IsDefined(ExperimentName))
+            if (Core.Optional.IsDefined(ExperimentName))
             {
                 writer.WritePropertyName("experimentName"u8);
                 writer.WriteStringValue(ExperimentName);
             }
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {
@@ -135,14 +135,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("identity");
                 }
             }
-            if (Optional.IsDefined(IsArchived))
+            if (Core.Optional.IsDefined(IsArchived))
             {
                 writer.WritePropertyName("isArchived"u8);
                 writer.WriteBooleanValue(IsArchived.Value);
             }
             writer.WritePropertyName("jobType"u8);
             writer.WriteStringValue(JobType.ToString());
-            if (Optional.IsCollectionDefined(Services))
+            if (Core.Optional.IsCollectionDefined(Services))
             {
                 if (Services != null)
                 {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("services");
                 }
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (Core.Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {
@@ -217,26 +217,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningEarlyTerminationPolicy> earlyTermination = default;
-            Optional<IDictionary<string, MachineLearningJobInput>> inputs = default;
-            Optional<MachineLearningSweepJobLimits> limits = default;
+            Core.Optional<MachineLearningEarlyTerminationPolicy> earlyTermination = default;
+            Core.Optional<IDictionary<string, MachineLearningJobInput>> inputs = default;
+            Core.Optional<MachineLearningSweepJobLimits> limits = default;
             MachineLearningObjective objective = default;
-            Optional<IDictionary<string, MachineLearningJobOutput>> outputs = default;
+            Core.Optional<IDictionary<string, MachineLearningJobOutput>> outputs = default;
             SamplingAlgorithm samplingAlgorithm = default;
             BinaryData searchSpace = default;
             MachineLearningTrialComponent trial = default;
-            Optional<ResourceIdentifier> componentId = default;
-            Optional<ResourceIdentifier> computeId = default;
-            Optional<string> displayName = default;
-            Optional<string> experimentName = default;
-            Optional<MachineLearningIdentityConfiguration> identity = default;
-            Optional<bool> isArchived = default;
+            Core.Optional<ResourceIdentifier> componentId = default;
+            Core.Optional<ResourceIdentifier> computeId = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<string> experimentName = default;
+            Core.Optional<MachineLearningIdentityConfiguration> identity = default;
+            Core.Optional<bool> isArchived = default;
             JobType jobType = default;
-            Optional<IDictionary<string, MachineLearningJobService>> services = default;
-            Optional<MachineLearningJobStatus> status = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, MachineLearningJobService>> services = default;
+            Core.Optional<MachineLearningJobStatus> status = default;
+            Core.Optional<string> description = default;
+            Core.Optional<IDictionary<string, string>> properties = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("earlyTermination"u8))
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningSweepJob(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), componentId.Value, computeId.Value, displayName.Value, experimentName.Value, identity.Value, Optional.ToNullable(isArchived), jobType, Optional.ToDictionary(services), Optional.ToNullable(status), earlyTermination.Value, Optional.ToDictionary(inputs), limits.Value, objective, Optional.ToDictionary(outputs), samplingAlgorithm, searchSpace, trial);
+            return new MachineLearningSweepJob(description.Value, Core.Optional.ToDictionary(properties), Core.Optional.ToDictionary(tags), componentId.Value, computeId.Value, displayName.Value, experimentName.Value, identity.Value, Core.Optional.ToNullable(isArchived), jobType, Core.Optional.ToDictionary(services), Core.Optional.ToNullable(status), earlyTermination.Value, Core.Optional.ToDictionary(inputs), limits.Value, objective, Core.Optional.ToDictionary(outputs), samplingAlgorithm, searchSpace, trial);
         }
     }
 }

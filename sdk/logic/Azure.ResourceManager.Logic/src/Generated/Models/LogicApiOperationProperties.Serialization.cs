@@ -11,57 +11,57 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicApiOperationProperties : IUtf8JsonSerializable
+    public partial class LogicApiOperationProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Summary))
+            if (Core.Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Visibility))
+            if (Core.Optional.IsDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility);
             }
-            if (Optional.IsDefined(Trigger))
+            if (Core.Optional.IsDefined(Trigger))
             {
                 writer.WritePropertyName("trigger"u8);
                 writer.WriteStringValue(Trigger);
             }
-            if (Optional.IsDefined(TriggerHint))
+            if (Core.Optional.IsDefined(TriggerHint))
             {
                 writer.WritePropertyName("triggerHint"u8);
                 writer.WriteStringValue(TriggerHint);
             }
-            if (Optional.IsDefined(IsPageable))
+            if (Core.Optional.IsDefined(IsPageable))
             {
                 writer.WritePropertyName("pageable"u8);
                 writer.WriteBooleanValue(IsPageable.Value);
             }
-            if (Optional.IsDefined(Annotation))
+            if (Core.Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteObjectValue(Annotation);
             }
-            if (Optional.IsDefined(Api))
+            if (Core.Optional.IsDefined(Api))
             {
                 writer.WritePropertyName("api"u8);
                 writer.WriteObjectValue(Api);
             }
-            if (Optional.IsDefined(InputsDefinition))
+            if (Core.Optional.IsDefined(InputsDefinition))
             {
                 writer.WritePropertyName("inputsDefinition"u8);
                 writer.WriteObjectValue(InputsDefinition);
             }
-            if (Optional.IsCollectionDefined(ResponsesDefinition))
+            if (Core.Optional.IsCollectionDefined(ResponsesDefinition))
             {
                 writer.WritePropertyName("responsesDefinition"u8);
                 writer.WriteStartObject();
@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(IsWebhook))
+            if (Core.Optional.IsDefined(IsWebhook))
             {
                 writer.WritePropertyName("isWebhook"u8);
                 writer.WriteBooleanValue(IsWebhook.Value);
             }
-            if (Optional.IsDefined(IsNotification))
+            if (Core.Optional.IsDefined(IsNotification))
             {
                 writer.WritePropertyName("isNotification"u8);
                 writer.WriteBooleanValue(IsNotification.Value);
@@ -91,18 +91,18 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> summary = default;
-            Optional<string> description = default;
-            Optional<string> visibility = default;
-            Optional<string> trigger = default;
-            Optional<string> triggerHint = default;
-            Optional<bool> pageable = default;
-            Optional<LogicApiOperationAnnotation> annotation = default;
-            Optional<LogicApiReference> api = default;
-            Optional<SwaggerSchema> inputsDefinition = default;
-            Optional<IDictionary<string, SwaggerSchema>> responsesDefinition = default;
-            Optional<bool> isWebhook = default;
-            Optional<bool> isNotification = default;
+            Core.Optional<string> summary = default;
+            Core.Optional<string> description = default;
+            Core.Optional<string> visibility = default;
+            Core.Optional<string> trigger = default;
+            Core.Optional<string> triggerHint = default;
+            Core.Optional<bool> pageable = default;
+            Core.Optional<LogicApiOperationAnnotation> annotation = default;
+            Core.Optional<LogicApiReference> api = default;
+            Core.Optional<SwaggerSchema> inputsDefinition = default;
+            Core.Optional<IDictionary<string, SwaggerSchema>> responsesDefinition = default;
+            Core.Optional<bool> isWebhook = default;
+            Core.Optional<bool> isNotification = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summary"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new LogicApiOperationProperties(summary.Value, description.Value, visibility.Value, trigger.Value, triggerHint.Value, Optional.ToNullable(pageable), annotation.Value, api.Value, inputsDefinition.Value, Optional.ToDictionary(responsesDefinition), Optional.ToNullable(isWebhook), Optional.ToNullable(isNotification));
+            return new LogicApiOperationProperties(summary.Value, description.Value, visibility.Value, trigger.Value, triggerHint.Value, Core.Optional.ToNullable(pageable), annotation.Value, api.Value, inputsDefinition.Value, Core.Optional.ToDictionary(responsesDefinition), Core.Optional.ToNullable(isWebhook), Core.Optional.ToNullable(isNotification));
         }
     }
 }

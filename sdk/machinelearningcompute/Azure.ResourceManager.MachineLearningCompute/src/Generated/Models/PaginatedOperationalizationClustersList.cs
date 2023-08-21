@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         /// <summary> Initializes a new instance of PaginatedOperationalizationClustersList. </summary>
         internal PaginatedOperationalizationClustersList()
         {
-            Value = new ChangeTrackingList<OperationalizationClusterData>();
+            Value = new Core.ChangeTrackingList<OperationalizationClusterData>();
         }
 
         /// <summary> Initializes a new instance of PaginatedOperationalizationClustersList. </summary>

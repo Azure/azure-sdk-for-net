@@ -16,8 +16,8 @@ namespace Azure.Maps.Routing.Models
         /// <summary> Initializes a new instance of RouteData. </summary>
         internal RouteData()
         {
-            Legs = new ChangeTrackingList<RouteLeg>();
-            Sections = new ChangeTrackingList<RouteSection>();
+            Legs = new Core.ChangeTrackingList<RouteLeg>();
+            Sections = new Core.ChangeTrackingList<RouteSection>();
         }
 
         /// <summary> Initializes a new instance of RouteData. </summary>

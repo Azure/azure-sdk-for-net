@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class IdentityAccessPermissions : IUtf8JsonSerializable
+    public partial class IdentityAccessPermissions : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Keys))
+            if (Core.Optional.IsCollectionDefined(Keys))
             {
                 writer.WritePropertyName("keys"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Secrets))
+            if (Core.Optional.IsCollectionDefined(Secrets))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Certificates))
+            if (Core.Optional.IsCollectionDefined(Certificates))
             {
                 writer.WritePropertyName("certificates"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Storage))
+            if (Core.Optional.IsCollectionDefined(Storage))
             {
                 writer.WritePropertyName("storage"u8);
                 writer.WriteStartArray();
@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<IList<IdentityAccessKeyPermission>> keys = default;
-            Optional<IList<IdentityAccessSecretPermission>> secrets = default;
-            Optional<IList<IdentityAccessCertificatePermission>> certificates = default;
-            Optional<IList<IdentityAccessStoragePermission>> storage = default;
+            Core.Optional<IList<IdentityAccessKeyPermission>> keys = default;
+            Core.Optional<IList<IdentityAccessSecretPermission>> secrets = default;
+            Core.Optional<IList<IdentityAccessCertificatePermission>> certificates = default;
+            Core.Optional<IList<IdentityAccessStoragePermission>> storage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keys"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new IdentityAccessPermissions(Optional.ToList(keys), Optional.ToList(secrets), Optional.ToList(certificates), Optional.ToList(storage));
+            return new IdentityAccessPermissions(Core.Optional.ToList(keys), Core.Optional.ToList(secrets), Core.Optional.ToList(certificates), Core.Optional.ToList(storage));
         }
     }
 }

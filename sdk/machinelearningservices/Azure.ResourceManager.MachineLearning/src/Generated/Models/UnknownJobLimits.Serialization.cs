@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class UnknownJobLimits : IUtf8JsonSerializable
+    internal partial class UnknownJobLimits : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("jobLimitsType"u8);
             writer.WriteStringValue(JobLimitsType.ToString());
-            if (Optional.IsDefined(Timeout))
+            if (Core.Optional.IsDefined(Timeout))
             {
                 if (Timeout != null)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             JobLimitsType jobLimitsType = "Unknown";
-            Optional<TimeSpan?> timeout = default;
+            Core.Optional<TimeSpan?> timeout = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobLimitsType"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new UnknownJobLimits(jobLimitsType, Optional.ToNullable(timeout));
+            return new UnknownJobLimits(jobLimitsType, Core.Optional.ToNullable(timeout));
         }
     }
 }

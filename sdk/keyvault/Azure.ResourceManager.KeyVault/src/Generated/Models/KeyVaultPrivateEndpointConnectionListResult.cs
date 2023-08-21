@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of KeyVaultPrivateEndpointConnectionListResult. </summary>
         internal KeyVaultPrivateEndpointConnectionListResult()
         {
-            Value = new ChangeTrackingList<KeyVaultPrivateEndpointConnectionData>();
+            Value = new Core.ChangeTrackingList<KeyVaultPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of KeyVaultPrivateEndpointConnectionListResult. </summary>

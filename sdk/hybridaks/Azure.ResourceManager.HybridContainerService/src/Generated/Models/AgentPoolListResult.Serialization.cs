@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HybridContainerServiceAgentPoolData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<HybridContainerServiceAgentPoolData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new AgentPoolListResult(Optional.ToList(value), nextLink.Value);
+            return new AgentPoolListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

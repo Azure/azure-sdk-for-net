@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Logic.Models
                 return null;
             }
             string message = default;
-            Optional<IReadOnlyList<LogicExpressionErrorInfo>> details = default;
+            Core.Optional<IReadOnlyList<LogicExpressionErrorInfo>> details = default;
             string code = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new LogicExpressionErrorInfo(code, message, Optional.ToList(details));
+            return new LogicExpressionErrorInfo(code, message, Core.Optional.ToList(details));
         }
     }
 }

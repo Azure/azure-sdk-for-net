@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="location"> The location. </param>
         public HybridComputeMachineData(AzureLocation location) : base(location)
         {
-            Resources = new ChangeTrackingList<HybridComputeMachineExtensionData>();
+            Resources = new Core.ChangeTrackingList<HybridComputeMachineExtensionData>();
         }
 
         /// <summary> Initializes a new instance of HybridComputeMachineData. </summary>

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = await _networkTapRuleRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, networkTapRuleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkTapRuleResource>(new NetworkTapRuleOperationSource(Client), _networkTapRuleClientDiagnostics, Pipeline, _networkTapRuleRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkTapRuleName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkTapRuleResource>(new NetworkTapRuleOperationSource(Client), _networkTapRuleClientDiagnostics, Pipeline, _networkTapRuleRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkTapRuleName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = _networkTapRuleRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, networkTapRuleName, data, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkTapRuleResource>(new NetworkTapRuleOperationSource(Client), _networkTapRuleClientDiagnostics, Pipeline, _networkTapRuleRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkTapRuleName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkTapRuleResource>(new NetworkTapRuleOperationSource(Client), _networkTapRuleClientDiagnostics, Pipeline, _networkTapRuleRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkTapRuleName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkTapRuleRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkTapRuleRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkTapRuleResource(Client, NetworkTapRuleData.DeserializeNetworkTapRuleData(e)), _networkTapRuleClientDiagnostics, Pipeline, "NetworkTapRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkTapRuleResource(Client, NetworkTapRuleData.DeserializeNetworkTapRuleData(e)), _networkTapRuleClientDiagnostics, Pipeline, "NetworkTapRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkTapRuleRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkTapRuleRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkTapRuleResource(Client, NetworkTapRuleData.DeserializeNetworkTapRuleData(e)), _networkTapRuleClientDiagnostics, Pipeline, "NetworkTapRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkTapRuleResource(Client, NetworkTapRuleData.DeserializeNetworkTapRuleData(e)), _networkTapRuleClientDiagnostics, Pipeline, "NetworkTapRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

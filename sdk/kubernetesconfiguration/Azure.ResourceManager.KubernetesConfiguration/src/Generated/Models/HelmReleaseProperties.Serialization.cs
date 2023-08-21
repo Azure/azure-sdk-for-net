@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<long?> lastRevisionApplied = default;
-            Optional<KubernetesObjectReference> helmChartRef = default;
-            Optional<long?> failureCount = default;
-            Optional<long?> installFailureCount = default;
-            Optional<long?> upgradeFailureCount = default;
+            Core.Optional<long?> lastRevisionApplied = default;
+            Core.Optional<KubernetesObjectReference> helmChartRef = default;
+            Core.Optional<long?> failureCount = default;
+            Core.Optional<long?> installFailureCount = default;
+            Core.Optional<long?> upgradeFailureCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastRevisionApplied"u8))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     continue;
                 }
             }
-            return new HelmReleaseProperties(Optional.ToNullable(lastRevisionApplied), helmChartRef.Value, Optional.ToNullable(failureCount), Optional.ToNullable(installFailureCount), Optional.ToNullable(upgradeFailureCount));
+            return new HelmReleaseProperties(Core.Optional.ToNullable(lastRevisionApplied), helmChartRef.Value, Core.Optional.ToNullable(failureCount), Core.Optional.ToNullable(installFailureCount), Core.Optional.ToNullable(upgradeFailureCount));
         }
     }
 }

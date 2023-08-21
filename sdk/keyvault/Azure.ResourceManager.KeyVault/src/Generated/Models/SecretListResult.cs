@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of SecretListResult. </summary>
         internal SecretListResult()
         {
-            Value = new ChangeTrackingList<KeyVaultSecretData>();
+            Value = new Core.ChangeTrackingList<KeyVaultSecretData>();
         }
 
         /// <summary> Initializes a new instance of SecretListResult. </summary>

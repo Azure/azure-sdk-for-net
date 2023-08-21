@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class SelectAudioTrackById : IUtf8JsonSerializable
+    public partial class SelectAudioTrackById : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("trackId"u8);
             writer.WriteNumberValue(TrackId);
-            if (Optional.IsDefined(ChannelMapping))
+            if (Core.Optional.IsDefined(ChannelMapping))
             {
                 writer.WritePropertyName("channelMapping"u8);
                 writer.WriteStringValue(ChannelMapping.Value.ToString());
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             long trackId = default;
-            Optional<ChannelMapping> channelMapping = default;
+            Core.Optional<ChannelMapping> channelMapping = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new SelectAudioTrackById(odataType, Optional.ToNullable(channelMapping), trackId);
+            return new SelectAudioTrackById(odataType, Core.Optional.ToNullable(channelMapping), trackId);
         }
     }
 }

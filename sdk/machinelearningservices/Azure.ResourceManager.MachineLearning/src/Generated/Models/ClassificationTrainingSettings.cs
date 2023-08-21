@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of ClassificationTrainingSettings. </summary>
         public ClassificationTrainingSettings()
         {
-            AllowedTrainingAlgorithms = new ChangeTrackingList<ClassificationModel>();
-            BlockedTrainingAlgorithms = new ChangeTrackingList<ClassificationModel>();
+            AllowedTrainingAlgorithms = new Core.ChangeTrackingList<ClassificationModel>();
+            BlockedTrainingAlgorithms = new Core.ChangeTrackingList<ClassificationModel>();
         }
 
         /// <summary> Initializes a new instance of ClassificationTrainingSettings. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of MachineExtensionsListResult. </summary>
         internal MachineExtensionsListResult()
         {
-            Value = new ChangeTrackingList<HybridComputeMachineExtensionData>();
+            Value = new Core.ChangeTrackingList<HybridComputeMachineExtensionData>();
         }
 
         /// <summary> Initializes a new instance of MachineExtensionsListResult. </summary>

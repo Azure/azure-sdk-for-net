@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of FlowAccessControlConfigurationPolicy. </summary>
         public FlowAccessControlConfigurationPolicy()
         {
-            AllowedCallerIPAddresses = new ChangeTrackingList<FlowAccessControlIPAddressRange>();
+            AllowedCallerIPAddresses = new Core.ChangeTrackingList<FlowAccessControlIPAddressRange>();
         }
 
         /// <summary> Initializes a new instance of FlowAccessControlConfigurationPolicy. </summary>

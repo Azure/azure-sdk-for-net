@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> findings = default;
+            Core.Optional<IReadOnlyList<string>> findings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("findings"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new DiagnoseVirtualNetworkResult(Optional.ToList(findings));
+            return new DiagnoseVirtualNetworkResult(Core.Optional.ToList(findings));
         }
     }
 }

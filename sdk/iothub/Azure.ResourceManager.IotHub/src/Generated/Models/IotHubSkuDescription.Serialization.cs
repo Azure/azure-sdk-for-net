@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<ResourceType> resourceType = default;
+            Core.Optional<ResourceType> resourceType = default;
             IotHubSkuInfo sku = default;
             IotHubCapacity capacity = default;
             foreach (var property in element.EnumerateObject())
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new IotHubSkuDescription(Optional.ToNullable(resourceType), sku, capacity);
+            return new IotHubSkuDescription(Core.Optional.ToNullable(resourceType), sku, capacity);
         }
     }
 }

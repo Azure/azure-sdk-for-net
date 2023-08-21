@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class TransportStreamFormat : IUtf8JsonSerializable
+    public partial class TransportStreamFormat : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(OutputFiles))
+            if (Core.Optional.IsCollectionDefined(OutputFiles))
             {
                 writer.WritePropertyName("outputFiles"u8);
                 writer.WriteStartArray();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IList<MediaOutputFile>> outputFiles = default;
+            Core.Optional<IList<MediaOutputFile>> outputFiles = default;
             string odataType = default;
             string filenamePattern = default;
             foreach (var property in element.EnumerateObject())
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new TransportStreamFormat(odataType, filenamePattern, Optional.ToList(outputFiles));
+            return new TransportStreamFormat(odataType, filenamePattern, Core.Optional.ToList(outputFiles));
         }
     }
 }

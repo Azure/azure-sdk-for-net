@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class AddonProfiles : IUtf8JsonSerializable
+    public partial class AddonProfiles : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Config))
+            if (Core.Optional.IsCollectionDefined(Config))
             {
                 writer.WritePropertyName("config"u8);
                 writer.WriteStartObject();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Enabled))
+            if (Core.Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> config = default;
-            Optional<bool> enabled = default;
+            Core.Optional<IDictionary<string, string>> config = default;
+            Core.Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("config"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new AddonProfiles(Optional.ToDictionary(config), Optional.ToNullable(enabled));
+            return new AddonProfiles(Core.Optional.ToDictionary(config), Core.Optional.ToNullable(enabled));
         }
     }
 }

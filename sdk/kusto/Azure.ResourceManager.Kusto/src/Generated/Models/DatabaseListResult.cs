@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of DatabaseListResult. </summary>
         internal DatabaseListResult()
         {
-            Value = new ChangeTrackingList<KustoDatabaseData>();
+            Value = new Core.ChangeTrackingList<KustoDatabaseData>();
         }
 
         /// <summary> Initializes a new instance of DatabaseListResult. </summary>

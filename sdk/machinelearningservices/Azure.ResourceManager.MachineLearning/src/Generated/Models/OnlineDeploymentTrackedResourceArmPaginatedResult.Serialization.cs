@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<MachineLearningOnlineDeploymentData>> value = default;
+            Core.Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<MachineLearningOnlineDeploymentData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new OnlineDeploymentTrackedResourceArmPaginatedResult(nextLink.Value, Optional.ToList(value));
+            return new OnlineDeploymentTrackedResourceArmPaginatedResult(nextLink.Value, Core.Optional.ToList(value));
         }
     }
 }

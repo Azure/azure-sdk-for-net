@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.IotCentral
             try
             {
                 var response = await _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new IotCentralArmOperation<IotCentralPrivateEndpointConnectionResource>(new IotCentralPrivateEndpointConnectionOperationSource(Client), _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new IotCentralArmOperation<IotCentralPrivateEndpointConnectionResource>(new IotCentralPrivateEndpointConnectionOperationSource(Client), _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.IotCentral
             try
             {
                 var response = _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new IotCentralArmOperation<IotCentralPrivateEndpointConnectionResource>(new IotCentralPrivateEndpointConnectionOperationSource(Client), _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new IotCentralArmOperation<IotCentralPrivateEndpointConnectionResource>(new IotCentralPrivateEndpointConnectionOperationSource(Client), _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.IotCentral
         public virtual AsyncPageable<IotCentralPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new IotCentralPrivateEndpointConnectionResource(Client, IotCentralPrivateEndpointConnectionData.DeserializeIotCentralPrivateEndpointConnectionData(e)), _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "IotCentralPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new IotCentralPrivateEndpointConnectionResource(Client, IotCentralPrivateEndpointConnectionData.DeserializeIotCentralPrivateEndpointConnectionData(e)), _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "IotCentralPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.IotCentral
         public virtual Pageable<IotCentralPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new IotCentralPrivateEndpointConnectionResource(Client, IotCentralPrivateEndpointConnectionData.DeserializeIotCentralPrivateEndpointConnectionData(e)), _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "IotCentralPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, e => new IotCentralPrivateEndpointConnectionResource(Client, IotCentralPrivateEndpointConnectionData.DeserializeIotCentralPrivateEndpointConnectionData(e)), _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "IotCentralPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

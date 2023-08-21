@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningOperationName> operationName = default;
-            Optional<DateTimeOffset> operationTime = default;
-            Optional<MachineLearningOperationStatus> operationStatus = default;
-            Optional<MachineLearningOperationTrigger> operationTrigger = default;
+            Core.Optional<MachineLearningOperationName> operationName = default;
+            Core.Optional<DateTimeOffset> operationTime = default;
+            Core.Optional<MachineLearningOperationStatus> operationStatus = default;
+            Core.Optional<MachineLearningOperationTrigger> operationTrigger = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationName"u8))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningComputeInstanceLastOperation(Optional.ToNullable(operationName), Optional.ToNullable(operationTime), Optional.ToNullable(operationStatus), Optional.ToNullable(operationTrigger));
+            return new MachineLearningComputeInstanceLastOperation(Core.Optional.ToNullable(operationName), Core.Optional.ToNullable(operationTime), Core.Optional.ToNullable(operationStatus), Core.Optional.ToNullable(operationTrigger));
         }
     }
 }

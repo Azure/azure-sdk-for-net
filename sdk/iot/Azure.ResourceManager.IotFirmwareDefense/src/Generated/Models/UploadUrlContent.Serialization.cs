@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class UploadUrlContent : IUtf8JsonSerializable
+    public partial class UploadUrlContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FirmwareName))
+            if (Core.Optional.IsDefined(FirmwareName))
             {
                 writer.WritePropertyName("firmwareId"u8);
                 writer.WriteStringValue(FirmwareName);

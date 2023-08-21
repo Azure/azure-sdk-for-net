@@ -18,8 +18,8 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<LatLongPairAbbreviated> topLeftPoint = default;
-            Optional<LatLongPairAbbreviated> btmRightPoint = default;
+            Core.Optional<LatLongPairAbbreviated> topLeftPoint = default;
+            Core.Optional<LatLongPairAbbreviated> btmRightPoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("topLeftPoint"u8))

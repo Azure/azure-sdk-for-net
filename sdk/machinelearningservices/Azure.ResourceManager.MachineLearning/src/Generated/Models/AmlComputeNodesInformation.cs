@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of AmlComputeNodesInformation. </summary>
         internal AmlComputeNodesInformation()
         {
-            Nodes = new ChangeTrackingList<AmlComputeNodeInformation>();
+            Nodes = new Core.ChangeTrackingList<AmlComputeNodeInformation>();
         }
 
         /// <summary> Initializes a new instance of AmlComputeNodesInformation. </summary>

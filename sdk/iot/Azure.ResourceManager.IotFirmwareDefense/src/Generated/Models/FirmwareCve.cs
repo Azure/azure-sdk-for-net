@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of FirmwareCve. </summary>
         internal FirmwareCve()
         {
-            Links = new ChangeTrackingList<CveLink>();
+            Links = new Core.ChangeTrackingList<CveLink>();
         }
 
         /// <summary> Initializes a new instance of FirmwareCve. </summary>

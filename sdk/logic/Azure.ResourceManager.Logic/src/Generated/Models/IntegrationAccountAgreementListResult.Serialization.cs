@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IntegrationAccountAgreementData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<IntegrationAccountAgreementData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new IntegrationAccountAgreementListResult(Optional.ToList(value), nextLink.Value);
+            return new IntegrationAccountAgreementListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

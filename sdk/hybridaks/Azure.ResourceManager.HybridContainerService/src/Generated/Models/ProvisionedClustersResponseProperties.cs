@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> Initializes a new instance of ProvisionedClustersResponseProperties. </summary>
         public ProvisionedClustersResponseProperties()
         {
-            AddonProfiles = new ChangeTrackingDictionary<string, AddonProfiles>();
-            AgentPoolProfiles = new ChangeTrackingList<NamedAgentPoolProfile>();
+            AddonProfiles = new Core.ChangeTrackingDictionary<string, AddonProfiles>();
+            AgentPoolProfiles = new Core.ChangeTrackingList<NamedAgentPoolProfile>();
         }
 
         /// <summary> Initializes a new instance of ProvisionedClustersResponseProperties. </summary>

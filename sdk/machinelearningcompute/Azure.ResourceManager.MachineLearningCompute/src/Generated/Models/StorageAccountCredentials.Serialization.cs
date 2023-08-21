@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<string> resourceId = default;
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
+            Core.Optional<string> resourceId = default;
+            Core.Optional<string> primaryKey = default;
+            Core.Optional<string> secondaryKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))

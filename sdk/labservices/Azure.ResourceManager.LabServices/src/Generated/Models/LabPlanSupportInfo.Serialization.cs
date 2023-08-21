@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class LabPlanSupportInfo : IUtf8JsonSerializable
+    public partial class LabPlanSupportInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Uri))
+            if (Core.Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Email))
+            if (Core.Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (Optional.IsDefined(Phone))
+            if (Core.Optional.IsDefined(Phone))
             {
                 writer.WritePropertyName("phone"u8);
                 writer.WriteStringValue(Phone);
             }
-            if (Optional.IsDefined(Instructions))
+            if (Core.Optional.IsDefined(Instructions))
             {
                 writer.WritePropertyName("instructions"u8);
                 writer.WriteStringValue(Instructions);
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<Uri> url = default;
-            Optional<string> email = default;
-            Optional<string> phone = default;
-            Optional<string> instructions = default;
+            Core.Optional<Uri> url = default;
+            Core.Optional<string> email = default;
+            Core.Optional<string> phone = default;
+            Core.Optional<string> instructions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"u8))

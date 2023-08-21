@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MediaAssetStreamingLocator>> streamingLocators = default;
+            Core.Optional<IReadOnlyList<MediaAssetStreamingLocator>> streamingLocators = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streamingLocators"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new ListStreamingLocatorsResponse(Optional.ToList(streamingLocators));
+            return new ListStreamingLocatorsResponse(Core.Optional.ToList(streamingLocators));
         }
     }
 }

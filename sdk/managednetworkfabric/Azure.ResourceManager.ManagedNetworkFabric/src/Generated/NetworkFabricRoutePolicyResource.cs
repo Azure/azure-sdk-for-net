@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = await _networkFabricRoutePolicyRoutePoliciesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation(_networkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, _networkFabricRoutePolicyRoutePoliciesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedNetworkFabricArmOperation(_networkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, _networkFabricRoutePolicyRoutePoliciesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = _networkFabricRoutePolicyRoutePoliciesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation(_networkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, _networkFabricRoutePolicyRoutePoliciesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedNetworkFabricArmOperation(_networkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, _networkFabricRoutePolicyRoutePoliciesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = await _networkFabricRoutePolicyRoutePoliciesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricRoutePolicyResource>(new NetworkFabricRoutePolicyOperationSource(Client), _networkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, _networkFabricRoutePolicyRoutePoliciesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricRoutePolicyResource>(new NetworkFabricRoutePolicyOperationSource(Client), _networkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, _networkFabricRoutePolicyRoutePoliciesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = _networkFabricRoutePolicyRoutePoliciesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricRoutePolicyResource>(new NetworkFabricRoutePolicyOperationSource(Client), _networkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, _networkFabricRoutePolicyRoutePoliciesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricRoutePolicyResource>(new NetworkFabricRoutePolicyOperationSource(Client), _networkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, _networkFabricRoutePolicyRoutePoliciesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = await _networkFabricRoutePolicyRoutePoliciesRestClient.UpdateAdministrativeStateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<DeviceUpdateCommonPostActionResult>(new DeviceUpdateCommonPostActionResultOperationSource(), _networkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, _networkFabricRoutePolicyRoutePoliciesRestClient.CreateUpdateAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedNetworkFabricArmOperation<DeviceUpdateCommonPostActionResult>(new DeviceUpdateCommonPostActionResultOperationSource(), _networkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, _networkFabricRoutePolicyRoutePoliciesRestClient.CreateUpdateAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = _networkFabricRoutePolicyRoutePoliciesRestClient.UpdateAdministrativeState(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<DeviceUpdateCommonPostActionResult>(new DeviceUpdateCommonPostActionResultOperationSource(), _networkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, _networkFabricRoutePolicyRoutePoliciesRestClient.CreateUpdateAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedNetworkFabricArmOperation<DeviceUpdateCommonPostActionResult>(new DeviceUpdateCommonPostActionResultOperationSource(), _networkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, _networkFabricRoutePolicyRoutePoliciesRestClient.CreateUpdateAdministrativeStateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = await _networkFabricRoutePolicyRoutePoliciesRestClient.ValidateConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<ValidateConfigurationResult>(new ValidateConfigurationResultOperationSource(), _networkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, _networkFabricRoutePolicyRoutePoliciesRestClient.CreateValidateConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedNetworkFabricArmOperation<ValidateConfigurationResult>(new ValidateConfigurationResultOperationSource(), _networkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, _networkFabricRoutePolicyRoutePoliciesRestClient.CreateValidateConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = _networkFabricRoutePolicyRoutePoliciesRestClient.ValidateConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<ValidateConfigurationResult>(new ValidateConfigurationResultOperationSource(), _networkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, _networkFabricRoutePolicyRoutePoliciesRestClient.CreateValidateConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedNetworkFabricArmOperation<ValidateConfigurationResult>(new ValidateConfigurationResultOperationSource(), _networkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, _networkFabricRoutePolicyRoutePoliciesRestClient.CreateValidateConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = await _networkFabricRoutePolicyRoutePoliciesRestClient.CommitConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult>(new StateUpdateCommonPostActionResultOperationSource(), _networkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, _networkFabricRoutePolicyRoutePoliciesRestClient.CreateCommitConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult>(new StateUpdateCommonPostActionResultOperationSource(), _networkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, _networkFabricRoutePolicyRoutePoliciesRestClient.CreateCommitConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = _networkFabricRoutePolicyRoutePoliciesRestClient.CommitConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult>(new StateUpdateCommonPostActionResultOperationSource(), _networkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, _networkFabricRoutePolicyRoutePoliciesRestClient.CreateCommitConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedNetworkFabricArmOperation<StateUpdateCommonPostActionResult>(new StateUpdateCommonPostActionResultOperationSource(), _networkFabricRoutePolicyRoutePoliciesClientDiagnostics, Pipeline, _networkFabricRoutePolicyRoutePoliciesRestClient.CreateCommitConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

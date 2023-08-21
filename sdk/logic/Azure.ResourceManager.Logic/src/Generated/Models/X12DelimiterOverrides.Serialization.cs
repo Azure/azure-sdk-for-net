@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class X12DelimiterOverrides : IUtf8JsonSerializable
+    public partial class X12DelimiterOverrides : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProtocolVersion))
+            if (Core.Optional.IsDefined(ProtocolVersion))
             {
                 writer.WritePropertyName("protocolVersion"u8);
                 writer.WriteStringValue(ProtocolVersion);
             }
-            if (Optional.IsDefined(MessageId))
+            if (Core.Optional.IsDefined(MessageId))
             {
                 writer.WritePropertyName("messageId"u8);
                 writer.WriteStringValue(MessageId);
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteNumberValue(ReplaceCharacter);
             writer.WritePropertyName("replaceSeparatorsInPayload"u8);
             writer.WriteBooleanValue(ReplaceSeparatorsInPayload);
-            if (Optional.IsDefined(TargetNamespace))
+            if (Core.Optional.IsDefined(TargetNamespace))
             {
                 writer.WritePropertyName("targetNamespace"u8);
                 writer.WriteStringValue(TargetNamespace);
@@ -51,15 +51,15 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> protocolVersion = default;
-            Optional<string> messageId = default;
+            Core.Optional<string> protocolVersion = default;
+            Core.Optional<string> messageId = default;
             int dataElementSeparator = default;
             int componentSeparator = default;
             int segmentTerminator = default;
             SegmentTerminatorSuffix segmentTerminatorSuffix = default;
             int replaceCharacter = default;
             bool replaceSeparatorsInPayload = default;
-            Optional<string> targetNamespace = default;
+            Core.Optional<string> targetNamespace = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protocolVersion"u8))

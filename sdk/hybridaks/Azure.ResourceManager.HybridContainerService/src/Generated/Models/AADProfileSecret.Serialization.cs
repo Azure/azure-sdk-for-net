@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class AADProfileSecret : IUtf8JsonSerializable
+    public partial class AADProfileSecret : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServerAppSecret))
+            if (Core.Optional.IsDefined(ServerAppSecret))
             {
                 writer.WritePropertyName("serverAppSecret"u8);
                 writer.WriteStringValue(ServerAppSecret);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<string> serverAppSecret = default;
+            Core.Optional<string> serverAppSecret = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serverAppSecret"u8))

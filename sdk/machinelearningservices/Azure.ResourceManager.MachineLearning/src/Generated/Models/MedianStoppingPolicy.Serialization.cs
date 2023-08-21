@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MedianStoppingPolicy : IUtf8JsonSerializable
+    public partial class MedianStoppingPolicy : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DelayEvaluation))
+            if (Core.Optional.IsDefined(DelayEvaluation))
             {
                 writer.WritePropertyName("delayEvaluation"u8);
                 writer.WriteNumberValue(DelayEvaluation.Value);
             }
-            if (Optional.IsDefined(EvaluationInterval))
+            if (Core.Optional.IsDefined(EvaluationInterval))
             {
                 writer.WritePropertyName("evaluationInterval"u8);
                 writer.WriteNumberValue(EvaluationInterval.Value);
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> delayEvaluation = default;
-            Optional<int> evaluationInterval = default;
+            Core.Optional<int> delayEvaluation = default;
+            Core.Optional<int> evaluationInterval = default;
             EarlyTerminationPolicyType policyType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MedianStoppingPolicy(Optional.ToNullable(delayEvaluation), Optional.ToNullable(evaluationInterval), policyType);
+            return new MedianStoppingPolicy(Core.Optional.ToNullable(delayEvaluation), Core.Optional.ToNullable(evaluationInterval), policyType);
         }
     }
 }

@@ -14,19 +14,19 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.IotCentral
 {
-    public partial class IotCentralPrivateEndpointConnectionData : IUtf8JsonSerializable
+    public partial class IotCentralPrivateEndpointConnectionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateEndpoint))
+            if (Core.Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (Optional.IsDefined(ConnectionState))
+            if (Core.Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(ConnectionState);
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.IotCentral
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<string>> groupIds = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<IotCentralPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<IotCentralPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<IReadOnlyList<string>> groupIds = default;
+            Core.Optional<SubResource> privateEndpoint = default;
+            Core.Optional<IotCentralPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Core.Optional<IotCentralPrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.IotCentral
                     continue;
                 }
             }
-            return new IotCentralPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToList(groupIds), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new IotCentralPrivateEndpointConnectionData(id, name, type, systemData.Value, Core.Optional.ToList(groupIds), privateEndpoint, privateLinkServiceConnectionState.Value, Core.Optional.ToNullable(provisioningState));
         }
     }
 }

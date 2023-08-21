@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of StreamingPolicyContentKey. </summary>
         public StreamingPolicyContentKey()
         {
-            Tracks = new ChangeTrackingList<MediaTrackSelection>();
+            Tracks = new Core.ChangeTrackingList<MediaTrackSelection>();
         }
 
         /// <summary> Initializes a new instance of StreamingPolicyContentKey. </summary>

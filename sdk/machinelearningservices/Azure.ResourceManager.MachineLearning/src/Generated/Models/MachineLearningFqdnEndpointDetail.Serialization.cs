@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> port = default;
+            Core.Optional<int> port = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("port"u8))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningFqdnEndpointDetail(Optional.ToNullable(port));
+            return new MachineLearningFqdnEndpointDetail(Core.Optional.ToNullable(port));
         }
     }
 }

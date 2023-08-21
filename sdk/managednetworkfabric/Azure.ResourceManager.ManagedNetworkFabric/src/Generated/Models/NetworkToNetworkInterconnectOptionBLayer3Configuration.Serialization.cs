@@ -10,37 +10,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkToNetworkInterconnectOptionBLayer3Configuration : IUtf8JsonSerializable
+    public partial class NetworkToNetworkInterconnectOptionBLayer3Configuration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PeerAsn))
+            if (Core.Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerASN"u8);
                 writer.WriteNumberValue(PeerAsn.Value);
             }
-            if (Optional.IsDefined(VlanId))
+            if (Core.Optional.IsDefined(VlanId))
             {
                 writer.WritePropertyName("vlanId"u8);
                 writer.WriteNumberValue(VlanId.Value);
             }
-            if (Optional.IsDefined(PrimaryIPv4Prefix))
+            if (Core.Optional.IsDefined(PrimaryIPv4Prefix))
             {
                 writer.WritePropertyName("primaryIpv4Prefix"u8);
                 writer.WriteStringValue(PrimaryIPv4Prefix);
             }
-            if (Optional.IsDefined(PrimaryIPv6Prefix))
+            if (Core.Optional.IsDefined(PrimaryIPv6Prefix))
             {
                 writer.WritePropertyName("primaryIpv6Prefix"u8);
                 writer.WriteStringValue(PrimaryIPv6Prefix);
             }
-            if (Optional.IsDefined(SecondaryIPv4Prefix))
+            if (Core.Optional.IsDefined(SecondaryIPv4Prefix))
             {
                 writer.WritePropertyName("secondaryIpv4Prefix"u8);
                 writer.WriteStringValue(SecondaryIPv4Prefix);
             }
-            if (Optional.IsDefined(SecondaryIPv6Prefix))
+            if (Core.Optional.IsDefined(SecondaryIPv6Prefix))
             {
                 writer.WritePropertyName("secondaryIpv6Prefix"u8);
                 writer.WriteStringValue(SecondaryIPv6Prefix);
@@ -54,13 +54,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<long> peerAsn = default;
-            Optional<int> vlanId = default;
-            Optional<long> fabricAsn = default;
-            Optional<string> primaryIPv4Prefix = default;
-            Optional<string> primaryIPv6Prefix = default;
-            Optional<string> secondaryIPv4Prefix = default;
-            Optional<string> secondaryIPv6Prefix = default;
+            Core.Optional<long> peerAsn = default;
+            Core.Optional<int> vlanId = default;
+            Core.Optional<long> fabricAsn = default;
+            Core.Optional<string> primaryIPv4Prefix = default;
+            Core.Optional<string> primaryIPv6Prefix = default;
+            Core.Optional<string> secondaryIPv4Prefix = default;
+            Core.Optional<string> secondaryIPv6Prefix = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("peerASN"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new NetworkToNetworkInterconnectOptionBLayer3Configuration(primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value, Optional.ToNullable(peerAsn), Optional.ToNullable(vlanId), Optional.ToNullable(fabricAsn));
+            return new NetworkToNetworkInterconnectOptionBLayer3Configuration(primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value, Core.Optional.ToNullable(peerAsn), Core.Optional.ToNullable(vlanId), Core.Optional.ToNullable(fabricAsn));
         }
     }
 }

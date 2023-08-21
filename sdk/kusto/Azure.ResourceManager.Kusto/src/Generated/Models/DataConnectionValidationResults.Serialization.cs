@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataConnectionValidationResult>> value = default;
+            Core.Optional<IReadOnlyList<DataConnectionValidationResult>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new DataConnectionValidationResults(Optional.ToList(value));
+            return new DataConnectionValidationResults(Core.Optional.ToList(value));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of LogicExpression. </summary>
         internal LogicExpression()
         {
-            Subexpressions = new ChangeTrackingList<LogicExpression>();
+            Subexpressions = new Core.ChangeTrackingList<LogicExpression>();
         }
 
         /// <summary> Initializes a new instance of LogicExpression. </summary>

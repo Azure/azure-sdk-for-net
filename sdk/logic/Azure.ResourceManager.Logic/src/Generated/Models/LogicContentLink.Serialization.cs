@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicContentLink : IUtf8JsonSerializable
+    public partial class LogicContentLink : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Uri))
+            if (Core.Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<Uri> uri = default;
-            Optional<string> contentVersion = default;
-            Optional<long> contentSize = default;
-            Optional<LogicContentHash> contentHash = default;
-            Optional<BinaryData> metadata = default;
+            Core.Optional<Uri> uri = default;
+            Core.Optional<string> contentVersion = default;
+            Core.Optional<long> contentSize = default;
+            Core.Optional<LogicContentHash> contentHash = default;
+            Core.Optional<BinaryData> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uri"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new LogicContentLink(uri.Value, contentVersion.Value, Optional.ToNullable(contentSize), contentHash.Value, metadata.Value);
+            return new LogicContentLink(uri.Value, contentVersion.Value, Core.Optional.ToNullable(contentSize), contentHash.Value, metadata.Value);
         }
     }
 }

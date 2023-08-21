@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Media
         /// <summary> Initializes a new instance of MediaServicesPrivateLinkResourceData. </summary>
         public MediaServicesPrivateLinkResourceData()
         {
-            RequiredMembers = new ChangeTrackingList<string>();
-            RequiredZoneNames = new ChangeTrackingList<string>();
+            RequiredMembers = new Core.ChangeTrackingList<string>();
+            RequiredZoneNames = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of MediaServicesPrivateLinkResourceData. </summary>

@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.Logic.Models
             MessageFilter = messageFilter;
             SecuritySettings = securitySettings;
             ProcessingSettings = processingSettings;
-            EnvelopeOverrides = new ChangeTrackingList<X12EnvelopeOverride>();
-            ValidationOverrides = new ChangeTrackingList<X12ValidationOverride>();
-            MessageFilterList = new ChangeTrackingList<X12MessageIdentifier>();
+            EnvelopeOverrides = new Core.ChangeTrackingList<X12EnvelopeOverride>();
+            ValidationOverrides = new Core.ChangeTrackingList<X12ValidationOverride>();
+            MessageFilterList = new Core.ChangeTrackingList<X12MessageIdentifier>();
             SchemaReferences = schemaReferences.ToList();
-            X12DelimiterOverrides = new ChangeTrackingList<X12DelimiterOverrides>();
+            X12DelimiterOverrides = new Core.ChangeTrackingList<X12DelimiterOverrides>();
         }
 
         /// <summary> Initializes a new instance of X12ProtocolSettings. </summary>

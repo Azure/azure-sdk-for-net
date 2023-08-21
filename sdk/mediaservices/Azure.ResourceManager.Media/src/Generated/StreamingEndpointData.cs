@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="location"> The location. </param>
         public StreamingEndpointData(AzureLocation location) : base(location)
         {
-            CustomHostNames = new ChangeTrackingList<string>();
+            CustomHostNames = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of StreamingEndpointData. </summary>

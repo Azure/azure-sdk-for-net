@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of StopSellSubscriptions. </summary>
         public StopSellSubscriptions()
         {
-            Subscriptions = new ChangeTrackingList<string>();
+            Subscriptions = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Gets the subscriptions. </summary>

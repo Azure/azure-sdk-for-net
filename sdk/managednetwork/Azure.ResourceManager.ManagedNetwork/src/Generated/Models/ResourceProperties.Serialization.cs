@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetwork.Models
 {
-    public partial class ResourceProperties : IUtf8JsonSerializable
+    public partial class ResourceProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<ETag> etag = default;
+            Core.Optional<ProvisioningState> provisioningState = default;
+            Core.Optional<ETag> etag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     continue;
                 }
             }
-            return new ResourceProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(etag));
+            return new ResourceProperties(Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(etag));
         }
     }
 }

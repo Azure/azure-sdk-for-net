@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubTestRouteContent : IUtf8JsonSerializable
+    public partial class IotHubTestRouteContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Message))
+            if (Core.Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteObjectValue(Message);
             }
             writer.WritePropertyName("route"u8);
             writer.WriteObjectValue(Route);
-            if (Optional.IsDefined(Twin))
+            if (Core.Optional.IsDefined(Twin))
             {
                 writer.WritePropertyName("twin"u8);
                 writer.WriteObjectValue(Twin);

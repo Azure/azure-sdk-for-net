@@ -109,7 +109,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
             }
-            if (avoid != null && Optional.IsCollectionDefined(avoid))
+            if (avoid != null && Core.Optional.IsCollectionDefined(avoid))
             {
                 foreach (var param in avoid)
                 {
@@ -135,7 +135,7 @@ namespace Azure.Maps.Routing
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(routeMatrixQuery);
             request.Content = content;
             return message;
@@ -245,7 +245,7 @@ namespace Azure.Maps.Routing
         /// <param name="vehicleLoadType"> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routeMatrixQuery"/> is null. </exception>
-        public async Task<ResponseWithHeaders<RouteRequestRouteMatrixHeaders>> RequestRouteMatrixAsync(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults = null, TravelTimeType? computeTravelTime = null, SectionType? filterSectionType = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? vehicleAxleWeight = null, double? vehicleLength = null, double? vehicleHeight = null, double? vehicleWidth = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<RouteRequestRouteMatrixHeaders>> RequestRouteMatrixAsync(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults = null, TravelTimeType? computeTravelTime = null, SectionType? filterSectionType = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? vehicleAxleWeight = null, double? vehicleLength = null, double? vehicleHeight = null, double? vehicleWidth = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, CancellationToken cancellationToken = default)
         {
             if (routeMatrixQuery == null)
             {
@@ -259,7 +259,7 @@ namespace Azure.Maps.Routing
             {
                 case 200:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -369,7 +369,7 @@ namespace Azure.Maps.Routing
         /// <param name="vehicleLoadType"> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routeMatrixQuery"/> is null. </exception>
-        public ResponseWithHeaders<RouteRequestRouteMatrixHeaders> RequestRouteMatrix(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults = null, TravelTimeType? computeTravelTime = null, SectionType? filterSectionType = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? vehicleAxleWeight = null, double? vehicleLength = null, double? vehicleHeight = null, double? vehicleWidth = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<RouteRequestRouteMatrixHeaders> RequestRouteMatrix(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults = null, TravelTimeType? computeTravelTime = null, SectionType? filterSectionType = null, DateTimeOffset? arriveAt = null, DateTimeOffset? departAt = null, int? vehicleAxleWeight = null, double? vehicleLength = null, double? vehicleHeight = null, double? vehicleWidth = null, int? vehicleMaxSpeed = null, int? vehicleWeight = null, WindingnessLevel? windingness = null, InclineLevel? inclineLevel = null, TravelMode? travelMode = null, IEnumerable<RouteAvoidType> avoid = null, bool? useTrafficData = null, RouteType? routeType = null, VehicleLoadType? vehicleLoadType = null, CancellationToken cancellationToken = default)
         {
             if (routeMatrixQuery == null)
             {
@@ -383,7 +383,7 @@ namespace Azure.Maps.Routing
             {
                 case 200:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -438,7 +438,7 @@ namespace Azure.Maps.Routing
         /// <param name="matrixId"> Matrix id received after the Matrix Route request was accepted successfully. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="matrixId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<RouteGetRouteMatrixHeaders>> GetRouteMatrixAsync(string matrixId, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<RouteGetRouteMatrixHeaders>> GetRouteMatrixAsync(string matrixId, CancellationToken cancellationToken = default)
         {
             if (matrixId == null)
             {
@@ -452,7 +452,7 @@ namespace Azure.Maps.Routing
             {
                 case 200:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -488,7 +488,7 @@ namespace Azure.Maps.Routing
         /// <param name="matrixId"> Matrix id received after the Matrix Route request was accepted successfully. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="matrixId"/> is null. </exception>
-        public ResponseWithHeaders<RouteGetRouteMatrixHeaders> GetRouteMatrix(string matrixId, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<RouteGetRouteMatrixHeaders> GetRouteMatrix(string matrixId, CancellationToken cancellationToken = default)
         {
             if (matrixId == null)
             {
@@ -502,7 +502,7 @@ namespace Azure.Maps.Routing
             {
                 case 200:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -574,7 +574,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
             }
-            if (avoid != null && Optional.IsCollectionDefined(avoid))
+            if (avoid != null && Core.Optional.IsCollectionDefined(avoid))
             {
                 foreach (var param in avoid)
                 {
@@ -600,7 +600,7 @@ namespace Azure.Maps.Routing
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(routeMatrixQuery);
             request.Content = content;
             return message;
@@ -967,7 +967,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
             }
-            if (avoid != null && Optional.IsCollectionDefined(avoid))
+            if (avoid != null && Core.Optional.IsCollectionDefined(avoid))
             {
                 foreach (var param in avoid)
                 {
@@ -1620,7 +1620,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
             }
-            if (avoid != null && Optional.IsCollectionDefined(avoid))
+            if (avoid != null && Core.Optional.IsCollectionDefined(avoid))
             {
                 foreach (var param in avoid)
                 {
@@ -1698,7 +1698,7 @@ namespace Azure.Maps.Routing
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(routeDirectionParameters);
             request.Content = content;
             return message;
@@ -2202,7 +2202,7 @@ namespace Azure.Maps.Routing
             uri.AppendPath("/route/range/", false);
             uri.AppendPath(format.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (query != null && Optional.IsCollectionDefined(query))
+            if (query != null && Core.Optional.IsCollectionDefined(query))
             {
                 uri.AppendQueryDelimited("query", query, ",", true);
             }
@@ -2234,7 +2234,7 @@ namespace Azure.Maps.Routing
             {
                 uri.AppendQuery("traffic", useTrafficData.Value, true);
             }
-            if (avoid != null && Optional.IsCollectionDefined(avoid))
+            if (avoid != null && Core.Optional.IsCollectionDefined(avoid))
             {
                 foreach (var param in avoid)
                 {
@@ -2769,7 +2769,7 @@ namespace Azure.Maps.Routing
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(routeDirectionsBatchQueries);
             request.Content = content;
             return message;
@@ -2930,7 +2930,7 @@ namespace Azure.Maps.Routing
         /// <param name="routeDirectionsBatchQueries"> The list of route directions queries/requests to process. The list can contain a max of 700 queries for async and 100 queries for sync version and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routeDirectionsBatchQueries"/> is null. </exception>
-        public async Task<ResponseWithHeaders<RouteRequestRouteDirectionsBatchHeaders>> RequestRouteDirectionsBatchAsync(JsonFormat format, BatchRequest routeDirectionsBatchQueries, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<RouteRequestRouteDirectionsBatchHeaders>> RequestRouteDirectionsBatchAsync(JsonFormat format, BatchRequest routeDirectionsBatchQueries, CancellationToken cancellationToken = default)
         {
             if (routeDirectionsBatchQueries == null)
             {
@@ -2944,7 +2944,7 @@ namespace Azure.Maps.Routing
             {
                 case 200:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -3105,7 +3105,7 @@ namespace Azure.Maps.Routing
         /// <param name="routeDirectionsBatchQueries"> The list of route directions queries/requests to process. The list can contain a max of 700 queries for async and 100 queries for sync version and must contain at least 1 query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="routeDirectionsBatchQueries"/> is null. </exception>
-        public ResponseWithHeaders<RouteRequestRouteDirectionsBatchHeaders> RequestRouteDirectionsBatch(JsonFormat format, BatchRequest routeDirectionsBatchQueries, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<RouteRequestRouteDirectionsBatchHeaders> RequestRouteDirectionsBatch(JsonFormat format, BatchRequest routeDirectionsBatchQueries, CancellationToken cancellationToken = default)
         {
             if (routeDirectionsBatchQueries == null)
             {
@@ -3119,7 +3119,7 @@ namespace Azure.Maps.Routing
             {
                 case 200:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -3248,7 +3248,7 @@ namespace Azure.Maps.Routing
         /// <param name="batchId"> Batch id for querying the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<RouteGetRouteDirectionsBatchHeaders>> GetRouteDirectionsBatchAsync(string batchId, CancellationToken cancellationToken = default)
+        public async Task<Core.ResponseWithHeaders<RouteGetRouteDirectionsBatchHeaders>> GetRouteDirectionsBatchAsync(string batchId, CancellationToken cancellationToken = default)
         {
             if (batchId == null)
             {
@@ -3262,7 +3262,7 @@ namespace Azure.Maps.Routing
             {
                 case 200:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -3372,7 +3372,7 @@ namespace Azure.Maps.Routing
         /// <param name="batchId"> Batch id for querying the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="batchId"/> is null. </exception>
-        public ResponseWithHeaders<RouteGetRouteDirectionsBatchHeaders> GetRouteDirectionsBatch(string batchId, CancellationToken cancellationToken = default)
+        public Core.ResponseWithHeaders<RouteGetRouteDirectionsBatchHeaders> GetRouteDirectionsBatch(string batchId, CancellationToken cancellationToken = default)
         {
             if (batchId == null)
             {
@@ -3386,7 +3386,7 @@ namespace Azure.Maps.Routing
             {
                 case 200:
                 case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -3409,7 +3409,7 @@ namespace Azure.Maps.Routing
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
+            var content = new Core.Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(routeDirectionsBatchQueries);
             request.Content = content;
             return message;

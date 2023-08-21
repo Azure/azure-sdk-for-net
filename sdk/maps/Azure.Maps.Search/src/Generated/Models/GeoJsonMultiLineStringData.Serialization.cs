@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class GeoJsonMultiLineStringData : IUtf8JsonSerializable
+    public partial class GeoJsonMultiLineStringData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("coordinates"u8);

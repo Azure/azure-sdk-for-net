@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class NetworkFabricL3IsolationDomainOperationSource : IOperationSource<NetworkFabricL3IsolationDomainResource>
+    internal class NetworkFabricL3IsolationDomainOperationSource : Core.IOperationSource<NetworkFabricL3IsolationDomainResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             _client = client;
         }
 
-        NetworkFabricL3IsolationDomainResource IOperationSource<NetworkFabricL3IsolationDomainResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkFabricL3IsolationDomainResource Core.IOperationSource<NetworkFabricL3IsolationDomainResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NetworkFabricL3IsolationDomainData.DeserializeNetworkFabricL3IsolationDomainData(document.RootElement);
             return new NetworkFabricL3IsolationDomainResource(_client, data);
         }
 
-        async ValueTask<NetworkFabricL3IsolationDomainResource> IOperationSource<NetworkFabricL3IsolationDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkFabricL3IsolationDomainResource> Core.IOperationSource<NetworkFabricL3IsolationDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NetworkFabricL3IsolationDomainData.DeserializeNetworkFabricL3IsolationDomainData(document.RootElement);

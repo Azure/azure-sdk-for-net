@@ -12,16 +12,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class KeyVaultProperties : IUtf8JsonSerializable
+    public partial class KeyVaultProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("tenantId"u8);
             writer.WriteStringValue(TenantId);
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Optional.IsCollectionDefined(AccessPolicies))
+            if (Core.Optional.IsCollectionDefined(AccessPolicies))
             {
                 writer.WritePropertyName("accessPolicies"u8);
                 writer.WriteStartArray();
@@ -31,62 +31,62 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(VaultUri))
+            if (Core.Optional.IsDefined(VaultUri))
             {
                 writer.WritePropertyName("vaultUri"u8);
                 writer.WriteStringValue(VaultUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(EnabledForDeployment))
+            if (Core.Optional.IsDefined(EnabledForDeployment))
             {
                 writer.WritePropertyName("enabledForDeployment"u8);
                 writer.WriteBooleanValue(EnabledForDeployment.Value);
             }
-            if (Optional.IsDefined(EnabledForDiskEncryption))
+            if (Core.Optional.IsDefined(EnabledForDiskEncryption))
             {
                 writer.WritePropertyName("enabledForDiskEncryption"u8);
                 writer.WriteBooleanValue(EnabledForDiskEncryption.Value);
             }
-            if (Optional.IsDefined(EnabledForTemplateDeployment))
+            if (Core.Optional.IsDefined(EnabledForTemplateDeployment))
             {
                 writer.WritePropertyName("enabledForTemplateDeployment"u8);
                 writer.WriteBooleanValue(EnabledForTemplateDeployment.Value);
             }
-            if (Optional.IsDefined(EnableSoftDelete))
+            if (Core.Optional.IsDefined(EnableSoftDelete))
             {
                 writer.WritePropertyName("enableSoftDelete"u8);
                 writer.WriteBooleanValue(EnableSoftDelete.Value);
             }
-            if (Optional.IsDefined(SoftDeleteRetentionInDays))
+            if (Core.Optional.IsDefined(SoftDeleteRetentionInDays))
             {
                 writer.WritePropertyName("softDeleteRetentionInDays"u8);
                 writer.WriteNumberValue(SoftDeleteRetentionInDays.Value);
             }
-            if (Optional.IsDefined(EnableRbacAuthorization))
+            if (Core.Optional.IsDefined(EnableRbacAuthorization))
             {
                 writer.WritePropertyName("enableRbacAuthorization"u8);
                 writer.WriteBooleanValue(EnableRbacAuthorization.Value);
             }
-            if (Optional.IsDefined(CreateMode))
+            if (Core.Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToSerialString());
             }
-            if (Optional.IsDefined(EnablePurgeProtection))
+            if (Core.Optional.IsDefined(EnablePurgeProtection))
             {
                 writer.WritePropertyName("enablePurgeProtection"u8);
                 writer.WriteBooleanValue(EnablePurgeProtection.Value);
             }
-            if (Optional.IsDefined(NetworkRuleSet))
+            if (Core.Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkAcls"u8);
                 writer.WriteObjectValue(NetworkRuleSet);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (Core.Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (Core.Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess);
@@ -102,21 +102,21 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             Guid tenantId = default;
             KeyVaultSku sku = default;
-            Optional<IList<KeyVaultAccessPolicy>> accessPolicies = default;
-            Optional<Uri> vaultUri = default;
-            Optional<string> hsmPoolResourceId = default;
-            Optional<bool> enabledForDeployment = default;
-            Optional<bool> enabledForDiskEncryption = default;
-            Optional<bool> enabledForTemplateDeployment = default;
-            Optional<bool> enableSoftDelete = default;
-            Optional<int> softDeleteRetentionInDays = default;
-            Optional<bool> enableRbacAuthorization = default;
-            Optional<KeyVaultCreateMode> createMode = default;
-            Optional<bool> enablePurgeProtection = default;
-            Optional<KeyVaultNetworkRuleSet> networkAcls = default;
-            Optional<KeyVaultProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<KeyVaultPrivateEndpointConnectionItemData>> privateEndpointConnections = default;
-            Optional<string> publicNetworkAccess = default;
+            Core.Optional<IList<KeyVaultAccessPolicy>> accessPolicies = default;
+            Core.Optional<Uri> vaultUri = default;
+            Core.Optional<string> hsmPoolResourceId = default;
+            Core.Optional<bool> enabledForDeployment = default;
+            Core.Optional<bool> enabledForDiskEncryption = default;
+            Core.Optional<bool> enabledForTemplateDeployment = default;
+            Core.Optional<bool> enableSoftDelete = default;
+            Core.Optional<int> softDeleteRetentionInDays = default;
+            Core.Optional<bool> enableRbacAuthorization = default;
+            Core.Optional<KeyVaultCreateMode> createMode = default;
+            Core.Optional<bool> enablePurgeProtection = default;
+            Core.Optional<KeyVaultNetworkRuleSet> networkAcls = default;
+            Core.Optional<KeyVaultProvisioningState> provisioningState = default;
+            Core.Optional<IReadOnlyList<KeyVaultPrivateEndpointConnectionItemData>> privateEndpointConnections = default;
+            Core.Optional<string> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new KeyVaultProperties(tenantId, sku, Optional.ToList(accessPolicies), vaultUri.Value, hsmPoolResourceId.Value, Optional.ToNullable(enabledForDeployment), Optional.ToNullable(enabledForDiskEncryption), Optional.ToNullable(enabledForTemplateDeployment), Optional.ToNullable(enableSoftDelete), Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(enableRbacAuthorization), Optional.ToNullable(createMode), Optional.ToNullable(enablePurgeProtection), networkAcls.Value, Optional.ToNullable(provisioningState), Optional.ToList(privateEndpointConnections), publicNetworkAccess.Value);
+            return new KeyVaultProperties(tenantId, sku, Core.Optional.ToList(accessPolicies), vaultUri.Value, hsmPoolResourceId.Value, Core.Optional.ToNullable(enabledForDeployment), Core.Optional.ToNullable(enabledForDiskEncryption), Core.Optional.ToNullable(enabledForTemplateDeployment), Core.Optional.ToNullable(enableSoftDelete), Core.Optional.ToNullable(softDeleteRetentionInDays), Core.Optional.ToNullable(enableRbacAuthorization), Core.Optional.ToNullable(createMode), Core.Optional.ToNullable(enablePurgeProtection), networkAcls.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(privateEndpointConnections), publicNetworkAccess.Value);
         }
     }
 }

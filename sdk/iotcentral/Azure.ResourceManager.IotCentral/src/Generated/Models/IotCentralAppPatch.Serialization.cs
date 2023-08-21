@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotCentral.Models
 {
-    public partial class IotCentralAppPatch : IUtf8JsonSerializable
+    public partial class IotCentralAppPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -26,39 +26,39 @@ namespace Azure.ResourceManager.IotCentral.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (Core.Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Subdomain))
+            if (Core.Optional.IsDefined(Subdomain))
             {
                 writer.WritePropertyName("subdomain"u8);
                 writer.WriteStringValue(Subdomain);
             }
-            if (Optional.IsDefined(Template))
+            if (Core.Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
                 writer.WriteStringValue(Template);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (Core.Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(NetworkRuleSets))
+            if (Core.Optional.IsDefined(NetworkRuleSets))
             {
                 writer.WritePropertyName("networkRuleSets"u8);
                 writer.WriteObjectValue(NetworkRuleSets);

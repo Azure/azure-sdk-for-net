@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningOnlineRequestSettings : IUtf8JsonSerializable
+    public partial class MachineLearningOnlineRequestSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxConcurrentRequestsPerInstance))
+            if (Core.Optional.IsDefined(MaxConcurrentRequestsPerInstance))
             {
                 writer.WritePropertyName("maxConcurrentRequestsPerInstance"u8);
                 writer.WriteNumberValue(MaxConcurrentRequestsPerInstance.Value);
             }
-            if (Optional.IsDefined(MaxQueueWait))
+            if (Core.Optional.IsDefined(MaxQueueWait))
             {
                 writer.WritePropertyName("maxQueueWait"u8);
                 writer.WriteStringValue(MaxQueueWait.Value, "P");
             }
-            if (Optional.IsDefined(RequestTimeout))
+            if (Core.Optional.IsDefined(RequestTimeout))
             {
                 writer.WritePropertyName("requestTimeout"u8);
                 writer.WriteStringValue(RequestTimeout.Value, "P");
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> maxConcurrentRequestsPerInstance = default;
-            Optional<TimeSpan> maxQueueWait = default;
-            Optional<TimeSpan> requestTimeout = default;
+            Core.Optional<int> maxConcurrentRequestsPerInstance = default;
+            Core.Optional<TimeSpan> maxQueueWait = default;
+            Core.Optional<TimeSpan> requestTimeout = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxConcurrentRequestsPerInstance"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningOnlineRequestSettings(Optional.ToNullable(maxConcurrentRequestsPerInstance), Optional.ToNullable(maxQueueWait), Optional.ToNullable(requestTimeout));
+            return new MachineLearningOnlineRequestSettings(Core.Optional.ToNullable(maxConcurrentRequestsPerInstance), Core.Optional.ToNullable(maxQueueWait), Core.Optional.ToNullable(requestTimeout));
         }
     }
 }

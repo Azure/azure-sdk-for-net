@@ -13,19 +13,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetwork
 {
-    public partial class ScopeAssignmentData : IUtf8JsonSerializable
+    public partial class ScopeAssignmentData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AssignedManagedNetwork))
+            if (Core.Optional.IsDefined(AssignedManagedNetwork))
             {
                 writer.WritePropertyName("assignedManagedNetwork"u8);
                 writer.WriteStringValue(AssignedManagedNetwork);
@@ -40,14 +40,14 @@ namespace Azure.ResourceManager.ManagedNetwork
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            Core.Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<ETag> etag = default;
-            Optional<string> assignedManagedNetwork = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<ProvisioningState> provisioningState = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<string> assignedManagedNetwork = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                     continue;
                 }
             }
-            return new ScopeAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(etag), assignedManagedNetwork.Value, Optional.ToNullable(location));
+            return new ScopeAssignmentData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(etag), assignedManagedNetwork.Value, Core.Optional.ToNullable(location));
         }
     }
 }

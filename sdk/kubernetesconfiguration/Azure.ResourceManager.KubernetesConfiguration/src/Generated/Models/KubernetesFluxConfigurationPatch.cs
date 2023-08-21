@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <summary> Initializes a new instance of KubernetesFluxConfigurationPatch. </summary>
         public KubernetesFluxConfigurationPatch()
         {
-            Kustomizations = new ChangeTrackingDictionary<string, KustomizationUpdateContent>();
-            ConfigurationProtectedSettings = new ChangeTrackingDictionary<string, string>();
+            Kustomizations = new Core.ChangeTrackingDictionary<string, KustomizationUpdateContent>();
+            ConfigurationProtectedSettings = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Source Kind to pull the configuration data from. </summary>

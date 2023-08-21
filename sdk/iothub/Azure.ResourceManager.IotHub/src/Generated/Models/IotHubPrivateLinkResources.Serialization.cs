@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IotHubPrivateEndpointGroupInformationData>> value = default;
+            Core.Optional<IReadOnlyList<IotHubPrivateEndpointGroupInformationData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new IotHubPrivateLinkResources(Optional.ToList(value));
+            return new IotHubPrivateLinkResources(Core.Optional.ToList(value));
         }
     }
 }

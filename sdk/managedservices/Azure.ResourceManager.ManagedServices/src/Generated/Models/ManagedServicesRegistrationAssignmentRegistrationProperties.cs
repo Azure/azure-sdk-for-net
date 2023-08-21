@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <summary> Initializes a new instance of ManagedServicesRegistrationAssignmentRegistrationProperties. </summary>
         internal ManagedServicesRegistrationAssignmentRegistrationProperties()
         {
-            Authorizations = new ChangeTrackingList<ManagedServicesAuthorization>();
-            EligibleAuthorizations = new ChangeTrackingList<ManagedServicesEligibleAuthorization>();
+            Authorizations = new Core.ChangeTrackingList<ManagedServicesAuthorization>();
+            EligibleAuthorizations = new Core.ChangeTrackingList<ManagedServicesEligibleAuthorization>();
         }
 
         /// <summary> Initializes a new instance of ManagedServicesRegistrationAssignmentRegistrationProperties. </summary>

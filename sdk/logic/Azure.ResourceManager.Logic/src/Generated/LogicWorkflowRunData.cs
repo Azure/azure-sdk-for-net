@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic
         /// <summary> Initializes a new instance of LogicWorkflowRunData. </summary>
         internal LogicWorkflowRunData()
         {
-            Outputs = new ChangeTrackingDictionary<string, LogicWorkflowOutputParameterInfo>();
+            Outputs = new Core.ChangeTrackingDictionary<string, LogicWorkflowOutputParameterInfo>();
         }
 
         /// <summary> Initializes a new instance of LogicWorkflowRunData. </summary>

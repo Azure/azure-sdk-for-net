@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningCertificateDatastoreCredentials : IUtf8JsonSerializable
+    public partial class MachineLearningCertificateDatastoreCredentials : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AuthorityUri))
+            if (Core.Optional.IsDefined(AuthorityUri))
             {
                 if (AuthorityUri != null)
                 {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("clientId"u8);
             writer.WriteStringValue(ClientId);
-            if (Optional.IsDefined(ResourceUri))
+            if (Core.Optional.IsDefined(ResourceUri))
             {
                 if (ResourceUri != null)
                 {
@@ -59,9 +59,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<Uri> authorityUrl = default;
+            Core.Optional<Uri> authorityUrl = default;
             Guid clientId = default;
-            Optional<Uri> resourceUrl = default;
+            Core.Optional<Uri> resourceUrl = default;
             MachineLearningCertificateDatastoreSecrets secrets = default;
             Guid tenantId = default;
             string thumbprint = default;

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="networkDependencyHealthState"> The integration service environment network health state. </param>
         internal IntegrationServiceEnvironmentSubnetNetworkHealth(IntegrationServiceEnvironmentNetworkEndPointAccessibilityState networkDependencyHealthState)
         {
-            OutboundNetworkDependencies = new ChangeTrackingList<IntegrationServiceEnvironmentNetworkDependency>();
+            OutboundNetworkDependencies = new Core.ChangeTrackingList<IntegrationServiceEnvironmentNetworkDependency>();
             NetworkDependencyHealthState = networkDependencyHealthState;
         }
 

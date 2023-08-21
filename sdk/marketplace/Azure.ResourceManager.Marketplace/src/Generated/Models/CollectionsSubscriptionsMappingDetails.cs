@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of CollectionsSubscriptionsMappingDetails. </summary>
         internal CollectionsSubscriptionsMappingDetails()
         {
-            Subscriptions = new ChangeTrackingList<string>();
+            Subscriptions = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of CollectionsSubscriptionsMappingDetails. </summary>

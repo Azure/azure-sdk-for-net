@@ -10,36 +10,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class ExportDevicesContent : IUtf8JsonSerializable
+    public partial class ExportDevicesContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("exportBlobContainerUri"u8);
             writer.WriteStringValue(ExportBlobContainerUri.AbsoluteUri);
             writer.WritePropertyName("excludeKeys"u8);
             writer.WriteBooleanValue(ExcludeKeys);
-            if (Optional.IsDefined(ExportBlobName))
+            if (Core.Optional.IsDefined(ExportBlobName))
             {
                 writer.WritePropertyName("exportBlobName"u8);
                 writer.WriteStringValue(ExportBlobName);
             }
-            if (Optional.IsDefined(AuthenticationType))
+            if (Core.Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (Optional.IsDefined(IncludeConfigurations))
+            if (Core.Optional.IsDefined(IncludeConfigurations))
             {
                 writer.WritePropertyName("includeConfigurations"u8);
                 writer.WriteBooleanValue(IncludeConfigurations.Value);
             }
-            if (Optional.IsDefined(ConfigurationsBlobName))
+            if (Core.Optional.IsDefined(ConfigurationsBlobName))
             {
                 writer.WritePropertyName("configurationsBlobName"u8);
                 writer.WriteStringValue(ConfigurationsBlobName);

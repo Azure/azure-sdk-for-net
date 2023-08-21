@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class JpgLayer : IUtf8JsonSerializable
+    public partial class JpgLayer : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Quality))
+            if (Core.Optional.IsDefined(Quality))
             {
                 writer.WritePropertyName("quality"u8);
                 writer.WriteNumberValue(Quality.Value);
             }
-            if (Optional.IsDefined(Width))
+            if (Core.Optional.IsDefined(Width))
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteStringValue(Width);
             }
-            if (Optional.IsDefined(Height))
+            if (Core.Optional.IsDefined(Height))
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteStringValue(Height);
             }
-            if (Optional.IsDefined(Label))
+            if (Core.Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<int> quality = default;
-            Optional<string> width = default;
-            Optional<string> height = default;
-            Optional<string> label = default;
+            Core.Optional<int> quality = default;
+            Core.Optional<string> width = default;
+            Core.Optional<string> height = default;
+            Core.Optional<string> label = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("quality"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new JpgLayer(width.Value, height.Value, label.Value, Optional.ToNullable(quality));
+            return new JpgLayer(width.Value, height.Value, label.Value, Core.Optional.ToNullable(quality));
         }
     }
 }

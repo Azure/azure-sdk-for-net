@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             try
             {
                 var response = await _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, fluxConfigurationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new KubernetesConfigurationArmOperation<KubernetesFluxConfigurationResource>(new KubernetesFluxConfigurationOperationSource(Client), _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, fluxConfigurationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new KubernetesConfigurationArmOperation<KubernetesFluxConfigurationResource>(new KubernetesFluxConfigurationOperationSource(Client), _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, fluxConfigurationName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             try
             {
                 var response = _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, fluxConfigurationName, data, cancellationToken);
-                var operation = new KubernetesConfigurationArmOperation<KubernetesFluxConfigurationResource>(new KubernetesFluxConfigurationOperationSource(Client), _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, fluxConfigurationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new KubernetesConfigurationArmOperation<KubernetesFluxConfigurationResource>(new KubernetesFluxConfigurationOperationSource(Client), _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName, fluxConfigurationName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KubernetesFluxConfigurationResource(Client, KubernetesFluxConfigurationData.DeserializeKubernetesFluxConfigurationData(e)), _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, "KubernetesFluxConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KubernetesFluxConfigurationResource(Client, KubernetesFluxConfigurationData.DeserializeKubernetesFluxConfigurationData(e)), _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, "KubernetesFluxConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _kubernetesFluxConfigurationFluxConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _clusterRp, _clusterResourceName, _clusterName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KubernetesFluxConfigurationResource(Client, KubernetesFluxConfigurationData.DeserializeKubernetesFluxConfigurationData(e)), _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, "KubernetesFluxConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KubernetesFluxConfigurationResource(Client, KubernetesFluxConfigurationData.DeserializeKubernetesFluxConfigurationData(e)), _kubernetesFluxConfigurationFluxConfigurationsClientDiagnostics, Pipeline, "KubernetesFluxConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

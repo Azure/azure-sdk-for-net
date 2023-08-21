@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> Initializes a new instance of LinuxProfilePropertiesSsh. </summary>
         public LinuxProfilePropertiesSsh()
         {
-            PublicKeys = new ChangeTrackingList<LinuxProfilePropertiesSshPublicKeysItem>();
+            PublicKeys = new Core.ChangeTrackingList<LinuxProfilePropertiesSshPublicKeysItem>();
         }
 
         /// <summary> Initializes a new instance of LinuxProfilePropertiesSsh. </summary>

@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesClusterExtensionPatch : IUtf8JsonSerializable
+    public partial class KubernetesClusterExtensionPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AutoUpgradeMinorVersion))
+            if (Core.Optional.IsDefined(AutoUpgradeMinorVersion))
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
-            if (Optional.IsDefined(ReleaseTrain))
+            if (Core.Optional.IsDefined(ReleaseTrain))
             {
                 writer.WritePropertyName("releaseTrain"u8);
                 writer.WriteStringValue(ReleaseTrain);
             }
-            if (Optional.IsDefined(Version))
+            if (Core.Optional.IsDefined(Version))
             {
                 if (Version != null)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("version");
                 }
             }
-            if (Optional.IsCollectionDefined(ConfigurationSettings))
+            if (Core.Optional.IsCollectionDefined(ConfigurationSettings))
             {
                 if (ConfigurationSettings != null)
                 {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("configurationSettings");
                 }
             }
-            if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
+            if (Core.Optional.IsCollectionDefined(ConfigurationProtectedSettings))
             {
                 if (ConfigurationProtectedSettings != null)
                 {

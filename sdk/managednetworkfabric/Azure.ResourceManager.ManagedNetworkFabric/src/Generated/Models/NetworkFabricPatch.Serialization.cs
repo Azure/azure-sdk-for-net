@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkFabricPatch : IUtf8JsonSerializable
+    public partial class NetworkFabricPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -28,42 +28,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
+            if (Core.Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (Optional.IsDefined(RackCount))
+            if (Core.Optional.IsDefined(RackCount))
             {
                 writer.WritePropertyName("rackCount"u8);
                 writer.WriteNumberValue(RackCount.Value);
             }
-            if (Optional.IsDefined(ServerCountPerRack))
+            if (Core.Optional.IsDefined(ServerCountPerRack))
             {
                 writer.WritePropertyName("serverCountPerRack"u8);
                 writer.WriteNumberValue(ServerCountPerRack.Value);
             }
-            if (Optional.IsDefined(IPv4Prefix))
+            if (Core.Optional.IsDefined(IPv4Prefix))
             {
                 writer.WritePropertyName("ipv4Prefix"u8);
                 writer.WriteStringValue(IPv4Prefix);
             }
-            if (Optional.IsDefined(IPv6Prefix))
+            if (Core.Optional.IsDefined(IPv6Prefix))
             {
                 writer.WritePropertyName("ipv6Prefix"u8);
                 writer.WriteStringValue(IPv6Prefix);
             }
-            if (Optional.IsDefined(FabricAsn))
+            if (Core.Optional.IsDefined(FabricAsn))
             {
                 writer.WritePropertyName("fabricASN"u8);
                 writer.WriteNumberValue(FabricAsn.Value);
             }
-            if (Optional.IsDefined(TerminalServerConfiguration))
+            if (Core.Optional.IsDefined(TerminalServerConfiguration))
             {
                 writer.WritePropertyName("terminalServerConfiguration"u8);
                 writer.WriteObjectValue(TerminalServerConfiguration);
             }
-            if (Optional.IsDefined(ManagementNetworkConfiguration))
+            if (Core.Optional.IsDefined(ManagementNetworkConfiguration))
             {
                 writer.WritePropertyName("managementNetworkConfiguration"u8);
                 writer.WriteObjectValue(ManagementNetworkConfiguration);

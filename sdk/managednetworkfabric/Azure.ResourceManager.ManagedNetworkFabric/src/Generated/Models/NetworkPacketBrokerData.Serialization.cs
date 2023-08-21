@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    public partial class NetworkPacketBrokerData : IUtf8JsonSerializable
+    public partial class NetworkPacketBrokerData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -45,18 +45,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             ResourceIdentifier networkFabricId = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> networkDeviceIds = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> sourceInterfaceIds = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> networkTapIds = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> neighborGroupIds = default;
-            Optional<NetworkFabricProvisioningState> provisioningState = default;
+            Core.Optional<IReadOnlyList<ResourceIdentifier>> networkDeviceIds = default;
+            Core.Optional<IReadOnlyList<ResourceIdentifier>> sourceInterfaceIds = default;
+            Core.Optional<IReadOnlyList<ResourceIdentifier>> networkTapIds = default;
+            Core.Optional<IReadOnlyList<ResourceIdentifier>> neighborGroupIds = default;
+            Core.Optional<NetworkFabricProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     continue;
                 }
             }
-            return new NetworkPacketBrokerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, networkFabricId, Optional.ToList(networkDeviceIds), Optional.ToList(sourceInterfaceIds), Optional.ToList(networkTapIds), Optional.ToList(neighborGroupIds), Optional.ToNullable(provisioningState));
+            return new NetworkPacketBrokerData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, networkFabricId, Core.Optional.ToList(networkDeviceIds), Core.Optional.ToList(sourceInterfaceIds), Core.Optional.ToList(networkTapIds), Core.Optional.ToList(neighborGroupIds), Core.Optional.ToNullable(provisioningState));
         }
     }
 }

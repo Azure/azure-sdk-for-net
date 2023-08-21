@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class PrivateStorePlan : IUtf8JsonSerializable
+    public partial class PrivateStorePlan : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Accessibility))
+            if (Core.Optional.IsDefined(Accessibility))
             {
                 writer.WritePropertyName("accessibility"u8);
                 writer.WriteStringValue(Accessibility.Value.ToString());
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> skuId = default;
-            Optional<string> planId = default;
-            Optional<string> planDisplayName = default;
-            Optional<PrivateStorePlanAccessibility> accessibility = default;
-            Optional<string> altStackReference = default;
-            Optional<string> stackType = default;
+            Core.Optional<string> skuId = default;
+            Core.Optional<string> planId = default;
+            Core.Optional<string> planDisplayName = default;
+            Core.Optional<PrivateStorePlanAccessibility> accessibility = default;
+            Core.Optional<string> altStackReference = default;
+            Core.Optional<string> stackType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("skuId"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new PrivateStorePlan(skuId.Value, planId.Value, planDisplayName.Value, Optional.ToNullable(accessibility), altStackReference.Value, stackType.Value);
+            return new PrivateStorePlan(skuId.Value, planId.Value, planDisplayName.Value, Core.Optional.ToNullable(accessibility), altStackReference.Value, stackType.Value);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MachineLearningPrivateLinkResource>> value = default;
+            Core.Optional<IReadOnlyList<MachineLearningPrivateLinkResource>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningPrivateLinkResourceListResult(Optional.ToList(value));
+            return new MachineLearningPrivateLinkResourceListResult(Core.Optional.ToList(value));
         }
     }
 }

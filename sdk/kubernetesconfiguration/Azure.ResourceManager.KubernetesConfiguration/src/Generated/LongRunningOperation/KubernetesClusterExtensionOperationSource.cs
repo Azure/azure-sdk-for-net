@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.KubernetesConfiguration
 {
-    internal class KubernetesClusterExtensionOperationSource : IOperationSource<KubernetesClusterExtensionResource>
+    internal class KubernetesClusterExtensionOperationSource : Core.IOperationSource<KubernetesClusterExtensionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             _client = client;
         }
 
-        KubernetesClusterExtensionResource IOperationSource<KubernetesClusterExtensionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        KubernetesClusterExtensionResource Core.IOperationSource<KubernetesClusterExtensionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = KubernetesClusterExtensionData.DeserializeKubernetesClusterExtensionData(document.RootElement);
             return new KubernetesClusterExtensionResource(_client, data);
         }
 
-        async ValueTask<KubernetesClusterExtensionResource> IOperationSource<KubernetesClusterExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<KubernetesClusterExtensionResource> Core.IOperationSource<KubernetesClusterExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = KubernetesClusterExtensionData.DeserializeKubernetesClusterExtensionData(document.RootElement);

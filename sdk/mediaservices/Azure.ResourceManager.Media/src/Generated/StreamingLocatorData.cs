@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Media
         /// <summary> Initializes a new instance of StreamingLocatorData. </summary>
         public StreamingLocatorData()
         {
-            ContentKeys = new ChangeTrackingList<StreamingLocatorContentKey>();
-            Filters = new ChangeTrackingList<string>();
+            ContentKeys = new Core.ChangeTrackingList<StreamingLocatorContentKey>();
+            Filters = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of StreamingLocatorData. </summary>

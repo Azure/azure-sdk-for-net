@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = await _networkFabricInternetGatewayInternetGatewaysRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricInternetGatewayResource>(new NetworkFabricInternetGatewayOperationSource(Client), _networkFabricInternetGatewayInternetGatewaysClientDiagnostics, Pipeline, _networkFabricInternetGatewayInternetGatewaysRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricInternetGatewayResource>(new NetworkFabricInternetGatewayOperationSource(Client), _networkFabricInternetGatewayInternetGatewaysClientDiagnostics, Pipeline, _networkFabricInternetGatewayInternetGatewaysRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = _networkFabricInternetGatewayInternetGatewaysRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricInternetGatewayResource>(new NetworkFabricInternetGatewayOperationSource(Client), _networkFabricInternetGatewayInternetGatewaysClientDiagnostics, Pipeline, _networkFabricInternetGatewayInternetGatewaysRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricInternetGatewayResource>(new NetworkFabricInternetGatewayOperationSource(Client), _networkFabricInternetGatewayInternetGatewaysClientDiagnostics, Pipeline, _networkFabricInternetGatewayInternetGatewaysRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

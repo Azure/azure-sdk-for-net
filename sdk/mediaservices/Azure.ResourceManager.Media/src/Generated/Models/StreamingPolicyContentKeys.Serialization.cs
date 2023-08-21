@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class StreamingPolicyContentKeys : IUtf8JsonSerializable
+    public partial class StreamingPolicyContentKeys : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultKey))
+            if (Core.Optional.IsDefined(DefaultKey))
             {
                 writer.WritePropertyName("defaultKey"u8);
                 writer.WriteObjectValue(DefaultKey);
             }
-            if (Optional.IsCollectionDefined(KeyToTrackMappings))
+            if (Core.Optional.IsCollectionDefined(KeyToTrackMappings))
             {
                 writer.WritePropertyName("keyToTrackMappings"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<EncryptionSchemeDefaultKey> defaultKey = default;
-            Optional<IList<StreamingPolicyContentKey>> keyToTrackMappings = default;
+            Core.Optional<EncryptionSchemeDefaultKey> defaultKey = default;
+            Core.Optional<IList<StreamingPolicyContentKey>> keyToTrackMappings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultKey"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new StreamingPolicyContentKeys(defaultKey.Value, Optional.ToList(keyToTrackMappings));
+            return new StreamingPolicyContentKeys(defaultKey.Value, Core.Optional.ToList(keyToTrackMappings));
         }
     }
 }

@@ -18,9 +18,9 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<int> totalMessagesPurged = default;
-            Optional<string> deviceId = default;
-            Optional<string> moduleId = default;
+            Core.Optional<int> totalMessagesPurged = default;
+            Core.Optional<string> deviceId = default;
+            Core.Optional<string> moduleId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalMessagesPurged"u8))
@@ -43,7 +43,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new PurgeMessageQueueResult(Optional.ToNullable(totalMessagesPurged), deviceId.Value, moduleId.Value);
+            return new PurgeMessageQueueResult(Core.Optional.ToNullable(totalMessagesPurged), deviceId.Value, moduleId.Value);
         }
     }
 }

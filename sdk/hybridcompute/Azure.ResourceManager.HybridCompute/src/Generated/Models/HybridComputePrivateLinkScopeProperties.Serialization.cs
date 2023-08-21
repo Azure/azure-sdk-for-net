@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class HybridComputePrivateLinkScopeProperties : IUtf8JsonSerializable
+    public partial class HybridComputePrivateLinkScopeProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (Core.Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<PublicNetworkAccessType> publicNetworkAccess = default;
-            Optional<string> provisioningState = default;
-            Optional<string> privateLinkScopeId = default;
-            Optional<IReadOnlyList<PrivateEndpointConnectionDataModel>> privateEndpointConnections = default;
+            Core.Optional<PublicNetworkAccessType> publicNetworkAccess = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<string> privateLinkScopeId = default;
+            Core.Optional<IReadOnlyList<PrivateEndpointConnectionDataModel>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicNetworkAccess"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     continue;
                 }
             }
-            return new HybridComputePrivateLinkScopeProperties(Optional.ToNullable(publicNetworkAccess), provisioningState.Value, privateLinkScopeId.Value, Optional.ToList(privateEndpointConnections));
+            return new HybridComputePrivateLinkScopeProperties(Core.Optional.ToNullable(publicNetworkAccess), provisioningState.Value, privateLinkScopeId.Value, Core.Optional.ToList(privateEndpointConnections));
         }
     }
 }

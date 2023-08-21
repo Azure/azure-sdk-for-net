@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class LabVirtualMachineProfile : IUtf8JsonSerializable
+    public partial class LabVirtualMachineProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("createOption"u8);
@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.LabServices.Models
             writer.WriteObjectValue(ImageReference);
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Optional.IsDefined(AdditionalCapabilities))
+            if (Core.Optional.IsDefined(AdditionalCapabilities))
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
                 writer.WriteObjectValue(AdditionalCapabilities);
             }
             writer.WritePropertyName("usageQuota"u8);
             writer.WriteStringValue(UsageQuota, "P");
-            if (Optional.IsDefined(UseSharedPassword))
+            if (Core.Optional.IsDefined(UseSharedPassword))
             {
                 writer.WritePropertyName("useSharedPassword"u8);
                 writer.WriteStringValue(UseSharedPassword.Value.ToSerialString());
             }
             writer.WritePropertyName("adminUser"u8);
             writer.WriteObjectValue(AdminUser);
-            if (Optional.IsDefined(NonAdminUser))
+            if (Core.Optional.IsDefined(NonAdminUser))
             {
                 writer.WritePropertyName("nonAdminUser"u8);
                 writer.WriteObjectValue(NonAdminUser);
@@ -52,13 +52,13 @@ namespace Azure.ResourceManager.LabServices.Models
             }
             LabVirtualMachineCreateOption createOption = default;
             LabVirtualMachineImageReference imageReference = default;
-            Optional<LabVirtualMachineImageOSType> osType = default;
+            Core.Optional<LabVirtualMachineImageOSType> osType = default;
             LabServicesSku sku = default;
-            Optional<LabVirtualMachineAdditionalCapability> additionalCapabilities = default;
+            Core.Optional<LabVirtualMachineAdditionalCapability> additionalCapabilities = default;
             TimeSpan usageQuota = default;
-            Optional<LabServicesEnableState> useSharedPassword = default;
+            Core.Optional<LabServicesEnableState> useSharedPassword = default;
             LabVirtualMachineCredential adminUser = default;
-            Optional<LabVirtualMachineCredential> nonAdminUser = default;
+            Core.Optional<LabVirtualMachineCredential> nonAdminUser = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createOption"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     continue;
                 }
             }
-            return new LabVirtualMachineProfile(createOption, imageReference, Optional.ToNullable(osType), sku, additionalCapabilities.Value, usageQuota, Optional.ToNullable(useSharedPassword), adminUser, nonAdminUser.Value);
+            return new LabVirtualMachineProfile(createOption, imageReference, Core.Optional.ToNullable(osType), sku, additionalCapabilities.Value, usageQuota, Core.Optional.ToNullable(useSharedPassword), adminUser, nonAdminUser.Value);
         }
     }
 }

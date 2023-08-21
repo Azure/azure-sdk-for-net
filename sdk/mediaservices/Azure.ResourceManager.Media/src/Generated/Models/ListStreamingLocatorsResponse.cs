@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of ListStreamingLocatorsResponse. </summary>
         internal ListStreamingLocatorsResponse()
         {
-            StreamingLocators = new ChangeTrackingList<MediaAssetStreamingLocator>();
+            StreamingLocators = new Core.ChangeTrackingList<MediaAssetStreamingLocator>();
         }
 
         /// <summary> Initializes a new instance of ListStreamingLocatorsResponse. </summary>

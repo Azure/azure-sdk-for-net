@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of NetworkTapRulePatch. </summary>
         public NetworkTapRulePatch()
         {
-            MatchConfigurations = new ChangeTrackingList<NetworkTapRuleMatchConfiguration>();
-            DynamicMatchConfigurations = new ChangeTrackingList<CommonDynamicMatchConfiguration>();
+            MatchConfigurations = new Core.ChangeTrackingList<NetworkTapRuleMatchConfiguration>();
+            DynamicMatchConfigurations = new Core.ChangeTrackingList<CommonDynamicMatchConfiguration>();
         }
 
         /// <summary> Switch configuration description. </summary>

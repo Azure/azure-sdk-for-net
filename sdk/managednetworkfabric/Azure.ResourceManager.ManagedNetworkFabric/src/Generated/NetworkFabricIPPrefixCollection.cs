@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = await _networkFabricIPPrefixIPPrefixesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, ipPrefixName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricIPPrefixResource>(new NetworkFabricIPPrefixOperationSource(Client), _networkFabricIPPrefixIPPrefixesClientDiagnostics, Pipeline, _networkFabricIPPrefixIPPrefixesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipPrefixName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricIPPrefixResource>(new NetworkFabricIPPrefixOperationSource(Client), _networkFabricIPPrefixIPPrefixesClientDiagnostics, Pipeline, _networkFabricIPPrefixIPPrefixesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipPrefixName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = _networkFabricIPPrefixIPPrefixesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, ipPrefixName, data, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricIPPrefixResource>(new NetworkFabricIPPrefixOperationSource(Client), _networkFabricIPPrefixIPPrefixesClientDiagnostics, Pipeline, _networkFabricIPPrefixIPPrefixesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipPrefixName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricIPPrefixResource>(new NetworkFabricIPPrefixOperationSource(Client), _networkFabricIPPrefixIPPrefixesClientDiagnostics, Pipeline, _networkFabricIPPrefixIPPrefixesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipPrefixName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricIPPrefixIPPrefixesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricIPPrefixIPPrefixesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPPrefixResource(Client, NetworkFabricIPPrefixData.DeserializeNetworkFabricIPPrefixData(e)), _networkFabricIPPrefixIPPrefixesClientDiagnostics, Pipeline, "NetworkFabricIPPrefixCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPPrefixResource(Client, NetworkFabricIPPrefixData.DeserializeNetworkFabricIPPrefixData(e)), _networkFabricIPPrefixIPPrefixesClientDiagnostics, Pipeline, "NetworkFabricIPPrefixCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricIPPrefixIPPrefixesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricIPPrefixIPPrefixesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPPrefixResource(Client, NetworkFabricIPPrefixData.DeserializeNetworkFabricIPPrefixData(e)), _networkFabricIPPrefixIPPrefixesClientDiagnostics, Pipeline, "NetworkFabricIPPrefixCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPPrefixResource(Client, NetworkFabricIPPrefixData.DeserializeNetworkFabricIPPrefixData(e)), _networkFabricIPPrefixIPPrefixesClientDiagnostics, Pipeline, "NetworkFabricIPPrefixCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

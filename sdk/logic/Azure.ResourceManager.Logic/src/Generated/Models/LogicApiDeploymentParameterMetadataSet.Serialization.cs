@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<LogicApiDeploymentParameterMetadata> packageContentLink = default;
-            Optional<LogicApiDeploymentParameterMetadata> redisCacheConnectionString = default;
+            Core.Optional<LogicApiDeploymentParameterMetadata> packageContentLink = default;
+            Core.Optional<LogicApiDeploymentParameterMetadata> redisCacheConnectionString = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("packageContentLink"u8))

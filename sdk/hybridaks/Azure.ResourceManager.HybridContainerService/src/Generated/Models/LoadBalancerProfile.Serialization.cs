@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class LoadBalancerProfile : IUtf8JsonSerializable
+    public partial class LoadBalancerProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinuxProfile))
+            if (Core.Optional.IsDefined(LinuxProfile))
             {
                 writer.WritePropertyName("linuxProfile"u8);
                 writer.WriteObjectValue(LinuxProfile);
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Count))
+            if (Core.Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsCollectionDefined(AvailabilityZones))
+            if (Core.Optional.IsCollectionDefined(AvailabilityZones))
             {
                 writer.WritePropertyName("availabilityZones"u8);
                 writer.WriteStartArray();
@@ -41,27 +41,27 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MaxCount))
+            if (Core.Optional.IsDefined(MaxCount))
             {
                 writer.WritePropertyName("maxCount"u8);
                 writer.WriteNumberValue(MaxCount.Value);
             }
-            if (Optional.IsDefined(MaxPods))
+            if (Core.Optional.IsDefined(MaxPods))
             {
                 writer.WritePropertyName("maxPods"u8);
                 writer.WriteNumberValue(MaxPods.Value);
             }
-            if (Optional.IsDefined(MinCount))
+            if (Core.Optional.IsDefined(MinCount))
             {
                 writer.WritePropertyName("minCount"u8);
                 writer.WriteNumberValue(MinCount.Value);
             }
-            if (Optional.IsDefined(Mode))
+            if (Core.Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(NodeLabels))
+            if (Core.Optional.IsCollectionDefined(NodeLabels))
             {
                 writer.WritePropertyName("nodeLabels"u8);
                 writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(NodeTaints))
+            if (Core.Optional.IsCollectionDefined(NodeTaints))
             {
                 writer.WritePropertyName("nodeTaints"u8);
                 writer.WriteStartArray();
@@ -82,22 +82,22 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OSType))
+            if (Core.Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (Optional.IsDefined(NodeImageVersion))
+            if (Core.Optional.IsDefined(NodeImageVersion))
             {
                 writer.WritePropertyName("nodeImageVersion"u8);
                 writer.WriteStringValue(NodeImageVersion);
             }
-            if (Optional.IsDefined(VmSize))
+            if (Core.Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (Optional.IsDefined(CloudProviderProfile))
+            if (Core.Optional.IsDefined(CloudProviderProfile))
             {
                 writer.WritePropertyName("cloudProviderProfile"u8);
                 writer.WriteObjectValue(CloudProviderProfile);
@@ -111,20 +111,20 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<LinuxProfileProperties> linuxProfile = default;
-            Optional<string> name = default;
-            Optional<int> count = default;
-            Optional<IList<string>> availabilityZones = default;
-            Optional<int> maxCount = default;
-            Optional<int> maxPods = default;
-            Optional<int> minCount = default;
-            Optional<Mode> mode = default;
-            Optional<IDictionary<string, string>> nodeLabels = default;
-            Optional<IList<string>> nodeTaints = default;
-            Optional<OSType> osType = default;
-            Optional<string> nodeImageVersion = default;
-            Optional<string> vmSize = default;
-            Optional<CloudProviderProfile> cloudProviderProfile = default;
+            Core.Optional<LinuxProfileProperties> linuxProfile = default;
+            Core.Optional<string> name = default;
+            Core.Optional<int> count = default;
+            Core.Optional<IList<string>> availabilityZones = default;
+            Core.Optional<int> maxCount = default;
+            Core.Optional<int> maxPods = default;
+            Core.Optional<int> minCount = default;
+            Core.Optional<Mode> mode = default;
+            Core.Optional<IDictionary<string, string>> nodeLabels = default;
+            Core.Optional<IList<string>> nodeTaints = default;
+            Core.Optional<OSType> osType = default;
+            Core.Optional<string> nodeImageVersion = default;
+            Core.Optional<string> vmSize = default;
+            Core.Optional<CloudProviderProfile> cloudProviderProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linuxProfile"u8))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new LoadBalancerProfile(Optional.ToNullable(count), Optional.ToList(availabilityZones), Optional.ToNullable(maxCount), Optional.ToNullable(maxPods), Optional.ToNullable(minCount), Optional.ToNullable(mode), Optional.ToDictionary(nodeLabels), Optional.ToList(nodeTaints), Optional.ToNullable(osType), nodeImageVersion.Value, vmSize.Value, cloudProviderProfile.Value, name.Value, linuxProfile.Value);
+            return new LoadBalancerProfile(Core.Optional.ToNullable(count), Core.Optional.ToList(availabilityZones), Core.Optional.ToNullable(maxCount), Core.Optional.ToNullable(maxPods), Core.Optional.ToNullable(minCount), Core.Optional.ToNullable(mode), Core.Optional.ToDictionary(nodeLabels), Core.Optional.ToList(nodeTaints), Core.Optional.ToNullable(osType), nodeImageVersion.Value, vmSize.Value, cloudProviderProfile.Value, name.Value, linuxProfile.Value);
         }
     }
 }

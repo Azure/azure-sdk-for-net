@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of WorkspaceListResult. </summary>
         internal WorkspaceListResult()
         {
-            Value = new ChangeTrackingList<MachineLearningWorkspaceData>();
+            Value = new Core.ChangeTrackingList<MachineLearningWorkspaceData>();
         }
 
         /// <summary> Initializes a new instance of WorkspaceListResult. </summary>

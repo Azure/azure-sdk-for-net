@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class LiveEventInputTrackSelection : IUtf8JsonSerializable
+    public partial class LiveEventInputTrackSelection : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Property))
+            if (Core.Optional.IsDefined(Property))
             {
                 writer.WritePropertyName("property"u8);
                 writer.WriteStringValue(Property);
             }
-            if (Optional.IsDefined(Operation))
+            if (Core.Optional.IsDefined(Operation))
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation);
             }
-            if (Optional.IsDefined(Value))
+            if (Core.Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> property = default;
-            Optional<string> operation = default;
-            Optional<string> value = default;
+            Core.Optional<string> property = default;
+            Core.Optional<string> operation = default;
+            Core.Optional<string> value = default;
             foreach (var property0 in element.EnumerateObject())
             {
                 if (property0.NameEquals("property"u8))

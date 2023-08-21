@@ -16,7 +16,7 @@ namespace Azure.Maps.Routing.Models
         /// <summary> Initializes a new instance of RouteMatrixResult. </summary>
         internal RouteMatrixResult()
         {
-            Matrix = new ChangeTrackingList<IList<RouteMatrix>>();
+            Matrix = new Core.ChangeTrackingList<IList<RouteMatrix>>();
         }
 
         /// <summary> Initializes a new instance of RouteMatrixResult. </summary>

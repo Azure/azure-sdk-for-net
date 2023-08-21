@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<EdgeUsageDataCollectionPolicy> usageDataCollectionPolicy = default;
+            Core.Optional<EdgeUsageDataCollectionPolicy> usageDataCollectionPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("usageDataCollectionPolicy"u8))

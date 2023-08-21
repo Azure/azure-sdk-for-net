@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class SelectVideoTrackByAttribute : IUtf8JsonSerializable
+    public partial class SelectVideoTrackByAttribute : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("attribute"u8);
             writer.WriteStringValue(Attribute.ToString());
             writer.WritePropertyName("filter"u8);
             writer.WriteStringValue(Filter.ToString());
-            if (Optional.IsDefined(FilterValue))
+            if (Core.Optional.IsDefined(FilterValue))
             {
                 writer.WritePropertyName("filterValue"u8);
                 writer.WriteStringValue(FilterValue);
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
             }
             TrackAttribute attribute = default;
             TrackAttributeFilter filter = default;
-            Optional<string> filterValue = default;
+            Core.Optional<string> filterValue = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {

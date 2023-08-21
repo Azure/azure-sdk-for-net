@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    internal partial class AkamaiAccessControl : IUtf8JsonSerializable
+    internal partial class AkamaiAccessControl : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AkamaiSignatureHeaderAuthenticationKeyList))
+            if (Core.Optional.IsCollectionDefined(AkamaiSignatureHeaderAuthenticationKeyList))
             {
                 writer.WritePropertyName("akamaiSignatureHeaderAuthenticationKeyList"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IList<AkamaiSignatureHeaderAuthenticationKey>> akamaiSignatureHeaderAuthenticationKeyList = default;
+            Core.Optional<IList<AkamaiSignatureHeaderAuthenticationKey>> akamaiSignatureHeaderAuthenticationKeyList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("akamaiSignatureHeaderAuthenticationKeyList"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new AkamaiAccessControl(Optional.ToList(akamaiSignatureHeaderAuthenticationKeyList));
+            return new AkamaiAccessControl(Core.Optional.ToList(akamaiSignatureHeaderAuthenticationKeyList));
         }
     }
 }

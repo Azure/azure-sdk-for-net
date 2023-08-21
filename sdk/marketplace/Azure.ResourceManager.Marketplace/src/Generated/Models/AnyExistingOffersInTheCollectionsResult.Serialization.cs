@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<bool> value = default;
+            Core.Optional<bool> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new AnyExistingOffersInTheCollectionsResult(Optional.ToNullable(value));
+            return new AnyExistingOffersInTheCollectionsResult(Core.Optional.ToNullable(value));
         }
     }
 }

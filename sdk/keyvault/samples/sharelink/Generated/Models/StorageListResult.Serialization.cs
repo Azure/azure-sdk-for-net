@@ -19,8 +19,8 @@ namespace Azure.Security.KeyVault.Storage.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StorageAccountItem>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<StorageAccountItem>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new StorageListResult(Optional.ToList(value), nextLink.Value);
+            return new StorageListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

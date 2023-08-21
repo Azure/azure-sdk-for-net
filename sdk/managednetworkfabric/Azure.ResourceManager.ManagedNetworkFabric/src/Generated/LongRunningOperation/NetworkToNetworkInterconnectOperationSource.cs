@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class NetworkToNetworkInterconnectOperationSource : IOperationSource<NetworkToNetworkInterconnectResource>
+    internal class NetworkToNetworkInterconnectOperationSource : Core.IOperationSource<NetworkToNetworkInterconnectResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             _client = client;
         }
 
-        NetworkToNetworkInterconnectResource IOperationSource<NetworkToNetworkInterconnectResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkToNetworkInterconnectResource Core.IOperationSource<NetworkToNetworkInterconnectResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(document.RootElement);
             return new NetworkToNetworkInterconnectResource(_client, data);
         }
 
-        async ValueTask<NetworkToNetworkInterconnectResource> IOperationSource<NetworkToNetworkInterconnectResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkToNetworkInterconnectResource> Core.IOperationSource<NetworkToNetworkInterconnectResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NetworkToNetworkInterconnectData.DeserializeNetworkToNetworkInterconnectData(document.RootElement);

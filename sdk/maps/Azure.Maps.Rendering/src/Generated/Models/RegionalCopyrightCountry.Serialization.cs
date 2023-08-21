@@ -18,8 +18,8 @@ namespace Azure.Maps.Rendering
             {
                 return null;
             }
-            Optional<string> isO3 = default;
-            Optional<string> label = default;
+            Core.Optional<string> isO3 = default;
+            Core.Optional<string> label = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ISO3"u8))

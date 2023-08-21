@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Media.Models
         public StreamingLocatorContentKey(Guid id)
         {
             Id = id;
-            Tracks = new ChangeTrackingList<MediaTrackSelection>();
+            Tracks = new Core.ChangeTrackingList<MediaTrackSelection>();
         }
 
         /// <summary> Initializes a new instance of StreamingLocatorContentKey. </summary>

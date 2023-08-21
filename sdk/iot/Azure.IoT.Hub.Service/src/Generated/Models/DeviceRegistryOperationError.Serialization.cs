@@ -18,11 +18,11 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<string> deviceId = default;
-            Optional<DeviceRegistryOperationErrorCode> errorCode = default;
-            Optional<string> errorStatus = default;
-            Optional<string> moduleId = default;
-            Optional<string> operation = default;
+            Core.Optional<string> deviceId = default;
+            Core.Optional<DeviceRegistryOperationErrorCode> errorCode = default;
+            Core.Optional<string> errorStatus = default;
+            Core.Optional<string> moduleId = default;
+            Core.Optional<string> operation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"u8))
@@ -55,7 +55,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new DeviceRegistryOperationError(deviceId.Value, Optional.ToNullable(errorCode), errorStatus.Value, moduleId.Value, operation.Value);
+            return new DeviceRegistryOperationError(deviceId.Value, Core.Optional.ToNullable(errorCode), errorStatus.Value, moduleId.Value, operation.Value);
         }
     }
 }

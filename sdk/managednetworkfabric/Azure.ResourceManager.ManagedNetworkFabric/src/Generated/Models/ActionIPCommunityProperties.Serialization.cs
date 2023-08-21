@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ActionIPCommunityProperties : IUtf8JsonSerializable
+    public partial class ActionIPCommunityProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Delete))
+            if (Core.Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
                 writer.WriteObjectValue(Delete);
             }
-            if (Optional.IsDefined(Set))
+            if (Core.Optional.IsDefined(Set))
             {
                 writer.WritePropertyName("set"u8);
                 writer.WriteObjectValue(Set);
             }
-            if (Optional.IsDefined(Add))
+            if (Core.Optional.IsDefined(Add))
             {
                 writer.WritePropertyName("add"u8);
                 writer.WriteObjectValue(Add);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IPCommunityIdList> delete = default;
-            Optional<IPCommunityIdList> @set = default;
-            Optional<IPCommunityIdList> @add = default;
+            Core.Optional<IPCommunityIdList> delete = default;
+            Core.Optional<IPCommunityIdList> @set = default;
+            Core.Optional<IPCommunityIdList> @add = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("delete"u8))

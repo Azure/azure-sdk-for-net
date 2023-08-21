@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of AggregateRouteConfiguration. </summary>
         public AggregateRouteConfiguration()
         {
-            IPv4Routes = new ChangeTrackingList<AggregateRoute>();
-            IPv6Routes = new ChangeTrackingList<AggregateRoute>();
+            IPv4Routes = new Core.ChangeTrackingList<AggregateRoute>();
+            IPv6Routes = new Core.ChangeTrackingList<AggregateRoute>();
         }
 
         /// <summary> Initializes a new instance of AggregateRouteConfiguration. </summary>

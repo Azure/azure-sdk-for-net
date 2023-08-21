@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningContainerResourceSettings : IUtf8JsonSerializable
+    public partial class MachineLearningContainerResourceSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Cpu))
+            if (Core.Optional.IsDefined(Cpu))
             {
                 if (Cpu != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("cpu");
                 }
             }
-            if (Optional.IsDefined(Gpu))
+            if (Core.Optional.IsDefined(Gpu))
             {
                 if (Gpu != null)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("gpu");
                 }
             }
-            if (Optional.IsDefined(Memory))
+            if (Core.Optional.IsDefined(Memory))
             {
                 if (Memory != null)
                 {
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> cpu = default;
-            Optional<string> gpu = default;
-            Optional<string> memory = default;
+            Core.Optional<string> cpu = default;
+            Core.Optional<string> gpu = default;
+            Core.Optional<string> memory = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cpu"u8))

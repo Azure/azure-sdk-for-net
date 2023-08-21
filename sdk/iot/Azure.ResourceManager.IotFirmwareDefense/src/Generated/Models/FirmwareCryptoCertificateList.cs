@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of FirmwareCryptoCertificateList. </summary>
         internal FirmwareCryptoCertificateList()
         {
-            Value = new ChangeTrackingList<FirmwareCryptoCertificate>();
+            Value = new Core.ChangeTrackingList<FirmwareCryptoCertificate>();
         }
 
         /// <summary> Initializes a new instance of FirmwareCryptoCertificateList. </summary>

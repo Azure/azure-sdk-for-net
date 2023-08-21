@@ -18,9 +18,9 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<string> deviceId = default;
-            Optional<DeviceRegistryOperationWarningCode> warningCode = default;
-            Optional<string> warningStatus = default;
+            Core.Optional<string> deviceId = default;
+            Core.Optional<DeviceRegistryOperationWarningCode> warningCode = default;
+            Core.Optional<string> warningStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"u8))
@@ -43,7 +43,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new DeviceRegistryOperationWarning(deviceId.Value, Optional.ToNullable(warningCode), warningStatus.Value);
+            return new DeviceRegistryOperationWarning(deviceId.Value, Core.Optional.ToNullable(warningCode), warningStatus.Value);
         }
     }
 }

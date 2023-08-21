@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    internal partial class ManagedIdentity : IUtf8JsonSerializable
+    internal partial class ManagedIdentity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserAssignedIdentity))
+            if (Core.Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(UserAssignedIdentity);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> userAssignedIdentity = default;
+            Core.Optional<ResourceIdentifier> userAssignedIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userAssignedIdentity"u8))

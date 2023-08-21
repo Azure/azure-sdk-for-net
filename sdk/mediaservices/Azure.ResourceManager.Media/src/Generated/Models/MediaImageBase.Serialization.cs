@@ -11,41 +11,41 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaImageBase : IUtf8JsonSerializable
+    public partial class MediaImageBase : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("start"u8);
             writer.WriteStringValue(Start);
-            if (Optional.IsDefined(Step))
+            if (Core.Optional.IsDefined(Step))
             {
                 writer.WritePropertyName("step"u8);
                 writer.WriteStringValue(Step);
             }
-            if (Optional.IsDefined(Range))
+            if (Core.Optional.IsDefined(Range))
             {
                 writer.WritePropertyName("range"u8);
                 writer.WriteStringValue(Range);
             }
-            if (Optional.IsDefined(KeyFrameInterval))
+            if (Core.Optional.IsDefined(KeyFrameInterval))
             {
                 writer.WritePropertyName("keyFrameInterval"u8);
                 writer.WriteStringValue(KeyFrameInterval.Value, "P");
             }
-            if (Optional.IsDefined(StretchMode))
+            if (Core.Optional.IsDefined(StretchMode))
             {
                 writer.WritePropertyName("stretchMode"u8);
                 writer.WriteStringValue(StretchMode.Value.ToString());
             }
-            if (Optional.IsDefined(SyncMode))
+            if (Core.Optional.IsDefined(SyncMode))
             {
                 writer.WritePropertyName("syncMode"u8);
                 writer.WriteStringValue(SyncMode.Value.ToString());
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Optional.IsDefined(Label))
+            if (Core.Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -68,13 +68,13 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             string start = default;
-            Optional<string> step = default;
-            Optional<string> range = default;
-            Optional<TimeSpan> keyFrameInterval = default;
-            Optional<InputVideoStretchMode> stretchMode = default;
-            Optional<VideoSyncMode> syncMode = default;
+            Core.Optional<string> step = default;
+            Core.Optional<string> range = default;
+            Core.Optional<TimeSpan> keyFrameInterval = default;
+            Core.Optional<InputVideoStretchMode> stretchMode = default;
+            Core.Optional<VideoSyncMode> syncMode = default;
             string odataType = "#Microsoft.Media.Image";
-            Optional<string> label = default;
+            Core.Optional<string> label = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("start"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new MediaImageBase(odataType, label.Value, Optional.ToNullable(keyFrameInterval), Optional.ToNullable(stretchMode), Optional.ToNullable(syncMode), start, step.Value, range.Value);
+            return new MediaImageBase(odataType, label.Value, Core.Optional.ToNullable(keyFrameInterval), Core.Optional.ToNullable(stretchMode), Core.Optional.ToNullable(syncMode), start, step.Value, range.Value);
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class MachineExtensionUpgrade : IUtf8JsonSerializable
+    public partial class MachineExtensionUpgrade : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ExtensionTargets))
+            if (Core.Optional.IsCollectionDefined(ExtensionTargets))
             {
                 writer.WritePropertyName("extensionTargets"u8);
                 writer.WriteStartObject();

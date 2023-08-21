@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningAzureFileDatastore : IUtf8JsonSerializable
+    public partial class MachineLearningAzureFileDatastore : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("accountName"u8);
             writer.WriteStringValue(AccountName);
-            if (Optional.IsDefined(Endpoint))
+            if (Core.Optional.IsDefined(Endpoint))
             {
                 if (Endpoint != null)
                 {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("fileShareName"u8);
             writer.WriteStringValue(FileShareName);
-            if (Optional.IsDefined(Protocol))
+            if (Core.Optional.IsDefined(Protocol))
             {
                 if (Protocol != null)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("protocol");
                 }
             }
-            if (Optional.IsDefined(ServiceDataAccessAuthIdentity))
+            if (Core.Optional.IsDefined(ServiceDataAccessAuthIdentity))
             {
                 writer.WritePropertyName("serviceDataAccessAuthIdentity"u8);
                 writer.WriteStringValue(ServiceDataAccessAuthIdentity.Value.ToString());
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteObjectValue(Credentials);
             writer.WritePropertyName("datastoreType"u8);
             writer.WriteStringValue(DatastoreType.ToString());
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (Core.Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {
@@ -111,16 +111,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string accountName = default;
-            Optional<string> endpoint = default;
+            Core.Optional<string> endpoint = default;
             string fileShareName = default;
-            Optional<string> protocol = default;
-            Optional<MachineLearningServiceDataAccessAuthIdentity> serviceDataAccessAuthIdentity = default;
+            Core.Optional<string> protocol = default;
+            Core.Optional<MachineLearningServiceDataAccessAuthIdentity> serviceDataAccessAuthIdentity = default;
             MachineLearningDatastoreCredentials credentials = default;
             DatastoreType datastoreType = default;
-            Optional<bool> isDefault = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<bool> isDefault = default;
+            Core.Optional<string> description = default;
+            Core.Optional<IDictionary<string, string>> properties = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountName"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningAzureFileDatastore(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), credentials, datastoreType, Optional.ToNullable(isDefault), accountName, endpoint.Value, fileShareName, protocol.Value, Optional.ToNullable(serviceDataAccessAuthIdentity));
+            return new MachineLearningAzureFileDatastore(description.Value, Core.Optional.ToDictionary(properties), Core.Optional.ToDictionary(tags), credentials, datastoreType, Core.Optional.ToNullable(isDefault), accountName, endpoint.Value, fileShareName, protocol.Value, Core.Optional.ToNullable(serviceDataAccessAuthIdentity));
         }
     }
 }

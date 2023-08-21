@@ -18,8 +18,8 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Optional<int> providedIndex = default;
-            Optional<int> optimizedIndex = default;
+            Core.Optional<int> providedIndex = default;
+            Core.Optional<int> optimizedIndex = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("providedIndex"u8))
@@ -41,7 +41,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteOptimizedWaypoint(Optional.ToNullable(providedIndex), Optional.ToNullable(optimizedIndex));
+            return new RouteOptimizedWaypoint(Core.Optional.ToNullable(providedIndex), Core.Optional.ToNullable(optimizedIndex));
         }
     }
 }

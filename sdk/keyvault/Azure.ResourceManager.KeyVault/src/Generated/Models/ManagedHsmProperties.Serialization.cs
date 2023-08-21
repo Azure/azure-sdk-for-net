@@ -12,17 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class ManagedHsmProperties : IUtf8JsonSerializable
+    public partial class ManagedHsmProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(TenantId))
+            if (Core.Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsCollectionDefined(InitialAdminObjectIds))
+            if (Core.Optional.IsCollectionDefined(InitialAdminObjectIds))
             {
                 writer.WritePropertyName("initialAdminObjectIds"u8);
                 writer.WriteStartArray();
@@ -32,32 +32,32 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnableSoftDelete))
+            if (Core.Optional.IsDefined(EnableSoftDelete))
             {
                 writer.WritePropertyName("enableSoftDelete"u8);
                 writer.WriteBooleanValue(EnableSoftDelete.Value);
             }
-            if (Optional.IsDefined(SoftDeleteRetentionInDays))
+            if (Core.Optional.IsDefined(SoftDeleteRetentionInDays))
             {
                 writer.WritePropertyName("softDeleteRetentionInDays"u8);
                 writer.WriteNumberValue(SoftDeleteRetentionInDays.Value);
             }
-            if (Optional.IsDefined(EnablePurgeProtection))
+            if (Core.Optional.IsDefined(EnablePurgeProtection))
             {
                 writer.WritePropertyName("enablePurgeProtection"u8);
                 writer.WriteBooleanValue(EnablePurgeProtection.Value);
             }
-            if (Optional.IsDefined(CreateMode))
+            if (Core.Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToSerialString());
             }
-            if (Optional.IsDefined(NetworkRuleSet))
+            if (Core.Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkAcls"u8);
                 writer.WriteObjectValue(NetworkRuleSet);
             }
-            if (Optional.IsCollectionDefined(Regions))
+            if (Core.Optional.IsCollectionDefined(Regions))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (Core.Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
@@ -81,21 +81,21 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
-            Optional<IList<string>> initialAdminObjectIds = default;
-            Optional<Uri> hsmUri = default;
-            Optional<bool> enableSoftDelete = default;
-            Optional<int> softDeleteRetentionInDays = default;
-            Optional<bool> enablePurgeProtection = default;
-            Optional<ManagedHsmCreateMode> createMode = default;
-            Optional<string> statusMessage = default;
-            Optional<ManagedHsmProvisioningState> provisioningState = default;
-            Optional<ManagedHsmNetworkRuleSet> networkAcls = default;
-            Optional<IList<ManagedHsmGeoReplicatedRegion>> regions = default;
-            Optional<IReadOnlyList<ManagedHsmPrivateEndpointConnectionItemData>> privateEndpointConnections = default;
-            Optional<ManagedHsmPublicNetworkAccess> publicNetworkAccess = default;
-            Optional<DateTimeOffset> scheduledPurgeDate = default;
-            Optional<ManagedHSMSecurityDomainProperties> securityDomainProperties = default;
+            Core.Optional<Guid> tenantId = default;
+            Core.Optional<IList<string>> initialAdminObjectIds = default;
+            Core.Optional<Uri> hsmUri = default;
+            Core.Optional<bool> enableSoftDelete = default;
+            Core.Optional<int> softDeleteRetentionInDays = default;
+            Core.Optional<bool> enablePurgeProtection = default;
+            Core.Optional<ManagedHsmCreateMode> createMode = default;
+            Core.Optional<string> statusMessage = default;
+            Core.Optional<ManagedHsmProvisioningState> provisioningState = default;
+            Core.Optional<ManagedHsmNetworkRuleSet> networkAcls = default;
+            Core.Optional<IList<ManagedHsmGeoReplicatedRegion>> regions = default;
+            Core.Optional<IReadOnlyList<ManagedHsmPrivateEndpointConnectionItemData>> privateEndpointConnections = default;
+            Core.Optional<ManagedHsmPublicNetworkAccess> publicNetworkAccess = default;
+            Core.Optional<DateTimeOffset> scheduledPurgeDate = default;
+            Core.Optional<ManagedHSMSecurityDomainProperties> securityDomainProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new ManagedHsmProperties(Optional.ToNullable(tenantId), Optional.ToList(initialAdminObjectIds), hsmUri.Value, Optional.ToNullable(enableSoftDelete), Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(enablePurgeProtection), Optional.ToNullable(createMode), statusMessage.Value, Optional.ToNullable(provisioningState), networkAcls.Value, Optional.ToList(regions), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(scheduledPurgeDate), securityDomainProperties.Value);
+            return new ManagedHsmProperties(Core.Optional.ToNullable(tenantId), Core.Optional.ToList(initialAdminObjectIds), hsmUri.Value, Core.Optional.ToNullable(enableSoftDelete), Core.Optional.ToNullable(softDeleteRetentionInDays), Core.Optional.ToNullable(enablePurgeProtection), Core.Optional.ToNullable(createMode), statusMessage.Value, Core.Optional.ToNullable(provisioningState), networkAcls.Value, Core.Optional.ToList(regions), Core.Optional.ToList(privateEndpointConnections), Core.Optional.ToNullable(publicNetworkAccess), Core.Optional.ToNullable(scheduledPurgeDate), securityDomainProperties.Value);
         }
     }
 }

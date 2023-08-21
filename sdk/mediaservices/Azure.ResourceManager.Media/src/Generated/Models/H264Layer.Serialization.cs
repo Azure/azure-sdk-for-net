@@ -11,79 +11,79 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class H264Layer : IUtf8JsonSerializable
+    public partial class H264Layer : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Profile))
+            if (Core.Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
                 writer.WriteStringValue(Profile.Value.ToString());
             }
-            if (Optional.IsDefined(Level))
+            if (Core.Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level);
             }
-            if (Optional.IsDefined(BufferWindow))
+            if (Core.Optional.IsDefined(BufferWindow))
             {
                 writer.WritePropertyName("bufferWindow"u8);
                 writer.WriteStringValue(BufferWindow.Value, "P");
             }
-            if (Optional.IsDefined(ConstantRateFactor))
+            if (Core.Optional.IsDefined(ConstantRateFactor))
             {
                 writer.WritePropertyName("crf"u8);
                 writer.WriteNumberValue(ConstantRateFactor.Value);
             }
-            if (Optional.IsDefined(ReferenceFrames))
+            if (Core.Optional.IsDefined(ReferenceFrames))
             {
                 writer.WritePropertyName("referenceFrames"u8);
                 writer.WriteNumberValue(ReferenceFrames.Value);
             }
-            if (Optional.IsDefined(EntropyMode))
+            if (Core.Optional.IsDefined(EntropyMode))
             {
                 writer.WritePropertyName("entropyMode"u8);
                 writer.WriteStringValue(EntropyMode.Value.ToString());
             }
             writer.WritePropertyName("bitrate"u8);
             writer.WriteNumberValue(Bitrate);
-            if (Optional.IsDefined(MaxBitrate))
+            if (Core.Optional.IsDefined(MaxBitrate))
             {
                 writer.WritePropertyName("maxBitrate"u8);
                 writer.WriteNumberValue(MaxBitrate.Value);
             }
-            if (Optional.IsDefined(BFrames))
+            if (Core.Optional.IsDefined(BFrames))
             {
                 writer.WritePropertyName("bFrames"u8);
                 writer.WriteNumberValue(BFrames.Value);
             }
-            if (Optional.IsDefined(FrameRate))
+            if (Core.Optional.IsDefined(FrameRate))
             {
                 writer.WritePropertyName("frameRate"u8);
                 writer.WriteStringValue(FrameRate);
             }
-            if (Optional.IsDefined(Slices))
+            if (Core.Optional.IsDefined(Slices))
             {
                 writer.WritePropertyName("slices"u8);
                 writer.WriteNumberValue(Slices.Value);
             }
-            if (Optional.IsDefined(UseAdaptiveBFrame))
+            if (Core.Optional.IsDefined(UseAdaptiveBFrame))
             {
                 writer.WritePropertyName("adaptiveBFrame"u8);
                 writer.WriteBooleanValue(UseAdaptiveBFrame.Value);
             }
-            if (Optional.IsDefined(Width))
+            if (Core.Optional.IsDefined(Width))
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteStringValue(Width);
             }
-            if (Optional.IsDefined(Height))
+            if (Core.Optional.IsDefined(Height))
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteStringValue(Height);
             }
-            if (Optional.IsDefined(Label))
+            if (Core.Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -97,21 +97,21 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<H264VideoProfile> profile = default;
-            Optional<string> level = default;
-            Optional<TimeSpan> bufferWindow = default;
-            Optional<float> crf = default;
-            Optional<int> referenceFrames = default;
-            Optional<LayerEntropyMode> entropyMode = default;
+            Core.Optional<H264VideoProfile> profile = default;
+            Core.Optional<string> level = default;
+            Core.Optional<TimeSpan> bufferWindow = default;
+            Core.Optional<float> crf = default;
+            Core.Optional<int> referenceFrames = default;
+            Core.Optional<LayerEntropyMode> entropyMode = default;
             int bitrate = default;
-            Optional<int> maxBitrate = default;
-            Optional<int> bFrames = default;
-            Optional<string> frameRate = default;
-            Optional<int> slices = default;
-            Optional<bool> adaptiveBFrame = default;
-            Optional<string> width = default;
-            Optional<string> height = default;
-            Optional<string> label = default;
+            Core.Optional<int> maxBitrate = default;
+            Core.Optional<int> bFrames = default;
+            Core.Optional<string> frameRate = default;
+            Core.Optional<int> slices = default;
+            Core.Optional<bool> adaptiveBFrame = default;
+            Core.Optional<string> width = default;
+            Core.Optional<string> height = default;
+            Core.Optional<string> label = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("profile"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new H264Layer(width.Value, height.Value, label.Value, bitrate, Optional.ToNullable(maxBitrate), Optional.ToNullable(bFrames), frameRate.Value, Optional.ToNullable(slices), Optional.ToNullable(adaptiveBFrame), Optional.ToNullable(profile), level.Value, Optional.ToNullable(bufferWindow), Optional.ToNullable(crf), Optional.ToNullable(referenceFrames), Optional.ToNullable(entropyMode));
+            return new H264Layer(width.Value, height.Value, label.Value, bitrate, Core.Optional.ToNullable(maxBitrate), Core.Optional.ToNullable(bFrames), frameRate.Value, Core.Optional.ToNullable(slices), Core.Optional.ToNullable(adaptiveBFrame), Core.Optional.ToNullable(profile), level.Value, Core.Optional.ToNullable(bufferWindow), Core.Optional.ToNullable(crf), Core.Optional.ToNullable(referenceFrames), Core.Optional.ToNullable(entropyMode));
         }
     }
 }

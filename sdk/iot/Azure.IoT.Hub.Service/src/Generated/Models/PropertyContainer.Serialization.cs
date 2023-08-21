@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class PropertyContainer : IUtf8JsonSerializable
+    public partial class PropertyContainer : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Desired))
+            if (Core.Optional.IsCollectionDefined(Desired))
             {
                 writer.WritePropertyName("desired"u8);
                 writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.IoT.Hub.Service.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Reported))
+            if (Core.Optional.IsCollectionDefined(Reported))
             {
                 writer.WritePropertyName("reported"u8);
                 writer.WriteStartObject();

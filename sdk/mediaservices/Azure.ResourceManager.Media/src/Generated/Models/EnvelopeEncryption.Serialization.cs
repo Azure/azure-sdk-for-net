@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class EnvelopeEncryption : IUtf8JsonSerializable
+    public partial class EnvelopeEncryption : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnabledProtocols))
+            if (Core.Optional.IsDefined(EnabledProtocols))
             {
                 writer.WritePropertyName("enabledProtocols"u8);
                 writer.WriteObjectValue(EnabledProtocols);
             }
-            if (Optional.IsCollectionDefined(ClearTracks))
+            if (Core.Optional.IsCollectionDefined(ClearTracks))
             {
                 writer.WritePropertyName("clearTracks"u8);
                 writer.WriteStartArray();
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ContentKeys))
+            if (Core.Optional.IsDefined(ContentKeys))
             {
                 writer.WritePropertyName("contentKeys"u8);
                 writer.WriteObjectValue(ContentKeys);
             }
-            if (Optional.IsDefined(CustomKeyAcquisitionUriTemplate))
+            if (Core.Optional.IsDefined(CustomKeyAcquisitionUriTemplate))
             {
                 writer.WritePropertyName("customKeyAcquisitionUrlTemplate"u8);
                 writer.WriteStringValue(CustomKeyAcquisitionUriTemplate);
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<MediaEnabledProtocols> enabledProtocols = default;
-            Optional<IList<MediaTrackSelection>> clearTracks = default;
-            Optional<StreamingPolicyContentKeys> contentKeys = default;
-            Optional<string> customKeyAcquisitionUriTemplate = default;
+            Core.Optional<MediaEnabledProtocols> enabledProtocols = default;
+            Core.Optional<IList<MediaTrackSelection>> clearTracks = default;
+            Core.Optional<StreamingPolicyContentKeys> contentKeys = default;
+            Core.Optional<string> customKeyAcquisitionUriTemplate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabledProtocols"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new EnvelopeEncryption(enabledProtocols.Value, Optional.ToList(clearTracks), contentKeys.Value, customKeyAcquisitionUriTemplate.Value);
+            return new EnvelopeEncryption(enabledProtocols.Value, Core.Optional.ToList(clearTracks), contentKeys.Value, customKeyAcquisitionUriTemplate.Value);
         }
     }
 }

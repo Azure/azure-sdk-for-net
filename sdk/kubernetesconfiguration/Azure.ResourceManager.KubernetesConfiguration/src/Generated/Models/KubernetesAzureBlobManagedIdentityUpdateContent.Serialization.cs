@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    internal partial class KubernetesAzureBlobManagedIdentityUpdateContent : IUtf8JsonSerializable
+    internal partial class KubernetesAzureBlobManagedIdentityUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientId))
+            if (Core.Optional.IsDefined(ClientId))
             {
                 if (ClientId != null)
                 {

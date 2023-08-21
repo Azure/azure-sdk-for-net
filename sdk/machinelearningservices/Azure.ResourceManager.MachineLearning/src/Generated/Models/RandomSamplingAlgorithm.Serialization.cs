@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class RandomSamplingAlgorithm : IUtf8JsonSerializable
+    public partial class RandomSamplingAlgorithm : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Rule))
+            if (Core.Optional.IsDefined(Rule))
             {
                 writer.WritePropertyName("rule"u8);
                 writer.WriteStringValue(Rule.Value.ToString());
             }
-            if (Optional.IsDefined(Seed))
+            if (Core.Optional.IsDefined(Seed))
             {
                 if (Seed != null)
                 {
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<RandomSamplingAlgorithmRule> rule = default;
-            Optional<int?> seed = default;
+            Core.Optional<RandomSamplingAlgorithmRule> rule = default;
+            Core.Optional<int?> seed = default;
             SamplingAlgorithmType samplingAlgorithmType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new RandomSamplingAlgorithm(samplingAlgorithmType, Optional.ToNullable(rule), Optional.ToNullable(seed));
+            return new RandomSamplingAlgorithm(samplingAlgorithmType, Core.Optional.ToNullable(rule), Core.Optional.ToNullable(seed));
         }
     }
 }

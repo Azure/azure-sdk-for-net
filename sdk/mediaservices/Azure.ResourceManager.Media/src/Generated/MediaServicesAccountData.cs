@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Media
         /// <param name="location"> The location. </param>
         public MediaServicesAccountData(AzureLocation location) : base(location)
         {
-            StorageAccounts = new ChangeTrackingList<MediaServicesStorageAccount>();
-            PrivateEndpointConnections = new ChangeTrackingList<MediaServicesPrivateEndpointConnectionData>();
+            StorageAccounts = new Core.ChangeTrackingList<MediaServicesStorageAccount>();
+            PrivateEndpointConnections = new Core.ChangeTrackingList<MediaServicesPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of MediaServicesAccountData. </summary>

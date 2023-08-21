@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of B2BPartnerContent. </summary>
         public B2BPartnerContent()
         {
-            BusinessIdentities = new ChangeTrackingList<IntegrationAccountBusinessIdentity>();
+            BusinessIdentities = new Core.ChangeTrackingList<IntegrationAccountBusinessIdentity>();
         }
 
         /// <summary> Initializes a new instance of B2BPartnerContent. </summary>

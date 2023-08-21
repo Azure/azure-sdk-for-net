@@ -18,7 +18,7 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Optional<int> statusCode = default;
+            Core.Optional<int> statusCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("statusCode"u8))
@@ -31,7 +31,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new BatchResultItem(Optional.ToNullable(statusCode));
+            return new BatchResultItem(Core.Optional.ToNullable(statusCode));
         }
     }
 }

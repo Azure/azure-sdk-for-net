@@ -10,29 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningWorkspaceConnectionProperties : IUtf8JsonSerializable
+    public partial class MachineLearningWorkspaceConnectionProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType.ToString());
-            if (Optional.IsDefined(Category))
+            if (Core.Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (Optional.IsDefined(Target))
+            if (Core.Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (Optional.IsDefined(Value))
+            if (Core.Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(ValueFormat))
+            if (Core.Optional.IsDefined(ValueFormat))
             {
                 writer.WritePropertyName("valueFormat"u8);
                 writer.WriteStringValue(ValueFormat.Value.ToString());

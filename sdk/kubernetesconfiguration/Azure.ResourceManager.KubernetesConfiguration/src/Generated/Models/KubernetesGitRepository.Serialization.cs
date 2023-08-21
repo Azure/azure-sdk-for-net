@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesGitRepository : IUtf8JsonSerializable
+    public partial class KubernetesGitRepository : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Uri))
+            if (Core.Optional.IsDefined(Uri))
             {
                 if (Uri != null)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("url");
                 }
             }
-            if (Optional.IsDefined(TimeoutInSeconds))
+            if (Core.Optional.IsDefined(TimeoutInSeconds))
             {
                 if (TimeoutInSeconds != null)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("timeoutInSeconds");
                 }
             }
-            if (Optional.IsDefined(SyncIntervalInSeconds))
+            if (Core.Optional.IsDefined(SyncIntervalInSeconds))
             {
                 if (SyncIntervalInSeconds != null)
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("syncIntervalInSeconds");
                 }
             }
-            if (Optional.IsDefined(RepositoryRef))
+            if (Core.Optional.IsDefined(RepositoryRef))
             {
                 if (RepositoryRef != null)
                 {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("repositoryRef");
                 }
             }
-            if (Optional.IsDefined(SshKnownHosts))
+            if (Core.Optional.IsDefined(SshKnownHosts))
             {
                 if (SshKnownHosts != null)
                 {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("sshKnownHosts");
                 }
             }
-            if (Optional.IsDefined(HttpsUser))
+            if (Core.Optional.IsDefined(HttpsUser))
             {
                 if (HttpsUser != null)
                 {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("httpsUser");
                 }
             }
-            if (Optional.IsDefined(HttpsCACert))
+            if (Core.Optional.IsDefined(HttpsCACert))
             {
                 if (HttpsCACert != null)
                 {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("httpsCACert");
                 }
             }
-            if (Optional.IsDefined(LocalAuthRef))
+            if (Core.Optional.IsDefined(LocalAuthRef))
             {
                 if (LocalAuthRef != null)
                 {
@@ -121,14 +121,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<Uri> url = default;
-            Optional<long?> timeoutInSeconds = default;
-            Optional<long?> syncIntervalInSeconds = default;
-            Optional<KubernetesGitRepositoryRef> repositoryRef = default;
-            Optional<string> sshKnownHosts = default;
-            Optional<string> httpsUser = default;
-            Optional<string> httpsCACert = default;
-            Optional<string> localAuthRef = default;
+            Core.Optional<Uri> url = default;
+            Core.Optional<long?> timeoutInSeconds = default;
+            Core.Optional<long?> syncIntervalInSeconds = default;
+            Core.Optional<KubernetesGitRepositoryRef> repositoryRef = default;
+            Core.Optional<string> sshKnownHosts = default;
+            Core.Optional<string> httpsUser = default;
+            Core.Optional<string> httpsCACert = default;
+            Core.Optional<string> localAuthRef = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     continue;
                 }
             }
-            return new KubernetesGitRepository(url.Value, Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(syncIntervalInSeconds), repositoryRef.Value, sshKnownHosts.Value, httpsUser.Value, httpsCACert.Value, localAuthRef.Value);
+            return new KubernetesGitRepository(url.Value, Core.Optional.ToNullable(timeoutInSeconds), Core.Optional.ToNullable(syncIntervalInSeconds), repositoryRef.Value, sshKnownHosts.Value, httpsUser.Value, httpsCACert.Value, localAuthRef.Value);
         }
     }
 }

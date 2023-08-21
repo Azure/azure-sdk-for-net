@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    internal partial class GeoJsonFeatureCollectionData : IUtf8JsonSerializable
+    internal partial class GeoJsonFeatureCollectionData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("features"u8);

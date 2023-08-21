@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<long?> extractedSize = default;
-            Optional<long?> fileSize = default;
-            Optional<long?> extractedFileCount = default;
-            Optional<long?> componentCount = default;
-            Optional<long?> binaryCount = default;
-            Optional<long?> analysisTimeSeconds = default;
-            Optional<long?> rootFileSystems = default;
+            Core.Optional<long?> extractedSize = default;
+            Core.Optional<long?> fileSize = default;
+            Core.Optional<long?> extractedFileCount = default;
+            Core.Optional<long?> componentCount = default;
+            Core.Optional<long?> binaryCount = default;
+            Core.Optional<long?> analysisTimeSeconds = default;
+            Core.Optional<long?> rootFileSystems = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extractedSize"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     continue;
                 }
             }
-            return new FirmwareSummary(Optional.ToNullable(extractedSize), Optional.ToNullable(fileSize), Optional.ToNullable(extractedFileCount), Optional.ToNullable(componentCount), Optional.ToNullable(binaryCount), Optional.ToNullable(analysisTimeSeconds), Optional.ToNullable(rootFileSystems));
+            return new FirmwareSummary(Core.Optional.ToNullable(extractedSize), Core.Optional.ToNullable(fileSize), Core.Optional.ToNullable(extractedFileCount), Core.Optional.ToNullable(componentCount), Core.Optional.ToNullable(binaryCount), Core.Optional.ToNullable(analysisTimeSeconds), Core.Optional.ToNullable(rootFileSystems));
         }
     }
 }

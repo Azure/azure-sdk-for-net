@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<string> errorMessage = default;
-            Optional<string> phase = default;
-            Optional<bool> ready = default;
+            Core.Optional<string> errorMessage = default;
+            Core.Optional<string> phase = default;
+            Core.Optional<bool> ready = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorMessage"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new AddonStatus(errorMessage.Value, phase.Value, Optional.ToNullable(ready));
+            return new AddonStatus(errorMessage.Value, phase.Value, Core.Optional.ToNullable(ready));
         }
     }
 }

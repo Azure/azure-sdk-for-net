@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MachineLearningWorkspaceQuotaUpdate>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<MachineLearningWorkspaceQuotaUpdate>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new UpdateWorkspaceQuotasResult(Optional.ToList(value), nextLink.Value);
+            return new UpdateWorkspaceQuotasResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class NetworkFabricIPPrefixOperationSource : IOperationSource<NetworkFabricIPPrefixResource>
+    internal class NetworkFabricIPPrefixOperationSource : Core.IOperationSource<NetworkFabricIPPrefixResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             _client = client;
         }
 
-        NetworkFabricIPPrefixResource IOperationSource<NetworkFabricIPPrefixResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkFabricIPPrefixResource Core.IOperationSource<NetworkFabricIPPrefixResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NetworkFabricIPPrefixData.DeserializeNetworkFabricIPPrefixData(document.RootElement);
             return new NetworkFabricIPPrefixResource(_client, data);
         }
 
-        async ValueTask<NetworkFabricIPPrefixResource> IOperationSource<NetworkFabricIPPrefixResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkFabricIPPrefixResource> Core.IOperationSource<NetworkFabricIPPrefixResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NetworkFabricIPPrefixData.DeserializeNetworkFabricIPPrefixData(document.RootElement);

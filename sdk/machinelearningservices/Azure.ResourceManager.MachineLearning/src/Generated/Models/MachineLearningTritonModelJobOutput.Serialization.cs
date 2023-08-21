@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningTritonModelJobOutput : IUtf8JsonSerializable
+    public partial class MachineLearningTritonModelJobOutput : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Mode))
+            if (Core.Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsDefined(Uri))
+            if (Core.Optional.IsDefined(Uri))
             {
                 if (Uri != null)
                 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("uri");
                 }
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningOutputDeliveryMode> mode = default;
-            Optional<Uri> uri = default;
-            Optional<string> description = default;
+            Core.Optional<MachineLearningOutputDeliveryMode> mode = default;
+            Core.Optional<Uri> uri = default;
+            Core.Optional<string> description = default;
             JobOutputType jobOutputType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningTritonModelJobOutput(description.Value, jobOutputType, Optional.ToNullable(mode), uri.Value);
+            return new MachineLearningTritonModelJobOutput(description.Value, jobOutputType, Core.Optional.ToNullable(mode), uri.Value);
         }
     }
 }

@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class TerminalServerPatchableProperties : IUtf8JsonSerializable
+    public partial class TerminalServerPatchableProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Username))
+            if (Core.Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Optional.IsDefined(Password))
+            if (Core.Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(SerialNumber))
+            if (Core.Optional.IsDefined(SerialNumber))
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> username = default;
-            Optional<string> password = default;
-            Optional<string> serialNumber = default;
+            Core.Optional<string> username = default;
+            Core.Optional<string> password = default;
+            Core.Optional<string> serialNumber = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("username"u8))

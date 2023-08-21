@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KustoPrivateEndpointConnectionData>> value = default;
+            Core.Optional<IReadOnlyList<KustoPrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new KustoPrivateEndpointConnectionListResult(Optional.ToList(value));
+            return new KustoPrivateEndpointConnectionListResult(Core.Optional.ToList(value));
         }
     }
 }

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class VirtualNetworksExtendedLocation : IUtf8JsonSerializable
+    public partial class VirtualNetworksExtendedLocation : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualNetworksExtendedLocationType))
+            if (Core.Optional.IsDefined(VirtualNetworksExtendedLocationType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(VirtualNetworksExtendedLocationType);
             }
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<string> name = default;
+            Core.Optional<string> type = default;
+            Core.Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))

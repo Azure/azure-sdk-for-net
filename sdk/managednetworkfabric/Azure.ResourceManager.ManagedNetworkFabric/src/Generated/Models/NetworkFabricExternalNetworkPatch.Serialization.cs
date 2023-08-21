@@ -10,49 +10,49 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkFabricExternalNetworkPatch : IUtf8JsonSerializable
+    public partial class NetworkFabricExternalNetworkPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
+            if (Core.Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (Optional.IsDefined(ImportRoutePolicyId))
+            if (Core.Optional.IsDefined(ImportRoutePolicyId))
             {
                 writer.WritePropertyName("importRoutePolicyId"u8);
                 writer.WriteStringValue(ImportRoutePolicyId);
             }
-            if (Optional.IsDefined(ExportRoutePolicyId))
+            if (Core.Optional.IsDefined(ExportRoutePolicyId))
             {
                 writer.WritePropertyName("exportRoutePolicyId"u8);
                 writer.WriteStringValue(ExportRoutePolicyId);
             }
-            if (Optional.IsDefined(ImportRoutePolicy))
+            if (Core.Optional.IsDefined(ImportRoutePolicy))
             {
                 writer.WritePropertyName("importRoutePolicy"u8);
                 writer.WriteObjectValue(ImportRoutePolicy);
             }
-            if (Optional.IsDefined(ExportRoutePolicy))
+            if (Core.Optional.IsDefined(ExportRoutePolicy))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
                 writer.WriteObjectValue(ExportRoutePolicy);
             }
-            if (Optional.IsDefined(PeeringOption))
+            if (Core.Optional.IsDefined(PeeringOption))
             {
                 writer.WritePropertyName("peeringOption"u8);
                 writer.WriteStringValue(PeeringOption.Value.ToString());
             }
-            if (Optional.IsDefined(OptionBProperties))
+            if (Core.Optional.IsDefined(OptionBProperties))
             {
                 writer.WritePropertyName("optionBProperties"u8);
                 writer.WriteObjectValue(OptionBProperties);
             }
-            if (Optional.IsDefined(OptionAProperties))
+            if (Core.Optional.IsDefined(OptionAProperties))
             {
                 writer.WritePropertyName("optionAProperties"u8);
                 writer.WriteObjectValue(OptionAProperties);

@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class PrivateStorePlanDetails : IUtf8JsonSerializable
+    public partial class PrivateStorePlanDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PlanId))
+            if (Core.Optional.IsDefined(PlanId))
             {
                 writer.WritePropertyName("planId"u8);
                 writer.WriteStringValue(PlanId);
             }
-            if (Optional.IsDefined(Justification))
+            if (Core.Optional.IsDefined(Justification))
             {
                 writer.WritePropertyName("justification"u8);
                 writer.WriteStringValue(Justification);
             }
-            if (Optional.IsDefined(SubscriptionId))
+            if (Core.Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (Optional.IsDefined(SubscriptionName))
+            if (Core.Optional.IsDefined(SubscriptionName))
             {
                 writer.WritePropertyName("subscriptionName"u8);
                 writer.WriteStringValue(SubscriptionName);
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> planId = default;
-            Optional<PrivateStorePlanStatus> status = default;
-            Optional<BinaryData> requestDate = default;
-            Optional<string> justification = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> subscriptionName = default;
+            Core.Optional<string> planId = default;
+            Core.Optional<PrivateStorePlanStatus> status = default;
+            Core.Optional<BinaryData> requestDate = default;
+            Core.Optional<string> justification = default;
+            Core.Optional<string> subscriptionId = default;
+            Core.Optional<string> subscriptionName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("planId"u8))
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new PrivateStorePlanDetails(planId.Value, Optional.ToNullable(status), requestDate.Value, justification.Value, subscriptionId.Value, subscriptionName.Value);
+            return new PrivateStorePlanDetails(planId.Value, Core.Optional.ToNullable(status), requestDate.Value, justification.Value, subscriptionId.Value, subscriptionName.Value);
         }
     }
 }

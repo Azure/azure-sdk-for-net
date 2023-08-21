@@ -13,34 +13,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    public partial class StreamingPolicyData : IUtf8JsonSerializable
+    public partial class StreamingPolicyData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultContentKeyPolicyName))
+            if (Core.Optional.IsDefined(DefaultContentKeyPolicyName))
             {
                 writer.WritePropertyName("defaultContentKeyPolicyName"u8);
                 writer.WriteStringValue(DefaultContentKeyPolicyName);
             }
-            if (Optional.IsDefined(EnvelopeEncryption))
+            if (Core.Optional.IsDefined(EnvelopeEncryption))
             {
                 writer.WritePropertyName("envelopeEncryption"u8);
                 writer.WriteObjectValue(EnvelopeEncryption);
             }
-            if (Optional.IsDefined(CommonEncryptionCenc))
+            if (Core.Optional.IsDefined(CommonEncryptionCenc))
             {
                 writer.WritePropertyName("commonEncryptionCenc"u8);
                 writer.WriteObjectValue(CommonEncryptionCenc);
             }
-            if (Optional.IsDefined(CommonEncryptionCbcs))
+            if (Core.Optional.IsDefined(CommonEncryptionCbcs))
             {
                 writer.WritePropertyName("commonEncryptionCbcs"u8);
                 writer.WriteObjectValue(CommonEncryptionCbcs);
             }
-            if (Optional.IsDefined(NoEncryption))
+            if (Core.Optional.IsDefined(NoEncryption))
             {
                 writer.WritePropertyName("noEncryption"u8);
                 writer.WriteObjectValue(NoEncryption);
@@ -58,13 +58,13 @@ namespace Azure.ResourceManager.Media
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<string> defaultContentKeyPolicyName = default;
-            Optional<EnvelopeEncryption> envelopeEncryption = default;
-            Optional<CommonEncryptionCenc> commonEncryptionCenc = default;
-            Optional<CommonEncryptionCbcs> commonEncryptionCbcs = default;
-            Optional<NoEncryption> noEncryption = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DateTimeOffset> created = default;
+            Core.Optional<string> defaultContentKeyPolicyName = default;
+            Core.Optional<EnvelopeEncryption> envelopeEncryption = default;
+            Core.Optional<CommonEncryptionCenc> commonEncryptionCenc = default;
+            Core.Optional<CommonEncryptionCbcs> commonEncryptionCbcs = default;
+            Core.Optional<NoEncryption> noEncryption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Media
                     continue;
                 }
             }
-            return new StreamingPolicyData(id, name, type, systemData.Value, Optional.ToNullable(created), defaultContentKeyPolicyName.Value, envelopeEncryption.Value, commonEncryptionCenc.Value, commonEncryptionCbcs.Value, noEncryption.Value);
+            return new StreamingPolicyData(id, name, type, systemData.Value, Core.Optional.ToNullable(created), defaultContentKeyPolicyName.Value, envelopeEncryption.Value, commonEncryptionCenc.Value, commonEncryptionCbcs.Value, noEncryption.Value);
         }
     }
 }

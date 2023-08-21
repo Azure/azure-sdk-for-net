@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class NetworkPacketBrokerOperationSource : IOperationSource<NetworkPacketBrokerResource>
+    internal class NetworkPacketBrokerOperationSource : Core.IOperationSource<NetworkPacketBrokerResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             _client = client;
         }
 
-        NetworkPacketBrokerResource IOperationSource<NetworkPacketBrokerResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkPacketBrokerResource Core.IOperationSource<NetworkPacketBrokerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NetworkPacketBrokerData.DeserializeNetworkPacketBrokerData(document.RootElement);
             return new NetworkPacketBrokerResource(_client, data);
         }
 
-        async ValueTask<NetworkPacketBrokerResource> IOperationSource<NetworkPacketBrokerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkPacketBrokerResource> Core.IOperationSource<NetworkPacketBrokerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NetworkPacketBrokerData.DeserializeNetworkPacketBrokerData(document.RootElement);

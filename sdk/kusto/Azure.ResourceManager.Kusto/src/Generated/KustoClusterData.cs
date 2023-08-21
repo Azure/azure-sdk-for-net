@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Kusto
             Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
-            Zones = new ChangeTrackingList<string>();
-            TrustedExternalTenants = new ChangeTrackingList<KustoClusterTrustedExternalTenant>();
-            AllowedIPRangeList = new ChangeTrackingList<string>();
-            AcceptedAudiences = new ChangeTrackingList<AcceptedAudience>();
-            AllowedFqdnList = new ChangeTrackingList<string>();
-            PrivateEndpointConnections = new ChangeTrackingList<KustoPrivateEndpointConnectionData>();
+            Zones = new Core.ChangeTrackingList<string>();
+            TrustedExternalTenants = new Core.ChangeTrackingList<KustoClusterTrustedExternalTenant>();
+            AllowedIPRangeList = new Core.ChangeTrackingList<string>();
+            AcceptedAudiences = new Core.ChangeTrackingList<AcceptedAudience>();
+            AllowedFqdnList = new Core.ChangeTrackingList<string>();
+            PrivateEndpointConnections = new Core.ChangeTrackingList<KustoPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of KustoClusterData. </summary>

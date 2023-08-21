@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Initializes a new instance of MarketplaceAdminApprovalRequestData. </summary>
         public MarketplaceAdminApprovalRequestData()
         {
-            ApprovedPlans = new ChangeTrackingList<string>();
-            Plans = new ChangeTrackingList<PlanRequesterDetails>();
-            CollectionIds = new ChangeTrackingList<Guid>();
+            ApprovedPlans = new Core.ChangeTrackingList<string>();
+            Plans = new Core.ChangeTrackingList<PlanRequesterDetails>();
+            CollectionIds = new Core.ChangeTrackingList<Guid>();
         }
 
         /// <summary> Initializes a new instance of MarketplaceAdminApprovalRequestData. </summary>

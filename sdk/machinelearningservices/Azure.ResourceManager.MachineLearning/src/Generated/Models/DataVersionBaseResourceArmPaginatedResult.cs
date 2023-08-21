@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of DataVersionBaseResourceArmPaginatedResult. </summary>
         internal DataVersionBaseResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<MachineLearningDataVersionData>();
+            Value = new Core.ChangeTrackingList<MachineLearningDataVersionData>();
         }
 
         /// <summary> Initializes a new instance of DataVersionBaseResourceArmPaginatedResult. </summary>

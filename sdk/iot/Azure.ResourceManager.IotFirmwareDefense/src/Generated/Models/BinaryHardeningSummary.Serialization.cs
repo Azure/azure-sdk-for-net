@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<long> totalFiles = default;
-            Optional<int?> nx = default;
-            Optional<int?> pie = default;
-            Optional<int?> relro = default;
-            Optional<int?> canary = default;
-            Optional<int?> stripped = default;
+            Core.Optional<long> totalFiles = default;
+            Core.Optional<int?> nx = default;
+            Core.Optional<int?> pie = default;
+            Core.Optional<int?> relro = default;
+            Core.Optional<int?> canary = default;
+            Core.Optional<int?> stripped = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalFiles"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     continue;
                 }
             }
-            return new BinaryHardeningSummary(Optional.ToNullable(totalFiles), Optional.ToNullable(nx), Optional.ToNullable(pie), Optional.ToNullable(relro), Optional.ToNullable(canary), Optional.ToNullable(stripped));
+            return new BinaryHardeningSummary(Core.Optional.ToNullable(totalFiles), Core.Optional.ToNullable(nx), Core.Optional.ToNullable(pie), Core.Optional.ToNullable(relro), Core.Optional.ToNullable(canary), Core.Optional.ToNullable(stripped));
         }
     }
 }

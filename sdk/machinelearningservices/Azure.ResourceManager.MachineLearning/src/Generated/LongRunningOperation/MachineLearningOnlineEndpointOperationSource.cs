@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    internal class MachineLearningOnlineEndpointOperationSource : IOperationSource<MachineLearningOnlineEndpointResource>
+    internal class MachineLearningOnlineEndpointOperationSource : Core.IOperationSource<MachineLearningOnlineEndpointResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.MachineLearning
             _client = client;
         }
 
-        MachineLearningOnlineEndpointResource IOperationSource<MachineLearningOnlineEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        MachineLearningOnlineEndpointResource Core.IOperationSource<MachineLearningOnlineEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MachineLearningOnlineEndpointData.DeserializeMachineLearningOnlineEndpointData(document.RootElement);
             return new MachineLearningOnlineEndpointResource(_client, data);
         }
 
-        async ValueTask<MachineLearningOnlineEndpointResource> IOperationSource<MachineLearningOnlineEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MachineLearningOnlineEndpointResource> Core.IOperationSource<MachineLearningOnlineEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MachineLearningOnlineEndpointData.DeserializeMachineLearningOnlineEndpointData(document.RootElement);

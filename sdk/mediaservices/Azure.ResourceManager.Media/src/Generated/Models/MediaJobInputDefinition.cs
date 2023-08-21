@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of MediaJobInputDefinition. </summary>
         protected MediaJobInputDefinition()
         {
-            IncludedTracks = new ChangeTrackingList<TrackDescriptor>();
+            IncludedTracks = new Core.ChangeTrackingList<TrackDescriptor>();
         }
 
         /// <summary> Initializes a new instance of MediaJobInputDefinition. </summary>

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningCertificateDatastoreSecrets : IUtf8JsonSerializable
+    public partial class MachineLearningCertificateDatastoreSecrets : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Certificate))
+            if (Core.Optional.IsDefined(Certificate))
             {
                 if (Certificate != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> certificate = default;
+            Core.Optional<string> certificate = default;
             SecretsType secretsType = default;
             foreach (var property in element.EnumerateObject())
             {

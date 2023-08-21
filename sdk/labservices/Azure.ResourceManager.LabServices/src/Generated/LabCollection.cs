@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.LabServices
             try
             {
                 var response = await _labRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, labName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new LabServicesArmOperation<LabResource>(new LabOperationSource(Client), _labClientDiagnostics, Pipeline, _labRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, data).Request, response, OperationFinalStateVia.OriginalUri);
+                var operation = new LabServicesArmOperation<LabResource>(new LabOperationSource(Client), _labClientDiagnostics, Pipeline, _labRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, data).Request, response, Core.OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.LabServices
             try
             {
                 var response = _labRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, labName, data, cancellationToken);
-                var operation = new LabServicesArmOperation<LabResource>(new LabOperationSource(Client), _labClientDiagnostics, Pipeline, _labRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, data).Request, response, OperationFinalStateVia.OriginalUri);
+                var operation = new LabServicesArmOperation<LabResource>(new LabOperationSource(Client), _labClientDiagnostics, Pipeline, _labRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, data).Request, response, Core.OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.LabServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _labRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _labRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LabResource(Client, LabData.DeserializeLabData(e)), _labClientDiagnostics, Pipeline, "LabCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LabResource(Client, LabData.DeserializeLabData(e)), _labClientDiagnostics, Pipeline, "LabCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.LabServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _labRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _labRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LabResource(Client, LabData.DeserializeLabData(e)), _labClientDiagnostics, Pipeline, "LabCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LabResource(Client, LabData.DeserializeLabData(e)), _labClientDiagnostics, Pipeline, "LabCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

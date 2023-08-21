@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningComputeInstanceProperties : IUtf8JsonSerializable
+    public partial class MachineLearningComputeInstanceProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(VmSize))
+            if (Core.Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (Optional.IsDefined(Subnet))
+            if (Core.Optional.IsDefined(Subnet))
             {
                 if (Subnet != null)
                 {
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("subnet");
                 }
             }
-            if (Optional.IsDefined(ApplicationSharingPolicy))
+            if (Core.Optional.IsDefined(ApplicationSharingPolicy))
             {
                 writer.WritePropertyName("applicationSharingPolicy"u8);
                 writer.WriteStringValue(ApplicationSharingPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(SshSettings))
+            if (Core.Optional.IsDefined(SshSettings))
             {
                 if (SshSettings != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("sshSettings");
                 }
             }
-            if (Optional.IsDefined(ComputeInstanceAuthorizationType))
+            if (Core.Optional.IsDefined(ComputeInstanceAuthorizationType))
             {
                 if (ComputeInstanceAuthorizationType != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("computeInstanceAuthorizationType");
                 }
             }
-            if (Optional.IsDefined(PersonalComputeInstanceSettings))
+            if (Core.Optional.IsDefined(PersonalComputeInstanceSettings))
             {
                 if (PersonalComputeInstanceSettings != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("personalComputeInstanceSettings");
                 }
             }
-            if (Optional.IsDefined(SetupScriptsSettings))
+            if (Core.Optional.IsDefined(SetupScriptsSettings))
             {
                 if (SetupScriptsSettings != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("setupScripts");
                 }
             }
-            if (Optional.IsDefined(EnableNodePublicIP))
+            if (Core.Optional.IsDefined(EnableNodePublicIP))
             {
                 writer.WritePropertyName("enableNodePublicIp"u8);
                 writer.WriteBooleanValue(EnableNodePublicIP.Value);
@@ -100,25 +100,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> vmSize = default;
-            Optional<ResourceId> subnet = default;
-            Optional<MachineLearningApplicationSharingPolicy> applicationSharingPolicy = default;
-            Optional<MachineLearningComputeInstanceSshSettings> sshSettings = default;
-            Optional<MachineLearningComputeInstanceConnectivityEndpoints> connectivityEndpoints = default;
-            Optional<IReadOnlyList<MachineLearningComputeInstanceApplication>> applications = default;
-            Optional<MachineLearningComputeInstanceCreatedBy> createdBy = default;
-            Optional<IReadOnlyList<MachineLearningError>> errors = default;
-            Optional<MachineLearningComputeInstanceState> state = default;
-            Optional<MachineLearningComputeInstanceAuthorizationType?> computeInstanceAuthorizationType = default;
-            Optional<PersonalComputeInstanceSettings> personalComputeInstanceSettings = default;
-            Optional<SetupScripts> setupScripts = default;
-            Optional<MachineLearningComputeInstanceLastOperation> lastOperation = default;
-            Optional<ComputeSchedules> schedules = default;
-            Optional<bool> enableNodePublicIP = default;
-            Optional<IReadOnlyList<MachineLearningComputeInstanceContainer>> containers = default;
-            Optional<IReadOnlyList<MachineLearningComputeInstanceDataDisk>> dataDisks = default;
-            Optional<IReadOnlyList<MachineLearningComputeInstanceDataMount>> dataMounts = default;
-            Optional<ComputeInstanceVersion> versions = default;
+            Core.Optional<string> vmSize = default;
+            Core.Optional<ResourceId> subnet = default;
+            Core.Optional<MachineLearningApplicationSharingPolicy> applicationSharingPolicy = default;
+            Core.Optional<MachineLearningComputeInstanceSshSettings> sshSettings = default;
+            Core.Optional<MachineLearningComputeInstanceConnectivityEndpoints> connectivityEndpoints = default;
+            Core.Optional<IReadOnlyList<MachineLearningComputeInstanceApplication>> applications = default;
+            Core.Optional<MachineLearningComputeInstanceCreatedBy> createdBy = default;
+            Core.Optional<IReadOnlyList<MachineLearningError>> errors = default;
+            Core.Optional<MachineLearningComputeInstanceState> state = default;
+            Core.Optional<MachineLearningComputeInstanceAuthorizationType?> computeInstanceAuthorizationType = default;
+            Core.Optional<PersonalComputeInstanceSettings> personalComputeInstanceSettings = default;
+            Core.Optional<SetupScripts> setupScripts = default;
+            Core.Optional<MachineLearningComputeInstanceLastOperation> lastOperation = default;
+            Core.Optional<ComputeSchedules> schedules = default;
+            Core.Optional<bool> enableNodePublicIP = default;
+            Core.Optional<IReadOnlyList<MachineLearningComputeInstanceContainer>> containers = default;
+            Core.Optional<IReadOnlyList<MachineLearningComputeInstanceDataDisk>> dataDisks = default;
+            Core.Optional<IReadOnlyList<MachineLearningComputeInstanceDataMount>> dataMounts = default;
+            Core.Optional<ComputeInstanceVersion> versions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmSize"u8))
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningComputeInstanceProperties(vmSize.Value, subnet.Value, Optional.ToNullable(applicationSharingPolicy), sshSettings.Value, connectivityEndpoints.Value, Optional.ToList(applications), createdBy.Value, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToNullable(computeInstanceAuthorizationType), personalComputeInstanceSettings.Value, setupScripts.Value, lastOperation.Value, schedules.Value, Optional.ToNullable(enableNodePublicIP), Optional.ToList(containers), Optional.ToList(dataDisks), Optional.ToList(dataMounts), versions.Value);
+            return new MachineLearningComputeInstanceProperties(vmSize.Value, subnet.Value, Core.Optional.ToNullable(applicationSharingPolicy), sshSettings.Value, connectivityEndpoints.Value, Core.Optional.ToList(applications), createdBy.Value, Core.Optional.ToList(errors), Core.Optional.ToNullable(state), Core.Optional.ToNullable(computeInstanceAuthorizationType), personalComputeInstanceSettings.Value, setupScripts.Value, lastOperation.Value, schedules.Value, Core.Optional.ToNullable(enableNodePublicIP), Core.Optional.ToList(containers), Core.Optional.ToList(dataDisks), Core.Optional.ToList(dataMounts), versions.Value);
         }
     }
 }

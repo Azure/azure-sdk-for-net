@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <summary> Initializes a new instance of PagedSchedules. </summary>
         internal PagedSchedules()
         {
-            Value = new ChangeTrackingList<LabServicesScheduleData>();
+            Value = new Core.ChangeTrackingList<LabServicesScheduleData>();
         }
 
         /// <summary> Initializes a new instance of PagedSchedules. </summary>

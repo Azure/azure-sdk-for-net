@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> Initializes a new instance of VirtualNetworksProperties. </summary>
         public VirtualNetworksProperties()
         {
-            VipPool = new ChangeTrackingList<VirtualNetworksPropertiesVipPoolItem>();
-            VmipPool = new ChangeTrackingList<VirtualNetworksPropertiesVmipPoolItem>();
-            DhcpServers = new ChangeTrackingList<string>();
-            DnsServers = new ChangeTrackingList<string>();
+            VipPool = new Core.ChangeTrackingList<VirtualNetworksPropertiesVipPoolItem>();
+            VmipPool = new Core.ChangeTrackingList<VirtualNetworksPropertiesVmipPoolItem>();
+            DhcpServers = new Core.ChangeTrackingList<string>();
+            DnsServers = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworksProperties. </summary>

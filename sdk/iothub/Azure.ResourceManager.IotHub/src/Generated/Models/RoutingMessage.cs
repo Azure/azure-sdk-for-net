@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Initializes a new instance of RoutingMessage. </summary>
         public RoutingMessage()
         {
-            AppProperties = new ChangeTrackingDictionary<string, string>();
-            SystemProperties = new ChangeTrackingDictionary<string, string>();
+            AppProperties = new Core.ChangeTrackingDictionary<string, string>();
+            SystemProperties = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Body of routing message. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of StatementConditionProperties. </summary>
         public StatementConditionProperties()
         {
-            IPExtendedCommunityIds = new ChangeTrackingList<ResourceIdentifier>();
+            IPExtendedCommunityIds = new Core.ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of StatementConditionProperties. </summary>

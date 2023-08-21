@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ValidateConfigurationContent : IUtf8JsonSerializable
+    public partial class ValidateConfigurationContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ValidateAction))
+            if (Core.Optional.IsDefined(ValidateAction))
             {
                 writer.WritePropertyName("validateAction"u8);
                 writer.WriteStringValue(ValidateAction.Value.ToString());

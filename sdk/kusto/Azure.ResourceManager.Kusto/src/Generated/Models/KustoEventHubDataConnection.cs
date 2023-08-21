@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of KustoEventHubDataConnection. </summary>
         public KustoEventHubDataConnection()
         {
-            EventSystemProperties = new ChangeTrackingList<string>();
+            EventSystemProperties = new Core.ChangeTrackingList<string>();
             Kind = DataConnectionKind.EventHub;
         }
 

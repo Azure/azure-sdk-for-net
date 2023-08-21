@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<ETag> etag = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<ManagedHsmPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<ManagedHsmPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<SubResource> privateEndpoint = default;
+            Core.Optional<ManagedHsmPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Core.Optional<ManagedHsmPrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new ManagedHsmPrivateEndpointConnectionItemData(id.Value, Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new ManagedHsmPrivateEndpointConnectionItemData(id.Value, Core.Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Core.Optional.ToNullable(provisioningState));
         }
     }
 }

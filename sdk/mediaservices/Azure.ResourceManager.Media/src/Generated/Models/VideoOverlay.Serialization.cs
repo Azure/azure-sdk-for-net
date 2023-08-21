@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class VideoOverlay : IUtf8JsonSerializable
+    public partial class VideoOverlay : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Position))
+            if (Core.Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
                 writer.WriteObjectValue(Position);
             }
-            if (Optional.IsDefined(Opacity))
+            if (Core.Optional.IsDefined(Opacity))
             {
                 writer.WritePropertyName("opacity"u8);
                 writer.WriteNumberValue(Opacity.Value);
             }
-            if (Optional.IsDefined(CropRectangle))
+            if (Core.Optional.IsDefined(CropRectangle))
             {
                 writer.WritePropertyName("cropRectangle"u8);
                 writer.WriteObjectValue(CropRectangle);
@@ -35,27 +35,27 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStringValue(OdataType);
             writer.WritePropertyName("inputLabel"u8);
             writer.WriteStringValue(InputLabel);
-            if (Optional.IsDefined(Start))
+            if (Core.Optional.IsDefined(Start))
             {
                 writer.WritePropertyName("start"u8);
                 writer.WriteStringValue(Start.Value, "P");
             }
-            if (Optional.IsDefined(End))
+            if (Core.Optional.IsDefined(End))
             {
                 writer.WritePropertyName("end"u8);
                 writer.WriteStringValue(End.Value, "P");
             }
-            if (Optional.IsDefined(FadeInDuration))
+            if (Core.Optional.IsDefined(FadeInDuration))
             {
                 writer.WritePropertyName("fadeInDuration"u8);
                 writer.WriteStringValue(FadeInDuration.Value, "P");
             }
-            if (Optional.IsDefined(FadeOutDuration))
+            if (Core.Optional.IsDefined(FadeOutDuration))
             {
                 writer.WritePropertyName("fadeOutDuration"u8);
                 writer.WriteStringValue(FadeOutDuration.Value, "P");
             }
-            if (Optional.IsDefined(AudioGainLevel))
+            if (Core.Optional.IsDefined(AudioGainLevel))
             {
                 writer.WritePropertyName("audioGainLevel"u8);
                 writer.WriteNumberValue(AudioGainLevel.Value);
@@ -69,16 +69,16 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<RectangularWindow> position = default;
-            Optional<double> opacity = default;
-            Optional<RectangularWindow> cropRectangle = default;
+            Core.Optional<RectangularWindow> position = default;
+            Core.Optional<double> opacity = default;
+            Core.Optional<RectangularWindow> cropRectangle = default;
             string odataType = default;
             string inputLabel = default;
-            Optional<TimeSpan> start = default;
-            Optional<TimeSpan> end = default;
-            Optional<TimeSpan> fadeInDuration = default;
-            Optional<TimeSpan> fadeOutDuration = default;
-            Optional<double> audioGainLevel = default;
+            Core.Optional<TimeSpan> start = default;
+            Core.Optional<TimeSpan> end = default;
+            Core.Optional<TimeSpan> fadeInDuration = default;
+            Core.Optional<TimeSpan> fadeOutDuration = default;
+            Core.Optional<double> audioGainLevel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("position"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new VideoOverlay(odataType, inputLabel, Optional.ToNullable(start), Optional.ToNullable(end), Optional.ToNullable(fadeInDuration), Optional.ToNullable(fadeOutDuration), Optional.ToNullable(audioGainLevel), position.Value, Optional.ToNullable(opacity), cropRectangle.Value);
+            return new VideoOverlay(odataType, inputLabel, Core.Optional.ToNullable(start), Core.Optional.ToNullable(end), Core.Optional.ToNullable(fadeInDuration), Core.Optional.ToNullable(fadeOutDuration), Core.Optional.ToNullable(audioGainLevel), position.Value, Core.Optional.ToNullable(opacity), cropRectangle.Value);
         }
     }
 }

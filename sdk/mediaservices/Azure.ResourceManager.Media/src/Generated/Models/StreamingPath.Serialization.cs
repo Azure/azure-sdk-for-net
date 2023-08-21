@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Media.Models
             }
             StreamingPolicyStreamingProtocol streamingProtocol = default;
             StreamingPathEncryptionScheme encryptionScheme = default;
-            Optional<IReadOnlyList<string>> paths = default;
+            Core.Optional<IReadOnlyList<string>> paths = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streamingProtocol"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new StreamingPath(streamingProtocol, encryptionScheme, Optional.ToList(paths));
+            return new StreamingPath(streamingProtocol, encryptionScheme, Core.Optional.ToList(paths));
         }
     }
 }

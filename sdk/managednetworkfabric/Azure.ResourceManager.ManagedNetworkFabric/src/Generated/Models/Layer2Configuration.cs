@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of Layer2Configuration. </summary>
         public Layer2Configuration()
         {
-            Interfaces = new ChangeTrackingList<ResourceIdentifier>();
+            Interfaces = new Core.ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of Layer2Configuration. </summary>

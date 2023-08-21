@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of TransferOffersContent. </summary>
         public TransferOffersContent()
         {
-            TargetCollections = new ChangeTrackingList<string>();
-            OfferIdsList = new ChangeTrackingList<string>();
+            TargetCollections = new Core.ChangeTrackingList<string>();
+            OfferIdsList = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Target collections ids. </summary>

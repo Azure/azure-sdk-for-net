@@ -19,8 +19,8 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<SearchSummary> summary = default;
-            Optional<IReadOnlyList<ReverseSearchCrossStreetAddressResultItem>> addresses = default;
+            Core.Optional<SearchSummary> summary = default;
+            Core.Optional<IReadOnlyList<ReverseSearchCrossStreetAddressResultItem>> addresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summary"u8))
@@ -47,7 +47,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new ReverseSearchCrossStreetAddressResult(summary.Value, Optional.ToList(addresses));
+            return new ReverseSearchCrossStreetAddressResult(summary.Value, Core.Optional.ToList(addresses));
         }
     }
 }

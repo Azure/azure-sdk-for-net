@@ -10,49 +10,49 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class H265VideoLayer : IUtf8JsonSerializable
+    public partial class H265VideoLayer : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("bitrate"u8);
             writer.WriteNumberValue(Bitrate);
-            if (Optional.IsDefined(MaxBitrate))
+            if (Core.Optional.IsDefined(MaxBitrate))
             {
                 writer.WritePropertyName("maxBitrate"u8);
                 writer.WriteNumberValue(MaxBitrate.Value);
             }
-            if (Optional.IsDefined(BFrames))
+            if (Core.Optional.IsDefined(BFrames))
             {
                 writer.WritePropertyName("bFrames"u8);
                 writer.WriteNumberValue(BFrames.Value);
             }
-            if (Optional.IsDefined(FrameRate))
+            if (Core.Optional.IsDefined(FrameRate))
             {
                 writer.WritePropertyName("frameRate"u8);
                 writer.WriteStringValue(FrameRate);
             }
-            if (Optional.IsDefined(Slices))
+            if (Core.Optional.IsDefined(Slices))
             {
                 writer.WritePropertyName("slices"u8);
                 writer.WriteNumberValue(Slices.Value);
             }
-            if (Optional.IsDefined(UseAdaptiveBFrame))
+            if (Core.Optional.IsDefined(UseAdaptiveBFrame))
             {
                 writer.WritePropertyName("adaptiveBFrame"u8);
                 writer.WriteBooleanValue(UseAdaptiveBFrame.Value);
             }
-            if (Optional.IsDefined(Width))
+            if (Core.Optional.IsDefined(Width))
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteStringValue(Width);
             }
-            if (Optional.IsDefined(Height))
+            if (Core.Optional.IsDefined(Height))
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteStringValue(Height);
             }
-            if (Optional.IsDefined(Label))
+            if (Core.Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -67,14 +67,14 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             int bitrate = default;
-            Optional<int> maxBitrate = default;
-            Optional<int> bFrames = default;
-            Optional<string> frameRate = default;
-            Optional<int> slices = default;
-            Optional<bool> adaptiveBFrame = default;
-            Optional<string> width = default;
-            Optional<string> height = default;
-            Optional<string> label = default;
+            Core.Optional<int> maxBitrate = default;
+            Core.Optional<int> bFrames = default;
+            Core.Optional<string> frameRate = default;
+            Core.Optional<int> slices = default;
+            Core.Optional<bool> adaptiveBFrame = default;
+            Core.Optional<string> width = default;
+            Core.Optional<string> height = default;
+            Core.Optional<string> label = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bitrate"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new H265VideoLayer(width.Value, height.Value, label.Value, bitrate, Optional.ToNullable(maxBitrate), Optional.ToNullable(bFrames), frameRate.Value, Optional.ToNullable(slices), Optional.ToNullable(adaptiveBFrame));
+            return new H265VideoLayer(width.Value, height.Value, label.Value, bitrate, Core.Optional.ToNullable(maxBitrate), Core.Optional.ToNullable(bFrames), frameRate.Value, Core.Optional.ToNullable(slices), Core.Optional.ToNullable(adaptiveBFrame));
         }
     }
 }

@@ -19,8 +19,8 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RouteInstruction>> instructions = default;
-            Optional<IReadOnlyList<RouteInstructionGroup>> instructionGroups = default;
+            Core.Optional<IReadOnlyList<RouteInstruction>> instructions = default;
+            Core.Optional<IReadOnlyList<RouteInstructionGroup>> instructionGroups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instructions"u8))
@@ -52,7 +52,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteGuidance(Optional.ToList(instructions), Optional.ToList(instructionGroups));
+            return new RouteGuidance(Core.Optional.ToList(instructions), Core.Optional.ToList(instructionGroups));
         }
     }
 }

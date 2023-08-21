@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Initializes a new instance of SharedAccessSignatureAuthorizationRuleListResult. </summary>
         internal SharedAccessSignatureAuthorizationRuleListResult()
         {
-            Value = new ChangeTrackingList<SharedAccessSignatureAuthorizationRule>();
+            Value = new Core.ChangeTrackingList<SharedAccessSignatureAuthorizationRule>();
         }
 
         /// <summary> Initializes a new instance of SharedAccessSignatureAuthorizationRuleListResult. </summary>

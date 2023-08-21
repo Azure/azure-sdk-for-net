@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IntegrationServiceEnvironmentNetworkDependency>> outboundNetworkDependencies = default;
-            Optional<IntegrationServiceEnvironmentNetworkDependencyHealth> outboundNetworkHealth = default;
+            Core.Optional<IReadOnlyList<IntegrationServiceEnvironmentNetworkDependency>> outboundNetworkDependencies = default;
+            Core.Optional<IntegrationServiceEnvironmentNetworkDependencyHealth> outboundNetworkHealth = default;
             IntegrationServiceEnvironmentNetworkEndPointAccessibilityState networkDependencyHealthState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new IntegrationServiceEnvironmentSubnetNetworkHealth(Optional.ToList(outboundNetworkDependencies), outboundNetworkHealth.Value, networkDependencyHealthState);
+            return new IntegrationServiceEnvironmentSubnetNetworkHealth(Core.Optional.ToList(outboundNetworkDependencies), outboundNetworkHealth.Value, networkDependencyHealthState);
         }
     }
 }

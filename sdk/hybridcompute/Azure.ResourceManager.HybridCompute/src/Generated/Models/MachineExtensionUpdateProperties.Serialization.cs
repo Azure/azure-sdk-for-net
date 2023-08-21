@@ -10,42 +10,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class MachineExtensionUpdateProperties : IUtf8JsonSerializable
+    public partial class MachineExtensionUpdateProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ForceUpdateTag))
+            if (Core.Optional.IsDefined(ForceUpdateTag))
             {
                 writer.WritePropertyName("forceUpdateTag"u8);
                 writer.WriteStringValue(ForceUpdateTag);
             }
-            if (Optional.IsDefined(Publisher))
+            if (Core.Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Optional.IsDefined(MachineExtensionUpdatePropertiesType))
+            if (Core.Optional.IsDefined(MachineExtensionUpdatePropertiesType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(MachineExtensionUpdatePropertiesType);
             }
-            if (Optional.IsDefined(TypeHandlerVersion))
+            if (Core.Optional.IsDefined(TypeHandlerVersion))
             {
                 writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (Optional.IsDefined(EnableAutomaticUpgrade))
+            if (Core.Optional.IsDefined(EnableAutomaticUpgrade))
             {
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
             }
-            if (Optional.IsDefined(AutoUpgradeMinorVersion))
+            if (Core.Optional.IsDefined(AutoUpgradeMinorVersion))
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
-            if (Optional.IsCollectionDefined(Settings))
+            if (Core.Optional.IsCollectionDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ProtectedSettings))
+            if (Core.Optional.IsCollectionDefined(ProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettings"u8);
                 writer.WriteStartObject();

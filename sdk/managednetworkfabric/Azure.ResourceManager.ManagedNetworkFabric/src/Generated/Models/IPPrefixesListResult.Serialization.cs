@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetworkFabricIPPrefixData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<NetworkFabricIPPrefixData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new IPPrefixesListResult(Optional.ToList(value), nextLink.Value);
+            return new IPPrefixesListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }

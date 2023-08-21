@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicResourceReference : IUtf8JsonSerializable
+    public partial class LogicResourceReference : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Core.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<string> name = default;
+            Core.Optional<ResourceType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new LogicResourceReference(id.Value, name.Value, Optional.ToNullable(type));
+            return new LogicResourceReference(id.Value, name.Value, Core.Optional.ToNullable(type));
         }
     }
 }

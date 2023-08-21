@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class LinuxProfileProperties : IUtf8JsonSerializable
+    public partial class LinuxProfileProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AdminUsername))
+            if (Core.Optional.IsDefined(AdminUsername))
             {
                 writer.WritePropertyName("adminUsername"u8);
                 writer.WriteStringValue(AdminUsername);
             }
-            if (Optional.IsDefined(Ssh))
+            if (Core.Optional.IsDefined(Ssh))
             {
                 writer.WritePropertyName("ssh"u8);
                 writer.WriteObjectValue(Ssh);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<string> adminUsername = default;
-            Optional<LinuxProfilePropertiesSsh> ssh = default;
+            Core.Optional<string> adminUsername = default;
+            Core.Optional<LinuxProfilePropertiesSsh> ssh = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("adminUsername"u8))

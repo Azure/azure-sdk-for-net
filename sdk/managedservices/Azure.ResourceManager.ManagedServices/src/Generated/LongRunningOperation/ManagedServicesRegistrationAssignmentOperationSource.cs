@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagedServices
 {
-    internal class ManagedServicesRegistrationAssignmentOperationSource : IOperationSource<ManagedServicesRegistrationAssignmentResource>
+    internal class ManagedServicesRegistrationAssignmentOperationSource : Core.IOperationSource<ManagedServicesRegistrationAssignmentResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ManagedServices
             _client = client;
         }
 
-        ManagedServicesRegistrationAssignmentResource IOperationSource<ManagedServicesRegistrationAssignmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedServicesRegistrationAssignmentResource Core.IOperationSource<ManagedServicesRegistrationAssignmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedServicesRegistrationAssignmentData.DeserializeManagedServicesRegistrationAssignmentData(document.RootElement);
             return new ManagedServicesRegistrationAssignmentResource(_client, data);
         }
 
-        async ValueTask<ManagedServicesRegistrationAssignmentResource> IOperationSource<ManagedServicesRegistrationAssignmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedServicesRegistrationAssignmentResource> Core.IOperationSource<ManagedServicesRegistrationAssignmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedServicesRegistrationAssignmentData.DeserializeManagedServicesRegistrationAssignmentData(document.RootElement);

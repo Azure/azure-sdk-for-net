@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NeighborAddress : IUtf8JsonSerializable
+    public partial class NeighborAddress : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Address))
+            if (Core.Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> address = default;
-            Optional<NetworkFabricConfigurationState> configurationState = default;
+            Core.Optional<string> address = default;
+            Core.Optional<NetworkFabricConfigurationState> configurationState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("address"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new NeighborAddress(address.Value, Optional.ToNullable(configurationState));
+            return new NeighborAddress(address.Value, Core.Optional.ToNullable(configurationState));
         }
     }
 }

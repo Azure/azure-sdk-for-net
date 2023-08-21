@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of ContentKeyPolicyListResult. </summary>
         internal ContentKeyPolicyListResult()
         {
-            Value = new ChangeTrackingList<ContentKeyPolicyData>();
+            Value = new Core.ChangeTrackingList<ContentKeyPolicyData>();
         }
 
         /// <summary> Initializes a new instance of ContentKeyPolicyListResult. </summary>

@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            Optional<MaintenanceScope> maintenanceScope = default;
-            Optional<MaintenanceImpactType> impactType = default;
-            Optional<MaintenanceUpdateStatus> status = default;
-            Optional<int> impactDurationInSec = default;
-            Optional<DateTimeOffset> notBefore = default;
-            Optional<ResourceIdentifier> resourceId = default;
+            Core.Optional<MaintenanceScope> maintenanceScope = default;
+            Core.Optional<MaintenanceImpactType> impactType = default;
+            Core.Optional<MaintenanceUpdateStatus> status = default;
+            Core.Optional<int> impactDurationInSec = default;
+            Core.Optional<DateTimeOffset> notBefore = default;
+            Core.Optional<ResourceIdentifier> resourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maintenanceScope"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     continue;
                 }
             }
-            return new MaintenanceUpdate(Optional.ToNullable(maintenanceScope), Optional.ToNullable(impactType), Optional.ToNullable(status), Optional.ToNullable(impactDurationInSec), Optional.ToNullable(notBefore), resourceId.Value);
+            return new MaintenanceUpdate(Core.Optional.ToNullable(maintenanceScope), Core.Optional.ToNullable(impactType), Core.Optional.ToNullable(status), Core.Optional.ToNullable(impactDurationInSec), Core.Optional.ToNullable(notBefore), resourceId.Value);
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class ImageSweepSettings : IUtf8JsonSerializable
+    public partial class ImageSweepSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EarlyTermination))
+            if (Core.Optional.IsDefined(EarlyTermination))
             {
                 if (EarlyTermination != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningEarlyTerminationPolicy> earlyTermination = default;
+            Core.Optional<MachineLearningEarlyTerminationPolicy> earlyTermination = default;
             SamplingAlgorithmType samplingAlgorithm = default;
             foreach (var property in element.EnumerateObject())
             {

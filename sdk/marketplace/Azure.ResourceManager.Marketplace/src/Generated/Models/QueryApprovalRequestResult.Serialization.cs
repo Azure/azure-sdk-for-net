@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> uniqueOfferId = default;
-            Optional<IReadOnlyDictionary<string, PrivateStorePlanDetails>> plansDetails = default;
-            Optional<ETag> etag = default;
-            Optional<long> messageCode = default;
+            Core.Optional<string> uniqueOfferId = default;
+            Core.Optional<IReadOnlyDictionary<string, PrivateStorePlanDetails>> plansDetails = default;
+            Core.Optional<ETag> etag = default;
+            Core.Optional<long> messageCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uniqueOfferId"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new QueryApprovalRequestResult(uniqueOfferId.Value, Optional.ToDictionary(plansDetails), Optional.ToNullable(etag), Optional.ToNullable(messageCode));
+            return new QueryApprovalRequestResult(uniqueOfferId.Value, Core.Optional.ToDictionary(plansDetails), Core.Optional.ToNullable(etag), Core.Optional.ToNullable(messageCode));
         }
     }
 }

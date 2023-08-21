@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class TextClassification : IUtf8JsonSerializable
+    public partial class TextClassification : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrimaryMetric))
+            if (Core.Optional.IsDefined(PrimaryMetric))
             {
                 writer.WritePropertyName("primaryMetric"u8);
                 writer.WriteStringValue(PrimaryMetric.Value.ToString());
             }
-            if (Optional.IsDefined(FeaturizationSettings))
+            if (Core.Optional.IsDefined(FeaturizationSettings))
             {
                 if (FeaturizationSettings != null)
                 {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("featurizationSettings");
                 }
             }
-            if (Optional.IsDefined(LimitSettings))
+            if (Core.Optional.IsDefined(LimitSettings))
             {
                 if (LimitSettings != null)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("limitSettings");
                 }
             }
-            if (Optional.IsDefined(ValidationData))
+            if (Core.Optional.IsDefined(ValidationData))
             {
                 if (ValidationData != null)
                 {
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationData");
                 }
             }
-            if (Optional.IsDefined(LogVerbosity))
+            if (Core.Optional.IsDefined(LogVerbosity))
             {
                 writer.WritePropertyName("logVerbosity"u8);
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
-            if (Optional.IsDefined(TargetColumnName))
+            if (Core.Optional.IsDefined(TargetColumnName))
             {
                 if (TargetColumnName != null)
                 {
@@ -86,12 +86,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ClassificationPrimaryMetric> primaryMetric = default;
-            Optional<NlpVerticalFeaturizationSettings> featurizationSettings = default;
-            Optional<NlpVerticalLimitSettings> limitSettings = default;
-            Optional<MachineLearningTableJobInput> validationData = default;
-            Optional<MachineLearningLogVerbosity> logVerbosity = default;
-            Optional<string> targetColumnName = default;
+            Core.Optional<ClassificationPrimaryMetric> primaryMetric = default;
+            Core.Optional<NlpVerticalFeaturizationSettings> featurizationSettings = default;
+            Core.Optional<NlpVerticalLimitSettings> limitSettings = default;
+            Core.Optional<MachineLearningTableJobInput> validationData = default;
+            Core.Optional<MachineLearningLogVerbosity> logVerbosity = default;
+            Core.Optional<string> targetColumnName = default;
             TaskType taskType = default;
             MachineLearningTableJobInput trainingData = default;
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new TextClassification(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, Optional.ToNullable(primaryMetric), featurizationSettings.Value, limitSettings.Value, validationData.Value);
+            return new TextClassification(Core.Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, Core.Optional.ToNullable(primaryMetric), featurizationSettings.Value, limitSettings.Value, validationData.Value);
         }
     }
 }

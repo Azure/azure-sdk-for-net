@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <summary> Initializes a new instance of MaintenanceWindowsPatchSettings. </summary>
         public MaintenanceWindowsPatchSettings()
         {
-            KbNumbersToExclude = new ChangeTrackingList<string>();
-            KbNumbersToInclude = new ChangeTrackingList<string>();
-            ClassificationsToInclude = new ChangeTrackingList<string>();
+            KbNumbersToExclude = new Core.ChangeTrackingList<string>();
+            KbNumbersToInclude = new Core.ChangeTrackingList<string>();
+            ClassificationsToInclude = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of MaintenanceWindowsPatchSettings. </summary>

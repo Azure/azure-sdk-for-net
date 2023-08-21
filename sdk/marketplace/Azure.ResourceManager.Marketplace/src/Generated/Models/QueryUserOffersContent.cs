@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of QueryUserOffersContent. </summary>
         public QueryUserOffersContent()
         {
-            OfferIds = new ChangeTrackingList<string>();
-            SubscriptionIds = new ChangeTrackingList<string>();
+            OfferIds = new Core.ChangeTrackingList<string>();
+            SubscriptionIds = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> List of offer IDs. </summary>

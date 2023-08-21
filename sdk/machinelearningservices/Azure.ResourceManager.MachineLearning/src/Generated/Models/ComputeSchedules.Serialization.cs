@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MachineLearningComputeStartStopSchedule>> computeStartStop = default;
+            Core.Optional<IReadOnlyList<MachineLearningComputeStartStopSchedule>> computeStartStop = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeStartStop"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new ComputeSchedules(Optional.ToList(computeStartStop));
+            return new ComputeSchedules(Core.Optional.ToList(computeStartStop));
         }
     }
 }

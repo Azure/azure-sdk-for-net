@@ -12,22 +12,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class SwaggerExternalDocumentation : IUtf8JsonSerializable
+    public partial class SwaggerExternalDocumentation : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Uri))
+            if (Core.Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(Extensions))
+            if (Core.Optional.IsCollectionDefined(Extensions))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartObject();
@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<Uri> uri = default;
-            Optional<IDictionary<string, BinaryData>> extensions = default;
+            Core.Optional<string> description = default;
+            Core.Optional<Uri> uri = default;
+            Core.Optional<IDictionary<string, BinaryData>> extensions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new SwaggerExternalDocumentation(description.Value, uri.Value, Optional.ToDictionary(extensions));
+            return new SwaggerExternalDocumentation(description.Value, uri.Value, Core.Optional.ToDictionary(extensions));
         }
     }
 }

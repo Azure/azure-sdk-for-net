@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <summary> Initializes a new instance of LabPlanPatch. </summary>
         public LabPlanPatch()
         {
-            AllowedRegions = new ChangeTrackingList<AzureLocation>();
+            AllowedRegions = new Core.ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Managed Identity Information. Current supported identity types: SystemAssigned. </summary>

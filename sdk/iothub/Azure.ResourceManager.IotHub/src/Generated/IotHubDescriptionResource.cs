@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.IotHub
             try
             {
                 var response = await _iotHubDescriptionIotHubResourceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new IotHubArmOperation<IotHubDescriptionResource>(new IotHubDescriptionOperationSource(Client), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, _iotHubDescriptionIotHubResourceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new IotHubArmOperation<IotHubDescriptionResource>(new IotHubDescriptionOperationSource(Client), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, _iotHubDescriptionIotHubResourceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.IotHub
             try
             {
                 var response = _iotHubDescriptionIotHubResourceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new IotHubArmOperation<IotHubDescriptionResource>(new IotHubDescriptionOperationSource(Client), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, _iotHubDescriptionIotHubResourceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new IotHubArmOperation<IotHubDescriptionResource>(new IotHubDescriptionOperationSource(Client), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, _iotHubDescriptionIotHubResourceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.IotHub
             try
             {
                 var response = await _iotHubDescriptionIotHubResourceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new IotHubArmOperation<IotHubDescriptionResource>(new IotHubDescriptionOperationSource(Client), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, _iotHubDescriptionIotHubResourceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new IotHubArmOperation<IotHubDescriptionResource>(new IotHubDescriptionOperationSource(Client), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, _iotHubDescriptionIotHubResourceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.IotHub
             try
             {
                 var response = _iotHubDescriptionIotHubResourceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new IotHubArmOperation<IotHubDescriptionResource>(new IotHubDescriptionOperationSource(Client), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, _iotHubDescriptionIotHubResourceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new IotHubArmOperation<IotHubDescriptionResource>(new IotHubDescriptionOperationSource(Client), _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, _iotHubDescriptionIotHubResourceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.IotHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubDescriptionIotHubResourceRestClient.CreateGetValidSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotHubDescriptionIotHubResourceRestClient.CreateGetValidSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, IotHubSkuDescription.DeserializeIotHubSkuDescription, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetValidSkus", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, IotHubSkuDescription.DeserializeIotHubSkuDescription, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetValidSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.IotHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubDescriptionIotHubResourceRestClient.CreateGetValidSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotHubDescriptionIotHubResourceRestClient.CreateGetValidSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, IotHubSkuDescription.DeserializeIotHubSkuDescription, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetValidSkus", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, IotHubSkuDescription.DeserializeIotHubSkuDescription, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetValidSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.IotHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubDescriptionIotHubResourceRestClient.CreateListJobsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotHubDescriptionIotHubResourceRestClient.CreateListJobsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, IotHubJobInfo.DeserializeIotHubJobInfo, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetJobs", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, IotHubJobInfo.DeserializeIotHubJobInfo, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.IotHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubDescriptionIotHubResourceRestClient.CreateListJobsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotHubDescriptionIotHubResourceRestClient.CreateListJobsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, IotHubJobInfo.DeserializeIotHubJobInfo, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetJobs", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, IotHubJobInfo.DeserializeIotHubJobInfo, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -757,7 +757,7 @@ namespace Azure.ResourceManager.IotHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubDescriptionIotHubResourceRestClient.CreateGetQuotaMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotHubDescriptionIotHubResourceRestClient.CreateGetQuotaMetricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, IotHubQuotaMetricInfo.DeserializeIotHubQuotaMetricInfo, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetQuotaMetrics", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, IotHubQuotaMetricInfo.DeserializeIotHubQuotaMetricInfo, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetQuotaMetrics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.IotHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubDescriptionIotHubResourceRestClient.CreateGetQuotaMetricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotHubDescriptionIotHubResourceRestClient.CreateGetQuotaMetricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, IotHubQuotaMetricInfo.DeserializeIotHubQuotaMetricInfo, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetQuotaMetrics", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, IotHubQuotaMetricInfo.DeserializeIotHubQuotaMetricInfo, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetQuotaMetrics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -801,7 +801,7 @@ namespace Azure.ResourceManager.IotHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubDescriptionIotHubResourceRestClient.CreateGetEndpointHealthRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotHubDescriptionIotHubResourceRestClient.CreateGetEndpointHealthNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, IotHubEndpointHealthInfo.DeserializeIotHubEndpointHealthInfo, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetEndpointHealth", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, IotHubEndpointHealthInfo.DeserializeIotHubEndpointHealthInfo, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetEndpointHealth", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -823,7 +823,7 @@ namespace Azure.ResourceManager.IotHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubDescriptionIotHubResourceRestClient.CreateGetEndpointHealthRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotHubDescriptionIotHubResourceRestClient.CreateGetEndpointHealthNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, IotHubEndpointHealthInfo.DeserializeIotHubEndpointHealthInfo, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetEndpointHealth", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, IotHubEndpointHealthInfo.DeserializeIotHubEndpointHealthInfo, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetEndpointHealth", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -981,7 +981,7 @@ namespace Azure.ResourceManager.IotHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubDescriptionIotHubResourceRestClient.CreateListKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotHubDescriptionIotHubResourceRestClient.CreateListKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SharedAccessSignatureAuthorizationRule.DeserializeSharedAccessSignatureAuthorizationRule, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetKeys", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SharedAccessSignatureAuthorizationRule.DeserializeSharedAccessSignatureAuthorizationRule, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1003,7 +1003,7 @@ namespace Azure.ResourceManager.IotHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubDescriptionIotHubResourceRestClient.CreateListKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotHubDescriptionIotHubResourceRestClient.CreateListKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SharedAccessSignatureAuthorizationRule.DeserializeSharedAccessSignatureAuthorizationRule, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetKeys", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SharedAccessSignatureAuthorizationRule.DeserializeSharedAccessSignatureAuthorizationRule, _iotHubDescriptionIotHubResourceClientDiagnostics, Pipeline, "IotHubDescriptionResource.GetKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1238,7 +1238,7 @@ namespace Azure.ResourceManager.IotHub
             try
             {
                 var response = await _iotHubRestClient.ManualFailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new IotHubArmOperation(_iotHubClientDiagnostics, Pipeline, _iotHubRestClient.CreateManualFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new IotHubArmOperation(_iotHubClientDiagnostics, Pipeline, _iotHubRestClient.CreateManualFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1276,7 +1276,7 @@ namespace Azure.ResourceManager.IotHub
             try
             {
                 var response = _iotHubRestClient.ManualFailover(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new IotHubArmOperation(_iotHubClientDiagnostics, Pipeline, _iotHubRestClient.CreateManualFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new IotHubArmOperation(_iotHubClientDiagnostics, Pipeline, _iotHubRestClient.CreateManualFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

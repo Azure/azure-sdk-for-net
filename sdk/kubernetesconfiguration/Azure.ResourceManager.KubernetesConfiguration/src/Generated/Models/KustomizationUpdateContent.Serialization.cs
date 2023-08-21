@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KustomizationUpdateContent : IUtf8JsonSerializable
+    public partial class KustomizationUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Path))
+            if (Core.Optional.IsDefined(Path))
             {
                 if (Path != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("path");
                 }
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (Core.Optional.IsCollectionDefined(DependsOn))
             {
                 if (DependsOn != null)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("dependsOn");
                 }
             }
-            if (Optional.IsDefined(TimeoutInSeconds))
+            if (Core.Optional.IsDefined(TimeoutInSeconds))
             {
                 if (TimeoutInSeconds != null)
                 {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("timeoutInSeconds");
                 }
             }
-            if (Optional.IsDefined(SyncIntervalInSeconds))
+            if (Core.Optional.IsDefined(SyncIntervalInSeconds))
             {
                 if (SyncIntervalInSeconds != null)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("syncIntervalInSeconds");
                 }
             }
-            if (Optional.IsDefined(RetryIntervalInSeconds))
+            if (Core.Optional.IsDefined(RetryIntervalInSeconds))
             {
                 if (RetryIntervalInSeconds != null)
                 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("retryIntervalInSeconds");
                 }
             }
-            if (Optional.IsDefined(Prune))
+            if (Core.Optional.IsDefined(Prune))
             {
                 if (Prune != null)
                 {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("prune");
                 }
             }
-            if (Optional.IsDefined(Force))
+            if (Core.Optional.IsDefined(Force))
             {
                 if (Force != null)
                 {

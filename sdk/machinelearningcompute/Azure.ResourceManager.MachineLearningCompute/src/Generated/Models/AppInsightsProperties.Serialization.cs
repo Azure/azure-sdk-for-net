@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
-    internal partial class AppInsightsProperties : IUtf8JsonSerializable
+    internal partial class AppInsightsProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (Core.Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<string> resourceId = default;
+            Core.Optional<string> resourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))

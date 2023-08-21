@@ -16,8 +16,8 @@ namespace Azure.IoT.Hub.Service.Models
         /// <summary> Initializes a new instance of ConfigurationMetrics. </summary>
         public ConfigurationMetrics()
         {
-            Results = new ChangeTrackingDictionary<string, long>();
-            Queries = new ChangeTrackingDictionary<string, string>();
+            Results = new Core.ChangeTrackingDictionary<string, long>();
+            Queries = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ConfigurationMetrics. </summary>

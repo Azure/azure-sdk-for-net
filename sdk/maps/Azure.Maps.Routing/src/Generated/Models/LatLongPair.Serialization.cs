@@ -18,8 +18,8 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Optional<double> latitude = default;
-            Optional<double> longitude = default;
+            Core.Optional<double> latitude = default;
+            Core.Optional<double> longitude = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("latitude"u8))
@@ -41,7 +41,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new LatLongPair(Optional.ToNullable(latitude), Optional.ToNullable(longitude));
+            return new LatLongPair(Core.Optional.ToNullable(latitude), Core.Optional.ToNullable(longitude));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of KustoSkuDescriptionList. </summary>
         internal KustoSkuDescriptionList()
         {
-            Value = new ChangeTrackingList<KustoSkuDescription>();
+            Value = new Core.ChangeTrackingList<KustoSkuDescription>();
         }
 
         /// <summary> Initializes a new instance of KustoSkuDescriptionList. </summary>

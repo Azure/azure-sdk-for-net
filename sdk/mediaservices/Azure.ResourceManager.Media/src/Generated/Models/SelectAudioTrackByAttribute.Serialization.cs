@@ -10,21 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class SelectAudioTrackByAttribute : IUtf8JsonSerializable
+    public partial class SelectAudioTrackByAttribute : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("attribute"u8);
             writer.WriteStringValue(Attribute.ToString());
             writer.WritePropertyName("filter"u8);
             writer.WriteStringValue(Filter.ToString());
-            if (Optional.IsDefined(FilterValue))
+            if (Core.Optional.IsDefined(FilterValue))
             {
                 writer.WritePropertyName("filterValue"u8);
                 writer.WriteStringValue(FilterValue);
             }
-            if (Optional.IsDefined(ChannelMapping))
+            if (Core.Optional.IsDefined(ChannelMapping))
             {
                 writer.WritePropertyName("channelMapping"u8);
                 writer.WriteStringValue(ChannelMapping.Value.ToString());
@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.Media.Models
             }
             TrackAttribute attribute = default;
             TrackAttributeFilter filter = default;
-            Optional<string> filterValue = default;
-            Optional<ChannelMapping> channelMapping = default;
+            Core.Optional<string> filterValue = default;
+            Core.Optional<ChannelMapping> channelMapping = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new SelectAudioTrackByAttribute(odataType, Optional.ToNullable(channelMapping), attribute, filter, filterValue.Value);
+            return new SelectAudioTrackByAttribute(odataType, Core.Optional.ToNullable(channelMapping), attribute, filter, filterValue.Value);
         }
     }
 }

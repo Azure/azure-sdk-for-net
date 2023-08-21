@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of FirmwareList. </summary>
         internal FirmwareList()
         {
-            Value = new ChangeTrackingList<FirmwareData>();
+            Value = new Core.ChangeTrackingList<FirmwareData>();
         }
 
         /// <summary> Initializes a new instance of FirmwareList. </summary>

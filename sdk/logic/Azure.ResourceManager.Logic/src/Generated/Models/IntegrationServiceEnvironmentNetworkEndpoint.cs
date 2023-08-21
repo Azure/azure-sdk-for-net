@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentNetworkEndpoint. </summary>
         internal IntegrationServiceEnvironmentNetworkEndpoint()
         {
-            Ports = new ChangeTrackingList<string>();
+            Ports = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentNetworkEndpoint. </summary>

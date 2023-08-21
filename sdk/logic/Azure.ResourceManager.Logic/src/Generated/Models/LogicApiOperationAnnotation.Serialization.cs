@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicApiOperationAnnotation : IUtf8JsonSerializable
+    public partial class LogicApiOperationAnnotation : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Family))
+            if (Core.Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (Optional.IsDefined(Revision))
+            if (Core.Optional.IsDefined(Revision))
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<LogicApiOperationAnnotationStatus> status = default;
-            Optional<string> family = default;
-            Optional<int> revision = default;
+            Core.Optional<LogicApiOperationAnnotationStatus> status = default;
+            Core.Optional<string> family = default;
+            Core.Optional<int> revision = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new LogicApiOperationAnnotation(Optional.ToNullable(status), family.Value, Optional.ToNullable(revision));
+            return new LogicApiOperationAnnotation(Core.Optional.ToNullable(status), family.Value, Core.Optional.ToNullable(revision));
         }
     }
 }

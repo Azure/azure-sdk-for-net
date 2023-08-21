@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.LabServices
 {
-    internal class LabOperationSource : IOperationSource<LabResource>
+    internal class LabOperationSource : Core.IOperationSource<LabResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.LabServices
             _client = client;
         }
 
-        LabResource IOperationSource<LabResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        LabResource Core.IOperationSource<LabResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = LabData.DeserializeLabData(document.RootElement);
             return new LabResource(_client, data);
         }
 
-        async ValueTask<LabResource> IOperationSource<LabResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<LabResource> Core.IOperationSource<LabResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = LabData.DeserializeLabData(document.RootElement);

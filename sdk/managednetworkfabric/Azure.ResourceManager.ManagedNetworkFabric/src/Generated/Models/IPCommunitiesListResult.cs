@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of IPCommunitiesListResult. </summary>
         internal IPCommunitiesListResult()
         {
-            Value = new ChangeTrackingList<NetworkFabricIPCommunityData>();
+            Value = new Core.ChangeTrackingList<NetworkFabricIPCommunityData>();
         }
 
         /// <summary> Initializes a new instance of IPCommunitiesListResult. </summary>

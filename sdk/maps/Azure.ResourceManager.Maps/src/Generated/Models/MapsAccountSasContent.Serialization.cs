@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maps.Models
 {
-    public partial class MapsAccountSasContent : IUtf8JsonSerializable
+    public partial class MapsAccountSasContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("signingKey"u8);
             writer.WriteStringValue(SigningKey.ToString());
             writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
-            if (Optional.IsCollectionDefined(Regions))
+            if (Core.Optional.IsCollectionDefined(Regions))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();

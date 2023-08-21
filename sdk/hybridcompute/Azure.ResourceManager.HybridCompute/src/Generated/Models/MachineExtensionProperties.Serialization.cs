@@ -12,42 +12,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class MachineExtensionProperties : IUtf8JsonSerializable
+    public partial class MachineExtensionProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ForceUpdateTag))
+            if (Core.Optional.IsDefined(ForceUpdateTag))
             {
                 writer.WritePropertyName("forceUpdateTag"u8);
                 writer.WriteStringValue(ForceUpdateTag);
             }
-            if (Optional.IsDefined(Publisher))
+            if (Core.Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Optional.IsDefined(MachineExtensionPropertiesType))
+            if (Core.Optional.IsDefined(MachineExtensionPropertiesType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(MachineExtensionPropertiesType);
             }
-            if (Optional.IsDefined(TypeHandlerVersion))
+            if (Core.Optional.IsDefined(TypeHandlerVersion))
             {
                 writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (Optional.IsDefined(EnableAutomaticUpgrade))
+            if (Core.Optional.IsDefined(EnableAutomaticUpgrade))
             {
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
             }
-            if (Optional.IsDefined(AutoUpgradeMinorVersion))
+            if (Core.Optional.IsDefined(AutoUpgradeMinorVersion))
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
-            if (Optional.IsCollectionDefined(Settings))
+            if (Core.Optional.IsCollectionDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ProtectedSettings))
+            if (Core.Optional.IsCollectionDefined(ProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettings"u8);
                 writer.WriteStartObject();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(InstanceView))
+            if (Core.Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
                 writer.WriteObjectValue(InstanceView);
@@ -101,16 +101,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<string> forceUpdateTag = default;
-            Optional<string> publisher = default;
-            Optional<string> type = default;
-            Optional<string> typeHandlerVersion = default;
-            Optional<bool> enableAutomaticUpgrade = default;
-            Optional<bool> autoUpgradeMinorVersion = default;
-            Optional<IDictionary<string, BinaryData>> settings = default;
-            Optional<IDictionary<string, BinaryData>> protectedSettings = default;
-            Optional<string> provisioningState = default;
-            Optional<MachineExtensionInstanceView> instanceView = default;
+            Core.Optional<string> forceUpdateTag = default;
+            Core.Optional<string> publisher = default;
+            Core.Optional<string> type = default;
+            Core.Optional<string> typeHandlerVersion = default;
+            Core.Optional<bool> enableAutomaticUpgrade = default;
+            Core.Optional<bool> autoUpgradeMinorVersion = default;
+            Core.Optional<IDictionary<string, BinaryData>> settings = default;
+            Core.Optional<IDictionary<string, BinaryData>> protectedSettings = default;
+            Core.Optional<string> provisioningState = default;
+            Core.Optional<MachineExtensionInstanceView> instanceView = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("forceUpdateTag"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     continue;
                 }
             }
-            return new MachineExtensionProperties(forceUpdateTag.Value, publisher.Value, type.Value, typeHandlerVersion.Value, Optional.ToNullable(enableAutomaticUpgrade), Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToDictionary(settings), Optional.ToDictionary(protectedSettings), provisioningState.Value, instanceView.Value);
+            return new MachineExtensionProperties(forceUpdateTag.Value, publisher.Value, type.Value, typeHandlerVersion.Value, Core.Optional.ToNullable(enableAutomaticUpgrade), Core.Optional.ToNullable(autoUpgradeMinorVersion), Core.Optional.ToDictionary(settings), Core.Optional.ToDictionary(protectedSettings), provisioningState.Value, instanceView.Value);
         }
     }
 }

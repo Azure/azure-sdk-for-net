@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<KubernetesConfigurationComplianceStateType> complianceState = default;
-            Optional<DateTimeOffset> lastConfigApplied = default;
-            Optional<string> message = default;
-            Optional<KubernetesConfigurationMesageLevel> messageLevel = default;
+            Core.Optional<KubernetesConfigurationComplianceStateType> complianceState = default;
+            Core.Optional<DateTimeOffset> lastConfigApplied = default;
+            Core.Optional<string> message = default;
+            Core.Optional<KubernetesConfigurationMesageLevel> messageLevel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("complianceState"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     continue;
                 }
             }
-            return new KubernetesConfigurationComplianceStatus(Optional.ToNullable(complianceState), Optional.ToNullable(lastConfigApplied), message.Value, Optional.ToNullable(messageLevel));
+            return new KubernetesConfigurationComplianceStatus(Core.Optional.ToNullable(complianceState), Core.Optional.ToNullable(lastConfigApplied), message.Value, Core.Optional.ToNullable(messageLevel));
         }
     }
 }

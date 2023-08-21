@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <summary> Initializes a new instance of PagedUsers. </summary>
         internal PagedUsers()
         {
-            Value = new ChangeTrackingList<LabUserData>();
+            Value = new Core.ChangeTrackingList<LabUserData>();
         }
 
         /// <summary> Initializes a new instance of PagedUsers. </summary>

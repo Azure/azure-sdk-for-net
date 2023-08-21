@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningTritonModelJobInput : IUtf8JsonSerializable
+    public partial class MachineLearningTritonModelJobInput : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Mode))
+            if (Core.Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningInputDeliveryMode> mode = default;
+            Core.Optional<MachineLearningInputDeliveryMode> mode = default;
             Uri uri = default;
-            Optional<string> description = default;
+            Core.Optional<string> description = default;
             JobInputType jobInputType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningTritonModelJobInput(description.Value, jobInputType, Optional.ToNullable(mode), uri);
+            return new MachineLearningTritonModelJobInput(description.Value, jobInputType, Core.Optional.ToNullable(mode), uri);
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    internal partial class LabVirtualMachineAdditionalCapability : IUtf8JsonSerializable
+    internal partial class LabVirtualMachineAdditionalCapability : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(InstallGpuDrivers))
+            if (Core.Optional.IsDefined(InstallGpuDrivers))
             {
                 writer.WritePropertyName("installGpuDrivers"u8);
                 writer.WriteStringValue(InstallGpuDrivers.Value.ToSerialString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<LabServicesEnableState> installGpuDrivers = default;
+            Core.Optional<LabServicesEnableState> installGpuDrivers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("installGpuDrivers"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     continue;
                 }
             }
-            return new LabVirtualMachineAdditionalCapability(Optional.ToNullable(installGpuDrivers));
+            return new LabVirtualMachineAdditionalCapability(Core.Optional.ToNullable(installGpuDrivers));
         }
     }
 }

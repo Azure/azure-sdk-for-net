@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of QueryApprovalRequestContent. </summary>
         public QueryApprovalRequestContent()
         {
-            PlanIds = new ChangeTrackingList<string>();
+            PlanIds = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> The offer's publisher id. </summary>

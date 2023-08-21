@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> Initializes a new instance of ProvisionedClustersResponseListResult. </summary>
         internal ProvisionedClustersResponseListResult()
         {
-            Value = new ChangeTrackingList<ProvisionedClusterData>();
+            Value = new Core.ChangeTrackingList<ProvisionedClusterData>();
         }
 
         /// <summary> Initializes a new instance of ProvisionedClustersResponseListResult. </summary>

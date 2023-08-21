@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of MarketplaceAdminApprovalRequestList. </summary>
         internal MarketplaceAdminApprovalRequestList()
         {
-            Value = new ChangeTrackingList<MarketplaceAdminApprovalRequestData>();
+            Value = new Core.ChangeTrackingList<MarketplaceAdminApprovalRequestData>();
         }
 
         /// <summary> Initializes a new instance of MarketplaceAdminApprovalRequestList. </summary>

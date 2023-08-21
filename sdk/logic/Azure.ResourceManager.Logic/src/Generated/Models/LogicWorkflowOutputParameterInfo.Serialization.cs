@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicWorkflowOutputParameterInfo : IUtf8JsonSerializable
+    public partial class LogicWorkflowOutputParameterInfo : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ParameterType))
+            if (Core.Optional.IsDefined(ParameterType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ParameterType.Value.ToString());
             }
-            if (Optional.IsDefined(Value))
+            if (Core.Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Logic.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Value.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(Metadata))
+            if (Core.Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Logic.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Metadata.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<BinaryData> error = default;
-            Optional<LogicWorkflowParameterType> type = default;
-            Optional<BinaryData> value = default;
-            Optional<BinaryData> metadata = default;
-            Optional<string> description = default;
+            Core.Optional<BinaryData> error = default;
+            Core.Optional<LogicWorkflowParameterType> type = default;
+            Core.Optional<BinaryData> value = default;
+            Core.Optional<BinaryData> metadata = default;
+            Core.Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new LogicWorkflowOutputParameterInfo(Optional.ToNullable(type), value.Value, metadata.Value, description.Value, error.Value);
+            return new LogicWorkflowOutputParameterInfo(Core.Optional.ToNullable(type), value.Value, metadata.Value, description.Value, error.Value);
         }
     }
 }

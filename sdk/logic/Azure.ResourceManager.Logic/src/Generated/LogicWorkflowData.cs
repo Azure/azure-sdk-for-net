@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="location"> The location. </param>
         public LogicWorkflowData(AzureLocation location) : base(location)
         {
-            Parameters = new ChangeTrackingDictionary<string, LogicWorkflowParameterInfo>();
+            Parameters = new Core.ChangeTrackingDictionary<string, LogicWorkflowParameterInfo>();
         }
 
         /// <summary> Initializes a new instance of LogicWorkflowData. </summary>

@@ -19,15 +19,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MachineLearningDiagnoseResult>> userDefinedRouteResults = default;
-            Optional<IReadOnlyList<MachineLearningDiagnoseResult>> networkSecurityRuleResults = default;
-            Optional<IReadOnlyList<MachineLearningDiagnoseResult>> resourceLockResults = default;
-            Optional<IReadOnlyList<MachineLearningDiagnoseResult>> dnsResolutionResults = default;
-            Optional<IReadOnlyList<MachineLearningDiagnoseResult>> storageAccountResults = default;
-            Optional<IReadOnlyList<MachineLearningDiagnoseResult>> keyVaultResults = default;
-            Optional<IReadOnlyList<MachineLearningDiagnoseResult>> containerRegistryResults = default;
-            Optional<IReadOnlyList<MachineLearningDiagnoseResult>> applicationInsightsResults = default;
-            Optional<IReadOnlyList<MachineLearningDiagnoseResult>> otherResults = default;
+            Core.Optional<IReadOnlyList<MachineLearningDiagnoseResult>> userDefinedRouteResults = default;
+            Core.Optional<IReadOnlyList<MachineLearningDiagnoseResult>> networkSecurityRuleResults = default;
+            Core.Optional<IReadOnlyList<MachineLearningDiagnoseResult>> resourceLockResults = default;
+            Core.Optional<IReadOnlyList<MachineLearningDiagnoseResult>> dnsResolutionResults = default;
+            Core.Optional<IReadOnlyList<MachineLearningDiagnoseResult>> storageAccountResults = default;
+            Core.Optional<IReadOnlyList<MachineLearningDiagnoseResult>> keyVaultResults = default;
+            Core.Optional<IReadOnlyList<MachineLearningDiagnoseResult>> containerRegistryResults = default;
+            Core.Optional<IReadOnlyList<MachineLearningDiagnoseResult>> applicationInsightsResults = default;
+            Core.Optional<IReadOnlyList<MachineLearningDiagnoseResult>> otherResults = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userDefinedRouteResults"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningDiagnoseResultValue(Optional.ToList(userDefinedRouteResults), Optional.ToList(networkSecurityRuleResults), Optional.ToList(resourceLockResults), Optional.ToList(dnsResolutionResults), Optional.ToList(storageAccountResults), Optional.ToList(keyVaultResults), Optional.ToList(containerRegistryResults), Optional.ToList(applicationInsightsResults), Optional.ToList(otherResults));
+            return new MachineLearningDiagnoseResultValue(Core.Optional.ToList(userDefinedRouteResults), Core.Optional.ToList(networkSecurityRuleResults), Core.Optional.ToList(resourceLockResults), Core.Optional.ToList(dnsResolutionResults), Core.Optional.ToList(storageAccountResults), Core.Optional.ToList(keyVaultResults), Core.Optional.ToList(containerRegistryResults), Core.Optional.ToList(applicationInsightsResults), Core.Optional.ToList(otherResults));
         }
     }
 }

@@ -13,17 +13,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic
 {
-    public partial class IntegrationAccountData : IUtf8JsonSerializable
+    public partial class IntegrationAccountData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Core.Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Logic
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IntegrationServiceEnvironment))
+            if (Core.Optional.IsDefined(IntegrationServiceEnvironment))
             {
                 writer.WritePropertyName("integrationServiceEnvironment"u8);
                 writer.WriteObjectValue(IntegrationServiceEnvironment);
             }
-            if (Optional.IsDefined(State))
+            if (Core.Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -58,15 +58,15 @@ namespace Azure.ResourceManager.Logic
             {
                 return null;
             }
-            Optional<IntegrationAccountSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<IntegrationAccountSku> sku = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<LogicResourceReference> integrationServiceEnvironment = default;
-            Optional<LogicWorkflowState> state = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<LogicResourceReference> integrationServiceEnvironment = default;
+            Core.Optional<LogicWorkflowState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Logic
                     continue;
                 }
             }
-            return new IntegrationAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, integrationServiceEnvironment.Value, Optional.ToNullable(state));
+            return new IntegrationAccountData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku.Value, integrationServiceEnvironment.Value, Core.Optional.ToNullable(state));
         }
     }
 }

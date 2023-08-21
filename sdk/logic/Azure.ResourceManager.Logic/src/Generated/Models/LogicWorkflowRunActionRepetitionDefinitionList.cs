@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of LogicWorkflowRunActionRepetitionDefinitionList. </summary>
         internal LogicWorkflowRunActionRepetitionDefinitionList()
         {
-            Value = new ChangeTrackingList<LogicWorkflowRunActionRepetitionDefinitionData>();
+            Value = new Core.ChangeTrackingList<LogicWorkflowRunActionRepetitionDefinitionData>();
         }
 
         /// <summary> Initializes a new instance of LogicWorkflowRunActionRepetitionDefinitionList. </summary>

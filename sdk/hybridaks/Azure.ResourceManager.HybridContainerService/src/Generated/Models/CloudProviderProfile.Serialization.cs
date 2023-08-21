@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class CloudProviderProfile : IUtf8JsonSerializable
+    public partial class CloudProviderProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(InfraNetworkProfile))
+            if (Core.Optional.IsDefined(InfraNetworkProfile))
             {
                 writer.WritePropertyName("infraNetworkProfile"u8);
                 writer.WriteObjectValue(InfraNetworkProfile);
             }
-            if (Optional.IsDefined(InfraStorageProfile))
+            if (Core.Optional.IsDefined(InfraStorageProfile))
             {
                 writer.WritePropertyName("infraStorageProfile"u8);
                 writer.WriteObjectValue(InfraStorageProfile);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<CloudProviderProfileInfraNetworkProfile> infraNetworkProfile = default;
-            Optional<CloudProviderProfileInfraStorageProfile> infraStorageProfile = default;
+            Core.Optional<CloudProviderProfileInfraNetworkProfile> infraNetworkProfile = default;
+            Core.Optional<CloudProviderProfileInfraStorageProfile> infraStorageProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("infraNetworkProfile"u8))

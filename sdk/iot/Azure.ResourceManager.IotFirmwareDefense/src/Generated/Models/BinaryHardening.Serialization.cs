@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<string> binaryHardeningId = default;
-            Optional<string> architecture = default;
-            Optional<string> path = default;
-            Optional<string> @class = default;
-            Optional<string> runpath = default;
-            Optional<string> rpath = default;
-            Optional<NxFlag> nx = default;
-            Optional<PieFlag> pie = default;
-            Optional<RelroFlag> relro = default;
-            Optional<CanaryFlag> canary = default;
-            Optional<StrippedFlag> stripped = default;
+            Core.Optional<string> binaryHardeningId = default;
+            Core.Optional<string> architecture = default;
+            Core.Optional<string> path = default;
+            Core.Optional<string> @class = default;
+            Core.Optional<string> runpath = default;
+            Core.Optional<string> rpath = default;
+            Core.Optional<NxFlag> nx = default;
+            Core.Optional<PieFlag> pie = default;
+            Core.Optional<RelroFlag> relro = default;
+            Core.Optional<CanaryFlag> canary = default;
+            Core.Optional<StrippedFlag> stripped = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("binaryHardeningId"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     continue;
                 }
             }
-            return new BinaryHardening(binaryHardeningId.Value, architecture.Value, path.Value, @class.Value, runpath.Value, rpath.Value, Optional.ToNullable(nx), Optional.ToNullable(pie), Optional.ToNullable(relro), Optional.ToNullable(canary), Optional.ToNullable(stripped));
+            return new BinaryHardening(binaryHardeningId.Value, architecture.Value, path.Value, @class.Value, runpath.Value, rpath.Value, Core.Optional.ToNullable(nx), Core.Optional.ToNullable(pie), Core.Optional.ToNullable(relro), Core.Optional.ToNullable(canary), Core.Optional.ToNullable(stripped));
         }
     }
 }

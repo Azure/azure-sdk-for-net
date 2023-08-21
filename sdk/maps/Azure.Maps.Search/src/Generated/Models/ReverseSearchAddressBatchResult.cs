@@ -16,7 +16,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of ReverseSearchAddressBatchResult. </summary>
         internal ReverseSearchAddressBatchResult()
         {
-            BatchItems = new ChangeTrackingList<ReverseSearchAddressBatchItem>();
+            BatchItems = new Core.ChangeTrackingList<ReverseSearchAddressBatchItem>();
         }
     }
 }

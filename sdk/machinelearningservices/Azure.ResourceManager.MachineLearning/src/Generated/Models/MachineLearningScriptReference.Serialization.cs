@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningScriptReference : IUtf8JsonSerializable
+    public partial class MachineLearningScriptReference : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScriptSource))
+            if (Core.Optional.IsDefined(ScriptSource))
             {
                 writer.WritePropertyName("scriptSource"u8);
                 writer.WriteStringValue(ScriptSource);
             }
-            if (Optional.IsDefined(ScriptData))
+            if (Core.Optional.IsDefined(ScriptData))
             {
                 writer.WritePropertyName("scriptData"u8);
                 writer.WriteStringValue(ScriptData);
             }
-            if (Optional.IsDefined(ScriptArguments))
+            if (Core.Optional.IsDefined(ScriptArguments))
             {
                 writer.WritePropertyName("scriptArguments"u8);
                 writer.WriteStringValue(ScriptArguments);
             }
-            if (Optional.IsDefined(Timeout))
+            if (Core.Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> scriptSource = default;
-            Optional<string> scriptData = default;
-            Optional<string> scriptArguments = default;
-            Optional<string> timeout = default;
+            Core.Optional<string> scriptSource = default;
+            Core.Optional<string> scriptData = default;
+            Core.Optional<string> scriptArguments = default;
+            Core.Optional<string> timeout = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scriptSource"u8))

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Initializes a new instance of IotHubEndpointHealthInfoListResult. </summary>
         internal IotHubEndpointHealthInfoListResult()
         {
-            Value = new ChangeTrackingList<IotHubEndpointHealthInfo>();
+            Value = new Core.ChangeTrackingList<IotHubEndpointHealthInfo>();
         }
 
         /// <summary> Initializes a new instance of IotHubEndpointHealthInfoListResult. </summary>

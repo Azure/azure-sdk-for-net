@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of HybridComputePrivateEndpointConnectionListResult. </summary>
         internal HybridComputePrivateEndpointConnectionListResult()
         {
-            Value = new ChangeTrackingList<HybridComputePrivateEndpointConnectionData>();
+            Value = new Core.ChangeTrackingList<HybridComputePrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of HybridComputePrivateEndpointConnectionListResult. </summary>

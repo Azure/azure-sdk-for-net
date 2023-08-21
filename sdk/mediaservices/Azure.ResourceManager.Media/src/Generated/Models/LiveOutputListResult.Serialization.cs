@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MediaLiveOutputData>> value = default;
-            Optional<int> odataCount = default;
-            Optional<string> odataNextLink = default;
+            Core.Optional<IReadOnlyList<MediaLiveOutputData>> value = default;
+            Core.Optional<int> odataCount = default;
+            Core.Optional<string> odataNextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new LiveOutputListResult(Optional.ToList(value), Optional.ToNullable(odataCount), odataNextLink.Value);
+            return new LiveOutputListResult(Core.Optional.ToList(value), Core.Optional.ToNullable(odataCount), odataNextLink.Value);
         }
     }
 }

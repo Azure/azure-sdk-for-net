@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.ManagedServices
             {
                 return null;
             }
-            Optional<ManagedServicesMarketplaceRegistrationProperties> properties = default;
-            Optional<ManagedServicesPlan> plan = default;
+            Core.Optional<ManagedServicesMarketplaceRegistrationProperties> properties = default;
+            Core.Optional<ManagedServicesPlan> plan = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Core.Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))

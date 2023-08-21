@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of KeyVaultNetworkRuleSet. </summary>
         public KeyVaultNetworkRuleSet()
         {
-            IPRules = new ChangeTrackingList<KeyVaultIPRule>();
-            VirtualNetworkRules = new ChangeTrackingList<KeyVaultVirtualNetworkRule>();
+            IPRules = new Core.ChangeTrackingList<KeyVaultIPRule>();
+            VirtualNetworkRules = new Core.ChangeTrackingList<KeyVaultVirtualNetworkRule>();
         }
 
         /// <summary> Initializes a new instance of KeyVaultNetworkRuleSet. </summary>

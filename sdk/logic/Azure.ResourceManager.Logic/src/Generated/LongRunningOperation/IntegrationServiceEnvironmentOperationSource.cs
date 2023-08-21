@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Logic
 {
-    internal class IntegrationServiceEnvironmentOperationSource : IOperationSource<IntegrationServiceEnvironmentResource>
+    internal class IntegrationServiceEnvironmentOperationSource : Core.IOperationSource<IntegrationServiceEnvironmentResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Logic
             _client = client;
         }
 
-        IntegrationServiceEnvironmentResource IOperationSource<IntegrationServiceEnvironmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        IntegrationServiceEnvironmentResource Core.IOperationSource<IntegrationServiceEnvironmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = IntegrationServiceEnvironmentData.DeserializeIntegrationServiceEnvironmentData(document.RootElement);
             return new IntegrationServiceEnvironmentResource(_client, data);
         }
 
-        async ValueTask<IntegrationServiceEnvironmentResource> IOperationSource<IntegrationServiceEnvironmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<IntegrationServiceEnvironmentResource> Core.IOperationSource<IntegrationServiceEnvironmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = IntegrationServiceEnvironmentData.DeserializeIntegrationServiceEnvironmentData(document.RootElement);

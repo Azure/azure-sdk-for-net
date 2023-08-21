@@ -18,9 +18,9 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<string> date = default;
-            Optional<int> hour = default;
-            Optional<int> minute = default;
+            Core.Optional<string> date = default;
+            Core.Optional<int> hour = default;
+            Core.Optional<int> minute = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("date"u8))
@@ -47,7 +47,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new OperatingHoursTime(date.Value, Optional.ToNullable(hour), Optional.ToNullable(minute));
+            return new OperatingHoursTime(date.Value, Core.Optional.ToNullable(hour), Core.Optional.ToNullable(minute));
         }
     }
 }

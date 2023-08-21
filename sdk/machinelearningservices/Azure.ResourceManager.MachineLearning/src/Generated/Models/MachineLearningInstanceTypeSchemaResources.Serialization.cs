@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningInstanceTypeSchemaResources : IUtf8JsonSerializable
+    public partial class MachineLearningInstanceTypeSchemaResources : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Requests))
+            if (Core.Optional.IsCollectionDefined(Requests))
             {
                 writer.WritePropertyName("requests"u8);
                 writer.WriteStartObject();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Limits))
+            if (Core.Optional.IsCollectionDefined(Limits))
             {
                 writer.WritePropertyName("limits"u8);
                 writer.WriteStartObject();
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> requests = default;
-            Optional<IDictionary<string, string>> limits = default;
+            Core.Optional<IDictionary<string, string>> requests = default;
+            Core.Optional<IDictionary<string, string>> limits = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requests"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningInstanceTypeSchemaResources(Optional.ToDictionary(requests), Optional.ToDictionary(limits));
+            return new MachineLearningInstanceTypeSchemaResources(Core.Optional.ToDictionary(requests), Core.Optional.ToDictionary(limits));
         }
     }
 }

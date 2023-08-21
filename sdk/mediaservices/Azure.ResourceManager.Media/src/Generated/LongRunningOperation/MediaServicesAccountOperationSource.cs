@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Media
 {
-    internal class MediaServicesAccountOperationSource : IOperationSource<MediaServicesAccountResource>
+    internal class MediaServicesAccountOperationSource : Core.IOperationSource<MediaServicesAccountResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Media
             _client = client;
         }
 
-        MediaServicesAccountResource IOperationSource<MediaServicesAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        MediaServicesAccountResource Core.IOperationSource<MediaServicesAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MediaServicesAccountData.DeserializeMediaServicesAccountData(document.RootElement);
             return new MediaServicesAccountResource(_client, data);
         }
 
-        async ValueTask<MediaServicesAccountResource> IOperationSource<MediaServicesAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MediaServicesAccountResource> Core.IOperationSource<MediaServicesAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MediaServicesAccountData.DeserializeMediaServicesAccountData(document.RootElement);

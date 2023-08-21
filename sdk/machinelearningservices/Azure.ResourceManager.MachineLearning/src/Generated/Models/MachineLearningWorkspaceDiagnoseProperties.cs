@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningWorkspaceDiagnoseProperties. </summary>
         public MachineLearningWorkspaceDiagnoseProperties()
         {
-            Udr = new ChangeTrackingDictionary<string, BinaryData>();
-            Nsg = new ChangeTrackingDictionary<string, BinaryData>();
-            ResourceLock = new ChangeTrackingDictionary<string, BinaryData>();
-            DnsResolution = new ChangeTrackingDictionary<string, BinaryData>();
-            StorageAccount = new ChangeTrackingDictionary<string, BinaryData>();
-            KeyVault = new ChangeTrackingDictionary<string, BinaryData>();
-            ContainerRegistry = new ChangeTrackingDictionary<string, BinaryData>();
-            ApplicationInsights = new ChangeTrackingDictionary<string, BinaryData>();
-            Others = new ChangeTrackingDictionary<string, BinaryData>();
+            Udr = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            Nsg = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            ResourceLock = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            DnsResolution = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            StorageAccount = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            KeyVault = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            ContainerRegistry = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            ApplicationInsights = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            Others = new Core.ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary>

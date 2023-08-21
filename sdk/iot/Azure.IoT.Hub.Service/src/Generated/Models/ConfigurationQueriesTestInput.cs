@@ -16,7 +16,7 @@ namespace Azure.IoT.Hub.Service.Models
         /// <summary> Initializes a new instance of ConfigurationQueriesTestInput. </summary>
         public ConfigurationQueriesTestInput()
         {
-            CustomMetricQueries = new ChangeTrackingDictionary<string, string>();
+            CustomMetricQueries = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The query used to define targeted devices or modules. The query is based on twin tags and/or reported properties. </summary>

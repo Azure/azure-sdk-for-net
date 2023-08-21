@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class IntegrationAccountBatchReleaseCriteria : IUtf8JsonSerializable
+    public partial class IntegrationAccountBatchReleaseCriteria : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MessageCount))
+            if (Core.Optional.IsDefined(MessageCount))
             {
                 writer.WritePropertyName("messageCount"u8);
                 writer.WriteNumberValue(MessageCount.Value);
             }
-            if (Optional.IsDefined(BatchSize))
+            if (Core.Optional.IsDefined(BatchSize))
             {
                 writer.WritePropertyName("batchSize"u8);
                 writer.WriteNumberValue(BatchSize.Value);
             }
-            if (Optional.IsDefined(Recurrence))
+            if (Core.Optional.IsDefined(Recurrence))
             {
                 writer.WritePropertyName("recurrence"u8);
                 writer.WriteObjectValue(Recurrence);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<int> messageCount = default;
-            Optional<int> batchSize = default;
-            Optional<LogicWorkflowTriggerRecurrence> recurrence = default;
+            Core.Optional<int> messageCount = default;
+            Core.Optional<int> batchSize = default;
+            Core.Optional<LogicWorkflowTriggerRecurrence> recurrence = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("messageCount"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new IntegrationAccountBatchReleaseCriteria(Optional.ToNullable(messageCount), Optional.ToNullable(batchSize), recurrence.Value);
+            return new IntegrationAccountBatchReleaseCriteria(Core.Optional.ToNullable(messageCount), Core.Optional.ToNullable(batchSize), recurrence.Value);
         }
     }
 }

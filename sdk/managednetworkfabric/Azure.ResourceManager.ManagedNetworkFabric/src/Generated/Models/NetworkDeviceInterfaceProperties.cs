@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of NetworkDeviceInterfaceProperties. </summary>
         public NetworkDeviceInterfaceProperties()
         {
-            SupportedConnectorTypes = new ChangeTrackingList<SupportedConnectorProperties>();
+            SupportedConnectorTypes = new Core.ChangeTrackingList<SupportedConnectorProperties>();
         }
 
         /// <summary> Initializes a new instance of NetworkDeviceInterfaceProperties. </summary>

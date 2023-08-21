@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class MatchConfigurationIPGroupProperties : IUtf8JsonSerializable
+    public partial class MatchConfigurationIPGroupProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Core.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(IPAddressType))
+            if (Core.Optional.IsDefined(IPAddressType))
             {
                 writer.WritePropertyName("ipAddressType"u8);
                 writer.WriteStringValue(IPAddressType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IPPrefixes))
+            if (Core.Optional.IsCollectionDefined(IPPrefixes))
             {
                 writer.WritePropertyName("ipPrefixes"u8);
                 writer.WriteStartArray();
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<NetworkFabricIPAddressType> ipAddressType = default;
-            Optional<IList<string>> ipPrefixes = default;
+            Core.Optional<string> name = default;
+            Core.Optional<NetworkFabricIPAddressType> ipAddressType = default;
+            Core.Optional<IList<string>> ipPrefixes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new MatchConfigurationIPGroupProperties(name.Value, Optional.ToNullable(ipAddressType), Optional.ToList(ipPrefixes));
+            return new MatchConfigurationIPGroupProperties(name.Value, Core.Optional.ToNullable(ipAddressType), Core.Optional.ToList(ipPrefixes));
         }
     }
 }

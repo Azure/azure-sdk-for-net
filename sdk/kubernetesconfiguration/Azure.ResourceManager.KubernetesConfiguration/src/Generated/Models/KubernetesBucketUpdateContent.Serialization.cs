@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesBucketUpdateContent : IUtf8JsonSerializable
+    public partial class KubernetesBucketUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Uri))
+            if (Core.Optional.IsDefined(Uri))
             {
                 if (Uri != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("url");
                 }
             }
-            if (Optional.IsDefined(BucketName))
+            if (Core.Optional.IsDefined(BucketName))
             {
                 if (BucketName != null)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("bucketName");
                 }
             }
-            if (Optional.IsDefined(UseInsecureCommunication))
+            if (Core.Optional.IsDefined(UseInsecureCommunication))
             {
                 if (UseInsecureCommunication != null)
                 {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("insecure");
                 }
             }
-            if (Optional.IsDefined(TimeoutInSeconds))
+            if (Core.Optional.IsDefined(TimeoutInSeconds))
             {
                 if (TimeoutInSeconds != null)
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("timeoutInSeconds");
                 }
             }
-            if (Optional.IsDefined(SyncIntervalInSeconds))
+            if (Core.Optional.IsDefined(SyncIntervalInSeconds))
             {
                 if (SyncIntervalInSeconds != null)
                 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("syncIntervalInSeconds");
                 }
             }
-            if (Optional.IsDefined(AccessKey))
+            if (Core.Optional.IsDefined(AccessKey))
             {
                 if (AccessKey != null)
                 {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("accessKey");
                 }
             }
-            if (Optional.IsDefined(LocalAuthRef))
+            if (Core.Optional.IsDefined(LocalAuthRef))
             {
                 if (LocalAuthRef != null)
                 {

@@ -18,8 +18,8 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<EntryPointType> type = default;
-            Optional<LatLongPairAbbreviated> position = default;
+            Core.Optional<EntryPointType> type = default;
+            Core.Optional<LatLongPairAbbreviated> position = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -41,7 +41,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new FacilityEntryPoint(Optional.ToNullable(type), position.Value);
+            return new FacilityEntryPoint(Core.Optional.ToNullable(type), position.Value);
         }
     }
 }

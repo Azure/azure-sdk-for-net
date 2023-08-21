@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             bool nameAvailable = default;
-            Optional<string> reason = default;
-            Optional<string> message = default;
+            Core.Optional<string> reason = default;
+            Core.Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameAvailable"u8))

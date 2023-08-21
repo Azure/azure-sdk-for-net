@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    internal partial class ClearKeyEncryptionConfiguration : IUtf8JsonSerializable
+    internal partial class ClearKeyEncryptionConfiguration : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomKeysAcquisitionUriTemplate))
+            if (Core.Optional.IsDefined(CustomKeysAcquisitionUriTemplate))
             {
                 writer.WritePropertyName("customKeysAcquisitionUrlTemplate"u8);
                 writer.WriteStringValue(CustomKeysAcquisitionUriTemplate);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<string> customKeysAcquisitionUriTemplate = default;
+            Core.Optional<string> customKeysAcquisitionUriTemplate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customKeysAcquisitionUrlTemplate"u8))

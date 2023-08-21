@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
-    internal partial class SasDefinitionCreateParameters : IUtf8JsonSerializable
+    internal partial class SasDefinitionCreateParameters : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("templateUri"u8);
@@ -21,12 +21,12 @@ namespace Azure.Security.KeyVault.Storage.Models
             writer.WriteStringValue(SasType.ToString());
             writer.WritePropertyName("validityPeriod"u8);
             writer.WriteStringValue(ValidityPeriod);
-            if (Optional.IsDefined(SasDefinitionAttributes))
+            if (Core.Optional.IsDefined(SasDefinitionAttributes))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteObjectValue(SasDefinitionAttributes);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();

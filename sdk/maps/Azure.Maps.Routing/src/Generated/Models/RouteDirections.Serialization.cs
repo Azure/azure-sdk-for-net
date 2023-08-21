@@ -19,10 +19,10 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Optional<string> formatVersion = default;
-            Optional<IReadOnlyList<RouteData>> routes = default;
-            Optional<IReadOnlyList<RouteOptimizedWaypoint>> optimizedWaypoints = default;
-            Optional<RouteReport> report = default;
+            Core.Optional<string> formatVersion = default;
+            Core.Optional<IReadOnlyList<RouteData>> routes = default;
+            Core.Optional<IReadOnlyList<RouteOptimizedWaypoint>> optimizedWaypoints = default;
+            Core.Optional<RouteReport> report = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("formatVersion"u8))
@@ -68,7 +68,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteDirections(formatVersion.Value, Optional.ToList(routes), Optional.ToList(optimizedWaypoints), report.Value);
+            return new RouteDirections(formatVersion.Value, Core.Optional.ToList(routes), Core.Optional.ToList(optimizedWaypoints), report.Value);
         }
     }
 }

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class NetworkTapOperationSource : IOperationSource<NetworkTapResource>
+    internal class NetworkTapOperationSource : Core.IOperationSource<NetworkTapResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             _client = client;
         }
 
-        NetworkTapResource IOperationSource<NetworkTapResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkTapResource Core.IOperationSource<NetworkTapResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NetworkTapData.DeserializeNetworkTapData(document.RootElement);
             return new NetworkTapResource(_client, data);
         }
 
-        async ValueTask<NetworkTapResource> IOperationSource<NetworkTapResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkTapResource> Core.IOperationSource<NetworkTapResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NetworkTapData.DeserializeNetworkTapData(document.RootElement);

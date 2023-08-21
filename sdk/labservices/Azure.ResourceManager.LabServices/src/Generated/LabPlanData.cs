@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="location"> The location. </param>
         public LabPlanData(AzureLocation location) : base(location)
         {
-            AllowedRegions = new ChangeTrackingList<AzureLocation>();
+            AllowedRegions = new Core.ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Initializes a new instance of LabPlanData. </summary>

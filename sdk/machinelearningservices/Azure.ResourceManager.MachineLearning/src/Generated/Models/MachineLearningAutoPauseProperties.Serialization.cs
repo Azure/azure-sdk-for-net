@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningAutoPauseProperties : IUtf8JsonSerializable
+    public partial class MachineLearningAutoPauseProperties : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DelayInMinutes))
+            if (Core.Optional.IsDefined(DelayInMinutes))
             {
                 writer.WritePropertyName("delayInMinutes"u8);
                 writer.WriteNumberValue(DelayInMinutes.Value);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (Core.Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> delayInMinutes = default;
-            Optional<bool> enabled = default;
+            Core.Optional<int> delayInMinutes = default;
+            Core.Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("delayInMinutes"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningAutoPauseProperties(Optional.ToNullable(delayInMinutes), Optional.ToNullable(enabled));
+            return new MachineLearningAutoPauseProperties(Core.Optional.ToNullable(delayInMinutes), Core.Optional.ToNullable(enabled));
         }
     }
 }

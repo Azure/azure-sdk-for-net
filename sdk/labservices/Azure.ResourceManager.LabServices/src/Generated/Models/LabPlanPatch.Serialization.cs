@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class LabPlanPatch : IUtf8JsonSerializable
+    public partial class LabPlanPatch : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();
@@ -32,22 +32,22 @@ namespace Azure.ResourceManager.LabServices.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultConnectionProfile))
+            if (Core.Optional.IsDefined(DefaultConnectionProfile))
             {
                 writer.WritePropertyName("defaultConnectionProfile"u8);
                 writer.WriteObjectValue(DefaultConnectionProfile);
             }
-            if (Optional.IsDefined(DefaultAutoShutdownProfile))
+            if (Core.Optional.IsDefined(DefaultAutoShutdownProfile))
             {
                 writer.WritePropertyName("defaultAutoShutdownProfile"u8);
                 writer.WriteObjectValue(DefaultAutoShutdownProfile);
             }
-            if (Optional.IsDefined(DefaultNetworkProfile))
+            if (Core.Optional.IsDefined(DefaultNetworkProfile))
             {
                 writer.WritePropertyName("defaultNetworkProfile"u8);
                 writer.WriteObjectValue(DefaultNetworkProfile);
             }
-            if (Optional.IsCollectionDefined(AllowedRegions))
+            if (Core.Optional.IsCollectionDefined(AllowedRegions))
             {
                 writer.WritePropertyName("allowedRegions"u8);
                 writer.WriteStartArray();
@@ -57,17 +57,17 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SharedGalleryId))
+            if (Core.Optional.IsDefined(SharedGalleryId))
             {
                 writer.WritePropertyName("sharedGalleryId"u8);
                 writer.WriteStringValue(SharedGalleryId);
             }
-            if (Optional.IsDefined(SupportInfo))
+            if (Core.Optional.IsDefined(SupportInfo))
             {
                 writer.WritePropertyName("supportInfo"u8);
                 writer.WriteObjectValue(SupportInfo);
             }
-            if (Optional.IsDefined(LinkedLmsInstance))
+            if (Core.Optional.IsDefined(LinkedLmsInstance))
             {
                 writer.WritePropertyName("linkedLmsInstance"u8);
                 writer.WriteStringValue(LinkedLmsInstance.AbsoluteUri);

@@ -14,17 +14,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LabServices
 {
-    public partial class LabPlanData : IUtf8JsonSerializable
+    public partial class LabPlanData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Core.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Core.Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.LabServices
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultConnectionProfile))
+            if (Core.Optional.IsDefined(DefaultConnectionProfile))
             {
                 writer.WritePropertyName("defaultConnectionProfile"u8);
                 writer.WriteObjectValue(DefaultConnectionProfile);
             }
-            if (Optional.IsDefined(DefaultAutoShutdownProfile))
+            if (Core.Optional.IsDefined(DefaultAutoShutdownProfile))
             {
                 writer.WritePropertyName("defaultAutoShutdownProfile"u8);
                 writer.WriteObjectValue(DefaultAutoShutdownProfile);
             }
-            if (Optional.IsDefined(DefaultNetworkProfile))
+            if (Core.Optional.IsDefined(DefaultNetworkProfile))
             {
                 writer.WritePropertyName("defaultNetworkProfile"u8);
                 writer.WriteObjectValue(DefaultNetworkProfile);
             }
-            if (Optional.IsCollectionDefined(AllowedRegions))
+            if (Core.Optional.IsCollectionDefined(AllowedRegions))
             {
                 writer.WritePropertyName("allowedRegions"u8);
                 writer.WriteStartArray();
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.LabServices
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SharedGalleryId))
+            if (Core.Optional.IsDefined(SharedGalleryId))
             {
                 writer.WritePropertyName("sharedGalleryId"u8);
                 writer.WriteStringValue(SharedGalleryId);
             }
-            if (Optional.IsDefined(SupportInfo))
+            if (Core.Optional.IsDefined(SupportInfo))
             {
                 writer.WritePropertyName("supportInfo"u8);
                 writer.WriteObjectValue(SupportInfo);
             }
-            if (Optional.IsDefined(LinkedLmsInstance))
+            if (Core.Optional.IsDefined(LinkedLmsInstance))
             {
                 writer.WritePropertyName("linkedLmsInstance"u8);
                 writer.WriteStringValue(LinkedLmsInstance.AbsoluteUri);
@@ -89,21 +89,21 @@ namespace Azure.ResourceManager.LabServices
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            Core.Optional<ManagedServiceIdentity> identity = default;
+            Core.Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<LabConnectionProfile> defaultConnectionProfile = default;
-            Optional<LabAutoShutdownProfile> defaultAutoShutdownProfile = default;
-            Optional<LabPlanNetworkProfile> defaultNetworkProfile = default;
-            Optional<IList<AzureLocation>> allowedRegions = default;
-            Optional<ResourceIdentifier> sharedGalleryId = default;
-            Optional<LabPlanSupportInfo> supportInfo = default;
-            Optional<Uri> linkedLmsInstance = default;
-            Optional<LabServicesProvisioningState> provisioningState = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<LabConnectionProfile> defaultConnectionProfile = default;
+            Core.Optional<LabAutoShutdownProfile> defaultAutoShutdownProfile = default;
+            Core.Optional<LabPlanNetworkProfile> defaultNetworkProfile = default;
+            Core.Optional<IList<AzureLocation>> allowedRegions = default;
+            Core.Optional<ResourceIdentifier> sharedGalleryId = default;
+            Core.Optional<LabPlanSupportInfo> supportInfo = default;
+            Core.Optional<Uri> linkedLmsInstance = default;
+            Core.Optional<LabServicesProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.LabServices
                     continue;
                 }
             }
-            return new LabPlanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, defaultConnectionProfile.Value, defaultAutoShutdownProfile.Value, defaultNetworkProfile.Value, Optional.ToList(allowedRegions), sharedGalleryId.Value, supportInfo.Value, linkedLmsInstance.Value, Optional.ToNullable(provisioningState));
+            return new LabPlanData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity, defaultConnectionProfile.Value, defaultAutoShutdownProfile.Value, defaultNetworkProfile.Value, Core.Optional.ToList(allowedRegions), sharedGalleryId.Value, supportInfo.Value, linkedLmsInstance.Value, Core.Optional.ToNullable(provisioningState));
         }
     }
 }

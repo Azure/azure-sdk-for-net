@@ -14,24 +14,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    public partial class MediaJobData : IUtf8JsonSerializable
+    public partial class MediaJobData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Input))
+            if (Core.Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
             }
-            if (Optional.IsCollectionDefined(Outputs))
+            if (Core.Optional.IsCollectionDefined(Outputs))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Media
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Priority))
+            if (Core.Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteStringValue(Priority.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(CorrelationData))
+            if (Core.Optional.IsCollectionDefined(CorrelationData))
             {
                 writer.WritePropertyName("correlationData"u8);
                 writer.WriteStartObject();
@@ -70,17 +70,17 @@ namespace Azure.ResourceManager.Media
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<MediaJobState> state = default;
-            Optional<string> description = default;
-            Optional<MediaJobInputBasicProperties> input = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<IList<MediaJobOutput>> outputs = default;
-            Optional<MediaJobPriority> priority = default;
-            Optional<IDictionary<string, string>> correlationData = default;
-            Optional<DateTimeOffset?> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<DateTimeOffset> created = default;
+            Core.Optional<MediaJobState> state = default;
+            Core.Optional<string> description = default;
+            Core.Optional<MediaJobInputBasicProperties> input = default;
+            Core.Optional<DateTimeOffset> lastModified = default;
+            Core.Optional<IList<MediaJobOutput>> outputs = default;
+            Core.Optional<MediaJobPriority> priority = default;
+            Core.Optional<IDictionary<string, string>> correlationData = default;
+            Core.Optional<DateTimeOffset?> startTime = default;
+            Core.Optional<DateTimeOffset?> endTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Media
                     continue;
                 }
             }
-            return new MediaJobData(id, name, type, systemData.Value, Optional.ToNullable(created), Optional.ToNullable(state), description.Value, input.Value, Optional.ToNullable(lastModified), Optional.ToList(outputs), Optional.ToNullable(priority), Optional.ToDictionary(correlationData), Optional.ToNullable(startTime), Optional.ToNullable(endTime));
+            return new MediaJobData(id, name, type, systemData.Value, Core.Optional.ToNullable(created), Core.Optional.ToNullable(state), description.Value, input.Value, Core.Optional.ToNullable(lastModified), Core.Optional.ToList(outputs), Core.Optional.ToNullable(priority), Core.Optional.ToDictionary(correlationData), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime));
         }
     }
 }

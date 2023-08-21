@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of KeyVaultPrivateLinkResourceListResult. </summary>
         internal KeyVaultPrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<KeyVaultPrivateLinkResourceData>();
+            Value = new Core.ChangeTrackingList<KeyVaultPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of KeyVaultPrivateLinkResourceListResult. </summary>

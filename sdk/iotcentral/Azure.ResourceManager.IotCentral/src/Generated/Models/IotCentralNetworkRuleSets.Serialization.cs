@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotCentral.Models
 {
-    public partial class IotCentralNetworkRuleSets : IUtf8JsonSerializable
+    public partial class IotCentralNetworkRuleSets : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ApplyToDevices))
+            if (Core.Optional.IsDefined(ApplyToDevices))
             {
                 writer.WritePropertyName("applyToDevices"u8);
                 writer.WriteBooleanValue(ApplyToDevices.Value);
             }
-            if (Optional.IsDefined(ApplyToIotCentral))
+            if (Core.Optional.IsDefined(ApplyToIotCentral))
             {
                 writer.WritePropertyName("applyToIoTCentral"u8);
                 writer.WriteBooleanValue(ApplyToIotCentral.Value);
             }
-            if (Optional.IsDefined(DefaultAction))
+            if (Core.Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IPRules))
+            if (Core.Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.IotCentral.Models
             {
                 return null;
             }
-            Optional<bool> applyToDevices = default;
-            Optional<bool> applyToIoTCentral = default;
-            Optional<IotCentralNetworkAction> defaultAction = default;
-            Optional<IList<IotCentralNetworkRuleSetIPRule>> ipRules = default;
+            Core.Optional<bool> applyToDevices = default;
+            Core.Optional<bool> applyToIoTCentral = default;
+            Core.Optional<IotCentralNetworkAction> defaultAction = default;
+            Core.Optional<IList<IotCentralNetworkRuleSetIPRule>> ipRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("applyToDevices"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                     continue;
                 }
             }
-            return new IotCentralNetworkRuleSets(Optional.ToNullable(applyToDevices), Optional.ToNullable(applyToIoTCentral), Optional.ToNullable(defaultAction), Optional.ToList(ipRules));
+            return new IotCentralNetworkRuleSets(Core.Optional.ToNullable(applyToDevices), Core.Optional.ToNullable(applyToIoTCentral), Core.Optional.ToNullable(defaultAction), Core.Optional.ToList(ipRules));
         }
     }
 }

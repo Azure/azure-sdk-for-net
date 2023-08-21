@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Kubernetes.Models
             {
                 return null;
             }
-            Optional<HybridConnectionConfig> hybridConnectionConfig = default;
-            Optional<IReadOnlyList<CredentialResult>> kubeconfigs = default;
+            Core.Optional<HybridConnectionConfig> hybridConnectionConfig = default;
+            Core.Optional<IReadOnlyList<CredentialResult>> kubeconfigs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hybridConnectionConfig"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     continue;
                 }
             }
-            return new CredentialResults(hybridConnectionConfig.Value, Optional.ToList(kubeconfigs));
+            return new CredentialResults(hybridConnectionConfig.Value, Core.Optional.ToList(kubeconfigs));
         }
     }
 }

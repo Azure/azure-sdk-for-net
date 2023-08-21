@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of SubscriptionsContextList. </summary>
         internal SubscriptionsContextList()
         {
-            SubscriptionsIds = new ChangeTrackingList<string>();
+            SubscriptionsIds = new Core.ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SubscriptionsContextList. </summary>

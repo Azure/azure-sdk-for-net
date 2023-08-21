@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class EdifactAcknowledgementSettings : IUtf8JsonSerializable
+    public partial class EdifactAcknowledgementSettings : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("needTechnicalAcknowledgement"u8);
@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(NeedLoopForValidMessages);
             writer.WritePropertyName("sendSynchronousAcknowledgement"u8);
             writer.WriteBooleanValue(SendSynchronousAcknowledgement);
-            if (Optional.IsDefined(AcknowledgementControlNumberPrefix))
+            if (Core.Optional.IsDefined(AcknowledgementControlNumberPrefix))
             {
                 writer.WritePropertyName("acknowledgementControlNumberPrefix"u8);
                 writer.WriteStringValue(AcknowledgementControlNumberPrefix);
             }
-            if (Optional.IsDefined(AcknowledgementControlNumberSuffix))
+            if (Core.Optional.IsDefined(AcknowledgementControlNumberSuffix))
             {
                 writer.WritePropertyName("acknowledgementControlNumberSuffix"u8);
                 writer.WriteStringValue(AcknowledgementControlNumberSuffix);
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Logic.Models
             bool batchFunctionalAcknowledgements = default;
             bool needLoopForValidMessages = default;
             bool sendSynchronousAcknowledgement = default;
-            Optional<string> acknowledgementControlNumberPrefix = default;
-            Optional<string> acknowledgementControlNumberSuffix = default;
+            Core.Optional<string> acknowledgementControlNumberPrefix = default;
+            Core.Optional<string> acknowledgementControlNumberSuffix = default;
             int acknowledgementControlNumberLowerBound = default;
             int acknowledgementControlNumberUpperBound = default;
             bool rolloverAcknowledgementControlNumber = default;

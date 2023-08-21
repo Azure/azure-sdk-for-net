@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class EndpointDependency : IUtf8JsonSerializable
+    public partial class EndpointDependency : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DomainName))
+            if (Core.Optional.IsDefined(DomainName))
             {
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (Optional.IsCollectionDefined(EndpointDetails))
+            if (Core.Optional.IsCollectionDefined(EndpointDetails))
             {
                 writer.WritePropertyName("endpointDetails"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<string> domainName = default;
-            Optional<IList<EndpointDetail>> endpointDetails = default;
+            Core.Optional<string> domainName = default;
+            Core.Optional<IList<EndpointDetail>> endpointDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainName"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new EndpointDependency(domainName.Value, Optional.ToList(endpointDetails));
+            return new EndpointDependency(domainName.Value, Core.Optional.ToList(endpointDetails));
         }
     }
 }

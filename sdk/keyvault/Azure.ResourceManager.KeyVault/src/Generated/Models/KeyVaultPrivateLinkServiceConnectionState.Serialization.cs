@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class KeyVaultPrivateLinkServiceConnectionState : IUtf8JsonSerializable
+    public partial class KeyVaultPrivateLinkServiceConnectionState : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Core.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ActionsRequired))
+            if (Core.Optional.IsDefined(ActionsRequired))
             {
                 writer.WritePropertyName("actionsRequired"u8);
                 writer.WriteStringValue(ActionsRequired.Value.ToString());
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Optional<KeyVaultPrivateEndpointServiceConnectionStatus> status = default;
-            Optional<string> description = default;
-            Optional<KeyVaultActionsRequiredMessage> actionsRequired = default;
+            Core.Optional<KeyVaultPrivateEndpointServiceConnectionStatus> status = default;
+            Core.Optional<string> description = default;
+            Core.Optional<KeyVaultActionsRequiredMessage> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new KeyVaultPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, Optional.ToNullable(actionsRequired));
+            return new KeyVaultPrivateLinkServiceConnectionState(Core.Optional.ToNullable(status), description.Value, Core.Optional.ToNullable(actionsRequired));
         }
     }
 }

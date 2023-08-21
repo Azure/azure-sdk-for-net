@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class OSProfile : IUtf8JsonSerializable
+    public partial class OSProfile : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(WindowsConfiguration))
+            if (Core.Optional.IsDefined(WindowsConfiguration))
             {
                 writer.WritePropertyName("windowsConfiguration"u8);
                 writer.WriteObjectValue(WindowsConfiguration);
             }
-            if (Optional.IsDefined(LinuxConfiguration))
+            if (Core.Optional.IsDefined(LinuxConfiguration))
             {
                 writer.WritePropertyName("linuxConfiguration"u8);
                 writer.WriteObjectValue(LinuxConfiguration);
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<string> computerName = default;
-            Optional<OSProfileWindowsConfiguration> windowsConfiguration = default;
-            Optional<OSProfileLinuxConfiguration> linuxConfiguration = default;
+            Core.Optional<string> computerName = default;
+            Core.Optional<OSProfileWindowsConfiguration> windowsConfiguration = default;
+            Core.Optional<OSProfileLinuxConfiguration> linuxConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computerName"u8))

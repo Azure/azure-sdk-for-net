@@ -13,44 +13,44 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    public partial class KustoAttachedDatabaseConfigurationData : IUtf8JsonSerializable
+    public partial class KustoAttachedDatabaseConfigurationData : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Core.Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DatabaseName))
+            if (Core.Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (Optional.IsDefined(ClusterResourceId))
+            if (Core.Optional.IsDefined(ClusterResourceId))
             {
                 writer.WritePropertyName("clusterResourceId"u8);
                 writer.WriteStringValue(ClusterResourceId);
             }
-            if (Optional.IsDefined(DefaultPrincipalsModificationKind))
+            if (Core.Optional.IsDefined(DefaultPrincipalsModificationKind))
             {
                 writer.WritePropertyName("defaultPrincipalsModificationKind"u8);
                 writer.WriteStringValue(DefaultPrincipalsModificationKind.Value.ToString());
             }
-            if (Optional.IsDefined(TableLevelSharingProperties))
+            if (Core.Optional.IsDefined(TableLevelSharingProperties))
             {
                 writer.WritePropertyName("tableLevelSharingProperties"u8);
                 writer.WriteObjectValue(TableLevelSharingProperties);
             }
-            if (Optional.IsDefined(DatabaseNameOverride))
+            if (Core.Optional.IsDefined(DatabaseNameOverride))
             {
                 writer.WritePropertyName("databaseNameOverride"u8);
                 writer.WriteStringValue(DatabaseNameOverride);
             }
-            if (Optional.IsDefined(DatabaseNamePrefix))
+            if (Core.Optional.IsDefined(DatabaseNamePrefix))
             {
                 writer.WritePropertyName("databaseNamePrefix"u8);
                 writer.WriteStringValue(DatabaseNamePrefix);
@@ -65,19 +65,19 @@ namespace Azure.ResourceManager.Kusto
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            Core.Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<KustoProvisioningState> provisioningState = default;
-            Optional<string> databaseName = default;
-            Optional<ResourceIdentifier> clusterResourceId = default;
-            Optional<IReadOnlyList<string>> attachedDatabaseNames = default;
-            Optional<KustoDatabaseDefaultPrincipalsModificationKind> defaultPrincipalsModificationKind = default;
-            Optional<KustoDatabaseTableLevelSharingProperties> tableLevelSharingProperties = default;
-            Optional<string> databaseNameOverride = default;
-            Optional<string> databaseNamePrefix = default;
+            Core.Optional<SystemData> systemData = default;
+            Core.Optional<KustoProvisioningState> provisioningState = default;
+            Core.Optional<string> databaseName = default;
+            Core.Optional<ResourceIdentifier> clusterResourceId = default;
+            Core.Optional<IReadOnlyList<string>> attachedDatabaseNames = default;
+            Core.Optional<KustoDatabaseDefaultPrincipalsModificationKind> defaultPrincipalsModificationKind = default;
+            Core.Optional<KustoDatabaseTableLevelSharingProperties> tableLevelSharingProperties = default;
+            Core.Optional<string> databaseNameOverride = default;
+            Core.Optional<string> databaseNamePrefix = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Kusto
                     continue;
                 }
             }
-            return new KustoAttachedDatabaseConfigurationData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), databaseName.Value, clusterResourceId.Value, Optional.ToList(attachedDatabaseNames), Optional.ToNullable(defaultPrincipalsModificationKind), tableLevelSharingProperties.Value, databaseNameOverride.Value, databaseNamePrefix.Value);
+            return new KustoAttachedDatabaseConfigurationData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), Core.Optional.ToNullable(provisioningState), databaseName.Value, clusterResourceId.Value, Core.Optional.ToList(attachedDatabaseNames), Core.Optional.ToNullable(defaultPrincipalsModificationKind), tableLevelSharingProperties.Value, databaseNameOverride.Value, databaseNamePrefix.Value);
         }
     }
 }

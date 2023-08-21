@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class StandardEncoderPreset : IUtf8JsonSerializable
+    public partial class StandardEncoderPreset : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(ExperimentalOptions))
+            if (Core.Optional.IsCollectionDefined(ExperimentalOptions))
             {
                 writer.WritePropertyName("experimentalOptions"u8);
                 writer.WriteStartObject();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Filters))
+            if (Core.Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteObjectValue(Filters);
@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> experimentalOptions = default;
-            Optional<FilteringOperations> filters = default;
+            Core.Optional<IDictionary<string, string>> experimentalOptions = default;
+            Core.Optional<FilteringOperations> filters = default;
             IList<MediaCodecBase> codecs = default;
             IList<MediaFormatBase> formats = default;
             string odataType = default;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new StandardEncoderPreset(odataType, Optional.ToDictionary(experimentalOptions), filters.Value, codecs, formats);
+            return new StandardEncoderPreset(odataType, Core.Optional.ToDictionary(experimentalOptions), filters.Value, codecs, formats);
         }
     }
 }

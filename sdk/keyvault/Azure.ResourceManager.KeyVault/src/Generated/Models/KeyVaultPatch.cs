@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of KeyVaultPatch. </summary>
         public KeyVaultPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Tags = new Core.ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The tags that will be assigned to the key vault. </summary>

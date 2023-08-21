@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridCompute
 {
-    internal class HybridComputePrivateEndpointConnectionOperationSource : IOperationSource<HybridComputePrivateEndpointConnectionResource>
+    internal class HybridComputePrivateEndpointConnectionOperationSource : Core.IOperationSource<HybridComputePrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.HybridCompute
             _client = client;
         }
 
-        HybridComputePrivateEndpointConnectionResource IOperationSource<HybridComputePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        HybridComputePrivateEndpointConnectionResource Core.IOperationSource<HybridComputePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = HybridComputePrivateEndpointConnectionData.DeserializeHybridComputePrivateEndpointConnectionData(document.RootElement);
             return new HybridComputePrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<HybridComputePrivateEndpointConnectionResource> IOperationSource<HybridComputePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HybridComputePrivateEndpointConnectionResource> Core.IOperationSource<HybridComputePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = HybridComputePrivateEndpointConnectionData.DeserializeHybridComputePrivateEndpointConnectionData(document.RootElement);

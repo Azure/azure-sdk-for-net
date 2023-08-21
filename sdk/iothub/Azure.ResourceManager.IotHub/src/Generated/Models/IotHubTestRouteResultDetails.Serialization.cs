@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RouteCompilationError>> compilationErrors = default;
+            Core.Optional<IReadOnlyList<RouteCompilationError>> compilationErrors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("compilationErrors"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new IotHubTestRouteResultDetails(Optional.ToList(compilationErrors));
+            return new IotHubTestRouteResultDetails(Core.Optional.ToList(compilationErrors));
         }
     }
 }

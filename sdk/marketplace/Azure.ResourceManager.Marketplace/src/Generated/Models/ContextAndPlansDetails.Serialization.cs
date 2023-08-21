@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class ContextAndPlansDetails : IUtf8JsonSerializable
+    public partial class ContextAndPlansDetails : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Context))
+            if (Core.Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
             }
-            if (Optional.IsCollectionDefined(PlanIds))
+            if (Core.Optional.IsCollectionDefined(PlanIds))
             {
                 writer.WritePropertyName("planIds"u8);
                 writer.WriteStartArray();

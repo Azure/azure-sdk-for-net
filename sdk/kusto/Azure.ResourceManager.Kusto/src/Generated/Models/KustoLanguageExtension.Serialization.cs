@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoLanguageExtension : IUtf8JsonSerializable
+    public partial class KustoLanguageExtension : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LanguageExtensionName))
+            if (Core.Optional.IsDefined(LanguageExtensionName))
             {
                 writer.WritePropertyName("languageExtensionName"u8);
                 writer.WriteStringValue(LanguageExtensionName.Value.ToString());
             }
-            if (Optional.IsDefined(LanguageExtensionImageName))
+            if (Core.Optional.IsDefined(LanguageExtensionImageName))
             {
                 writer.WritePropertyName("languageExtensionImageName"u8);
                 writer.WriteStringValue(LanguageExtensionImageName.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<KustoLanguageExtensionName> languageExtensionName = default;
-            Optional<KustoLanguageExtensionImageName> languageExtensionImageName = default;
+            Core.Optional<KustoLanguageExtensionName> languageExtensionName = default;
+            Core.Optional<KustoLanguageExtensionImageName> languageExtensionImageName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("languageExtensionName"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new KustoLanguageExtension(Optional.ToNullable(languageExtensionName), Optional.ToNullable(languageExtensionImageName));
+            return new KustoLanguageExtension(Core.Optional.ToNullable(languageExtensionName), Core.Optional.ToNullable(languageExtensionImageName));
         }
     }
 }

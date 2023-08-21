@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    internal partial class LinuxProfilePropertiesSsh : IUtf8JsonSerializable
+    internal partial class LinuxProfilePropertiesSsh : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PublicKeys))
+            if (Core.Optional.IsCollectionDefined(PublicKeys))
             {
                 writer.WritePropertyName("publicKeys"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<IList<LinuxProfilePropertiesSshPublicKeysItem>> publicKeys = default;
+            Core.Optional<IList<LinuxProfilePropertiesSshPublicKeysItem>> publicKeys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicKeys"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new LinuxProfilePropertiesSsh(Optional.ToList(publicKeys));
+            return new LinuxProfilePropertiesSsh(Core.Optional.ToList(publicKeys));
         }
     }
 }

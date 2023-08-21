@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of ExpressionTraces. </summary>
         internal ExpressionTraces()
         {
-            Inputs = new ChangeTrackingList<LogicExpressionRoot>();
+            Inputs = new Core.ChangeTrackingList<LogicExpressionRoot>();
         }
 
         /// <summary> Initializes a new instance of ExpressionTraces. </summary>

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HybridCompute
             try
             {
                 var response = await _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridComputeArmOperation<HybridComputePrivateEndpointConnectionResource>(new HybridComputePrivateEndpointConnectionOperationSource(Client), _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new HybridComputeArmOperation<HybridComputePrivateEndpointConnectionResource>(new HybridComputePrivateEndpointConnectionOperationSource(Client), _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.HybridCompute
             try
             {
                 var response = _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new HybridComputeArmOperation<HybridComputePrivateEndpointConnectionResource>(new HybridComputePrivateEndpointConnectionOperationSource(Client), _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new HybridComputeArmOperation<HybridComputePrivateEndpointConnectionResource>(new HybridComputePrivateEndpointConnectionOperationSource(Client), _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, Core.OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByPrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByPrivateLinkScopeNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridComputePrivateEndpointConnectionResource(Client, HybridComputePrivateEndpointConnectionData.DeserializeHybridComputePrivateEndpointConnectionData(e)), _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "HybridComputePrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridComputePrivateEndpointConnectionResource(Client, HybridComputePrivateEndpointConnectionData.DeserializeHybridComputePrivateEndpointConnectionData(e)), _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "HybridComputePrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByPrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByPrivateLinkScopeNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridComputePrivateEndpointConnectionResource(Client, HybridComputePrivateEndpointConnectionData.DeserializeHybridComputePrivateEndpointConnectionData(e)), _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "HybridComputePrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridComputePrivateEndpointConnectionResource(Client, HybridComputePrivateEndpointConnectionData.DeserializeHybridComputePrivateEndpointConnectionData(e)), _hybridComputePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "HybridComputePrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

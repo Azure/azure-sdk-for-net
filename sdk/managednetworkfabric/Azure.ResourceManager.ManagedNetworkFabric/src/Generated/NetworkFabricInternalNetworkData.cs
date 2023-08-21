@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="vlanId"> Vlan identifier. Example: 1001. </param>
         public NetworkFabricInternalNetworkData(int vlanId)
         {
-            ConnectedIPv4Subnets = new ChangeTrackingList<ConnectedSubnet>();
-            ConnectedIPv6Subnets = new ChangeTrackingList<ConnectedSubnet>();
+            ConnectedIPv4Subnets = new Core.ChangeTrackingList<ConnectedSubnet>();
+            ConnectedIPv6Subnets = new Core.ChangeTrackingList<ConnectedSubnet>();
             VlanId = vlanId;
         }
 

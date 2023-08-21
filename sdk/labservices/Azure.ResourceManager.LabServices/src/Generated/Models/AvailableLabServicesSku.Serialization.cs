@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<string> name = default;
-            Optional<AvailableLabServicesSkuTier> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<AvailableLabServicesSkuCapacity> capacity = default;
-            Optional<IReadOnlyList<AvailableLabServicesSkuCapability>> capabilities = default;
-            Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Optional<IReadOnlyList<AvailableLabServicesSkuCost>> costs = default;
-            Optional<IReadOnlyList<AvailableLabServicesSkuRestrictions>> restrictions = default;
+            Core.Optional<string> resourceType = default;
+            Core.Optional<string> name = default;
+            Core.Optional<AvailableLabServicesSkuTier> tier = default;
+            Core.Optional<string> size = default;
+            Core.Optional<string> family = default;
+            Core.Optional<AvailableLabServicesSkuCapacity> capacity = default;
+            Core.Optional<IReadOnlyList<AvailableLabServicesSkuCapability>> capabilities = default;
+            Core.Optional<IReadOnlyList<AzureLocation>> locations = default;
+            Core.Optional<IReadOnlyList<AvailableLabServicesSkuCost>> costs = default;
+            Core.Optional<IReadOnlyList<AvailableLabServicesSkuRestrictions>> restrictions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     continue;
                 }
             }
-            return new AvailableLabServicesSku(resourceType.Value, name.Value, Optional.ToNullable(tier), size.Value, family.Value, capacity.Value, Optional.ToList(capabilities), Optional.ToList(locations), Optional.ToList(costs), Optional.ToList(restrictions));
+            return new AvailableLabServicesSku(resourceType.Value, name.Value, Core.Optional.ToNullable(tier), size.Value, family.Value, capacity.Value, Core.Optional.ToList(capabilities), Core.Optional.ToList(locations), Core.Optional.ToList(costs), Core.Optional.ToList(restrictions));
         }
     }
 }

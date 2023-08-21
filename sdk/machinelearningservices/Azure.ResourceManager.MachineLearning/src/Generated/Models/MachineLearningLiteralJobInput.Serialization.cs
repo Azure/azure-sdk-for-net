@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningLiteralJobInput : IUtf8JsonSerializable
+    public partial class MachineLearningLiteralJobInput : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            if (Optional.IsDefined(Description))
+            if (Core.Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string value = default;
-            Optional<string> description = default;
+            Core.Optional<string> description = default;
             JobInputType jobInputType = default;
             foreach (var property in element.EnumerateObject())
             {

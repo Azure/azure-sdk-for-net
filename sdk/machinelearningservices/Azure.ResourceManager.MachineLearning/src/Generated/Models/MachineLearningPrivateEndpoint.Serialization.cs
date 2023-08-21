@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningPrivateEndpoint : IUtf8JsonSerializable
+    public partial class MachineLearningPrivateEndpoint : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<ResourceIdentifier> subnetArmId = default;
+            Core.Optional<ResourceIdentifier> id = default;
+            Core.Optional<ResourceIdentifier> subnetArmId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningManagedIdentity : IUtf8JsonSerializable
+    public partial class MachineLearningManagedIdentity : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientId))
+            if (Core.Optional.IsDefined(ClientId))
             {
                 if (ClientId != null)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("clientId");
                 }
             }
-            if (Optional.IsDefined(ObjectId))
+            if (Core.Optional.IsDefined(ObjectId))
             {
                 if (ObjectId != null)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("objectId");
                 }
             }
-            if (Optional.IsDefined(ResourceId))
+            if (Core.Optional.IsDefined(ResourceId))
             {
                 if (ResourceId != null)
                 {
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<Guid?> clientId = default;
-            Optional<Guid?> objectId = default;
-            Optional<ResourceIdentifier> resourceId = default;
+            Core.Optional<Guid?> clientId = default;
+            Core.Optional<Guid?> objectId = default;
+            Core.Optional<ResourceIdentifier> resourceId = default;
             IdentityConfigurationType identityType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningManagedIdentity(identityType, Optional.ToNullable(clientId), Optional.ToNullable(objectId), resourceId.Value);
+            return new MachineLearningManagedIdentity(identityType, Core.Optional.ToNullable(clientId), Core.Optional.ToNullable(objectId), resourceId.Value);
         }
     }
 }

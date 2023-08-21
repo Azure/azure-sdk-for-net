@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesServicePrincipalUpdateContent : IUtf8JsonSerializable
+    public partial class KubernetesServicePrincipalUpdateContent : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientId))
+            if (Core.Optional.IsDefined(ClientId))
             {
                 if (ClientId != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("clientId");
                 }
             }
-            if (Optional.IsDefined(TenantId))
+            if (Core.Optional.IsDefined(TenantId))
             {
                 if (TenantId != null)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("tenantId");
                 }
             }
-            if (Optional.IsDefined(ClientSecret))
+            if (Core.Optional.IsDefined(ClientSecret))
             {
                 if (ClientSecret != null)
                 {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("clientSecret");
                 }
             }
-            if (Optional.IsDefined(ClientCertificate))
+            if (Core.Optional.IsDefined(ClientCertificate))
             {
                 if (ClientCertificate != null)
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("clientCertificate");
                 }
             }
-            if (Optional.IsDefined(ClientCertificatePassword))
+            if (Core.Optional.IsDefined(ClientCertificatePassword))
             {
                 if (ClientCertificatePassword != null)
                 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("clientCertificatePassword");
                 }
             }
-            if (Optional.IsDefined(ClientCertificateSendChain))
+            if (Core.Optional.IsDefined(ClientCertificateSendChain))
             {
                 writer.WritePropertyName("clientCertificateSendChain"u8);
                 writer.WriteBooleanValue(ClientCertificateSendChain.Value);

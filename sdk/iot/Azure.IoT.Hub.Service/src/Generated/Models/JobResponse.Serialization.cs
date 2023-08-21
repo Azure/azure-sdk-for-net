@@ -19,19 +19,19 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<string> jobId = default;
-            Optional<string> queryCondition = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<long> maxExecutionTimeInSeconds = default;
-            Optional<JobResponseType> type = default;
-            Optional<CloudToDeviceMethodRequest> cloudToDeviceMethod = default;
-            Optional<TwinData> updateTwin = default;
-            Optional<JobResponseStatus> status = default;
-            Optional<string> failureReason = default;
-            Optional<string> statusMessage = default;
-            Optional<DeviceJobStatistics> deviceJobStatistics = default;
+            Core.Optional<string> jobId = default;
+            Core.Optional<string> queryCondition = default;
+            Core.Optional<DateTimeOffset> createdTime = default;
+            Core.Optional<DateTimeOffset> startTime = default;
+            Core.Optional<DateTimeOffset> endTime = default;
+            Core.Optional<long> maxExecutionTimeInSeconds = default;
+            Core.Optional<JobResponseType> type = default;
+            Core.Optional<CloudToDeviceMethodRequest> cloudToDeviceMethod = default;
+            Core.Optional<TwinData> updateTwin = default;
+            Core.Optional<JobResponseStatus> status = default;
+            Core.Optional<string> failureReason = default;
+            Core.Optional<string> statusMessage = default;
+            Core.Optional<DeviceJobStatistics> deviceJobStatistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobId"u8))
@@ -136,7 +136,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new JobResponse(jobId.Value, queryCondition.Value, Optional.ToNullable(createdTime), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(maxExecutionTimeInSeconds), Optional.ToNullable(type), cloudToDeviceMethod.Value, updateTwin.Value, Optional.ToNullable(status), failureReason.Value, statusMessage.Value, deviceJobStatistics.Value);
+            return new JobResponse(jobId.Value, queryCondition.Value, Core.Optional.ToNullable(createdTime), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToNullable(maxExecutionTimeInSeconds), Core.Optional.ToNullable(type), cloudToDeviceMethod.Value, updateTwin.Value, Core.Optional.ToNullable(status), failureReason.Value, statusMessage.Value, deviceJobStatistics.Value);
         }
     }
 }

@@ -19,15 +19,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> source = default;
-            Optional<MachineLearningSourceType> sourceType = default;
-            Optional<string> mountName = default;
-            Optional<MachineLearningMountAction> mountAction = default;
-            Optional<string> createdBy = default;
-            Optional<string> mountPath = default;
-            Optional<MachineLearningMountState> mountState = default;
-            Optional<DateTimeOffset> mountedOn = default;
-            Optional<string> error = default;
+            Core.Optional<string> source = default;
+            Core.Optional<MachineLearningSourceType> sourceType = default;
+            Core.Optional<string> mountName = default;
+            Core.Optional<MachineLearningMountAction> mountAction = default;
+            Core.Optional<string> createdBy = default;
+            Core.Optional<string> mountPath = default;
+            Core.Optional<MachineLearningMountState> mountState = default;
+            Core.Optional<DateTimeOffset> mountedOn = default;
+            Core.Optional<string> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"u8))
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningComputeInstanceDataMount(source.Value, Optional.ToNullable(sourceType), mountName.Value, Optional.ToNullable(mountAction), createdBy.Value, mountPath.Value, Optional.ToNullable(mountState), Optional.ToNullable(mountedOn), error.Value);
+            return new MachineLearningComputeInstanceDataMount(source.Value, Core.Optional.ToNullable(sourceType), mountName.Value, Core.Optional.ToNullable(mountAction), createdBy.Value, mountPath.Value, Core.Optional.ToNullable(mountState), Core.Optional.ToNullable(mountedOn), error.Value);
         }
     }
 }

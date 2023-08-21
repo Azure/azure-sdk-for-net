@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class LiveEventEncoding : IUtf8JsonSerializable
+    public partial class LiveEventEncoding : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(EncodingType))
+            if (Core.Optional.IsDefined(EncodingType))
             {
                 writer.WritePropertyName("encodingType"u8);
                 writer.WriteStringValue(EncodingType.Value.ToString());
             }
-            if (Optional.IsDefined(PresetName))
+            if (Core.Optional.IsDefined(PresetName))
             {
                 writer.WritePropertyName("presetName"u8);
                 writer.WriteStringValue(PresetName);
             }
-            if (Optional.IsDefined(StretchMode))
+            if (Core.Optional.IsDefined(StretchMode))
             {
                 if (StretchMode != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Media.Models
                     writer.WriteNull("stretchMode");
                 }
             }
-            if (Optional.IsDefined(KeyFrameInterval))
+            if (Core.Optional.IsDefined(KeyFrameInterval))
             {
                 if (KeyFrameInterval != null)
                 {
@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<LiveEventEncodingType> encodingType = default;
-            Optional<string> presetName = default;
-            Optional<InputVideoStretchMode?> stretchMode = default;
-            Optional<TimeSpan?> keyFrameInterval = default;
+            Core.Optional<LiveEventEncodingType> encodingType = default;
+            Core.Optional<string> presetName = default;
+            Core.Optional<InputVideoStretchMode?> stretchMode = default;
+            Core.Optional<TimeSpan?> keyFrameInterval = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encodingType"u8))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new LiveEventEncoding(Optional.ToNullable(encodingType), presetName.Value, Optional.ToNullable(stretchMode), Optional.ToNullable(keyFrameInterval));
+            return new LiveEventEncoding(Core.Optional.ToNullable(encodingType), presetName.Value, Core.Optional.ToNullable(stretchMode), Core.Optional.ToNullable(keyFrameInterval));
         }
     }
 }

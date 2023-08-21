@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<Uri> endpointUri = default;
+            Core.Optional<string> displayName = default;
+            Core.Optional<Uri> endpointUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))

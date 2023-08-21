@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of AudioAnalyzerPreset. </summary>
         public AudioAnalyzerPreset()
         {
-            ExperimentalOptions = new ChangeTrackingDictionary<string, string>();
+            ExperimentalOptions = new Core.ChangeTrackingDictionary<string, string>();
             OdataType = "#Microsoft.Media.AudioAnalyzerPreset";
         }
 

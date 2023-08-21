@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of NetworkTapPatch. </summary>
         public NetworkTapPatch()
         {
-            Destinations = new ChangeTrackingList<NetworkTapPatchableParametersDestinationsItem>();
+            Destinations = new Core.ChangeTrackingList<NetworkTapPatchableParametersDestinationsItem>();
         }
 
         /// <summary> Switch configuration description. </summary>

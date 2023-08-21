@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<long> currentValue = default;
-            Optional<long> maxValue = default;
+            Core.Optional<string> name = default;
+            Core.Optional<long> currentValue = default;
+            Core.Optional<long> maxValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new IotHubQuotaMetricInfo(name.Value, Optional.ToNullable(currentValue), Optional.ToNullable(maxValue));
+            return new IotHubQuotaMetricInfo(name.Value, Core.Optional.ToNullable(currentValue), Core.Optional.ToNullable(maxValue));
         }
     }
 }

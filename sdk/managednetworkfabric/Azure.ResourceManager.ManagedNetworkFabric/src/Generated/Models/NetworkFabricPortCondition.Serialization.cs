@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkFabricPortCondition : IUtf8JsonSerializable
+    public partial class NetworkFabricPortCondition : Core.IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PortType))
+            if (Core.Optional.IsDefined(PortType))
             {
                 writer.WritePropertyName("portType"u8);
                 writer.WriteStringValue(PortType.Value.ToString());
             }
             writer.WritePropertyName("layer4Protocol"u8);
             writer.WriteStringValue(Layer4Protocol.ToString());
-            if (Optional.IsCollectionDefined(Ports))
+            if (Core.Optional.IsCollectionDefined(Ports))
             {
                 writer.WritePropertyName("ports"u8);
                 writer.WriteStartArray();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PortGroupNames))
+            if (Core.Optional.IsCollectionDefined(PortGroupNames))
             {
                 writer.WritePropertyName("portGroupNames"u8);
                 writer.WriteStartArray();
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<NetworkFabricPortType> portType = default;
+            Core.Optional<NetworkFabricPortType> portType = default;
             Layer4Protocol layer4Protocol = default;
-            Optional<IList<string>> ports = default;
-            Optional<IList<string>> portGroupNames = default;
+            Core.Optional<IList<string>> ports = default;
+            Core.Optional<IList<string>> portGroupNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("portType"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new NetworkFabricPortCondition(Optional.ToNullable(portType), layer4Protocol, Optional.ToList(ports), Optional.ToList(portGroupNames));
+            return new NetworkFabricPortCondition(Core.Optional.ToNullable(portType), layer4Protocol, Core.Optional.ToList(ports), Core.Optional.ToList(portGroupNames));
         }
     }
 }

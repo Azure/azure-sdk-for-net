@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProvisionedClusterData>> value = default;
-            Optional<string> nextLink = default;
+            Core.Optional<IReadOnlyList<ProvisionedClusterData>> value = default;
+            Core.Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new ProvisionedClustersResponseListResult(Optional.ToList(value), nextLink.Value);
+            return new ProvisionedClustersResponseListResult(Core.Optional.ToList(value), nextLink.Value);
         }
     }
 }
