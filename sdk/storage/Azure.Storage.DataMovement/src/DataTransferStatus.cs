@@ -11,6 +11,10 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     public class DataTransferStatus
     {
+        private object _stateLock = new object();
+        private object _hasSkippedLock = new object();
+        private object _hasFailedLock = new object();
+
         /// <summary>
         /// Defines the types of the state a transfer can have.
         /// </summary>
@@ -115,5 +119,64 @@ namespace Azure.Storage.DataMovement
 
         internal bool IsCompletedWithFailedItems => State.Equals(TransferState.Completed) && HasFailedItems;
         internal bool IsCompletedWithSkippedItems => State.Equals(TransferState.Completed) && HasSkippedItems;
+
+        /// <summary>
+        /// Accordingly update the <see cref="HasFailedItems"/> to true. If already set to true, nothing will happen.
+        ///
+        /// This should only be triggered when a failed item has been seen.
+        /// </summary>
+        /// <returns>True if <see cref="HasFailedItems"/> was updated. False otherwise.</returns>
+        internal bool OnFailedItem()
+        {
+            lock (_hasFailedLock)
+            {
+                if (!HasFailedItems)
+                {
+                    HasFailedItems = true;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Accordingly update the <see cref="HasSkippedItems"/> to true. If already set to true, nothing will happen.
+        ///
+        /// This should only be triggered when a skipped item has been seen.
+        /// </summary>
+        /// /// <returns>True if <see cref="HasSkippedItems"/> was updated. False otherwise.</returns>
+        internal bool OnSkippedItem()
+        {
+            lock (_hasSkippedLock)
+            {
+                if (!HasSkippedItems)
+                {
+                    HasSkippedItems = true;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Accordingly update the <see cref="State"/>. If the current State is the same as the parameter,
+        /// then nothing will happen.
+        ///
+        /// This should only be triggered when the state updates.
+        /// </summary>
+        /// <returns>True if <see cref="State"/> was updated. False otherwise.</returns>
+        internal bool OnTransferStateChange(TransferState state)
+        {
+            lock (_stateLock)
+            {
+                if (state != TransferState.None &&
+                    State != state)
+                {
+                    State = state;
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

@@ -305,7 +305,7 @@ namespace Azure.Storage.DataMovement
             DataTransferStatus status,
             CancellationToken cancellationToken = default)
         {
-            long length = DataMovementConstants.PlanFile.OneByte;
+            long length = DataMovementConstants.PlanFile.OneByte * 3;
             int offset = DataMovementConstants.PlanFile.AtomicJobStatusStateIndex;
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
@@ -326,7 +326,13 @@ namespace Azure.Storage.DataMovement
                         {
                             accessor.Write(
                                 position: 0,
-                                value: (byte)status);
+                                value: (byte)status.State);
+                            accessor.Write(
+                                position: 1,
+                                value: status.HasFailedItems);
+                            accessor.Write(
+                                position: 2,
+                                value: status.HasSkippedItems);
                             // to flush to the underlying file that supports the mmf
                             accessor.Flush();
                         }
@@ -348,7 +354,7 @@ namespace Azure.Storage.DataMovement
             DataTransferStatus status,
             CancellationToken cancellationToken = default)
         {
-            long length = DataMovementConstants.PlanFile.OneByte;
+            long length = DataMovementConstants.PlanFile.OneByte * 3;
             int offset = DataMovementConstants.PlanFile.AtomicPartStatusIndex;
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
@@ -369,7 +375,13 @@ namespace Azure.Storage.DataMovement
                         {
                             accessor.Write(
                                 position: 0,
-                                value: (byte)status);
+                                value: (byte)status.State);
+                            accessor.Write(
+                                position: 1,
+                                value: status.HasFailedItems);
+                            accessor.Write(
+                                position: 2,
+                                value: status.HasSkippedItems);
                             // to flush to the underlying file that supports the mmf
                             accessor.Flush();
                         }

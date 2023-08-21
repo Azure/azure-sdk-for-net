@@ -14,7 +14,6 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     internal class DataTransferState
     {
-        private readonly object _statusLock = new object();
         private string _id;
         private DataTransferStatus _status;
 
@@ -31,16 +30,14 @@ namespace Azure.Storage.DataMovement
         /// <param name="status">The Transfer Status of the Transfer. See <see cref="DataTransferStatus"/>.</param>
         public DataTransferState(
             string id = default,
-            DataTransferStatus status = DataTransferStatus.Queued)
+            DataTransferStatus status = default)
         {
             _id = string.IsNullOrEmpty(id) ? Guid.NewGuid().ToString() : id;
             _status = status;
             CompletionSource = new TaskCompletionSource<DataTransferStatus>(
                 _status,
                 TaskCreationOptions.RunContinuationsAsynchronously);
-            if (DataTransferStatus.TransferState.Completed == status ||
-                        DataTransferStatus.TransferState.CompletedWithSkippedTransfers == status ||
-                        DataTransferStatus.TransferState.CompletedWithFailedTransfers == status)
+            if (DataTransferStatus.TransferState.Completed == status.State)
             {
                 CompletionSource.TrySetResult(status);
             }
@@ -62,9 +59,9 @@ namespace Azure.Storage.DataMovement
         public bool HasCompleted
         {
             get {
-                return (DataTransferStatus.TransferState.Completed == _status ||
-                        DataTransferStatus.TransferState.CompletedWithSkippedTransfers == _status ||
-                        DataTransferStatus.TransferState.CompletedWithFailedTransfers == _status);
+                // TODO: look to whether before a paused state was considered completed..
+                return (DataTransferStatus.TransferState.Completed == _status.State ||
+                        DataTransferStatus.TransferState.Paused == _status.State);
             }
             internal set { }
         }
@@ -84,42 +81,37 @@ namespace Azure.Storage.DataMovement
         /// <returns></returns>
         public DataTransferStatus GetTransferStatus()
         {
-            lock (_statusLock)
-            {
-                return _status;
-            }
+            return _status;
         }
 
         /// <summary>
         /// Sets the completion status
         /// </summary>
-        /// <param name="status"></param>
+        /// <param name="state"></param>
         /// <returns>Returns whether or not the status has been changed/set</returns>
-        public bool TrySetTransferStatus(DataTransferStatus status)
+        public bool TrySetTransferState(DataTransferStatus.TransferState state)
         {
-            lock (_statusLock)
+            if (_status.OnTransferStateChange(state))
             {
-                if (_status != status)
+                if (DataTransferStatus.TransferState.Completed == _status.State ||
+                    DataTransferStatus.TransferState.Paused == _status.State)
                 {
-                    _status = status;
-                    if (DataTransferStatus.TransferState.Paused == status ||
-                        DataTransferStatus.TransferState.Completed == status ||
-                        DataTransferStatus.TransferState.CompletedWithSkippedTransfers == status ||
-                        DataTransferStatus.TransferState.CompletedWithFailedTransfers == status)
-                    {
-                        // If the _completionSource has been cancelled or the exception
-                        // has been set, we don't need to check if TrySetResult returns false
-                        // because it's acceptable to cancel or have an error occur before then.
-                        CompletionSource.TrySetResult(status);
-                    }
-                    return true;
+                    // If the _completionSource has been cancelled or the exception
+                    // has been set, we don't need to check if TrySetResult returns false
+                    // because it's acceptable to cancel or have an error occur before then.
+                    CompletionSource.TrySetResult(_status);
                 }
-                return false;
+                return true;
             }
+            return false;
         }
 
+        public bool TryOnFailedItemsState() => _status.OnFailedItem();
+
+        public bool TryOnSkippedItemsState() => _status.OnSkippedItem();
+
         internal bool CanPause()
-            => _status == DataTransferStatus.InProgress;
+            => DataTransferStatus.TransferState.InProgress == _status.State;
 
         public async Task PauseIfRunningAsync(CancellationToken cancellationToken)
         {
@@ -129,7 +121,7 @@ namespace Azure.Storage.DataMovement
             }
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             // Call the inner cancellation token to stop the transfer job
-            TrySetTransferStatus(DataTransferStatus.TransferState.Pausing);
+            TrySetTransferState(DataTransferStatus.TransferState.Pausing);
             if (TriggerCancellation())
             {
                 // Wait until full pause has completed.

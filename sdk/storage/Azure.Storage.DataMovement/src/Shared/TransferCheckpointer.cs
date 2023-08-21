@@ -148,10 +148,10 @@ namespace Azure.Storage.DataMovement
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be canceled.
         /// </param>
-        public abstract Task SetJobPartTransferStateAsync(
+        public abstract Task SetJobPartTransferStatusAsync(
             string transferId,
             int partNumber,
-            DataTransferStatus.TransferState state,
+            DataTransferStatus state,
             CancellationToken cancellationToken = default);
 
         /// <summary>

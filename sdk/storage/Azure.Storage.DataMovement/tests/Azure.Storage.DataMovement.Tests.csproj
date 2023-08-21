@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net6.0</TargetFrameworks>
     <AssemblyTitle>Microsoft Azure.Storage.DataMovement client library tests</AssemblyTitle>
     <DefineConstants>BlobDataMovementSDK;$(DefineConstants)</DefineConstants>
     <IsPackable>false</IsPackable>

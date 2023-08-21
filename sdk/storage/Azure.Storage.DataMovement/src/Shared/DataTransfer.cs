@@ -54,7 +54,7 @@ namespace Azure.Storage.DataMovement
         internal DataTransfer(
             string id,
             TransferManager transferManager,
-            DataTransferStatus status = DataTransferStatus.Queued)
+            DataTransferStatus status = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(transferManager, nameof(transferManager));

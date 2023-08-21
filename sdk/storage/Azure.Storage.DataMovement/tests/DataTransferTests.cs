@@ -170,7 +170,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(DataTransferStatus.TransferState.Pausing, transfer.TransferStatus);
 
             // Assert
-            if (!transfer._state.TrySetTransferStatus(DataTransferStatus.TransferState.Paused))
+            if (!transfer._state.TrySetTransferState(DataTransferStatus.TransferState.Paused))
             {
                 Assert.Fail("Unable to set the transfer status internally to the DataTransfer.");
             }
